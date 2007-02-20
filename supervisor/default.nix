@@ -8,9 +8,13 @@
 # $ nix-build ./st-lab.nix --arg currentLoadDir \"/tmp/current-load\" -o tmp-supervisor
 {currentLoadDir ? "/home/nix/buildfarm-state/current-load"}:
 
-(import ../../release/supervisor/supervisor.nix)
-  { stateDir = "/home/nix/buildfarm-state";
-    jobsURL = https://svn.cs.uu.nl:12443/repos/trace/configurations/trunk/tud/supervisor/jobs.conf;
-    machinesList = ./machines;
-    inherit currentLoadDir;
-  }
+{
+  supervisor =
+    (import ../../../release/supervisor/supervisor.nix) {
+      stateDir = "/home/nix/buildfarm-state";
+      jobsURL = https://svn.cs.uu.nl:12443/repos/trace/configurations/trunk/tud/supervisor/jobs.conf;
+      machinesList = ./machines;
+      pkgsPath = "/etc/nixos/nixpkgs/pkgs";
+      inherit currentLoadDir;
+    };
+}
