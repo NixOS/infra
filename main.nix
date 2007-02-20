@@ -4,6 +4,7 @@
     initrd = {
       extraKernelModules = ["arcmsr"];
     };
+    extraKernelModules = ["kvm-intel"];
   };
 
   fileSystems = [
@@ -44,7 +45,11 @@
         };
 
       };
-      
+
+      extraSubservices = [
+        
+      ];
+    
     };
 
   };
