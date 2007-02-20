@@ -16,6 +16,14 @@
     { label = "swap1"; }
   ];
   
+  networking = {
+    interfaces = [
+      { name = "eth0:0";
+        ipAddress = "192.168.1.5";
+      }
+    ];
+  };
+  
   services = {
     sshd = {
       enable = true;
