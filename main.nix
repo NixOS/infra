@@ -47,9 +47,7 @@ rec {
 
       extraSubservices = {
         enable = true;
-        services = webServer : pkgs : [
-          (distManagerService webServer pkgs)        
-        ];
+        services = [distManagerService];
       };
     };
   };
