@@ -55,15 +55,16 @@ rec {
   distManagerService = webServer : pkgs :
     (distManager webServer pkgs) {
       distDir = "/data/webserver/dist";
-      distPrefix = "/dist";
+      distPrefix = "/releases";
       distConfDir = "/data/webserver/dist-conf";
+      directories = ./dist-manager/directories.conf;
     };
 
-  distManager = webServer : pkgs : { distDir, distPrefix, distConfDir } :
+  distManager = webServer : pkgs : { distDir, distPrefix, distConfDir, directories} :
     import ../../services/dist-manager {
       inherit (pkgs) stdenv perl;
       saxon8 = pkgs.saxonb;
-      inherit distDir distPrefix distConfDir;
+      inherit distDir distPrefix distConfDir directories;
       canonicalName = "http://" + webServer.hostName + 
         (if webServer.httpPort == 80 then "" else ":" + (toString webServer.httpPort));
     };
