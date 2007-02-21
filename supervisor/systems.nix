@@ -1,10 +1,9 @@
-[ { system = "i686-linux"; }
-  { system = "x86_64-linux"; }
-  { system = "i686-cygwin"; }
-  { system = "i686-cygwin"; stdenvType = "i686-mingw"; }
-  { system = "i686-darwin"; }
-
-  # { system = "powerpc-darwin"; }
-  # { system = "powerpc-linux"; }
-  # {system = "i686-freebsd";}
+[ "i686-linux"
+  "x86_64-linux"
+  "i686-cygwin"
+  "i686-darwin"
 ]
+
+  # "powerpc-darwin"
+  # "powerpc-linux"
+  # "i686-freebsd"
