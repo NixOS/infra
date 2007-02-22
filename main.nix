@@ -19,6 +19,7 @@ rec {
   ];
   
   networking = {
+    hostName = "buildfarm";
     interfaces = [
       { name = "eth0:0";
         ipAddress = "192.168.1.5";
