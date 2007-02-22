@@ -42,6 +42,12 @@ rec {
           dataDir = "/data/subversion";
           notificationSender = "svn@example.org";
           userCreationDomain = "st.ewi.tudelft.nl";
+          
+          organization = {
+            name = "Software Engineering Research Group, TU Delft";
+            url  = "http://swerl.tudelft.nl";
+            logo = ./serg-logo.png;
+          };
         };
       };
 
