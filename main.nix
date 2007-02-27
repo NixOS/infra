@@ -20,7 +20,13 @@ rec {
   
   networking = {
     hostName = "buildfarm";
+    defaultGateway = "130.161.158.1";
+    # subnetmask = "255.255.254.0";
+
     interfaces = [
+      { name = "eth0";
+        ipAddress = "130.161.158.181";     
+      }
       { name = "eth0:0";
         ipAddress = "192.168.1.5";
       }
@@ -35,7 +41,7 @@ rec {
     httpd = {
       enable = true;
       adminAddr = "admin@example.org";
-      hostName = "dutiel.st.ewi.tudelft.nl";
+      hostName = "buildfarm.st.ewi.tudelft.nl";
 
       subservices = {
         subversion = {
