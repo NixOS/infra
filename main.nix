@@ -21,11 +21,11 @@ rec {
   networking = {
     hostName = "buildfarm";
     defaultGateway = "130.161.158.1";
-    # subnetmask = "255.255.254.0";
 
     interfaces = [
       { name = "eth0";
-        ipAddress = "130.161.158.181";     
+        ipAddress = "130.161.158.181";
+        subnetMask = "255.255.254.0";
       }
       { name = "eth0:0";
         ipAddress = "192.168.1.5";
