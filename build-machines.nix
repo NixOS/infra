@@ -16,6 +16,10 @@
     { label = "swap"; }
   ];
 
+  nix = {
+    maxJobs = 2;
+  };
+  
   networking = {
     useDHCP = false;
     interfaces = [

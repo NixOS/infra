@@ -4,7 +4,6 @@ rec {
     initrd = {
       extraKernelModules = ["arcmsr"];
     };
-
     extraKernelModules = ["kvm-intel"];
   };
 
@@ -17,6 +16,10 @@ rec {
   swapDevices = [
     { label = "swap1"; }
   ];
+  
+  nix = {
+    maxJobs = 2;
+  };
   
   networking = {
     hostName = "buildfarm";
@@ -32,7 +35,7 @@ rec {
       }
     ];
   };
-  
+
   services = {
     sshd = {
       enable = true;
