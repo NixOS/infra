@@ -63,7 +63,7 @@ rec {
 
       extraSubservices = {
         enable = true;
-        services = [distManagerService];
+        services = [distManagerService rootFiles];
       };
     };
   };
@@ -83,5 +83,12 @@ rec {
       inherit distDir distPrefix distConfDir directories;
       canonicalName = "http://" + webServer.hostName + 
         (if webServer.httpPort == 80 then "" else ":" + (toString webServer.httpPort));
+    };
+
+  rootFiles =  webServer : pkgs :
+    import ../../../services/apache-httpd/subservices/serve-files {
+      directory = ./webroot;
+      urlPath = "/";
+      inherit (pkgs) stdenv;
     };
 }
