@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /viewcvs
+Disallow: /viewvc
+Disallow: /repos
+Disallow: /repos-xml
+Disallow: /svnweb
