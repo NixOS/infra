@@ -26,11 +26,11 @@ rec {
     defaultGateway = "130.161.158.1";
 
     interfaces = [
-      { name = "eth0";
+      { name = "eth1";
         ipAddress = "130.161.158.181";
         subnetMask = "255.255.254.0";
       }
-      { name = "eth0:0";
+      { name = "eth0";
         ipAddress = "192.168.1.5";
       }
     ];
