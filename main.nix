@@ -86,7 +86,7 @@ rec {
     };
 
   rootFiles =  webServer : pkgs :
-    import ../../../services/apache-httpd/subservices/serve-files {
+    import ../../services/apache-httpd/subservices/serve-files {
       directory = ./webroot;
       urlPath = "/";
       inherit (pkgs) stdenv;
