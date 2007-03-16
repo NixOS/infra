@@ -43,6 +43,12 @@ rec {
     sshd = {
       enable = true;
     };
+
+    dhcpd = {
+      enable = true;
+      configFile = ./dhcpd.conf;
+      interfaces = ["eth0"];
+    };
     
     httpd = {
       enable = true;
