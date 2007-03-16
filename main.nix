@@ -23,7 +23,6 @@ rec {
   
   networking = {
     hostName = "buildfarm";
-    defaultGateway = "130.161.158.1";
 
     interfaces = [
       { name = "eth1";
@@ -34,6 +33,10 @@ rec {
         ipAddress = "192.168.1.5";
       }
     ];
+
+    defaultGateway = "130.161.158.1";
+
+    nameservers = ["130.161.158.4" "130.161.33.17" "130.161.180.1"];
   };
 
   services = {
