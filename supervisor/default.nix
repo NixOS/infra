@@ -15,6 +15,8 @@
       jobsURL = https://svn.cs.uu.nl:12443/repos/trace/configurations/trunk/tud/supervisor/jobs.conf;
       machinesList = ./machines;
       pkgsPath = "/etc/nixos/nixpkgs/pkgs";
+      smtpHost = "smtp.st.ewi.tudelft.nl";
+      fromAddress = "TU Delft Nix Buildfarm <martin@st.ewi.tudelft.nl>";
       inherit currentLoadDir;
     };
 }
