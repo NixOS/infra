@@ -1,4 +1,4 @@
-# Buildfarm configuration for the Utrecht buildfarm.
+# Buildfarm configuration for the TUD buildfarm.
 
 # The following makes it easy to build a supervisor that uses a
 # different current-load directory.  This is to prevent one-shot jobs
