@@ -37,6 +37,27 @@ rec {
     defaultGateway = "130.161.158.1";
 
     nameservers = ["130.161.158.4" "130.161.33.17" "130.161.180.1"];
+
+    localCommands =
+      # Provide NATting for the build machines on 192.168.1.*.
+      # Obviously, this should be something that NixOS provides.
+      let pkgs = import ../../nixpkgs/pkgs/top-level/all-packages.nix {};
+      in "
+        export PATH=${pkgs.iptables}/sbin:$PATH
+
+        modprobe ip_tables
+        modprobe ip_conntrack_ftp
+        modprobe ip_nat_ftp
+        modprobe ipt_LOG
+        modprobe ip_nat
+        modprobe xt_tcpudp
+
+        iptables -t nat -F
+        iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -d 192.168.1.0/24 -j ACCEPT
+        iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j SNAT --to-source 130.161.158.181
+
+        echo 1 > /proc/sys/net/ipv4/ip_forward
+      ";
   };
 
   services = {
