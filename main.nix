@@ -73,7 +73,7 @@ rec {
     
     httpd = {
       enable = true;
-      adminAddr = "admin@example.org";
+      adminAddr = "eelco@cs.uu.nl";
       hostName = "buildfarm.st.ewi.tudelft.nl";
 
       subservices = {
