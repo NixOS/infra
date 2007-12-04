@@ -106,8 +106,21 @@ rec {
 
     dhcpd = {
       enable = true;
-      configFile = ./dhcpd.conf;
       interfaces = ["eth0"];
+      extraConfig = "
+	option subnet-mask 255.255.255.0;
+	option broadcast-address 192.168.1.255;
+	option routers 192.168.1.5;
+	option domain-name-servers 130.161.158.4, 130.161.33.17, 130.161.180.1;
+	option domain-name \"buildfarm-net\";
+
+	subnet 192.168.1.0 netmask 255.255.255.0 {
+	  range 192.168.1.100 192.168.1.200;
+	}
+
+	use-host-decl-names on;
+      ";
+      machines = pkgs.lib.filter (machine: machine ? ethernetAddress) machineList;
     };
     
     extraJobs = [
