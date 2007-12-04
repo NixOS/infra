@@ -59,6 +59,10 @@ rec {
         ipAddress = "130.161.158.181";
         subnetMask = "255.255.254.0";
       }
+      { name = "eth1:1";
+        ipAddress = "130.161.159.14";
+        subnetMask = "255.255.254.0";
+      }
       { name = "eth0";
         ipAddress = machines.cartman.ipAddress;
       }
