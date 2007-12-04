@@ -26,4 +26,7 @@
     };
   };
 
+  networking = {
+    hostName = ""; # obtain from DHCP server
+  };
 }
