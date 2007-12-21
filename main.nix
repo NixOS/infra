@@ -60,7 +60,7 @@ rec {
         subnetMask = "255.255.254.0";
       }
       { name = "eth1:1";
-        ipAddress = "130.161.159.14";
+        ipAddress = "130.161.158.185";
         subnetMask = "255.255.254.0";
       }
       { name = "eth0";
@@ -92,6 +92,9 @@ rec {
         iptables -t nat -F
         iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -d 192.168.1.0/24 -j ACCEPT
         iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j SNAT --to-source 130.161.158.181
+
+        # WebDSL server.
+	iptables -t nat -A PREROUTING -d 130.161.158.185 -i eth1 -p tcp --dport 80 -j DNAT --to-destination 130.161.158.181:8080
 
         echo 1 > /proc/sys/net/ipv4/ip_forward
       ";
