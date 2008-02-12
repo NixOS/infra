@@ -26,6 +26,7 @@ let
 in
 
 rec {
+
   boot = {
     grubDevice = "/dev/sda";
     initrd = {
@@ -111,36 +112,42 @@ rec {
       enable = true;
     };
 
+    cron = {
+      systemCronJobs = [
+        "25 * * * *  root  (TZ=CET date; ${pkgs.rsync}/bin/rsync -razv --numeric-ids /data/subversion/ /data/vm/ unixhome.st.ewi.tudelft.nl::bfarm/subversion) >> /var/log/svn-backup.log 2>&1"
+      ];
+    };
+
     dhcpd = {
       enable = true;
       interfaces = ["eth0"];
-      extraConfig = "
+      extraConfig = ''
 	option subnet-mask 255.255.255.0;
 	option broadcast-address 192.168.1.255;
 	option routers 192.168.1.5;
 	option domain-name-servers 130.161.158.4, 130.161.33.17, 130.161.180.1;
-	option domain-name \"buildfarm-net\";
+	option domain-name "buildfarm-net";
 
 	subnet 192.168.1.0 netmask 255.255.255.0 {
 	  range 192.168.1.100 192.168.1.200;
 	}
 
 	use-host-decl-names on;
-      ";
+      '';
       machines = pkgs.lib.filter (machine: machine ? ethernetAddress) machineList;
     };
     
     extraJobs = [
       { name = "buildfarm-supervisor";
-        job = "
-          description \"Build farm job starter\"
+        job = ''
+          description "Build farm job starter"
 
           start on network-interfaces/started
           stop on network-interfaces/stop
 
           #respawn ${pkgs.su}/bin/su - root -c 'NIX_REMOTE= ${supervisor}/bin/run' > /var/log/buildfarm 2>&1
           respawn ${pkgs.su}/bin/su - buildfarm -c ${supervisor}/bin/run > /var/log/buildfarm 2>&1
-        ";
+        '';
       }
     ];
 
@@ -232,4 +239,5 @@ rec {
       urlPath = "/";
       inherit (pkgs) stdenv;
     };
+
 }
