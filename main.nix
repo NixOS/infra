@@ -23,6 +23,8 @@ let
     fromAddress = "TU Delft Nix Buildfarm <martin@st.ewi.tudelft.nl>";
   };
 
+  myIP = "130.161.158.181";
+
 in
 
 rec {
@@ -57,7 +59,7 @@ rec {
 
     interfaces = [
       { name = "eth1";
-        ipAddress = "130.161.158.181";
+        ipAddress = myIP;
         subnetMask = "255.255.254.0";
       }
       { name = "eth1:1";
@@ -92,10 +94,10 @@ rec {
 
         iptables -t nat -F
         iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -d 192.168.1.0/24 -j ACCEPT
-        iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j SNAT --to-source 130.161.158.181
+        iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j SNAT --to-source ${myIP}
 
         # WebDSL server.
-	iptables -t nat -A PREROUTING -d 130.161.158.185 -i eth1 -p tcp --dport 80 -j DNAT --to-destination 130.161.158.181:8080
+	iptables -t nat -A PREROUTING -d 130.161.158.185 -i eth1 -p tcp --dport 80 -j DNAT --to-destination ${myIP}:8080
 
         echo 1 > /proc/sys/net/ipv4/ip_forward
       ";
@@ -191,31 +193,42 @@ rec {
     
     httpd = {
       enable = true;
+      experimental = true;
       adminAddr = "eelco@cs.uu.nl";
       hostName = "buildfarm.st.ewi.tudelft.nl";
 
-      subservices = {
-        subversion = {
-          enable = true;
-          dataDir = "/data/subversion";
-          notificationSender = "svn@example.org";
-          userCreationDomain = "st.ewi.tudelft.nl";
-          
-          organization = {
-            name = "Software Engineering Research Group, TU Delft";
-            url  = "http://swerl.tudelft.nl";
-            logo = ./serg-logo.png;
-          };
-        };
-      };
+      documentRoot = pkgs.lib.cleanSource ./webroot;
 
-      extraSubservices = {
-        enable = true;
-        services = [distManagerService rootFiles];
-      };
+      extraSubservices = [
+        { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/subversion.nix;
+          config = {
+            urlPrefix = "";
+            dataDir = "/data/subversion";
+            notificationSender = "root@buildfarm.st.ewi.tudelft.nl";
+            userCreationDomain = "st.ewi.tudelft.nl";
+            organisation = {
+              name = "Software Engineering Research Group, TU Delft";
+              url = http://www.st.ewi.tudelft.nl/;
+              logo = "/serg-logo.png";
+            };
+          };
+        }
+	{ function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/dist-manager.nix;
+	  config = rec {
+	    urlPrefix = "/releases";
+	    distDir = "/data/webserver/dist";
+	    uploaderIPs = ["127.0.0.1" myIP];
+	    distPasswords = "/data/webserver/upload_passwords";
+	    directoriesConf = ''
+	      nix ${distDir}/nix nix-upload
+	    '';
+	  };
+	}
+      ];
     };
   };
 
+  /*
   distManagerService = webServer : pkgs :
     (distManager webServer pkgs) {
       distDir = "/data/webserver/dist";
@@ -239,5 +252,6 @@ rec {
       urlPath = "/";
       inherit (pkgs) stdenv;
     };
+  */
 
 }
