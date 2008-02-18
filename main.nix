@@ -24,6 +24,7 @@ let
   };
 
   myIP = "130.161.158.181";
+  webdslIP = "130.161.158.185";
 
 in
 
@@ -63,7 +64,7 @@ rec {
         subnetMask = "255.255.254.0";
       }
       { name = "eth1:1";
-        ipAddress = "130.161.158.185";
+        ipAddress = webdslIP;
         subnetMask = "255.255.254.0";
       }
       { name = "eth0";
@@ -97,7 +98,7 @@ rec {
         iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j SNAT --to-source ${myIP}
 
         # WebDSL server.
-	iptables -t nat -A PREROUTING -d 130.161.158.185 -i eth1 -p tcp --dport 80 -j DNAT --to-destination ${myIP}:8080
+	iptables -t nat -A PREROUTING -d ${webdslIP} -i eth1 -p tcp --dport 80 -j DNAT --to-destination ${myIP}:8080
 
         echo 1 > /proc/sys/net/ipv4/ip_forward
       ";
@@ -153,6 +154,11 @@ rec {
       }
     ];
 
+    postgresql = {
+      enable = true;
+      dataDir = "/data/postgresql";
+    };
+
     nagios = {
       enable = true;
       enableWebInterface = true;
@@ -195,63 +201,87 @@ rec {
       enable = true;
       experimental = true;
       adminAddr = "eelco@cs.uu.nl";
-      hostName = "buildfarm.st.ewi.tudelft.nl";
+      hostName = "localhost";
 
-      documentRoot = pkgs.lib.cleanSource ./webroot;
-
+      # !!! move 
       extraSubservices = [
-        { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/subversion.nix;
-          config = {
-            urlPrefix = "";
-            dataDir = "/data/subversion";
-            notificationSender = "root@buildfarm.st.ewi.tudelft.nl";
-            userCreationDomain = "st.ewi.tudelft.nl";
-            organisation = {
-              name = "Software Engineering Research Group, TU Delft";
-              url = http://www.st.ewi.tudelft.nl/;
-              logo = "/serg-logo.png";
-            };
-          };
-        }
-	{ function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/dist-manager.nix;
-	  config = rec {
-	    urlPrefix = "/releases";
-	    distDir = "/data/webserver/dist";
-	    uploaderIPs = ["127.0.0.1" myIP];
-	    distPasswords = "/data/webserver/upload_passwords";
-	    directoriesConf = ''
-	      nix ${distDir}/nix nix-upload
-	    '';
+	{ function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/subversion.nix;
+	  config = {
+	    urlPrefix = "";
+	    dataDir = "/data/subversion";
+	    notificationSender = "root@buildfarm.st.ewi.tudelft.nl";
+	    userCreationDomain = "st.ewi.tudelft.nl";
+	    organisation = {
+	      name = "Software Engineering Research Group, TU Delft";
+	      url = http://www.st.ewi.tudelft.nl/;
+	      logo = "/serg-logo.png";
+	    };
 	  };
 	}
       ];
+
+      virtualHosts = [
+
+        { hostName = "buildfarm.st.ewi.tudelft.nl";
+          documentRoot = pkgs.lib.cleanSource ./webroot;
+          extraSubservices = [
+	    { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/dist-manager.nix;
+	      config = rec {
+		urlPrefix = "/releases";
+		distDir = "/data/webserver/dist";
+		uploaderIPs = ["127.0.0.1" myIP];
+		distPasswords = "/data/webserver/upload_passwords";
+		directoriesConf = ''
+		  nix ${distDir}/nix nix-upload
+		'';
+	      };
+	    }
+	  ];
+        }
+
+        # !!! hacky
+        { hostName = "strategoxt.org";
+          extraSubservices = [
+	    { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/twiki.nix;
+	      config = { startWeb = "Stratego/WebHome"; };
+	    }
+          ];
+        }
+
+        { hostName = "www.strategoxt.org";
+          extraSubservices = [
+	    { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/twiki.nix;
+	      config = { startWeb = "Stratego/WebHome"; };
+	    }
+          ];
+        }
+
+        { hostName = "www.stratego-language.org";
+          extraSubservices = [
+	    { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/twiki.nix;
+	      config = { startWeb = "Stratego/WebHome"; };
+	    }
+          ];
+        }
+
+        { hostName = "program-transformation.org";
+          extraSubservices = [
+	    { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/twiki.nix;
+	      config = { startWeb = "Transform/WebHome"; };
+	    }
+          ];
+        }
+
+        { hostName = "www.program-transformation.org";
+          extraSubservices = [
+	    { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/twiki.nix;
+	      config = { startWeb = "Transform/WebHome"; };
+	    }
+          ];
+        }
+
+      ];
     };
   };
-
-  /*
-  distManagerService = webServer : pkgs :
-    (distManager webServer pkgs) {
-      distDir = "/data/webserver/dist";
-      distPrefix = "/releases";
-      distConfDir = "/data/webserver/dist-conf";
-      directories = ./dist-manager/directories.conf;
-    };
-
-  distManager = webServer : pkgs : {distDir, distPrefix, distConfDir, directories} :
-    import ../../services/dist-manager {
-      inherit (pkgs) stdenv perl;
-      saxon8 = pkgs.saxonb;
-      inherit distDir distPrefix distConfDir directories;
-      canonicalName = "http://" + webServer.hostName + 
-        (if webServer.httpPort == 80 then "" else ":" + (toString webServer.httpPort));
-    };
-
-  rootFiles =  webServer : pkgs :
-    import ../../services/apache-httpd/subservices/serve-files {
-      directory = ./webroot;
-      urlPath = "/";
-      inherit (pkgs) stdenv;
-    };
-  */
 
 }
