@@ -23,6 +23,8 @@ let
     fromAddress = "TU Delft Nix Buildfarm <martin@st.ewi.tudelft.nl>";
   };
 
+  jiraJetty = (import ../../services/jira/jira-instance.nix).jetty;
+
   myIP = "130.161.158.181";
   webdslIP = "130.161.158.185";
 
@@ -117,7 +119,7 @@ rec {
 
     cron = {
       systemCronJobs = [
-        "25 * * * *  root  (TZ=CET date; ${pkgs.rsync}/bin/rsync -razv --numeric-ids /data/subversion/ /data/vm/ unixhome.st.ewi.tudelft.nl::bfarm/subversion) >> /var/log/svn-backup.log 2>&1"
+        "25 * * * *  root  (TZ=CET date; ${pkgs.rsync}/bin/rsync -razv --numeric-ids --delete /data/subversion /data/vm /data/pt-wiki /data/postgresql unixhome.st.ewi.tudelft.nl::bfarm/) >> /var/log/backup.log 2>&1"
       ];
     };
 
@@ -141,6 +143,7 @@ rec {
     };
     
     extraJobs = [
+
       { name = "buildfarm-supervisor";
         job = ''
           description "Build farm job starter"
@@ -152,6 +155,32 @@ rec {
           respawn ${pkgs.su}/bin/su - buildfarm -c ${supervisor}/bin/run > /var/log/buildfarm 2>&1
         '';
       }
+
+      { name = "jira";
+	users = [
+	  { name = "jira";
+	    description = "JIRA bug tracker";
+	  }
+	];
+        job = ''
+          description "JIRA bug tracker"
+
+          start on network-interfaces/started
+          stop on network-interfaces/stop
+
+          start script
+              mkdir -p /var/log/jetty /var/cache/jira
+              chown jira /var/log/jetty /var/cache/jira
+          end script
+
+          respawn ${pkgs.su}/bin/su -s ${pkgs.bash}/bin/sh jira -c '${jiraJetty}/bin/run-jetty'
+          
+          stop script
+              ${pkgs.su}/bin/su -s ${pkgs.bash}/bin/sh jira -c '${jiraJetty}/bin/stop-jetty'
+          end script
+        '';
+      }
+
     ];
 
     postgresql = {
@@ -278,6 +307,20 @@ rec {
 	      config = { startWeb = "Transform/WebHome"; };
 	    }
           ];
+        }
+
+        { hostName = "bugs.strategoxt.org";
+          extraConfig = ''
+	    <Proxy *>
+	    Order deny,allow
+	    Allow from all
+	    </Proxy>
+
+	    ProxyRequests     Off
+	    ProxyPreserveHost On
+	    ProxyPass         /       http://localhost:10080/
+	    ProxyPassReverse  /       http://localhost:10080/
+          '';
         }
 
       ];
