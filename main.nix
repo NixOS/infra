@@ -270,22 +270,7 @@ rec {
 
         # !!! hacky
         { hostName = "strategoxt.org";
-          extraSubservices = [
-	    { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/twiki.nix;
-	      config = { startWeb = "Stratego/WebHome"; };
-	    }
-          ];
-        }
-
-        { hostName = "www.strategoxt.org";
-          extraSubservices = [
-	    { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/twiki.nix;
-	      config = { startWeb = "Stratego/WebHome"; };
-	    }
-          ];
-        }
-
-        { hostName = "www.stratego-language.org";
+          serverAliases = ["www.strategoxt.org" "www.stratego-language.org"];
           extraSubservices = [
 	    { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/twiki.nix;
 	      config = { startWeb = "Stratego/WebHome"; };
@@ -294,14 +279,7 @@ rec {
         }
 
         { hostName = "program-transformation.org";
-          extraSubservices = [
-	    { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/twiki.nix;
-	      config = { startWeb = "Transform/WebHome"; };
-	    }
-          ];
-        }
-
-        { hostName = "www.program-transformation.org";
+          serverAliases = ["www.program-transformation.org"];
           extraSubservices = [
 	    { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/twiki.nix;
 	      config = { startWeb = "Transform/WebHome"; };
