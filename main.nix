@@ -119,7 +119,7 @@ rec {
 
     cron = {
       systemCronJobs = [
-        "25 * * * *  root  (TZ=CET date; ${pkgs.rsync}/bin/rsync -razv --numeric-ids --delete /data/subversion /data/vm /data/pt-wiki /data/postgresql unixhome.st.ewi.tudelft.nl::bfarm/) >> /var/log/backup.log 2>&1"
+        "25 * * * *  root  (TZ=CET date; ${pkgs.rsync}/bin/rsync -razv --numeric-ids --delete /data/subversion /data/subversion-strategoxt /data/vm /data/pt-wiki /data/postgresql unixhome.st.ewi.tudelft.nl::bfarm/) >> /var/log/backup.log 2>&1"
       ];
     };
 
@@ -237,6 +237,7 @@ rec {
 	{ function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/subversion.nix;
 	  config = {
 	    urlPrefix = "";
+            toplevelRedirect = false;
 	    dataDir = "/data/subversion";
 	    notificationSender = "root@buildfarm.st.ewi.tudelft.nl";
 	    userCreationDomain = "st.ewi.tudelft.nl";
@@ -268,12 +269,35 @@ rec {
 	  ];
         }
 
-        # !!! hacky
         { hostName = "strategoxt.org";
-          serverAliases = ["www.strategoxt.org" "www.stratego-language.org"];
           extraSubservices = [
 	    { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/twiki.nix;
 	      config = { startWeb = "Stratego/WebHome"; };
+	    }
+          ];
+        }
+
+        { hostName = "www.strategoxt.org";
+          serverAliases = ["www.stratego-language.org"];
+          extraConfig = ''
+            RedirectPermanent / http://strategoxt.org/
+          '';
+        }
+
+        { hostName = "svn.strategoxt.org";
+          extraSubservices = [
+	    { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/subversion.nix;
+	      config = {
+		urlPrefix = "";
+		dataDir = "/data/subversion-strategoxt";
+		notificationSender = "root@buildfarm.st.ewi.tudelft.nl";
+		userCreationDomain = "st.ewi.tudelft.nl";
+		organisation = {
+		  name = "Stratego/XT";
+		  url = http://strategoxt.org/;
+		  logo = "http://strategoxt.org/pub/Stratego/StrategoLogo/StrategoLogoTextlessWhite-100px.png";
+		};
+	      };
 	    }
           ];
         }
