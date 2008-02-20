@@ -229,6 +229,7 @@ rec {
     httpd = {
       enable = true;
       experimental = true;
+      logPerVirtualHost = true;
       adminAddr = "eelco@cs.uu.nl";
       hostName = "localhost";
 
