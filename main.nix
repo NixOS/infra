@@ -85,7 +85,7 @@ rec {
     localCommands =
       # Provide NATting for the build machines on 192.168.1.*.
       # Obviously, this should be something that NixOS provides.
-      "
+      ''
         export PATH=${pkgs.iptables}/sbin:$PATH
 
         modprobe ip_tables
@@ -100,10 +100,10 @@ rec {
         iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j SNAT --to-source ${myIP}
 
         # WebDSL server.
-	iptables -t nat -A PREROUTING -d ${webdslIP} -i eth1 -p tcp --dport 80 -j DNAT --to-destination ${myIP}:8080
+        iptables -t nat -A PREROUTING -d ${webdslIP} -i eth1 -p tcp --dport 80 -j DNAT --to-destination ${myIP}:8080
 
         echo 1 > /proc/sys/net/ipv4/ip_forward
-      ";
+      '';
 
     defaultMailServer = {
       directDelivery = true;
@@ -119,7 +119,7 @@ rec {
 
     cron = {
       systemCronJobs = [
-        "25 * * * *  root  (TZ=CET date; ${pkgs.rsync}/bin/rsync -razv --numeric-ids --delete /data/subversion /data/subversion-strategoxt /data/vm /data/pt-wiki /data/postgresql unixhome.st.ewi.tudelft.nl::bfarm/) >> /var/log/backup.log 2>&1"
+        "25 * * * *  root  (TZ=CET date; ${pkgs.rsync}/bin/rsync -razv --numeric-ids --delete /data/subversion /data/subversion-strategoxt /data/subversion-nix /data/vm /data/pt-wiki /data/postgresql unixhome.st.ewi.tudelft.nl::bfarm/) >> /var/log/backup.log 2>&1"
       ];
     };
 
@@ -127,17 +127,17 @@ rec {
       enable = true;
       interfaces = ["eth0"];
       extraConfig = ''
-	option subnet-mask 255.255.255.0;
-	option broadcast-address 192.168.1.255;
-	option routers 192.168.1.5;
-	option domain-name-servers 130.161.158.4, 130.161.33.17, 130.161.180.1;
-	option domain-name "buildfarm-net";
+        option subnet-mask 255.255.255.0;
+        option broadcast-address 192.168.1.255;
+        option routers 192.168.1.5;
+        option domain-name-servers 130.161.158.4, 130.161.33.17, 130.161.180.1;
+        option domain-name "buildfarm-net";
 
-	subnet 192.168.1.0 netmask 255.255.255.0 {
-	  range 192.168.1.100 192.168.1.200;
-	}
+        subnet 192.168.1.0 netmask 255.255.255.0 {
+          range 192.168.1.100 192.168.1.200;
+        }
 
-	use-host-decl-names on;
+        use-host-decl-names on;
       '';
       machines = pkgs.lib.filter (machine: machine ? ethernetAddress) machineList;
     };
@@ -157,11 +157,11 @@ rec {
       }
 
       { name = "jira";
-	users = [
-	  { name = "jira";
-	    description = "JIRA bug tracker";
-	  }
-	];
+        users = [
+          { name = "jira";
+            description = "JIRA bug tracker";
+          }
+        ];
         job = ''
           description "JIRA bug tracker"
 
@@ -234,20 +234,20 @@ rec {
 
       # !!! move 
       extraSubservices = [
-	{ function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/subversion.nix;
-	  config = {
-	    urlPrefix = "";
+        { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/subversion.nix;
+          config = {
+            urlPrefix = "";
             toplevelRedirect = false;
-	    dataDir = "/data/subversion";
-	    notificationSender = "root@buildfarm.st.ewi.tudelft.nl";
-	    userCreationDomain = "st.ewi.tudelft.nl";
-	    organisation = {
-	      name = "Software Engineering Research Group, TU Delft";
-	      url = http://www.st.ewi.tudelft.nl/;
-	      logo = "/serg-logo.png";
-	    };
-	  };
-	}
+            dataDir = "/data/subversion";
+            notificationSender = "root@buildfarm.st.ewi.tudelft.nl";
+            userCreationDomain = "st.ewi.tudelft.nl";
+            organisation = {
+              name = "Software Engineering Research Group, TU Delft";
+              url = http://www.st.ewi.tudelft.nl/;
+              logo = "/serg-logo.png";
+            };
+          };
+        }
       ];
 
       virtualHosts = [
@@ -255,25 +255,28 @@ rec {
         { hostName = "buildfarm.st.ewi.tudelft.nl";
           documentRoot = pkgs.lib.cleanSource ./webroot;
           extraSubservices = [
-	    { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/dist-manager.nix;
-	      config = rec {
-		urlPrefix = "/releases";
-		distDir = "/data/webserver/dist";
-		uploaderIPs = ["127.0.0.1" myIP];
-		distPasswords = "/data/webserver/upload_passwords";
-		directoriesConf = ''
-		  nix ${distDir}/nix nix-upload
-		'';
-	      };
-	    }
-	  ];
+            { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/dist-manager.nix;
+              config = rec {
+                urlPrefix = "/releases";
+                distDir = "/data/webserver/dist";
+                uploaderIPs = ["127.0.0.1" myIP];
+                distPasswords = "/data/webserver/upload_passwords";
+                directoriesConf = ''
+                  nix          ${distDir}/nix          nix-upload
+                  nix-cache    ${distDir}/nix-cache    nix-upload strategoxt-upload meta-environment-upload
+                  strategoxt   ${distDir}/strategoxt   strategoxt-upload
+                  meta-environment ${distDir}/meta-environment meta-environment-upload
+                '';
+              };
+            }
+          ];
         }
 
         { hostName = "strategoxt.org";
           extraSubservices = [
-	    { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/twiki.nix;
-	      config = { startWeb = "Stratego/WebHome"; };
-	    }
+            { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/twiki.nix;
+              config = { startWeb = "Stratego/WebHome"; };
+            }
           ];
         }
 
@@ -286,43 +289,61 @@ rec {
 
         { hostName = "svn.strategoxt.org";
           extraSubservices = [
-	    { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/subversion.nix;
-	      config = {
-		urlPrefix = "";
-		dataDir = "/data/subversion-strategoxt";
-		notificationSender = "root@buildfarm.st.ewi.tudelft.nl";
-		userCreationDomain = "st.ewi.tudelft.nl";
-		organisation = {
-		  name = "Stratego/XT";
-		  url = http://strategoxt.org/;
-		  logo = "http://strategoxt.org/pub/Stratego/StrategoLogo/StrategoLogoTextlessWhite-100px.png";
-		};
-	      };
-	    }
+            { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/subversion.nix;
+              config = {
+                urlPrefix = "";
+                dataDir = "/data/subversion-strategoxt";
+                notificationSender = "root@buildfarm.st.ewi.tudelft.nl";
+                userCreationDomain = "st.ewi.tudelft.nl";
+                organisation = {
+                  name = "Stratego/XT";
+                  url = http://strategoxt.org/;
+                  logo = "http://strategoxt.org/pub/Stratego/StrategoLogo/StrategoLogoTextlessWhite-100px.png";
+                };
+              };
+            }
           ];
         }
 
         { hostName = "program-transformation.org";
           serverAliases = ["www.program-transformation.org"];
           extraSubservices = [
-	    { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/twiki.nix;
-	      config = { startWeb = "Transform/WebHome"; };
-	    }
+            { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/twiki.nix;
+              config = { startWeb = "Transform/WebHome"; };
+            }
           ];
         }
 
         { hostName = "bugs.strategoxt.org";
           extraConfig = ''
-	    <Proxy *>
-	    Order deny,allow
-	    Allow from all
-	    </Proxy>
+            <Proxy *>
+            Order deny,allow
+            Allow from all
+            </Proxy>
 
-	    ProxyRequests     Off
-	    ProxyPreserveHost On
-	    ProxyPass         /       http://localhost:10080/
-	    ProxyPassReverse  /       http://localhost:10080/
+            ProxyRequests     Off
+            ProxyPreserveHost On
+            ProxyPass         /       http://localhost:10080/
+            ProxyPassReverse  /       http://localhost:10080/
           '';
+        }
+
+        { hostName = "svn.nixos.org";
+          extraSubservices = [
+            { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/subversion.nix;
+              config = {
+                urlPrefix = "";
+                dataDir = "/data/subversion-nix";
+                notificationSender = "root@buildfarm.st.ewi.tudelft.nl";
+                userCreationDomain = "st.ewi.tudelft.nl";
+                organisation = {
+                  name = "Nix";
+                  url = http://nixos.org/;
+                  logo = "http://www.st.ewi.tudelft.nl/serg-logo.png"; # !!! need a logo
+                };
+              };
+            }
+          ];
         }
 
       ];
