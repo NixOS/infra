@@ -18,9 +18,17 @@ let
 
   supervisor = import ../../release/supervisor/supervisor.nix {
     stateDir = "/home/buildfarm/buildfarm-state";
-    jobsURL = https://svn.cs.uu.nl:12443/repos/trace/configurations/trunk/tud/supervisor/jobs.conf;
+    #jobsURL = https://svn.cs.uu.nl:12443/repos/trace/configurations/trunk/tud/supervisor/jobs.nix;
+    jobsFile = toString /etc/nixos/configurations/tud/supervisor/jobs.nix;
     smtpHost = "smtp.st.ewi.tudelft.nl";
     fromAddress = "TU Delft Nix Buildfarm <martin@st.ewi.tudelft.nl>";
+  };
+
+  supervisorOld = import ../../old-release/supervisor/supervisor.nix {
+    stateDir = "/home/buildfarm/buildfarm-state-old";
+    jobsURL = https://svn.cs.uu.nl:12443/repos/trace/configurations/trunk/tud/supervisor/jobs.conf;
+    smtpHost = "smtp.st.ewi.tudelft.nl";
+    fromAddress = "TU Delft Nix Legacy Buildfarm <martin@st.ewi.tudelft.nl>";
   };
 
   jiraJetty = (import ../../services/jira/jira-instance.nix).jetty;
@@ -151,8 +159,18 @@ rec {
           start on network-interfaces/started
           stop on network-interfaces/stop
 
-          #respawn ${pkgs.su}/bin/su - root -c 'NIX_REMOTE= ${supervisor}/bin/run' > /var/log/buildfarm 2>&1
           respawn ${pkgs.su}/bin/su - buildfarm -c ${supervisor}/bin/run > /var/log/buildfarm 2>&1
+        '';
+      }
+
+      { name = "buildfarm-supervisor-old";
+        job = ''
+          description "Build farm job starter (legacy jobs)"
+
+          start on network-interfaces/started
+          stop on network-interfaces/stop
+
+          respawn ${pkgs.su}/bin/su - buildfarm -c ${supervisorOld}/bin/run > /var/log/buildfarm-old 2>&1
         '';
       }
 
