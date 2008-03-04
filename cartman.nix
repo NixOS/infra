@@ -282,9 +282,10 @@ rec {
                 distPasswords = "/data/webserver/upload_passwords";
                 directoriesConf = ''
                   nix          ${distDir}/nix          nix-upload
-                  nix-cache    ${distDir}/nix-cache    nix-upload strategoxt-upload meta-environment-upload
+                  nix-cache    ${distDir}/nix-cache    nix-upload strategoxt-upload meta-environment-upload ut-fmt-upload
                   strategoxt   ${distDir}/strategoxt   strategoxt-upload
                   meta-environment ${distDir}/meta-environment meta-environment-upload
+                  ut-fmt       ${distDir}/ut-fmt       ut-fmt-upload
                 '';
               };
             }
