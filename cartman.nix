@@ -251,29 +251,25 @@ rec {
       adminAddr = "eelco@cs.uu.nl";
       hostName = "localhost";
 
-      # !!! move 
-      extraSubservices = [
-        { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/subversion.nix;
-          config = {
-            urlPrefix = "";
-            toplevelRedirect = false;
-            dataDir = "/data/subversion";
-            notificationSender = "root@buildfarm.st.ewi.tudelft.nl";
-            userCreationDomain = "st.ewi.tudelft.nl";
-            organisation = {
-              name = "Software Engineering Research Group, TU Delft";
-              url = http://www.st.ewi.tudelft.nl/;
-              logo = "/serg-logo.png";
-            };
-          };
-        }
-      ];
-
       virtualHosts = [
 
         { hostName = "buildfarm.st.ewi.tudelft.nl";
           documentRoot = pkgs.lib.cleanSource ./webroot;
           extraSubservices = [
+            { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/subversion.nix;
+              config = {
+                urlPrefix = "";
+                toplevelRedirect = false;
+                dataDir = "/data/subversion";
+                notificationSender = "root@buildfarm.st.ewi.tudelft.nl";
+                userCreationDomain = "st.ewi.tudelft.nl";
+                organisation = {
+                  name = "Software Engineering Research Group, TU Delft";
+                  url = http://www.st.ewi.tudelft.nl/;
+                  logo = "/serg-logo.png";
+                };
+              };
+            }
             { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/dist-manager.nix;
               config = rec {
                 urlPrefix = "/releases";
