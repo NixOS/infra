@@ -362,6 +362,11 @@ rec {
           ];
         }
 
+        { hostName = "planet.strategoxt.org";
+          serverAliases = ["planet.stratego.org"];
+          documentRoot = "/home/karltk/public_html/planet";
+        }
+
       ];
     };
   };
