@@ -34,7 +34,6 @@ let
   jiraJetty = (import ../../services/jira/jira-instance.nix).jetty;
 
   myIP = "130.161.158.181";
-  webdslIP = "130.161.158.185";
 
 in
 
@@ -73,10 +72,6 @@ rec {
         ipAddress = myIP;
         subnetMask = "255.255.254.0";
       }
-      { name = "eth1:1";
-        ipAddress = webdslIP;
-        subnetMask = "255.255.254.0";
-      }
       { name = "eth0";
         ipAddress = machines.cartman.ipAddress;
       }
@@ -106,9 +101,6 @@ rec {
         iptables -t nat -F
         iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -d 192.168.1.0/24 -j ACCEPT
         iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j SNAT --to-source ${myIP}
-
-        # WebDSL server.
-        iptables -t nat -A PREROUTING -d ${webdslIP} -i eth1 -p tcp --dport 80 -j DNAT --to-destination ${myIP}:8080
 
         echo 1 > /proc/sys/net/ipv4/ip_forward
       '';
