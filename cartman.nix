@@ -20,15 +20,14 @@ let
     stateDir = "/home/buildfarm/buildfarm-state";
     #jobsURL = https://svn.cs.uu.nl:12443/repos/trace/configurations/trunk/tud/supervisor/jobs.nix;
     jobsFile = toString /etc/nixos/configurations/tud/supervisor/jobs.nix;
-    smtpHost = "smtp.st.ewi.tudelft.nl";
-    fromAddress = "TU Delft Nix Buildfarm <martin@st.ewi.tudelft.nl>";
+    fromAddress = "TU Delft Nix Buildfarm <e.dolstra@tudelft.nl>";
   };
 
   supervisorOld = import ../../old-release/supervisor/supervisor.nix {
     stateDir = "/home/buildfarm/buildfarm-state-old";
     jobsURL = https://svn.cs.uu.nl:12443/repos/trace/configurations/trunk/tud/supervisor/jobs.conf;
     smtpHost = "smtp.st.ewi.tudelft.nl";
-    fromAddress = "TU Delft Nix Legacy Buildfarm <martin@st.ewi.tudelft.nl>";
+    fromAddress = "TU Delft Nix Legacy Buildfarm <e.dolstra@tudelft.nl>";
   };
 
   jiraJetty = (import ../../services/jira/jira-instance.nix).jetty;
@@ -144,20 +143,20 @@ rec {
     
     extraJobs = [
 
-      { name = "buildfarm-supervisor";
+      { name = "buildfarm";
         job = ''
-          description "Build farm job starter"
+          description "Build farm job runner"
 
           start on network-interfaces/started
           stop on network-interfaces/stop
 
-          respawn ${pkgs.su}/bin/su - buildfarm -c ${supervisor}/bin/run > /var/log/buildfarm 2>&1
+          respawn ${pkgs.su}/bin/su - buildfarm -c 'sendNotifications=1 ${supervisor}/bin/run' > /var/log/buildfarm 2>&1
         '';
       }
 
-      { name = "buildfarm-supervisor-old";
+      { name = "buildfarm-old";
         job = ''
-          description "Build farm job starter (legacy jobs)"
+          description "Build farm job runner (legacy jobs)"
 
           start on network-interfaces/started
           stop on network-interfaces/stop
@@ -269,7 +268,6 @@ rec {
                 uploaderIPs = ["127.0.0.1" myIP];
                 distPasswords = "/data/webserver/upload_passwords";
                 directoriesConf = ''
-                  nix          ${distDir}/nix          nix-upload
                   nix-cache    ${distDir}/nix-cache    nix-upload strategoxt-upload meta-environment-upload ut-fmt-upload
                   strategoxt   ${distDir}/strategoxt   strategoxt-upload
                   meta-environment ${distDir}/meta-environment meta-environment-upload
@@ -334,6 +332,15 @@ rec {
             ProxyPass         /       http://localhost:10080/
             ProxyPassReverse  /       http://localhost:10080/
           '';
+        }
+
+        { hostName = "nixos.org";
+          documentRoot = "/home/eelco/nix-homepage";
+          servedDirs = [
+            { urlPath = "/releases";
+              dir = "/data/webserver/dist/nix";
+            }
+          ];
         }
 
         { hostName = "svn.nixos.org";

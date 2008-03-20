@@ -53,6 +53,18 @@ in
 
 {
 
+  /* Nix */
+
+  nixTrunk = makeNixJob {
+    dirName = "nix";
+    inputs = {
+      nixCheckout = svnInput https://svn.cs.uu.nl:12443/repos/trace/nix/trunk;
+    };
+    jobExpr = "../jobs/nix/nix.nix";
+    jobAttr = "nixRelease";
+  };
+  
+
   /* PatchELF */
 
   patchelfTrunk = makeNixJob {
@@ -62,7 +74,6 @@ in
     };
     jobExpr = "../jobs/nix/patchelf.nix";
     jobAttr = "patchelfRelease";
-    #noRelease = true;    
   };
   
 
@@ -80,6 +91,7 @@ in
   };
   */
 
+  
   /* Groove */
 
   /*
