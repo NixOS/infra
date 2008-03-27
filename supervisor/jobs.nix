@@ -64,6 +64,15 @@ in
     jobAttr = "nixRelease";
   };
   
+  nixNoBDBBranch = makeNixJob {
+    dirName = "nix-no-bdb";
+    inputs = {
+      nixCheckout = svnInput https://svn.cs.uu.nl:12443/repos/trace/nix/branches/no-bdb;
+    };
+    jobExpr = "../jobs/nix/nix.nix";
+    jobAttr = "nixRelease";
+  };
+  
 
   /* PatchELF */
 
