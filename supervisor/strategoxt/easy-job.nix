@@ -42,7 +42,7 @@ rec {
           } // attrs)
           // {
             inputs = 
-              ((refspec.svnInput attrs.svn) // refspec.requiresInputs)
+              ((refspec.svnInputAttrs attrs.svn) // refspec.requiresInputs)
               //  (if attrs ? inputs then attrs.inputs else {});
           });
 
@@ -91,9 +91,9 @@ rec {
        * with attributes for the variant.
        */
       svnInputAttrValue = variant :
-        builtins.getAttr variant spec.svn;
+        svnInput (builtins.getAttr variant spec.svn);
 
-      svnInput = variant :
+      svnInputAttrs = variant :
         (builtins.listToAttrs [
           { name = svnInputAttrName;
             value = svnInputAttrValue variant;
@@ -103,7 +103,7 @@ rec {
       /**
        * The info attribute name is by convention ${attrPrefix}Info
        */
-      internalInfoInput =
+      infoInputAttr =
         { name = infoInputAttrName;
           value = infoInputAttrValue;
         };
@@ -123,7 +123,7 @@ rec {
 
       requiresInputs =
         builtins.listToAttrs (
-          map (somespec : (reflect somespec).internalInfoInput) requiresClosure
+          map (somespec : (reflect somespec).infoInputAttr) requiresClosure
         );
 
       /**
