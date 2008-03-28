@@ -4,7 +4,7 @@ let easy = (import ./easy-job.nix) attrs;
     makeEasyJob = easy.makeEasyJob;
 
     specs =
-      (import ../../../release/jobs/strategoxt2/packages.nix);
+      (import ../../../../release/jobs/strategoxt2/packages.nix);
 
  in {
   javaFrontSyntaxTrunk = makeEasyJob {
