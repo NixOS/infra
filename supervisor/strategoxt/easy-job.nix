@@ -114,7 +114,7 @@ rec {
       infoInputAttrValue =
         if spec.packageName == "aterm" then
           baseline.aterm
-        else if spec.packageName == "sdf" then
+        else if spec.packageName == "sdf2-bundle" then
           baseline.sdf
         else if spec.packageName == "strategoxt" then
           baseline.strategoxt
