@@ -48,10 +48,13 @@ let
   utFmtDistDir = "/data/webserver/dist/ut-fmt";
   utFmtDistURL = http://buildfarm.st.ewi.tudelft.nl/releases/ut-fmt;
 
+  strategoxtJobs =
+    (import ./strategoxt/jobs.nix) {
+      inherit makeJob pathInput svnInput svnInputRev;
+    };
 
 in
-
-{
+  strategoxtJobs // {
 
   /* Nix */
 

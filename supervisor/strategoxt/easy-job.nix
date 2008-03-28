@@ -20,6 +20,9 @@ rec {
     } // attrs.inputs;
   });
 
+  /**
+   * Current Stratego/XT baseline packages.
+   */
   baseline = 
     let urls = import ./baseline.nix;
      in { aterm = infoInput urls.aterm;
@@ -28,6 +31,11 @@ rec {
           strategoLibraries = infoInput urls.strategoLibraries;
         };
 
+  /**
+   * This job function makes a buildfarm job based on a specification of
+   * a package in packages.nix. It automatically adds the svn inputs
+   * and the releaae-info.xml files of the requirements.
+   */
   makeEasyJob = attrs :
     let refspec = reflect (attrs.spec);
      in makeStrategoXTJob (({
