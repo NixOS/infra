@@ -2,6 +2,7 @@
 
 let
   urlInput = url: {type = "tgz"; url = url;};
+  infoInput = url : urlInput "${url}/release-info.xml";
 
   job = attrs : makeJob (attrs // {
     dirname ="strategoxt";
@@ -16,7 +17,7 @@ let
     ];
 
     inputs = {
-      systems = svnInput https://svn.cs.uu.nl:12443/repos/trace/configurations/trunk/tud/supervisor/systems.nix;
+      systems = pathInput ./systems.nix;
     } // attrs.inputs;
   });
 
@@ -24,14 +25,13 @@ let
   kalleberg = "karltk@strategoxt.org";
   visser = "e.visser.@tudelft.nl";
 
-  info = {
-    baseline = {
-      aterm = urlInput http://buildfarm.st.ewi.tudelft.nl/releases/meta-environment/aterm-2.5pre21238-l2q7rg38/release-info.xml;
-      sdf = urlInput http://buildfarm.st.ewi.tudelft.nl/releases/meta-environment/sdf2-bundle-2.4pre212034-2nspl1xc/release-info.xml;
-      strategoxt = urlInput http://buildfarm.st.ewi.tudelft.nl/releases/strategoxt/strategoxt-0.17M3pre17483/release-info.xml;
-      strategoLibraries = urlInput http://buildfarm.st.ewi.tudelft.nl/releases/strategoxt/stratego-libraries-0.17pre17483-zvwcks5g/release-info.xml;
-    };
-  };
+  baseline = 
+    let urls = import ./baseline.nix;
+     in { aterm = infoInput urls.aterm;
+          sdf = infoInput urls.sdf;
+          strategoxt = infoInput urls.strategoxt;
+          strategoLibraries = infoInput urls.strategoLibraries;
+        };
 
 in
 
@@ -41,9 +41,9 @@ in
     inputs = {
       javaFrontSyntax = svnInput https://svn.cs.uu.nl:12443/repos/StrategoXT/java-front/trunk/syntax;
       /* @todo it should be easy to automate this now (based on info in packages.nix) */      
-      atermInfo = info.baseline.aterm;
-      sdf2BundleInfo = info.baseline.sdf;
-      strategoxtInfo = info.baseline.strategoxt;
+      atermInfo = baseline.aterm;
+      sdf2BundleInfo = baseline.sdf;
+      strategoxtInfo = baseline.strategoxt;
     };
 
     notifyAddresses = [bravenboer];
