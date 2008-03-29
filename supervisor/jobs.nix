@@ -11,7 +11,7 @@ let
     inputs = {
       job = pathInput ../../../release;
       #job = svnInput jobBaseline;
-      nixpkgs = svnInputRev nixpkgsBaseline 11222;
+      nixpkgs = svnInputRev nixpkgsBaseline 11301;
     } // attrs.inputs;
   };
 
@@ -22,7 +22,7 @@ let
 
   nixpkgsBaseline = https://svn.cs.uu.nl:12443/repos/trace/nixpkgs/trunk;
 
-  defaultJobScript = "generic-dist/build+upload.sh";
+  defaultJobScript = "generic-dist/build+release.sh";
 
   cacheDir = "/data/webserver/dist/nix-cache";
   cacheURL = http://buildfarm.st.ewi.tudelft.nl/releases/nix-cache;
