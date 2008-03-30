@@ -1,39 +1,74 @@
 attrs :
 
 let easy = (import ./easy-job.nix) attrs;
+    reflect = easy.reflect;
+    infoInput = easy.infoInput;
     makeEasyJob = easy.makeEasyJob;
     makeStrategoXTJob = easy.makeStrategoXTJob;
 
     specs =
       (import ../../../../release/jobs/strategoxt2/packages.nix);
 
+    /**
+     * Current Stratego/XT baseline packages.
+     */
+    baseline = 
+      import ./baseline.nix;
+
+    makeInfoURL = {
+      usingBaseline = spec :
+        let packageName = reflect.packageName spec;
+         in if packageName == "aterm" then
+              infoInput baseline.aterm
+            else if packageName == "sdf2-bundle" then
+              infoInput baseline.sdf
+            else if packageName == "strategoxt" then
+              infoInput baseline.strategoxt
+            else if packageName == "stratego-libraries" then
+              infoInput baseline.strategoLibraries
+           else
+             infoInput "http://buildfarm.st.ewi.tudelft.nl/releases/strategoxt2/${packageName}/${packageName}-unstable/";
+
+      withATerm64 = spec :
+        let packageName = reflect.packageName spec;
+         in if packageName == "aterm" then
+              infoInput "http://buildfarm.st.ewi.tudelft.nl/releases/strategoxt2/aterm64/${packageName}-unstable/"
+            else if reflect.isRequired spec specs.aterm then
+              infoInput "http://buildfarm.st.ewi.tudelft.nl/releases/strategoxt2/${packageName}-with-aterm64/${packageName}-unstable/"
+            else
+              infoInput "http://buildfarm.st.ewi.tudelft.nl/releases/strategoxt2/${packageName}/${packageName}-unstable/";
+    };
+
  in {
 
   javaFrontSyntaxTrunk = makeEasyJob {
     spec = specs.javaFrontSyntax;
-    useBaseline = true;
+    makeInfoURL = makeInfoURL.usingBaseline;
   };
 
   javaFrontTrunk = makeEasyJob {
     spec = specs.javaFront;
-    useBaseline = true;
+    makeInfoURL = makeInfoURL.usingBaseline;
   };
 
   jimpleFrontTrunk = makeEasyJob {
     spec = specs.jimpleFront;
-    useBaseline = true;
+    makeInfoURL = makeInfoURL.usingBaseline;
   };
 
   strategoLibrariesTrunk = makeEasyJob {
     spec = specs.strategoLibraries;
-    useBaseline = true;
+    makeInfoURL = makeInfoURL.usingBaseline;
   };
 
   strategoShellTrunk = makeEasyJob {
     spec = specs.strategoShell;
-    useBaseline = true;
+    makeInfoURL = makeInfoURL.usingBaseline;
   };
 
+  /**
+   * Meta-Environment
+   */
   metaBuildEnvTrunk = makeEasyJob {
     spec = specs.metaBuildEnv;
   };
@@ -46,6 +81,65 @@ let easy = (import ./easy-job.nix) attrs;
 
   atermTrunk = makeEasyJob {
     spec = specs.aterm;
+  };
+
+  sdfLibraryTrunk = makeEasyJob {
+    spec = specs.sdfLibrary;
+    makeInfoURL = makeInfoURL.withATerm64;
+  };
+
+  toolbuslibTrunk = makeEasyJob {
+    spec = specs.toolbuslib;
+    dirName = "toolbuslib-with-aterm64";
+    makeInfoURL = makeInfoURL.withATerm64;
+  };
+
+  errorSupportTrunk = makeEasyJob {
+    spec = specs.errorSupport;
+    dirName = "error-support-with-aterm64";
+  };
+
+  tideSupportTrunk = makeEasyJob {
+    spec = specs.tideSupport;
+    dirName = "tide-support-with-aterm64";
+    makeInfoURL = makeInfoURL.withATerm64;
+  };
+
+  ptSupportTrunk = makeEasyJob {
+    spec = specs.ptSupport;
+    dirName = "pt-support-with-aterm64";
+    makeInfoURL = makeInfoURL.withATerm64;
+  };
+
+
+  sglrTrunk = makeEasyJob {
+    spec = specs.sglr;
+    dirName = "sglr-with-aterm64";
+    makeInfoURL = makeInfoURL.withATerm64;
+  };
+
+  asfSupportTrunk = makeEasyJob {
+    spec = specs.asfSupport;
+    dirName = "asf-support-with-aterm64";
+    makeInfoURL = makeInfoURL.withATerm64;
+  };
+
+  ascSupportTrunk = makeEasyJob {
+    spec = specs.ascSupport;
+    dirName = "asc-support-with-aterm64";
+    makeInfoURL = makeInfoURL.withATerm64;
+  };
+
+  sdfSupportTrunk = makeEasyJob {
+    spec = specs.sdfSupport;
+    dirName = "sdf-support-with-aterm64";
+    makeInfoURL = makeInfoURL.withATerm64;
+  };
+
+  pgenTrunk = makeEasyJob {
+    spec = specs.pgen;
+    dirName = "pgen-with-aterm64";
+    makeInfoURL = makeInfoURL.withATerm64;
   };
 }
 

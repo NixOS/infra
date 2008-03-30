@@ -21,41 +21,40 @@ rec {
   });
 
   /**
-   * Current Stratego/XT baseline packages.
-   */
-  baseline = 
-    let urls = import ./baseline.nix;
-     in { aterm = infoInput urls.aterm;
-          sdf = infoInput urls.sdf;
-          strategoxt = infoInput urls.strategoxt;
-          strategoLibraries = infoInput urls.strategoLibraries;
-        };
-
-  /**
    * This job function makes a buildfarm job based on a specification of
    * a package in packages.nix. It automatically adds the svn inputs
    * and the releaae-info.xml files of the requirements.
    */
   makeEasyJob = attrs :
-    let refspec = reflect (attrs ? useBaseline && attrs.useBaseline) (attrs.spec);
-     in makeStrategoXTJob (({
-          dirName = refspec.packageName;
-
+    let makeInfoURL =
+          if attrs ? makeInfoURL then attrs.makeInfoURL else defaultMakeInfoURL;
+        spec =
+          attrs.spec;
+        stable =
+          if attrs ? stable then attrs.stable else false;
+        svn =
+          if attrs ? svn then attrs.svn else "trunk";
+        customInputs =
+          if attrs ? inputs then attrs.inputs else {};
+     in makeStrategoXTJob (removeAttrs (({
+          dirName =
+            reflect.packageName spec;
           notifyAddresses =
-            refspec.notifyAddresses;
-
+            reflect.notifyAddresses spec;
           jobAttr =
-            refspec.jobAttr (if attrs ? stable then attrs.stable else false);
-
-          } // attrs)
+            reflect.jobAttr spec stable;
+          }
+          // attrs)
           // {
             inputs = 
-              (
-                (refspec.svnInputAttrs
-                  (if attrs ? svn then attrs.svn else "trunk")
-                ) // refspec.requiresInputs
-              ) //  (if attrs ? inputs then attrs.inputs else {});
-          });
+              ((reflect.svnInputs spec svn)
+              // (reflect.requiresInputs spec makeInfoURL))
+              // customInputs;
+          }) ["makeInfoURL"]);
+
+  defaultMakeInfoURL = spec :
+     let packageName = reflect.packageName spec;
+      in infoInput "http://buildfarm.st.ewi.tudelft.nl/releases/strategoxt2/${packageName}/${packageName}-unstable/";
 
   /**
    * Some packages reflect of pkgs to determine dependencies
@@ -71,98 +70,102 @@ rec {
   /**
    * Reflection tools for package specifications.
    */
-  reflect = useBaseline : somespec : 
-    let spec = somespec fakePkgs;
-     in rec {
-      /**
-       * packageName is optional. We fall back to the fullName
-       */
-      packageName =
-        if spec ? packageName then
-          spec.packageName
-        else
-          spec.fullName;
+  reflect = rec {
+    /**
+     * packageName is optional. We fall back to the fullName
+     */
+    packageName = spec :
+      if (spec fakePkgs) ? packageName then
+        (spec fakePkgs).packageName
+      else
+        (spec fakePkgs).fullName;
 
-      /**
-       * notifyAddresses are optional. We fall back to the contactEmail.
-       */
-      notifyAddresses =
-        if spec ? notifyAddresses then
-          spec.notifyAddresses
-        else
-          [spec.contactEmail];
+    /**
+     * notifyAddresses are optional. We fall back to the contactEmail.
+     */
+    notifyAddresses = spec :
+      if (spec fakePkgs) ? notifyAddresses then
+        (spec fakePkgs).notifyAddresses
+      else
+        [(spec fakePkgs).contactEmail];
 
-      /**
-       * if stable, then the job attribute is by convention ${attrPrefix}Stable.
-       * if not stable, then ${attrPrefix}Unstable.
-       */
-      jobAttr = stable :
-        if stable then
-          spec.attrPrefix + "Stable"
-        else
-          spec.attrPrefix + "Unstable";
+    /**
+     * if stable, then the job attribute is by convention ${attrPrefix}Stable.
+     * if not stable, then ${attrPrefix}Unstable.
+     */
+    jobAttr = spec : stable :
+      if stable then
+        (spec fakePkgs).attrPrefix + "Stable"
+      else
+        (spec fakePkgs).attrPrefix + "Unstable";
 
-      /**
-       * The svn input is by convention ${attrPrefix}Checkout.
-       */
-      svnInputAttrName =
-        spec.attrPrefix + "Checkout";
+    /**
+     * The svn input is by convention ${attrPrefix}Checkout.
+     *
+     * The package description must have an svn attribute set
+     * with attributes for the variant.
+     */
+    svnInputAttr = spec : variant :
+      { name =
+          (spec fakePkgs).attrPrefix + "Checkout";
 
-      /**
-       * The package description must have an svn attribute set
-       * with attributes for the variant.
-       */
-      svnInputAttrValue = variant :
-        svnInput (builtins.getAttr variant spec.svn);
+        value =
+          svnInput (builtins.getAttr variant (spec fakePkgs).svn);
+      };
 
-      svnInputAttrs = variant :
-        (builtins.listToAttrs [
-          { name = svnInputAttrName;
-            value = svnInputAttrValue variant;
-          }
-        ]);
+    svnInputs = spec : variant :
+      builtins.listToAttrs [(svnInputAttr spec variant)];
 
-      /**
-       * The info attribute name is by convention ${attrPrefix}Info
-       */
-      infoInputAttr =
-        { name = infoInputAttrName;
-          value = infoInputAttrValue;
-        };
+    /**
+     * The info attribute name is by convention ${attrPrefix}Info
+     */
+    infoInputAttr = spec : makeInfoURL :
+      { name = (spec fakePkgs).attrPrefix + "Info";
+        value = makeInfoURL spec;
+      };
 
-      infoInputAttrName =
-        spec.attrPrefix + "Info";
+    requiresInputs = spec : makeInfoURL :
+      builtins.listToAttrs (
+        map (somespec : (reflect.infoInputAttr somespec makeInfoURL)) (requiresClosure spec)
+      );
 
-      infoInputAttrValue =
-        if useBaseline && spec.packageName == "aterm" then
-          baseline.aterm
-        else if useBaseline && spec.packageName == "sdf2-bundle" then
-          baseline.sdf
-        else if useBaseline && spec.packageName == "strategoxt" then
-          baseline.strategoxt
-        else
-          infoInput "http://buildfarm.st.ewi.tudelft.nl/releases/strategoxt2/${spec.packageName}/${spec.packageName}-unstable/";
+    /**
+     * Take the closure of requirements.
+     */
+    requiresClosure = spec :
+      let closure = somespec :
+            (somespec fakePkgs).requires;
+/*
+            ++ (fun.concatLists
+                  (map (x : closure (x {})) (somespec fakePkgs).requires)
+               ); */
+       in (closure spec);
 
-      requiresInputs =
-        builtins.listToAttrs (
-          map (somespec : (reflect useBaseline somespec).infoInputAttr) requiresClosure
-        );
+/*
+          ++ (fun.concatLists
+                  (map (x : closure (x {})) (spec fakePkgs).svnRequires)
+             )
+          ++ (spec fakePkgs).svnRequires; */
 
-      /**
-       * Take the closure of requirements.
-       */
-      requiresClosure =
-        let closure = somespec :
-              somespec.requires ++ (concatLists (map (x : closure (x {})) somespec.requires));
- 
-            fold = op: nul: list:
-              if list == []
-                then nul
-              else op (builtins.head list) (fold op nul (builtins.tail list));
+    /**
+     * Is the second argument spec required by the spec?
+     */
+    isRequired = byspec : somespec :
+      fun.elem somespec (requiresClosure byspec);
+  };
 
-            concatLists =
-              fold (x: y: x ++ y) [];
+  /**
+   * Taken from the nixpkgs library.
+   */
+  fun = rec {
+    elem = x: list: fold (a: bs: x == a || bs) false list;
 
-         in (closure spec) ++ (concatLists (map (x : closure (x {})) spec.svnRequires)) ++ spec.svnRequires;
-    };
+    fold = op: nul: list:
+      if list == []
+        then nul
+      else op (builtins.head list) (fold op nul (builtins.tail list));
+
+    concatLists =
+      fold (x: y: x ++ y) [];
+  };
 }
