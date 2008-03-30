@@ -41,7 +41,7 @@ let easy = (import ./easy-job.nix) attrs;
   atermBranch64 = makeEasyJob {
     spec = specs.aterm;
     svn = "branch64";
-    dirname = "aterm64";
+    dirName = "aterm64";
   };
 
   atermTrunk = makeEasyJob {
