@@ -9,8 +9,8 @@ rec {
       # directory relative to the supervisor.
       "../jobs/strategoxt2/releases.nix"
       attrs.jobAttr
-      "/data/webserver/dist/strategoxt-tmp/${attrs.dirName}"
-      "http://buildfarm.st.ewi.tudelft.nl/releases/strategoxt-tmp/${attrs.dirName}"
+      "/data/webserver/dist/strategoxt2/${attrs.dirName}"
+      "http://buildfarm.st.ewi.tudelft.nl/releases/strategoxt2/${attrs.dirName}"
       "/data/webserver/dist/nix-cache"
       "http://buildfarm.st.ewi.tudelft.nl/releases/nix-cache"
     ];
