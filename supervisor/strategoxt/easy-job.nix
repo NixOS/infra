@@ -141,7 +141,7 @@ rec {
         else if spec.packageName == "strategoxt" then
           baseline.strategoxt
         else
-          infoInput "http://buildfarm.st.ewi.tudelft.nl/releases/strategoxt/${spec.packageName}-unstable-latest/";
+          infoInput "http://buildfarm.st.ewi.tudelft.nl/releases/strategoxt2/${spec.packageName}/${spec.packageName}-unstable/";
 
       requiresInputs =
         builtins.listToAttrs (
