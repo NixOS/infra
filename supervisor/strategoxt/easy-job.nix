@@ -134,18 +134,15 @@ rec {
      */
     requiresClosure = spec :
       let closure = somespec :
-            (somespec fakePkgs).requires;
-/*
+            (somespec fakePkgs).requires
             ++ (fun.concatLists
-                  (map (x : closure (x {})) (somespec fakePkgs).requires)
-               ); */
-       in (closure spec);
-
-/*
+                  (map (x : closure x) (somespec fakePkgs).requires)
+               );
+       in (closure spec)
           ++ (fun.concatLists
-                  (map (x : closure (x {})) (spec fakePkgs).svnRequires)
+                  (map (x : closure x) (spec fakePkgs).svnRequires)
              )
-          ++ (spec fakePkgs).svnRequires; */
+          ++ (spec fakePkgs).svnRequires;
 
     /**
      * Is the second argument spec required by the spec?
