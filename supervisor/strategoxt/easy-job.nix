@@ -37,7 +37,7 @@ rec {
    * and the releaae-info.xml files of the requirements.
    */
   makeEasyJob = attrs :
-    let refspec = reflect (attrs.spec);
+    let refspec = reflect (attrs ? useBaseline && attrs.useBaseline) (attrs.spec);
      in makeStrategoXTJob (({
           dirName = refspec.packageName;
 
@@ -71,7 +71,7 @@ rec {
   /**
    * Reflection tools for package specifications.
    */
-  reflect = somespec : 
+  reflect = useBaseline : somespec : 
     let spec = somespec fakePkgs;
      in rec {
       /**
@@ -134,18 +134,18 @@ rec {
         spec.attrPrefix + "Info";
 
       infoInputAttrValue =
-        if spec.packageName == "aterm" then
+        if useBaseline && spec.packageName == "aterm" then
           baseline.aterm
-        else if spec.packageName == "sdf2-bundle" then
+        else if useBaseline && spec.packageName == "sdf2-bundle" then
           baseline.sdf
-        else if spec.packageName == "strategoxt" then
+        else if useBaseline && spec.packageName == "strategoxt" then
           baseline.strategoxt
         else
           infoInput "http://buildfarm.st.ewi.tudelft.nl/releases/strategoxt2/${spec.packageName}/${spec.packageName}-unstable/";
 
       requiresInputs =
         builtins.listToAttrs (
-          map (somespec : (reflect somespec).infoInputAttr) requiresClosure
+          map (somespec : (reflect useBaseline somespec).infoInputAttr) requiresClosure
         );
 
       /**
