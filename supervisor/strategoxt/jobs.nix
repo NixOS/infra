@@ -11,22 +11,27 @@ let easy = (import ./easy-job.nix) attrs;
 
   javaFrontSyntaxTrunk = makeEasyJob {
     spec = specs.javaFrontSyntax;
+    useBaseline = true;
   };
 
   javaFrontTrunk = makeEasyJob {
     spec = specs.javaFront;
+    useBaseline = true;
   };
 
   jimpleFrontTrunk = makeEasyJob {
     spec = specs.jimpleFront;
+    useBaseline = true;
   };
 
   strategoLibrariesTrunk = makeEasyJob {
     spec = specs.strategoLibraries;
+    useBaseline = true;
   };
 
   strategoShellTrunk = makeEasyJob {
     spec = specs.strategoShell;
+    useBaseline = true;
   };
 
   metaBuildEnvTrunk = makeEasyJob {
