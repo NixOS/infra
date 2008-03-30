@@ -334,6 +334,10 @@ rec {
           '';
         }
 
+        { hostName = "releases.strategoxt.org";
+          documentRoot = "/data/webserver/dist/strategoxt2";
+        }
+
         { hostName = "nixos.org";
           documentRoot = "/home/eelco/nix-homepage";
           servedDirs = [
