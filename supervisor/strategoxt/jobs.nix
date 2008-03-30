@@ -11,8 +11,31 @@ let easy = (import ./easy-job.nix) attrs;
 
   javaFrontSyntaxTrunk = makeEasyJob {
     spec = specs.javaFrontSyntax;
-    stable = false;
-    svn = "trunk";
+  };
+
+  javaFrontTrunk = makeEasyJob {
+    spec = specs.javaFront;
+  };
+
+  jimpleFrontTrunk = makeEasyJob {
+    spec = specs.jimpleFront;
+  };
+
+  strategoLibrariesTrunk = makeEasyJob {
+    spec = specs.strategoLibraries;
+  };
+
+  strategoShellTrunk = makeEasyJob {
+    spec = specs.strategoShell;
+  };
+
+  metaBuildEnvTrunk = makeEasyJob {
+    spec = specs.metaBuildEnv;
+  };
+
+  atermBranch64 = makeEasyJob {
+    spec = specs.aterm;
+    svn = "branch64";
   };
 }
 

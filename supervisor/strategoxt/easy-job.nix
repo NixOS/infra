@@ -45,20 +45,34 @@ rec {
             refspec.notifyAddresses;
 
           jobAttr =
-            refspec.jobAttr attrs.stable;
+            refspec.jobAttr (if attrs ? stable then attrs.stable else false);
 
           } // attrs)
           // {
             inputs = 
-              ((refspec.svnInputAttrs attrs.svn) // refspec.requiresInputs)
-              //  (if attrs ? inputs then attrs.inputs else {});
+              (
+                (refspec.svnInputAttrs
+                  (if attrs ? svn then attrs.svn else "trunk")
+                ) // refspec.requiresInputs
+              ) //  (if attrs ? inputs then attrs.inputs else {});
           });
+
+  /**
+   * Some packages reflect of pkgs to determine dependencies
+   * and options. We need to accommodate that a bit ...
+   */
+  fakePkgs =
+    {
+      stdenv = {
+        system = "generic";
+      };
+    };
 
   /**
    * Reflection tools for package specifications.
    */
   reflect = somespec : 
-    let spec = somespec {};
+    let spec = somespec fakePkgs;
      in rec {
       /**
        * packageName is optional. We fall back to the fullName
