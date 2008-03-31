@@ -78,7 +78,7 @@ rec {
             else if packageName == "stratego-libraries" then
               infoInput baseline.strategoLibraries
             else
-              infoInput "http://buildfarm.st.ewi.tudelft.nl/releases/strategoxt2/${packageName}/${packageName}-unstable/";
+              infoInput "http://releases.strategoxt.org/${packageName}/${packageName}-unstable/";
 
       # Stratego/XT uses a branch of the ATerm library. For the
       # Meta-Environment packages to built against this branch, and
@@ -92,10 +92,10 @@ rec {
       withATerm64 = spec :
         let packageName = reflect.packageName spec;
          in if packageName == "aterm" then
-              infoInput "http://buildfarm.st.ewi.tudelft.nl/releases/strategoxt2/aterm64/${packageName}-unstable/"
+              infoInput "http://releases.strategoxt.org/aterm64/${packageName}-unstable/"
             else if reflect.isRequired spec specs.aterm then
-              infoInput "http://buildfarm.st.ewi.tudelft.nl/releases/strategoxt2/${packageName}-with-aterm64/${packageName}-unstable/"
+              infoInput "http://releases.strategoxt.org/${packageName}-with-aterm64/${packageName}-unstable/"
             else
-              infoInput "http://buildfarm.st.ewi.tudelft.nl/releases/strategoxt2/${packageName}/${packageName}-unstable/";
+              infoInput "http://releases.strategoxt.org/${packageName}/${packageName}-unstable/";
     };
 }

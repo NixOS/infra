@@ -54,7 +54,7 @@ rec {
 
   defaultMakeInfoURL = spec :
      let packageName = reflect.packageName spec;
-      in infoInput "http://buildfarm.st.ewi.tudelft.nl/releases/strategoxt2/${packageName}/${packageName}-unstable/";
+      in infoInput "http://releases.strategoxt.org/${packageName}/${packageName}-unstable/";
 
   /**
    * Some packages reflect of pkgs to determine dependencies
