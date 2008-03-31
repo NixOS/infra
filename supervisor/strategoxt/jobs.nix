@@ -121,6 +121,12 @@ let easy = (import ./easy-job.nix) attrs;
     makeInfoURL = makeInfoURL.withATerm64;
   };
 
+  relationStoresTrunk64 = makeEasyJob {
+    spec = specs.relationStores;
+    dirName = "relation-stores-with-aterm64";
+    makeInfoURL = makeInfoURL.withATerm64;
+  };
+
   ptSupportTrunk64 = makeEasyJob {
     spec = specs.ptSupport;
     dirName = "pt-support-with-aterm64";
