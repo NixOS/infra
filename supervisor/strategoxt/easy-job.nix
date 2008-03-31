@@ -10,7 +10,7 @@ rec {
       "../jobs/strategoxt2/releases.nix"
       attrs.jobAttr
       "/data/webserver/dist/strategoxt2/${attrs.dirName}"
-      "http://buildfarm.st.ewi.tudelft.nl/releases/strategoxt2/${attrs.dirName}"
+      "http://releases.strategoxt.org/${attrs.dirName}"
       "/data/webserver/dist/nix-cache"
       "http://buildfarm.st.ewi.tudelft.nl/releases/nix-cache"
     ];
