@@ -1,9 +1,25 @@
 attrs :
 
-let easy = (import ./easy-job.nix) attrs;
+let # The easy buildfarm configuration is a system based on a
+    # declarative package description, and dependencies that are
+    # downloaded directly from release pages produced by the
+    # buildfarm.
+    easy = (import ./easy-job.nix) attrs;
+
+    # Reflect is a set of functions for reflecting over package
+    # specifications.
     reflect = easy.reflect;
+
+    # infoInput turns a URL of a release into a buildfarm input,
+    # attaching release-info.xml to the URL.
     infoInput = easy.infoInput;
+
+    # Main function to make jobs.
     makeEasyJob = easy.makeEasyJob;
+
+    # A more generic job. Requires more configuration though! You need
+    # to specify yourself: dirName, notifyAddresses, jobAttr in
+    # releases.nix, and inputs.
     makeStrategoXTJob = easy.makeStrategoXTJob;
 
     # The file packages.nix describes packages, their dependencies,
