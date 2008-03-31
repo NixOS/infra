@@ -44,8 +44,8 @@ let easy = (import ./easy-job.nix) attrs;
               infoInput baseline.strategoxt
             else if packageName == "stratego-libraries" then
               infoInput baseline.strategoLibraries
-           else
-             infoInput "http://buildfarm.st.ewi.tudelft.nl/releases/strategoxt2/${packageName}/${packageName}-unstable/";
+            else
+              infoInput "http://buildfarm.st.ewi.tudelft.nl/releases/strategoxt2/${packageName}/${packageName}-unstable/";
 
       withATerm64 = spec :
         let packageName = reflect.packageName spec;
