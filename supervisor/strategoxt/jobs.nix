@@ -1,85 +1,9 @@
 attrs :
 
-let # The easy buildfarm configuration is a system based on a
-    # declarative package description, and dependencies that are
-    # downloaded directly from release pages produced by the
-    # buildfarm.
-    easy = (import ./easy-job.nix) attrs;
+# check jobs-helpers.nix for documentation.
+with (import ./jobs-helpers.nix) attrs;
 
-    # Reflect is a set of functions for reflecting over package
-    # specifications.
-    reflect = easy.reflect;
-
-    # infoInput turns a URL of a release into a buildfarm input,
-    # attaching release-info.xml to the URL.
-    infoInput = easy.infoInput;
-
-    # Main function to make jobs.
-    makeEasyJob = easy.makeEasyJob;
-
-    # A more generic job. Requires more configuration though! You need
-    # to specify yourself: dirName, notifyAddresses, jobAttr in
-    # releases.nix, and inputs.
-    makeStrategoXTJob = easy.makeStrategoXTJob;
-
-    # The file packages.nix describes packages, their dependencies,
-    # specific platform requirements, etc.
-    specs =
-      (import ../../../../release/jobs/strategoxt2/packages.nix);
-
-    # Current Stratego/XT baseline packages.
-    baseline = 
-      import ./baseline.nix;
-
-    # The makeEasyJob function accepts an argument
-    # 'makeInfoURL'. makeInfoURL is a function that given a package
-    # specification returns a URL to a release-info.xml file. This
-    # file provides the buildfarm with information about available
-    # source tarballs and RPMs for this package.
-
-    # The default makeInfoURL always uses the latest -unstable release
-    # of a package. You only need to specify your own makeInfoURL if
-    # you want a different behaviour. Some useful makeInfoURL variants
-    # are defined here.
-    makeInfoURL = {
-
-      # A common example of makeInfoURL is 'usingBaseline'. This
-      # makeInfoURL variant uses baseline releases for aterm,
-      # sdf2-bundle, and strategoxt. The URLs of the baseline are
-      # specified in 'baseline.nix'.
-      usingBaseline = spec :
-        let packageName = reflect.packageName spec;
-         in if packageName == "aterm" then
-              infoInput baseline.aterm
-            else if packageName == "sdf2-bundle" then
-              infoInput baseline.sdf
-            else if packageName == "strategoxt" then
-              infoInput baseline.strategoxt
-            else if packageName == "stratego-libraries" then
-              infoInput baseline.strategoLibraries
-            else
-              infoInput "http://buildfarm.st.ewi.tudelft.nl/releases/strategoxt2/${packageName}/${packageName}-unstable/";
-
-      # Stratego/XT uses a branch of the ATerm library. For the
-      # Meta-Environment packages to built against this branch, and
-      # against other releases that have been built using this branch,
-      # we use this makeInfoURL function, which attaches
-      # '-with-aterm64' to package names.
-
-      # This function is not required for Stratego/XT packages, since
-      # these are all built using with this branch of the ATerm
-      # library.
-      withATerm64 = spec :
-        let packageName = reflect.packageName spec;
-         in if packageName == "aterm" then
-              infoInput "http://buildfarm.st.ewi.tudelft.nl/releases/strategoxt2/aterm64/${packageName}-unstable/"
-            else if reflect.isRequired spec specs.aterm then
-              infoInput "http://buildfarm.st.ewi.tudelft.nl/releases/strategoxt2/${packageName}-with-aterm64/${packageName}-unstable/"
-            else
-              infoInput "http://buildfarm.st.ewi.tudelft.nl/releases/strategoxt2/${packageName}/${packageName}-unstable/";
-    };
-
- in {
+{
 
   javaFrontSyntaxTrunk = makeEasyJob {
     spec = specs.javaFrontSyntax;
@@ -104,6 +28,27 @@ let # The easy buildfarm configuration is a system based on a
   strategoShellTrunk = makeEasyJob {
     spec = specs.strategoShell;
     makeInfoURL = makeInfoURL.usingBaseline;
+  };
+
+  strategoxtTrunk = makeJob {
+    args = [
+      "../jobs/strategoxt/strategoxt.nix"
+      "release"
+      "/data/webserver/dist/strategoxt2/strategoxt"
+      "http://releases.strategoxt.org/strategoxt"
+      "/data/webserver/dist/nix-cache"
+      "http://buildfarm.st.ewi.tudelft.nl/releases/nix-cache"
+    ];
+
+    inputs = {
+      strategoxtCheckout = svnInput https://svn.cs.uu.nl:12443/repos/StrategoXT/strategoxt/trunk;
+      systems = pathInput ./systems.nix;
+      atermInfo = infoInput baseline.aterm;
+      sdf2BundleInfo = infoInput baseline.sdf;
+      strategoxtBaseline = urlInput ftp://ftp.strategoxt.org/pub/stratego/StrategoXT/baseline/latest/strategoxt.tar.gz;
+    };
+
+    notifyAddresses = ["karltk@strategoxt.org" "martin.bravenboer@gmail.com" "e.visser@tudelft.nl"];
   };
 
   /**
