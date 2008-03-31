@@ -6,15 +6,33 @@ let easy = (import ./easy-job.nix) attrs;
     makeEasyJob = easy.makeEasyJob;
     makeStrategoXTJob = easy.makeStrategoXTJob;
 
+    /* The file packages.nix describes packages, their dependencies, etc. */
     specs =
       (import ../../../../release/jobs/strategoxt2/packages.nix);
 
-    /**
-     * Current Stratego/XT baseline packages.
-     */
+    /* Current Stratego/XT baseline packages. */
     baseline = 
       import ./baseline.nix;
 
+    /* 
+       
+       The makeEasyJob function accepts an argument
+       'makeInfoURL'. makeInfoURL is a function that given a package
+       specification returns a URL to a release-info.xml file. This
+       file provides the buildfarm with information about available
+       source tarballs and RPMs for this package.
+
+       The default makeInfoURL always uses the latest -unstable
+       release of a package. You only need to specify your own
+       makeInfoURL if you want a different behaviour.
+
+       Some useful makeInfoURL variants are defined here. A common
+       example of this is 'usingBaseline'. This makeInfoURL variant
+       uses baseline releases for aterm, sdf2-bundle, and
+       strategoxt. The URLs of the baseline are specified in
+       'baseline.nix'.
+
+     */
     makeInfoURL = {
       usingBaseline = spec :
         let packageName = reflect.packageName spec;
