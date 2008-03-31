@@ -14,26 +14,22 @@ let easy = (import ./easy-job.nix) attrs;
     baseline = 
       import ./baseline.nix;
 
-    /* 
-       
-       The makeEasyJob function accepts an argument
-       'makeInfoURL'. makeInfoURL is a function that given a package
-       specification returns a URL to a release-info.xml file. This
-       file provides the buildfarm with information about available
-       source tarballs and RPMs for this package.
+    # The makeEasyJob function accepts an argument
+    # 'makeInfoURL'. makeInfoURL is a function that given a package
+    # specification returns a URL to a release-info.xml file. This
+    # file provides the buildfarm with information about available
+    # source tarballs and RPMs for this package.
 
-       The default makeInfoURL always uses the latest -unstable
-       release of a package. You only need to specify your own
-       makeInfoURL if you want a different behaviour.
-
-       Some useful makeInfoURL variants are defined here. A common
-       example of this is 'usingBaseline'. This makeInfoURL variant
-       uses baseline releases for aterm, sdf2-bundle, and
-       strategoxt. The URLs of the baseline are specified in
-       'baseline.nix'.
-
-     */
+    # The default makeInfoURL always uses the latest -unstable release
+    # of a package. You only need to specify your own makeInfoURL if
+    # you want a different behaviour. Some useful makeInfoURL variants
+    # are defined here.
     makeInfoURL = {
+
+      # A common example of makeInfoURL is 'usingBaseline'. This
+      # makeInfoURL variant uses baseline releases for aterm,
+      # sdf2-bundle, and strategoxt. The URLs of the baseline are
+      # specified in 'baseline.nix'.
       usingBaseline = spec :
         let packageName = reflect.packageName spec;
          in if packageName == "aterm" then
@@ -47,6 +43,15 @@ let easy = (import ./easy-job.nix) attrs;
             else
               infoInput "http://buildfarm.st.ewi.tudelft.nl/releases/strategoxt2/${packageName}/${packageName}-unstable/";
 
+      # Stratego/XT uses a branch of the ATerm library. For the
+      # Meta-Environment packages to built against this branch, and
+      # against other releases that have been built using this branch,
+      # we use this makeInfoURL function, which attaches
+      # '-with-aterm64' to package names.
+
+      # This function is not required for Stratego/XT packages, since
+      # these are all built using with this branch of the ATerm
+      # library.
       withATerm64 = spec :
         let packageName = reflect.packageName spec;
          in if packageName == "aterm" then
