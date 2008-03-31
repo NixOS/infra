@@ -97,6 +97,7 @@ let easy = (import ./easy-job.nix) attrs;
   errorSupportTrunk = makeEasyJob {
     spec = specs.errorSupport;
     dirName = "error-support-with-aterm64";
+    makeInfoURL = makeInfoURL.withATerm64;
   };
 
   tideSupportTrunk = makeEasyJob {
