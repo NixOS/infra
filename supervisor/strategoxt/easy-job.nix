@@ -47,7 +47,7 @@ rec {
           // attrs)
           // {
             inputs = 
-              ((reflect.svnInputs spec svn)
+              ( (reflect.svnInputs spec svn)
               // (reflect.requiresInputs spec makeInfoURL))
               // customInputs;
           }) ["makeInfoURL"]);
@@ -114,7 +114,10 @@ rec {
       };
 
     svnInputs = spec : variant :
-      builtins.listToAttrs [(svnInputAttr spec variant)];
+      if (spec fakePkgs) ? svn then
+        builtins.listToAttrs [(svnInputAttr spec variant)]
+      else
+        {};
 
     /**
      * The info attribute name is by convention ${attrPrefix}Info
@@ -138,7 +141,14 @@ rec {
             ++ (fun.concatLists
                   (map (x : closure x) (somespec fakePkgs).requires)
                );
-       in (closure spec)
+       in (if (spec fakePkgs) ? bundles then
+             (spec fakePkgs).bundles
+             ++ (fun.concatLists
+                  (map (x : closure x) (spec fakePkgs).bundles)
+                )
+           else
+             [])
+          ++ (closure spec)
           ++ (fun.concatLists
                   (map (x : closure x) (spec fakePkgs).svnRequires)
              )

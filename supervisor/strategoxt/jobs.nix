@@ -168,6 +168,12 @@ let easy = (import ./easy-job.nix) attrs;
     dirName = "pgen-with-aterm64";
     makeInfoURL = makeInfoURL.withATerm64;
   };
+
+  sdf2BundleTrunk64 = makeEasyJob {
+    spec = specs.sdf2Bundle;
+    dirName = "sdf2-bundle-with-aterm64";
+    makeInfoURL = makeInfoURL.withATerm64;
+  };
 }
 
 
