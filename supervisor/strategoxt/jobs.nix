@@ -73,71 +73,91 @@ let easy = (import ./easy-job.nix) attrs;
     spec = specs.metaBuildEnv;
   };
 
+  atermTrunk = makeEasyJob {
+    spec = specs.aterm;
+  };
+
   atermBranch64 = makeEasyJob {
     spec = specs.aterm;
     svn = "branch64";
     dirName = "aterm64";
   };
 
-  atermTrunk = makeEasyJob {
-    spec = specs.aterm;
-  };
-
   sdfLibraryTrunk = makeEasyJob {
     spec = specs.sdfLibrary;
-    makeInfoURL = makeInfoURL.withATerm64;
   };
 
-  toolbuslibTrunk = makeEasyJob {
+  /* toolbuslibTrunk = makeEasyJob {
+    spec = specs.toolbuslib;
+  }; */
+
+  toolbuslibTrunk64 = makeEasyJob {
     spec = specs.toolbuslib;
     dirName = "toolbuslib-with-aterm64";
     makeInfoURL = makeInfoURL.withATerm64;
   };
 
-  errorSupportTrunk = makeEasyJob {
+  cLibraryTrunk64 = makeEasyJob {
+    spec = specs.cLibrary;
+    dirName = "c-library-with-aterm64";
+    makeInfoURL = makeInfoURL.withATerm64;
+  };
+
+  configSupportTrunk64 = makeEasyJob {
+    spec = specs.configSupport;
+    dirName = "config-support-with-aterm64";
+    makeInfoURL = makeInfoURL.withATerm64;
+  };
+
+  errorSupportTrunk64 = makeEasyJob {
     spec = specs.errorSupport;
     dirName = "error-support-with-aterm64";
     makeInfoURL = makeInfoURL.withATerm64;
   };
 
-  tideSupportTrunk = makeEasyJob {
+  tideSupportTrunk64 = makeEasyJob {
     spec = specs.tideSupport;
     dirName = "tide-support-with-aterm64";
     makeInfoURL = makeInfoURL.withATerm64;
   };
 
-  ptSupportTrunk = makeEasyJob {
+  ptSupportTrunk64 = makeEasyJob {
     spec = specs.ptSupport;
     dirName = "pt-support-with-aterm64";
     makeInfoURL = makeInfoURL.withATerm64;
   };
 
+  ptableSupportTrunk64 = makeEasyJob {
+    spec = specs.ptableSupport;
+    dirName = "ptable-support-with-aterm64";
+    makeInfoURL = makeInfoURL.withATerm64;
+  };
 
-  sglrTrunk = makeEasyJob {
+  sglrTrunk64 = makeEasyJob {
     spec = specs.sglr;
     dirName = "sglr-with-aterm64";
     makeInfoURL = makeInfoURL.withATerm64;
   };
 
-  asfSupportTrunk = makeEasyJob {
+  asfSupportTrunk64 = makeEasyJob {
     spec = specs.asfSupport;
     dirName = "asf-support-with-aterm64";
     makeInfoURL = makeInfoURL.withATerm64;
   };
 
-  ascSupportTrunk = makeEasyJob {
+  ascSupportTrunk64 = makeEasyJob {
     spec = specs.ascSupport;
     dirName = "asc-support-with-aterm64";
     makeInfoURL = makeInfoURL.withATerm64;
   };
 
-  sdfSupportTrunk = makeEasyJob {
+  sdfSupportTrunk64 = makeEasyJob {
     spec = specs.sdfSupport;
     dirName = "sdf-support-with-aterm64";
     makeInfoURL = makeInfoURL.withATerm64;
   };
 
-  pgenTrunk = makeEasyJob {
+  pgenTrunk64 = makeEasyJob {
     spec = specs.pgen;
     dirName = "pgen-with-aterm64";
     makeInfoURL = makeInfoURL.withATerm64;
