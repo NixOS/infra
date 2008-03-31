@@ -6,11 +6,12 @@ let easy = (import ./easy-job.nix) attrs;
     makeEasyJob = easy.makeEasyJob;
     makeStrategoXTJob = easy.makeStrategoXTJob;
 
-    /* The file packages.nix describes packages, their dependencies, etc. */
+    # The file packages.nix describes packages, their dependencies,
+    # specific platform requirements, etc.
     specs =
       (import ../../../../release/jobs/strategoxt2/packages.nix);
 
-    /* Current Stratego/XT baseline packages. */
+    # Current Stratego/XT baseline packages.
     baseline = 
       import ./baseline.nix;
 
