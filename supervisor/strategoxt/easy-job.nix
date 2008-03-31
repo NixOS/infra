@@ -7,7 +7,7 @@ rec {
   makeStrategoXTJob = attrs : makeJob (attrs // {
     args = [
       # directory relative to the supervisor.
-      "../jobs/strategoxt2/releases.nix"
+      "../jobs/strategoxt/releases.nix"
       attrs.jobAttr
       "/data/webserver/dist/strategoxt2/${attrs.dirName}"
       "http://releases.strategoxt.org/${attrs.dirName}"
