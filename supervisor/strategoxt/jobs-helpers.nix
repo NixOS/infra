@@ -43,7 +43,7 @@ rec {
     # specific platform requirements, etc.
 
     specs =
-      (import ../../../../release/jobs/strategoxt2/packages.nix);
+      (import ../../../../release/jobs/strategoxt/packages.nix);
 
     # Current Stratego/XT baseline packages.
 
