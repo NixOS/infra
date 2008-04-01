@@ -30,6 +30,7 @@ with (import ./jobs-helpers.nix) attrs;
     makeInfoURL = makeInfoURL.usingBaseline;
   };
 
+  # Stratego/XT is a non-standard job, therefore we cannot use makeEasyJob.
   strategoxtTrunk = makeJob {
     args = [
       "../jobs/strategoxt/strategoxt.nix"
@@ -47,6 +48,28 @@ with (import ./jobs-helpers.nix) attrs;
       sdf2BundleInfo = infoInput baseline.sdf;
       strategoxtBaselineTarball = urlInput http://buildfarm.st.ewi.tudelft.nl/releases/strategoxt/strategoxt-0.17M3pre17632/strategoxt-0.17M3pre17632.tar.gz;
       # ftp://ftp.strategoxt.org/pub/stratego/StrategoXT/baseline/latest/strategoxt.tar.gz
+    };
+
+    notifyAddresses = ["karltk@strategoxt.org" "martin.bravenboer@gmail.com" "e.visser@tudelft.nl"];
+  };
+
+  # The Stratego/XT manual is a non-standard job, therefore we cannot use makeEasyJob.
+  strategoxtManualTrunk = makeJob {
+    args = [
+      "../jobs/strategoxt/custom/manual.nix"
+      "trunkRelease"
+      "/data/webserver/dist/strategoxt2/manual"
+      "http://releases.strategoxt.org/strategoxt-manual"
+      "/data/webserver/dist/nix-cache"
+      "http://buildfarm.st.ewi.tudelft.nl/releases/nix-cache"
+    ];
+
+    inputs = {
+      strategoxtManualCheckout = svnInput https://svn.cs.uu.nl:12443/repos/StrategoXT/strategoxt-manual/trunk;
+      systems = pathInput ./systems.nix;
+      atermInfo = infoInput baseline.aterm;
+      sdf2BundleInfo = infoInput baseline.sdf;
+      strategoxtInfo = infoInput baseline.strategoxt;
     };
 
     notifyAddresses = ["karltk@strategoxt.org" "martin.bravenboer@gmail.com" "e.visser@tudelft.nl"];
