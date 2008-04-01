@@ -45,7 +45,8 @@ with (import ./jobs-helpers.nix) attrs;
       systems = pathInput ./systems.nix;
       atermInfo = infoInput baseline.aterm;
       sdf2BundleInfo = infoInput baseline.sdf;
-      strategoxtBaseline = urlInput ftp://ftp.strategoxt.org/pub/stratego/StrategoXT/baseline/latest/strategoxt.tar.gz;
+      strategoxtBaselineTarball = urlInput http://buildfarm.st.ewi.tudelft.nl/releases/strategoxt/strategoxt-0.17M3pre17632/strategoxt-0.17M3pre17632.tar.gz;
+      # ftp://ftp.strategoxt.org/pub/stratego/StrategoXT/baseline/latest/strategoxt.tar.gz
     };
 
     notifyAddresses = ["karltk@strategoxt.org" "martin.bravenboer@gmail.com" "e.visser@tudelft.nl"];
