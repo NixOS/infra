@@ -62,6 +62,8 @@ rec {
     # are defined here.
 
     makeInfoURL = {
+      unstable =
+        easy.defaultMakeInfoURL;
 
       # A common example of makeInfoURL is 'usingBaseline'. This
       # makeInfoURL variant uses baseline releases for aterm,
@@ -98,4 +100,14 @@ rec {
             else
               infoInput "http://releases.strategoxt.org/${packageName}/${packageName}-unstable/";
     };
+
+  strategoxtArgs = {jobFile, jobAttr, subdir} :
+    [
+      ("../jobs/" + jobFile)
+      jobAttr
+      ("/data/webserver/dist/strategoxt2/" + subdir)
+      ("http://releases.strategoxt.org/" + subdir)
+      "/data/webserver/dist/nix-cache"
+      "http://buildfarm.st.ewi.tudelft.nl/releases/nix-cache"
+    ];
 }

@@ -30,51 +30,6 @@ with (import ./jobs-helpers.nix) attrs;
     makeInfoURL = makeInfoURL.usingBaseline;
   };
 
-  # Stratego/XT is a non-standard job, therefore we cannot use makeEasyJob.
-  strategoxtTrunk = makeJob {
-    args = [
-      "../jobs/strategoxt/strategoxt.nix"
-      "trunkRelease"
-      "/data/webserver/dist/strategoxt2/strategoxt"
-      "http://releases.strategoxt.org/strategoxt"
-      "/data/webserver/dist/nix-cache"
-      "http://buildfarm.st.ewi.tudelft.nl/releases/nix-cache"
-    ];
-
-    inputs = {
-      strategoxtCheckout = svnInput https://svn.cs.uu.nl:12443/repos/StrategoXT/strategoxt/trunk;
-      systems = pathInput ./systems.nix;
-      atermInfo = infoInput baseline.aterm;
-      sdf2BundleInfo = infoInput baseline.sdf;
-      strategoxtBaselineTarball = urlInput http://buildfarm.st.ewi.tudelft.nl/releases/strategoxt/strategoxt-0.17M3pre17632/strategoxt-0.17M3pre17632.tar.gz;
-      # ftp://ftp.strategoxt.org/pub/stratego/StrategoXT/baseline/latest/strategoxt.tar.gz
-    };
-
-    notifyAddresses = ["karltk@strategoxt.org" "martin.bravenboer@gmail.com" "e.visser@tudelft.nl"];
-  };
-
-  # The Stratego/XT manual is a non-standard job, therefore we cannot use makeEasyJob.
-  strategoxtManualTrunk = makeJob {
-    args = [
-      "../jobs/strategoxt/custom/manual.nix"
-      "trunkRelease"
-      "/data/webserver/dist/strategoxt2/strategoxt-manual"
-      "http://releases.strategoxt.org/strategoxt-manual"
-      "/data/webserver/dist/nix-cache"
-      "http://buildfarm.st.ewi.tudelft.nl/releases/nix-cache"
-    ];
-
-    inputs = {
-      strategoxtManualCheckout = svnInput https://svn.cs.uu.nl:12443/repos/StrategoXT/strategoxt-manual/trunk;
-      systems = pathInput ./systems.nix;
-      atermInfo = infoInput baseline.aterm;
-      sdf2BundleInfo = infoInput baseline.sdf;
-      strategoxtInfo = infoInput baseline.strategoxt;
-    };
-
-    notifyAddresses = ["karltk@strategoxt.org" "martin.bravenboer@gmail.com" "e.visser@tudelft.nl"];
-  };
-
   /**
    * Meta-Environment
    */
@@ -183,6 +138,66 @@ with (import ./jobs-helpers.nix) attrs;
     dirName = "sdf2-bundle-with-aterm64";
     makeInfoURL = makeInfoURL.withATerm64;
   };
+
+  /**
+   * Complicated jobs
+   */
+  strategoxtTrunk = makeJob {
+    args =
+      strategoxtArgs {
+        jobFile = "strategoxt/strategoxt.nix";
+        jobAttr = "trunkRelease";
+        subdir = "strategoxt";
+      };
+
+    inputs = {
+      strategoxtCheckout = svnInput https://svn.cs.uu.nl:12443/repos/StrategoXT/strategoxt/trunk;
+      systems = pathInput ./systems.nix;
+      atermInfo = makeInfoURL.usingBaseline specs.aterm;
+      sdf2BundleInfo = makeInfoURL.usingBaseline specs.sdf2Bundle;
+      strategoxtBaselineTarball = urlInput baseline.strategoxtBootstrap;
+    };
+
+    notifyAddresses = ["karltk@strategoxt.org" "martin.bravenboer@gmail.com" "e.visser@tudelft.nl"];
+  };
+
+  strategoxtManualTrunk = makeJob {
+    args = 
+      strategoxtArgs {
+        jobFile = "strategoxt/custom/manual.nix";
+        jobAttr = "trunkRelease";
+        subdir = "strategoxt-manual";
+      };
+
+    inputs = {
+      strategoxtManualCheckout = svnInput https://svn.cs.uu.nl:12443/repos/StrategoXT/strategoxt-manual/trunk;
+      systems = pathInput ./systems.nix;
+      atermInfo = makeInfoURL.usingBaseline specs.aterm;
+      sdf2BundleInfo = makeInfoURL.usingBaseline specs.sdf2Bundle;
+      strategoxtInfo = makeInfoURL.usingBaseline specs.strategoxt;
+    };
+
+    notifyAddresses = ["karltk@strategoxt.org" "martin.bravenboer@gmail.com" "e.visser@tudelft.nl"];
+  };
+
+  strategoxtBasePackages = makeJob {
+    args = 
+      strategoxtArgs {
+        jobFile = "strategoxt/custom/strategoxt-packages.nix";
+        jobAttr = "baseRelease";
+        subdir = "strategoxt-base-packages";
+      };
+
+    inputs = {
+      systems = pathInput ./systems.nix;
+      atermInfo = makeInfoURL.usingBaseline specs.aterm;
+      sdf2BundleInfo = makeInfoURL.usingBaseline specs.sdf2Bundle;
+      strategoxtInfo = makeInfoURL.unstable specs.strategoxt;
+    };
+
+    notifyAddresses = ["karltk@strategoxt.org" "martin.bravenboer@gmail.com" "e.visser@tudelft.nl"];
+  };
+
 }
 
 
