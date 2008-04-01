@@ -34,7 +34,7 @@ with (import ./jobs-helpers.nix) attrs;
   strategoxtTrunk = makeJob {
     args = [
       "../jobs/strategoxt/strategoxt.nix"
-      "release"
+      "trunkRelease"
       "/data/webserver/dist/strategoxt2/strategoxt"
       "http://releases.strategoxt.org/strategoxt"
       "/data/webserver/dist/nix-cache"
