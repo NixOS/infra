@@ -35,6 +35,11 @@ with (import ./jobs-helpers.nix) attrs;
     makeInfoURL = makeInfoURL.usingBaseline;
   };
 
+  strategoxtUtilsTrunk = makeEasyJob {
+    spec = specs.strategoxtUtils;
+    makeInfoURL = makeInfoURL.usingBaseline;
+  };
+
   strategoLibrariesTrunk = makeEasyJob {
     spec = specs.strategoLibraries;
     makeInfoURL = makeInfoURL.usingBaseline;
@@ -212,6 +217,32 @@ with (import ./jobs-helpers.nix) attrs;
 
     notifyAddresses = ["karltk@strategoxt.org" "martin.bravenboer@gmail.com" "e.visser@tudelft.nl"];
   };
+
+  strategoxtPackages = makeJob {
+    args = 
+      strategoxtArgs {
+        jobFile = "strategoxt/custom/strategoxt-packages.nix";
+        jobAttr = "release";
+        subdir = "strategoxt-packages";
+      };
+
+    inputs = {
+      systems = pathInput ./systems.nix;
+      atermInfo = makeInfoURL.usingBaseline specs.aterm;
+      sdf2BundleInfo = makeInfoURL.usingBaseline specs.sdf2Bundle;
+      strategoxtInfo = makeInfoURL.usingBaseline specs.strategoxt;
+      strategoLibrariesInfo = makeInfoURL.usingBaseline specs.strategoLibraries;
+      strategoxtUtilsInfo = makeInfoURL.unstable specs.strategoxtUtils;
+      strategoShellInfo = makeInfoURL.unstable specs.strategoShell;
+      javaFrontInfo = makeInfoURL.unstable specs.javaFront;
+      dryadInfo = makeInfoURL.unstable specs.dryad;
+      transformersGenericToolsInfo = makeInfoURL.unstable specs.transformersGenericTools;
+      phpFrontInfo = makeInfoURL.unstable specs.phpFront;
+    };
+
+    notifyAddresses = ["karltk@strategoxt.org" "martin.bravenboer@gmail.com" "e.visser@tudelft.nl"];
+  };
+
 
 }
 
