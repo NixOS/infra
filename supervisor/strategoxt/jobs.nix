@@ -20,6 +20,21 @@ with (import ./jobs-helpers.nix) attrs;
     makeInfoURL = makeInfoURL.usingBaseline;
   };
 
+  phpFrontTrunk = makeEasyJob {
+    spec = specs.phpFront;
+    makeInfoURL = makeInfoURL.usingBaseline;
+  };
+
+  dryadTrunk = makeEasyJob {
+    spec = specs.dryad;
+    makeInfoURL = makeInfoURL.usingBaseline;
+  };
+
+  transformersGenericToolsTrunk = makeEasyJob {
+    spec = specs.transformersGenericTools;
+    makeInfoURL = makeInfoURL.usingBaseline;
+  };
+
   strategoLibrariesTrunk = makeEasyJob {
     spec = specs.strategoLibraries;
     makeInfoURL = makeInfoURL.usingBaseline;
