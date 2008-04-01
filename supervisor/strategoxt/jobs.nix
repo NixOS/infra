@@ -58,7 +58,7 @@ with (import ./jobs-helpers.nix) attrs;
     args = [
       "../jobs/strategoxt/custom/manual.nix"
       "trunkRelease"
-      "/data/webserver/dist/strategoxt2/manual"
+      "/data/webserver/dist/strategoxt2/strategoxt-manual"
       "http://releases.strategoxt.org/strategoxt-manual"
       "/data/webserver/dist/nix-cache"
       "http://buildfarm.st.ewi.tudelft.nl/releases/nix-cache"
