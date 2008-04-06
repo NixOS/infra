@@ -110,4 +110,26 @@ rec {
       "/data/webserver/dist/nix-cache"
       "http://buildfarm.st.ewi.tudelft.nl/releases/nix-cache"
     ];
+
+  makeAPIJob = {jobAttr, subdir, svn} :
+    makeJob {
+      args =
+        strategoxtArgs {
+          jobFile = "strategoxt/custom/docs.nix";
+          inherit jobAttr;
+          subdir = "docs/api/" + subdir;
+        };
+
+      inputs = {
+        checkout = svnInput svn;
+        systems = pathInput ./systems.nix;
+        atermInfo = makeInfoURL.usingBaseline specs.aterm;
+        sdf2BundleInfo = makeInfoURL.usingBaseline specs.sdf2Bundle;
+        strategoxtInfo = makeInfoURL.usingBaseline specs.strategoxt;
+        strategoxtUtilsInfo = makeInfoURL.usingBaseline specs.strategoxtUtils;
+        xdocInfo = makeInfoURL.usingBaseline specs.xdoc;
+      };
+
+      notifyAddresses = ["karltk@strategoxt.org" "martin.bravenboer@gmail.com" "e.visser@tudelft.nl"];
+    };
 }

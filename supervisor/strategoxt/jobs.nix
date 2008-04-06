@@ -50,6 +50,11 @@ with (import ./jobs-helpers.nix) attrs;
     makeInfoURL = makeInfoURL.usingBaseline;
   };
 
+  xdocTrunk = makeEasyJob {
+    spec = specs.xdoc;
+    makeInfoURL = makeInfoURL.usingBaseline;
+  };
+
   /**
    * Meta-Environment
    */
@@ -158,6 +163,15 @@ with (import ./jobs-helpers.nix) attrs;
     dirName = "sdf2-bundle-with-aterm64";
     makeInfoURL = makeInfoURL.withATerm64;
   };
+
+  /**
+   * API documentation
+  strategoLibDocsTrunk = makeAPIJob {
+    subdir = "stratego-lib";
+    jobAttr = "strategoLibDocsRelease";
+    svn = https://svn.cs.uu.nl:12443/repos/StrategoXT/strategoxt/trunk/stratego-libraries/lib/spec;
+  };
+   */
 
   /**
    * Complicated jobs
