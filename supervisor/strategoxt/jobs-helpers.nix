@@ -111,16 +111,31 @@ rec {
       "http://buildfarm.st.ewi.tudelft.nl/releases/nix-cache"
     ];
 
-  makeAPIJob = {jobAttr, subdir, svn} :
+  /**
+   * Jobs for documentation
+   */
+  makeAPIJob = {jobAttr, subdir, svn, extraInputs ? {}} :
+    makeDocsJob {
+      subdir = "api/" + subdir;
+      inherit jobAttr svn extraInputs;
+    };
+
+  makeSyntaxJob = {jobAttr, subdir, svn, extraInputs ? {}} :
+    makeDocsJob {
+      subdir = "syntax/" + subdir;
+      inherit jobAttr svn extraInputs;
+    };
+
+  makeDocsJob = {jobAttr, subdir, svn, extraInputs} :
     makeJob {
       args =
         strategoxtArgs {
           jobFile = "strategoxt/custom/docs.nix";
           inherit jobAttr;
-          subdir = "docs/api/" + subdir;
+          subdir = "docs/" + subdir;
         };
 
-      inputs = {
+      inputs = ({
         checkout = svnInput svn;
         systems = pathInput ./systems.nix;
         atermInfo = makeInfoURL.usingBaseline specs.aterm;
@@ -128,7 +143,7 @@ rec {
         strategoxtInfo = makeInfoURL.usingBaseline specs.strategoxt;
         strategoxtUtilsInfo = makeInfoURL.usingBaseline specs.strategoxtUtils;
         xdocInfo = makeInfoURL.usingBaseline specs.xdoc;
-      };
+      } // extraInputs);
 
       notifyAddresses = ["karltk@strategoxt.org" "martin.bravenboer@gmail.com" "e.visser@tudelft.nl"];
     };

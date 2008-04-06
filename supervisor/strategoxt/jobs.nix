@@ -15,6 +15,16 @@ with (import ./jobs-helpers.nix) attrs;
     makeInfoURL = makeInfoURL.usingBaseline;
   };
 
+  aspectjFrontSyntaxTrunk = makeEasyJob {
+    spec = specs.aspectjFrontSyntax;
+    makeInfoURL = makeInfoURL.usingBaseline;
+  };
+
+  aspectjFrontTrunk = makeEasyJob {
+    spec = specs.aspectjFront;
+    makeInfoURL = makeInfoURL.usingBaseline;
+  };
+
   jimpleFrontTrunk = makeEasyJob {
     spec = specs.jimpleFront;
     makeInfoURL = makeInfoURL.usingBaseline;
@@ -168,9 +178,82 @@ with (import ./jobs-helpers.nix) attrs;
    * API documentation
    */
   strategoLibDocsTrunk = makeAPIJob {
-    subdir = "stratego-lib";
-    jobAttr = "strategoLibDocsRelease";
+    subdir = "libstratego-lib";
+    jobAttr = "strategoLib";
     svn = https://svn.cs.uu.nl:12443/repos/StrategoXT/strategoxt/trunk/stratego-libraries/lib/spec;
+  };
+
+  strategoXTCDocsTrunk = makeAPIJob {
+    subdir = "libstratego-xtc";
+    jobAttr = "xtc";
+    svn = https://svn.cs.uu.nl:12443/repos/StrategoXT/strategoxt/trunk/stratego-libraries/xtc/lib;
+  };
+
+  strategoSGLRDocsTrunk = makeAPIJob {
+    subdir = "libstratego-sglr";
+    jobAttr = "sglr";
+    svn = https://svn.cs.uu.nl:12443/repos/StrategoXT/strategoxt/trunk/stratego-libraries/sglr/lib;
+  };
+
+  strategoGPPDocsTrunk = makeAPIJob {
+    subdir = "libstratego-gpp";
+    jobAttr = "gpp";
+    svn = https://svn.cs.uu.nl:12443/repos/StrategoXT/strategoxt/trunk/stratego-libraries/gpp/lib;
+  };
+
+  strategoRTGDocsTrunk = makeAPIJob {
+    subdir = "libstratego-rtg";
+    jobAttr = "rtg";
+    svn = https://svn.cs.uu.nl:12443/repos/StrategoXT/strategoxt/trunk/stratego-libraries/rtg/lib;
+  };
+
+  sdfLibrarySyntaxDocsTrunk = makeSyntaxJob {
+    subdir = "sdf-library";
+    jobAttr = "sdfLibrarySyntax";
+    svn =svn+ssh://svn.cwi.nl/sdf-library/trunk/library ;
+  };
+
+  javaFrontSyntaxDocsTrunk = makeSyntaxJob {
+    subdir = "java-front";
+    jobAttr = "javaFrontSyntax";
+    svn = https://svn.cs.uu.nl:12443/repos/StrategoXT/java-front/trunk/syntax/src;
+  };
+
+  jimpleFrontSyntaxDocsTrunk = makeSyntaxJob {
+    subdir = "jimple-front";
+    jobAttr = "jimpleFrontSyntax";
+    svn = https://svn.cs.uu.nl:12443/repos/StrategoXT/sootxt/jimple-front/trunk/syn;
+  };
+
+  aspectjFrontSyntaxDocsTrunk = makeSyntaxJob {
+    subdir = "aspectj-front";
+    jobAttr = "aspectjFrontSyntax";
+    svn = https://svn.cs.uu.nl:12443/repos/StrategoXT/aspectj-front/trunk/syntax/src;
+    extraInputs = {
+      javaFrontInfo = makeInfoURL.unstable specs.javaFront;
+      aspectjFrontInfo = makeInfoURL.unstable specs.aspectjFront;
+    };
+  };
+
+  dryadDocsTrunk = makeAPIJob {
+    subdir = "libdryad";
+    jobAttr = "dryadLibrary";
+    svn = https://svn.cs.uu.nl:12443/repos/StrategoXT/dryad/trunk/lib;
+    extraInputs = {
+      javaFrontInfo = makeInfoURL.unstable specs.javaFront;
+    };
+  };
+
+  phpFrontSyntaxDocsTrunk = makeSyntaxJob {
+    subdir = "php-front";
+    jobAttr = "phpFrontSyntax";
+    svn = https://svn.cs.uu.nl:12443/repos/psat/php-front/trunk/src/grammar;
+  };
+
+  phpFrontLibraryDocsTrunk = makeAPIJob {
+    subdir = "libphp-front";
+    jobAttr = "phpFrontLibrary";
+    svn = https://svn.cs.uu.nl:12443/repos/psat/php-front/trunk/src/lib;
   };
 
   /**
