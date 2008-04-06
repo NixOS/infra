@@ -166,12 +166,12 @@ with (import ./jobs-helpers.nix) attrs;
 
   /**
    * API documentation
+   */
   strategoLibDocsTrunk = makeAPIJob {
     subdir = "stratego-lib";
     jobAttr = "strategoLibDocsRelease";
     svn = https://svn.cs.uu.nl:12443/repos/StrategoXT/strategoxt/trunk/stratego-libraries/lib/spec;
   };
-   */
 
   /**
    * Complicated jobs
