@@ -40,6 +40,11 @@ with (import ./jobs-helpers.nix) attrs;
     makeInfoURL = makeInfoURL.usingBaseline;
   };
 
+  dryadCompilerTrunk = makeEasyJob {
+    spec = specs.dryadCompiler;
+    makeInfoURL = makeInfoURL.usingBaseline;
+  };
+
   transformersGenericToolsTrunk = makeEasyJob {
     spec = specs.transformersGenericTools;
     makeInfoURL = makeInfoURL.usingBaseline;
