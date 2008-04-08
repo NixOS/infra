@@ -23,13 +23,6 @@ let
     fromAddress = "TU Delft Nix Buildfarm <e.dolstra@tudelft.nl>";
   };
 
-  supervisorOld = import ../../old-release/supervisor/supervisor.nix {
-    stateDir = "/home/buildfarm/buildfarm-state-old";
-    jobsURL = https://svn.cs.uu.nl:12443/repos/trace/configurations/trunk/tud/supervisor/jobs.conf;
-    smtpHost = "smtp.st.ewi.tudelft.nl";
-    fromAddress = "TU Delft Nix Legacy Buildfarm <e.dolstra@tudelft.nl>";
-  };
-
   jiraJetty = (import ../../services/jira/jira-instance.nix).jetty;
 
   myIP = "130.161.158.181";
@@ -154,17 +147,6 @@ rec {
         '';
       }
 
-      { name = "buildfarm-old";
-        job = ''
-          description "Build farm job runner (legacy jobs)"
-
-          start on network-interfaces/started
-          stop on network-interfaces/stop
-
-          respawn ${pkgs.su}/bin/su - buildfarm -c ${supervisorOld}/bin/run > /var/log/buildfarm-old 2>&1
-        '';
-      }
-
       { name = "jira";
         users = [
           { name = "jira";
@@ -259,20 +241,6 @@ rec {
                   url = http://www.st.ewi.tudelft.nl/;
                   logo = "/serg-logo.png";
                 };
-              };
-            }
-            { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/dist-manager.nix;
-              config = rec {
-                urlPrefix = "/releases";
-                distDir = "/data/webserver/dist";
-                uploaderIPs = ["127.0.0.1" myIP];
-                distPasswords = "/data/webserver/upload_passwords";
-                directoriesConf = ''
-                  nix-cache    ${distDir}/nix-cache    nix-upload strategoxt-upload meta-environment-upload ut-fmt-upload
-                  strategoxt   ${distDir}/strategoxt   strategoxt-upload
-                  meta-environment ${distDir}/meta-environment meta-environment-upload
-                  ut-fmt       ${distDir}/ut-fmt       ut-fmt-upload
-                '';
               };
             }
           ];
