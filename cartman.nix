@@ -244,6 +244,14 @@ rec {
               };
             }
           ];
+          servedDirs = [
+            { urlPath = "/releases/css"; # legacy; old releases point here
+              dir = /etc/nixos/services/dist-manager/files/css;
+            }
+            { urlPath = "/releases";
+              dir = "/data/webserver/dist";
+            }
+          ];
         }
 
         { hostName = "strategoxt.org";
