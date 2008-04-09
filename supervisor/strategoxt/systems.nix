@@ -4,9 +4,9 @@
 [ "i686-linux"
   "x86_64-linux"
   "i686-darwin"
+  "i686-cygwin"
 ]
 
-  # "i686-cygwin"
 
   # "powerpc-darwin"
   # "powerpc-linux"

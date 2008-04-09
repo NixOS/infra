@@ -60,10 +60,17 @@ rec {
    * Some packages reflect of pkgs to determine dependencies
    * and options. We need to accommodate that a bit ...
    */
-  fakePkgs =
-    {
+  fakePkgs = {
       stdenv = {
         system = "generic";
+      };
+    };
+
+  fakePkgsMinGW = {
+      stdenv = {
+        system = "i686-cygwin";
+        stdenvType = "i686-mingw";
+        isMinGW = true;
       };
     };
 
@@ -138,6 +145,7 @@ rec {
     requiresClosure = spec :
       let closure = somespec :
             (somespec fakePkgs).requires
+            ++ (somespec fakePkgsMinGW).requires
             ++ (fun.concatLists
                   (map (x : closure x) (somespec fakePkgs).requires)
                );
