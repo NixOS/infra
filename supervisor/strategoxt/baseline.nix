@@ -8,14 +8,14 @@
     http://buildfarm.st.ewi.tudelft.nl/releases/meta-environment/sdf2-bundle-2.4pre212034-2nspl1xc/;
 
   strategoxt =
-    http://releases.strategoxt.org/strategoxt/strategoxt-0.17M3pre17632-f440vxhd/;
+    http://releases.strategoxt.org/strategoxt/strategoxt-0.17M3pre17662-4cjkwz42/;
 
   strategoLibraries =
-    http://releases.strategoxt.org/stratego-libraries/stratego-libraries-0.17pre1763217632-vfcwm49q/;
+    http://releases.strategoxt.org/stratego-libraries/stratego-libraries-0.17pre1766217662-0qk0d2ag/;
 
   # used for compiling Stratego/XT from Subversion.
   strategoxtBootstrap =
-    http://releases.strategoxt.org/strategoxt/strategoxt-0.17M3pre17632-f440vxhd/strategoxt-0.17M3pre17632.tar.gz;
+    http://releases.strategoxt.org/strategoxt/strategoxt-0.17M3pre17662-4cjkwz42/strategoxt-0.17M3pre17662.tar.gz;
     # ftp server is down a lot at the moment
     # ftp://ftp.strategoxt.org/pub/stratego/StrategoXT/baseline/latest/strategoxt.tar.gz
 }
