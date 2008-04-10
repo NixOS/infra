@@ -224,6 +224,10 @@ rec {
       adminAddr = "eelco@cs.uu.nl";
       hostName = "localhost";
 
+      extraConfig = ''
+        AddType application/nix-package .nixpkg
+      '';
+          
       virtualHosts = [
 
         { hostName = "buildfarm.st.ewi.tudelft.nl";
