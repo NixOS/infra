@@ -112,6 +112,11 @@ rec {
     cron = {
       systemCronJobs = [
         "25 * * * *  root  (TZ=CET date; ${pkgs.rsync}/bin/rsync -razv --numeric-ids --delete /data/subversion /data/subversion-strategoxt /data/subversion-nix /data/vm /data/pt-wiki /data/postgresql unixhome.st.ewi.tudelft.nl::bfarm/) >> /var/log/backup.log 2>&1"
+
+        # Releases indices.
+        "10 * * * *  root  (cd /etc/nixos/release/index && PATH=${pkgs.saxonb}/bin:$PATH ./make-index.sh /data/webserver/dist/nix http://nixos.org/releases/ /releases.css) >> /var/log/index 2>&1"
+        "20 * * * *  root  (cd /etc/nixos/release/index && PATH=${pkgs.saxonb}/bin:$PATH ./make-index.sh /data/webserver/dist/strategoxt2 http://releases.strategoxt.org/ /releases.css) >> /var/log/index 2>&1"
+        "30 * * * *  root  (cd /etc/nixos/release/index && PATH=${pkgs.saxonb}/bin:$PATH ./make-index.sh /data/webserver/dist http://buildfarm.st.ewi.tudelft.nl /releases.css) >> /var/log/index 2>&1"
       ];
     };
 
@@ -228,6 +233,12 @@ rec {
         AddType application/nix-package .nixpkg
       '';
           
+      servedFiles = [
+        { urlPath = "/releases.css";
+          file = /etc/nixos/release/generic-dist/release-page/releases.css;
+        }
+      ];
+      
       virtualHosts = [
 
         { hostName = "buildfarm.st.ewi.tudelft.nl";
@@ -248,10 +259,12 @@ rec {
               };
             }
           ];
-          servedDirs = [
-            { urlPath = "/releases/css"; # legacy; old releases point here
-              dir = /etc/nixos/services/dist-manager/files/css;
+          servedFiles = [
+            { urlPath = "/releases/css/releases.css"; # legacy; old releases point here
+              file = /etc/nixos/release/generic-dist/release-page/releases.css;
             }
+          ];
+          servedDirs = [
             { urlPath = "/releases";
               dir = "/data/webserver/dist";
             }
