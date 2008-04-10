@@ -1,7 +1,7 @@
 {makeJob, pathInput, svnInput, svnInputRev} :
 
 rec {
-  urlInput = url: {type = "tgz"; url = url;};
+  urlInput = url: {type = "url"; inherit url;};
   infoInput = url : urlInput "${url}/release-info.xml";
 
   makeStrategoXTJob = attrs : makeJob (attrs // {
