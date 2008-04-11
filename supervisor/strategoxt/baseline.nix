@@ -1,11 +1,11 @@
 {
   aterm =
-    http://releases.strategoxt.org/strategoxt-0.17/aterm/aterm-2.5pre21238-8vxvj9gm/;
+    http://releases.strategoxt.org/strategoxt-0.17/aterm/unstable/;
 
   # martin: needs to be updated, but I'm scared what will happen. We
   # should do this when the buildfarm transition has stabilized a bit.
   sdf =
-    http://releases.strategoxt.org/strategoxt-0.17/sdf2-bundle/sdf2-bundle-2.4pre212034-hbj2ka9x/;
+    http://releases.strategoxt.org/strategoxt-0.17/sdf2-bundle/unstable/;
 
   strategoxt =
     http://releases.strategoxt.org/strategoxt/strategoxt-0.17M3pre17664-r77nysmx/;
