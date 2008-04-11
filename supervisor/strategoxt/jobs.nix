@@ -81,6 +81,25 @@ with (import ./jobs-helpers.nix) attrs;
   };
 
   /**
+   * Stratego/XT 0.17
+   */
+  atermBranch64Rev21238 = makeEasyJob {
+    spec = specs.aterm;
+    dirName = "strategoxt-0.17/aterm";
+    inputs = {
+      atermCheckout = svnInputRev svn+ssh://svn.cwi.nl/aterm/branches/64-bit-fixes 21238;
+    };
+  };
+
+  /**
+  sdf2Bundle24 = makeEasyJob {
+    spec = specs.sdf2Bundle24;
+    dirName = "strategoxtsdf2-bundle-with-aterm64";
+    makeInfoURL = makeInfoURL.withATerm64;
+  };
+  */
+
+  /**
    * Meta-Environment
    */
   metaBuildEnvTrunk = makeEasyJob {
@@ -95,14 +114,6 @@ with (import ./jobs-helpers.nix) attrs;
     spec = specs.aterm;
     svn = "branch64";
     dirName = "aterm64";
-  };
-
-  atermBranch64Rev21238 = makeEasyJob {
-    spec = specs.aterm;
-    dirName = "aterm64";
-    inputs = {
-      atermCheckout = svnInputRev svn+ssh://svn.cwi.nl/aterm/branches/64-bit-fixes 21238;
-    };
   };
 
   sdfLibraryTrunk = makeEasyJob {

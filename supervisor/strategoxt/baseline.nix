@@ -1,6 +1,6 @@
 {
   aterm =
-    http://buildfarm.st.ewi.tudelft.nl/releases/meta-environment/aterm-2.5pre21238-l2q7rg38/;
+    http://releases.strategoxt.org/aterm64/aterm-2.5pre21238-bdw75bjj/;
 
   # martin: needs to be updated, but I'm scared what will happen. We
   # should do this when the buildfarm transition has stabilized a bit.
