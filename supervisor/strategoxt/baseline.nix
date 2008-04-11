@@ -5,7 +5,7 @@
   # martin: needs to be updated, but I'm scared what will happen. We
   # should do this when the buildfarm transition has stabilized a bit.
   sdf =
-    http://buildfarm.st.ewi.tudelft.nl/releases/meta-environment/sdf2-bundle-2.4pre212034-2nspl1xc/;
+    http://releases.strategoxt.org/strategoxt-0.17/sdf2-bundle/sdf2-bundle-2.4pre212034-hbj2ka9x/;
 
   strategoxt =
     http://releases.strategoxt.org/strategoxt/strategoxt-0.17M3pre17662-4cjkwz42/;
