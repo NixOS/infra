@@ -23,7 +23,7 @@ rec {
 
     urlInput = easy.urlInput;
 
-    inherit (attrs) svnInput pathInput;
+    inherit (attrs) svnInput svnInputRev pathInput;
 
     # Main function to make easy jobs.
 

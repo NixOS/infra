@@ -97,6 +97,14 @@ with (import ./jobs-helpers.nix) attrs;
     dirName = "aterm64";
   };
 
+  atermBranch64Rev21238 = makeEasyJob {
+    spec = specs.aterm;
+    dirName = "aterm64";
+    customInputs = {
+      atermCheckout = svnInputRev svn+ssh://svn.cwi.nl/aterm/branches/64-bit-fixes 21238;
+    };
+  };
+
   sdfLibraryTrunk = makeEasyJob {
     spec = specs.sdfLibrary;
   };
