@@ -100,7 +100,7 @@ with (import ./jobs-helpers.nix) attrs;
   atermBranch64Rev21238 = makeEasyJob {
     spec = specs.aterm;
     dirName = "aterm64";
-    customInputs = {
+    inputs = {
       atermCheckout = svnInputRev svn+ssh://svn.cwi.nl/aterm/branches/64-bit-fixes 21238;
     };
   };
