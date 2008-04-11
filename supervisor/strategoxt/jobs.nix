@@ -50,6 +50,16 @@ with (import ./jobs-helpers.nix) attrs;
     makeInfoURL = makeInfoURL.usingBaseline;
   };
 
+  transformersCToolsTrunk = makeEasyJob {
+    spec = specs.transformersCTools;
+    makeInfoURL = makeInfoURL.usingBaseline;
+  };
+
+  transformersCxxToolsTrunk = makeEasyJob {
+    spec = specs.transformersCxxTools;
+    makeInfoURL = makeInfoURL.usingBaseline;
+  };
+
   strategoxtUtilsTrunk = makeEasyJob {
     spec = specs.strategoxtUtils;
     makeInfoURL = makeInfoURL.usingBaseline;
