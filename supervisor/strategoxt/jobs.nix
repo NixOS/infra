@@ -83,21 +83,47 @@ with (import ./jobs-helpers.nix) attrs;
   /**
    * Stratego/XT 0.17
    */
-  atermBranch64Rev21238 = makeEasyJob {
-    spec = specs.aterm;
-    dirName = "strategoxt-0.17/aterm";
+  atermForStrategoXT017 = makeJob {
+    args = 
+      strategoxtArgs {
+        jobFile = "strategoxt/releases.nix";
+        jobAttr = "atermForStrategoXT017";
+        subdir  = "strategoxt-0.17/aterm";
+      };
+
     inputs = {
+      systems = pathInput ./systems.nix;
       atermCheckout = svnInputRev svn+ssh://svn.cwi.nl/aterm/branches/64-bit-fixes 21238;
     };
+
+    notifyAddresses = ["karltk@strategoxt.org" "martin.bravenboer@gmail.com" "e.visser@tudelft.nl"];
   };
 
-  /**
-  sdf2Bundle24 = makeEasyJob {
-    spec = specs.sdf2Bundle24;
-    dirName = "strategoxtsdf2-bundle-with-aterm64";
-    makeInfoURL = makeInfoURL.withATerm64;
+  sdf2BundleForStrategoXT017 = makeJob {
+    args = 
+      strategoxtArgs {
+        jobFile = "strategoxt/releases.nix";
+        jobAttr = "sdf2BundleForStrategoXT017";
+        subdir  = "strategoxt-0.17/sdf2-bundle";
+      };
+
+    inputs = {
+      systems = pathInput ./systems.nix;
+      atermInfo = urlInput http://releases.strategoxt.org/strategoxt-0.17/aterm/unstable/release-info.xml;
+      ascSupportInfo = urlInput http://buildfarm.st.ewi.tudelft.nl/releases/meta-environment/asc-support-2.3pre21097-w8slj5v8/release-info.xml;
+      asfSupportInfo = urlInput http://buildfarm.st.ewi.tudelft.nl/releases/meta-environment/asf-support-1.5pre19781-0a9vk2m6/release-info.xml;
+      errorSupportInfo = urlInput http://buildfarm.st.ewi.tudelft.nl/releases/meta-environment/error-support-1.4pre21542-5kanxhfi/release-info.xml;
+      pgenInfo = urlInput http://buildfarm.st.ewi.tudelft.nl/releases/meta-environment/pgen-2.4pre21317-2jbx7pvy/release-info.xml;
+      ptSupportInfo =  urlInput http://buildfarm.st.ewi.tudelft.nl/releases/meta-environment/pt-support-2.1pre21423-27y7bn5c/release-info.xml;
+      sdfLibraryInfo = urlInput http://buildfarm.st.ewi.tudelft.nl/releases/meta-environment/sdf-library-1.0pre21293-q0kr017v/release-info.xml;
+      sdfSupportInfo = urlInput http://buildfarm.st.ewi.tudelft.nl/releases/meta-environment/sdf-support-2.3pre21547-2mylics2/release-info.xml;
+      sglrInfo = urlInput http://buildfarm.st.ewi.tudelft.nl/releases/meta-environment/sglr-3.16pre20932-xh8w2ikz/release-info.xml;
+      tideSupportInfo = urlInput http://buildfarm.st.ewi.tudelft.nl/releases/meta-environment/tide-support-1.2pre21550-yvkk4q8g/release-info.xml;
+      toolbuslibInfo = urlInput http://buildfarm.st.ewi.tudelft.nl/releases/meta-environment/toolbuslib-0.9pre21552-w4kgsm0p/release-info.xml;
+    };
+
+    notifyAddresses = ["karltk@strategoxt.org" "martin.bravenboer@gmail.com" "e.visser@tudelft.nl"];
   };
-  */
 
   /**
    * Meta-Environment
