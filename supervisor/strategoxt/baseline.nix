@@ -1,6 +1,6 @@
 {
   aterm =
-    http://releases.strategoxt.org/strategoxt-0.17/aterm/unstable/;
+    http://releases.strategoxt.org/strategoxt-0.17/aterm/aterm-2.5pre21238-26ra85lr/;
 
   # martin: needs to be updated, but I'm scared what will happen. We
   # should do this when the buildfarm transition has stabilized a bit.
