@@ -94,6 +94,7 @@ with (import ./jobs-helpers.nix) attrs;
     inputs = {
       systems = pathInput ./systems.nix;
       atermCheckout = svnInputRev svn+ssh://svn.cwi.nl/aterm/branches/64-bit-fixes 21238;
+      metaBuildEnvInfo = urlInput http://releases.strategoxt.org/meta-build-env/meta-build-env-0.1pre24995-50nbjf4z/release-info.xml;
     };
 
     notifyAddresses = ["karltk@strategoxt.org" "martin.bravenboer@gmail.com" "e.visser@tudelft.nl"];
