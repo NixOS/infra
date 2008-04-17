@@ -35,6 +35,11 @@ with (import ./jobs-helpers.nix) attrs;
     makeInfoURL = makeInfoURL.usingBaseline;
   };
 
+  sqlFrontTrunk = makeEasyJob {
+    spec = specs.sqlFront;
+    makeInfoURL = makeInfoURL.usingBaseline;
+  };
+
   dryadTrunk = makeEasyJob {
     spec = specs.dryad;
     makeInfoURL = makeInfoURL.usingBaseline;
