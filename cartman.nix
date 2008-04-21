@@ -142,13 +142,14 @@ rec {
     extraJobs = [
 
       { name = "buildfarm";
+        extraPath = [supervisor];
         job = ''
           description "Build farm job runner"
 
           start on network-interfaces/started
           stop on network-interfaces/stop
 
-          respawn ${pkgs.su}/bin/su - buildfarm -c 'sendNotifications=1 ${supervisor}/bin/run' > /var/log/buildfarm 2>&1
+          respawn ${pkgs.su}/bin/su - buildfarm -c 'sendNotifications=1 ${supervisor}/bin/buildfarm-supervisor' > /var/log/buildfarm 2>&1
         '';
       }
 
@@ -237,6 +238,12 @@ rec {
         { urlPath = "/releases.css";
           file = /etc/nixos/release/generic-dist/release-page/releases.css;
         }
+        { urlPath = "/css/releases.css"; # legacy; old releases point here
+          file = /etc/nixos/release/generic-dist/release-page/releases.css;
+        }
+        { urlPath = "/releases/css/releases.css"; # legacy; old releases point here
+          file = /etc/nixos/release/generic-dist/release-page/releases.css;
+        }
       ];
       
       virtualHosts = [
@@ -257,11 +264,6 @@ rec {
                   logo = "/serg-logo.png";
                 };
               };
-            }
-          ];
-          servedFiles = [
-            { urlPath = "/releases/css/releases.css"; # legacy; old releases point here
-              file = /etc/nixos/release/generic-dist/release-page/releases.css;
             }
           ];
           servedDirs = [
@@ -337,9 +339,18 @@ rec {
             { urlPath = "/releases";
               dir = "/data/webserver/dist/nix";
             }
+            { urlPath = "/tarballs";
+              dir = "/data/webserver/tarballs";
+            }
           ];
         }
 
+        { hostName = "www.nixos.org";
+          extraConfig = ''
+            RedirectPermanent / http://nixos.org/
+          '';
+        }
+        
         { hostName = "svn.nixos.org";
           extraSubservices = [
             { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/subversion.nix;
