@@ -18,8 +18,8 @@ let
 
   supervisor = import ../../release/supervisor/supervisor.nix {
     stateDir = "/home/buildfarm/buildfarm-state";
-    #jobsURL = https://svn.cs.uu.nl:12443/repos/trace/configurations/trunk/tud/supervisor/jobs.nix;
-    jobsFile = toString /etc/nixos/configurations/tud/supervisor/jobs.nix;
+    #jobsURL = https://svn.cs.uu.nl:12443/repos/trace/configurations/trunk/tud/buildfarm/jobs.nix;
+    jobsFile = toString /etc/nixos/configurations/tud/buildfarm/jobs.nix;
     fromAddress = "TU Delft Nix Buildfarm <e.dolstra@tudelft.nl>";
   };
 
