@@ -119,7 +119,7 @@ in
   };
 
 
-  /* HUT */
+  /* UU ST group jobs */
 
   uulibTrunk = makeUUSTJob {
     dirName = "uulib";
@@ -137,6 +137,15 @@ in
     };
     jobExpr = "../jobs/hut/uuagc.nix";
     jobAttr = "uuagcRelease";
+  };
+  
+  ehTrunk = makeUUSTJob {
+    dirName = "eh";
+    inputs = {
+      ehCheckout = svnInput https://svn.cs.uu.nl:12443/repos/EHC/trunk/EHC/;
+    };
+    jobExpr = "../jobs/hut/eh.nix";
+    jobAttr = "ehRelease";
   };
   
 
