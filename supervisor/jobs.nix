@@ -24,6 +24,8 @@ let
 
   defaultJobScript = "generic-dist/build+release.sh";
 
+  defaultURL = http://buildfarm.st.ewi.tudelft.nl/releases;
+
   cacheDir = "/data/webserver/dist/nix-cache";
   cacheURL = http://buildfarm.st.ewi.tudelft.nl/releases/nix-cache;
 
@@ -43,6 +45,21 @@ let
   } // attrs);
     
 
+  /* Common variables for UU ST jobs. */
+
+  makeUUSTJob = attrs: makeJob ({
+    notifyAddresses = ["ariem@cs.uu.nl"];
+    args = [
+      attrs.jobExpr
+      attrs.jobAttr
+      "/data/webserver/dist/uust/${attrs.dirName}"
+      "${defaultURL}/uust/${attrs.dirName}"
+      cacheDir
+      cacheURL
+    ];
+  } // attrs);
+
+  
   /* Common variables for UT project jobs. */
 
   utFmtDistDir = "/data/webserver/dist/ut-fmt";
@@ -55,6 +72,7 @@ let
 
 in
   strategoxtJobs // {
+  
 
   /* Nix */
 
@@ -77,6 +95,18 @@ in
   };
   
 
+  /* Nixpkgs */
+
+  nixpkgsTrunk = makeNixJob {
+    dirName = "nixpkgs";
+    inputs = {
+      nixpkgsCheckout = svnInput https://svn.cs.uu.nl:12443/repos/trace/nixpkgs/trunk;
+    };
+    jobExpr = "../jobs/nix/nixpkgs.nix";
+    jobAttr = "nixpkgsRelease";
+  };
+  
+  
   /* PatchELF */
 
   patchelfTrunk = makeNixJob {
@@ -86,6 +116,27 @@ in
     };
     jobExpr = "../jobs/nix/patchelf.nix";
     jobAttr = "patchelfRelease";
+  };
+
+
+  /* HUT */
+
+  uulibTrunk = makeUUSTJob {
+    dirName = "uulib";
+    inputs = {
+      uulibCheckout = svnInput https://svn.cs.uu.nl:12443/repos/uust-repo/uulib/trunk/;
+    };
+    jobExpr = "../jobs/hut/uulib.nix";
+    jobAttr = "uulibRelease";
+  };
+
+  uuagcTrunk = makeUUSTJob {
+    dirName = "uuagc";
+    inputs = {
+      uuagcCheckout = svnInput https://svn.cs.uu.nl:12443/repos/uust-repo/uuagc/trunk/;
+    };
+    jobExpr = "../jobs/hut/uuagc.nix";
+    jobAttr = "uuagcRelease";
   };
   
 
