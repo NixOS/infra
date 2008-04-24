@@ -280,7 +280,6 @@ rec {
         # otherwise SSL requests that don't match with any vhost will
         # go to svn.strategoxt.org.
         { hostName = "buildfarm.st.ewi.tudelft.nl";
-          port = 443;
           enableSSL = true;
           globalRedirect = "http://buildfarm.st.ewi.tudelft.nl/";
         }
@@ -303,7 +302,6 @@ rec {
         }
         
         { hostName = "svn.strategoxt.org";
-          port = 443;
           enableSSL = true;
           extraSubservices = [
             { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/subversion.nix;
@@ -367,7 +365,6 @@ rec {
         }
         
         { hostName = "svn.nixos.org";
-          port = 443;
           enableSSL = true;
           extraSubservices = [
             { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/subversion.nix;
