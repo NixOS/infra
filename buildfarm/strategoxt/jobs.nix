@@ -246,31 +246,31 @@ with (import ./jobs-helpers.nix) attrs;
   strategoLibDocsTrunk = makeAPIJob {
     subdir = "libstratego-lib";
     jobAttr = "strategoLib";
-    svn = https://svn.cs.uu.nl:12443/repos/StrategoXT/strategoxt/trunk/stratego-libraries/lib/spec;
+    svn = https://svn.strategoxt.org/repos/StrategoXT/strategoxt/trunk/stratego-libraries/lib/spec;
   };
 
   strategoXTCDocsTrunk = makeAPIJob {
     subdir = "libstratego-xtc";
     jobAttr = "xtc";
-    svn = https://svn.cs.uu.nl:12443/repos/StrategoXT/strategoxt/trunk/stratego-libraries/xtc/lib;
+    svn = https://svn.strategoxt.org/repos/StrategoXT/strategoxt/trunk/stratego-libraries/xtc/lib;
   };
 
   strategoSGLRDocsTrunk = makeAPIJob {
     subdir = "libstratego-sglr";
     jobAttr = "sglr";
-    svn = https://svn.cs.uu.nl:12443/repos/StrategoXT/strategoxt/trunk/stratego-libraries/sglr/lib;
+    svn = https://svn.strategoxt.org/repos/StrategoXT/strategoxt/trunk/stratego-libraries/sglr/lib;
   };
 
   strategoGPPDocsTrunk = makeAPIJob {
     subdir = "libstratego-gpp";
     jobAttr = "gpp";
-    svn = https://svn.cs.uu.nl:12443/repos/StrategoXT/strategoxt/trunk/stratego-libraries/gpp/lib;
+    svn = https://svn.strategoxt.org/repos/StrategoXT/strategoxt/trunk/stratego-libraries/gpp/lib;
   };
 
   strategoRTGDocsTrunk = makeAPIJob {
     subdir = "libstratego-rtg";
     jobAttr = "rtg";
-    svn = https://svn.cs.uu.nl:12443/repos/StrategoXT/strategoxt/trunk/stratego-libraries/rtg/lib;
+    svn = https://svn.strategoxt.org/repos/StrategoXT/strategoxt/trunk/stratego-libraries/rtg/lib;
   };
 
   sdfLibrarySyntaxDocsTrunk = makeSyntaxJob {
@@ -282,19 +282,19 @@ with (import ./jobs-helpers.nix) attrs;
   javaFrontSyntaxDocsTrunk = makeSyntaxJob {
     subdir = "java-front";
     jobAttr = "javaFrontSyntax";
-    svn = https://svn.cs.uu.nl:12443/repos/StrategoXT/java-front/trunk/syntax/src;
+    svn = https://svn.strategoxt.org/repos/StrategoXT/java-front/trunk/syntax/src;
   };
 
   jimpleFrontSyntaxDocsTrunk = makeSyntaxJob {
     subdir = "jimple-front";
     jobAttr = "jimpleFrontSyntax";
-    svn = https://svn.cs.uu.nl:12443/repos/StrategoXT/sootxt/jimple-front/trunk/syn;
+    svn = https://svn.strategoxt.org/repos/StrategoXT/sootxt/jimple-front/trunk/syn;
   };
 
   aspectjFrontSyntaxDocsTrunk = makeSyntaxJob {
     subdir = "aspectj-front";
     jobAttr = "aspectjFrontSyntax";
-    svn = https://svn.cs.uu.nl:12443/repos/StrategoXT/aspectj-front/trunk/syntax/src;
+    svn = https://svn.strategoxt.org/repos/StrategoXT/aspectj-front/trunk/syntax/src;
     extraInputs = {
       javaFrontInfo = makeInfoURL.unstable specs.javaFront;
       aspectjFrontInfo = makeInfoURL.unstable specs.aspectjFront;
@@ -304,7 +304,7 @@ with (import ./jobs-helpers.nix) attrs;
   dryadDocsTrunk = makeAPIJob {
     subdir = "libdryad";
     jobAttr = "dryadLibrary";
-    svn = https://svn.cs.uu.nl:12443/repos/StrategoXT/dryad/trunk/lib;
+    svn = https://svn.strategoxt.org/repos/StrategoXT/dryad/trunk/lib;
     extraInputs = {
       javaFrontInfo = makeInfoURL.unstable specs.javaFront;
     };
@@ -334,7 +334,7 @@ with (import ./jobs-helpers.nix) attrs;
       };
 
     inputs = {
-      strategoxtCheckout = svnInput https://svn.cs.uu.nl:12443/repos/StrategoXT/strategoxt/trunk;
+      strategoxtCheckout = svnInput https://svn.strategoxt.org/repos/StrategoXT/strategoxt/trunk;
       systems = pathInput ./systems.nix;
       atermInfo = makeInfoURL.usingBaseline specs.aterm;
       sdf2BundleInfo = makeInfoURL.usingBaseline specs.sdf2Bundle;
@@ -353,7 +353,7 @@ with (import ./jobs-helpers.nix) attrs;
       };
 
     inputs = {
-      strategoxtManualCheckout = svnInput https://svn.cs.uu.nl:12443/repos/StrategoXT/strategoxt-manual/trunk;
+      strategoxtManualCheckout = svnInput https://svn.strategoxt.org/repos/StrategoXT/strategoxt-manual/trunk;
       systems = pathInput ./systems.nix;
       atermInfo = makeInfoURL.usingBaseline specs.aterm;
       sdf2BundleInfo = makeInfoURL.usingBaseline specs.sdf2Bundle;
@@ -414,7 +414,7 @@ with (import ./jobs-helpers.nix) attrs;
   javaFrontSyntaxTrunk2 = makeStrategoXTJob {
     dirName = "java-front-syntax2";
     inputs = {
-      javaFrontSyntaxCheckout = attrs.svnInput https://svn.cs.uu.nl:12443/repos/StrategoXT/java-front/trunk/syntax;
+      javaFrontSyntaxCheckout = attrs.svnInput https://svn.strategoxt.org/repos/StrategoXT/java-front/trunk/syntax;
       atermInfo = easy.baseline.aterm;
       sdf2BundleInfo = easy.baseline.sdf;
       strategoxtInfo = easy.baseline.strategoxt;
