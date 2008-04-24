@@ -111,7 +111,7 @@ rec {
 
     cron = {
       systemCronJobs = [
-        "25 * * * *  root  (TZ=CET date; ${pkgs.rsync}/bin/rsync -razv --numeric-ids --delete /data/subversion /data/subversion-strategoxt /data/subversion-nix /data/vm /data/pt-wiki /data/postgresql unixhome.st.ewi.tudelft.nl::bfarm/) >> /var/log/backup.log 2>&1"
+        "25 * * * *  root  (TZ=CET date; ${pkgs.rsync}/bin/rsync -razv --numeric-ids --delete /data/subversion* /data/vm /data/pt-wiki /data/postgresql unixhome.st.ewi.tudelft.nl::bfarm/) >> /var/log/backup.log 2>&1"
 
         # Releases indices.
         "10 * * * *  root  (cd /etc/nixos/release/index && PATH=${pkgs.saxonb}/bin:$PATH ./make-index.sh /data/webserver/dist/nix http://nixos.org/releases/ /releases.css) >> /var/log/index 2>&1"
@@ -259,6 +259,20 @@ rec {
                 urlPrefix = "";
                 toplevelRedirect = false;
                 dataDir = "/data/subversion";
+                notificationSender = "root@buildfarm.st.ewi.tudelft.nl";
+                userCreationDomain = "st.ewi.tudelft.nl";
+                organisation = {
+                  name = "Software Engineering Research Group, TU Delft";
+                  url = http://www.st.ewi.tudelft.nl/;
+                  logo = "/serg-logo.png";
+                };
+              };
+            }
+            { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/subversion.nix;
+              config = {
+                id = "ptg";
+                urlPrefix = "/ptg";
+                dataDir = "/data/subversion-ptg";
                 notificationSender = "root@buildfarm.st.ewi.tudelft.nl";
                 userCreationDomain = "st.ewi.tudelft.nl";
                 organisation = {
