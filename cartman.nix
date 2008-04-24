@@ -259,7 +259,7 @@ rec {
                 urlPrefix = "";
                 toplevelRedirect = false;
                 dataDir = "/data/subversion";
-                notificationSender = "root@buildfarm.st.ewi.tudelft.nl";
+                notificationSender = "svn@buildfarm.st.ewi.tudelft.nl";
                 userCreationDomain = "st.ewi.tudelft.nl";
                 organisation = {
                   name = "Software Engineering Research Group, TU Delft";
@@ -273,7 +273,7 @@ rec {
                 id = "ptg";
                 urlPrefix = "/ptg";
                 dataDir = "/data/subversion-ptg";
-                notificationSender = "root@buildfarm.st.ewi.tudelft.nl";
+                notificationSender = "svn@buildfarm.st.ewi.tudelft.nl";
                 userCreationDomain = "st.ewi.tudelft.nl";
                 organisation = {
                   name = "Software Engineering Research Group, TU Delft";
@@ -323,7 +323,7 @@ rec {
                 id = "strategoxt";
                 urlPrefix = "";
                 dataDir = "/data/subversion-strategoxt";
-                notificationSender = "root@buildfarm.st.ewi.tudelft.nl";
+                notificationSender = "svn@svn.strategoxt.org";
                 userCreationDomain = "st.ewi.tudelft.nl";
                 organisation = {
                   name = "Stratego/XT";
@@ -386,7 +386,7 @@ rec {
                 id = "nix";
                 urlPrefix = "";
                 dataDir = "/data/subversion-nix";
-                notificationSender = "root@buildfarm.st.ewi.tudelft.nl";
+                notificationSender = "svn@svn.nixos.org";
                 userCreationDomain = "st.ewi.tudelft.nl";
                 organisation = {
                   name = "Nix";
