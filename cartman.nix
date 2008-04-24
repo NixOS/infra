@@ -227,9 +227,12 @@ rec {
       enable = true;
       experimental = true;
       logPerVirtualHost = true;
-      adminAddr = "eelco@cs.uu.nl";
+      adminAddr = "e.dolstra@tudelft.nl";
       hostName = "localhost";
 
+      sslServerCert = "/root/ssl-secrets/server.crt";
+      sslServerKey = "/root/ssl-secrets/server.key";
+          
       extraConfig = ''
         AddType application/nix-package .nixpkg
       '';
@@ -273,6 +276,15 @@ rec {
           ];
         }
 
+        # Default vhost for SSL; nothing here yet, but we need it,
+        # otherwise SSL requests that don't match with any vhost will
+        # go to svn.strategoxt.org.
+        { hostName = "buildfarm.st.ewi.tudelft.nl";
+          port = 443;
+          enableSSL = true;
+          globalRedirect = "http://buildfarm.st.ewi.tudelft.nl/";
+        }
+        
         { hostName = "strategoxt.org";
           extraSubservices = [
             { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/twiki.nix;
@@ -283,15 +295,20 @@ rec {
 
         { hostName = "www.strategoxt.org";
           serverAliases = ["www.stratego-language.org"];
-          extraConfig = ''
-            RedirectPermanent / http://strategoxt.org/
-          '';
+          globalRedirect = "http://strategoxt.org/";
         }
 
         { hostName = "svn.strategoxt.org";
+          globalRedirect = "https://svn.strategoxt.org/";
+        }
+        
+        { hostName = "svn.strategoxt.org";
+          port = 443;
+          enableSSL = true;
           extraSubservices = [
             { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/subversion.nix;
               config = {
+                id = "strategoxt";
                 urlPrefix = "";
                 dataDir = "/data/subversion-strategoxt";
                 notificationSender = "root@buildfarm.st.ewi.tudelft.nl";
@@ -299,7 +316,7 @@ rec {
                 organisation = {
                   name = "Stratego/XT";
                   url = http://strategoxt.org/;
-                  logo = "http://strategoxt.org/pub/Stratego/StrategoLogo/StrategoLogoTextlessWhite-100px.png";
+                  logo = http://strategoxt.org/pub/Stratego/StrategoLogo/StrategoLogoTextlessWhite-100px.png;
                 };
               };
             }
@@ -346,15 +363,16 @@ rec {
         }
 
         { hostName = "www.nixos.org";
-          extraConfig = ''
-            RedirectPermanent / http://nixos.org/
-          '';
+          globalRedirect = "http://nixos.org/";
         }
         
         { hostName = "svn.nixos.org";
+          port = 443;
+          enableSSL = true;
           extraSubservices = [
             { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/subversion.nix;
               config = {
+                id = "nix";
                 urlPrefix = "";
                 dataDir = "/data/subversion-nix";
                 notificationSender = "root@buildfarm.st.ewi.tudelft.nl";
@@ -362,13 +380,17 @@ rec {
                 organisation = {
                   name = "Nix";
                   url = http://nixos.org/;
-                  logo = "http://www.st.ewi.tudelft.nl/serg-logo.png"; # !!! need a logo
+                  logo = http://subversion.tigris.org/images/subversion_logo_hor-468x64.png; # !!! need a logo
                 };
               };
             }
           ];
         }
 
+        { hostName = "svn.nixos.org";
+          globalRedirect = "https://svn.nixos.org/";
+        }
+        
         { hostName = "planet.strategoxt.org";
           serverAliases = ["planet.stratego.org"];
           documentRoot = "/home/karltk/public_html/planet";
