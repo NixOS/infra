@@ -27,6 +27,8 @@ let
 
   myIP = "130.161.158.181";
 
+  releasesCSS = /etc/nixos/release/generic-dist/release-page/releases.css;
+
 in
 
 rec {
@@ -114,9 +116,9 @@ rec {
         "25 * * * *  root  (TZ=CET date; ${pkgs.rsync}/bin/rsync -razv --numeric-ids --delete /data/subversion* /data/vm /data/pt-wiki /data/postgresql unixhome.st.ewi.tudelft.nl::bfarm/) >> /var/log/backup.log 2>&1"
 
         # Releases indices.
-        "10 * * * *  root  (cd /etc/nixos/release/index && PATH=${pkgs.saxonb}/bin:$PATH ./make-index.sh /data/webserver/dist/nix http://nixos.org/releases/ /releases.css) >> /var/log/index 2>&1"
-        "20 * * * *  root  (cd /etc/nixos/release/index && PATH=${pkgs.saxonb}/bin:$PATH ./make-index.sh /data/webserver/dist/strategoxt2 http://releases.strategoxt.org/ /releases.css) >> /var/log/index 2>&1"
-        "30 * * * *  root  (cd /etc/nixos/release/index && PATH=${pkgs.saxonb}/bin:$PATH ./make-index.sh /data/webserver/dist http://buildfarm.st.ewi.tudelft.nl /releases.css) >> /var/log/index 2>&1"
+        "10 * * * *  buildfarm  (cd /etc/nixos/release/index && PATH=${pkgs.saxonb}/bin:$PATH ./make-index.sh /data/webserver/dist/nix http://nixos.org/releases/ /releases.css) >> /var/log/index 2>&1"
+        "20 * * * *  buildfarm  (cd /etc/nixos/release/index && PATH=${pkgs.saxonb}/bin:$PATH ./make-index.sh /data/webserver/dist/strategoxt2 http://releases.strategoxt.org/ /releases.css) >> /var/log/index 2>&1"
+        "30 * * * *  buildfarm  (cd /etc/nixos/release/index && PATH=${pkgs.saxonb}/bin:$PATH ./make-index.sh /data/webserver/dist http://buildfarm.st.ewi.tudelft.nl /releases.css) >> /var/log/index 2>&1"
       ];
     };
 
@@ -239,13 +241,13 @@ rec {
           
       servedFiles = [
         { urlPath = "/releases.css";
-          file = /etc/nixos/release/generic-dist/release-page/releases.css;
+          file = releasesCSS;
         }
         { urlPath = "/css/releases.css"; # legacy; old releases point here
-          file = /etc/nixos/release/generic-dist/release-page/releases.css;
+          file = releasesCSS;
         }
         { urlPath = "/releases/css/releases.css"; # legacy; old releases point here
-          file = /etc/nixos/release/generic-dist/release-page/releases.css;
+          file = releasesCSS;
         }
       ];
       
@@ -370,6 +372,11 @@ rec {
             }
             { urlPath = "/tarballs";
               dir = "/data/webserver/tarballs";
+            }
+          ];
+          servedFiles = [
+            { urlPath = "/releases/css/releases.css";
+              file = releasesCSS;
             }
           ];
         }
