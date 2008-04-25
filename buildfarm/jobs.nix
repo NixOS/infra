@@ -18,9 +18,9 @@ let
 
   /* Common variables for (almost) all jobs. */
 
-  jobBaseline = https://svn.cs.uu.nl:12443/repos/trace/release/branches/new;
+  jobBaseline = https://svn.nixos.org/repos/nix/release/branches/new;
 
-  nixpkgsBaseline = https://svn.cs.uu.nl:12443/repos/trace/nixpkgs/trunk;
+  nixpkgsBaseline = https://svn.nixos.org/repos/nix/nixpkgs/trunk;
 
   defaultJobScript = "generic-dist/build+release.sh";
 
@@ -79,7 +79,7 @@ in
   nixTrunk = makeNixJob {
     dirName = "nix";
     inputs = {
-      nixCheckout = svnInput https://svn.cs.uu.nl:12443/repos/trace/nix/trunk;
+      nixCheckout = svnInput https://svn.nixos.org/repos/nix/nix/trunk;
     };
     jobExpr = "../jobs/nix/nix.nix";
     jobAttr = "nixRelease";
@@ -88,7 +88,7 @@ in
   nixNoBDBBranch = makeNixJob {
     dirName = "nix-no-bdb";
     inputs = {
-      nixCheckout = svnInput https://svn.cs.uu.nl:12443/repos/trace/nix/branches/no-bdb;
+      nixCheckout = svnInput https://svn.nixos.org/repos/nix/nix/branches/no-bdb;
     };
     jobExpr = "../jobs/nix/nix.nix";
     jobAttr = "nixRelease";
@@ -100,7 +100,7 @@ in
   nixpkgsTrunk = makeNixJob {
     dirName = "nixpkgs";
     inputs = {
-      nixpkgsCheckout = svnInput https://svn.cs.uu.nl:12443/repos/trace/nixpkgs/trunk;
+      nixpkgsCheckout = svnInput https://svn.nixos.org/repos/nix/nixpkgs/trunk;
     };
     jobExpr = "../jobs/nix/nixpkgs.nix";
     jobAttr = "nixpkgsRelease";
@@ -112,7 +112,7 @@ in
   patchelfTrunk = makeNixJob {
     dirName = "patchelf";
     inputs = {
-      patchelfCheckout = svnInput https://svn.cs.uu.nl:12443/repos/trace/patchelf/trunk;
+      patchelfCheckout = svnInput https://svn.nixos.org/repos/nix/patchelf/trunk;
     };
     jobExpr = "../jobs/nix/patchelf.nix";
     jobAttr = "patchelfRelease";
