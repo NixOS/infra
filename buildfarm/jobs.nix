@@ -105,6 +105,20 @@ in
     jobExpr = "../jobs/nix/nixpkgs.nix";
     jobAttr = "nixpkgsRelease";
   };
+
+
+  /* NixOS */
+  
+  nixosTrunk = makeNixJob {
+    dirName = "nixos";
+    inputs = {
+      nixosCheckout = svnInput https://svn.nixos.org/repos/nix/nixos/trunk;
+      nixpkgsCheckout = svnInput https://svn.nixos.org/repos/nix/nixpkgs/trunk;
+    };
+    jobExpr = "../jobs/nix/nixos.nix";
+    jobAttr = "nixosRelease";
+    disabled = true;
+  };
   
   
   /* PatchELF */
@@ -147,6 +161,19 @@ in
     jobExpr = "../jobs/hut/eh.nix";
     jobAttr = "ehRelease";
   };
+
+  heliumTrunk = makeUUSTJob {
+    dirName = "helium";
+    inputs = {
+      systemCheckout = svnInput https://svn.cs.uu.nl:12443/repos/heliumsystem;
+      heliumCheckout = svnInput https://svn.cs.uu.nl:12443/repos/helium/trunk;
+      topCheckout = svnInput https://svn.cs.uu.nl:12443/repos/Top/trunk;
+      lvmCheckout = svnInput https://svn.cs.uu.nl:12443/repos/lvm/trunk;
+      hintCheckout = svnInput https://svn.cs.uu.nl:12443/repos/hint/trunk;
+    };
+    jobExpr = "../jobs/hut/helium.nix";
+    jobAttr = "heliumRelease";
+  }; 
   
 
   /* TorX */
