@@ -24,9 +24,17 @@
     sshd = {
       enable = true;
     };
+    zabbixAgent = {
+      enable = true;
+      server = "192.168.1.5";
+    };
   };
 
   networking = {
     hostName = ""; # obtain from DHCP server
+  };
+
+  environment = {
+    nix = pkgs: pkgs.nixNoBDB;
   };
 }
