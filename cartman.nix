@@ -209,13 +209,6 @@ rec {
           Order deny,allow
           Allow from all
         </Location>
-
-        Alias /zabbix ${pkgs.zabbixServer}/share/zabbix/php
-        <Directory ${pkgs.zabbixServer}/share/zabbix/php>
-          DirectoryIndex index.php
-          Order deny,allow
-          Allow from *
-        </Directory>
       '';
           
       servedFiles = [
@@ -235,33 +228,32 @@ rec {
         { hostName = "buildfarm.st.ewi.tudelft.nl";
           documentRoot = pkgs.lib.cleanSource ./webroot;
           extraSubservices = [
-            { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/subversion.nix;
-              config = {
-                urlPrefix = "";
-                toplevelRedirect = false;
-                dataDir = "/data/subversion";
-                notificationSender = "svn@buildfarm.st.ewi.tudelft.nl";
-                userCreationDomain = "st.ewi.tudelft.nl";
-                organisation = {
-                  name = "Software Engineering Research Group, TU Delft";
-                  url = http://www.st.ewi.tudelft.nl/;
-                  logo = "/serg-logo.png";
-                };
+            { serviceType = "subversion";
+              urlPrefix = "";
+              toplevelRedirect = false;
+              dataDir = "/data/subversion";
+              notificationSender = "svn@buildfarm.st.ewi.tudelft.nl";
+              userCreationDomain = "st.ewi.tudelft.nl";
+              organisation = {
+                name = "Software Engineering Research Group, TU Delft";
+                url = http://www.st.ewi.tudelft.nl/;
+                logo = "/serg-logo.png";
               };
             }
-            { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/subversion.nix;
-              config = {
-                id = "ptg";
-                urlPrefix = "/ptg";
-                dataDir = "/data/subversion-ptg";
-                notificationSender = "svn@buildfarm.st.ewi.tudelft.nl";
-                userCreationDomain = "st.ewi.tudelft.nl";
-                organisation = {
-                  name = "Software Engineering Research Group, TU Delft";
-                  url = http://www.st.ewi.tudelft.nl/;
-                  logo = "/serg-logo.png";
-                };
+            { serviceType = "subversion";
+              id = "ptg";
+              urlPrefix = "/ptg";
+              dataDir = "/data/subversion-ptg";
+              notificationSender = "svn@buildfarm.st.ewi.tudelft.nl";
+              userCreationDomain = "st.ewi.tudelft.nl";
+              organisation = {
+                name = "Software Engineering Research Group, TU Delft";
+                url = http://www.st.ewi.tudelft.nl/;
+                logo = "/serg-logo.png";
               };
+            }
+            { serviceType = "zabbix";
+              urlPrefix = "/zabbix";
             }
           ];
           servedDirs = [
@@ -281,8 +273,8 @@ rec {
         
         { hostName = "strategoxt.org";
           extraSubservices = [
-            { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/twiki.nix;
-              config = { startWeb = "Stratego/WebHome"; };
+            { serviceType = "twiki";
+              startWeb = "Stratego/WebHome";
             }
           ];
         }
@@ -299,18 +291,16 @@ rec {
         { hostName = "svn.strategoxt.org";
           enableSSL = true;
           extraSubservices = [
-            { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/subversion.nix;
-              config = {
-                id = "strategoxt";
-                urlPrefix = "";
-                dataDir = "/data/subversion-strategoxt";
-                notificationSender = "svn@svn.strategoxt.org";
-                userCreationDomain = "st.ewi.tudelft.nl";
-                organisation = {
-                  name = "Stratego/XT";
-                  url = http://strategoxt.org/;
-                  logo = http://strategoxt.org/pub/Stratego/StrategoLogo/StrategoLogoTextlessWhite-100px.png;
-                };
+            { serviceType = "subversion";
+              id = "strategoxt";
+              urlPrefix = "";
+              dataDir = "/data/subversion-strategoxt";
+              notificationSender = "svn@svn.strategoxt.org";
+              userCreationDomain = "st.ewi.tudelft.nl";
+              organisation = {
+                name = "Stratego/XT";
+                url = http://strategoxt.org/;
+                logo = http://strategoxt.org/pub/Stratego/StrategoLogo/StrategoLogoTextlessWhite-100px.png;
               };
             }
           ];
@@ -319,8 +309,8 @@ rec {
         { hostName = "program-transformation.org";
           serverAliases = ["www.program-transformation.org"];
           extraSubservices = [
-            { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/twiki.nix;
-              config = { startWeb = "Transform/WebHome"; };
+            { serviceType = "twiki";
+              startWeb = "Transform/WebHome";
             }
           ];
         }
@@ -367,18 +357,16 @@ rec {
         { hostName = "svn.nixos.org";
           enableSSL = true;
           extraSubservices = [
-            { function = import /etc/nixos/nixos/upstart-jobs/apache-httpd/subversion.nix;
-              config = {
-                id = "nix";
-                urlPrefix = "";
-                dataDir = "/data/subversion-nix";
-                notificationSender = "svn@svn.nixos.org";
-                userCreationDomain = "st.ewi.tudelft.nl";
-                organisation = {
-                  name = "Nix";
-                  url = http://nixos.org/;
-                  logo = http://subversion.tigris.org/images/subversion_logo_hor-468x64.png; # !!! need a logo
-                };
+            { serviceType = "subversion";
+              id = "nix";
+              urlPrefix = "";
+              dataDir = "/data/subversion-nix";
+              notificationSender = "svn@svn.nixos.org";
+              userCreationDomain = "st.ewi.tudelft.nl";
+              organisation = {
+                name = "Nix";
+                url = http://nixos.org/;
+                logo = http://subversion.tigris.org/images/subversion_logo_hor-468x64.png; # !!! need a logo
               };
             }
           ];
