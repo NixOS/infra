@@ -52,7 +52,7 @@ rec {
   ];
   
   nix = {
-    maxJobs = 2;
+    maxJobs = 1;
     distributedBuilds = true;
     inherit buildMachines;
   };
@@ -112,14 +112,18 @@ rec {
     };
 
     cron = {
-      systemCronJobs = [
-        "25 * * * *  root  (TZ=CET date; ${pkgs.rsync}/bin/rsync -razv --numeric-ids --delete /data/subversion* /data/vm /data/pt-wiki /data/postgresql unixhome.st.ewi.tudelft.nl::bfarm/) >> /var/log/backup.log 2>&1"
+      systemCronJobs =
+        let indexJob = minute: dir: url: 
+          "${toString minute} * * * *  buildfarm  (cd /etc/nixos/release/index && PATH=${pkgs.saxonb}/bin:$PATH ./make-index.sh ${dir} ${url} /releases.css) | ${pkgs.utillinux}/bin/logger -t index";
+        in
+        [
+          "25 * * * *  root  (TZ=CET date; ${pkgs.rsync}/bin/rsync -razv --numeric-ids --delete /data/subversion* /data/vm /data/pt-wiki /data/postgresql unixhome.st.ewi.tudelft.nl::bfarm/) >> /var/log/backup.log 2>&1"
 
-        # Releases indices.
-        "10 * * * *  buildfarm  (cd /etc/nixos/release/index && PATH=${pkgs.saxonb}/bin:$PATH ./make-index.sh /data/webserver/dist/nix http://nixos.org/releases/ /releases.css) >> /var/log/index 2>&1"
-        "20 * * * *  buildfarm  (cd /etc/nixos/release/index && PATH=${pkgs.saxonb}/bin:$PATH ./make-index.sh /data/webserver/dist/strategoxt2 http://releases.strategoxt.org/ /releases.css) >> /var/log/index 2>&1"
-        "30 * * * *  buildfarm  (cd /etc/nixos/release/index && PATH=${pkgs.saxonb}/bin:$PATH ./make-index.sh /data/webserver/dist http://buildfarm.st.ewi.tudelft.nl /releases.css) >> /var/log/index 2>&1"
-      ];
+          # Releases indices.
+          (indexJob 10 "/data/webserver/dist/nix" http://nixos.org/releases/)
+          (indexJob 20 "/data/webserver/dist/strategoxt2" http://releases.strategoxt.org/)
+          (indexJob 40 "/data/webserver/dist" http://buildfarm.st.ewi.tudelft.nl/)
+        ];
     };
 
     dhcpd = {
@@ -187,44 +191,6 @@ rec {
       dataDir = "/data/postgresql";
     };
 
-    nagios = {
-      enable = true;
-      enableWebInterface = true;
-      objectDefs = [
-        ./nagios-base.cfg
-        (pkgs.writeText "nagios-machines.cfg" (
-          map (machine:
-            let hostName = machine.hostName; in
-            "
-              define host {
-                host_name  ${hostName}
-                use        generic-server
-                alias      Build machine ${hostName} (${machine.system})
-                address    ${hostName}
-                hostgroups tud-buildfarm
-              }
-
-              define service {
-                service_description SSH on ${hostName}
-                use                 local-service
-                host_name           ${hostName}
-                servicegroups       ssh
-                check_command       check_ssh
-              }
-
-              #define service {
-              #  service_description /nix on ${hostName}
-              #  use                 local-service
-              #  host_name           ${hostName}
-              #  servicegroups       diskspace
-              #  check_command       check_remote_disk!nagios!/var/lib/nagios/id_nagios!75%!10%!/nix
-              #}
-            "
-          ) machineList
-        ))
-      ];
-    };
-    
     httpd = {
       enable = true;
       experimental = true;
@@ -237,6 +203,19 @@ rec {
           
       extraConfig = ''
         AddType application/nix-package .nixpkg
+
+        ScriptAlias /status /home/eelco/release/status/status.pl
+        <Location /status>
+          Order deny,allow
+          Allow from all
+        </Location>
+
+        Alias /zabbix ${pkgs.zabbixServer}/share/zabbix/php
+        <Directory ${pkgs.zabbixServer}/share/zabbix/php>
+          DirectoryIndex index.php
+          Order deny,allow
+          Allow from *
+        </Directory>
       '';
           
       servedFiles = [
@@ -416,6 +395,19 @@ rec {
 
       ];
     };
+
+    zabbixAgent = {
+      enable = true;
+    };
+
+    zabbixServer = {
+      enable = true;
+    };
+
+  };
+
+  environment = {
+    nix = pkgs: pkgs.nixNoBDB;
   };
 
 }

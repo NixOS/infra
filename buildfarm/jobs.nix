@@ -11,7 +11,7 @@ let
     inputs = {
       job = pathInput ../../../release;
       #job = svnInput jobBaseline;
-      nixpkgs = svnInputRev nixpkgsBaseline 11620;
+      nixpkgs = svnInputRev nixpkgsBaseline 11922;
     } // attrs.inputs;
   };
 
@@ -101,6 +101,15 @@ in
     dirName = "nixpkgs";
     inputs = {
       nixpkgsCheckout = svnInput https://svn.nixos.org/repos/nix/nixpkgs/trunk;
+    };
+    jobExpr = "../jobs/nix/nixpkgs.nix";
+    jobAttr = "nixpkgsRelease";
+  };
+
+  nixpkgsStdenvBranch = makeNixJob {
+    dirName = "nixpkgs-stdenv-branch";
+    inputs = {
+      nixpkgsCheckout = svnInput https://svn.nixos.org/repos/nix/nixpkgs/branches/stdenv-updates;
     };
     jobExpr = "../jobs/nix/nixpkgs.nix";
     jobAttr = "nixpkgsRelease";
