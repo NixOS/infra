@@ -70,8 +70,14 @@ let
       inherit makeJob pathInput svnInput svnInputRev;
     };
 
+  spoofaxJobs = 
+    (import ./spoofax/jobs.nix) {
+      inherit makeJob pathInput svnInput svnInputRev;
+    };
+
 in
-  strategoxtJobs // {
+  strategoxtJobs //
+  spoofaxJobs    // {
   
 
   /* Nix */
