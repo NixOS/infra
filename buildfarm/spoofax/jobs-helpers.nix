@@ -105,7 +105,7 @@ rec {
     [
       ("../jobs/" + jobFile)
       jobAttr
-      ("/data/webserver/dist/spoofax/" + subdir)
+      ("/data/webserver/dist/strategoxt/" + subdir)
       ("http://releases.strategoxt.org/" + subdir)
       "/data/webserver/dist/nix-cache"
       "http://buildfarm.st.ewi.tudelft.nl/releases/nix-cache"
