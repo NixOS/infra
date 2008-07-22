@@ -9,7 +9,7 @@ rec {
       # directory relative to the supervisor.
       "../jobs/spoofax/releases.nix"
       attrs.jobAttr
-      "/data/webserver/dist/spoofax/${attrs.dirName}"
+      "/data/webserver/dist/strategoxt/${attrs.dirName}"
       "http://releases.strategoxt.org/${attrs.dirName}"
       "/data/webserver/dist/nix-cache"
       "http://buildfarm.st.ewi.tudelft.nl/releases/nix-cache"
