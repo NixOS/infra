@@ -10,10 +10,10 @@ with (import ./jobs-helpers.nix) attrs;
     makeInfoURL = makeInfoURL.usingBaseline;
   };
 
-  spoofaxJsglrTrunk = makeEasyJob {
-    spec = specs.spoofaxJsglr;
-    makeInfoURL = makeInfoURL.usingBaseline;
-  };
+#  spoofaxJsglrTrunk = makeEasyJob {
+#    spec = specs.spoofaxJsglr;
+#    makeInfoURL = makeInfoURL.usingBaseline;
+#  };
 
 }
 
