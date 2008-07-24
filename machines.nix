@@ -19,7 +19,7 @@
     system = "x86_64-linux";
     aliases = ["linux64-1" "linux64"];
     maxJobs = 2;
-    #buildUser = "buildfarm";
+    buildUser = "buildfarm";
   };
   phillip = {
     ipAddress = "192.168.1.13";
@@ -43,7 +43,7 @@
     system = "i686-linux";
     aliases = ["linux32-2"];
     maxJobs = 2;
-    #buildUser = "buildfarm";
+    buildUser = "buildfarm";
   };
   token = {
     ipAddress = "192.168.1.16";

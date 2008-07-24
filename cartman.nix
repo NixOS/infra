@@ -18,8 +18,7 @@ let
 
   supervisor = import ../../release/supervisor/supervisor.nix {
     stateDir = "/home/buildfarm/buildfarm-state";
-    #jobsURL = https://svn.cs.uu.nl:12443/repos/trace/configurations/trunk/tud/buildfarm/jobs.nix;
-    jobsFile = toString /etc/nixos/configurations/tud/buildfarm/jobs.nix;
+    jobsFile = toString /home/buildfarm/jobs.nix;
     fromAddress = "TU Delft Nix Buildfarm <e.dolstra@tudelft.nl>";
   };
 
@@ -55,6 +54,11 @@ rec {
     maxJobs = 1;
     distributedBuilds = true;
     inherit buildMachines;
+    extraOptions = ''
+      # The default (`true') slows Nix down a lot since the build farm
+      # has so many GC roots.
+      gc-check-reachability = false
+    '';
   };
   
   networking = {

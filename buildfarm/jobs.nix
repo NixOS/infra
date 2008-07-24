@@ -91,15 +91,6 @@ in
     jobAttr = "nixRelease";
   };
   
-  nixNoBDBBranch = makeNixJob {
-    dirName = "nix-no-bdb";
-    inputs = {
-      nixCheckout = svnInput https://svn.nixos.org/repos/nix/nix/branches/no-bdb;
-    };
-    jobExpr = "../jobs/nix/nix.nix";
-    jobAttr = "nixRelease";
-  };
-  
 
   /* Nixpkgs */
 
@@ -119,6 +110,7 @@ in
     };
     jobExpr = "../jobs/nix/nixpkgs.nix";
     jobAttr = "nixpkgsRelease";
+    disabled = true;
   };
 
 
