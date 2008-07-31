@@ -15,6 +15,11 @@ with (import ./jobs-helpers.nix) attrs;
     makeInfoURL = makeInfoURL.usingBaseline;
   };
 
+  aster = makeEasyJob {
+    spec = specs.asterUnstable;
+    makeInfoURL = makeInfoURL.usingBaseline;
+  };
+
   aspectjFrontSyntaxTrunk = makeEasyJob {
     spec = specs.aspectjFrontSyntax;
     makeInfoURL = makeInfoURL.usingBaseline;
