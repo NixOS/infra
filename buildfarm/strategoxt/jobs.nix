@@ -417,6 +417,27 @@ with (import ./jobs-helpers.nix) attrs;
   };
 
 
+  strategoxtBootstrapBranch = makeJob {
+    args =
+      strategoxtArgs {
+        jobFile = "strategoxt/strategoxt-ng.nix";
+        jobAttr = "release";
+        subdir = "strategoxt-bootstrap";
+      };
+
+    inputs = rec {
+      strategoxtCheckout = svnInput (builtins.getAttr packagePath.path specs easy.fakePkgs).svn.trunk;
+      systems = pathInput ./systems.nix;
+      atermInfo = makeInfoURL.usingBaseline specs.aterm;
+      sdf2BundleInfo = makeInfoURL.usingBaseline specs.sdf2Bundle;
+      strategoxtBaselineTarball = urlInput baseline.strategoxtBootstrap;
+      packagePath = { path = "strategoxtBootstrap"; };
+    };
+
+    notifyAddresses = ["nicolas.b.pierron@gmail.com"];
+  };
+
+
 }
 
 
