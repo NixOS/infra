@@ -15,8 +15,8 @@ with (import ./jobs-helpers.nix) attrs;
     makeInfoURL = makeInfoURL.usingBaseline;
   };
 
-  aster = makeEasyJob {
-    spec = specs.asterUnstable;
+  asterTrunk = makeEasyJob {
+    spec = specs.aster;
     makeInfoURL = makeInfoURL.usingBaseline;
   };
 
@@ -87,6 +87,11 @@ with (import ./jobs-helpers.nix) attrs;
 
   xdocTrunk = makeEasyJob {
     spec = specs.xdoc;
+    makeInfoURL = makeInfoURL.usingBaseline;
+  };
+
+  webdslTrunk = makeEasyJob {
+    spec = specs.webdsl;
     makeInfoURL = makeInfoURL.usingBaseline;
   };
 
