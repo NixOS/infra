@@ -15,7 +15,8 @@
 
   # used for compiling Stratego/XT from Subversion.
   strategoxtBootstrap =
-    http://releases.strategoxt.org/strategoxt/strategoxt-0.17M3pre17690-0ryq08iv/strategoxt-0.17M3pre17690.tar.gz;
+    http://releases.strategoxt.org/strategoxt/strategoxt-0.17pre17928-x2sni5sg/strategoxt-0.17pre17928.tar.gz
+    # http://releases.strategoxt.org/strategoxt/strategoxt-0.17M3pre17690-0ryq08iv/strategoxt-0.17M3pre17690.tar.gz;
     # ftp server is down a lot at the moment
     # ftp://ftp.strategoxt.org/pub/stratego/StrategoXT/baseline/latest/strategoxt.tar.gz
 }
