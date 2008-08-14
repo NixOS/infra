@@ -426,12 +426,12 @@ with (import ./jobs-helpers.nix) attrs;
       };
 
     inputs = rec {
-      strategoxtCheckout = svnInput (builtins.getAttr packagePath.path specs easy.fakePkgs).svn.trunk;
+      strategoxtCheckout = svnInput (builtins.getAttr packagePath.string specs easy.fakePkgs).svn.trunk;
       systems = pathInput ./systems.nix;
       atermInfo = makeInfoURL.usingBaseline specs.aterm;
       sdf2BundleInfo = makeInfoURL.usingBaseline specs.sdf2Bundle;
       strategoxtBaselineTarball = urlInput baseline.strategoxtBootstrap;
-      packagePath = { path = "strategoxtBootstrap"; };
+      packagePath = {type = "string"; string = "strategoxtBootstrap";};
     };
 
     notifyAddresses = ["nicolas.b.pierron@gmail.com"];

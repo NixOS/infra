@@ -101,6 +101,7 @@ in
     };
     jobExpr = "../jobs/nix/nixpkgs.nix";
     jobAttr = "nixpkgsRelease";
+    notifyAddresses = ["nix-commits@cs.uu.nl"];
   };
 
   nixpkgsStdenvBranch = makeNixJob {
