@@ -38,11 +38,13 @@ rec {
       extraKernelModules = ["arcmsr"];
     };
     kernelModules = ["kvm-intel"];
+    kernelPackages = pkgs: pkgs.kernelPackages_2_6_25;
   };
 
   fileSystems = [
     { mountPoint = "/";
       label = "nixos";
+      options = "acl";
     }
   ];
 
@@ -127,6 +129,8 @@ rec {
           (indexJob 10 "/data/webserver/dist/nix" http://nixos.org/releases/)
           (indexJob 20 "/data/webserver/dist/strategoxt2" http://releases.strategoxt.org/)
           (indexJob 40 "/data/webserver/dist" http://buildfarm.st.ewi.tudelft.nl/)
+
+          "35 03 * * * root  ${pkgs.nixUnstable}/bin/nix-collect-garbage --max-links 30000 > /var/log/gc.log 2>&1"
         ];
     };
 
