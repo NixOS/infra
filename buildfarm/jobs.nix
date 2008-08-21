@@ -18,7 +18,7 @@ let
 
   /* Common variables for (almost) all jobs. */
 
-  jobBaseline = https://svn.nixos.org/repos/nix/release/branches/new;
+  jobBaseline = https://svn.nixos.org/repos/nix/release/trunk;
 
   nixpkgsBaseline = https://svn.nixos.org/repos/nix/nixpkgs/trunk;
 
