@@ -130,7 +130,7 @@ rec {
           (indexJob 20 "/data/webserver/dist/strategoxt2" http://releases.strategoxt.org/)
           (indexJob 40 "/data/webserver/dist" http://buildfarm.st.ewi.tudelft.nl/)
 
-          "35 03 * * * root  ${pkgs.nixUnstable}/bin/nix-collect-garbage --max-links 30000 > /var/log/gc.log 2>&1"
+          "35 03 * * * root  ${pkgs.nixUnstable}/bin/nix-collect-garbage --max-links 27500 > /var/log/gc.log 2>&1"
         ];
     };
 
