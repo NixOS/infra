@@ -119,16 +119,16 @@ rec {
 
     cron = {
       systemCronJobs =
-        let indexJob = minute: dir: url: 
-          "${toString minute} * * * *  buildfarm  (cd /etc/nixos/release/index && PATH=${pkgs.saxonb}/bin:$PATH ./make-index.sh ${dir} ${url} /releases.css) | ${pkgs.utillinux}/bin/logger -t index";
+        let indexJob = hour: dir: url: 
+          "45 ${toString hour} * * *  buildfarm  (cd /etc/nixos/release/index && PATH=${pkgs.saxonb}/bin:$PATH ./make-index.sh ${dir} ${url} /releases.css) | ${pkgs.utillinux}/bin/logger -t index";
         in
         [
-          "25 * * * *  root  (TZ=CET date; ${pkgs.rsync}/bin/rsync -razv --numeric-ids --delete /data/subversion* /data/vm /data/pt-wiki /data/postgresql unixhome.st.ewi.tudelft.nl::bfarm/) >> /var/log/backup.log 2>&1"
+          "25 5 * * *  root  (TZ=CET date; ${pkgs.rsync}/bin/rsync -razv --numeric-ids --delete /data/subversion* /data/vm /data/pt-wiki /data/postgresql unixhome.st.ewi.tudelft.nl::bfarm/) >> /var/log/backup.log 2>&1"
 
           # Releases indices.
-          (indexJob 10 "/data/webserver/dist/nix" http://nixos.org/releases/)
-          (indexJob 20 "/data/webserver/dist/strategoxt2" http://releases.strategoxt.org/)
-          (indexJob 40 "/data/webserver/dist" http://buildfarm.st.ewi.tudelft.nl/)
+          (indexJob 01 "/data/webserver/dist/nix" http://nixos.org/releases/)
+          (indexJob 02 "/data/webserver/dist/strategoxt2" http://releases.strategoxt.org/)
+          (indexJob 05 "/data/webserver/dist" http://buildfarm.st.ewi.tudelft.nl/)
 
           "35 03 * * * root  ${pkgs.nixUnstable}/bin/nix-collect-garbage --max-links 27500 > /var/log/gc.log 2>&1"
         ];
@@ -400,10 +400,6 @@ rec {
       enable = true;
     };
 
-  };
-
-  environment = {
-    nix = pkgs: pkgs.nixNoBDB;
   };
 
 }
