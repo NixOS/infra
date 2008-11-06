@@ -351,7 +351,7 @@ with (import ./jobs-helpers.nix) attrs;
       strategoxtBaselineTarball = urlInput baseline.strategoxtBootstrap;
     };
 
-    notifyAddresses = ["karltk@strategoxt.org" "martin.bravenboer@gmail.com" "e.visser@tudelft.nl"];
+    notifyAddresses = ["karltk@strategoxt.org" "martin.bravenboer@gmail.com" "e.visser@tudelft.nl" "l.c.l.kats@tudelft.nl"];
   };
 
   strategoxtManualTrunk = makeJob {
