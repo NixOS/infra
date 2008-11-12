@@ -8,7 +8,7 @@
     http://releases.strategoxt.org/strategoxt-0.17/sdf2-bundle/sdf2-bundle-2.4pre212034-37nm9z7p/;
 
   strategoxt =
-    http://releases.strategoxt.org/strategoxt/strategoxt-0.17pre18253-i9sd1ni4/strategoxt-0.17pre18253.tar.gz;
+    http://releases.strategoxt.org/strategoxt/strategoxt-0.17pre18253-i9sd1ni4/;
 
   strategoLibraries =
     http://releases.strategoxt.org/stratego-libraries/stratego-libraries-0.17pre1768017680-hjqcxi9w/;
