@@ -20,6 +20,9 @@
 
   nix = {
     maxJobs = 2;
+    extraOptions = ''
+      build-max-silent-time = 3600
+    '';
   };
   
   services = {
