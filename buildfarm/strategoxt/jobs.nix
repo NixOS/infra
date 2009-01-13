@@ -70,6 +70,11 @@ with (import ./jobs-helpers.nix) attrs;
     makeInfoURL = makeInfoURL.usingBaseline;
   };
 
+  magnoliaTrunk = makeEasyJob {
+    spec = specs.magnolia;
+    makeInfoURL = makeInfoURL.usingBaseline;
+  };
+
   strategoxtUtilsTrunk = makeEasyJob {
     spec = specs.strategoxtUtils;
     makeInfoURL = makeInfoURL.usingBaseline;
