@@ -38,8 +38,4 @@
   networking = {
     hostName = ""; # obtain from DHCP server
   };
-
-  environment = {
-    nix = pkgs: pkgs.nixNoBDB;
-  };
 }
