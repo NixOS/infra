@@ -8,6 +8,7 @@
     };
     kernelModules = ["kvm-intel"];
     kernelPackages = pkgs: pkgs.kernelPackages_2_6_27;
+    copyKernels = true;
   };
 
   fileSystems = [
