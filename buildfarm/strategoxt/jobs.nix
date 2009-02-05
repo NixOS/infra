@@ -15,6 +15,11 @@ with (import ./jobs-helpers.nix) attrs;
     makeInfoURL = makeInfoURL.usingBaseline;
   };
 
+  prologToolsTrunk = makeEasyJob {
+    spec = specs.prologTools;
+    makeInfoURL = makeInfoURL.usingBaseline;
+  };
+
   asterTrunk = makeEasyJob {
     spec = specs.aster;
     makeInfoURL = makeInfoURL.usingBaseline;
@@ -67,6 +72,11 @@ with (import ./jobs-helpers.nix) attrs;
 
   transformersCxxToolsTrunk = makeEasyJob {
     spec = specs.transformersCxxTools;
+    makeInfoURL = makeInfoURL.usingBaseline;
+  };
+
+  lutinTrunk = makeEasyJob {
+    spec = specs.lutin;
     makeInfoURL = makeInfoURL.usingBaseline;
   };
 
