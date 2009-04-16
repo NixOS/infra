@@ -38,13 +38,13 @@ rec {
       extraKernelModules = ["arcmsr"];
     };
     kernelModules = ["kvm-intel"];
-    kernelPackages = pkgs: pkgs.kernelPackages_2_6_25;
+    kernelPackages = pkgs: pkgs.kernelPackages_2_6_27;
   };
 
   fileSystems = [
     { mountPoint = "/";
       label = "nixos";
-      options = "acl";
+      options = "acl,noatime";
     }
   ];
 
@@ -53,13 +53,20 @@ rec {
   ];
   
   nix = {
-    maxJobs = 1;
+    maxJobs = 0;
     distributedBuilds = true;
     inherit buildMachines;
     extraOptions = ''
+      gc-keep-outputs = true
+      
       # The default (`true') slows Nix down a lot since the build farm
       # has so many GC roots.
       gc-check-reachability = false
+
+      # Hydra needs caching of build failures.
+      build-cache-failure = true
+
+      build-poll-interval = 10
     '';
   };
   
@@ -82,7 +89,7 @@ rec {
     nameservers = ["130.161.158.4" "130.161.33.17" "130.161.180.1"];
 
     extraHosts = 
-      let toHosts = m: "${m.ipAddress} ${m.hostName} ${pkgs.lib.concatStringsSep " " m.aliases}\n"; in
+      let toHosts = m: "${m.ipAddress} ${m.hostName} ${pkgs.lib.concatStringsSep " " (if m ? aliases then m.aliases else [])}\n"; in
       pkgs.lib.concatStrings (map toHosts machineList);
 
     localCommands =
@@ -123,14 +130,14 @@ rec {
           "45 ${toString hour} * * *  buildfarm  (cd /etc/nixos/release/index && PATH=${pkgs.saxonb}/bin:$PATH ./make-index.sh ${dir} ${url} /releases.css) | ${pkgs.utillinux}/bin/logger -t index";
         in
         [
-          "25 5 * * *  root  (TZ=CET date; ${pkgs.rsync}/bin/rsync -razv --numeric-ids --delete /data/subversion* /data/vm /data/pt-wiki /data/postgresql unixhome.st.ewi.tudelft.nl::bfarm/) >> /var/log/backup.log 2>&1"
+          "15 0 * * *  root  (TZ=CET date; ${pkgs.rsync}/bin/rsync -razv --numeric-ids --delete /data/subversion* /data/vm /data/pt-wiki /data/postgresql /data/webserver/tarballs /home/buildfarm/hydra unixhome.st.ewi.tudelft.nl::bfarm/) >> /var/log/backup.log 2>&1"
 
           # Releases indices.
           (indexJob 01 "/data/webserver/dist/nix" http://nixos.org/releases/)
           (indexJob 02 "/data/webserver/dist/strategoxt2" http://releases.strategoxt.org/)
           (indexJob 05 "/data/webserver/dist" http://buildfarm.st.ewi.tudelft.nl/)
 
-          "35 03 * * * root  ${pkgs.nixUnstable}/bin/nix-collect-garbage --max-links 27500 > /var/log/gc.log 2>&1"
+          "00 03 * * * root ${pkgs.nixUnstable}/bin/nix-collect-garbage --max-atime $(date +\\%s -d '2 weeks ago') > /var/log/gc.log 2>&1"
         ];
     };
 
@@ -235,6 +242,7 @@ rec {
 
         { hostName = "buildfarm.st.ewi.tudelft.nl";
           documentRoot = pkgs.lib.cleanSource ./webroot;
+          enableUserDir = true;
           extraSubservices = [
             { serviceType = "subversion";
               urlPrefix = "";
@@ -326,8 +334,8 @@ rec {
         { hostName = "bugs.strategoxt.org";
           extraConfig = ''
             <Proxy *>
-            Order deny,allow
-            Allow from all
+              Order deny,allow
+              Allow from all
             </Proxy>
 
             ProxyRequests     Off
@@ -384,6 +392,20 @@ rec {
           globalRedirect = "https://svn.nixos.org/";
         }
         
+        { hostName = "hydra.nixos.org";
+          extraConfig = ''
+            <Proxy *>
+              Order deny,allow
+              Allow from all
+            </Proxy>
+
+            ProxyRequests     Off
+            ProxyPreserveHost On
+            ProxyPass         /       http://localhost:3000/
+            ProxyPassReverse  /       http://localhost:3000/
+          '';
+        }
+
         { hostName = "planet.strategoxt.org";
           serverAliases = ["planet.stratego.org"];
           documentRoot = "/home/karltk/public_html/planet";

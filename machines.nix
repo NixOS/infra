@@ -61,4 +61,8 @@
     maxJobs = 2;
     buildUser = "nix";
   };
+  hydra = {
+    ipAddress = "192.168.1.18";
+    ethernetAddress = "00:22:19:55:bf:24";
+  };
 }
