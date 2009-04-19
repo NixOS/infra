@@ -9,9 +9,9 @@ let
   makeJob = attrs: attrs // {
     jobScript = defaultJobScript;
     inputs = {
-      job = pathInput ../../../release;
-      #job = svnInput jobBaseline;
-      nixpkgs = svnInputRev nixpkgsBaseline 12812;
+      #job = pathInput ../../../release;
+      job = svnInput jobBaseline;
+      nixpkgs = svnInputRev nixpkgsBaseline 13338;
     } // attrs.inputs;
   };
 
@@ -80,18 +80,6 @@ in
   spoofaxJobs    // {
   
 
-  /* Nix */
-
-  nixTrunk = makeNixJob {
-    dirName = "nix";
-    inputs = {
-      nixCheckout = svnInput https://svn.nixos.org/repos/nix/nix/trunk;
-    };
-    jobExpr = "../jobs/nix/nix.nix";
-    jobAttr = "nixRelease";
-  };
-  
-
   /* Nixpkgs */
 
   nixpkgsTrunk = makeNixJob {
@@ -101,48 +89,14 @@ in
     };
     jobExpr = "../jobs/nix/nixpkgs.nix";
     jobAttr = "nixpkgsRelease";
-    notifyAddresses = ["nix-commits@cs.uu.nl"];
-  };
-
-  nixpkgsStdenvBranch = makeNixJob {
-    dirName = "nixpkgs-stdenv-branch";
-    inputs = {
-      nixpkgsCheckout = svnInput https://svn.nixos.org/repos/nix/nixpkgs/branches/stdenv-updates;
-    };
-    jobExpr = "../jobs/nix/nixpkgs.nix";
-    jobAttr = "nixpkgsRelease";
+    #notifyAddresses = ["nix-commits@cs.uu.nl"];
     disabled = true;
-  };
-
-
-  /* NixOS */
-  
-  nixosTrunk = makeNixJob {
-    dirName = "nixos";
-    inputs = {
-      nixosCheckout = svnInput https://svn.nixos.org/repos/nix/nixos/trunk;
-      nixpkgsCheckout = svnInput https://svn.nixos.org/repos/nix/nixpkgs/trunk;
-    };
-    jobExpr = "../jobs/nix/nixos.nix";
-    jobAttr = "nixosRelease";
-    disabled = true;
-  };
-  
-  
-  /* PatchELF */
-
-  patchelfTrunk = makeNixJob {
-    dirName = "patchelf";
-    inputs = {
-      patchelfCheckout = svnInput https://svn.nixos.org/repos/nix/patchelf/trunk;
-    };
-    jobExpr = "../jobs/nix/patchelf.nix";
-    jobAttr = "patchelfRelease";
   };
 
 
   /* UU ST group jobs */
 
+  /*
   uulibTrunk = makeUUSTJob {
     dirName = "uulib";
     inputs = {
@@ -182,6 +136,7 @@ in
     jobExpr = "../jobs/hut/helium.nix";
     jobAttr = "heliumRelease";
   }; 
+  */
   
 
   /* TorX */

@@ -338,13 +338,13 @@ with (import ./jobs-helpers.nix) attrs;
   phpFrontSyntaxDocsTrunk = makeSyntaxJob {
     subdir = "php-front";
     jobAttr = "phpFrontSyntax";
-    svn = https://svn.cs.uu.nl:12443/repos/psat/php-front/trunk/src/grammar;
+    svn = https://svn.strategoxt.org/repos/psat/php-front/trunk/src/grammar;
   };
 
   phpFrontLibraryDocsTrunk = makeAPIJob {
     subdir = "libphp-front";
     jobAttr = "phpFrontLibrary";
-    svn = https://svn.cs.uu.nl:12443/repos/psat/php-front/trunk/src/lib;
+    svn = https://svn.strategoxt.org/repos/psat/php-front/trunk/src/lib;
   };
 
   /**
