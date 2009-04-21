@@ -401,8 +401,8 @@ rec {
 
             ProxyRequests     Off
             ProxyPreserveHost On
-            ProxyPass         /       http://localhost:3000/
-            ProxyPassReverse  /       http://localhost:3000/
+            ProxyPass         /       http://hydra:3000/
+            ProxyPassReverse  /       http://hydra:3000/
           '';
         }
 
