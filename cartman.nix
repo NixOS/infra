@@ -4,9 +4,6 @@ let
 
   machines = import ./machines.nix;
 
-  machineList = map (name: {hostName = name;} // builtins.getAttr name machines)
-    (builtins.attrNames machines);
-
   # Produce the list of Nix build machines in the format expected by
   # the Nix daemon Upstart job.
   buildMachines =
@@ -14,7 +11,7 @@ let
       { sshKey = "/root/.ssh/id_buildfarm";
         sshUser = machine.buildUser;
       };
-    in map addKey (pkgs.lib.filter (machine: machine ? buildUser) machineList);
+    in map addKey (pkgs.lib.filter (machine: machine ? buildUser) machines);
 
   supervisor = import ../../release/supervisor/supervisor.nix {
     stateDir = "/home/buildfarm/buildfarm-state";
@@ -80,7 +77,7 @@ rec {
         subnetMask = "255.255.254.0";
       }
       { name = "eth0";
-        ipAddress = machines.cartman.ipAddress;
+        ipAddress = (pkgs.lib.findSingle (m: m.hostName == "cartman") {} {} machines).ipAddress;
       }
     ];
 
@@ -90,7 +87,7 @@ rec {
 
     extraHosts = 
       let toHosts = m: "${m.ipAddress} ${m.hostName} ${pkgs.lib.concatStringsSep " " (if m ? aliases then m.aliases else [])}\n"; in
-      pkgs.lib.concatStrings (map toHosts machineList);
+      pkgs.lib.concatStrings (map toHosts machines);
 
     localCommands =
       # Provide NATting for the build machines on 192.168.1.*.
@@ -157,7 +154,7 @@ rec {
 
         use-host-decl-names on;
       '';
-      machines = pkgs.lib.filter (machine: machine ? ethernetAddress) machineList;
+      machines = pkgs.lib.filter (machine: machine ? ethernetAddress) machines;
     };
     
     extraJobs = [
