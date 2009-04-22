@@ -26,6 +26,15 @@
   }
   
   {
+    hostName = "kyle";
+    ipAddress = "192.168.1.21";
+    ethernetAddress = "00:22:19:55:c1:18";
+    system = "x86_64-linux";
+    maxJobs = 8;
+    buildUser = "buildfarm";
+  }
+  
+  {
     hostName = "garrison";
     ipAddress = "192.168.1.11";
     ethernetAddress = "00:19:d1:10:37:54";
