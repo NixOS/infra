@@ -11,7 +11,7 @@ let
     inputs = {
       #job = pathInput ../../../release;
       job = svnInput jobBaseline;
-      nixpkgs = svnInputRev nixpkgsBaseline 13338;
+      nixpkgs = svnInputRev nixpkgsBaseline 15249;
     } // attrs.inputs;
   };
 
