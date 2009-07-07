@@ -43,7 +43,7 @@
     */
     cron = {
       systemCronJobs = [
-        "15 03 * * * root ${pkgs.nixUnstable}/bin/nix-collect-garbage --max-atime $(date +\\%s -d '2 weeks ago') > /var/log/gc.log 2>&1"
+        "15 03 * * * root ${pkgs.nixUnstable}/bin/nix-collect-garbage --max-freed $((32 * 1024**3)) > /var/log/gc.log 2>&1"
       ];
     };
   };
@@ -51,4 +51,6 @@
   networking = {
     hostName = ""; # obtain from DHCP server
   };
+
+  environment.extraPackages = [pkgs.emacs];
 }
