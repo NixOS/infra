@@ -11,6 +11,10 @@
     kernelModules = ["acpi-cpufreq" "kvm-intel"];
     kernelPackages = pkgs: pkgs.kernelPackages_2_6_28;
     copyKernels = true;
+
+    localCommands = ''
+      echo 60 > /proc/sys/kernel/panic
+    '';
   };
 
   fileSystems = [
