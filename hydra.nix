@@ -75,5 +75,9 @@ in
       enable = true;
     };
       
+    cron.systemCronJobs = 
+      [ "15 03 * * * root ${pkgs.nixUnstable}/bin/nix-collect-garbage --max-freed $((64 * 1024**3)) > /var/log/gc.log 2>&1"
+      ];
+
   };
 }
