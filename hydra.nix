@@ -25,7 +25,7 @@ in
     grubDevice = "/dev/sda";
     copyKernels = true;
   
-    localCommands = ''
+    postBootCommands = ''
       echo 60 > /proc/sys/kernel/panic
     '';
   };
@@ -67,6 +67,12 @@ in
     extraHosts = 
       let toHosts = m: "${m.ipAddress} ${m.hostName} ${pkgs.lib.concatStringsSep " " (if m ? aliases then m.aliases else [])}\n"; in
       pkgs.lib.concatStrings (map toHosts machines);
+
+    defaultMailServer = {
+      directDelivery = true;
+      hostName = "smtp.st.ewi.tudelft.nl";
+      domain = "st.ewi.tudelft.nl";
+    };
   };
 
   services = {
