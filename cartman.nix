@@ -1,6 +1,6 @@
-let 
+{config, pkgs, ...}:
 
-  pkgs = import /etc/nixos/nixpkgs {};
+let 
 
   machines = import ./machines.nix;
 
@@ -35,7 +35,8 @@ rec {
       extraKernelModules = ["arcmsr"];
     };
     kernelModules = ["kvm-intel"];
-    kernelPackages = pkgs: pkgs.kernelPackages_2_6_27;
+    kernelPackages = pkgs.kernelPackages_2_6_27;
+    copyKernels = true;
   };
 
   fileSystems = [
@@ -106,6 +107,9 @@ rec {
         iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -d 192.168.1.0/24 -j ACCEPT
         iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j SNAT --to-source ${myIP}
 
+        # losser ssh
+        iptables -t nat -A PREROUTING -p tcp -i eth1 --dport 8080 -j DNAT --to 192.168.1.18:2022
+
         echo 1 > /proc/sys/net/ipv4/ip_forward
       '';
 
@@ -159,17 +163,19 @@ rec {
     
     extraJobs = [
 
+      /*
       { name = "buildfarm";
         extraPath = [supervisor];
         job = ''
           description "Build farm job runner"
 
-          start on network-interfaces/started
+          #start on network-interfaces/started
           stop on network-interfaces/stop
 
-          respawn ${pkgs.su}/bin/su - buildfarm -c 'sendNotifications=1 ${supervisor}/bin/buildfarm-supervisor' > /var/log/buildfarm 2>&1
+          respawn ${pkgs.su}/bin/su - buildfarm -c 'sendNotifications=0 ${supervisor}/bin/buildfarm-supervisor' > /var/log/buildfarm 2>&1
         '';
       }
+      */
 
       { name = "jira";
         users = [
@@ -200,18 +206,19 @@ rec {
 
     postgresql = {
       enable = true;
+      enableTCPIP = true;
       dataDir = "/data/postgresql";
       authentication = ''
           local all all              ident sameuser
           host  all all 127.0.0.1/32 md5
           host  all all ::1/128      md5
           host  all all 192.168.1.18/32  md5
+          host  all all 130.161.159.80/32 md5
         '';
     };
 
     httpd = {
       enable = true;
-      experimental = true;
       logPerVirtualHost = true;
       adminAddr = "e.dolstra@tudelft.nl";
       hostName = "localhost";
@@ -271,9 +278,11 @@ rec {
                 logo = "/serg-logo.png";
               };
             }
+            /*
             { serviceType = "zabbix";
               urlPrefix = "/zabbix";
             }
+            */
           ];
           servedDirs = [
             { urlPath = "/releases";
@@ -294,6 +303,10 @@ rec {
           extraSubservices = [
             { serviceType = "twiki";
               startWeb = "Stratego/WebHome";
+              dataDir = "/data/pt-wiki/data";
+              pubDir = "/data/pt-wiki/pub";
+              twikiName = "Stratego/XT Wiki";
+              registrationDomain = "ewi.tudelft.nl";
             }
           ];
         }
@@ -330,6 +343,10 @@ rec {
           extraSubservices = [
             { serviceType = "twiki";
               startWeb = "Transform/WebHome";
+              dataDir = "/data/pt-wiki/data";
+              pubDir = "/data/pt-wiki/pub";
+              twikiName = "Program Transformation Wiki";
+              registrationDomain = "ewi.tudelft.nl";
             }
           ];
         }
@@ -414,9 +431,15 @@ rec {
           documentRoot = "/home/karltk/public_html/planet";
         }
 
+        { hostName = "buildfarm.info";
+          serverAliases = ["www.buildfarm.info"];
+          documentRoot = "/data/webserver/buildfarm.info";
+        }
+
       ];
     };
 
+    /*
     zabbixAgent = {
       enable = true;
     };
@@ -424,6 +447,7 @@ rec {
     zabbixServer = {
       enable = true;
     };
+    */
 
   };
 
