@@ -9,10 +9,10 @@
       extraKernelModules = ["uhci_hcd" "ehci_hcd" "ata_piix" "mptsas" "usbhid" "ext4"];
     };
     kernelModules = ["acpi-cpufreq" "kvm-intel"];
-    kernelPackages = pkgs: pkgs.kernelPackages_2_6_28;
+    kernelPackages = pkgs.kernelPackages_2_6_28;
     copyKernels = true;
 
-    localCommands = ''
+    postBootCommands = ''
       echo 60 > /proc/sys/kernel/panic
     '';
   };
