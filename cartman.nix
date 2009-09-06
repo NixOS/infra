@@ -28,6 +28,7 @@ let
 in
 
 rec {
+  #nixpkgs.config.packageOverrides = pkgs: { postgresql = pkgs.postgresql84 ; } ;
 
   boot = {
     grubDevice = "/dev/sda";
