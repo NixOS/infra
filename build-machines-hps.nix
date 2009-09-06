@@ -7,7 +7,7 @@
       extraKernelModules = ["3w_xxxx"];
     };
     kernelModules = ["kvm-intel"];
-    kernelPackages = pkgs: pkgs.kernelPackages_2_6_27;
+    kernelPackages = pkgs.kernelPackages_2_6_29;
     copyKernels = true;
   };
 
