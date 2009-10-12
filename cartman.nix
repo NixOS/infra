@@ -13,12 +13,6 @@ let
       };
     in map addKey (pkgs.lib.filter (machine: machine ? buildUser) machines);
 
-  supervisor = import ../../release/supervisor/supervisor.nix {
-    stateDir = "/home/buildfarm/buildfarm-state";
-    jobsFile = toString /home/buildfarm/jobs.nix;
-    fromAddress = "TU Delft Nix Buildfarm <e.dolstra@tudelft.nl>";
-  };
-
   jiraJetty = (import ../../services/jira/jira-instance.nix).jetty;
 
   myIP = "130.161.158.181";
@@ -28,7 +22,6 @@ let
 in
 
 rec {
-  #nixpkgs.config.packageOverrides = pkgs: { postgresql = pkgs.postgresql84 ; } ;
 
   boot = {
     grubDevice = "/dev/sda";
@@ -57,15 +50,6 @@ rec {
     inherit buildMachines;
     extraOptions = ''
       gc-keep-outputs = true
-      
-      # The default (`true') slows Nix down a lot since the build farm
-      # has so many GC roots.
-      gc-check-reachability = false
-
-      # Hydra needs caching of build failures.
-      build-cache-failure = true
-
-      build-poll-interval = 10
     '';
   };
   
@@ -132,10 +116,7 @@ rec {
           "45 ${toString hour} * * *  buildfarm  (cd /etc/nixos/release/index && PATH=${pkgs.saxonb}/bin:$PATH ./make-index.sh ${dir} ${url} /releases.css) | ${pkgs.utillinux}/bin/logger -t index";
         in
         [
-          "15 0 * * *  root  (TZ=CET date; ${pkgs.rsync}/bin/rsync -razv --numeric-ids --delete /data/subversion* /data/vm /data/pt-wiki /data/postgresql /data/webserver/tarballs /home/buildfarm/hydra unixhome.st.ewi.tudelft.nl::bfarm/) >> /var/log/backup.log 2>&1"
-
-          # Releases indices.
-          (indexJob 01 "/data/webserver/dist/nix" http://nixos.org/releases/)
+          "15 0 * * *  root  (TZ=CET date; ${pkgs.rsync}/bin/rsync -razv --numeric-ids --delete /data/postgresql /data/webserver/tarballs unixhome.st.ewi.tudelft.nl::bfarm/) >> /var/log/backup.log 2>&1"
           (indexJob 02 "/data/webserver/dist/strategoxt2" http://releases.strategoxt.org/)
           (indexJob 05 "/data/webserver/dist" http://buildfarm.st.ewi.tudelft.nl/)
 
@@ -163,20 +144,6 @@ rec {
     };
     
     extraJobs = [
-
-      /*
-      { name = "buildfarm";
-        extraPath = [supervisor];
-        job = ''
-          description "Build farm job runner"
-
-          #start on network-interfaces/started
-          stop on network-interfaces/stop
-
-          respawn ${pkgs.su}/bin/su - buildfarm -c 'sendNotifications=0 ${supervisor}/bin/buildfarm-supervisor' > /var/log/buildfarm 2>&1
-        '';
-      }
-      */
 
       { name = "jira";
         users = [
@@ -235,6 +202,8 @@ rec {
           Order deny,allow
           Allow from all
         </Location>
+
+        SSLProtocol all -TLSv1
       '';
           
       servedFiles = [
@@ -439,6 +408,60 @@ rec {
 
       ];
     };
+
+    postgresqlBackup = {
+      enable = true;
+      databases = [ "hydra" "jira" ];
+    };
+
+    sitecopy = {
+      enable = true;
+      backups =
+        let genericBackup = { server = "webdata.tudelft.nl";
+                              protocol = "webdav";
+                              https = true ;
+                              symlinks = "ignore"; 
+                            };
+        in [
+          ( genericBackup // { name   = "postgresql";
+                               local  = config.services.postgresqlBackup.location;
+                               remote = "/staff-groups/ewi/st/strategoxt/backup/postgresql"; 
+                             } )
+          ( genericBackup // { name   = "subversion";
+                               local  = "/data/subversion";
+                               remote = "/staff-groups/ewi/st/strategoxt/backup/subversion/subversion"; 
+                             } )
+          ( genericBackup // { name   = "subversion-nix";
+                               local  = "/data/subversion-nix";
+                               remote = "/staff-groups/ewi/st/strategoxt/backup/subversion/subversion-nix"; 
+                               period = "15 03 * * *"; 
+                             } )
+          ( genericBackup // { name   = "subversion-ptg";
+                               local  = "/data/subversion-ptg";
+                               remote = "/staff-groups/ewi/st/strategoxt/backup/subversion/subversion-ptg"; 
+                             } )
+          ( genericBackup // { name   = "subversion-strategoxt"; 
+                               local  = "/data/subversion-strategoxt";
+                               remote = "/staff-groups/ewi/st/strategoxt/backup/subversion/subversion-strategoxt"; 
+                               period = "15 02 * * *"; 
+                             } )
+          ( genericBackup // { name   = "webserver-dist-nix"; 
+                               local  = "/data/webserver/dist/nix";
+                               remote = "/staff-groups/ewi/st/strategoxt/backup/webserver-dist-nix"; 
+                               period = "5 03 * * *"; 
+                             } )
+#          ( genericBackup // { name   = "webserver-tarballs"; 
+#                               local  = "/data/webserver/tarballs";
+#                               remote = "/staff-groups/ewi/st/strategoxt/backup/webserver-tarballs"; 
+#                               period = "5 03 * * *"; 
+#                             } )
+          ( genericBackup // { name   = "pt-wiki"; 
+                               local  = "/data/pt-wiki";
+                               remote = "/staff-groups/ewi/st/strategoxt/backup/pt-wiki"; 
+                               period = "55 02 * * *"; 
+                             } )
+        ];
+      };
 
     /*
     zabbixAgent = {
