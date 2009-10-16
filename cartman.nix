@@ -197,12 +197,6 @@ rec {
       extraConfig = ''
         AddType application/nix-package .nixpkg
 
-        ScriptAlias /status /home/eelco/release/status/status.pl
-        <Location /status>
-          Order deny,allow
-          Allow from all
-        </Location>
-
         SSLProtocol all -TLSv1
       '';
           
