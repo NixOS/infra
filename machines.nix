@@ -11,8 +11,9 @@
     hostName = "kenny";
     ipAddress = "192.168.1.19";
     ethernetAddress = "00:22:19:55:cc:0d";
-    system = "x86_64-linux";
+    systems = [ "x86_64-linux" "i686-linux" ];
     maxJobs = 8;
+    speedFactor = 2;
     buildUser = "buildfarm";
   }
   
@@ -20,8 +21,9 @@
     hostName = "stan";
     ipAddress = "192.168.1.20";
     ethernetAddress = "00:22:19:55:bf:2e";
-    system = "x86_64-linux";
+    systems = [ "x86_64-linux" "i686-linux" ];
     maxJobs = 8;
+    speedFactor = 2;
     buildUser = "buildfarm";
   }
   
@@ -29,8 +31,9 @@
     hostName = "kyle";
     ipAddress = "192.168.1.21";
     ethernetAddress = "00:22:19:55:c1:18";
-    system = "x86_64-linux";
+    systems = [ "x86_64-linux" "i686-linux" ];
     maxJobs = 8;
+    speedFactor = 2;
     buildUser = "buildfarm";
   }
   
@@ -48,8 +51,8 @@
     hostName = "terrance";
     ipAddress = "192.168.1.12";
     ethernetAddress = "00:19:d1:10:37:49";
-    system = "x86_64-linux";
-    aliases = ["linux64-1" "linux64"];
+    system = "i686-openbsd";
+    aliases = ["openbsd-1"];
     maxJobs = 2;
     buildUser = "buildfarm";
   }
@@ -58,8 +61,8 @@
     hostName = "phillip";
     ipAddress = "192.168.1.13";
     ethernetAddress = "00:19:d1:19:2a:31";
-    system = "x86_64-linux";
-    aliases = ["linux64-2"];
+    system = "i686-freebsd";
+    aliases = ["freebsd-1"];
     maxJobs = 2;
     buildUser = "buildfarm";
   }
@@ -71,7 +74,7 @@
     system = "i686-linux";
     aliases = ["linux32-1" "linux32" "linux"];
     maxJobs = 2;
-    buildUser = "buildfarm";
+    #buildUser = "buildfarm";
   }
   
   {
@@ -81,7 +84,7 @@
     system = "i686-linux";
     aliases = ["linux32-2"];
     maxJobs = 2;
-    buildUser = "buildfarm";
+    #buildUser = "buildfarm";
   }
   
   {

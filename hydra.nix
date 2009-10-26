@@ -82,7 +82,8 @@ in
     };
       
     cron.systemCronJobs = 
-      [ "15 03 * * * root ${pkgs.nixUnstable}/bin/nix-collect-garbage --max-freed $((64 * 1024**3)) > /var/log/gc.log 2>&1"
+      [ "15 02 * * * hydra /nix/var/nix/profiles/per-user/hydra/profile/bin/hydra_update_gc_roots.pl > /home/hydra/gc-roots.log 2>&1"
+        "15 03 * * * root  ${pkgs.nixUnstable}/bin/nix-collect-garbage --max-freed $((64 * 1024**3)) > /var/log/gc.log 2>&1"
       ];
 
   };
