@@ -112,4 +112,10 @@
     ipAddress = "192.168.1.18";
     ethernetAddress = "00:22:19:55:bf:24";
   }
+
+  {
+    hostName = "chef";
+    ipAddress = "192.168.1.22";
+    ethernetAddress = "00:26:b9:35:bb:ca";
+  }
 ]

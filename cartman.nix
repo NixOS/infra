@@ -1,5 +1,7 @@
 { config, pkgs, ... }:
 
+with pkgs.lib;
+
 let 
 
   machines = import ./machines.nix;
@@ -11,7 +13,7 @@ let
       { sshKey = "/root/.ssh/id_buildfarm";
         sshUser = machine.buildUser;
       };
-    in map addKey (pkgs.lib.filter (machine: machine ? buildUser) machines);
+    in map addKey (filter (machine: machine ? buildUser) machines);
 
   jiraJetty = (import ../../services/jira/jira-instance.nix).jetty;
 
@@ -64,7 +66,7 @@ rec {
         subnetMask = "255.255.254.0";
       }
       { name = "eth0";
-        ipAddress = (pkgs.lib.findSingle (m: m.hostName == "cartman") {} {} machines).ipAddress;
+        ipAddress = (findSingle (m: m.hostName == "cartman") {} {} machines).ipAddress;
       }
     ];
 
@@ -73,8 +75,8 @@ rec {
     nameservers = ["130.161.158.4" "130.161.33.17" "130.161.180.1"];
 
     extraHosts = 
-      let toHosts = m: "${m.ipAddress} ${m.hostName} ${pkgs.lib.concatStringsSep " " (if m ? aliases then m.aliases else [])}\n"; in
-      pkgs.lib.concatStrings (map toHosts machines);
+      let toHosts = m: "${m.ipAddress} ${m.hostName} ${concatStringsSep " " (if m ? aliases then m.aliases else [])}\n"; in
+      concatStrings (map toHosts machines);
 
     localCommands =
       # Provide NATting for the build machines on 192.168.1.*.
@@ -108,6 +110,7 @@ rec {
 
   services = {
     cron = {
+      mailto = "rob.vermaas@gmail.com";
       systemCronJobs =
         let indexJob = hour: dir: url: 
           "45 ${toString hour} * * *  buildfarm  (cd /etc/nixos/release/index && PATH=${pkgs.saxonb}/bin:$PATH ./make-index.sh ${dir} ${url} /releases.css) | ${pkgs.utillinux}/bin/logger -t index";
@@ -137,38 +140,9 @@ rec {
 
         use-host-decl-names on;
       '';
-      machines = pkgs.lib.filter (machine: machine ? ethernetAddress) machines;
+      machines = filter (machine: machine ? ethernetAddress) machines;
     };
     
-    extraJobs = [
-
-      { name = "jira";
-        users = [
-          { name = "jira";
-            description = "JIRA bug tracker";
-          }
-        ];
-        job = ''
-          description "JIRA bug tracker"
-
-          start on network-interfaces/started
-          stop on network-interfaces/stop
-
-          start script
-              mkdir -p /var/log/jetty /var/cache/jira
-              chown jira /var/log/jetty /var/cache/jira
-          end script
-
-          respawn ${pkgs.su}/bin/su -s ${pkgs.bash}/bin/sh jira -c '${jiraJetty}/bin/run-jetty'
-          
-          stop script
-              ${pkgs.su}/bin/su -s ${pkgs.bash}/bin/sh jira -c '${jiraJetty}/bin/stop-jetty'
-          end script
-        '';
-      }
-
-    ];
-
     postgresql = {
       enable = true;
       enableTCPIP = true;
@@ -212,7 +186,7 @@ rec {
       virtualHosts = [
 
         { hostName = "buildfarm.st.ewi.tudelft.nl";
-          documentRoot = pkgs.lib.cleanSource ./webroot;
+          documentRoot = cleanSource ./webroot;
           enableUserDir = true;
           extraSubservices = [
             { serviceType = "subversion";
@@ -339,6 +313,9 @@ rec {
             { urlPath = "/tarballs";
               dir = "/data/webserver/tarballs";
             }
+            { urlPath = "/irc";
+              dir = "/data/webserver/irc";
+            }
           ];
           servedFiles = [
             { urlPath = "/releases/css/releases.css";
@@ -455,15 +432,34 @@ rec {
       };
 
     /*
-    zabbixAgent = {
-      enable = true;
-    };
-
-    zabbixServer = {
-      enable = true;
-    };
+    zabbixAgent.enable = true;
+    zabbixServer.enable = true;
     */
 
   };
+
+  users.extraUsers = singleton
+    { name = "jira";
+      description = "JIRA bug tracker";
+    };
+
+  jobs.jira =
+    { description = "JIRA bug tracker";
+
+      startOn = "started network-interfaces";
+
+      preStart =
+        ''
+          mkdir -p /var/log/jetty /var/cache/jira
+          chown jira /var/log/jetty /var/cache/jira
+        '';
+
+      exec = "${pkgs.su}/bin/su -s ${pkgs.bash}/bin/sh jira -c '${jiraJetty}/bin/run-jetty'";
+
+      postStop =
+        ''
+          ${pkgs.su}/bin/su -s ${pkgs.bash}/bin/sh jira -c '${jiraJetty}/bin/stop-jetty'
+        '';
+    };
 
 }
