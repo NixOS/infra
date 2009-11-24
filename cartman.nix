@@ -22,6 +22,7 @@ let
 in
 
 rec {
+  require = [ ./common.nix ];
 
   boot = {
     grubDevice = "/dev/sda";
@@ -106,10 +107,6 @@ rec {
   };
 
   services = {
-    sshd = {
-      enable = true;
-    };
-
     cron = {
       systemCronJobs =
         let indexJob = hour: dir: url: 
