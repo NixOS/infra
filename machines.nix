@@ -106,6 +106,16 @@
     maxJobs = 2;
     buildUser = "nix";
   }
+
+  {
+    hostName = "butters";
+    ipAddress = "192.168.1.23";
+    ethernetAddress = "00:24:36:f3:cd:c0";
+    system = "x86_64-darwin";
+    aliases = ["mac64-1"];
+    maxJobs = 2;
+    buildUser = "nix";
+  }
   
   {
     hostName = "hydra";
