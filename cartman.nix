@@ -148,6 +148,7 @@ rec {
       enableTCPIP = true;
       dataDir = "/data/postgresql";
       authentication = ''
+          local all mediawiki        ident mediawiki-users
           local all all              ident sameuser
           host  all all 127.0.0.1/32 md5
           host  all all ::1/128      md5
@@ -362,6 +363,22 @@ rec {
             ProxyPass         /       http://hydra:3000/
             ProxyPassReverse  /       http://hydra:3000/
           '';
+        }
+
+        { hostName = "wiki.nixos.org";
+          extraConfig = ''
+            RedirectMatch ^/$ /wiki
+          '';
+          extraSubservices = [
+            { serviceType = "mediawiki";
+              siteName = "Nix Wiki";
+              logo = "http://nixos.org/logo/nix-wiki.png";
+              extraConfig =
+                ''
+                  $wgEmailConfirmToEdit = true;
+                '';
+            }
+          ];
         }
 
         { hostName = "planet.strategoxt.org";
