@@ -7,7 +7,7 @@ let
   modprobe = config.system.sbin.modprobe;
 
   couchdbUser = "couchdb";
-  couchdbFlags = "-c ${couchdbCfg}";
+  couchdbFlags = "-a ${couchdbCfg}";
   couchdbCfg = pkgs.writeText "couchdb.ini" ''
           [Couch]
           ConsoleStartupMsg=Apache CouchDB is starting.
@@ -20,6 +20,8 @@ let
           LogLevel=info
           [Couch Query Servers]
           javascript=${couchdb}/bin/couchjs ${couchdb}/share/couchdb/server/main.js
+
+          ${config.services.couchdb.extraIni}
         '';
 
   stateDir = "/var/spool/couchdb";
@@ -28,7 +30,8 @@ let
     name = "couchdb-wrapper";
     text = ''
       #!/bin/sh
-      HOME=${stateDir} ${couchdb}/bin/couchdb ${couchdbFlags}
+      EXTRA_PATH="${config.services.couchdb.extraPath}"
+      HOME=${stateDir} PATH="$PATH''${EXTRA_PATH:+:}$EXTRA_PATH" ${couchdb}/bin/couchdb ${couchdbFlags}
     ''; 
     executable = true;
     destination = "/bin/couchdb";
@@ -66,7 +69,18 @@ in
           Location of CouchDB log files
         '';
       };
-
+      extraIni = mkOption {
+        default = "";
+	description = ''
+	  Extra text to put verbatim in ini file.
+	'';
+      };
+      extraPath = mkOption {
+        default = "";
+	description =''
+	  Extra PATH for job
+	'';
+      };
     };
   };
 
