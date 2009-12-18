@@ -23,7 +23,7 @@ in
       extraKernelModules = [ "uhci_hcd" "ehci_hcd" "ata_piix" "mptsas" "usbhid" "ext4" ];
     };
     kernelModules = [ "acpi-cpufreq" "kvm-intel" ];
-    kernelPackages = pkgs.kernelPackages_2_6_29;
+    kernelPackages = pkgs.kernelPackages_2_6_32;
     grubDevice = "/dev/sda";
     copyKernels = true;
   };

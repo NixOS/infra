@@ -4,7 +4,7 @@
   require = [ ./common.nix ];
 
   boot.grubDevice = "/dev/sda";
-  boot.kernelPackages = pkgs.kernelPackages_2_6_29;
+  boot.kernelPackages = pkgs.kernelPackages_2_6_32;
   boot.copyKernels = true;
 
   fileSystems =
