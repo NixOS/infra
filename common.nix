@@ -9,4 +9,9 @@
     ''
       echo 60 > /proc/sys/kernel/panic
     '';
+
+  nix.extraOptions =
+    ''
+      fsync-metadata = true
+    '';
 }

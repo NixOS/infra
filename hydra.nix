@@ -78,7 +78,7 @@ in
     cron.systemCronJobs = 
       [ "15 02 * * * hydra source /home/hydra/.bashrc; /nix/var/nix/profiles/per-user/hydra/profile/bin/hydra_update_gc_roots.pl > /home/hydra/gc-roots.log 2>&1"
         # Make sure that at least 100 GiB of disk space is available.
-        "15 03 * * * root  nix-store --gc --max-freed \"$((100 * 1024**3 - 1024 * $(df /nix/store | tail -n 1 | awk '{ print $4 }')))\" > /var/log/gc.log 2>&1"
+        "15 03 * * * root  nix-store --gc --max-freed \"$((250 * 1024**3 - 1024 * $(df /nix/store | tail -n 1 | awk '{ print $4 }')))\" > /var/log/gc.log 2>&1"
       ];
 
   };
