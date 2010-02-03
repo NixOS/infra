@@ -10,6 +10,8 @@
       echo 60 > /proc/sys/kernel/panic
     '';
 
+  nix.useChroot = true;
+
   nix.extraOptions =
     ''
       fsync-metadata = true
