@@ -154,6 +154,7 @@ rec {
           host  all all ::1/128      md5
           host  all all 192.168.1.18/32  md5
           host  all all 130.161.159.80/32 md5
+          host  all all 94.208.32.143/32 md5
         '';
     };
 
@@ -214,11 +215,9 @@ rec {
                 logo = "/serg-logo.png";
               };
             }
-            /*
             { serviceType = "zabbix";
               urlPrefix = "/zabbix";
             }
-            */
           ];
           servedDirs = [
             { urlPath = "/releases";
@@ -360,7 +359,7 @@ rec {
 
             ProxyRequests     Off
             ProxyPreserveHost On
-            ProxyPass         /       http://hydra:3000/
+            ProxyPass         /       http://hydra:3000/ retry=5
             ProxyPassReverse  /       http://hydra:3000/
           '';
         }
@@ -448,10 +447,14 @@ rec {
         ];
       };
 
-    /*
     zabbixAgent.enable = true;
+    zabbixAgent.extraConfig =
+      ''
+        UserParameter=hydra.queue.total,${pkgs.postgresql}/bin/psql hydra -At -c 'select count(*) from builds where finished = 0'
+        UserParameter=hydra.queue.building,${pkgs.postgresql}/bin/psql hydra -At -c 'select count(*) from builds natural join BuildSchedulingInfo where finished = 0 and busy = 1'
+      '';
+    
     zabbixServer.enable = true;
-    */
 
   };
 
