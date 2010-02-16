@@ -10,12 +10,5 @@
 
   nix.maxJobs = 8;
 
-  /*  
-  services.zabbixAgent = {
-    enable = true;
-    server = "192.168.1.5";
-  };
-  */
-
   environment.extraPackages = [pkgs.emacs];
 }

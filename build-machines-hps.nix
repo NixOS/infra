@@ -9,9 +9,4 @@
   boot.kernelModules = ["kvm-intel"];
 
   nix.maxJobs = 2;
-  
-  services.zabbixAgent = {
-    enable = true;
-    server = "192.168.1.5";
-  };
 }

@@ -46,7 +46,7 @@
     maxJobs = 2;
     buildUser = "nix";
   }
-  
+
   {
     hostName = "terrance";
     ipAddress = "192.168.1.12";
@@ -56,7 +56,7 @@
     maxJobs = 2;
     buildUser = "buildfarm";
   }
-  
+
   {
     hostName = "phillip";
     ipAddress = "192.168.1.13";

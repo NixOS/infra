@@ -23,7 +23,7 @@ in
       extraKernelModules = [ "uhci_hcd" "ehci_hcd" "ata_piix" "mptsas" "usbhid" "ext4" ];
     };
     kernelModules = [ "acpi-cpufreq" "kvm-intel" ];
-    kernelPackages = pkgs.kernelPackages_2_6_32;
+    kernelPackages = pkgs.linuxPackages_2_6_32;
     grubDevice = "/dev/sda";
     copyKernels = true;
   };
@@ -74,6 +74,16 @@ in
   };
 
   services = {
+    httpd.enable = true;
+    httpd.adminAddr = "rob.vermaas@gmail.com";
+
+    systemhealth = {
+      enable = true;
+      interfaces = [ "lo" "eth0" ];
+      drives = [
+        { name = "root"; path = "/"; }
+      ];
+    };
 
     cron.systemCronJobs = 
       [ "15 02 * * * hydra source /home/hydra/.bashrc; /nix/var/nix/profiles/per-user/hydra/profile/bin/hydra_update_gc_roots.pl > /home/hydra/gc-roots.log 2>&1"

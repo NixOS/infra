@@ -16,4 +16,7 @@
     ''
       fsync-metadata = true
     '';
+
+  services.zabbixAgent.enable = true;
+  services.zabbixAgent.server = "192.168.1.5";
 }

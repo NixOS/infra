@@ -32,7 +32,7 @@ rec {
       extraKernelModules = ["arcmsr"];
     };
     kernelModules = ["kvm-intel"];
-    kernelPackages = pkgs.kernelPackages_2_6_27;
+    kernelPackages = pkgs.linuxPackages_2_6_27;
     copyKernels = true;
   };
 

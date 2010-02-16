@@ -87,7 +87,7 @@
   ######## copied from common ###########
 
   boot.grubDevice = "/dev/sda";
-  boot.kernelPackages = pkgs.kernelPackages_2_6_29;
+  boot.kernelPackages = pkgs.linuxPackages_2_6_29;
   boot.copyKernels = true;
 
   swapDevices = [ { label = "swap"; } ];
