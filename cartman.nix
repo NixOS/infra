@@ -21,6 +21,12 @@ let
 
   releasesCSS = /etc/nixos/release/generic-dist/release-page/releases.css;
 
+  ZabbixApacheUpdater = pkgs.fetchsvn {
+    url = https://www.zulukilo.com/svn/pub/zabbix-apache-stats/trunk/fetch.py;
+    sha256 = "1q66x429wpqjqcmlsi3x37rkn95i55nj8ldzcrblnx6a0jnjgd2g";
+    rev = 94;
+  };
+
 in
 
 rec {
@@ -121,6 +127,7 @@ rec {
           (indexJob 05 "/data/webserver/dist" http://buildfarm.st.ewi.tudelft.nl/)
 
           "00 03 * * * root ${pkgs.nixUnstable}/bin/nix-collect-garbage --max-atime $(date +\\%s -d '2 weeks ago') > /var/log/gc.log 2>&1"
+          "*  *  * * * root ${pkgs.python}/bin/python ${ZabbixApacheUpdater} -z 192.168.1.5 -c cartman"
         ];
     };
 
@@ -171,6 +178,14 @@ rec {
         AddType application/nix-package .nixpkg
 
         SSLProtocol all -TLSv1
+
+        <Location /server-status>
+                SetHandler server-status
+                Allow from 127.0.0.1 # If using a remote host for monitoring replace 127.0.0.1 with its IP. 
+                Order deny,allow
+                Deny from all
+        </Location>
+        ExtendedStatus On
       '';
           
       servedFiles = [

@@ -20,5 +20,5 @@
     '';
 
   services.zabbixAgent.enable = true;
-  services.zabbixAgent.server = "192.168.1.5";
+  services.zabbixAgent.server = "192.168.1.5,127.0.0.1";
 }
