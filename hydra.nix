@@ -19,24 +19,20 @@ in
   require = [ ./common.nix ];
 
   boot = {
-    initrd = {
-      extraKernelModules = [ "uhci_hcd" "ehci_hcd" "ata_piix" "mptsas" "usbhid" "ext4" ];
-    };
+    initrd.kernelModules = [ "uhci_hcd" "ehci_hcd" "ata_piix" "mptsas" "usbhid" "ext4" ];
     kernelModules = [ "acpi-cpufreq" "kvm-intel" ];
     kernelPackages = pkgs.linuxPackages_2_6_32;
-    grubDevice = "/dev/sda";
-    copyKernels = true;
+    loader.grub.device = "/dev/sda";
+    loader.grub.copyKernels = true;
   };
 
-  fileSystems = [
-    { mountPoint = "/"; 
-      label = "nixos";
-    }
-  ];
+  fileSystems =
+    [ { mountPoint = "/"; 
+        label = "nixos";
+      }
+    ];
  
-  swapDevices = [
-    { label = "swap" ; }
-  ];
+  swapDevices = [ { label = "swap" ; } ];
 
   nix = {
     maxJobs = 0;
@@ -74,12 +70,28 @@ in
     };
   };
 
-  services = {
-    cron.systemCronJobs = 
-      [ "15 02 * * * hydra source /home/hydra/.bashrc; /nix/var/nix/profiles/per-user/hydra/profile/bin/hydra_update_gc_roots.pl > /home/hydra/gc-roots.log 2>&1"
-        # Make sure that at least 100 GiB of disk space is available.
-        "15 03 * * * root  nix-store --gc --max-freed \"$((250 * 1024**3 - 1024 * $(df /nix/store | tail -n 1 | awk '{ print $4 }')))\" > /var/log/gc.log 2>&1"
-      ];
+  services.cron.systemCronJobs = 
+    [ "15 02 * * * hydra source /home/hydra/.bashrc; /nix/var/nix/profiles/per-user/hydra/profile/bin/hydra_update_gc_roots.pl > /home/hydra/gc-roots.log 2>&1"
+      # Make sure that at least 100 GiB of disk space is available.
+      "15 03 * * * root  nix-store --gc --max-freed \"$((250 * 1024**3 - 1024 * $(df /nix/store | tail -n 1 | awk '{ print $4 }')))\" > /var/log/gc.log 2>&1"
+    ];
 
-  };
+  jobs.hydra_server = 
+    { name = "hydra-server";
+      startOn = "started network-interfaces";
+      exec = "${pkgs.su}/bin/su - hydra -c 'hydra_server.pl > /home/hydra/data/server.log 2>&1'";
+    };
+
+  jobs.hydra_scheduler = 
+    { name = "hydra-scheduler";
+      startOn = "started network-interfaces";
+      exec = "${pkgs.su}/bin/su - hydra -c 'hydra_scheduler.pl > /home/hydra/data/scheduler.log 2>&1'";
+    };
+
+  jobs.hydra_queue_runner = 
+    { name = "hydra-queue-runner";
+      startOn = "started network-interfaces";
+      exec = "${pkgs.su}/bin/su - hydra -c 'hydra_queue_runner.pl > /home/hydra/data/queue_runner.log 2>&1'";
+    };
+
 }
