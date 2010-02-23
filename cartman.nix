@@ -45,7 +45,7 @@ rec {
   fileSystems = [
     { mountPoint = "/";
       label = "nixos";
-      options = "acl,noatime";
+      options = "acl";
     }
   ];
 

@@ -12,11 +12,9 @@
   fileSystems = 
     [ { mountPoint = "/";
         label = "nixos";
-        options = "noatime";
       }
       { mountPoint = "/data";
         label = "data";
-        options = "noatime";
       }    
     ];
 

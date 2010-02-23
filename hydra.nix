@@ -31,7 +31,6 @@ in
   fileSystems = [
     { mountPoint = "/"; 
       label = "nixos";
-      options = "noatime";
     }
   ];
  
@@ -42,6 +41,8 @@ in
   nix = {
     maxJobs = 0;
     distributedBuilds = true;
+    manualNixMachines = true;
+
     inherit buildMachines;
 
     extraOptions = ''
@@ -74,17 +75,6 @@ in
   };
 
   services = {
-    httpd.enable = true;
-    httpd.adminAddr = "rob.vermaas@gmail.com";
-
-    systemhealth = {
-      enable = true;
-      interfaces = [ "lo" "eth0" ];
-      drives = [
-        { name = "root"; path = "/"; }
-      ];
-    };
-
     cron.systemCronJobs = 
       [ "15 02 * * * hydra source /home/hydra/.bashrc; /nix/var/nix/profiles/per-user/hydra/profile/bin/hydra_update_gc_roots.pl > /home/hydra/gc-roots.log 2>&1"
         # Make sure that at least 100 GiB of disk space is available.
