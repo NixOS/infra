@@ -27,10 +27,6 @@ in
       }    
     ];
 
-  environment.extraPackages = [ pkgs.hdparm ];
-
-  services.zabbixAgent.enable = true;
-  services.zabbixAgent.server = "buildfarm.st.ewi.tudelft.nl";
   services.zabbixAgent.extraConfig = ''
     UserParameter=mysql_threads,${pkgs.mysql}/bin/mysqladmin -uroot status|cut -f3 -d":"|cut -f1 -d"Q"
     UserParameter=mysql_questions,${pkgs.mysql}/bin/mysqladmin -uroot status|cut -f4 -d":"|cut -f1 -d"S"
