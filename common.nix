@@ -3,7 +3,7 @@
 {
   boot.kernelModules = [ "coretemp" ];
 
-  environment.systemPackages = [ pkgs.emacs pkgs.subversion ];
+  environment.systemPackages = [ pkgs.emacs pkgs.subversion pkgs.sysstat ];
 
   services.sshd.enable = true;
 
