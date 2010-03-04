@@ -18,6 +18,8 @@ in
 {
   require = [ ./common.nix ];
 
+  environment.nix = pkgs.nixSqlite;
+
   boot = {
     initrd.kernelModules = [ "uhci_hcd" "ehci_hcd" "ata_piix" "mptsas" "usbhid" "ext4" ];
     kernelModules = [ "acpi-cpufreq" "kvm-intel" ];
