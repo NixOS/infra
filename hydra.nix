@@ -81,7 +81,7 @@ in
   jobs.hydra_server = 
     { name = "hydra-server";
       startOn = "started network-interfaces";
-      exec = "${pkgs.su}/bin/su - hydra -c 'NIX_REMOTE= hydra_server.pl > /home/hydra/data/server.log 2>&1'";
+      exec = "${pkgs.su}/bin/su - hydra -c 'hydra_server.pl > /home/hydra/data/server.log 2>&1'";
     };
 
   jobs.hydra_scheduler = 
