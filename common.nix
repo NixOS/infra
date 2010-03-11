@@ -14,6 +14,8 @@
 
   nix.useChroot = true;
 
+  nix.nrBuildUsers = 20;
+
   nix.extraOptions =
     ''
       fsync-metadata = true
