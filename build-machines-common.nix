@@ -5,7 +5,7 @@
   
   environment.nix = pkgs.nixSqlite;
 
-  boot.grubDevice = "/dev/sda";
+  boot.loader.grub.device = "/dev/sda";
   boot.kernelPackages = pkgs.linuxPackages_2_6_32;
   boot.copyKernels = true;
 

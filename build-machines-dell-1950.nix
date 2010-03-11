@@ -10,5 +10,5 @@
 
   nix.maxJobs = 8;
 
-  environment.extraPackages = [pkgs.emacs];
+  environment.systemPackages = [pkgs.emacs];
 }
