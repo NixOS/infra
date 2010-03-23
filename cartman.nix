@@ -355,7 +355,7 @@ rec {
               organisation = {
                 name = "Nix";
                 url = http://nixos.org/;
-                logo = http://subversion.tigris.org/images/subversion_logo_hor-468x64.png; # !!! need a logo
+                logo = http://nixos.org/logo/nixos-lores.png;
               };
             }
           ];
@@ -400,9 +400,32 @@ rec {
           documentRoot = "/home/karltk/public_html/planet";
         }
 
-        { hostName = "buildfarm.info";
-          serverAliases = ["www.buildfarm.info"];
-          documentRoot = "/data/webserver/buildfarm.info";
+        { hostName = "test.researchr.org";
+          extraConfig = ''
+            <Proxy *>
+              Order deny,allow
+              Allow from all
+            </Proxy>
+
+            ProxyRequests     Off
+            ProxyPreserveHost On
+            ProxyPass         /       http://mrhankey:8080/ retry=5
+            ProxyPassReverse  /       http://mrhankey:8080/
+          '';
+        }
+
+        { hostName = "test.nixos.org";
+          extraConfig = ''
+            <Proxy *>
+              Order deny,allow
+              Allow from all
+            </Proxy>
+
+            ProxyRequests     Off
+            ProxyPreserveHost On
+            ProxyPass         /       http://mrhankey:8080/ retry=5
+            ProxyPassReverse  /       http://mrhankey:8080/
+          '';
         }
 
       ];
@@ -410,7 +433,7 @@ rec {
 
     postgresqlBackup = {
       enable = true;
-      databases = [ "hydra" "jira" ];
+      databases = [ "jira" ];
     };
 
     sitecopy = {
@@ -463,11 +486,6 @@ rec {
       };
 
     zabbixAgent.enable = true;
-    zabbixAgent.extraConfig =
-      ''
-        UserParameter=hydra.queue.total,${pkgs.postgresql}/bin/psql hydra -At -c 'select count(*) from builds where finished = 0'
-        UserParameter=hydra.queue.building,${pkgs.postgresql}/bin/psql hydra -At -c 'select count(*) from builds natural join BuildSchedulingInfo where finished = 0 and busy = 1'
-      '';
     
     zabbixServer.enable = true;
 
