@@ -73,10 +73,22 @@ in
     };
   };
 
-  services.cron.systemCronJobs = 
-    [ "15 02 * * * hydra source /home/hydra/.bashrc; /nix/var/nix/profiles/per-user/hydra/profile/bin/hydra_update_gc_roots.pl > /home/hydra/gc-roots.log 2>&1"
+  services.cron.systemCronJobs =
+    let
+      # If there is less than 5 GiB of free disk space, stop the queue
+      # to prevent builds from failing or aborting.
+      checkSpace = pkgs.writeScript "check-space"
+        ''
+          #! /bin/sh
+          if [ $(($(stat -f -c '%a' /nix/store) * $(stat -f -c '%S' /nix/store))) -lt $((5 * 1024**3)) ]; then
+            stop hydra-queue-runner
+          fi
+        '';
+    in
+    [ "15 02 * * * hydra source /home/hydrddda/.bashrc; /nix/var/nix/profiles/per-user/hydra/profile/bin/hydra_update_gc_roots.pl > /home/hydra/gc-roots.log 2>&1"
       # Make sure that at least 200 GiB of disk space is available.
       "15 03 * * * root  nix-store --gc --max-freed \"$((200 * 1024**3 - 1024 * $(df /nix/store | tail -n 1 | awk '{ print $4 }')))\" > /var/log/gc.log 2>&1"
+      "*/5 * * * * root  ${checkSpace}"
     ];
 
   jobs.hydra_server = 
@@ -95,6 +107,7 @@ in
     { name = "hydra-queue-runner";
       startOn = "started network-interfaces";
       exec = "${pkgs.su}/bin/su - hydra -c 'hydra_queue_runner.pl > /home/hydra/data/queue_runner.log 2>&1'";
+      postStop = "${pkgs.su}/bin/su - hydra -c 'hydra_queue_runner.pl --unlock'";
     };
 
 }
