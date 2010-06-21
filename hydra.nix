@@ -35,7 +35,7 @@ in
       }
     ];
  
-  swapDevices = [ { label = "swap" ; } ];
+  #swapDevices = [ { label = "swap" ; } ];
 
   nix = {
     maxJobs = 0;
@@ -85,10 +85,10 @@ in
       exec = "${pkgs.su}/bin/su - hydra -c 'hydra_server.pl > /home/hydra/data/server.log 2>&1'";
     };
 
-  jobs.hydra_scheduler = 
-    { name = "hydra-scheduler";
+  jobs.hydra_evaluator = 
+    { name = "hydra-evaluator";
       startOn = "started network-interfaces";
-      exec = "${pkgs.su}/bin/su - hydra -c 'hydra_scheduler.pl > /home/hydra/data/scheduler.log 2>&1'";
+      exec = "${pkgs.su}/bin/su - hydra -c 'hydra_evaluator.pl > /home/hydra/data/evaluator.log 2>&1'";
     };
 
   jobs.hydra_queue_runner = 

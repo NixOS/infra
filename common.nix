@@ -18,7 +18,7 @@
 
   nix.extraOptions =
     ''
-      fsync-metadata = true
+      fsync-metadata = false
     '';
 
   services.zabbixAgent.enable = true;
