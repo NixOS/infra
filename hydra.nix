@@ -29,9 +29,9 @@ in
   };
 
   fileSystems =
-    [ { mountPoint = "/"; 
+    [ { mountPoint = "/";
         label = "nixos";
-        options = "noatime,barrier=0";
+        options = "noatime,barrier=0,data=ordered";
       }
     ];
  
@@ -46,6 +46,7 @@ in
 
     extraOptions = ''
       gc-keep-outputs = true
+      gc-keep-derivations = true
 
       # The default (`true') slows Nix down a lot since the build farm
       # has so many GC roots.
@@ -85,7 +86,7 @@ in
           fi
         '';
     in
-    [ "15 02 * * * hydra source /home/hydrddda/.bashrc; /nix/var/nix/profiles/per-user/hydra/profile/bin/hydra_update_gc_roots.pl > /home/hydra/gc-roots.log 2>&1"
+    [ "15 02 * * * hydra source /home/hydra/.bashrc; /nix/var/nix/profiles/per-user/hydra/profile/bin/hydra_update_gc_roots.pl > /home/hydra/gc-roots.log 2>&1"
       # Make sure that at least 200 GiB of disk space is available.
       "15 03 * * * root  nix-store --gc --max-freed \"$((200 * 1024**3 - 1024 * $(df /nix/store | tail -n 1 | awk '{ print $4 }')))\" > /var/log/gc.log 2>&1"
       "*/5 * * * * root  ${checkSpace}"
