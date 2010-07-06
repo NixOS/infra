@@ -5,10 +5,8 @@
 {
   require = [ ./build-machines-common.nix ];
 
-  boot.initrd.extraKernelModules = ["uhci_hcd" "ehci_hcd" "ata_piix" "mptsas" "usbhid" "ext4"];
-  boot.kernelModules = ["acpi-cpufreq" "kvm-intel"];
+  boot.initrd.extraKernelModules = [ "mptsas" "ext4" ];
+  boot.kernelModules = [ "acpi-cpufreq" "kvm-intel" ];
 
   nix.maxJobs = 8;
-
-  environment.systemPackages = [pkgs.emacs];
 }

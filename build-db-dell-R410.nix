@@ -13,7 +13,7 @@ in
 {
   require = [ ./common.nix ./couchdb.nix ] ;
 
-  boot.initrd.extraKernelModules = ["uhci_hcd" "ehci_hcd" "ata_piix" "mptsas" "usbhid" "ext3"];
+  boot.initrd.extraKernelModules = [ "mptsas" ];
   boot.kernelModules = ["acpi-cpufreq" "kvm-intel"];
 
   nix.maxJobs = 4;

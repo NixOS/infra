@@ -21,7 +21,7 @@ in
   environment.nix = pkgs.nixSqlite;
 
   boot = {
-    initrd.kernelModules = [ "uhci_hcd" "ehci_hcd" "ata_piix" "mptsas" "usbhid" "ext4" ];
+    initrd.kernelModules = [ "mptsas" "ext4" ];
     kernelModules = [ "acpi-cpufreq" "kvm-intel" ];
     loader.grub.device = "/dev/sda";
     loader.grub.copyKernels = true;
