@@ -23,7 +23,6 @@ in
   boot = {
     initrd.kernelModules = [ "uhci_hcd" "ehci_hcd" "ata_piix" "mptsas" "usbhid" "ext4" ];
     kernelModules = [ "acpi-cpufreq" "kvm-intel" ];
-    kernelPackages = pkgs.linuxPackages_2_6_32;
     loader.grub.device = "/dev/sda";
     loader.grub.copyKernels = true;
   };

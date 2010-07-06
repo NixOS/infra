@@ -33,13 +33,10 @@ rec {
   require = [ ./common.nix ];
 
   boot = {
-    grubDevice = "/dev/sda";
-    initrd = {
-      extraKernelModules = ["arcmsr"];
-    };
+    loader.grub.device = "/dev/sda";
+    loader.grub.copyKernels = true;
+    initrd.kernelModules = ["arcmsr"];
     kernelModules = ["kvm-intel"];
-    kernelPackages = pkgs.linuxPackages_2_6_27;
-    copyKernels = true;
   };
 
   fileSystems = [
