@@ -328,6 +328,9 @@ rec {
             { urlPath = "/irc";
               dir = "/data/webserver/irc";
             }
+            { urlPath = "/update";
+              dir = "/data/webserver/update";
+            }
           ];
           servedFiles = [
             { urlPath = "/releases/css/releases.css";
@@ -511,5 +514,8 @@ rec {
           ${pkgs.su}/bin/su -s ${pkgs.bash}/bin/sh jira -c '${jiraJetty}/bin/stop-jetty'
         '';
     };
+
+  # Needed for the Nixpkgs mirror script.
+  environment.pathsToLink = [ "/libexec" ];
 
 }
