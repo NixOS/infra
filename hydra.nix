@@ -55,6 +55,8 @@ in
       build-cache-failure = true
 
       build-poll-interval = 10
+
+      use-sqlite-wal = false
     '';
   };
 
