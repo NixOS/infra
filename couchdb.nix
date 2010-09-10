@@ -30,8 +30,9 @@ let
     name = "couchdb-wrapper";
     text = ''
       #!/bin/sh
-      EXTRA_PATH="${config.services.couchdb.extraPath}"
-      HOME=${stateDir} PATH="$PATH''${EXTRA_PATH:+:}$EXTRA_PATH" ${couchdb}/bin/couchdb ${couchdbFlags}
+      export HOME=${stateDir}     
+      export PATH=$PATH:${getopt}/bin
+      ${couchdb}/bin/couchdb ${couchdbFlags}
     ''; 
     executable = true;
     destination = "/bin/couchdb";

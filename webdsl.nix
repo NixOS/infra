@@ -89,6 +89,7 @@ in
           host  all all ::1/128      md5
           host  all all 130.161.159.80/32 md5
           host  all all 130.161.158.181/32 md5
+          host  all all 94.208.39.185/32 md5
         ''; 
   };
 
@@ -121,7 +122,9 @@ in
   services.tomcat = {
       enable = true;
       baseDir = "/data/tomcat";
-      javaOpts = "-Dshare.dir=/nix/var/nix/profiles/default/share -Xms350m -Xmx2048m -XX:MaxPermSize=512M -XX:PermSize=512M -XX:-UseGCOverheadLimit";
+      javaOpts = "-Dshare.dir=/nix/var/nix/profiles/default/share -Xms350m -Xss8m -Xmx2048m -XX:MaxPermSize=512M -XX:PermSize=512M -XX:-UseGCOverheadLimit " 
+               + "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=8999 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.rmi.server.hostname=localhost "
+               + "-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/data/tomcat/logs/java_pid<pid>.hprof";
       logPerVirtualHost = true;
       virtualHosts = [
         { name = "researchr.org";}
@@ -232,5 +235,5 @@ in
 
   };
 
-  environment.systemPackages = [ pkgs.strategoPackages018.strategoxt ];
+  environment.systemPackages = [ pkgs.stdenv pkgs.lsiutil ] ++ (with pkgs.strategoPackages018; [ aterm sdf strategoxt ]) ;
 }
