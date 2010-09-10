@@ -8,7 +8,7 @@
 
   fileSystems = 
     [ { mountPoint = "/";
-        label = "mrhankey";
+        label = "nixos";
         fsType = "ext3";
       }
     ];
