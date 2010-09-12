@@ -3,6 +3,9 @@
 {
   require = [ ./common.nix ];
 
+  virtualisation.xen.enable = true;
+  virtualisation.xen.domain0MemorySize = 512;
+
   boot.grubDevice = "/dev/sda";
   boot.initrd.extraKernelModules = [ "mptbase" "mptscsih" "mptsas" ];
 
@@ -19,6 +22,7 @@
 
   services.openssh.enable = true;
 
+/*
   services.tomcat = 
     {
       enable = true;
@@ -37,5 +41,5 @@
       package = pkgs.mysql51;
       dataDir = "/data/mysql";
     };
-
+*/
 }
