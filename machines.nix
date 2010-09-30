@@ -134,4 +134,23 @@
     ipAddress = "192.168.1.24";
     ethernetAddress = "00:1D:09:0E:09:E5";
   }
+
+  {
+    hostName = "lucifer";
+    ipAddress = "192.168.1.25";
+    ethernetAddress = "84:2B:2B:0B:98:F0";
+  }
+
+
+  # The following are Xen VMs hosted on mrhankey.
+  # Note that 00:16:3e is the prefix for Xen MAC addresses.
+  
+  {
+    hostName = "tweek";
+    ipAddress = "192.168.1.50";
+    ethernetAddress = "00:16:3e:00:00:01";
+    systems = [ "i386-sunos" ];
+    maxJobs = 2;
+  }
+  
 ]
