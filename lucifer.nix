@@ -1,7 +1,9 @@
 { config, pkgs, ... }:
 
 {
-  require = [ ./common.nix] ;
+  require = [ ./common.nix ];
+
+  networking.hostName = "lucifer";
 
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.copyKernels = true;
