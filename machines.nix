@@ -152,5 +152,20 @@
     systems = [ "i386-sunos" ];
     maxJobs = 2;
   }
-  
+
+  {
+    hostName = "drdoctor";
+    ipAddress = "192.168.1.51";
+    ethernetAddress = "00:16:3e:00:00:02";
+    systems = [ "x86_64-linux" ];
+  }
+    
+  { # Legacy JIRA server, put in its own Xen ghetto because our JIRA
+    # is very old and probably insecure.
+    hostName = "mrkitty";
+    ipAddress = "192.168.1.52";
+    ethernetAddress = "00:16:3e:00:00:03";
+    systems = [ "x86_64-linux" ];
+  }
+    
 ]

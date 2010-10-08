@@ -15,8 +15,6 @@ let
       };
     in map addKey (filter (machine: machine ? buildUser) machines);
 
-  jiraJetty = (import ../../services/jira/jira-instance.nix).jetty;
-
   myIP = "130.161.158.181";
 
   releasesCSS = /etc/nixos/release/generic-dist/release-page/releases.css;
@@ -98,8 +96,11 @@ rec {
         iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -d 192.168.1.0/24 -j ACCEPT
         iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j SNAT --to-source ${myIP}
 
-        # losser ssh
-        iptables -t nat -A PREROUTING -p tcp -i eth1 --dport 8080 -j DNAT --to 192.168.1.18:2022
+        # butters ssh
+        iptables -t nat -A PREROUTING -p tcp -i eth1 --dport 8080 -j DNAT --to 192.168.1.23:22
+
+        # stan ssh (for the SCM seminar)
+        iptables -t nat -A PREROUTING -p tcp -i eth1 --dport 2222 -j DNAT --to 192.168.1.20:22
 
         echo 1 > /proc/sys/net/ipv4/ip_forward
       '';
@@ -115,14 +116,8 @@ rec {
     cron = {
       mailto = "rob.vermaas@gmail.com";
       systemCronJobs =
-        let indexJob = hour: dir: url: 
-          "45 ${toString hour} * * *  buildfarm  (cd /etc/nixos/release/index && PATH=${pkgs.saxonb}/bin:$PATH ./make-index.sh ${dir} ${url} /releases.css) | ${pkgs.utillinux}/bin/logger -t index";
-        in
         [
           "15 0 * * *  root  (TZ=CET date; ${pkgs.rsync}/bin/rsync -razv --numeric-ids --delete /data/postgresql /data/webserver/tarballs unixhome.st.ewi.tudelft.nl::bfarm/) >> /var/log/backup.log 2>&1"
-          (indexJob 02 "/data/webserver/dist/strategoxt2" http://releases.strategoxt.org/)
-          (indexJob 05 "/data/webserver/dist" http://buildfarm.st.ewi.tudelft.nl/)
-
           "00 03 * * * root ${pkgs.nixUnstable}/bin/nix-collect-garbage --max-atime $(date +\\%s -d '2 weeks ago') > /var/log/gc.log 2>&1"
           "*  *  * * * root ${pkgs.python}/bin/python ${ZabbixApacheUpdater} -z 192.168.1.5 -c cartman"
         ];
@@ -307,8 +302,8 @@ rec {
 
             ProxyRequests     Off
             ProxyPreserveHost On
-            ProxyPass         /       http://localhost:10080/
-            ProxyPassReverse  /       http://localhost:10080/
+            ProxyPass         /       http://mrkitty:10080/
+            ProxyPassReverse  /       http://mrkitty:10080/
           '';
         }
 
@@ -319,9 +314,6 @@ rec {
         { hostName = "nixos.org";
           documentRoot = "/home/eelco/nix-homepage";
           servedDirs = [
-            { urlPath = "/releases";
-              dir = "/data/webserver/dist/nix";
-            }
             { urlPath = "/tarballs";
               dir = "/data/webserver/tarballs";
             }
@@ -332,6 +324,19 @@ rec {
               dir = "/data/webserver/update";
             }
           ];
+
+          extraConfig = ''
+            <Proxy *>
+              Order deny,allow
+              Allow from all
+            </Proxy>
+
+            ProxyRequests     Off
+            ProxyPreserveHost On
+            ProxyPass         /releases/       http://lucifer:80/releases/
+            ProxyPassReverse  /releases/       http://lucifer:80/releases/
+          '';
+
           servedFiles = [
             { urlPath = "/releases/css/releases.css";
               file = releasesCSS;
@@ -400,40 +405,7 @@ rec {
           documentRoot = "/home/karltk/public_html/planet";
         }
 
-        { hostName = "test.researchr.org";
-          extraConfig = ''
-            <Proxy *>
-              Order deny,allow
-              Allow from all
-            </Proxy>
-
-            ProxyRequests     Off
-            ProxyPreserveHost On
-            ProxyPass         /       http://mrhankey:8080/ retry=5
-            ProxyPassReverse  /       http://mrhankey:8080/
-          '';
-        }
-
-        { hostName = "test.nixos.org";
-          extraConfig = ''
-            <Proxy *>
-              Order deny,allow
-              Allow from all
-            </Proxy>
-
-            ProxyRequests     Off
-            ProxyPreserveHost On
-            ProxyPass         /       http://mrhankey:8080/ retry=5
-            ProxyPassReverse  /       http://mrhankey:8080/
-          '';
-        }
-
       ];
-    };
-
-    postgresqlBackup = {
-      enable = true;
-      databases = [ "jira" ];
     };
 
     sitecopy = {
@@ -490,30 +462,6 @@ rec {
     zabbixServer.enable = true;
 
   };
-
-  users.extraUsers = singleton
-    { name = "jira";
-      description = "JIRA bug tracker";
-    };
-
-  jobs.jira =
-    { description = "JIRA bug tracker";
-
-      startOn = "started network-interfaces";
-
-      preStart =
-        ''
-          mkdir -p /var/log/jetty /var/cache/jira
-          chown jira /var/log/jetty /var/cache/jira
-        '';
-
-      exec = "${pkgs.su}/bin/su -s ${pkgs.bash}/bin/sh jira -c '${jiraJetty}/bin/run-jetty'";
-
-      postStop =
-        ''
-          ${pkgs.su}/bin/su -s ${pkgs.bash}/bin/sh jira -c '${jiraJetty}/bin/stop-jetty'
-        '';
-    };
 
   # Needed for the Nixpkgs mirror script.
   environment.pathsToLink = [ "/libexec" ];
