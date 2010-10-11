@@ -8,7 +8,7 @@ let
 
   jiraJetty = (import ../../services/jira/jira-instance.nix {
     inherit pkgs;
-    dbHost = "webdsl.org";
+    dbHost = "192.168.1.25";
     dbPassword = import ./jira-password.nix;
   }).jetty;
 
