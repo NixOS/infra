@@ -104,12 +104,6 @@ rec {
 
         echo 1 > /proc/sys/net/ipv4/ip_forward
       '';
-
-    defaultMailServer = {
-      directDelivery = true;
-      hostName = "smtp.st.ewi.tudelft.nl";
-      domain = "st.ewi.tudelft.nl";
-    };
   };
 
   services = {

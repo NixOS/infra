@@ -29,4 +29,10 @@
       UserParameter=hardware.temp.cpu.average,cat /sys/devices/platform/coretemp.*/temp1_input | ${pkgs.perl}/bin/perl -e 'while (<>) { $n++; $sum += $_; }; print $sum / $n / 1000;'
       UserParameter=vm.memory.dirty,echo $((1024 * $(cat /proc/meminfo | sed 's/Dirty: *\([0-9]\+\) kB/\1/; t; d')))
     '';
+
+  networking.defaultMailServer = {
+    directDelivery = true;
+    hostName = "smtp.st.ewi.tudelft.nl";
+    domain = "st.ewi.tudelft.nl";
+  };
 }

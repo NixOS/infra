@@ -226,13 +226,6 @@ in
     nameservers = [ "130.161.158.4" "130.161.158.133" ];
 
     useDHCP = false;
-
-    defaultMailServer = {
-      directDelivery = true;
-      hostName = "smtp.st.ewi.tudelft.nl";
-      domain = "st.ewi.tudelft.nl";
-    };
-
   };
 
   environment.systemPackages = [ pkgs.stdenv pkgs.lsiutil ] ++ (with pkgs.strategoPackages018; [ aterm sdf strategoxt ]) ;
