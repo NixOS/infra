@@ -167,5 +167,19 @@
     ethernetAddress = "00:16:3e:00:00:03";
     systems = [ "x86_64-linux" ];
   }
+
+  { # Legacy FreeBSD machine.
+    hostName = "losser";
+    ipAddress = "192.168.1.53";
+    ethernetAddress = "00:16:3e:00:00:04";
+    systems = [ "i686-freebsd" ];
+  }
+    
+  { # Ubuntu 10.10 machine.
+    hostName = "meerkat";
+    ipAddress = "192.168.1.54";
+    ethernetAddress = "00:16:3e:00:00:05";
+    systems = [ "i686-linux" ];
+  }
     
 ]
