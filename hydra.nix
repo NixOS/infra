@@ -63,10 +63,6 @@ in
   networking = {
     hostName = "hydra";
     domain = "buildfarm";
-
-    extraHosts = 
-      let toHosts = m: "${m.ipAddress} ${m.hostName} ${pkgs.lib.concatStringsSep " " (if m ? aliases then m.aliases else [])}\n"; in
-      pkgs.lib.concatStrings (map toHosts machines);
   };
 
   services.cron.systemCronJobs =

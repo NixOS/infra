@@ -73,11 +73,9 @@ rec {
 
     defaultGateway = "130.161.158.1";
 
-    nameservers = ["130.161.158.4" "130.161.33.17" "130.161.180.1"];
+    nameservers = [ "127.0.0.1" ];
 
-    extraHosts = 
-      let toHosts = m: "${m.ipAddress} ${m.hostName} ${concatStringsSep " " (if m ? aliases then m.aliases else [])}\n"; in
-      concatStrings (map toHosts machines);
+    extraHosts = "192.168.1.5 cartman";
 
     localCommands =
       # Provide NATting for the build machines on 192.168.1.*.
@@ -117,25 +115,6 @@ rec {
         ];
     };
 
-    dhcpd = {
-      enable = true;
-      interfaces = ["eth0"];
-      extraConfig = ''
-        option subnet-mask 255.255.255.0;
-        option broadcast-address 192.168.1.255;
-        option routers 192.168.1.5;
-        option domain-name-servers 130.161.158.4, 130.161.33.17, 130.161.180.1;
-        option domain-name "buildfarm-net";
-
-        subnet 192.168.1.0 netmask 255.255.255.0 {
-          range 192.168.1.100 192.168.1.200;
-        }
-
-        use-host-decl-names on;
-      '';
-      machines = filter (machine: machine ? ethernetAddress) machines;
-    };
-    
     postgresql = {
       enable = true;
       enableTCPIP = true;
@@ -462,4 +441,26 @@ rec {
   # Needed for the Nixpkgs mirror script.
   environment.pathsToLink = [ "/libexec" ];
 
+  jobs.dnsmasq =
+    let confFile = pkgs.writeText "dnsmasq.conf"
+      ''
+        keep-in-foreground
+        expand-hosts
+        domain=buildfarm
+
+        server=130.161.158.4
+        server=130.161.33.17
+        server=130.161.180.1
+        
+        dhcp-range=192.168.1.100,192.168.1.200
+        
+        ${flip concatMapStrings machines (m: optionalString (m ? ethernetAddress) ''
+          dhcp-host=${m.ethernetAddress},${m.ipAddress},${m.hostName}
+        '')}
+      '';
+    in
+    { startOn = "network-interfaces";
+      exec = "${pkgs.dnsmasq}/bin/dnsmasq --conf-file=${confFile}";
+    };
+  
 }
