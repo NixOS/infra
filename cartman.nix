@@ -454,6 +454,8 @@ rec {
     zabbixAgent.enable = true;
     
     zabbixServer.enable = true;
+    zabbixServer.dbServer = "lucifer";
+    zabbixServer.dbPassword = import ./zabbix-password.nix;
 
   };
 
