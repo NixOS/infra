@@ -37,12 +37,17 @@ rec {
     kernelModules = ["kvm-intel"];
   };
 
-  fileSystems = [
-    { mountPoint = "/";
-      label = "nixos";
-      options = "acl";
-    }
-  ];
+  fileSystems =
+    [ { mountPoint = "/";
+        label = "nixos";
+        options = "acl";
+      }
+      { mountPoint = "/data/releases";
+        device = "192.168.1.25:/data/releases";
+        fsType = "nfs";
+        options = "vers=3"; # !!! check why vers=4 doesn't work
+      }
+    ];
 
   swapDevices = [
     { label = "swap1"; }
@@ -296,19 +301,10 @@ rec {
             { urlPath = "/update";
               dir = "/data/webserver/update";
             }
+            { urlPath = "/releases";
+              dir = "/data/releases";
+            }
           ];
-
-          extraConfig = ''
-            <Proxy *>
-              Order deny,allow
-              Allow from all
-            </Proxy>
-
-            ProxyRequests     Off
-            ProxyPreserveHost On
-            ProxyPass         /releases/       http://lucifer:80/releases/
-            ProxyPassReverse  /releases/       http://lucifer:80/releases/
-          '';
 
           servedFiles = [
             { urlPath = "/releases/css/releases.css";
@@ -357,6 +353,20 @@ rec {
           '';
         }
 
+        { hostName = "hydra-test.nixos.org";
+          extraConfig = ''
+            <Proxy *>
+              Order deny,allow
+              Allow from all
+            </Proxy>
+
+            ProxyRequests     Off
+            ProxyPreserveHost On
+            ProxyPass         /       http://hydra:3001/ retry=5
+            ProxyPassReverse  /       http://hydra:3001/
+          '';
+        }
+
         { hostName = "wiki.nixos.org";
           extraConfig = ''
             RedirectMatch ^/$ /wiki
@@ -378,6 +388,19 @@ rec {
           documentRoot = "/home/karltk/public_html/planet";
         }
 
+        { hostName = "sonar.nixos.org";
+          extraConfig = ''
+            <Proxy *>
+              Order deny,allow
+              Allow from all
+            </Proxy>
+
+            ProxyRequests     Off
+            ProxyPreserveHost On
+            ProxyPass         /       http://lucifer:8080/ retry=5
+            ProxyPassReverse  /       http://lucifer:8080/
+          '';
+        }
       ];
     };
 
