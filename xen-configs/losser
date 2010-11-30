@@ -1,0 +1,13 @@
+# Losser is a FreeBSD 4 machine.
+
+kernel = "hvmloader"
+
+builder = "hvm"
+
+memory = 384
+
+disk = [ 'file:/vmdisks/losser-disk1.img,hda,w' ]
+
+vif = [ 'mac=00:16:3e:00:00:04' ]
+
+vfb = [ 'vnc=1' ]

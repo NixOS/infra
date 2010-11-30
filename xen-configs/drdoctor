@@ -1,0 +1,18 @@
+from xen.util.path import *
+
+name = 'drdoctor'
+
+memory = 512
+
+kernel = XENFIRMWAREDIR + '/pv-grub-x86_64.gz'
+
+extra = '(hd0)/grub/menu.lst'
+
+disk = [ 'file:/vmdisks/drdoctor-boot.img,xvda1,w'
+       , 'file:/vmdisks/drdoctor-root.img,xvda2,w' ]
+
+vif = [ 'mac=00:16:3e:00:00:02' ]
+
+vfb = [ 'vnc=2' ]
+
+tsc_mode = 1 # always emulate TSC

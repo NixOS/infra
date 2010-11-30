@@ -145,7 +145,7 @@
   # The following are Xen VMs hosted on mrhankey.
   # Note that 00:16:3e is the prefix for Xen MAC addresses.
   
-  {
+  { # OpenSolaris 2009.06 (32 bit).
     hostName = "tweek";
     ipAddress = "192.168.1.50";
     ethernetAddress = "00:16:3e:00:00:01";
@@ -153,7 +153,7 @@
     maxJobs = 2;
   }
 
-  {
+  { # NixOS test machine.
     hostName = "drdoctor";
     ipAddress = "192.168.1.51";
     ethernetAddress = "00:16:3e:00:00:02";
@@ -175,11 +175,11 @@
     systems = [ "i686-freebsd" ];
   }
     
-  { # Ubuntu 10.10 machine.
+  { # Ubuntu 10.10 test machine.
     hostName = "meerkat";
     ipAddress = "192.168.1.54";
     ethernetAddress = "00:16:3e:00:00:05";
     systems = [ "i686-linux" ];
   }
-    
+
 ]
