@@ -14,5 +14,3 @@ disk = [ 'file:/vmdisks/drdoctor-boot.img,xvda1,w'
 vif = [ 'mac=00:16:3e:00:00:02' ]
 
 vfb = [ 'vnc=2' ]
-
-tsc_mode = 1 # always emulate TSC
