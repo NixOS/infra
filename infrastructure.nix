@@ -1,39 +1,35 @@
 {
   # !!! should be merged with machines.nix
-  terrance =
-    { hostName = "terrance";
-      system = "x86_64-linux";
-    };
-  phillip =
-    { hostName = "phillip";
-      system = "x86_64-linux";
-    };
   jimmy =
-    { hostName = "jimmy";
+    { hostname = "jimmy";
       system = "i686-linux";
     };
   timmy =
-    { hostName = "timmy";
+    { hostname = "timmy";
       system = "i686-linux";
     };
   kenny = 
-    { hostName = "kenny";
+    { hostname = "kenny";
       system = "x86_64-linux";
     };
   stan = 
-    { hostName = "stan";
+    { hostname = "stan";
       system = "x86_64-linux";
     };
   kyle = 
-    { hostName = "kyle";
+    { hostname = "kyle";
       system = "x86_64-linux";
     };
   cartman = 
-    { hostName = "cartman";
+    { hostname = "cartman";
       system = "i686-linux";
     };
   hydra = 
-    { hostName = "hydra";
+    { hostname = "hydra";
+      system = "x86_64-linux";
+    };
+  lucifer = 
+    { hostname = "lucifer";
       system = "x86_64-linux";
     };
 }

@@ -30,6 +30,8 @@ in
 rec {
   require = [ ./common.nix ];
 
+  environment.nix = pkgs.nixSqlite;
+
   boot = {
     loader.grub.device = "/dev/sda";
     loader.grub.copyKernels = true;
