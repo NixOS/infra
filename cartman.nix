@@ -4,7 +4,7 @@ with pkgs.lib;
 
 let 
 
-  machines = import ./machines.nix;
+  machines = import ./machines.nix pkgs.lib;
 
   # Produce the list of Nix build machines in the format expected by
   # the Nix daemon Upstart job.
@@ -104,6 +104,9 @@ rec {
 
         # stan ssh (for the SCM seminar)
         iptables -t nat -A PREROUTING -p tcp -i eth1 --dport 2222 -j DNAT --to 192.168.1.20:22
+
+        # lucifer ssh (to give Karl/Armijn access for the BAT project)
+        iptables -t nat -A PREROUTING -p tcp -i eth1 --dport 22222 -j DNAT --to 192.168.1.25:22
 
         echo 1 > /proc/sys/net/ipv4/ip_forward
       '';

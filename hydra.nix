@@ -2,7 +2,7 @@
 
 let
 
-  machines = import ./machines.nix;
+  machines = import ./machines.nix pkgs.lib;
 
   # Produce the list of Nix build machines in the format expected by
   # the Nix daemon Upstart job.

@@ -1,3 +1,5 @@
+lib: with lib;
+
 [
   {
     hostName = "cartman";
@@ -181,5 +183,13 @@
     ethernetAddress = "00:16:3e:00:00:05";
     systems = [ "i686-linux" ];
   }
-
 ]
+
+# Machines for the agilecloud experiment.
+++ flip map (range 0 9) (nr:
+  { hostName = "agilecloud0${toString nr}";
+    ipAddress = "192.168.1.${toString (builtins.add nr 80)}";
+    ethernetAddress = "00:16:3e:00:34:0${toString nr}";
+    systems = [ "i686-linux" ];
+  }
+)
