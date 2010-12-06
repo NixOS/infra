@@ -17,7 +17,7 @@
 
   nix.useChroot = true;
 
-  nix.nrBuildUsers = 20;
+  nix.nrBuildUsers = 100;
 
   nix.extraOptions =
     ''
