@@ -30,6 +30,10 @@
   #services.hydraChannelMirror.enable = true;
   services.hydraChannelMirror.period = "0-59/15 * * * *";
 
+  services.cron.systemCronJobs =
+    [ "0-59/15 * * * * hydra-mirror perl -I/home/hydra-mirror/nix/inst/libexec/nix ~/release/channels/mirror-channel.pl http://hydra.nixos.org/jobset/nixpkgs/trunk/channel/latest /data/releases/nixpkgs/channels/nixpkgs-unstable /data/releases/nars http://nixos.org/releases/nars /data/releases/patches http://nixos.org/releases/patches http://hydra.nixos.org/job/nixpkgs/trunk/tarball/latest/download-by-type/file/source-dist >> /var/log/nixpkgs-unstable.log 2>&1"
+    ];
+
   /*
   services.httpd.enable = true;
   services.httpd.adminAddr = "rob.vermaas@gmail.com";
