@@ -32,4 +32,12 @@
     { hostname = "lucifer";
       system = "x86_64-linux";
     };
+  mrkitty = 
+    { hostname = "mrkitty";
+      system = "x86_64-linux";
+    };
+  mrhankey = 
+    { hostname = "mrhankey";
+      system = "x86_64-linux";
+    };
 }

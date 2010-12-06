@@ -7,4 +7,6 @@
   cartman = import ./cartman.nix;
   hydra = import ./hydra.nix;
   lucifer = import ./lucifer.nix;
+  mrkitty = import ./mrkitty.nix;
+  mrhankey = import ./mrhankey.nix;
 }
