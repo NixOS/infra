@@ -80,7 +80,7 @@ in
     [ "15 02 * * * hydra source /home/hydra/.bashrc; NIX_REMOTE=daemon /nix/var/nix/profiles/per-user/hydra/profile/bin/hydra_update_gc_roots.pl > /home/hydra/gc-roots.log 2>&1"
       # Make sure that at least 200 GiB of disk space is available.
       "15 3 * * * root  nix-store --gc --max-freed \"$((200 * 1024**3 - 1024 * $(df /nix/store | tail -n 1 | awk '{ print $4 }')))\" > /var/log/gc.log 2>&1"
-      "15 4 * * * root  start hydra-queue-runner"
+      #"15 4 * * * root  start hydra-queue-runner"
       "*/5 * * * * root  ${checkSpace}"
     ];
 
