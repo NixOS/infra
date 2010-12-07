@@ -77,9 +77,10 @@ in
           fi
         '';
     in
-    [ "15 02 * * * hydra source /home/hydra/.bashrc; /nix/var/nix/profiles/per-user/hydra/profile/bin/hydra_update_gc_roots.pl > /home/hydra/gc-roots.log 2>&1"
+    [ "15 02 * * * hydra source /home/hydra/.bashrc; NIX_REMOTE=daemon /nix/var/nix/profiles/per-user/hydra/profile/bin/hydra_update_gc_roots.pl > /home/hydra/gc-roots.log 2>&1"
       # Make sure that at least 200 GiB of disk space is available.
-      "15 03 * * * root  nix-store --gc --max-freed \"$((200 * 1024**3 - 1024 * $(df /nix/store | tail -n 1 | awk '{ print $4 }')))\" > /var/log/gc.log 2>&1"
+      "15 3 * * * root  nix-store --gc --max-freed \"$((200 * 1024**3 - 1024 * $(df /nix/store | tail -n 1 | awk '{ print $4 }')))\" > /var/log/gc.log 2>&1"
+      "15 4 * * * root  start hydra-queue-runner"
       "*/5 * * * * root  ${checkSpace}"
     ];
 
@@ -92,13 +93,13 @@ in
   jobs.hydra_evaluator = 
     { name = "hydra-evaluator";
       startOn = "started network-interfaces";
-      exec = "${pkgs.su}/bin/su - hydra -c 'hydra_evaluator.pl > /home/hydra/data/evaluator.log 2>&1'";
+      exec = "${pkgs.su}/bin/su - hydra -c 'nice -n 5 hydra_evaluator.pl > /home/hydra/data/evaluator.log 2>&1'";
     };
 
   jobs.hydra_queue_runner = 
     { name = "hydra-queue-runner";
       startOn = "started network-interfaces";
-      exec = "${pkgs.su}/bin/su - hydra -c 'hydra_queue_runner.pl > /home/hydra/data/queue_runner.log 2>&1'";
+      exec = "${pkgs.su}/bin/su - hydra -c 'nice -n 8 hydra_queue_runner.pl > /home/hydra/data/queue_runner.log 2>&1'";
       postStop = "${pkgs.su}/bin/su - hydra -c 'hydra_queue_runner.pl --unlock'";
     };
 
