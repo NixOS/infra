@@ -3,6 +3,8 @@
 {
   require = [ ./common.nix ];
 
+  environment.nix = pkgs.nixSqlite;
+
   networking.hostName = "lucifer";
 
   boot.loader.grub.device = "/dev/sda";
@@ -14,9 +16,19 @@
     [ { mountPoint = "/";
         label = "nixos";
       }
+      { mountPoint = "/fatdata";
+        device = "/dev/fatdisk/fatdata";
+        neededForBoot = true;
+      }    
+      { mountPoint = "/nix";
+        device = "/fatdata/nix";
+        fsType = "none";
+        options = "bind";
+        neededForBoot = true;
+      }
       { mountPoint = "/data";
         label = "data";
-      }    
+      }
     ];
 
   services.nfsKernel.server.enable = true;
