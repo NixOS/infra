@@ -5,6 +5,8 @@ with pkgs.lib;
 {
   require = [ ./common.nix ];
 
+  nixpkgs.system = "x86_64-linux";
+
   virtualisation.xen.enable = true;
   virtualisation.xen.domain0MemorySize = 512;
 

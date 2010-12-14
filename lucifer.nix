@@ -3,6 +3,8 @@
 {
   require = [ ./common.nix ];
 
+  nixpkgs.system = "x86_64-linux";
+
   environment.nix = pkgs.nixSqlite;
 
   networking.hostName = "lucifer";

@@ -17,6 +17,8 @@ in
 {
   require = [ "${modulesPath}/virtualisation/xen-domU.nix" ./common.nix ];
 
+  nixpkgs.system = "x86_64-linux";
+
   networking.hostName = "mrkitty";
 
   fileSystems = 

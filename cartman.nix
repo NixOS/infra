@@ -30,6 +30,8 @@ in
 rec {
   require = [ ./common.nix ];
 
+  nixpkgs.system = "i686-linux";
+
   environment.nix = pkgs.nixSqlite;
 
   boot = {
