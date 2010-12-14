@@ -6,8 +6,8 @@
   environment.nix = pkgs.nixSqlite;
 
   boot.loader.grub.device = "/dev/sda";
+  boot.loader.grub.copyKernels = true;
   boot.kernelPackages = pkgs.linuxPackages_2_6_32;
-  boot.copyKernels = true;
 
   fileSystems =
     [ { mountPoint = "/";

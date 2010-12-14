@@ -5,7 +5,7 @@
 {
   require = [ ./build-machines-common.nix ];
 
-  boot.initrd.extraKernelModules = [ "mptsas" "ext4" ];
+  boot.initrd.kernelModules = [ "mptsas" "ext4" ];
   boot.kernelModules = [ "acpi-cpufreq" "kvm-intel" ];
 
   nix.maxJobs = 8;

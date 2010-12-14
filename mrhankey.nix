@@ -8,8 +8,8 @@ with pkgs.lib;
   virtualisation.xen.enable = true;
   virtualisation.xen.domain0MemorySize = 512;
 
-  boot.grubDevice = "/dev/sda";
-  boot.initrd.extraKernelModules = [ "mptbase" "mptscsih" "mptsas" ];
+  boot.loader.grub.device = "/dev/sda";
+  boot.initrd.kernelModules = [ "mptbase" "mptscsih" "mptsas" ];
 
   fileSystems = 
     [ { mountPoint = "/";

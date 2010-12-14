@@ -13,7 +13,7 @@ in
 {
   require = [ ./common.nix ./couchdb.nix ] ;
 
-  boot.initrd.extraKernelModules = [ "mptsas" ];
+  boot.initrd.kernelModules = [ "mptsas" ];
   boot.kernelModules = ["acpi-cpufreq" "kvm-intel"];
 
   nix.maxJobs = 4;
@@ -198,9 +198,9 @@ in
 
   ######## copied from common ###########
 
-  boot.grubDevice = "/dev/sda";
+  boot.loader.grub.device = "/dev/sda";
+  boot.loader.grub.copyKernels = true;
   boot.kernelPackages = pkgs.linuxPackages_2_6_29;
-  boot.copyKernels = true;
 
   swapDevices = [ { label = "swap"; } ];
 

@@ -5,7 +5,7 @@
 {
   require = [ ./build-machines-common.nix ];
   
-  boot.initrd.extraKernelModules = ["3w_xxxx"];
+  boot.initrd.kernelModules = ["3w_xxxx"];
   boot.kernelModules = ["kvm-intel"];
 
   nix.maxJobs = 2;
