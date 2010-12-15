@@ -383,6 +383,8 @@ rec {
                 ''
                   $wgEmailConfirmToEdit = true;
                 '';
+              enableUploads = true;
+              uploadDir = "/data/nixos-mediawiki-upload";
             }
           ];
         }
@@ -453,6 +455,11 @@ rec {
                                local  = "/data/pt-wiki";
                                remote = "/staff-groups/ewi/st/strategoxt/backup/pt-wiki"; 
                                period = "55 02 * * *"; 
+                             } )
+          ( genericBackup // { name   = "nixos-mediawiki-upload"; 
+                               local  = "/data/nixos-mediawiki-upload";
+                               remote = "/staff-groups/ewi/st/strategoxt/backup/nixos-mediawiki-upload"; 
+                               period = "20 03 * * *"; 
                              } )
         ];
       };
