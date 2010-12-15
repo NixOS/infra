@@ -103,9 +103,6 @@ rec {
         iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -d 192.168.1.0/24 -j ACCEPT
         iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j SNAT --to-source ${myIP}
 
-        # butters ssh
-        iptables -t nat -A PREROUTING -p tcp -i eth1 --dport 8080 -j DNAT --to 192.168.1.23:22
-
         # stan ssh (for the SCM seminar)
         iptables -t nat -A PREROUTING -p tcp -i eth1 --dport 2222 -j DNAT --to 192.168.1.20:22
 
