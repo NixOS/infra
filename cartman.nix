@@ -352,12 +352,12 @@ rec {
 
             ProxyRequests     Off
             ProxyPreserveHost On
-            ProxyPass         /       http://hydra:3000/ retry=5
-            ProxyPassReverse  /       http://hydra:3000/
+            ProxyPass         /       http://lucifer:3000/ retry=5
+            ProxyPassReverse  /       http://lucifer:3000/
           '';
         }
 
-        { hostName = "hydra-test.nixos.org";
+        { hostName = "hydra-old.nixos.org";
           extraConfig = ''
             <Proxy *>
               Order deny,allow
@@ -366,8 +366,8 @@ rec {
 
             ProxyRequests     Off
             ProxyPreserveHost On
-            ProxyPass         /       http://hydra:3001/ retry=5
-            ProxyPassReverse  /       http://hydra:3001/
+            ProxyPass         /       http://hydra:3000/ retry=5
+            ProxyPassReverse  /       http://hydra:3000/
           '';
         }
 
