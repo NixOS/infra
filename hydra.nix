@@ -1,20 +1,5 @@
 { config, pkgs, ... }:
 
-let
-
-  machines = import ./machines.nix pkgs.lib;
-
-  # Produce the list of Nix build machines in the format expected by
-  # the Nix daemon Upstart job.
-  buildMachines =
-    let addKey = machine: machine // 
-      { sshKey = "/root/.ssh/id_buildfarm";
-        sshUser = machine.buildUser;
-      };
-    in map addKey (pkgs.lib.filter (machine: machine ? buildUser) machines);
-
-in
-
 {
   require = [ ./common.nix ];
 
@@ -40,8 +25,6 @@ in
 
   nix = {
     maxJobs = 8;
-
-    inherit buildMachines;
 
     extraOptions = ''
       gc-keep-outputs = true
