@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  require = [ ./common.nix ];
+  require = [ ./common.nix ./hydra-module.nix ];
 
   nixpkgs.system = "x86_64-linux";
 
@@ -13,6 +13,8 @@
   boot.loader.grub.copyKernels = true;
   boot.initrd.kernelModules = [ "uhci_hcd" "ehci_hcd" "ata_piix" "megaraid_sas" "usbhid" ];
   boot.kernelModules = [ "acpi-cpufreq" "kvm-intel" ];
+
+  services.hydra.enable = true;
 
   fileSystems = 
     [ { mountPoint = "/";
@@ -41,17 +43,10 @@
 
   nixpkgs.config.subversion.pythonBindings = true;
 
-  #services.hydraChannelMirror.enable = true;
+  services.hydraChannelMirror.enable = true;
+  services.hydraChannelMirror.enableBinaryPatches = true;
   services.hydraChannelMirror.period = "0-59/15 * * * *";
-
-  services.cron.systemCronJobs =
-    [ "0-59/15 * * * * hydra-mirror ENABLE_PATCHES=1 perl -I/home/hydra-mirror/nix/inst/libexec/nix ~/release/channels/mirror-channel.pl http://hydra.nixos.org/jobset/nixpkgs/trunk/channel/latest /data/releases/nixpkgs/channels/nixpkgs-unstable /data/releases/nars http://nixos.org/releases/nars /data/releases/patches http://nixos.org/releases/patches http://hydra.nixos.org/job/nixpkgs/trunk/tarball/latest/download-by-type/file/source-dist >> /var/log/nixpkgs-unstable.log 2>&1"
-    ];
-
-  /*
-  services.httpd.enable = true;
-  services.httpd.adminAddr = "rob.vermaas@gmail.com";
-  */
+  services.hydraChannelMirror.dataDir = "/data/releases";
 
   services.postgresql = {
     enable = true;
@@ -66,9 +61,6 @@
         host  all all 192.168.1.0/24 md5
       ''; 
   };
-
-  nix.gc.automatic = true;
-  nix.gc.options = "--max-freed $((100 * 1024**3))";
 
   services.tomcat = {
     enable = true;
