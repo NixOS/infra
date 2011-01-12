@@ -486,7 +486,7 @@ rec {
         server=130.161.33.17
         server=130.161.180.1
         
-        dhcp-range=192.168.1.100,192.168.1.200
+        dhcp-range=192.168.1.150,192.168.1.200
         
         ${flip concatMapStrings machines (m: optionalString (m ? ethernetAddress) ''
           dhcp-host=${m.ethernetAddress},${m.ipAddress},${m.hostName}

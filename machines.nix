@@ -193,3 +193,10 @@ lib: with lib;
     systems = [ "i686-linux" ];
   }
 )
+++ flip map (range 10 29) (nr:
+  { hostName = "agilecloud${toString nr}";
+    ipAddress = "192.168.1.${toString (builtins.add nr 80)}";
+    ethernetAddress = "00:16:3e:00:34:${toString nr}";
+    systems = [ "i686-linux" ];
+  }
+)

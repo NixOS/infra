@@ -5,7 +5,7 @@
 
   environment.systemPackages = 
     [ pkgs.emacs pkgs.subversion pkgs.sysstat pkgs.hdparm pkgs.sdparm pkgs.lsiutil 
-      pkgs.htop
+      pkgs.htop pkgs.sqlite
     ];
 
   services.sshd.enable = true;
