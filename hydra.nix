@@ -23,25 +23,7 @@
  
   #swapDevices = [ { label = "swap" ; } ];
 
-  nix = {
-    maxJobs = 8;
-
-    extraOptions = ''
-      gc-keep-outputs = true
-      gc-keep-derivations = true
-
-      # The default (`true') slows Nix down a lot since the build farm
-      # has so many GC roots.
-      gc-check-reachability = false
-
-      # Hydra needs caching of build failures.
-      build-cache-failure = true
-
-      build-poll-interval = 10
-
-      use-sqlite-wal = false
-    '';
-  };
+  nix.maxJobs = 8;
 
   networking = {
     hostName = "hydra";
