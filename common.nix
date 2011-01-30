@@ -35,7 +35,7 @@
 
   networking.defaultMailServer = {
     directDelivery = true;
-    hostName = "smtp.st.ewi.tudelft.nl";
+    hostName = "smtp.tudelft.nl";
     domain = "st.ewi.tudelft.nl";
   };
 }
