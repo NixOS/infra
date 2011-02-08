@@ -17,4 +17,12 @@
     ];
 
   services.openssh.enable = true;
+
+  # The kernel's default overcommit heuristic renders Nix incapable of
+  # forking on machines with little RAM (unless GC_INITIAL_HEAP_SIZE
+  # is set to a low value).  So turn off checking.
+  boot.postBootCommands =
+    ''
+      echo 1 > /proc/sys/vm/overcommit_memory
+    '';
 }
