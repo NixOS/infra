@@ -11,7 +11,7 @@ let
 in
 
 {
-  require = [ ./common.nix ./couchdb.nix ] ;
+  require = [ ./common.nix ] ;
 
   boot.initrd.kernelModules = [ "mptsas" ];
   boot.kernelModules = ["acpi-cpufreq" "kvm-intel"];
@@ -26,6 +26,8 @@ in
         label = "data";
       }    
     ];
+
+  services.ttyBackgrounds.enable = false; 
 
   services.zabbixAgent.extraConfig = ''
     UserParameter=mysql_threads,${pkgs.mysql}/bin/mysqladmin -uroot status|cut -f3 -d":"|cut -f1 -d"Q"
@@ -78,10 +80,19 @@ in
       databases = [ "hydra" ];
   };
 
+  services.syslogd.extraConfig = ''
+    local0.*		-/var/log/pgsql
+  '';
+
   services.postgresql = {
       enable = true;
       enableTCPIP = true;
       dataDir = "/data/postgresql";
+      extraConfig = ''
+        log_min_duration_statement = 200
+        log_duration = off
+        log_statement = 'none'
+      '';
       authentication = ''
           local all mediawiki        ident mediawiki-users
           local all all              ident sameuser
@@ -122,7 +133,7 @@ in
   services.tomcat = {
       enable = true;
       baseDir = "/data/tomcat";
-      javaOpts = "-Dshare.dir=/nix/var/nix/profiles/default/share -Xms350m -Xss8m -Xmx2048m -XX:MaxPermSize=512M -XX:PermSize=512M -XX:-UseGCOverheadLimit " 
+      javaOpts = "-Dshare.dir=/nix/var/nix/profiles/default/share -Xms350m -Xss8m -Xmx4096m -XX:MaxPermSize=512M -XX:PermSize=512M -XX:-UseGCOverheadLimit -XX:+UseCompressedOops " 
                + "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=8999 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.rmi.server.hostname=localhost "
                + "-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/data/tomcat/logs/java_pid<pid>.hprof";
       logPerVirtualHost = true;
@@ -136,6 +147,8 @@ in
         { name = "book.webdsl.org"; }
         { name = "yellowgrass.org"; }
         { name = "www.yellowgrass.org"; }
+        { name = "eelcovisser.org"; }
+        { name = "dsl-engineering.org"; }
       ];
     };
 
@@ -143,6 +156,7 @@ in
      enable = true;
      user = "root";
      databases = [ "researchr" "twitterarchive" "webdslorg" "pilweb" "mysql" "yellowgrass" "department" ];
+     singleTransaction = true;
    };
 
   users = {
@@ -200,7 +214,7 @@ in
 
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.copyKernels = true;
-  boot.kernelPackages = pkgs.linuxPackages_2_6_29;
+  boot.kernelPackages = pkgs.linuxPackages_2_6_35;
 
   swapDevices = [ { label = "swap"; } ];
 
@@ -223,9 +237,16 @@ in
     extraHosts = "127.0.0.2 webdsl.st.ewi.tudelft.nl webdsl";
 
     interfaces = [ { ipAddress = "130.161.159.114"; name = "eth0"; subnetMask = "255.255.254.0"; } ];
-    nameservers = [ "130.161.158.4" "130.161.158.133" ];
+    nameservers = [ "130.161.180.65" "130.161.158.4" ];
 
     useDHCP = false;
+
+    defaultMailServer = {
+      directDelivery = true;
+      hostName = "smtp.tudelft.nl";
+      domain = "st.ewi.tudelft.nl";
+    };
+
   };
 
   environment.systemPackages = [ pkgs.stdenv pkgs.lsiutil ] ++ (with pkgs.strategoPackages018; [ aterm sdf strategoxt ]) ;
