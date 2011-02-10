@@ -237,7 +237,7 @@ in
     extraHosts = "127.0.0.2 webdsl.st.ewi.tudelft.nl webdsl";
 
     interfaces = [ { ipAddress = "130.161.159.114"; name = "eth0"; subnetMask = "255.255.254.0"; } ];
-    nameservers = [ "130.161.180.65" "130.161.158.4" ];
+    nameservers = [ "130.161.180.1" "130.161.180.65" ];
 
     useDHCP = false;
 
