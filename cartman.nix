@@ -294,6 +294,7 @@ rec {
         }
 
         { hostName = "nixos.org";
+          serverAliases = [ "ipv6.nixos.org" ];
           documentRoot = "/home/eelco/nix-homepage";
           servedDirs = [
             { urlPath = "/tarballs";
@@ -357,7 +358,7 @@ rec {
           '';
         }
 
-        { hostName = "hydra-old.nixos.org";
+        { hostName = "hydra-ubuntu.nixos.org";
           extraConfig = ''
             <Proxy *>
               Order deny,allow
@@ -366,8 +367,8 @@ rec {
 
             ProxyRequests     Off
             ProxyPreserveHost On
-            ProxyPass         /       http://hydra:3000/ retry=5
-            ProxyPassReverse  /       http://hydra:3000/
+            ProxyPass         /       http://meerkat:3000/ retry=5
+            ProxyPassReverse  /       http://meerkat:3000/
           '';
         }
 
