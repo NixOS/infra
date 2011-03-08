@@ -114,6 +114,18 @@ rec {
   };
 
   services = {
+
+    radvd = {
+      enable = true;
+      config =
+        ''
+          interface eth0 {
+            AdvSendAdvert on;
+            prefix 2002:82a1:9eb5::/64 { };
+          };
+        '';
+    };
+  
     cron = {
       mailto = "rob.vermaas@gmail.com";
       systemCronJobs =
