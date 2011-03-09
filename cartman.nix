@@ -115,16 +115,16 @@ rec {
 
         # compute 6to4 address
         prefix6=$(printf "2002:%02x%02x:%02x%02x\n" $(echo ${myIP} | tr . ' '))
-        addr6="$prefix6"::1
+        addr6="$prefix6"::0 # our tunnel end-point on the tun6to4 interface
         
         # set up the tunnel
-        ip tunnel add tun6to4 mode sit remote any local ${myIP}
+        ip tunnel add tun6to4 mode sit remote any local ${myIP} ttl 64
         ip link set dev tun6to4 mtu 1472 up
-        ip -6 addr add $addr6/16 dev tun6to4
-        ip -6 route add ::/96 dev tun6to4 metric 1
+        ip -6 addr add $addr6/128 dev tun6to4
         ip -6 route add 2000::/3 via ::192.88.99.1 dev tun6to4 metric 1
 
         # enable forwarding for the rest of the network
+        ip -6 addr add $prefix6::1 dev eth0
         ip -6 route add $prefix6::/64 dev eth0
       '';
   };
