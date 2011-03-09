@@ -133,6 +133,12 @@ rec {
           "15 0 * * *  root  (TZ=CET date; ${pkgs.rsync}/bin/rsync -razv --numeric-ids --delete /data/postgresql /data/webserver/tarballs unixhome.st.ewi.tudelft.nl::bfarm/) >> /var/log/backup.log 2>&1"
           "00 03 * * * root ${pkgs.nixUnstable}/bin/nix-collect-garbage --max-atime $(date +\\%s -d '2 weeks ago') > /var/log/gc.log 2>&1"
           "*  *  * * * root ${pkgs.python}/bin/python ${ZabbixApacheUpdater} -z 192.168.1.5 -c cartman"
+
+          # Force the 6to4 tunnel to stay alive by periodically
+          # pinging ipv6.google.com.  This is necessary to remain
+          # reachable from the outside.  There probably is a nicer
+          # way.
+          "*/10 * * * * root ${pkgs.iputils}/sbin/ping6 -c 1 2a00:1450:8005::93"
         ];
     };
 
@@ -494,6 +500,7 @@ rec {
         keep-in-foreground
         expand-hosts
         domain=buildfarm
+        interface=eth0
 
         server=130.161.158.4
         server=130.161.33.17
