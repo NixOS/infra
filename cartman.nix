@@ -32,8 +32,6 @@ rec {
 
   nixpkgs.system = "i686-linux";
 
-  environment.nix = pkgs.nixSqlite;
-
   boot = {
     loader.grub.device = "/dev/sda";
     loader.grub.copyKernels = true;

@@ -5,8 +5,6 @@
 
   nixpkgs.system = "x86_64-linux";
 
-  environment.nix = pkgs.nixSqlite;
-
   networking.hostName = "lucifer";
 
   boot.loader.grub.device = "/dev/sda";

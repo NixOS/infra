@@ -5,8 +5,6 @@
 
   nixpkgs.system = "x86_64-linux";
 
-  environment.nix = pkgs.nixSqlite;
-
   boot = {
     initrd.kernelModules = [ "mptsas" "ext4" ];
     kernelModules = [ "acpi-cpufreq" "kvm-intel" ];
