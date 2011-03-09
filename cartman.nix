@@ -84,6 +84,12 @@ rec {
 
     extraHosts = "192.168.1.5 cartman";
 
+    firewall.enable = true;
+    firewall.allowedTCPPorts = [ 80 443 10051 ];
+    firewall.allowedUDPPorts = [ 53 67 ];
+    firewall.rejectPackets = true;
+    firewall.allowPing = true;
+    
     localCommands =
       ''
         # Provide NATting for the build machines on 192.168.1.*.
@@ -102,7 +108,7 @@ rec {
         iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j SNAT --to-source ${myIP}
 
         # lucifer ssh (to give Karl/Armijn access for the BAT project)
-        iptables -t nat -A PREROUTING -p tcp -i eth1 --dport 22222 -j DNAT --to 192.168.1.25:22
+        #iptables -t nat -A PREROUTING -p tcp -i eth1 --dport 22222 -j DNAT --to 192.168.1.25:22
 
         echo 1 > /proc/sys/net/ipv4/ip_forward
 
