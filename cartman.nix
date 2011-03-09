@@ -87,9 +87,9 @@ rec {
     extraHosts = "192.168.1.5 cartman";
 
     localCommands =
-      # Provide NATting for the build machines on 192.168.1.*.
-      # Obviously, this should be something that NixOS provides.
       ''
+        # Provide NATting for the build machines on 192.168.1.*.
+        # Obviously, this should be something that NixOS provides.
         export PATH=${pkgs.iptables}/sbin:$PATH
 
         modprobe ip_tables
@@ -103,13 +103,31 @@ rec {
         iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -d 192.168.1.0/24 -j ACCEPT
         iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j SNAT --to-source ${myIP}
 
-        # stan ssh (for the SCM seminar)
-        iptables -t nat -A PREROUTING -p tcp -i eth1 --dport 2222 -j DNAT --to 192.168.1.20:22
-
         # lucifer ssh (to give Karl/Armijn access for the BAT project)
         iptables -t nat -A PREROUTING -p tcp -i eth1 --dport 22222 -j DNAT --to 192.168.1.25:22
 
         echo 1 > /proc/sys/net/ipv4/ip_forward
+
+        # Set up a 6to4 tunnel for IPv6 connectivity.
+
+        # cleanup
+        ip -6 route flush dev tun6to4
+        ip link set dev tun6to4 down
+        ip tunnel del tun6to4
+
+        # compute 6to4 address
+        prefix6=$(printf "2002:%02x%02x:%02x%02x\n" $(echo ${myIP} | tr . ' '))
+        addr6="$prefix6"::1
+        
+        # set up the tunnel
+        ip tunnel add tun6to4 mode sit remote any local ${myIP}
+        ip link set dev tun6to4 mtu 1472 up
+        ip -6 addr add $addr6/16 dev tun6to4
+        ip -6 route add ::/96 dev tun6to4 metric 1
+        ip -6 route add 2000::/3 via ::192.88.99.1 dev tun6to4 metric 1
+
+        # enable forwarding for the rest of the network
+        ip -6 route add $prefix6::/64 dev eth0
       '';
   };
 
