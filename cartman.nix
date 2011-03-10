@@ -89,28 +89,16 @@ rec {
     firewall.allowedUDPPorts = [ 53 67 ];
     firewall.rejectPackets = true;
     firewall.allowPing = true;
+
+    nat.enable = true;
+    nat.internalIPs = "192.168.1.0/24";
+    nat.externalInterface = "eth1";
+    nat.externalIP = myIP;
     
     localCommands =
       ''
-        # Provide NATting for the build machines on 192.168.1.*.
-        # Obviously, this should be something that NixOS provides.
-        export PATH=${pkgs.iptables}/sbin:$PATH
-
-        modprobe ip_tables
-        modprobe ip_conntrack_ftp
-        modprobe ip_nat_ftp
-        modprobe ipt_LOG
-        modprobe ip_nat
-        modprobe xt_tcpudp
-
-        iptables -t nat -F
-        iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -d 192.168.1.0/24 -j ACCEPT
-        iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j SNAT --to-source ${myIP}
-
         # lucifer ssh (to give Karl/Armijn access for the BAT project)
         #iptables -t nat -A PREROUTING -p tcp -i eth1 --dport 22222 -j DNAT --to 192.168.1.25:22
-
-        echo 1 > /proc/sys/net/ipv4/ip_forward
 
         # Set up a 6to4 tunnel for IPv6 connectivity.
 
@@ -516,24 +504,34 @@ rec {
   # Needed for the Nixpkgs mirror script.
   environment.pathsToLink = [ "/libexec" ];
 
+  environment.systemPackages = [ pkgs.dnsmasq ];
+  
   jobs.dnsmasq =
-    let confFile = pkgs.writeText "dnsmasq.conf"
-      ''
-        keep-in-foreground
-        expand-hosts
-        domain=buildfarm
-        interface=eth0
+    let
+    
+      confFile = pkgs.writeText "dnsmasq.conf"
+        ''
+          keep-in-foreground
+          no-hosts
+          addn-hosts=${hostsFile}
+          expand-hosts
+          domain=buildfarm
+          interface=eth0
 
-        server=130.161.158.4
-        server=130.161.33.17
-        server=130.161.180.1
+          server=130.161.158.4
+          server=130.161.33.17
+          server=130.161.180.1
+
+          dhcp-range=192.168.1.150,192.168.1.200
+
+          ${flip concatMapStrings machines (m: optionalString (m ? ethernetAddress) ''
+            dhcp-host=${m.ethernetAddress},${m.ipAddress},${m.hostName}
+          '')}
+        '';
         
-        dhcp-range=192.168.1.150,192.168.1.200
+      hostsFile = pkgs.writeText "extra-hosts"
+        (flip concatMapStrings machines (m: "${m.ipAddress} ${m.hostName}\n"));
         
-        ${flip concatMapStrings machines (m: optionalString (m ? ethernetAddress) ''
-          dhcp-host=${m.ethernetAddress},${m.ipAddress},${m.hostName}
-        '')}
-      '';
     in
     { startOn = "network-interfaces";
       exec = "${pkgs.dnsmasq}/bin/dnsmasq --conf-file=${confFile}";
