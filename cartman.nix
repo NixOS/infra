@@ -100,26 +100,23 @@ rec {
         # lucifer ssh (to give Karl/Armijn access for the BAT project)
         #iptables -t nat -A PREROUTING -p tcp -i eth1 --dport 22222 -j DNAT --to 192.168.1.25:22
 
-        # Set up a 6to4 tunnel for IPv6 connectivity.
+        # Cleanup.
+        ip -6 route flush dev sixxs
+        ip link set dev sixxs down
+        ip tunnel del sixxs
 
-        # cleanup
-        ip -6 route flush dev tun6to4
-        ip link set dev tun6to4 down
-        ip tunnel del tun6to4
+        # Set up a SixXS tunnel for IPv7 connectivity.
+        ip tunnel add sixxs mode sit local 130.161.158.181 remote 192.87.102.107 ttl 64
+        ip link set dev sixxs mtu 1280 up
+        ip -6 addr add 2001:610:600:88d::2/64 dev sixxs
+        ip -6 route add default via 2001:610:600:88d::1 dev sixxs
 
-        # compute 6to4 address
-        prefix6=$(printf "2002:%02x%02x:%02x%02x\n" $(echo ${myIP} | tr . ' '))
-        addr6="$prefix6"::0 # our tunnel end-point on the tun6to4 interface
+        # Discard all traffic to networks in our prefix that don't exist.
+        ip -6 route add 2001:610:685::/48 dev lo
         
-        # set up the tunnel
-        ip tunnel add tun6to4 mode sit remote any local ${myIP} ttl 64
-        ip link set dev tun6to4 mtu 1472 up
-        ip -6 addr add $addr6/128 dev tun6to4
-        ip -6 route add default via ::192.88.99.1 dev tun6to4 metric 1
-
-        # enable forwarding for the rest of the network
-        ip -6 addr add $prefix6::1/64 dev eth0
-        ip -6 route add $prefix6::/64 dev eth0
+        # Create a local network (prefix:1::/64).
+        ip -6 addr add 2001:610:685:1::1/64 dev eth0
+        ip -6 route add 2001:610:685:1::/64 dev eth0
       '';
   };
 
@@ -131,7 +128,7 @@ rec {
         ''
           interface eth0 {
             AdvSendAdvert on;
-            prefix 2002:82a1:9eb5::/64 { };
+            prefix 2001:610:685:1::/64 { };
           };
         '';
     };
