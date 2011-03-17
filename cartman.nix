@@ -105,7 +105,7 @@ rec {
         ip link set dev sixxs down
         ip tunnel del sixxs
 
-        # Set up a SixXS tunnel for IPv7 connectivity.
+        # Set up a SixXS tunnel for IPv6 connectivity.
         ip tunnel add sixxs mode sit local 130.161.158.181 remote 192.87.102.107 ttl 64
         ip link set dev sixxs mtu 1280 up
         ip -6 addr add 2001:610:600:88d::2/64 dev sixxs
