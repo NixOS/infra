@@ -129,6 +129,7 @@ rec {
           interface eth0 {
             AdvSendAdvert on;
             prefix 2001:610:685:1::/64 { };
+            RDNSS 2001:610:685:1::1 { };
           };
         '';
     };
@@ -141,11 +142,10 @@ rec {
           "00 03 * * * root ${pkgs.nixUnstable}/bin/nix-collect-garbage --max-atime $(date +\\%s -d '2 weeks ago') > /var/log/gc.log 2>&1"
           "*  *  * * * root ${pkgs.python}/bin/python ${ZabbixApacheUpdater} -z 192.168.1.5 -c cartman"
 
-          # Force the 6to4 tunnel to stay alive by periodically
-          # pinging ipv6.google.com.  This is necessary to remain
-          # reachable from the outside.  There probably is a nicer
-          # way.
-          "*/10 * * * * root ${pkgs.iputils}/sbin/ping6 -c 1 2a00:1450:8005::93"
+          # Force the sixxs tunnel to stay alive by periodically
+          # pinging the other side.  This is necessary to remain
+          # reachable from the outside.
+          "*/10 * * * * root ${pkgs.iputils}/sbin/ping6 -c 1 2001:610:600:88d::1"
         ];
     };
 
