@@ -1,0 +1,12 @@
+#! /bin/sh
+
+socket="$1"
+if [ -z "$socket" ]; then
+  echo "syntax: $0 VNC-SOCKET"
+  exit 1
+fi
+
+port=$((1024 + $$))
+socat unix:"$socket" tcp-listen:$port &
+sleep 0.3
+vncviewer :$port
