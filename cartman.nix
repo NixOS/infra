@@ -75,6 +75,7 @@ rec {
       }
       { name = "eth0";
         ipAddress = (findSingle (m: m.hostName == "cartman") {} {} machines).ipAddress;
+        subnetMask = "22";
       }
     ];
 
@@ -91,7 +92,7 @@ rec {
     firewall.allowPing = true;
 
     nat.enable = true;
-    nat.internalIPs = "192.168.1.0/24";
+    nat.internalIPs = "192.168.1.0/22";
     nat.externalInterface = "eth1";
     nat.externalIP = myIP;
     
@@ -116,7 +117,6 @@ rec {
         
         # Create a local network (prefix:1::/64).
         ip -6 addr add 2001:610:685:1::1/64 dev eth0
-        ip -6 route add 2001:610:685:1::/64 dev eth0
       '';
   };
 
@@ -519,7 +519,7 @@ rec {
           server=130.161.33.17
           server=130.161.180.1
 
-          dhcp-range=192.168.1.150,192.168.1.200
+          dhcp-range=192.168.1.150,192.168.3.200
 
           ${flip concatMapStrings machines (m: optionalString (m ? ethernetAddress) ''
             dhcp-host=${m.ethernetAddress},${m.ipAddress},${m.hostName}
