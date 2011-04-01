@@ -21,4 +21,6 @@
   networking.bridges.veth0.interfaces = [ "eth0" ];
 
   virtualisation.libvirtd.enable = true;
+
+  services.rabbitmq.enable = true;
 }
