@@ -205,7 +205,7 @@ rec {
           documentRoot = cleanSource ./webroot;
           enableUserDir = true;
           extraSubservices = [
-            { serviceType = "subversion";
+            { function = import /etc/nixos/services/subversion;
               urlPrefix = "";
               toplevelRedirect = false;
               dataDir = "/data/subversion";
@@ -217,7 +217,7 @@ rec {
                 logo = "/serg-logo.png";
               };
             }
-            { serviceType = "subversion";
+            { function = import /etc/nixos/services/subversion;
               id = "ptg";
               urlPrefix = "/ptg";
               dataDir = "/data/subversion-ptg";
@@ -250,7 +250,7 @@ rec {
         
         { hostName = "strategoxt.org";
           extraSubservices = [
-            { serviceType = "twiki";
+            { function = import /etc/nixos/services/twiki;
               startWeb = "Stratego/WebHome";
               dataDir = "/data/pt-wiki/data";
               pubDir = "/data/pt-wiki/pub";
@@ -272,7 +272,7 @@ rec {
         { hostName = "svn.strategoxt.org";
           enableSSL = true;
           extraSubservices = [
-            { serviceType = "subversion";
+            { function = import /etc/nixos/services/subversion;
               id = "strategoxt";
               urlPrefix = "";
               dataDir = "/data/subversion-strategoxt";
@@ -290,7 +290,7 @@ rec {
         { hostName = "program-transformation.org";
           serverAliases = ["www.program-transformation.org"];
           extraSubservices = [
-            { serviceType = "twiki";
+            { function = import /etc/nixos/services/twiki;
               startWeb = "Transform/WebHome";
               dataDir = "/data/pt-wiki/data";
               pubDir = "/data/pt-wiki/pub";
@@ -343,6 +343,19 @@ rec {
           ];
         }
 
+        { hostName = "syntax-definition.org";
+          serverAliases = ["www.syntax-definition.org"];
+          extraSubservices = [
+            { function = import /etc/nixos/services/twiki;
+              startWeb = "Sdf/WebHome";
+              dataDir = "/data/pt-wiki/data";
+              pubDir = "/data/pt-wiki/pub";
+              twikiName = "Syntax Definition Wiki";
+              registrationDomain = "ewi.tudelft.nl";
+            }
+          ];
+        }
+
         { hostName = "www.nixos.org";
           globalRedirect = "http://nixos.org/";
         }
@@ -350,7 +363,7 @@ rec {
         { hostName = "svn.nixos.org";
           enableSSL = true;
           extraSubservices = [
-            { serviceType = "subversion";
+            { function = import /etc/nixos/services/subversion;
               id = "nix";
               urlPrefix = "";
               dataDir = "/data/subversion-nix";
@@ -431,6 +444,20 @@ rec {
             ProxyPreserveHost On
             ProxyPass         /       http://lucifer:8080/ retry=5
             ProxyPassReverse  /       http://lucifer:8080/
+          '';
+        }
+
+        { hostName = "cloud.nixos.org";
+          extraConfig = ''
+            <Proxy *>
+              Order deny,allow
+              Allow from all
+            </Proxy>
+
+            ProxyRequests     Off
+            ProxyPreserveHost On
+            ProxyPass         /       http://stan:8773/ retry=5
+            ProxyPassReverse  /       http://stan:8773/
           '';
         }
       ];

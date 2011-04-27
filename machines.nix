@@ -183,6 +183,14 @@ lib: with lib;
     ethernetAddress = "00:16:3e:00:00:05";
     systems = [ "i686-linux" ];
   }
+
+  { # Another NixOS test machine.
+    hostName = "clyde";
+    ipAddress = "192.168.1.55";
+    ethernetAddress = "00:16:3e:00:00:06";
+    systems = [ "x86_64-linux" ];
+  }
+  
 ]
 
 # Machines for the agilecloud experiment.
