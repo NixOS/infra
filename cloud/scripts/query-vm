@@ -11,7 +11,7 @@ fi
 info=/vmdisks/adhoc-cloud/"$id".info
 
 if [ ! -e "$info" ]; then
-    echo "Virtual machine $id doesn't exists!" >&2
+    echo "Virtual machine $id doesn't exist!" >&2
     exit 1
 fi
 
