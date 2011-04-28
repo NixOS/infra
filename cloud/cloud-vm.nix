@@ -1,5 +1,7 @@
 { config, pkgs, ... }:
 
+with pkgs.lib;
+
 {
   boot.loader.grub.version = 2;
   boot.loader.grub.device = "/dev/vda";
@@ -13,8 +15,8 @@
 
   swapDevices = [ { label = "swap"; } ];
 
-  networking.hostName = "";
-  networking.firewall.enable = true;
+  networking.hostName = mkOverride 950 "";
+  networking.firewall.enable = mkOverride 950 true;
 
   services.openssh.enable = true;
 
