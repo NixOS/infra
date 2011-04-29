@@ -3,9 +3,13 @@
 set -e
 
 id="$1"
+
+# Assign a number to the VM.  From this we derive the MAC and IPv6 addresses.
+lastnr=$(flock -x /vmdisks/adhoc-cloud/lock -c 'lastnr=$(cat /vmdisks/adhoc-cloud/last-nr || echo 65536); lastnr=$(($lastnr + 1)); echo $lastnr; echo $lastnr > /vmdisks/adhoc-cloud/last-nr')
+
+# If no id is given, use the number.
 if [ -z "$id" ]; then
-    echo "Syntax: $0 ID"
-    exit 1
+    id="i-$lastnr"
 fi
 
 xml=/vmdisks/adhoc-cloud/"$id".xml
@@ -13,20 +17,17 @@ image=/vmdisks/adhoc-cloud/"$id".qcow2
 info=/vmdisks/adhoc-cloud/"$id".info
 
 if [ -e "$info" -o -e "$xml" -o -e "$image" ]; then
-    echo "Virtual machine $id exists!"
+    echo "Virtual machine $id exists!" >&2
     exit 1
 fi
-
-# Assign a number to the VM.  From this we derive the MAC and IPv6 addresses.
-lastnr=$(flock -x /vmdisks/adhoc-cloud/lock -c 'lastnr=$(cat /vmdisks/adhoc-cloud/last-nr || echo 65536); lastnr=$(($lastnr + 1)); echo $lastnr; echo $lastnr > /vmdisks/adhoc-cloud/last-nr')
 
 # Compute the MAC.
 hex=$(printf "%06x" $lastnr)
 mac="00:16:3e:${hex:0:2}:${hex:2:2}:${hex:4:2}"
 ipv6="2001:610:685:1:216:3eff:fe${hex:0:2}:${hex:2:2}${hex:4:2}"
 
-echo "MAC address is $mac"
-echo "IPv6 address is $ipv6"
+echo "MAC address is $mac" >&2
+echo "IPv6 address is $ipv6" >&2
 
 echo "$ipv6" > "$info"
 
@@ -60,18 +61,20 @@ cat > "$xml" <<EOF
 </domain>
 EOF
 
-qemu-img create -f qcow2 "$image" -b /vmdisks/nixos-0.1pre26294-x86_64-base.qcow2
+qemu-img create -f qcow2 "$image" -b /vmdisks/nixos-0.1pre26294-x86_64-base.qcow2 >&2
 
-virsh define "$xml"
+virsh define "$xml" >&2
 
-virsh start "adhoc-cloud-$id"
+virsh start "adhoc-cloud-$id" >&2
 
 # Wait until SSH is up.
 if [ "$ASYNC" != 1 ]; then
     echo -n "Waiting for machine to finish booting..." >&2
     for ((i = 0; i < 60; i++)); do
 	if ping6 -c1 "$ipv6" > /dev/null; then break; fi
-	echo -n "."
+	echo -n "." >&2
     done
-    echo
+    echo >&2
 fi
+
+echo $id
