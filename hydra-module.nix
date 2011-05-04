@@ -4,15 +4,19 @@ with pkgs.lib;
 
 let
   cfg = config.services.hydra;
- 
-  hydraConf =  pkgs.writeScript "hydra.conf" ''
+
+  hydra = pkgs.hydra; 
+  hydraConf = pkgs.writeScript "hydra.conf" 
+    ''
       using_frontend_proxy 1
       base_uri ${cfg.hydraURL}
       notification_sender ${cfg.notificationSender}
       max_servers 25
     '';
     
-  env = ''NIX_REMOTE=daemon HYDRA_DBI="${cfg.dbi}" HYDRA_CONFIG=${cfg.baseDir}/data/hydra.conf HYDRA_DATA=${cfg.baseDir}/data'';
+  env = ''NIX_REMOTE=daemon HYDRA_DBI="${cfg.dbi}" HYDRA_CONFIG=${cfg.baseDir}/data/hydra.conf HYDRA_DATA=${cfg.baseDir}/data ''
+      + ''HYDRA_TRACKER="${cfg.tracker}" '';
+
 in
 
 {
@@ -28,7 +32,7 @@ in
       };
 
       baseDir = mkOption {
-        default = ''/home/${user.default}'';
+        default = "/home/${user.default}";
         description = ''
           The directory holding configuration, logs and temporary files.
         '';
@@ -68,13 +72,21 @@ in
           Threshold of minimum disk space (G) to determine if evaluator should run or not.  
         '';
       };
-      
+
       notificationSender = mkOption {
         default = "e.dolstra@tudelft.nl";
         description = ''
           Sender email address used for email notifications. 
         '';
       }; 
+
+      tracker = mkOption {
+        default = "";
+        description = ''
+          Piece of HTML that is included on all pages.
+        '';
+      }; 
+      
     };
 
   };
@@ -83,6 +95,7 @@ in
   ###### implementation
 
   config = mkIf cfg.enable {
+#    environment.systemPackages = [ hydra ];
 
     users.extraUsers = [
       { name = cfg.user;
@@ -100,7 +113,8 @@ in
     nix.nrBuildUsers = 100;
       
     nix.gc.automatic = true;
-    nix.gc.options = ''--max-freed "$((200 * 1024**3 - 1024 * $(df /nix/store | tail -n 1 | awk '{ print $4 }')))"'';
+    # $3 / $4 don't always work depending on length of device name
+    nix.gc.options = ''--max-freed "$((200 * 1024**3 - 1024 * $(df /nix/store | tail -n 1 | awk '{ print $3 }')))"'';
     
     nix.extraOptions = ''
       gc-keep-outputs = true
