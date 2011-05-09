@@ -44,7 +44,7 @@ cat > "$xml" <<EOF
   <devices>
     <graphics type='vnc' socket="/root/vnc-sockets/adhoc-cloud-$id"/>
     <disk type='file'>
-      <driver name='qemu' type='qcow2'/>
+      <driver name='qemu' type='qcow2' cache='writeback'/>
       <source file='$image'/>
       <target dev='hda' bus='virtio'/>
     </disk>
@@ -61,7 +61,8 @@ cat > "$xml" <<EOF
 </domain>
 EOF
 
-qemu-img create -f qcow2 "$image" -b /vmdisks/nixos-0.1pre26294-x86_64-base.qcow2 >&2
+#qemu-img create -f qcow2 "$image" -b /vmdisks/nixos-0.1pre26294-x86_64-base.qcow2 >&2
+cp /vmdisks/nixos-0.1pre26294-x86_64-base.qcow2 $image
 
 virsh define "$xml" >&2
 

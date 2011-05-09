@@ -16,7 +16,7 @@ if [ ! -e "$xml" ]; then
 fi
 
 virsh destroy "adhoc-cloud-$id" || true
-virsh undefine "adhoc-cloud-$id"
+virsh undefine "adhoc-cloud-$id" || true
 
 trash=/vmdisks/adhoc-cloud/old/$(date +%s)
 mkdir -p "$trash"
