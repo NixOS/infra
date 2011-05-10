@@ -7,10 +7,7 @@ id="$1"
 # Assign a number to the VM.  From this we derive the MAC and IPv6 addresses.
 lastnr=$(flock -x /vmdisks/adhoc-cloud/lock -c 'lastnr=$(cat /vmdisks/adhoc-cloud/last-nr || echo 65536); lastnr=$(($lastnr + 1)); echo $lastnr; echo $lastnr > /vmdisks/adhoc-cloud/last-nr')
 
-# If no id is given, use the number.
-if [ -z "$id" ]; then
-    id="i-$lastnr"
-fi
+id="i-$lastnr${id:+-$id}"
 
 xml=/vmdisks/adhoc-cloud/"$id".xml
 image=/vmdisks/adhoc-cloud/"$id".qcow2
