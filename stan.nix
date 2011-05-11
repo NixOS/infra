@@ -22,5 +22,5 @@
 
   virtualisation.libvirtd.enable = true;
 
-  services.rabbitmq.enable = true;
+  virtualisation.nova.enableSingleNode = true;
 }
