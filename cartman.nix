@@ -172,10 +172,11 @@ rec {
 
       sslServerCert = "/root/ssl-secrets/server.crt";
       sslServerKey = "/root/ssl-secrets/server.key";
-          
+    
+      extraModules = ["deflate"];      
       extraConfig = ''
         AddType application/nix-package .nixpkg
-
+        
         SSLProtocol all -TLSv1
 
         <Location /server-status>
@@ -393,6 +394,15 @@ rec {
             ProxyPreserveHost On
             ProxyPass         /       http://lucifer:3000/ retry=5
             ProxyPassReverse  /       http://lucifer:3000/
+            
+            <Location />
+              SetOutputFilter DEFLATE
+              BrowserMatch ^Mozilla/4\.0[678] no-gzip\
+              BrowserMatch \bMSI[E] !no-gzip !gzip-only-text/html
+              SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip dont-vary
+              SetEnvIfNoCase Request_URI /api/ no-gzip dont-vary
+              SetEnvIfNoCase Request_URI /download/ no-gzip dont-vary
+            </Location>
           '';
         }
 
