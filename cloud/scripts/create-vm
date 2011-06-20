@@ -66,7 +66,7 @@ virsh define "$xml" >&2
 virsh start "adhoc-cloud-$id" >&2
 
 # Wait until SSH is up.
-if [ "$ASYNC" != 1 ]; then
+if [ "$SYNC" != 0 ]; then
     echo -n "Waiting for machine to finish booting..." >&2
     for ((i = 0; i < 60; i++)); do
 	if ping6 -c1 "$ipv6" > /dev/null; then break; fi

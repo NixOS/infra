@@ -11,8 +11,8 @@ fi
 xml=/vmdisks/adhoc-cloud/"$id".xml
 
 if [ ! -e "$xml" ]; then
-    echo "Virtual machine $id doesn't exists!"
-    exit 1
+    echo "Virtual machine $id doesn't exist!"
+    exit 0
 fi
 
 virsh destroy "adhoc-cloud-$id" || true
