@@ -190,6 +190,25 @@ lib: with lib;
     ethernetAddress = "00:16:3e:00:00:06";
     systems = [ "x86_64-linux" ];
   }
+
+  { # 48 core powerrrr
+    hostName = "wendy";
+    ipAddress = "192.168.1.26";
+    ethernetAddress = "f0:4d:a2:40:1b:be";
+    systems = [ "x86_64-linux" ];
+  }
+  { # 48 core powerrrr
+    hostName = "ike";
+    ipAddress = "192.168.1.27";
+    ethernetAddress = "f0:4d:a2:40:1b:91";
+    systems = [ "x86_64-linux" ];
+  }
+  { # 48 core powerrrr
+    hostName = "shelley";
+    ipAddress = "192.168.1.28";
+    ethernetAddress = "f0:4d:a2:40:10:6c";
+    systems = [ "x86_64-linux" ];
+  }
   
 ]
 

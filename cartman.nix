@@ -117,6 +117,9 @@ rec {
         
         # Create a local network (prefix:1::/64).
         ip -6 addr add 2001:610:685:1::1/64 dev eth0
+
+        # Forward traffic to our Nova cloud to "stan".
+        ip -6 route add 2001:610:685:2::/64 via 2001:610:685:1:222:19ff:fe55:bf2e
       '';
   };
 
@@ -470,6 +473,21 @@ rec {
             ProxyPassReverse  /       http://stan:8773/
           '';
         }
+
+        { hostName = "vnc.nixos.org";
+          extraConfig = ''
+            <Proxy *>
+              Order deny,allow
+              Allow from all
+            </Proxy>
+
+            ProxyRequests     Off
+            ProxyPreserveHost On
+            ProxyPass         /       http://stan:6080/ retry=5
+            ProxyPassReverse  /       http://stan:6080/
+          '';
+        }
+        
       ];
     };
 
