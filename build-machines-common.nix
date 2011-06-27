@@ -1,5 +1,7 @@
 { config, pkgs, ... }:
 
+with pkgs.lib;
+
 {
   require = [ ./common.nix ];
   
@@ -26,4 +28,24 @@
     ];
 
   networking.hostName = ""; # obtain from DHCP server
+
+  users.extraUsers =
+    [ { name = "buildfarm";
+        description = "Hydra unprivileged build slave";
+        group = "users";
+        home = "/home/buildfarm";
+        useDefaultShell = true;
+        createHome = true;
+        isSystemUser = false;
+      }
+    ];
+
+  # !!! Should have a NixOS option for installing files into a declarative user account.
+  system.activationScripts.buildfarmSSHKey = stringAfter [ "users" ]
+    ''
+      mkdir -m 700 -p /home/buildfarm/.ssh
+      cp ${./id_buildfarm.pub} /home/buildfarm/.ssh/authorized_keys
+      chown -R buildfarm.users /home/buildfarm/.ssh
+    '';
+    
 }

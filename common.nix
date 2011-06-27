@@ -6,7 +6,7 @@
   boot.initrd.kernelModules = [ "ext4" ];
 
   environment.systemPackages = 
-    [ pkgs.emacs pkgs.subversion pkgs.sysstat pkgs.hdparm pkgs.sdparm pkgs.lsiutil 
+    [ pkgs.emacs pkgs.subversion pkgs.sysstat pkgs.hdparm pkgs.sdparm # pkgs.lsiutil 
       pkgs.htop pkgs.sqlite pkgs.iotop
     ];
 
