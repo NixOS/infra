@@ -8,5 +8,5 @@
   boot.initrd.kernelModules = [ "megaraid_sas" "ext4" ];
   boot.kernelModules = [ "acpi-cpufreq" "kvm-amd" ];
 
-  nix.maxJobs = 8;
+  nix.maxJobs = 48;
 }
