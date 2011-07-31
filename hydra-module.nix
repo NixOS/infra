@@ -11,11 +11,11 @@ let
       using_frontend_proxy 1
       base_uri ${cfg.hydraURL}
       notification_sender ${cfg.notificationSender}
-      max_servers 25
+      max_servers 50
     '';
     
-  env = ''NIX_REMOTE=daemon HYDRA_DBI="${cfg.dbi}" HYDRA_CONFIG=${cfg.baseDir}/data/hydra.conf HYDRA_DATA=${cfg.baseDir}/data ''
-      + ''HYDRA_TRACKER="${cfg.tracker}" '';
+  env = ''NIX_REMOTE=daemon HYDRA_DBI="${cfg.dbi}" HYDRA_CONFIG=${cfg.baseDir}/data/hydra.conf HYDRA_DATA=${cfg.baseDir}/data '';
+  server_env = env + ''HYDRA_TRACKER="${cfg.tracker}" '';
 
 in
 
@@ -114,7 +114,7 @@ in
       
     nix.gc.automatic = true;
     # $3 / $4 don't always work depending on length of device name
-    nix.gc.options = ''--max-freed "$((200 * 1024**3 - 1024 * $(df /nix/store | tail -n 1 | awk '{ print $3 }')))"'';
+    nix.gc.options = ''--max-freed "$((400 * 1024**3 - 1024 * $(df /nix/store | tail -n 1 | awk '{ print $3 }')))"'';
     
     nix.extraOptions = ''
       gc-keep-outputs = true
@@ -149,7 +149,7 @@ in
       { description = "hydra-server";
         startOn = "started network-interfaces hydra-init";
         exec = ''
-          ${pkgs.su}/bin/su - ${cfg.user} -c '${env} hydra_server.pl > ${cfg.baseDir}/data/server.log 2>&1'
+          ${pkgs.su}/bin/su - ${cfg.user} -c '${server_env} hydra_server.pl > ${cfg.baseDir}/data/server.log 2>&1'
         '';
       };
 
@@ -192,7 +192,7 @@ in
 	    in
 	    [ "*/5 * * * * root  ${checkSpace} &> ${cfg.baseDir}/data/checkspace.log" 
 	      "15 5 * * * root  ${compressLogs} &> ${cfg.baseDir}/data/compress.log"
-              "15 02 * * * ${cfg.user} ${env} hydra_update_gc_roots.pl &> ${cfg.baseDir}/data/gc-roots.log"
+              "15 02 * * * ${cfg.user} ${env} /home/${cfg.user}/.nix-profile/bin/hydra_update_gc_roots.pl &> ${cfg.baseDir}/data/gc-roots.log"
 	    ];
 
   };  
