@@ -40,4 +40,10 @@
     hostName = "smtp.tudelft.nl";
     domain = "st.ewi.tudelft.nl";
   };
+
+  # Bump the open files limit so that non-root users can run NixOS VM
+  # tests (Samba opens lot of files).
+  security.pam.loginLimits =
+    [ { domain = "*"; item = "nofile"; type = "-"; value = "16384"; }
+    ];
 }
