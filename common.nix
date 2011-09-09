@@ -1,6 +1,8 @@
 { config, pkgs, ... }:
 
 {
+  boot.kernelPackages = pkgs.linuxPackages_2_6_35;
+  
   boot.kernelModules = [ "coretemp" ];
 
   boot.initrd.kernelModules = [ "ext4" ];
