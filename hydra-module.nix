@@ -133,7 +133,7 @@ in
     '';
 
     jobs.hydra_init =
-      { description = "hydra-init";
+      { name = "hydra-init";
         startOn = "started network-interfaces";
         preStart = ''
           mkdir -p ${cfg.baseDir}/data
@@ -146,16 +146,16 @@ in
       };
 
     jobs.hydra_server =
-      { description = "hydra-server";
-        startOn = "started network-interfaces hydra-init";
+      { name = "hydra-server";
+        startOn = "started network-interfaces and started hydra-init";
         exec = ''
           ${pkgs.su}/bin/su - ${cfg.user} -c '${server_env} hydra_server.pl > ${cfg.baseDir}/data/server.log 2>&1'
         '';
       };
 
     jobs.hydra_queue_runner =
-      { description = "hydra-queue-runner";
-        startOn = "started network-interfaces hydra-init";
+      { name = "hydra-queue-runner";
+        startOn = "started network-interfaces and started hydra-init";
         preStart = "${pkgs.su}/bin/su - ${cfg.user} -c 'hydra_queue_runner.pl --unlock'";
         exec = ''
           ${pkgs.su}/bin/su - ${cfg.user} -c 'nice -n 8 hydra_queue_runner.pl > ${cfg.baseDir}/data/queue_runner.log 2>&1'
@@ -163,7 +163,7 @@ in
       };
 
     jobs.hydra_evaluator =
-      { description = "hydra-evaluator";
+      { name = "hydra-evaluator";
         startOn = "started network-interfaces";
         exec = ''
           ${pkgs.su}/bin/su - ${cfg.user} -c '${env} nice -n 5 hydra_evaluator.pl > ${cfg.baseDir}/data/evaluator.log 2>&1'
