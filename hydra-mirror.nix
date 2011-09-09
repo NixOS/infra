@@ -8,8 +8,8 @@ let
 
   mirrorChannel = pkgs.fetchsvn {
     url = https://svn.nixos.org/repos/nix/release/trunk/channels/mirror-channel.pl;
-    rev = 25210;
-    sha256 = "0gspqid1rpsj1z1mr29nakh7di278nlv6v2knafvmm3g8ah3yxgz";
+    rev = 28026;
+    sha256 = "0f76rfhxqap80qsq5gk7zbwv44sz8ci4czfxby6c0dqn0lzf1b41";
   };
 
   cronjob = jobset:
