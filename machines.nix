@@ -1,7 +1,7 @@
 lib: with lib;
 
 [
-  {
+  { # Web frontend.
     hostName = "cartman";
     ipAddress = "192.168.1.5";
     system = "i686-linux";
@@ -9,7 +9,7 @@ lib: with lib;
     maxJobs = 2;
   }
   
-  {
+  { # 8-core NixOS build machine.
     hostName = "kenny";
     ipAddress = "192.168.1.19";
     ethernetAddress = "00:22:19:55:cc:0d";
@@ -19,7 +19,7 @@ lib: with lib;
     buildUser = "buildfarm";
   }
   
-  {
+  { # 8-core NixOS build machine.
     hostName = "stan";
     ipAddress = "192.168.1.20";
     ethernetAddress = "00:22:19:55:bf:2e";
@@ -29,7 +29,7 @@ lib: with lib;
     buildUser = "buildfarm";
   }
   
-  {
+  { # 8-core NixOS build machine.
     hostName = "kyle";
     ipAddress = "192.168.1.21";
     ethernetAddress = "00:22:19:55:c1:18";
@@ -39,7 +39,7 @@ lib: with lib;
     buildUser = "buildfarm";
   }
   
-  {
+  { # Windows XP build machine.
     hostName = "garrison";
     ipAddress = "192.168.1.11";
     ethernetAddress = "00:19:d1:10:37:54";
@@ -47,16 +47,6 @@ lib: with lib;
     aliases = ["winxp32-1" "winxp32" "winxp"];
     maxJobs = 2;
     buildUser = "nix";
-  }
-
-  {
-    hostName = "terrance";
-    ipAddress = "192.168.1.12";
-    ethernetAddress = "00:19:d1:10:37:49";
-    system = "i686-openbsd";
-    aliases = ["openbsd-1"];
-    maxJobs = 2;
-    buildUser = "buildfarm";
   }
 
   {
@@ -69,47 +59,7 @@ lib: with lib;
     buildUser = "buildfarm";
   }
   
-  {
-    hostName = "jimmy";
-    ipAddress = "192.168.1.14";
-    ethernetAddress = "00:16:76:9a:32:1d";
-    system = "i686-linux";
-    aliases = ["linux32-1" "linux32" "linux"];
-    maxJobs = 2;
-    #buildUser = "buildfarm";
-  }
-  
-  {
-    hostName = "timmy";
-    ipAddress = "192.168.1.15";
-    ethernetAddress = "00:19:d1:1d:c4:9a";
-    system = "i686-linux";
-    aliases = ["linux32-2"];
-    maxJobs = 2;
-    #buildUser = "buildfarm";
-  }
-  
-  {
-    hostName = "token";
-    ipAddress = "192.168.1.16";
-    ethernetAddress = "00:16:cb:a6:13:28";
-    system = "i686-darwin";
-    aliases = ["mac86-1" "mac"];
-    maxJobs = 2;
-    buildUser = "nix";
-  }
-  
-  {
-    hostName = "black";
-    ipAddress = "192.168.1.17";
-    ethernetAddress = "00:16:cb:a6:13:d7";
-    system = "i686-darwin";
-    aliases = ["mac86-2"];
-    maxJobs = 2;
-    buildUser = "nix";
-  }
-
-  {
+  { # 64-bit Mac OS X build machine.
     hostName = "butters";
     ipAddress = "192.168.1.23";
     ethernetAddress = "00:24:36:f3:cd:c0";
@@ -119,25 +69,19 @@ lib: with lib;
     buildUser = "nix";
   }
   
-  {
+  { # Old Hydra server.
     hostName = "hydra";
     ipAddress = "192.168.1.18";
     ethernetAddress = "00:22:19:55:bf:24";
   }
 
-  {
-    hostName = "chef";
-    ipAddress = "192.168.1.22";
-    ethernetAddress = "00:26:b9:35:bb:ca";
-  }
-
-  {
+  { # Xen machine.
     hostName = "mrhankey";
     ipAddress = "192.168.1.24";
     ethernetAddress = "00:1D:09:0E:09:E5";
   }
 
-  {
+  { # New Hydra server.
     hostName = "lucifer";
     ipAddress = "192.168.1.25";
     ethernetAddress = "84:2B:2B:0B:98:F0";
