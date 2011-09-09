@@ -10,7 +10,7 @@
 
   nix.maxJobs = 48;
 
-  fileSystems = [ 
-    { device = "none"; fsType = "tmpfs"; mountPoint = "/tmp"; options = "size=16G"; neededForBoot=true; } 
-  ];
+  fileSystems = 
+    [ { device = "none"; fsType = "tmpfs"; mountPoint = "/tmp"; options = "size=16G"; neededForBoot = true; } 
+    ];
 }
