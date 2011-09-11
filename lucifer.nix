@@ -64,20 +64,6 @@
   services.hydraChannelMirror.period = "0-59/15 * * * *";
   services.hydraChannelMirror.dataDir = "/data/releases";
 
-  services.postgresql = {
-    enable = true;
-    enableTCPIP = true;
-    dataDir = "/data/postgresql";
-    authentication = 
-      ''
-        local all mediawiki        ident mediawiki-users
-        local all all              ident sameuser
-        host  all all 127.0.0.1/32 md5
-        host  all all ::1/128      md5
-        host  all all 192.168.1.0/24 md5
-      ''; 
-  };
-
   services.tomcat = {
     enable = true;
     baseDir = "/data/tomcat";
@@ -86,7 +72,6 @@
       + "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=8999 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.rmi.server.hostname=localhost "
       + "-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/data/tomcat/logs/java_pid<pid>.hprof";
   };
-
 
   services.cron.systemCronJobs =
     [ "*/5 * * * *  hydra-mirror  flock -x /data/releases/.lock -c /home/hydra-mirror/release/mirror/mirror-nixos-isos.sh >> /home/hydra-mirror/nixos-mirror.log 2>&1" ];
