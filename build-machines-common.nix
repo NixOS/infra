@@ -48,4 +48,11 @@ with pkgs.lib;
       chown -R buildfarm.users /home/buildfarm/.ssh
     '';
     
+  jobs.udevtrigger.postStop =
+    ''
+      # Enable Kernel Samepage Merging (reduces memory footprint of
+      # VMs).
+      echo 1 > /sys/kernel/mm/ksm/run
+    '';
+
 }
