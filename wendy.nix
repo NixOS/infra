@@ -44,4 +44,18 @@
       '';
     };
 
+  jobs.mturk_hydra_bridge_production =
+    { name = "mturk-hydra-bridge-production";
+      exec = ''
+        ${pkgs.su}/bin/su - mturk -c 'MTURK_STATE=/home/mturk/state-production exec create-hits-from-hydra.pl >> /home/mturk/state-production/hydra-bridge.log 2>&1'
+      '';
+    };
+
+  jobs.mturk_vm_cleanup_production =
+    { name = "mturk-vm-cleanup-production";
+      exec = ''
+        ${pkgs.su}/bin/su - mturk -c 'export MTURK_STATE=/home/mturk/state-production; while true; do cleanup-vms.pl >> /home/mturk/state-production/cleanup-vms.log 2>&1; sleep 60; done'
+      '';
+    };
+
 }
