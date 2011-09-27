@@ -37,6 +37,7 @@
       UserParameter=vm.memory.dirty,echo $((1024 * $(cat /proc/meminfo | sed 's/Dirty: *\([0-9]\+\) kB/\1/; t; d')))
       UserParameter=vm.memory.ksm.shared,echo -n $((4096 * $(cat /sys/kernel/mm/ksm/pages_shared)))
       UserParameter=vm.memory.ksm.sharing,echo -n $((4096 * $(cat /sys/kernel/mm/ksm/pages_sharing)))
+      UserParameter=vm.memory.ksm.unshared,echo -n $((4096 * $(cat /sys/kernel/mm/ksm/pages_unshared)))
       UserParameter=vm.memory.ksm.volatile,echo -n $((4096 * $(cat /sys/kernel/mm/ksm/pages_volatile)))
     '';
 
