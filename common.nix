@@ -35,6 +35,9 @@
     ''
       UserParameter=hardware.temp.cpu.average,shopt -s nullglob; cat /sys/devices/platform/coretemp.*/temp1_input /sys/bus/pci/drivers/k10temp/*/temp1_input < /dev/null | ${pkgs.perl}/bin/perl -e 'while (<>) { $n++; $sum += $_; }; print $sum / $n / 1000;'
       UserParameter=vm.memory.dirty,echo $((1024 * $(cat /proc/meminfo | sed 's/Dirty: *\([0-9]\+\) kB/\1/; t; d')))
+      UserParameter=vm.memory.ksm.shared,echo -n $((4096 * $(cat /sys/kernel/mm/ksm/pages_shared)))
+      UserParameter=vm.memory.ksm.sharing,echo -n $((4096 * $(cat /sys/kernel/mm/ksm/pages_sharing)))
+      UserParameter=vm.memory.ksm.volatile,echo -n $((4096 * $(cat /sys/kernel/mm/ksm/pages_volatile)))
     '';
 
   networking.defaultMailServer = {
