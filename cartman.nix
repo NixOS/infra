@@ -25,6 +25,78 @@ let
     rev = 94;
   };
 
+  nixosVHostConfig =
+    { hostName = "nixos.org";
+      serverAliases = [ "ipv6.nixos.org" ];
+      documentRoot = "/home/eelco/nix-homepage";
+      servedDirs =
+        [ { urlPath = "/tarballs";
+            dir = "/data/webserver/tarballs";
+          }
+          { urlPath = "/irc";
+            dir = "/data/webserver/irc";
+          }
+          { urlPath = "/update";
+            dir = "/data/webserver/update";
+          }
+          { urlPath = "/releases";
+            dir = "/data/releases";
+          }
+        ];
+
+      servedFiles =
+        [ { urlPath = "/releases/css/releases.css";
+            file = releasesCSS;
+          }
+        ];
+
+      extraConfig =
+        ''
+          <Proxy *>
+            Order deny,allow
+            Allow from all
+          </Proxy>
+
+          ProxyPreserveHost On
+          
+          ProxyPass         /mturk  http://wendy:3000/mturk retry=5
+          ProxyPassReverse  /mturk  http://wendy:3000/mturk
+          ProxyPass         /mturk-sandbox  http://wendy:3001/mturk-sandbox retry=5
+          ProxyPassReverse  /mturk-sandbox  http://wendy:3001/mturk-sandbox
+        '';
+
+      extraSubservices =
+        [ { function = import /etc/nixos/services/subversion;
+            id = "nix";
+            urlPrefix = "";
+            toplevelRedirect = false;
+            dataDir = "/data/subversion-nix";
+            notificationSender = "svn@svn.nixos.org";
+            userCreationDomain = "st.ewi.tudelft.nl";
+            organisation = {
+              name = "Nix";
+              url = http://nixos.org/;
+              logo = "/logo/nixos-lores.png";
+            };
+          }
+          { serviceType = "mediawiki";
+            siteName = "Nix Wiki";
+            logo = "/logo/nix-wiki.png";
+            defaultSkin = "nixos";
+            extraConfig =
+              ''
+                $wgEmailConfirmToEdit = true;
+              '';
+            enableUploads = true;
+            uploadDir = "/data/nixos-mediawiki-upload";
+            dbServer = "webdsl.org";
+            dbUser = "mediawiki";
+            dbPassword = import ./mediawiki-password.nix;
+          }
+        ];
+    };
+
+
 in
 
 rec {
@@ -204,6 +276,19 @@ rec {
           globalRedirect = "http://nixos.org/";
         }
         
+        nixosVHostConfig
+
+        (nixosVHostConfig // {
+          enableSSL = true;
+          sslServerCert = "/root/ssl-secrets/ssl-nixos-org.crt";
+          sslServerKey = "/root/ssl-secrets/ssl-nixos-org.key";
+          extraConfig = nixosVHostConfig.extraConfig +
+            ''
+              SSLCertificateChainFile /root/ssl-secrets/startssl-class1.pem
+              SSLCACertificateFile /root/ssl-secrets/startssl-ca.pem
+            '';
+        })
+          
         { hostName = "buildfarm.st.ewi.tudelft.nl";
           documentRoot = cleanSource ./webroot;
           enableUserDir = true;
@@ -325,71 +410,6 @@ rec {
           documentRoot = "/data/webserver/dist/strategoxt2";
         }
 
-        { hostName = "ssl.nixos.org";
-          serverAliases = [ "ipv6.nixos.org" ];
-          documentRoot = "/home/eelco/nix-homepage";
-          enableSSL = true;
-          sslServerCert = "/root/ssl-secrets/ssl-nixos-org.crt";
-          sslServerKey = "/root/ssl-secrets/ssl-nixos-org.key";
-          extraConfig =
-            ''
-              SSLCertificateChainFile /root/ssl-secrets/startssl-class1.pem
-              SSLCACertificateFile /root/ssl-secrets/startssl-ca.pem
-            '';
-          extraSubservices = [
-            { function = import /etc/nixos/services/subversion;
-              id = "nix";
-              urlPrefix = "";
-              toplevelRedirect = false;
-              dataDir = "/data/subversion-nix";
-              notificationSender = "svn@svn.nixos.org";
-              userCreationDomain = "st.ewi.tudelft.nl";
-              organisation = {
-                name = "Nix";
-                url = http://nixos.org/;
-                logo = http://nixos.org/logo/nixos-lores.png;
-              };
-            }
-          ];
-        }
-          
-        { hostName = "nixos.org";
-          serverAliases = [ "ipv6.nixos.org" ];
-          documentRoot = "/home/eelco/nix-homepage";
-          servedDirs = [
-            { urlPath = "/tarballs";
-              dir = "/data/webserver/tarballs";
-            }
-            { urlPath = "/irc";
-              dir = "/data/webserver/irc";
-            }
-            { urlPath = "/update";
-              dir = "/data/webserver/update";
-            }
-            { urlPath = "/releases";
-              dir = "/data/releases";
-            }
-          ];
-
-          servedFiles = [
-            { urlPath = "/releases/css/releases.css";
-              file = releasesCSS;
-            }
-          ];
-
-          extraConfig = ''
-            <Proxy *>
-              Order deny,allow
-              Allow from all
-            </Proxy>
-
-            ProxyPass         /mturk  http://wendy:3000/mturk retry=5
-            ProxyPassReverse  /mturk  http://wendy:3000/mturk
-            ProxyPass         /mturk-sandbox  http://wendy:3001/mturk-sandbox retry=5
-            ProxyPassReverse  /mturk-sandbox  http://wendy:3001/mturk-sandbox
-          '';
-        }
-
         { hostName = "syntax-definition.org";
           serverAliases = ["www.syntax-definition.org"];
           extraSubservices = [
@@ -403,6 +423,10 @@ rec {
           ];
         }
 
+        # Obsolete, kept for backwards compatibility.  Replace this
+        # with a global redirect once Subversion 1.7 has been out for
+        # a while
+        # (http://subversion.tigris.org/issues/show_bug.cgi?id=2779).
         { hostName = "svn.nixos.org";
           enableSSL = true;
           sslServerCert = "/root/ssl-secrets/server.crt";
@@ -421,10 +445,14 @@ rec {
               };
             }
           ];
+          extraConfig = ''
+            RedirectMatch ^/$ https://nixos.org/repoman
+          '';
         }
 
+        # Obsolete, kept for backwards compatibility.
         { hostName = "svn.nixos.org";
-          globalRedirect = "https://svn.nixos.org/";
+          globalRedirect = "https://nixos.org/svn";
         }
         
         { hostName = "hydra.nixos.org";
@@ -464,26 +492,12 @@ rec {
           '';
         }
 
+        # Obsolete, kept for backwards compatibility.
         { hostName = "wiki.nixos.org";
           extraConfig = ''
-            RedirectMatch ^/$ /wiki
+            RedirectMatch ^/$ https://nixos.org/wiki
+            Redirect / https://nixos.org/
           '';
-          extraSubservices = [
-            { serviceType = "mediawiki";
-              siteName = "Nix Wiki";
-              logo = "http://nixos.org/logo/nix-wiki.png";
-              defaultSkin = "nixos";
-              extraConfig =
-                ''
-                  $wgEmailConfirmToEdit = true;
-                '';
-              enableUploads = true;
-              uploadDir = "/data/nixos-mediawiki-upload";
-              dbServer = "webdsl.org";
-              dbUser = "mediawiki";
-              dbPassword = import ./mediawiki-password.nix;
-            }
-          ];
         }
 
         { hostName = "planet.strategoxt.org";
