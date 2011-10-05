@@ -37,6 +37,8 @@ rec {
     loader.grub.copyKernels = true;
     initrd.kernelModules = ["arcmsr"];
     kernelModules = ["kvm-intel"];
+    vesa = false; # otherwise "out of sync" on the KVM switch
+    blacklistedKernelModules = [ "i915" ];
   };
 
   fileSystems =
@@ -86,10 +88,14 @@ rec {
     extraHosts = "192.168.1.5 cartman";
 
     firewall.enable = true;
-    firewall.allowedTCPPorts = [ 80 443 10051 ];
+    firewall.allowedTCPPorts = [ 80 443 843 10051 5999 ];
     firewall.allowedUDPPorts = [ 53 67 ];
     firewall.rejectPackets = true;
     firewall.allowPing = true;
+    firewall.extraCommands =
+      ''
+        ip46tables -I nixos-fw-accept -p tcp --dport 843 --syn -j LOG --log-level info --log-prefix "POLICY REQUEST: "
+      '';
 
     nat.enable = true;
     nat.internalIPs = "192.168.1.0/22";
@@ -98,8 +104,10 @@ rec {
     
     localCommands =
       ''
+        ${pkgs.iptables}/sbin/iptables -t nat -F PREROUTING
+        
         # lucifer ssh (to give Karl/Armijn access for the BAT project)
-        #iptables -t nat -A PREROUTING -p tcp -i eth1 --dport 22222 -j DNAT --to 192.168.1.25:22
+        ${pkgs.iptables}/sbin/iptables -t nat -A PREROUTING -p tcp -d ${myIP} --dport 5950 -j DNAT --to 192.168.1.26:22
 
         # Cleanup.
         ip -6 route flush dev sixxs
@@ -107,7 +115,7 @@ rec {
         ip tunnel del sixxs
 
         # Set up a SixXS tunnel for IPv6 connectivity.
-        ip tunnel add sixxs mode sit local 130.161.158.181 remote 192.87.102.107 ttl 64
+        ip tunnel add sixxs mode sit local ${myIP} remote 192.87.102.107 ttl 64
         ip link set dev sixxs mtu 1280 up
         ip -6 addr add 2001:610:600:88d::2/64 dev sixxs
         ip -6 route add default via 2001:610:600:88d::1 dev sixxs
@@ -120,6 +128,10 @@ rec {
 
         # Forward traffic to our Nova cloud to "stan".
         ip -6 route add 2001:610:685:2::/64 via 2001:610:685:1:222:19ff:fe55:bf2e
+
+        # Amazon MTurk experiment.
+        ${pkgs.iptables}/sbin/iptables -t nat -A PREROUTING -p tcp -d ${myIP} --dport 5998 -j DNAT --to 192.168.1.26:5998
+        ${pkgs.iptables}/sbin/iptables -t nat -A PREROUTING -p tcp -d ${myIP} --dport 5999 -j DNAT --to 192.168.1.26:5999
       '';
   };
 
@@ -141,8 +153,8 @@ rec {
       mailto = "rob.vermaas@gmail.com";
       systemCronJobs =
         [
-          "15 0 * * *  root  (TZ=CET date; ${pkgs.rsync}/bin/rsync -razv --numeric-ids --delete /data/postgresql /data/webserver/tarballs unixhome.st.ewi.tudelft.nl::bfarm/) >> /var/log/backup.log 2>&1"
-          "00 03 * * * root ${pkgs.nixUnstable}/bin/nix-collect-garbage --max-atime $(date +\\%s -d '2 weeks ago') > /var/log/gc.log 2>&1"
+          #"15 0 * * *  root  (TZ=CET date; ${pkgs.rsync}/bin/rsync -razv --numeric-ids --delete /data/postgresql /data/webserver/tarballs unixhome.st.ewi.tudelft.nl::bfarm/) >> /var/log/backup.log 2>&1"
+          "0 3 * * * root nix-store --gc --max-freed \"$((50 * 1024**3 - 1024 * $(df /nix/store | tail -n 1 | awk '{ print $4 }')))\" > /var/log/gc.log 2>&1"
           "*  *  * * * root ${pkgs.python}/bin/python ${ZabbixApacheUpdater} -z 192.168.1.5 -c cartman"
 
           # Force the sixxs tunnel to stay alive by periodically
@@ -152,59 +164,46 @@ rec {
         ];
     };
 
-    postgresql = {
-      enable = true;
-      enableTCPIP = true;
-      dataDir = "/data/postgresql";
-      authentication = ''
-          local all mediawiki        ident mediawiki-users
-          local all all              ident sameuser
-          host  all all 127.0.0.1/32 md5
-          host  all all ::1/128      md5
-          host  all all 192.168.1.18/32  md5
-          host  all all 130.161.159.80/32 md5
-          host  all all 94.208.32.143/32 md5
-        '';
-    };
-
     httpd = {
       enable = true;
       logPerVirtualHost = true;
       adminAddr = "e.dolstra@tudelft.nl";
       hostName = "localhost";
 
-      sslServerCert = "/root/ssl-secrets/server.crt";
-      sslServerKey = "/root/ssl-secrets/server.key";
-    
-      extraModules = ["deflate"];      
-      extraConfig = ''
-        AddType application/nix-package .nixpkg
+      extraModules = ["deflate"];
+      extraConfig =
+        ''
+          AddType application/nix-package .nixpkg
         
-        SSLProtocol all -TLSv1
-
-        <Location /server-status>
-                SetHandler server-status
-                Allow from 127.0.0.1 # If using a remote host for monitoring replace 127.0.0.1 with its IP. 
-                Order deny,allow
-                Deny from all
-        </Location>
-        ExtendedStatus On
-      '';
+          <Location /server-status>
+            SetHandler server-status
+            Allow from 127.0.0.1 # If using a remote host for monitoring replace 127.0.0.1 with its IP. 
+            Order deny,allow
+            Deny from all
+          </Location>
+        
+          ExtendedStatus On
+        '';
           
-      servedFiles = [
-        { urlPath = "/releases.css";
-          file = releasesCSS;
-        }
-        { urlPath = "/css/releases.css"; # legacy; old releases point here
-          file = releasesCSS;
-        }
-        { urlPath = "/releases/css/releases.css"; # legacy; old releases point here
-          file = releasesCSS;
-        }
-      ];
+      servedFiles =
+        [ { urlPath = "/releases.css";
+            file = releasesCSS;
+          }
+          { urlPath = "/css/releases.css"; # legacy; old releases point here
+            file = releasesCSS;
+          }
+          { urlPath = "/releases/css/releases.css"; # legacy; old releases point here
+            file = releasesCSS;
+          }
+        ];
       
       virtualHosts = [
 
+        { # Catch-all site.
+          hostName = "www.nixos.org";
+          globalRedirect = "http://nixos.org/";
+        }
+        
         { hostName = "buildfarm.st.ewi.tudelft.nl";
           documentRoot = cleanSource ./webroot;
           enableUserDir = true;
@@ -249,6 +248,8 @@ rec {
         # go to svn.strategoxt.org.
         { hostName = "buildfarm.st.ewi.tudelft.nl";
           enableSSL = true;
+          sslServerCert = "/root/ssl-secrets/server.crt";
+          sslServerKey = "/root/ssl-secrets/server.key";
           globalRedirect = "http://buildfarm.st.ewi.tudelft.nl/";
         }
         
@@ -275,6 +276,8 @@ rec {
         
         { hostName = "svn.strategoxt.org";
           enableSSL = true;
+          sslServerCert = "/root/ssl-secrets/server.crt";
+          sslServerKey = "/root/ssl-secrets/server.key";
           extraSubservices = [
             { function = import /etc/nixos/services/subversion;
               id = "strategoxt";
@@ -322,6 +325,34 @@ rec {
           documentRoot = "/data/webserver/dist/strategoxt2";
         }
 
+        { hostName = "ssl.nixos.org";
+          serverAliases = [ "ipv6.nixos.org" ];
+          documentRoot = "/home/eelco/nix-homepage";
+          enableSSL = true;
+          sslServerCert = "/root/ssl-secrets/ssl-nixos-org.crt";
+          sslServerKey = "/root/ssl-secrets/ssl-nixos-org.key";
+          extraConfig =
+            ''
+              SSLCertificateChainFile /root/ssl-secrets/startssl-class1.pem
+              SSLCACertificateFile /root/ssl-secrets/startssl-ca.pem
+            '';
+          extraSubservices = [
+            { function = import /etc/nixos/services/subversion;
+              id = "nix";
+              urlPrefix = "";
+              toplevelRedirect = false;
+              dataDir = "/data/subversion-nix";
+              notificationSender = "svn@svn.nixos.org";
+              userCreationDomain = "st.ewi.tudelft.nl";
+              organisation = {
+                name = "Nix";
+                url = http://nixos.org/;
+                logo = http://nixos.org/logo/nixos-lores.png;
+              };
+            }
+          ];
+        }
+          
         { hostName = "nixos.org";
           serverAliases = [ "ipv6.nixos.org" ];
           documentRoot = "/home/eelco/nix-homepage";
@@ -345,6 +376,18 @@ rec {
               file = releasesCSS;
             }
           ];
+
+          extraConfig = ''
+            <Proxy *>
+              Order deny,allow
+              Allow from all
+            </Proxy>
+
+            ProxyPass         /mturk  http://wendy:3000/mturk retry=5
+            ProxyPassReverse  /mturk  http://wendy:3000/mturk
+            ProxyPass         /mturk-sandbox  http://wendy:3001/mturk-sandbox retry=5
+            ProxyPassReverse  /mturk-sandbox  http://wendy:3001/mturk-sandbox
+          '';
         }
 
         { hostName = "syntax-definition.org";
@@ -360,12 +403,10 @@ rec {
           ];
         }
 
-        { hostName = "www.nixos.org";
-          globalRedirect = "http://nixos.org/";
-        }
-        
         { hostName = "svn.nixos.org";
           enableSSL = true;
+          sslServerCert = "/root/ssl-secrets/server.crt";
+          sslServerKey = "/root/ssl-secrets/server.key";
           extraSubservices = [
             { function = import /etc/nixos/services/subversion;
               id = "nix";
@@ -431,12 +472,16 @@ rec {
             { serviceType = "mediawiki";
               siteName = "Nix Wiki";
               logo = "http://nixos.org/logo/nix-wiki.png";
+              defaultSkin = "nixos";
               extraConfig =
                 ''
                   $wgEmailConfirmToEdit = true;
                 '';
               enableUploads = true;
               uploadDir = "/data/nixos-mediawiki-upload";
+              dbServer = "webdsl.org";
+              dbUser = "mediawiki";
+              dbPassword = import ./mediawiki-password.nix;
             }
           ];
         }
@@ -474,7 +519,7 @@ rec {
           '';
         }
 
-        { hostName = "vnc.nixos.org";
+        { hostName = "mturk.nixos.org";
           extraConfig = ''
             <Proxy *>
               Order deny,allow
@@ -483,8 +528,20 @@ rec {
 
             ProxyRequests     Off
             ProxyPreserveHost On
-            ProxyPass         /       http://stan:6080/ retry=5
-            ProxyPassReverse  /       http://stan:6080/
+            ProxyPass         /  http://wendy/~mturk/ retry=5
+            ProxyPassReverse  /  http://wendy/~mturk/
+          '';
+        }
+
+        { hostName = "mturk-view.nixos.org";
+          extraConfig = ''
+            Redirect permanent / http://nixos.org/mturk/
+          '';
+        }
+        
+        { hostName = "mturk-view-sandbox.nixos.org";
+          extraConfig = ''
+            Redirect permanent / http://nixos.org/mturk-sandbox/
           '';
         }
         
@@ -496,14 +553,10 @@ rec {
       backups =
         let genericBackup = { server = "webdata.tudelft.nl";
                               protocol = "webdav";
-                              https = true ;
+                              https = true;
                               symlinks = "ignore"; 
                             };
         in [
-          ( genericBackup // { name   = "postgresql";
-                               local  = config.services.postgresqlBackup.location;
-                               remote = "/staff-groups/ewi/st/strategoxt/backup/postgresql"; 
-                             } )
           ( genericBackup // { name   = "subversion";
                                local  = "/data/subversion";
                                remote = "/staff-groups/ewi/st/strategoxt/backup/subversion/subversion"; 
@@ -511,7 +564,6 @@ rec {
           ( genericBackup // { name   = "subversion-nix";
                                local  = "/data/subversion-nix";
                                remote = "/staff-groups/ewi/st/strategoxt/backup/subversion/subversion-nix"; 
-                               period = "15 03 * * *"; 
                              } )
           ( genericBackup // { name   = "subversion-ptg";
                                local  = "/data/subversion-ptg";
@@ -520,27 +572,22 @@ rec {
           ( genericBackup // { name   = "subversion-strategoxt"; 
                                local  = "/data/subversion-strategoxt";
                                remote = "/staff-groups/ewi/st/strategoxt/backup/subversion/subversion-strategoxt"; 
-                               period = "15 02 * * *"; 
                              } )
           ( genericBackup // { name   = "webserver-dist-nix"; 
                                local  = "/data/webserver/dist/nix";
                                remote = "/staff-groups/ewi/st/strategoxt/backup/webserver-dist-nix"; 
-                               period = "5 03 * * *"; 
                              } )
 #          ( genericBackup // { name   = "webserver-tarballs"; 
 #                               local  = "/data/webserver/tarballs";
 #                               remote = "/staff-groups/ewi/st/strategoxt/backup/webserver-tarballs"; 
-#                               period = "5 03 * * *"; 
 #                             } )
           ( genericBackup // { name   = "pt-wiki"; 
                                local  = "/data/pt-wiki";
                                remote = "/staff-groups/ewi/st/strategoxt/backup/pt-wiki"; 
-                               period = "55 02 * * *"; 
                              } )
           ( genericBackup // { name   = "nixos-mediawiki-upload"; 
                                local  = "/data/nixos-mediawiki-upload";
                                remote = "/staff-groups/ewi/st/strategoxt/backup/nixos-mediawiki-upload"; 
-                               period = "20 03 * * *"; 
                              } )
         ];
       };
@@ -548,9 +595,11 @@ rec {
     zabbixAgent.enable = true;
     
     zabbixServer.enable = true;
-    zabbixServer.dbServer = "lucifer";
+    zabbixServer.dbServer = "webdsl.org";
     zabbixServer.dbPassword = import ./zabbix-password.nix;
 
+    flashpolicyd.enable = true;
+    
   };
 
   # Needed for the Nixpkgs mirror script.
@@ -585,8 +634,8 @@ rec {
         (flip concatMapStrings machines (m: "${m.ipAddress} ${m.hostName}\n"));
         
     in
-    { startOn = "network-interfaces";
+    { startOn = "started network-interfaces";
       exec = "${pkgs.dnsmasq}/bin/dnsmasq --conf-file=${confFile}";
     };
-  
+
 }
