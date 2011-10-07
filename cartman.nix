@@ -66,20 +66,7 @@ let
         '';
 
       extraSubservices =
-        [ { function = import /etc/nixos/services/subversion;
-            id = "nix";
-            urlPrefix = "";
-            toplevelRedirect = false;
-            dataDir = "/data/subversion-nix";
-            notificationSender = "svn@svn.nixos.org";
-            userCreationDomain = "st.ewi.tudelft.nl";
-            organisation = {
-              name = "Nix";
-              url = http://nixos.org/;
-              logo = "/logo/nixos-lores.png";
-            };
-          }
-          { serviceType = "mediawiki";
+        [ { serviceType = "mediawiki";
             siteName = "Nix Wiki";
             logo = "/logo/nix-wiki.png";
             defaultSkin = "nixos";
@@ -286,7 +273,24 @@ rec {
             ''
               SSLCertificateChainFile /root/ssl-secrets/startssl-class1.pem
               SSLCACertificateFile /root/ssl-secrets/startssl-ca.pem
+              # Required by Catalyst.
+              RequestHeader set X-Forwarded-Port 443
             '';
+          extraSubservices = nixosVHostConfig.extraSubservices ++
+            [ { function = import /etc/nixos/services/subversion;
+                id = "nix";
+                urlPrefix = "";
+                toplevelRedirect = false;
+                dataDir = "/data/subversion-nix";
+                notificationSender = "svn@svn.nixos.org";
+                userCreationDomain = "st.ewi.tudelft.nl";
+                organisation = {
+                  name = "Nix";
+                  url = http://nixos.org/;
+                  logo = "/logo/nixos-lores.png";
+                };
+              }
+            ];
         })
           
         { hostName = "buildfarm.st.ewi.tudelft.nl";
