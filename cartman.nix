@@ -343,6 +343,12 @@ rec {
         }
         
         { hostName = "strategoxt.org";
+          servedFiles = [ 
+            { urlPath = "/freenode.ver";
+              file = "/data/pt-wiki/pub/freenode.ver";
+            }
+          ] ;
+
           extraSubservices = [
             { function = import /etc/nixos/services/twiki;
               startWeb = "Stratego/WebHome";
