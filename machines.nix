@@ -49,16 +49,6 @@ lib: with lib;
     buildUser = "nix";
   }
 
-  {
-    hostName = "phillip";
-    ipAddress = "192.168.1.13";
-    ethernetAddress = "00:19:d1:19:2a:31";
-    system = "i686-freebsd";
-    aliases = ["freebsd-1"];
-    maxJobs = 2;
-    buildUser = "buildfarm";
-  }
-  
   { # 64-bit Mac OS X build machine.
     hostName = "butters";
     ipAddress = "192.168.1.23";
@@ -91,12 +81,12 @@ lib: with lib;
   # The following are Xen VMs hosted on mrhankey.
   # Note that 00:16:3e is the prefix for Xen MAC addresses.
   
-  { # OpenSolaris 2009.06 (32 bit).
+  { # 32-bit OpenIndiana 151a (in a VM).
     hostName = "tweek";
     ipAddress = "192.168.1.50";
     ethernetAddress = "00:16:3e:00:00:01";
-    systems = [ "i386-sunos" ];
-    maxJobs = 2;
+    systems = [ "i686-solaris" ];
+    maxJobs = 1;
   }
 
   { # NixOS test machine.
@@ -135,6 +125,24 @@ lib: with lib;
     systems = [ "x86_64-linux" ];
   }
 
+  { # 64-bit FreeBSD build machine (in a VM).
+    hostName = "beastie";
+    ipAddress = "192.168.1.56";
+    ethernetAddress = "00:16:3e:00:00:07";
+    system = "x86_64-freebsd";
+    maxJobs = 1;
+    buildUser = "buildfarm";
+  }
+  
+  { # 32-bit FreeBSD build machine (in a VM).
+    hostName = "demon";
+    ipAddress = "192.168.1.57";
+    ethernetAddress = "00:16:3e:00:00:08";
+    system = "i686-freebsd";
+    maxJobs = 1;
+    buildUser = "buildfarm";
+  }
+  
   { # 48 core powerrrr
     hostName = "wendy";
     ipAddress = "192.168.1.26";
@@ -155,19 +163,3 @@ lib: with lib;
   }
   
 ]
-
-# Machines for the agilecloud experiment.
-++ flip map (range 0 9) (nr:
-  { hostName = "agilecloud0${toString nr}";
-    ipAddress = "192.168.1.${toString (builtins.add nr 80)}";
-    ethernetAddress = "00:16:3e:00:34:0${toString nr}";
-    systems = [ "i686-linux" ];
-  }
-)
-++ flip map (range 10 29) (nr:
-  { hostName = "agilecloud${toString nr}";
-    ipAddress = "192.168.1.${toString (builtins.add nr 80)}";
-    ethernetAddress = "00:16:3e:00:34:${toString nr}";
-    systems = [ "i686-linux" ];
-  }
-)

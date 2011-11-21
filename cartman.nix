@@ -29,6 +29,7 @@ let
     { hostName = "nixos.org";
       serverAliases = [ "ipv6.nixos.org" ];
       documentRoot = "/home/eelco/nix-homepage";
+      enableUserDir = true;
       servedDirs =
         [ { urlPath = "/tarballs";
             dir = "/data/webserver/tarballs";
