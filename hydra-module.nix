@@ -5,7 +5,6 @@ with pkgs.lib;
 let
   cfg = config.services.hydra;
 
-  hydra = pkgs.hydra; 
   hydraConf = pkgs.writeScript "hydra.conf" 
     ''
       using_frontend_proxy 1
@@ -21,6 +20,7 @@ in
 
 {
   ###### interface
+
   options = {
     services.hydra = rec {
         
@@ -95,7 +95,6 @@ in
   ###### implementation
 
   config = mkIf cfg.enable {
-#    environment.systemPackages = [ hydra ];
 
     users.extraUsers = [
       { name = cfg.user;
@@ -128,8 +127,6 @@ in
       build-cache-failure = true
 
       build-poll-interval = 10
-
-      use-sqlite-wal = false
     '';
 
     jobs.hydra_init =
@@ -149,7 +146,7 @@ in
       { name = "hydra-server";
         startOn = "started network-interfaces and started hydra-init";
         exec = ''
-          ${pkgs.su}/bin/su - ${cfg.user} -c '${server_env} hydra_server.pl > ${cfg.baseDir}/data/server.log 2>&1'
+          ${pkgs.su}/bin/su - ${cfg.user} -c '${server_env} hydra_server.pl -h \* --max_spare_servers 20 --max_servers 50 > ${cfg.baseDir}/data/server.log 2>&1'
         '';
       };
 
