@@ -146,7 +146,7 @@ in
       { name = "hydra-server";
         startOn = "started network-interfaces and started hydra-init";
         exec = ''
-          ${pkgs.su}/bin/su - ${cfg.user} -c '${server_env} hydra_server.pl -h \* --max_spare_servers 20 --max_servers 50 > ${cfg.baseDir}/data/server.log 2>&1'
+          ${pkgs.su}/bin/su - ${cfg.user} -c '${server_env} exec hydra_server.pl -h \* --max_spare_servers 20 --max_servers 50 > ${cfg.baseDir}/data/server.log 2>&1'
         '';
       };
 
@@ -155,7 +155,7 @@ in
         startOn = "started network-interfaces and started hydra-init";
         preStart = "${pkgs.su}/bin/su - ${cfg.user} -c 'hydra_queue_runner.pl --unlock'";
         exec = ''
-          ${pkgs.su}/bin/su - ${cfg.user} -c 'nice -n 8 hydra_queue_runner.pl > ${cfg.baseDir}/data/queue_runner.log 2>&1'
+          ${pkgs.su}/bin/su - ${cfg.user} -c 'exec hydra_queue_runner.pl > ${cfg.baseDir}/data/queue_runner.log 2>&1'
         '';
       };
 
@@ -163,7 +163,7 @@ in
       { name = "hydra-evaluator";
         startOn = "started network-interfaces";
         exec = ''
-          ${pkgs.su}/bin/su - ${cfg.user} -c '${env} nice -n 5 hydra_evaluator.pl > ${cfg.baseDir}/data/evaluator.log 2>&1'
+          ${pkgs.su}/bin/su - ${cfg.user} -c '${env} exec hydra_evaluator.pl > ${cfg.baseDir}/data/evaluator.log 2>&1'
         '';
       };
 

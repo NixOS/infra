@@ -76,4 +76,37 @@
   services.cron.systemCronJobs =
     [ "*/5 * * * *  hydra-mirror  flock -x /data/releases/.lock -c /home/hydra-mirror/release/mirror/mirror-nixos-isos.sh >> /home/hydra-mirror/nixos-mirror.log 2>&1" ];
 
+  services.cgroups = {
+    enable = true;
+    groups =
+      ''
+        mount {
+          cpu = /dev/cgroup/cpu;
+        }
+        group hydra-server {
+          cpu {
+            cpu.shares = "700";
+          }
+        }
+        group hydra-build {
+          cpu {
+            cpu.shares = "200";
+          }
+        }
+        group hydra-evaluator {
+          cpu {
+            cpu.shares = "100";
+          }
+        }
+      '';
+    rules =
+      ''
+        root:nix-worker cpu hydra-build
+        hydra:nix-store cpu hydra-build
+        hydra:.hydra_build.pl-wrapped cpu hydra-build
+        hydra:.hydra_evaluator.pl-wrapped cpu hydra-evaluator
+        hydra:.hydra_server.pl-wrapped cpu hydra-server
+      '';
+  };
+
 }
