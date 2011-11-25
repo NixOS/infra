@@ -8,14 +8,14 @@ let
 
   mirrorChannel = pkgs.fetchsvn {
     url = https://svn.nixos.org/repos/nix/release/trunk/channels/mirror-channel.pl;
-    rev = 28026;
-    sha256 = "0f76rfhxqap80qsq5gk7zbwv44sz8ci4czfxby6c0dqn0lzf1b41";
+    rev = 30545;
+    sha256 = "0i75abvy989xq25r452clzg40pxl1hra94hkvknwn71l7nk2gyic";
   };
 
   cronjob = jobset:
     "${cfg.period} ${cfg.user}"
     + optionalString cfg.enableBinaryPatches " ENABLE_PATCHES=1"
-    + " perl -I${config.environment.nix}/libexec/nix -I${pkgs.perlPackages.DBI}/lib/perl5/site_perl -I${pkgs.perlPackages.DBDSQLite}/lib/perl5/site_perl ${mirrorChannel}"
+    + " perl -I${config.environment.nix}/lib/perl5/site_perl -I${pkgs.perlPackages.DBI}/lib/perl5/site_perl -I${pkgs.perlPackages.DBDSQLite}/lib/perl5/site_perl ${mirrorChannel}"
     + " ${cfg.hydraURL}/jobset/${jobset.project}/${jobset.jobset}/channel/latest"
     + " ${cfg.dataDir}/${jobset.project}/channels/${jobset.name}"
     + " ${cfg.dataDir}/nars"
