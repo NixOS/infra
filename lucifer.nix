@@ -64,6 +64,7 @@
   services.hydraChannelMirror.period = "0-59/15 * * * *";
   services.hydraChannelMirror.dataDir = "/data/releases";
 
+  /*
   services.tomcat = {
     enable = true;
     baseDir = "/data/tomcat";
@@ -72,6 +73,7 @@
       + "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=8999 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.rmi.server.hostname=localhost "
       + "-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/data/tomcat/logs/java_pid<pid>.hprof";
   };
+  */
 
   services.cron.systemCronJobs =
     [ "*/5 * * * *  hydra-mirror  flock -x /data/releases/.lock -c /home/hydra-mirror/release/mirror/mirror-nixos-isos.sh >> /home/hydra-mirror/nixos-mirror.log 2>&1" ];
@@ -82,6 +84,7 @@
       ''
         mount {
           cpu = /dev/cgroup/cpu;
+          blkio = /dev/cgroup/blkio;
         }
         group hydra-server {
           cpu {
@@ -92,8 +95,16 @@
           cpu {
             cpu.shares = "200";
           }
+          blkio {
+            blkio.weight = "500";
+          }
         }
         group hydra-evaluator {
+          cpu {
+            cpu.shares = "100";
+          }
+        }
+        group hydra-mirror {
           cpu {
             cpu.shares = "100";
           }
@@ -101,11 +112,13 @@
       '';
     rules =
       ''
-        root:nix-worker cpu hydra-build
-        hydra:nix-store cpu hydra-build
-        hydra:.hydra_build.pl-wrapped cpu hydra-build
+        root:nix-worker cpu,blkio hydra-build
+        root:build-remote.pl cpu,blkio hydra-build
+        hydra:nix-store cpu,blkio hydra-build
+        hydra:.hydra_build.pl-wrapped cpu,blkio hydra-build
         hydra:.hydra_evaluator.pl-wrapped cpu hydra-evaluator
         hydra:.hydra_server.pl-wrapped cpu hydra-server
+        hydra-mirror cpu hydra-mirror
       '';
   };
 
