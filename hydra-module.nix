@@ -131,15 +131,13 @@ in
 
     jobs.hydra_init =
       { name = "hydra-init";
-        startOn = "started network-interfaces";
-        preStart = ''
+        startOn = "filesystem";
+        script = ''
           mkdir -p ${cfg.baseDir}/data
           chown ${cfg.user} ${cfg.baseDir}/data
           ln -sf ${hydraConf} ${cfg.baseDir}/data/hydra.conf
         '';
-        exec = ''
-          echo done
-        '';
+        task = true;
       };
 
     jobs.hydra_server =
