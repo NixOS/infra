@@ -467,6 +467,7 @@ rec {
         }
         
         { hostName = "hydra.nixos.org";
+          logFormat = ''"%h %l %u %t \"%r\" %>s %b %D"'';
           extraConfig = ''
             <Proxy *>
               Order deny,allow
