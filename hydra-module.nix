@@ -144,16 +144,16 @@ in
       { name = "hydra-server";
         startOn = "started network-interfaces and started hydra-init";
         exec = ''
-          ${pkgs.su}/bin/su - ${cfg.user} -c '${server_env} exec hydra_server.pl -h \* --max_spare_servers 20 --max_servers 50 > ${cfg.baseDir}/data/server.log 2>&1'
+          ${pkgs.su}/bin/su - ${cfg.user} -c '${server_env} exec hydra-server -f -h \* --max_spare_servers 5 --max_servers 25 --max_requests 100 > ${cfg.baseDir}/data/server.log 2>&1'
         '';
       };
 
     jobs.hydra_queue_runner =
       { name = "hydra-queue-runner";
         startOn = "started network-interfaces and started hydra-init";
-        preStart = "${pkgs.su}/bin/su - ${cfg.user} -c 'hydra_queue_runner.pl --unlock'";
+        preStart = "${pkgs.su}/bin/su - ${cfg.user} -c 'hydra-queue-runner --unlock'";
         exec = ''
-          ${pkgs.su}/bin/su - ${cfg.user} -c 'exec hydra_queue_runner.pl > ${cfg.baseDir}/data/queue_runner.log 2>&1'
+          ${pkgs.su}/bin/su - ${cfg.user} -c 'exec hydra-queue-runner > ${cfg.baseDir}/data/queue_runner.log 2>&1'
         '';
       };
 
@@ -161,34 +161,35 @@ in
       { name = "hydra-evaluator";
         startOn = "started network-interfaces";
         exec = ''
-          ${pkgs.su}/bin/su - ${cfg.user} -c '${env} exec hydra_evaluator.pl > ${cfg.baseDir}/data/evaluator.log 2>&1'
+          ${pkgs.su}/bin/su - ${cfg.user} -c '${env} exec hydra-evaluator > ${cfg.baseDir}/data/evaluator.log 2>&1'
         '';
       };
 
     services.cron.systemCronJobs =
-	    let
-	      # If there is less than ... GiB of free disk space, stop the queue
-	      # to prevent builds from failing or aborting.
-	      checkSpace = pkgs.writeScript "hydra-check-space"
-	        ''
-	          #! /bin/sh
-	          if [ $(($(stat -f -c '%a' /nix/store) * $(stat -f -c '%S' /nix/store))) -lt $((${toString cfg.minimumDiskFree} * 1024**3)) ]; then
+      let
+        # If there is less than ... GiB of free disk space, stop the queue
+        # to prevent builds from failing or aborting.
+        checkSpace = pkgs.writeScript "hydra-check-space"
+          ''
+            #! /bin/sh
+            if [ $(($(stat -f -c '%a' /nix/store) * $(stat -f -c '%S' /nix/store))) -lt $((${toString cfg.minimumDiskFree} * 1024**3)) ]; then
                 stop hydra-queue-runner
-	          fi
-              if [ $(($(stat -f -c '%a' /nix/store) * $(stat -f -c '%S' /nix/store))) -lt $((${toString cfg.minimumDiskFreeEvaluator} * 1024**3)) ]; then
+            fi
+            if [ $(($(stat -f -c '%a' /nix/store) * $(stat -f -c '%S' /nix/store))) -lt $((${toString cfg.minimumDiskFreeEvaluator} * 1024**3)) ]; then
                 stop hydra-evaluator
-              fi
-	        '';
-          compressLogs = pkgs.writeScript "compress-logs" ''
-              #! /bin/sh -e
-             touch -d 'last month' r
-             find /nix/var/log/nix/drvs -type f -a ! -newer r -name '*.drv' | xargs bzip2 -v
-           '';
-	    in
-	    [ "*/5 * * * * root  ${checkSpace} &> ${cfg.baseDir}/data/checkspace.log" 
-	      "15 5 * * * root  ${compressLogs} &> ${cfg.baseDir}/data/compress.log"
-              "15 02 * * * ${cfg.user} ${env} /home/${cfg.user}/.nix-profile/bin/hydra_update_gc_roots.pl &> ${cfg.baseDir}/data/gc-roots.log"
-	    ];
+            fi
+          '';
+        compressLogs = pkgs.writeScript "compress-logs" 
+          ''
+            #! /bin/sh -e
+            touch -d 'last month' r
+            find /nix/var/log/nix/drvs -type f -a ! -newer r -name '*.drv' | xargs bzip2 -v
+          '';
+      in
+      [ "*/5 * * * * root  ${checkSpace} &> ${cfg.baseDir}/data/checkspace.log" 
+        "15 5 * * * root  ${compressLogs} &> ${cfg.baseDir}/data/compress.log"
+        "15 02 * * * ${cfg.user} ${env} /home/${cfg.user}/.nix-profile/bin/hydra-update-gc-roots &> ${cfg.baseDir}/data/gc-roots.log"
+      ];
 
   };  
 }
