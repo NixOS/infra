@@ -1,6 +1,7 @@
 lib: with lib;
 
-[
+[ /* Physical machines. */
+
   { # Web frontend.
     hostName = "cartman";
     ipAddress = "192.168.1.5";
@@ -9,6 +10,12 @@ lib: with lib;
     maxJobs = 2;
   }
   
+  { # APC UPS.
+    hostName = "ups";
+    ipAddress = "192.168.1.6";
+    ethernetAddress = "00:c0:b7:5b:16:56";
+  }
+
   { # 8-core NixOS build machine.
     hostName = "kenny";
     ipAddress = "192.168.1.19";
@@ -71,24 +78,37 @@ lib: with lib;
     ethernetAddress = "00:1D:09:0E:09:E5";
   }
 
-  { # New Hydra server.
+  { # Hydra server.
     hostName = "lucifer";
     ipAddress = "192.168.1.25";
     ethernetAddress = "84:2B:2B:0B:98:F0";
   }
 
-
-  # The following are Xen VMs hosted on mrhankey.
-  # Note that 00:16:3e is the prefix for Xen MAC addresses.
+  { # 48-core NixOS machine for random hackery.
+    hostName = "wendy";
+    ipAddress = "192.168.1.26";
+    ethernetAddress = "f0:4d:a2:40:1b:be";
+    systems = [ "x86_64-linux" ];
+  }
   
-  { # 32-bit OpenIndiana 151a (in a VM).
-    hostName = "tweek";
-    ipAddress = "192.168.1.50";
-    ethernetAddress = "00:16:3e:00:00:01";
-    systems = [ "i686-solaris" ];
-    maxJobs = 1;
+  { # 48-core NixOS build machine.
+    hostName = "ike";
+    ipAddress = "192.168.1.27";
+    ethernetAddress = "f0:4d:a2:40:1b:91";
+    systems = [ "x86_64-linux" ];
+  }
+  
+  { # 48-core NixOS build machine.
+    hostName = "shelley";
+    ipAddress = "192.168.1.28";
+    ethernetAddress = "f0:4d:a2:40:10:6c";
+    systems = [ "x86_64-linux" ];
   }
 
+
+  /* Xen VMs hosted on mrhankey.  Note that 00:16:3e is the prefix for
+     Xen MAC addresses. */
+  
   { # NixOS test machine.
     hostName = "drdoctor";
     ipAddress = "192.168.1.51";
@@ -104,6 +124,24 @@ lib: with lib;
     systems = [ "x86_64-linux" ];
   }
 
+  { # Another NixOS test machine.
+    hostName = "clyde";
+    ipAddress = "192.168.1.55";
+    ethernetAddress = "00:16:3e:00:00:06";
+    systems = [ "x86_64-linux" ];
+  }
+
+  
+  /* KVM VMs hosted on stan. */
+  
+  { # 32-bit OpenIndiana 151a (in a VM).
+    hostName = "tweek";
+    ipAddress = "192.168.1.50";
+    ethernetAddress = "00:16:3e:00:00:01";
+    systems = [ "i686-solaris" ];
+    maxJobs = 1;
+  }
+
   { # Legacy FreeBSD machine.
     hostName = "losser";
     ipAddress = "192.168.1.53";
@@ -116,13 +154,6 @@ lib: with lib;
     ipAddress = "192.168.1.54";
     ethernetAddress = "00:16:3e:00:00:05";
     systems = [ "i686-linux" ];
-  }
-
-  { # Another NixOS test machine.
-    hostName = "clyde";
-    ipAddress = "192.168.1.55";
-    ethernetAddress = "00:16:3e:00:00:06";
-    systems = [ "x86_64-linux" ];
   }
 
   { # 64-bit FreeBSD build machine (in a VM).
@@ -141,25 +172,6 @@ lib: with lib;
     system = "i686-freebsd";
     maxJobs = 1;
     buildUser = "buildfarm";
-  }
-  
-  { # 48 core powerrrr
-    hostName = "wendy";
-    ipAddress = "192.168.1.26";
-    ethernetAddress = "f0:4d:a2:40:1b:be";
-    systems = [ "x86_64-linux" ];
-  }
-  { # 48 core powerrrr
-    hostName = "ike";
-    ipAddress = "192.168.1.27";
-    ethernetAddress = "f0:4d:a2:40:1b:91";
-    systems = [ "x86_64-linux" ];
-  }
-  { # 48 core powerrrr
-    hostName = "shelley";
-    ipAddress = "192.168.1.28";
-    ethernetAddress = "f0:4d:a2:40:10:6c";
-    systems = [ "x86_64-linux" ];
   }
   
 ]
