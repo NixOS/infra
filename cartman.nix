@@ -141,6 +141,8 @@ rec {
       }
     ];
 
+    useDHCP = false;
+
     defaultGateway = "130.161.158.1";
 
     nameservers = [ "127.0.0.1" ];
@@ -167,7 +169,7 @@ rec {
         ${pkgs.iptables}/sbin/iptables -t nat -F PREROUTING
         
         # lucifer ssh (to give Karl/Armijn access for the BAT project)
-        ${pkgs.iptables}/sbin/iptables -t nat -A PREROUTING -p tcp -d ${myIP} --dport 5950 -j DNAT --to 192.168.1.26:22
+        ${pkgs.iptables}/sbin/iptables -t nat -A PREROUTING -p tcp -d ${myIP} --dport 2222 -j DNAT --to 192.168.1.26:22
 
         # Cleanup.
         ip -6 route flush dev sixxs
@@ -333,16 +335,6 @@ rec {
           ];
         }
 
-        # Default vhost for SSL; nothing here yet, but we need it,
-        # otherwise SSL requests that don't match with any vhost will
-        # go to svn.strategoxt.org.
-        { hostName = "buildfarm.st.ewi.tudelft.nl";
-          enableSSL = true;
-          sslServerCert = "/root/ssl-secrets/server.crt";
-          sslServerKey = "/root/ssl-secrets/server.key";
-          globalRedirect = "http://buildfarm.st.ewi.tudelft.nl/";
-        }
-        
         { hostName = "strategoxt.org";
           servedFiles = [ 
             { urlPath = "/freenode.ver";
@@ -372,8 +364,13 @@ rec {
         
         { hostName = "svn.strategoxt.org";
           enableSSL = true;
-          sslServerCert = "/root/ssl-secrets/server.crt";
-          sslServerKey = "/root/ssl-secrets/server.key";
+          sslServerCert = "/root/ssl-secrets/ssl-strategoxt-org.crt";
+          sslServerKey = "/root/ssl-secrets/ssl-strategoxt-org.key";
+          extraConfig = 
+            ''
+              SSLCertificateChainFile /root/ssl-secrets/startssl-class1.pem
+              SSLCACertificateFile /root/ssl-secrets/startssl-ca.pem
+            '';
           extraSubservices = [
             { function = import /etc/nixos/services/subversion;
               id = "strategoxt";
@@ -434,36 +431,20 @@ rec {
           ];
         }
 
-        # Obsolete, kept for backwards compatibility.  Replace this
-        # with a global redirect once Subversion 1.7 has been out for
-        # a while
-        # (http://subversion.tigris.org/issues/show_bug.cgi?id=2779).
+        # Obsolete, kept for backwards compatibility.
         { hostName = "svn.nixos.org";
           enableSSL = true;
           sslServerCert = "/root/ssl-secrets/server.crt";
           sslServerKey = "/root/ssl-secrets/server.key";
-          extraSubservices = [
-            { function = import /etc/nixos/services/subversion;
-              id = "nix";
-              urlPrefix = "";
-              dataDir = "/data/subversion-nix";
-              notificationSender = "svn@svn.nixos.org";
-              userCreationDomain = "st.ewi.tudelft.nl";
-              organisation = {
-                name = "Nix";
-                url = http://nixos.org/;
-                logo = http://nixos.org/logo/nixos-lores.png;
-              };
-            }
-          ];
           extraConfig = ''
-            RedirectMatch ^/$ https://nixos.org/repoman
+            RedirectMatch permanent ^/$ https://nixos.org/repoman
+            Redirect permanent / https://nixos.org/
           '';
         }
 
         # Obsolete, kept for backwards compatibility.
         { hostName = "svn.nixos.org";
-          globalRedirect = "https://nixos.org/svn";
+          globalRedirect = "https://nixos.org/repoman";
         }
         
         { hostName = "hydra.nixos.org";
