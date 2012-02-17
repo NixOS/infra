@@ -112,8 +112,7 @@ in
     nix.nrBuildUsers = 100;
       
     nix.gc.automatic = true;
-    # $3 / $4 don't always work depending on length of device name
-    nix.gc.options = ''--max-freed "$((400 * 1024**3 - 1024 * $(df /nix/store | tail -n 1 | awk '{ print $3 }')))"'';
+    nix.gc.options = ''--max-freed "$((400 * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | awk '{ print $4 }')))"'';
     
     nix.extraOptions = ''
       gc-keep-outputs = true
