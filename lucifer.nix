@@ -79,16 +79,16 @@
     let
       # Run the garbage collector on ‘machine’ to ensure that at least
       # ‘gbFree’ GiB are free.
-      gcRemote = { machine, gbFree ? 3, df ? "df" }:
+      gcRemote = { machine, gbFree ? 4, df ? "df" }:
         "15 03 * * *  root  ssh -x -i /root/.ssh/id_buildfarm ${machine} " +
         ''nix-store --gc --max-freed '$((${toString gbFree} * 1024**3 - 1024 * $(${df} -P -k /nix/store | tail -n 1 | awk "{ print \$4 }")))' > "/var/log/gc-${machine}.log" 2>&1'';
     in
     [ "*/5 * * * *  hydra-mirror  flock -x /data/releases/.lock -c /home/hydra-mirror/release/mirror/mirror-nixos-isos.sh >> /home/hydra-mirror/nixos-mirror.log 2>&1" 
-      (gcRemote { machine = "nix@butters"; })
+      (gcRemote { machine = "nix@butters"; gbFree = 50; })
       (gcRemote { machine = "nix@garrison"; })
       (gcRemote { machine = "nix@demon"; })
       (gcRemote { machine = "nix@beastie"; })
-      (gcRemote { machine = "nix@tweek"; gbFree = 2; df = "/usr/gnu/bin/df"; })
+      (gcRemote { machine = "nix@tweek"; gbFree = 3; df = "/usr/gnu/bin/df"; })
     ];
 
   services.cgroups = {
