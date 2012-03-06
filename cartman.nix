@@ -446,6 +446,8 @@ rec {
         { hostName = "hydra.nixos.org";
           logFormat = ''"%h %l %u %t \"%r\" %>s %b %D"'';
           extraConfig = ''
+            TimeOut 900
+          
             <Proxy *>
               Order deny,allow
               Allow from all
@@ -464,6 +466,21 @@ rec {
               SetEnvIfNoCase Request_URI /api/ no-gzip dont-vary
               SetEnvIfNoCase Request_URI /download/ no-gzip dont-vary
             </Location>
+          '';
+        }
+
+        { hostName = "hydra-test.nixos.org";
+          logFormat = ''"%h %l %u %t \"%r\" %>s %b %D"'';
+          extraConfig = ''
+            <Proxy *>
+              Order deny,allow
+              Allow from all
+            </Proxy>
+
+            ProxyRequests     Off
+            ProxyPreserveHost On
+            ProxyPass         /       http://lucifer:4000/ retry=5
+            ProxyPassReverse  /       http://lucifer:4000/
           '';
         }
 
