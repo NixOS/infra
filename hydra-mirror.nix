@@ -7,7 +7,7 @@ let
   cfg = config.services.hydraChannelMirror;
 
   mirrorChannel = pkgs.fetchsvn {
-    url = https://svn.nixos.org/repos/nix/release/trunk/channels/mirror-channel.pl;
+    url = https://nixos.org/repos/nix/release/trunk/channels/mirror-channel.pl;
     rev = 30545;
     sha256 = "0i75abvy989xq25r452clzg40pxl1hra94hkvknwn71l7nk2gyic";
   };
