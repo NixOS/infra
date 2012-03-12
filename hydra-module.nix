@@ -46,7 +46,7 @@ in
       };
       
       dbi = mkOption {
-        default = "dbi:Pg:dbname=hydra;host=webdsl.org;user=hydra;";
+        default = "dbi:Pg:dbname=hydra;host=wendy;user=hydra;";
         description = ''
           The DBI string for Hydra database connection
         '';
@@ -128,7 +128,7 @@ in
       build-poll-interval = 10
     '';
 
-    jobs.hydra_init =
+    jobs."hydra-init" =
       { name = "hydra-init";
         startOn = "filesystem";
         script = ''
@@ -139,7 +139,7 @@ in
         task = true;
       };
 
-    jobs.hydra_server =
+    jobs."hydra-server" =
       { name = "hydra-server";
         startOn = "started network-interfaces and started hydra-init";
         exec = ''
@@ -147,16 +147,16 @@ in
         '';
       };
 
-    jobs.hydra_queue_runner =
+    jobs."hydra-queue-runner" =
       { name = "hydra-queue-runner";
         startOn = "started network-interfaces and started hydra-init";
-        preStart = "${pkgs.su}/bin/su - ${cfg.user} -c 'hydra-queue-runner --unlock'";
+        preStart = "${pkgs.su}/bin/su - ${cfg.user} -c '${env} hydra-queue-runner --unlock'";
         exec = ''
-          ${pkgs.su}/bin/su - ${cfg.user} -c 'exec hydra-queue-runner > ${cfg.baseDir}/data/queue_runner.log 2>&1'
+          ${pkgs.su}/bin/su - ${cfg.user} -c '${env} exec hydra-queue-runner > ${cfg.baseDir}/data/queue_runner.log 2>&1'
         '';
       };
 
-    jobs.hydra_evaluator =
+    jobs."hydra-evaluator" =
       { name = "hydra-evaluator";
         startOn = "started network-interfaces";
         exec = ''
