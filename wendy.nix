@@ -71,15 +71,25 @@
       max_connections = 250
     '';
     authentication = ''
-      local all mediawiki        ident map=mediawiki-users
-      local all all              ident
-      host  all all 127.0.0.1/32 md5
-      host  all all ::1/128      md5
-      host  all all 192.168.1.25/32 md5
-      host  all all 192.168.1.26/32 md5
+      local all        mediawiki        ident map=mediawiki-users
+      local all        all              ident
+      host  all        all 127.0.0.1/32 md5
+      host  all        all ::1/128      md5
+      host  all        all 192.168.1.25/32 md5
+      host  hydra      hydra     192.168.1.26/32 md5
+      host  hydra_test hydra     192.168.1.26/32 md5
+      host  mediawiki  mediawiki 192.168.1.5/32 md5
+      host  zabbix     zabbix    192.168.1.5/32 md5
     ''; 
   };
 
   nixpkgs.config.packageOverrides = pkgs: { postgresql = pkgs.postgresql91; };
+
+  services.zabbixAgent.extraConfig = ''
+    UserParameter=hydra.queue.total,${pkgs.postgresql}/bin/psql hydra -At -c 'select count(*) from builds where finished = 0'
+    UserParameter=hydra.queue.building,${pkgs.postgresql}/bin/psql hydra -At -c 'select count(*) from builds where finished = 0 and busy = 1'
+    UserParameter=hydra.queue.buildsteps,${pkgs.postgresql}/bin/psql hydra -At -c 'select count(*) from BuildSteps s join Builds i on s.build = i.id where i.finished = 0 and i.busy = 1 and s.busy = 1'
+    UserParameter=hydra.builds,${pkgs.postgresql}/bin/psql hydra -At -c 'select count(*) from Builds'
+  '';
 
 }
