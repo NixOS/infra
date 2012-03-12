@@ -77,7 +77,7 @@ let
               '';
             enableUploads = true;
             uploadDir = "/data/nixos-mediawiki-upload";
-            dbServer = "webdsl.org";
+            dbServer = "wendy";
             dbUser = "mediawiki";
             dbPassword = import ./mediawiki-password.nix;
           }
@@ -615,7 +615,7 @@ rec {
     zabbixAgent.enable = true;
     
     zabbixServer.enable = true;
-    zabbixServer.dbServer = "webdsl.org";
+    zabbixServer.dbServer = "wendy";
     zabbixServer.dbPassword = import ./zabbix-password.nix;
 
     flashpolicyd.enable = true;
