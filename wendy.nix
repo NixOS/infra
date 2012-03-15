@@ -60,6 +60,11 @@
       '';
     };
 
+  services.postgresqlBackup = {
+    enable = true;
+    databases = [ "hydra" "jira" "mediawiki" ];
+  };
+
   services.postgresql = {
     enable = true;
     enableTCPIP = true;
