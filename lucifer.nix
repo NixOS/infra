@@ -51,8 +51,8 @@
       }
     ];
 
-  services.nfsKernel.server.enable = true;
-  services.nfsKernel.server.exports =
+  services.nfs.server.enable = true;
+  services.nfs.server.exports =
     ''
       /data/releases 192.168.1.0/255.255.255.0(ro,no_root_squash,fsid=0)
     '';

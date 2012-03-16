@@ -109,7 +109,7 @@ rec {
       { mountPoint = "/data/releases";
         device = "192.168.1.25:/data/releases";
         fsType = "nfs";
-        options = "vers=3,soft"; # !!! check why vers=4 doesn't work
+        options = "soft";
       }
     ];
 
