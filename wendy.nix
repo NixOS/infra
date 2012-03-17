@@ -97,4 +97,20 @@
     UserParameter=hydra.builds,${pkgs.postgresql}/bin/psql hydra -At -c 'select count(*) from Builds'
   '';
 
+  services.sitecopy = {
+      enable = true;
+      backups =
+        let genericBackup = { server = "webdata.tudelft.nl";
+                              protocol = "webdav";
+                              https = true ;
+                              symlinks = "ignore" ;
+                            };
+        in [
+          ( genericBackup // { name   = "postgresql";
+                               local  = config.services.postgresqlBackup.location;
+                               remote = "/staff-groups/ewi/st/strategoxt/backup/postgresql-wendy";
+                             })
+        ];
+    };
+
 }
