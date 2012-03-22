@@ -9,12 +9,14 @@ lib: with lib;
     aliases = ["main"];
     maxJobs = 2;
   }
-  
+
+  /*  
   { # APC UPS.
     hostName = "ups";
     ipAddress = "192.168.1.6";
     ethernetAddress = "00:c0:b7:5b:16:56";
   }
+  */
 
   { # 8-core NixOS build machine.
     hostName = "kenny";

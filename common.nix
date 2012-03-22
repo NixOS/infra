@@ -5,6 +5,8 @@
   
   boot.kernelModules = [ "coretemp" ];
 
+  boot.supportedFilesystems = [ "nfs" ];
+
   boot.initrd.kernelModules = [ "ext4" ];
 
   environment.systemPackages = 

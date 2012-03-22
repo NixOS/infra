@@ -7,8 +7,8 @@ with pkgs.lib;
 
   nixpkgs.system = "x86_64-linux";
 
-  virtualisation.xen.enable = true;
-  virtualisation.xen.domain0MemorySize = 512;
+  #virtualisation.xen.enable = true;
+  #virtualisation.xen.domain0MemorySize = 512;
 
   boot.loader.grub.device = "/dev/sda";
   boot.initrd.kernelModules = [ "mptbase" "mptscsih" "mptsas" ];
@@ -25,19 +25,4 @@ with pkgs.lib;
   networking.hostName = "";
 
   services.openssh.enable = true;
-
-  environment.etc =
-    flip map (range 0 9) (nr:
-      { source = pkgs.writeText "agilecloud0${toString nr}"
-          ''
-            from xen.util.path import *
-            memory = 512
-            kernel = XENFIRMWAREDIR + '/pv-grub-x86_32.gz'
-            extra = '(hd0)/boot/grub/menu.lst'
-            disk = [ 'file:/vmdisks/agilecloud-0${toString nr}-root.img,xvda1,w' ]
-            vif = [ 'mac=00:16:3e:00:34:0${toString nr}' ]
-          '';
-        target = "xen/agilecloud0${toString nr}";
-      }
-    );
 }
