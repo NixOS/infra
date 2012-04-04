@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  require = [ ./common.nix ./hydra-module.nix ./hydra-mirror.nix ];
+  require = [ ./common.nix ./hydra-module.nix ];
 
   nixpkgs.system = "x86_64-linux";
 
@@ -59,22 +59,6 @@
 
   nixpkgs.config.subversion.pythonBindings = true;
 
-  services.hydraChannelMirror.enable = true;
-  services.hydraChannelMirror.enableBinaryPatches = true;
-  services.hydraChannelMirror.period = "0-59/15 * * * *";
-  services.hydraChannelMirror.dataDir = "/data/releases";
-
-  /*
-  services.tomcat = {
-    enable = true;
-    baseDir = "/data/tomcat";
-    javaOpts = 
-      "-Dshare.dir=/nix/var/nix/profiles/default/share -Xms350m -Xss8m -Xmx1024m -XX:MaxPermSize=512M -XX:PermSize=512M -XX:-UseGCOverheadLimit "
-      + "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=8999 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.rmi.server.hostname=localhost "
-      + "-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/data/tomcat/logs/java_pid<pid>.hprof";
-  };
-  */
-
   services.cron.systemCronJobs =
     let
       # Run the garbage collector on ‘machine’ to ensure that at least
@@ -83,8 +67,7 @@
         "15 03 * * *  root  ssh -x -i /root/.ssh/id_buildfarm ${machine} " +
         ''nix-store --gc --max-freed '$((${toString gbFree} * 1024**3 - 1024 * $(${df} -P -k /nix/store | tail -n 1 | awk "{ print \$4 }")))' > "/var/log/gc-${machine}.log" 2>&1'';
     in
-    [ "*/5 * * * *  hydra-mirror  flock -x /data/releases/.lock -c /home/hydra-mirror/release/mirror/mirror-nixos-isos.sh >> /home/hydra-mirror/nixos-mirror.log 2>&1" 
-      (gcRemote { machine = "nix@butters"; gbFree = 50; })
+    [ (gcRemote { machine = "nix@butters"; gbFree = 50; })
       (gcRemote { machine = "nix@garrison"; })
       (gcRemote { machine = "nix@demon"; })
       (gcRemote { machine = "nix@beastie"; })
@@ -134,5 +117,32 @@
         hydra-mirror cpu hydra-mirror
       '';
   };
+
+  jobs."mirror-nixpkgs" =
+    { startOn = "started networking";
+      path = [ pkgs.su ];
+      script =
+        ''
+          su - hydra-mirror -c 'exec >> nixpkgs-mirror.log 2>&1; cd release/channels; while true; do date; ./mirror-nixpkgs.sh; sleep 300; done'
+        '';
+    };
+
+  jobs."generate-nixpkgs-patches" =
+    { startOn = "started networking";
+      path = [ pkgs.su ];
+      script =
+        ''
+          su - hydra-mirror -c 'exec >> nixpkgs-patches.log 2>&1; cd release/channels; while true; do date; ./generate-linear-patch-sequence.sh; sleep 300; done'
+        '';
+    };
+
+  jobs."mirror-nixos" =
+    { startOn = "started networking";
+      path = [ pkgs.su ];
+      script =
+        ''
+          su - hydra-mirror -c 'exec >> nixos-mirror.log 2>&1; cd release/channels; while true; do date; ./mirror-nixos-isos.sh; sleep 300; done'
+        '';
+    };
 
 }
