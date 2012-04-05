@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  boot.kernelPackages = pkgs.linuxPackages_2_6_35;
+  boot.kernelPackages = pkgs.linuxPackages_3_2;
   
   boot.kernelModules = [ "coretemp" ];
 
@@ -11,7 +11,8 @@
 
   environment.systemPackages = 
     [ pkgs.emacs pkgs.subversion pkgs.sysstat pkgs.hdparm pkgs.sdparm # pkgs.lsiutil 
-      pkgs.htop pkgs.sqlite pkgs.iotop pkgs.lm_sensors pkgs.gitFull
+      pkgs.htop pkgs.sqlite pkgs.iotop pkgs.lm_sensors pkgs.gitFull pkgs.hwloc
+      pkgs.lsof pkgs.numactl
     ];
 
   services.sshd.enable = true;
