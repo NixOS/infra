@@ -479,8 +479,8 @@ rec {
 
             ProxyRequests     Off
             ProxyPreserveHost On
-            ProxyPass         /       http://lucifer:4000/ retry=5
-            ProxyPassReverse  /       http://lucifer:4000/
+            ProxyPass         /       http://wendy:4000/ retry=5
+            ProxyPassReverse  /       http://wendy:4000/
           '';
         }
 

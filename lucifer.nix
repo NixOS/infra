@@ -54,7 +54,7 @@
   services.nfs.server.enable = true;
   services.nfs.server.exports =
     ''
-      /data/releases 192.168.1.0/255.255.255.0(ro,no_root_squash,fsid=0)
+      /data/releases 192.168.1.0/255.255.255.0(ro,no_root_squash,fsid=0,no_subtree_check)
     '';
 
   nixpkgs.config.subversion.pythonBindings = true;
@@ -141,7 +141,7 @@
       path = [ pkgs.su ];
       script =
         ''
-          su - hydra-mirror -c 'exec >> nixos-mirror.log 2>&1; cd release/channels; while true; do date; ./mirror-nixos-isos.sh; sleep 300; done'
+          su - hydra-mirror -c 'exec >> nixos-mirror.log 2>&1; cd release/channels; while true; do date; ./mirror-nixos.sh; sleep 300; done'
         '';
     };
 
