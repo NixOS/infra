@@ -123,7 +123,7 @@
       path = [ pkgs.su ];
       script =
         ''
-          su - hydra-mirror -c 'exec >> nixpkgs-mirror.log 2>&1; cd release/channels; while true; do date; ./mirror-nixpkgs.sh; sleep 300; done'
+          su - hydra-mirror -c 'exec >> nixpkgs-mirror.log 2>&1; rm -rf /data/releases/nixpkgs/.tmp-*; cd release/channels; while true; do date; ./mirror-nixpkgs.sh; sleep 300; done'
         '';
     };
 
@@ -141,7 +141,7 @@
       path = [ pkgs.su ];
       script =
         ''
-          su - hydra-mirror -c 'exec >> nixos-mirror.log 2>&1; cd release/channels; while true; do date; ./mirror-nixos.sh; sleep 300; done'
+          su - hydra-mirror -c 'exec >> nixos-mirror.log 2>&1; rm -rf /data/releases/nixos/.tmp-*; cd release/channels; while true; do date; ./mirror-nixos.sh; sleep 300; done'
         '';
     };
 
