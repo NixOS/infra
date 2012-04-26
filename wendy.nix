@@ -76,10 +76,6 @@
       max_connections = 250
     '';
     authentication = ''
-      local all        mediawiki        ident map=mediawiki-users
-      local all        all              ident
-      host  all        all 127.0.0.1/32 md5
-      host  all        all ::1/128      md5
       host  all        all 192.168.1.25/32 md5
       host  hydra      hydra     192.168.1.26/32 md5
       host  hydra_test hydra     192.168.1.26/32 md5
@@ -108,7 +104,7 @@
         in [
           ( genericBackup // { name   = "postgresql";
                                local  = config.services.postgresqlBackup.location;
-                               remote = "/staff-groups/ewi/st/strategoxt/backup/postgresql-wendy";
+                               remote = "/staff-groups/ewi/st/strategoxt/backup/postgresql-webdsl.org";
                              })
         ];
     };
