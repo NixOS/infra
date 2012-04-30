@@ -14,7 +14,7 @@ let
     '';
     
   env = ''NIX_REMOTE=daemon HYDRA_DBI="${cfg.dbi}" HYDRA_CONFIG=${cfg.baseDir}/data/hydra.conf HYDRA_DATA=${cfg.baseDir}/data '';
-  server_env = env + ''HYDRA_TRACKER="${cfg.tracker}" '';
+  server_env = env + ''HYDRA_LOGO="${cfg.logo}" HYDRA_TRACKER="${cfg.tracker}" '';
 
 in
 
@@ -84,6 +84,13 @@ in
         default = "";
         description = ''
           Piece of HTML that is included on all pages.
+        '';
+      }; 
+      
+      logo = mkOption {
+        default = "";
+        description = ''
+          Path to a file containing the logo of your Hydra instance.
         '';
       }; 
       

@@ -15,6 +15,7 @@
   boot.kernelModules = [ "acpi-cpufreq" "kvm-intel" ];
 
   services.hydra.enable = true;
+  services.hydra.logo = ./hydra-logo.png;
   services.hydra.tracker = ''
     <!-- Start of StatCounter Code -->
     <script type=\"text/javascript\">
