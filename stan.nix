@@ -22,7 +22,7 @@
 
   virtualisation.libvirtd.enable = true;
 
-  virtualisation.nova.enableSingleNode = true;
+  #virtualisation.nova.enableSingleNode = true;
 
   virtualisation.nova.extraConfig =
     ''
