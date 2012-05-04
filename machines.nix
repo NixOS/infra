@@ -164,7 +164,7 @@ lib: with lib;
     ethernetAddress = "00:16:3e:00:00:07";
     system = "x86_64-freebsd";
     maxJobs = 1;
-    buildUser = "buildfarm";
+    buildUser = "nix";
   }
   
   { # 32-bit FreeBSD build machine (in a VM).
@@ -173,7 +173,7 @@ lib: with lib;
     ethernetAddress = "00:16:3e:00:00:08";
     system = "i686-freebsd";
     maxJobs = 1;
-    buildUser = "buildfarm";
+    buildUser = "nix";
   }
   
 ]
