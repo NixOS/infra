@@ -28,8 +28,7 @@
 
   nix.extraOptions =
     ''
-      #fsync-metadata = false
-      #use-sqlite-wal = false
+      build-cores = 0
     '';
 
   services.zabbixAgent.enable = true;

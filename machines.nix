@@ -142,6 +142,7 @@ lib: with lib;
     ethernetAddress = "00:16:3e:00:00:01";
     systems = [ "i686-solaris" ];
     maxJobs = 1;
+    buildUser = "nix";
   }
 
   { # Legacy FreeBSD machine.
