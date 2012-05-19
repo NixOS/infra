@@ -3,6 +3,16 @@
 with pkgs.lib;
 
 let 
+  duplicityBackup = pkgs.writeScript "backup-duplicity" ''
+    #! /bin/sh
+    export PATH=$PATH:/var/run/current-system/sw/bin
+    time duplicity --no-encryption /data/pt-wiki file:///backup/cartman/pt-wiki
+    time duplicity --no-encryption /data/nixos-mediawiki-upload file:///backup/cartman/nixos-mediawiki-upload
+    time duplicity --no-encryption /data/subversion file:///backup/cartman/subversion
+    time duplicity --no-encryption /data/subversion-nix file:///backup/cartman/subversion-nix
+    time duplicity --no-encryption /data/subversion-ptg file:///backup/cartman/subversion-ptg
+    time duplicity --no-encryption /data/subversion-strategoxt file:///backup/cartman/subversion-strategoxt
+  '';
 
   machines = import ./machines.nix pkgs.lib;
 
@@ -111,6 +121,10 @@ rec {
         fsType = "nfs";
         options = "soft";
       }
+      { mountPoint = "/backup";
+        device = "130.161.158.5:/dxs/users4/group/buildfarm";
+        fsType = "nfs";
+      }
     ];
 
   swapDevices = [
@@ -218,6 +232,7 @@ rec {
           #"15 0 * * *  root  (TZ=CET date; ${pkgs.rsync}/bin/rsync -razv --numeric-ids --delete /data/postgresql /data/webserver/tarballs unixhome.st.ewi.tudelft.nl::bfarm/) >> /var/log/backup.log 2>&1"
           "0 3 * * * root nix-store --gc --max-freed \"$((50 * 1024**3 - 1024 * $(df /nix/store | tail -n 1 | awk '{ print $4 }')))\" > /var/log/gc.log 2>&1"
           "*  *  * * * root ${pkgs.python}/bin/python ${ZabbixApacheUpdater} -z 192.168.1.5 -c cartman"
+          "40 * * * *  ${duplicityBackup} &>> /var/log/backup-duplicity.log"
 
           # Force the sixxs tunnel to stay alive by periodically
           # pinging the other side.  This is necessary to remain
@@ -568,50 +583,6 @@ rec {
       ];
     };
 
-    sitecopy = {
-      enable = true;
-      backups =
-        let genericBackup = { server = "webdata.tudelft.nl";
-                              protocol = "webdav";
-                              https = true;
-                              symlinks = "ignore"; 
-                            };
-        in [
-          ( genericBackup // { name   = "subversion";
-                               local  = "/data/subversion";
-                               remote = "/staff-groups/ewi/st/strategoxt/backup/subversion/subversion"; 
-                             } )
-          ( genericBackup // { name   = "subversion-nix";
-                               local  = "/data/subversion-nix";
-                               remote = "/staff-groups/ewi/st/strategoxt/backup/subversion/subversion-nix"; 
-                             } )
-          ( genericBackup // { name   = "subversion-ptg";
-                               local  = "/data/subversion-ptg";
-                               remote = "/staff-groups/ewi/st/strategoxt/backup/subversion/subversion-ptg"; 
-                             } )
-          ( genericBackup // { name   = "subversion-strategoxt"; 
-                               local  = "/data/subversion-strategoxt";
-                               remote = "/staff-groups/ewi/st/strategoxt/backup/subversion/subversion-strategoxt"; 
-                             } )
-          ( genericBackup // { name   = "webserver-dist-nix"; 
-                               local  = "/data/webserver/dist/nix";
-                               remote = "/staff-groups/ewi/st/strategoxt/backup/webserver-dist-nix"; 
-                             } )
-#          ( genericBackup // { name   = "webserver-tarballs"; 
-#                               local  = "/data/webserver/tarballs";
-#                               remote = "/staff-groups/ewi/st/strategoxt/backup/webserver-tarballs"; 
-#                             } )
-          ( genericBackup // { name   = "pt-wiki"; 
-                               local  = "/data/pt-wiki";
-                               remote = "/staff-groups/ewi/st/strategoxt/backup/pt-wiki"; 
-                             } )
-          ( genericBackup // { name   = "nixos-mediawiki-upload"; 
-                               local  = "/data/nixos-mediawiki-upload";
-                               remote = "/staff-groups/ewi/st/strategoxt/backup/nixos-mediawiki-upload"; 
-                             } )
-        ];
-      };
-
     zabbixAgent.enable = true;
     
     zabbixServer.enable = true;
@@ -625,7 +596,7 @@ rec {
   # Needed for the Nixpkgs mirror script.
   environment.pathsToLink = [ "/libexec" ];
 
-  environment.systemPackages = [ pkgs.dnsmasq ];
+  environment.systemPackages = [ pkgs.dnsmasq pkgs.duplicity];
   
   jobs.dnsmasq =
     let
