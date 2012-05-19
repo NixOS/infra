@@ -12,6 +12,14 @@
       UseCanonicalName On
     '';
 
+  fileSystems =
+    [ { mountPoint = "/backup";
+        device = "130.161.158.5:/dxs/users4/group/buildfarm";
+        fsType = "nfs";
+      }
+    ];
+
+
   jobs.mturk_webserver_production =
     { name = "mturk-webserver-production";
       startOn = "started network-interfaces";
@@ -93,19 +101,10 @@
     UserParameter=hydra.builds,${pkgs.postgresql}/bin/psql hydra -At -c 'select count(*) from Builds'
   '';
 
-  services.sitecopy = {
-      enable = true;
-      backups =
-        let genericBackup = { server = "webdata.tudelft.nl";
-                              protocol = "webdav";
-                              https = true ;
-                              symlinks = "ignore" ;
-                            };
-        in [
-          ( genericBackup // { name   = "postgresql";
-                               local  = config.services.postgresqlBackup.location;
-                               remote = "/staff-groups/ewi/st/strategoxt/backup/postgresql-webdsl.org";
-                             })
+  services.cron = {
+      systemCronJobs =
+        [
+          "15 4 * * *  cp -v /var/backup/postgresql/* /backup/wendy/postgresql/  &> /var/log/backup-db.log"
         ];
     };
 
