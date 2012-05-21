@@ -7,7 +7,7 @@
   lucifer = import ./lucifer.nix;
   wendy = import ./wendy.nix;
   ike = import ./build-machines-dell-r815.nix;
-  shelley = import ./build-machines-dell-r815.nix;
+  #shelley = import ./build-machines-dell-r815.nix;
   #mrkitty = import ./mrkitty.nix;
   mrhankey = import ./mrhankey.nix;
 }
