@@ -232,7 +232,7 @@ rec {
           #"15 0 * * *  root  (TZ=CET date; ${pkgs.rsync}/bin/rsync -razv --numeric-ids --delete /data/postgresql /data/webserver/tarballs unixhome.st.ewi.tudelft.nl::bfarm/) >> /var/log/backup.log 2>&1"
           "0 3 * * * root nix-store --gc --max-freed \"$((50 * 1024**3 - 1024 * $(df /nix/store | tail -n 1 | awk '{ print $4 }')))\" > /var/log/gc.log 2>&1"
           "*  *  * * * root ${pkgs.python}/bin/python ${ZabbixApacheUpdater} -z 192.168.1.5 -c cartman"
-          "40 * * * *  ${duplicityBackup} &>> /var/log/backup-duplicity.log"
+          "40 * * * *  root ${duplicityBackup} &>> /var/log/backup-duplicity.log"
 
           # Force the sixxs tunnel to stay alive by periodically
           # pinging the other side.  This is necessary to remain
@@ -470,7 +470,7 @@ rec {
 
             ProxyRequests     Off
             ProxyPreserveHost On
-            ProxyPass         /       http://lucifer:3000/ retry=5
+            ProxyPass         /       http://lucifer:3000/ retry=5 disablereuse=on
             ProxyPassReverse  /       http://lucifer:3000/
             
             <Location />
@@ -494,7 +494,7 @@ rec {
 
             ProxyRequests     Off
             ProxyPreserveHost On
-            ProxyPass         /       http://wendy:4000/ retry=5
+            ProxyPass         /       http://wendy:4000/ retry=5 disablereuse=on
             ProxyPassReverse  /       http://wendy:4000/
           '';
         }
