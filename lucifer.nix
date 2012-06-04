@@ -83,6 +83,11 @@
           cpu = /dev/cgroup/cpu;
           blkio = /dev/cgroup/blkio;
         }
+        group sshd {
+          cpu {
+            cpu.shares = "2000";
+          }
+        }
         group hydra-server {
           cpu {
             cpu.shares = "700";
@@ -109,12 +114,13 @@
       '';
     rules =
       ''
+        root:sshd cpu sshd
         root:nix-worker cpu,blkio hydra-build
         root:build-remote.pl cpu,blkio hydra-build
         hydra:nix-store cpu,blkio hydra-build
-        hydra:.hydra_build.pl-wrapped cpu,blkio hydra-build
-        hydra:.hydra_evaluator.pl-wrapped cpu hydra-evaluator
-        hydra:.hydra_server.pl-wrapped cpu hydra-server
+        hydra:.hydra-build-wrapped cpu,blkio hydra-build
+        hydra:.hydra-evaluator-wrapped cpu hydra-evaluator
+        hydra:.hydra-server-wrapped cpu hydra-server
         hydra-mirror cpu hydra-mirror
       '';
   };
