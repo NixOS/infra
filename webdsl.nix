@@ -60,10 +60,6 @@ in
     UserParameter=mysql_threads,${pkgs.mysql}/bin/mysqladmin -uroot status|cut -f3 -d":"|cut -f1 -d"Q"
     UserParameter=mysql_questions,${pkgs.mysql}/bin/mysqladmin -uroot status|cut -f4 -d":"|cut -f1 -d"S"
     UserParameter=mysql_qps,${pkgs.mysql}/bin/mysqladmin -uroot status|cut -f9 -d":"
-    UserParameter=hydra.queue.total,${pkgs.postgresql}/bin/psql hydra -At -c 'select count(*) from builds where finished = 0'
-    UserParameter=hydra.queue.building,${pkgs.postgresql}/bin/psql hydra -At -c 'select count(*) from builds natural join BuildSchedulingInfo where finished = 0 and busy = 1'
-    UserParameter=hydra.queue.buildsteps,${pkgs.postgresql}/bin/psql hydra -At -c 'select count(*) from BuildSteps s join BuildSchedulingInfo i on s.build = i.id where i.busy = 1 and s.busy = 1'
-    UserParameter=hydra.builds,${pkgs.postgresql}/bin/psql hydra -At -c 'select count(*) from Builds'
   '';
 
   services.systemhealth = {
@@ -80,34 +76,11 @@ in
     anonymousUser = true;
   };
 
-  services.sitecopy = {
-      enable = true;
-      backups =
-        let genericBackup = { server = "webdata.tudelft.nl";
-                              protocol = "webdav";
-                              https = true ;
-                            };
-        in [
-          ( genericBackup // { name = "ftp";   local = "/home/ftp";                          remote = "/staff-groups/ewi/st/strategoxt/backup/ftp/ftp.strategoxt.org/"; } )
-          ( genericBackup // { name = "mysql"; local = config.services.mysqlBackup.location; remote = "/staff-groups/ewi/st/strategoxt/backup/mysql"; } )
-          ( genericBackup // { name = "tomcat"; local = config.services.tomcat.baseDir;      remote = "/staff-groups/ewi/st/strategoxt/backup/tomcat"; } )
-          ( genericBackup // { name   = "postgresql";
-                               local  = config.services.postgresqlBackup.location;
-                               remote = "/staff-groups/ewi/st/strategoxt/backup/postgresql-webdsl.org";
-                             } )
-        ];
-    };
-
   services.mysql = {
       enable = true;
       package = pkgs.mysql51;
       dataDir = "/data/mysql";
     };
-
-  services.postgresqlBackup = {
-    enable = true;
-    databases = [ "hydra" "jira" "mediawiki" ];
-  };
 
   services.syslogd.extraConfig = ''
     local0.*            -/var/log/pgsql
@@ -118,9 +91,9 @@ in
       enableTCPIP = true;
       dataDir = "/data/postgresql";
       extraConfig = ''
-        log_min_duration_statement = 1000
-        log_duration = off
-        log_statement = 'none'
+        #log_min_duration_statement = 1000
+        #log_duration = off
+        #log_statement = 'none'
         max_connections = 250
       '';
       authentication = ''
@@ -268,7 +241,7 @@ JkMount /* loadbalancer
   services.mysqlBackup = {
      enable = true;
      user = "root";
-     databases = [ "researchr" "twitterarchive" "webdslorg" "pilweb" "mysql" "yellowgrass" "department" ];
+     databases = [ "researchr" "twitterarchive" "webdslorg" "pilweb" "mysql" "yellowgrass" "department" "weblab" ];
      singleTransaction = true;
      split = true;
      extraArgs = "--ignore-table=researchr._SecurityContext --ignore-table=researchr.RequestLogEntry_params_RequestLogEntryParam --ignore-table=researchr._RequestLogEntry --ignore-table=researchr._RequestLogEntryParam --ignore-table=researchr._RequestLogEntry --ignore-table=researchr._RequestLogEntryParam --ignore-table=researchr.RequestLogEntry_params_RequestLogEntryParam";
@@ -343,6 +316,7 @@ JkMount /* loadbalancer
   services.cron.systemCronJobs =
     [ "15 03 * * * root ${pkgs.nixUnstable}/bin/nix-collect-garbage --max-freed $((32 * 1024**3)) > /var/log/gc.log 2>&1"
       "*  *  * * * root ${pkgs.python}/bin/python ${ZabbixApacheUpdater} -z buildfarm.st.ewi.tudelft.nl -c webdsl"
+      "05 05 * * * root cp -v /var/backup/mysql/* /backup/webdsl/mysql/"
     ];
 
   networking = {
@@ -366,5 +340,5 @@ JkMount /* loadbalancer
 
   };
 
-  environment.systemPackages = [ pkgs.stdenv /*pkgs.lsiutil*/ ] ++ (with pkgs.strategoPackages018; [ aterm sdf strategoxt ]) ;
+  environment.systemPackages = [ pkgs.stdenv pkgs.clang pkgs.llvm /*pkgs.lsiutil*/ ] ++ (with pkgs.strategoPackages018; [ aterm sdf strategoxt ]) ;
 }
