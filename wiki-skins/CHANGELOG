@@ -1,0 +1,20 @@
+== nixos theme release ==
+1.0 Joachim Schiele, js@lastlogde
+  * based on 1.02 clean theme
+  * see nixos.php on how to use
+    - see nixos/header.php
+    - see nixos/footer.php
+
+== 'clean theme' changelog ==
+1.02 Joachim Schiele, js@lastlog.de
+  * Main repository moved to: https://github.com/qknight/clean 
+  * Fixed PHP tags
+  * Fixed broken CSS
+  * Tested to work with php-5.2.14 and php-5.3.6
+  * License change from '' to 'cc-by-sa/3.0' on 'Kevin Hughes' request:
+    This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License:
+    http://creativecommons.org/licenses/by-sa/3.0/
+
+1.01 Kevin Hughes, kev@kevcom.com
+  initial release
+

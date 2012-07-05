@@ -1,0 +1,74 @@
+
+#bodyContent, #lastmod {
+	font-family: Lucida Grande, Arial, Helvetica, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+}
+
+#bodyContent p {
+	font-size: 10pt;
+	line-height: 150%;
+}
+
+#bodyContent td {
+	font-size: 10pt;
+}
+
+#bodyContent blockquote {
+	font-size: 10pt;
+	line-height: 130%;
+}
+
+#bodyContent blockquote pre {
+	font-size: 10pt;
+	line-height: 110%;
+	border-left: 0px;
+	border: 1px solid #CCCCCC;
+}
+
+#bodyContent ul, #bodyContent ol, #bodyContent dl {
+	font-size: 10pt;
+}
+
+#bodyContent blockquote ul, #bodyContent blockquote ol, #bodyContent blockquote dl {
+	font-size: 10pt;
+}
+
+#loginText {
+	font-size: 10pt;
+}
+
+.menuItem {
+	font-weight: bold;
+}
+
+#toc ul, #toc ul ul, .toc ul ul, #toc li, #toc li li {
+	font-size: 9pt;
+}
+
+textarea, code, blockquote pre {
+	font: 9pt Courier New, monospace;
+}
+
+#lastmod {
+	font-size: 10pt;
+}
+
+fieldset {
+	font-size: 10pt;
+}
+
+#searchField {
+	font-weight: normal;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+	_font-family: Lucida Grande, Arial, Helvetica, sans-serif;
+	_font-size: 9pt;
+}
+
+textarea {
+	width: 80%;
+	overflow: auto;
+}

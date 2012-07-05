@@ -1,0 +1,12 @@
+<html>
+<!--
+	IE7, version 0.9 (alpha) (2005-08-19)
+	Copyright: 2004-2005, Dean Edwards (http://dean.edwards.name/)
+	License: http://creativecommons.org/licenses/LGPL/2.1/
+-->
+<head>
+<style type="text/css">body{margin:0}</style>
+<script type="text/javascript">public_description=new function(){var l=false;this.ie7_anon=true;this.load=function(o,c,u){if(l)return;l=true;function _0(t,p){t.style[p]=o.currentStyle[p]};var p=o;while(p&&p.currentStyle.backgroundColor=="transparent"){p=p.parentElement}if(p)body.style.backgroundColor=p.currentStyle.backgroundColor;_0(body,"backgroundImage");_0(body,"backgroundRepeat");_0(body,"backgroundPositionX");_0(body,"backgroundPositionY");_0(body,"fontFamily");_0(body,"fontSize");_0(wrapper,"paddingTop");_0(wrapper,"paddingRight");_0(wrapper,"paddingBottom");_0(wrapper,"paddingLeft");image.width=o.clientWidth;image.height=o.clientHeight;var B64=/^data:.*;base64/i,P=/.png$/i;if(B64.test(u))u="ie7-base64.php"+"?"+u.slice(5);if(P.test(u)&&!/MSIE 5.0/.test(navigator.userAgent)){image.src="blank.gif";image.style.filter="progid:DXImageTransform.Microsoft.AlphaImageLoader(src='"+u+"',sizingMethod='scale')"}else{image.src=u}o.style.width=body.scrollWidth;o.style.height=body.scrollHeight}};</script>
+</head>
+<body id="body"><div id="wrapper"><img id="image"></div></body>
+</html>

@@ -1,0 +1,1024 @@
+
+/* Initial styles 2.1 by Faruk Ates - www.kurafire.net */
+
+/* Neutralize styling: */
+   
+html, form, fieldset {
+	margin: 0;
+	padding: 0;
+        font-family: sans-serif;
+}
+
+body {
+    max-width: 80%;
+    /*max-width: 55em;*/
+    margin: 1em auto;
+    background-color: white;
+
+    /* Put a rounded border around the page. */
+    border: 1px solid black;
+    padding: 1em;
+    border-radius: 1em;
+    -moz-border-radius: 1em;
+    -webkit-border-radius: 1em;
+    -moz-box-shadow: #404040 0px 5px 50px;
+    -webkit-box-shadow: #404040 0px 5px 50px;
+}
+
+code {
+    font: monospace;
+    border: 1px solid #6185a0;
+    padding: 6px 6px;
+    color: #600000;
+    background: #f4f4f8;
+}
+
+h1, h2, h3, h4, h5, h6, #pageTitle, #siteTitle {
+        font-family: sans-serif;
+}
+
+/* Neutralize styling: Elements with a vertical margin: */
+   
+h1, h2, h3, h4, h5, h6, p, pre,
+blockquote, ul, ol, dl, address {
+	margin: 1em 0;
+	padding: 0;
+}
+
+/* Apply left margin: Only to the few elements that need it: */
+   
+li, dd, blockquote {
+	margin-left: 1em;
+}
+
+/* Miscellaneous conveniences: */
+
+form label, form input[type=submit], form input[type=checkbox] {
+	cursor: pointer;
+}
+
+fieldset {
+	border: none;
+}
+
+/* Main CSS styles */
+
+
+html{
+	background-color: gray;
+	height: 100%;
+}
+
+
+input[type=text], input[type=password] {
+	background-color: #f5f7c4;
+}
+
+#searchField {
+	background-color: white;
+}
+
+a {
+	text-decoration: none;
+}
+
+#bodyTable {
+	margin-left: auto;
+	margin-right: auto;
+	height: 100%;
+	/* Remove the below line to make layout elastic */
+	width: 100%;
+}
+
+#middleDiv {
+}
+
+#leftDiv {
+	background: url(background.left.gif);
+	background-repeat: repeat-y;
+	background-position: top right;
+	_height: 100%;
+	width: 4%;
+}
+
+#rightDiv {
+	background: url(background.right.gif);
+	background-repeat: repeat-y;
+	background-position: top left;
+	_height: 100%;
+	width: 4%;
+}
+
+#header {
+	height: 50px;
+}
+
+/* The top and bottom menus. */
+ul.short-menu {
+    font-family: sans-serif;
+    display: block;
+    float: right;
+    right: 0em;
+    margin: 0;
+    padding: 0;
+}
+
+ul.short-menu li {
+    font-family: sans-serif;
+    display: inline;
+
+    /* Put a ">" in front of the menu item. */
+    margin-left: 0.5em;
+    padding-left: 1.3em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    background-image: url(arrow-right.gif);
+    background-repeat: no-repeat;
+    background-position: 0.3em center;
+}
+
+ul.short-menu li a {
+    font-family: sans-serif;
+    color: black;
+    text-decoration: none;
+}
+
+ul.short-menu li a:hover {
+    text-decoration: none;
+    border-bottom: 1px dotted black;
+    background: white;
+}
+
+ul#top-menu {
+    top: 0em;
+}
+
+#footer {
+    margin-top: 1em;
+    position: relative;
+}
+
+ul#bottom-menu {
+    bottom: 0em;
+}
+
+div#logo {
+    border: 0px;
+    float: left;
+    display: inline;
+}
+
+
+
+
+
+
+
+
+
+#siteLogoDiv {
+	float: left;
+	width: 120px;
+	height: 50px;
+	overflow: hidden;
+}
+
+#siteLogoDiv img {
+	width: 110px;
+	margin-top: -17px;
+	margin-left: 3px;
+}
+
+#topBackground {
+	display: block;
+	width: 100%;
+        /*
+	height: 50px;
+	background: url(background.top.gif);
+	background-repeat: repeat-x;
+	padding-top: 10px;
+        */
+}
+
+#siteTitle {
+	text-shadow: #CCCCCC 2px 2px 3px;
+	float: left;
+	font-weight: bold;
+	font-size: 180%;
+	color: #333333;
+	margin-top: 14px;
+}
+
+#siteTitle a {
+	color: #745c13;
+	text-decoration: none;
+}
+
+#pageTitle a {
+	color: #005AA0;
+	text-decoration: none;
+}
+
+#siteTitle a:hover, #pageTitle a:hover {
+	color: red;
+	text-decoration: none;
+}
+
+#loginText {
+	float: right;
+	font-size: 90%;
+	color: #444444;
+        margin: 0px 5px 5px 0;
+}
+
+#loginText a {
+	color: #444444;
+	text-decoration: none;
+}
+
+#loginText a:hover {
+	color: red;
+	text-decoration: none;
+}
+
+#menuTable {
+	clear: both;
+	background-color: #BBBBBB;
+	border-bottom: 1px solid #999999;
+	padding-left: 3px;
+	padding-right: 5px;
+}
+
+.menuItem {
+	font: Tahoma, Arial, Helvetica, sans-serif;
+	font-size: 100%;
+}
+
+.menuItem a {
+	color: black;
+	display: block;
+	text-decoration: none;
+	background-color: #BBBBBB;
+	padding: 4px 10px 4px 10px;
+}
+
+.menuItem a:hover {
+	color: white;
+	background-color: #666666;
+}
+
+#searchField {
+	width: 160px;
+	font-size: 90%;
+	margin-right: 5px;
+	margin-left: 10px;
+	border: 0px;
+	border-top: 1px solid #999999;
+	border-left: 1px solid #999999;
+	border-right: 1px solid #CCCCCC;
+	border-bottom: 1px solid #CCCCCC;
+	padding: 0;
+}
+
+.editMenuItem, .editsection a {
+	font-size: 12px;
+	background-color: #FFBF00;
+	padding: 1px 6px 1px 6px;
+	border-right: 1px solid #666666;
+	border-bottom: 1px solid #666666;
+}
+
+.editMenuItem {
+	display: block;
+	float: right;
+	border-right: 1px dotted black;
+	_border-right: 1px solid #be8e00;
+	white-space: nowrap;
+	margin-top: 6px;
+	_margin-top: 8px;
+}
+
+#editMiniMenu {
+	display: block;
+	background-color: #FFBF00;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 100;
+	border-right: 1px solid #666666;
+	border-bottom: 1px solid #666666;
+	padding: 4px 0 4px 0;
+	_padding: 2px 0 4px 0;
+}
+
+.editMiniItem a {
+	display: block;
+	background-color: #FFBF00;
+	font-size: 12px;
+	color: black;
+	text-decoration: none;
+	padding: 0 10px 1px 10px;
+	_padding: 0 5px 1px 10px;
+	white-space: nowrap;
+}
+
+.editMiniItem a:hover, .editMenuItemLast:hover, #dropLink:hover {
+	color: #FFBF00;
+	background-color: black;
+	text-decoration: none;
+}
+
+.editMenuItem a, .editsection a {
+	color: black;
+	text-decoration: none;
+}
+
+.editMenuItem a:hover, .editsection a:hover {
+	color: red;
+	text-decoration: none;
+}
+
+.editMenuItemLast {
+	border-right: 1px solid #666666;
+}
+
+.editsection a {
+	_line-height: 100%;
+	_padding-bottom: 2px;
+}
+
+.editsection {
+	clear: both;
+	color: white;
+	margin: 0;
+	padding: 0;
+	display: block;
+	float: right;
+	padding-top: 10px;
+	_padding-bottom: 6px;
+}
+
+#emptyDiv + .editsection {
+	margin-top: 0;
+	padding-top: 3px;
+}
+
+blockquote + .editsection {
+	margin-top: 15px;
+}
+
+blockquote + .editsection + a + h2 {
+	margin-top: 0;
+	padding-top: 22px;
+	_padding-top: 21px;
+}
+
+blockquote + .editsection + a + h3 {
+	margin-top: 0;
+	padding-top: 22px;
+	_padding-top: 24px;
+}
+
+p + .editsection + a + h3 {
+	margin-top: 0;
+	padding-top: 9px;
+	_padding-top: 10px;
+}
+
+/* Main Page Styles */
+
+#bodyContent {
+	margin-left: 10px;
+	padding: 0 20px 20px 20px;
+	clear: both;
+}
+
+#bodyContent p {
+	line-height: 110%;
+	margin-right: 40px;
+}
+
+#bodyContent li {
+	margin-right: 40px;
+	margin-bottom: 3px;
+}
+
+#bodyContent a {
+	color: #002BB8;
+}
+
+#bodyContent a:visited {
+	color: #3366C0;
+}
+
+#bodyContent a:hover {
+	text-decoration: underline;
+}
+
+#bodyContent .new {
+	color: red;
+}
+
+#pageHeader {
+	clear: both;
+	display: block;
+	border-bottom: 1px solid #A6A6A6;
+	margin: 23px 20px 20px 20px;
+	padding: 0;
+}
+
+#pageTitle {
+	font-size: 160%;
+	font-weight: bold;
+	color: black;
+	padding-top: 0px;
+	margin-left: 10px;
+	margin-right: 110px;
+	border-bottom: 0px;
+	display: block;
+}
+
+h1, h2 {
+	color: #005AA0;
+	font-size: 180%;
+	font-weight: bold;
+	color: #005AA0;
+	border-bottom: 1px dotted black;
+	padding-right: 50px;
+	display: block;
+}
+
+h3, h4, h5, h6 {
+	color: #005AA0;
+	padding-right: 50px;
+	display: block;
+}
+
+h3 {
+	font-size: 150%;
+}
+
+h4, h5 {
+	font-size: 140%;
+}
+
+h6 {
+	font-size: 130%;
+}
+
+p, ul, dl, ol, blockquote {
+	line-height: 130%;
+}
+
+blockquote ul, blockquote dl, blockquote ol {
+	margin-left: 0px;
+}
+
+li {
+	margin-left: 20px;
+}
+
+blockquote {
+	margin: 15px 30px 0 0;
+	padding-left: 20px;
+	_padding-left: 15px;
+	border-left: 5px solid #CCCCCC;
+}
+
+pre {
+        border: 1px dotted #6185a0;
+}
+
+blockquote pre {
+        font: monospace;
+        border: 1px solid #6185a0;
+        padding: 6px 6px;
+        color: #600000;
+        background: #f4f4f8;
+}
+
+#toc, .toc {
+	border: 1px dotted #aaa;
+	background-color: #EFEFEF;
+	padding: 5px;
+}
+
+#toc h2, .toc h2 {
+	display: inline;
+	margin: 0;
+	padding: 0;
+	border: none;
+	float: left;
+}
+
+#toc ul, .toc ul {
+	clear: both;
+	font-size: 9pt;
+	list-style-type: none;
+	list-style-image: none;
+	margin: 0 0 3px 0;
+	padding: 7px 0 0 0;
+	_padding: 0;
+	margin-top: 7px;
+	_margin-top: 3px;
+	text-align: left;
+}
+
+#toc ul ul, .toc ul ul {
+	padding-top: 0px;
+	margin: 0 0 0 1em;
+}
+
+#toc li {
+	font-size: 9pt;
+	line-height: 150%;
+	margin: 0 10px 0 5px;
+}
+
+#toc li li {
+	font-size: 100%;
+}
+
+#toc .toctoggle, .toc .toctoggle {
+	display: inline;
+	font-size: 95%;
+	padding-top: 7px;
+	float: right;
+	margin-left: 10px;
+}
+
+.printfooter {
+	display: none;
+	visibility: hidden;
+}
+
+#lastmod {
+	font-size: 85%;
+	line-height: 100%;
+	_line-height: 130%;
+	display: block;
+	width: 100%;
+	clear: both;
+	text-align: right;
+	color: #999999;
+	margin: 20px 20px 0 0;
+}
+
+/* Editing and Previewing */
+
+#toolbar {
+	display: none;
+}
+
+#editform {
+	margin-top: 20px;
+}
+
+#editform em {
+	font-size: 110%;
+}
+
+textarea {
+	font: 10pt Courier, monospace;
+	width: 100%;
+	height: 350px;
+	border: 1px solid #999999;
+}
+
+#editform textarea {
+	margin-bottom: 10px;
+}
+
+input {
+	border: 1px solid #999999;
+}
+
+input[type=checkbox] {
+	border: 0px;
+}
+
+input[type=submit] {
+	border: 1px outset #666666;
+	background-color: #CCCCCC;
+}
+
+#editpage-copywarn p {
+	font-size: 90%;
+	margin: 20px 0 0 0;
+	line-height: 130%;
+}
+
+#editpage-copywarn p br {
+	display: none;
+}
+
+input[name=wpMinoredit], label[for=wpMinoredit] {
+	display: none;
+}
+
+input[name=wpWatchthis], label[for=wpWatchthis] {
+	display: none;
+}
+
+#wpSave, #wpPreview {
+	font-size: 120%;
+	background-color: #DDDDDD;
+}
+
+#wpSave {
+	margin-right: 5px;
+}
+
+#wpSave:hover, #wpPreview:hover {
+	border-color: red;
+}
+
+#wpDiff {
+	display: none;
+}
+
+#wpPreview {
+	margin-right: 10px;
+}
+
+label[for=wpMinoredit] {
+	padding-right: 10px;
+}
+
+#editform em a {
+	font-style: normal;
+}
+
+.previewnote, .error {
+	display: block;
+	color: red;
+	padding: 5px;
+	background-color: #f8d1d1;
+	text-align: center;
+	font-weight: normal;
+	list-style-type: none;
+}
+
+.error li {
+	padding: 0;
+	margin: 0;
+}
+
+/* From MonoBook */
+
+#bodyContent a[href ^="http://"], #bodyContent a[href ^="gopher://"] {
+	background: url(external.png) center right no-repeat;
+	padding-right: 13px;
+}
+
+#bodyContent a[href ^="https://"], .link-https {
+	background: url(lock_icon.gif) center right no-repeat;
+	padding-right: 16px;
+}
+
+#bodyContent a[href ^="mailto:"], .link-mailto {
+	background: url(mail_icon.gif) center right no-repeat;
+	padding-right: 18px;
+}   
+
+#bodyContent a[href ^="news://"] {
+	background: url(news_icon.png) center right no-repeat;
+	padding-right: 18px;
+}   
+
+#bodyContent a[href ^="ftp://"], .link-ftp {
+	background: url(file_icon.gif) center right no-repeat;
+	padding-right: 18px;
+}
+
+#bodyContent a[href ^="irc://"], .link-irc {
+	background: url(discussionitem_icon.gif) center right no-repeat;
+	padding-right: 18px;
+}
+
+#homeLink {
+	display: block;
+}
+
+#dropLink {
+	display: block;
+	background: url(dropmenu_icon.gif) center right no-repeat;
+	background-color: #FFBF00;
+	padding-right: 14px;
+}
+
+/* Diff Rendering */
+
+table.diff, td.diff-otitle, td.diff-ntitle {
+	background-color: white;
+}
+
+td.diff-addedline {
+	background: #cfc;
+	font-size: smaller;
+}
+
+td.diff-deletedline {
+	background: #ffa;
+	font-size: smaller;
+}
+
+td.diff-context {
+	background: #eee;
+	font-size: smaller;
+}
+
+span.diffchange {
+	color: red;
+	font-weight: bold;
+}
+
+/* Page history styling */
+/* the auto-generated edit comments */
+
+.autocomment {
+	color: gray;
+}   
+
+#pagehistory span.user {
+	margin-left: 1.4em;
+	margin-right: .4em;
+}   
+
+#pagehistory span.minor {
+	font-weight: bold;
+}
+
+#pagehistory li {
+	border: 1px solid white;
+}
+
+#pagehistory li.selected {
+	background-color: #DDDDDD;
+	border: 1px solid white;
+}
+
+/* User Preferences */
+
+#preftoc {
+	float: left;
+	margin: 1em;
+	width: 13em;
+}
+
+#preftoc li {
+	border: 1px solid white;
+}
+
+#preftoc li.selected {
+	background-color: #DDDDDD;
+	border: 1px solid white;
+	padding: 4px 0 0 4px;
+}
+
+fieldset {
+	border: 1px solid #A6A6A6;
+	margin: 1em 0 1em 0;
+	padding: 0 1em 1em;
+	line-height: 1.5em;
+}
+
+#preftoc a, #preftoc a:active {
+	display: block;
+}
+
+#prefcontrol {
+	clear: both;
+	float: left;
+	margin-top: 1em;
+}
+
+div.prefsectiontip {
+	font-size: 95%;
+	margin-top: 1em;
+}
+
+fieldset.operaprefsection {
+	margin-left: 15em;
+}
+
+/* Search */
+
+#searchContent small {
+	font-size: 100%;
+}
+
+#searchContent ol {
+	padding-bottom: 3px;
+}
+
+#searchContent ol li a {
+	font-weight: bold;
+}
+
+#searchContent p:first-child + p {
+	display: none;
+}
+
+#searchContent p:first-child {
+	display: none;
+}
+
+#searchContent br {
+	display: none;
+}
+
+#searchContent li br {
+	display: inline;
+}
+
+#powersearch {
+	display: none;
+}
+
+/* Login */
+
+#userlogin table td:last-child p {
+	padding-top: 0;
+	margin-top: 0;
+}
+
+#userlogin table td:last-child p input {
+	margin-top: 20px;
+	font-size: 100%;
+}
+
+/* Main Menu */
+
+#mainMenu {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 100;
+	background-color: #BBBBBB;
+	border-right: 1px solid #777777;
+	border-bottom: 1px solid #777777;
+	padding: 4px 0 4px 0;
+}
+
+.mainMenuItem a {
+	font-size: 85%;
+	padding: 2px 10px 2px 10px;
+	_padding: 0 10px 2px 10px;
+	display: block;
+	color: black;
+	background-color: #BBBBBB;
+	text-decoration: none;
+}
+
+.mainMenuItem a:hover {
+	color: white;
+	background-color: #666666;
+	text-decoration: none;
+}
+
+.mainMenuItemDiv {
+	display: block;
+	margin-top: 4px;
+	border-bottom: 1px solid #999999;
+	margin-bottom: 4px;
+}
+
+.editMiniItemDiv {
+	display: block;
+	margin-top: 4px;
+	border-bottom: 1px solid #be8e00;
+	margin-bottom: 4px;
+	_margin-bottom: 2px;
+}
+
+/* Special Pages */
+
+.namespaceoptions {
+	padding-top: 10px;
+}
+
+textarea[name=wpUploadDescription] {
+	height: 100px;
+}
+
+textarea[name=wpReason] {
+	height: 100px;
+}
+
+/* Thumbnails */
+
+div.thumb {
+	margin-bottom: .5em;
+	border-style: solid;
+	border-color: transparent;
+	_border: 0;
+	width: auto;
+}
+
+div.thumb div {
+	border: 1px solid #ccc;
+	padding: 3px !important;
+	background-color: #f9f9f9;
+	font-size: 94%;
+	text-align: center;
+	overflow: hidden;
+}
+
+div.thumb div a img { 
+	border: 1px solid #ccc;
+}
+
+div.thumb div div.thumbcaption {
+	border: none;
+	text-align: left;
+	line-height: 1.4em;
+	padding: .3em 0 .1em 0;
+}
+
+div.magnify {
+	float: right;
+	border: none !important;
+	background: none !important;
+}
+
+div.magnify a, div.magnify img {
+	display: block;
+	border: none !important;
+	background: none !important;
+}
+
+div.tright {
+	clear: right;
+	float: right; 
+	border-width: .5em 0 .8em 1.4em;
+	_border: 0px;
+	_margin: .5em 0 .8em 1.4em;
+}
+
+div.tleft {
+	float: left;
+	margin-right: .5em;
+	border-width: .5em 1.4em .8em 0;
+	_border: 0px;
+	_margin: .5em 1.4em .8em 0;
+}
+
+.hiddenStructure {
+	display: none;
+}
+
+img.tex {
+	vertical-align: middle;
+}
+
+span.texhtml {
+	font-family: serif;
+}
+
+/* Misc Styling */
+
+div[class=fullImageLink] a:last-child {
+	display: block;
+	padding-top: 10px;
+}
+
+.rcoptions {
+	line-height: 150%;
+}
+
+span.searchmatch {
+	color: red;
+}
+
+#relatedChanges a:first-child {
+	font-size: 120%;
+	font-weight: bold;
+}
+
+#relatedChanges a:first-child:before {
+	content: "for ";
+}
+
+#relatedChanges hr {
+	display: none;
+}
+
+#catlinks {
+	margin-top: 20px;
+        border: 1px solid #aaa;
+        background-color: #EFEFEF;
+        padding: 5px;
+        padding-left: 7px;
+        display: none;
+}
+
+#catlinks p {
+        margin: 0;
+        padding: 0;
+}
+
+#catlinks a[title="Special:Categories"] {
+        font-weight: bold;
+}
+
