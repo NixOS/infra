@@ -243,10 +243,11 @@ div#logo {
 
 #menuTable {
 	clear: both;
-	background-color: #BBBBBB;
-	border-bottom: 1px solid #999999;
+	background-color: #E0E0FF;
+	/* border-bottom: 1px solid #999999; */
 	padding-left: 3px;
 	padding-right: 5px;
+	font-weight: bold;
 }
 
 .menuItem {
@@ -258,7 +259,6 @@ div#logo {
 	color: black;
 	display: block;
 	text-decoration: none;
-	background-color: #BBBBBB;
 	padding: 4px 10px 4px 10px;
 }
 
@@ -388,18 +388,16 @@ p + .editsection + a + h3 {
 /* Main Page Styles */
 
 #bodyContent {
-	margin-left: 10px;
-	padding: 0 20px 20px 20px;
 	clear: both;
 }
 
 #bodyContent p {
 	line-height: 110%;
-	margin-right: 40px;
+	/* margin-right: 40px; */
 }
 
 #bodyContent li {
-	margin-right: 40px;
+	/* margin-right: 40px; */
 	margin-bottom: 3px;
 }
 
@@ -423,16 +421,15 @@ p + .editsection + a + h3 {
 	clear: both;
 	display: block;
 	border-bottom: 1px solid #A6A6A6;
-	margin: 23px 20px 20px 20px;
+	margin: 23px 0px 20px 0px;
 	padding: 0;
 }
 
 #pageTitle {
-	font-size: 160%;
+	font-size: 180%;
 	font-weight: bold;
 	color: black;
 	padding-top: 0px;
-	margin-left: 10px;
 	margin-right: 110px;
 	border-bottom: 0px;
 	display: block;
@@ -440,30 +437,22 @@ p + .editsection + a + h3 {
 
 h1, h2 {
 	color: #005AA0;
-	font-size: 180%;
+	font-size: 130%;
 	font-weight: bold;
 	color: #005AA0;
 	border-bottom: 1px dotted black;
-	padding-right: 50px;
+	/* padding-right: 50px; */
 	display: block;
 }
 
 h3, h4, h5, h6 {
 	color: #005AA0;
-	padding-right: 50px;
+	/* padding-right: 50px; */
 	display: block;
 }
 
 h3 {
-	font-size: 150%;
-}
-
-h4, h5 {
-	font-size: 140%;
-}
-
-h6 {
-	font-size: 130%;
+	font-size: 100%;
 }
 
 p, ul, dl, ol, blockquote {
@@ -499,7 +488,7 @@ blockquote pre {
 
 #toc, .toc {
 	border: 1px dotted #aaa;
-	background-color: #EFEFEF;
+	background-color: #F0F0FF;
 	padding: 5px;
 }
 
@@ -855,7 +844,7 @@ fieldset.operaprefsection {
 	top: 0px;
 	left: 0px;
 	z-index: 100;
-	background-color: #BBBBBB;
+	background-color: #C0C0FF;
 	border-right: 1px solid #777777;
 	border-bottom: 1px solid #777777;
 	padding: 4px 0 4px 0;
@@ -867,7 +856,6 @@ fieldset.operaprefsection {
 	_padding: 0 10px 2px 10px;
 	display: block;
 	color: black;
-	background-color: #BBBBBB;
 	text-decoration: none;
 }
 
@@ -1022,3 +1010,14 @@ span.searchmatch {
         font-weight: bold;
 }
 
+/* Nix style stuff; should include nix-common.css */
+
+pre {
+    margin-left: 1.5em;
+    margin-right: 1.5em;
+    border: 1px solid #6185a0;
+    padding: 6px 6px;
+    color: #600000;
+    background: #f4f4f8;
+    white-space: pre-wrap;
+}

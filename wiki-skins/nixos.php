@@ -84,8 +84,6 @@ class NixOSTemplate extends QuickTemplate {
 	foreach ($this->data['personal_urls'] as $key => $item) {
 		$href = htmlspecialchars($item['href']);
 		$text = htmlspecialchars($item['text']);
-		if ($key != "userpage")
-			$text = strtolower($text);
 		$link = "<a href='$href'>$text</a>";
 		if ($key == "anonlogin" || $key == "logout" ||
 		$key == "userpage" || $key == "preferences")
@@ -94,8 +92,8 @@ class NixOSTemplate extends QuickTemplate {
 			$loginText .= " / ";
 	}
 	if (!$loginText && !$userpage) {
-		$text = strtolower(htmlspecialchars(
-			$this->translator->translate("userlogin")));
+		$text = htmlspecialchars(
+			$this->translator->translate("userlogin"));
 		$path = str_replace('$1', "Special:Userlogin", $wgArticlePath);
 		$loginText = "<a href='$path'>$text</a>";
 	}
@@ -104,10 +102,10 @@ class NixOSTemplate extends QuickTemplate {
 
 	foreach ($this->data['nav_urls'] as $key => $item) {
 		$href = htmlspecialchars($item['href']);
-		$text = strtolower(htmlspecialchars(
-			$this->translator->translate($key)));
+		$text = htmlspecialchars(
+			$this->translator->translate($key));
 		if ($key == "upload" && $isEnglish)
-			$text = "upload files";
+			$text = "Upload files";
 		$link = "<a href='$href'>$text</a>";
 		if ($key == "help")
 			$helpLink = $link;
@@ -127,15 +125,13 @@ class NixOSTemplate extends QuickTemplate {
 		$href = htmlspecialchars($item['href']);
 		$text = htmlspecialchars($item['text']);
 		if ($key == "talk" && $isEnglish)
-			$text = "discuss";
+			$text = "Discuss";
 		if ($key == "history" && $isEnglish)
-			$text = "changes";
+			$text = "Changes";
 		if ($key == "move" && $isEnglish)
-			$text = "rename";
+			$text = "Rename";
 		if ($key == "nstab-main")
 			$text = $this->data['title'];
-		else
-			$text = strtolower($text);
 		$link =  "<a href='$href'>$text</a>";
 		if ($key == "talk")
 			$talkLink = $link;
@@ -158,21 +154,21 @@ class NixOSTemplate extends QuickTemplate {
 	if (!$pageLink)
 		$pageLink = $this->data['title'];
 
-	$text = strtolower(htmlspecialchars(
-		$this->translator->translate("allpages")));
+	$text = htmlspecialchars(
+		$this->translator->translate("allpages"));
 	$path = str_replace('$1', "Special:Allpages", $wgArticlePath);
 	$allLink = "<a href='$path'>$text</a>";
 
-	$searchLabel = strtolower(htmlspecialchars(
-		$this->translator->translate("search")));
-	$newPageLabel = strtolower(htmlspecialchars(
-		$this->translator->translate("newpage")));
+	$searchLabel = htmlspecialchars(
+		$this->translator->translate("search"));
+	$newPageLabel = htmlspecialchars(
+		$this->translator->translate("newpage"));
 	if ($canEdit)
-		$moreLabel = strtolower(htmlspecialchars(
-			$this->translator->translate("moredotdotdot")));
+		$moreLabel = htmlspecialchars(
+			$this->translator->translate("moredotdotdot"));
 	else
-		$moreLabel = strtolower(htmlspecialchars(
-			$this->translator->translate("qbpageoptions")));
+		$moreLabel = htmlspecialchars(
+			$this->translator->translate("qbpageoptions"));
 	$moreLabel = str_replace("...", "", $moreLabel);
 ?>
 
@@ -251,7 +247,7 @@ require_once('nixos/header.php');
 
 <table cellpadding="0" cellspacing="0" border="0" width="100%" id="menuTable">
 <tr valign="center">
-<td class="menuItem" onmouseover="showMenu('mainMenu', 'homeLink', 'left');" nowrap><a href="<?php echo $homeLink ?>" id="homeLink">wiki</a></td>
+<td class="menuItem" onmouseover="showMenu('mainMenu', 'homeLink', 'left');" nowrap><a href="<?php echo $homeLink ?>" id="homeLink">Wiki</a></td>
 <td class="menuItem" nowrap><?php echo $helpLink; ?></td>
 <td nowrap width="100%"></td>
 <td class="menuItem" nowrap><?php echo $searchLabel; ?></td>
