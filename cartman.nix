@@ -74,6 +74,8 @@ let
           ProxyPassReverse  /mturk  http://wendy:3000/mturk
           ProxyPass         /mturk-sandbox  http://wendy:3001/mturk-sandbox retry=5
           ProxyPassReverse  /mturk-sandbox  http://wendy:3001/mturk-sandbox
+
+          MaxKeepAliveRequests 0
         '';
 
       extraSubservices =
@@ -494,7 +496,7 @@ rec {
 
             ProxyRequests     Off
             ProxyPreserveHost On
-            ProxyPass         /       http://wendy:4000/ retry=5 disablereuse=on
+            ProxyPass         /       http://wendy:4000/ retry=5 disablereuse=off
             ProxyPassReverse  /       http://wendy:4000/
           '';
         }

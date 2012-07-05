@@ -104,7 +104,7 @@
   services.cron = {
       systemCronJobs =
         [
-          "15 4 * * *  cp -v /var/backup/postgresql/* /backup/wendy/postgresql/  &> /var/log/backup-db.log"
+          "15 4 * * * root cp -v /var/backup/postgresql/* /backup/wendy/postgresql/  &> /var/log/backup-db.log"
         ];
     };
 
