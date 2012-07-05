@@ -83,6 +83,7 @@ let
             siteName = "Nix Wiki";
             logo = "/logo/nix-wiki.png";
             defaultSkin = "nixos";
+            skins = [ ./wiki-skins ];
             extraConfig =
               ''
                 $wgEmailConfirmToEdit = true;
