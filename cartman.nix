@@ -53,6 +53,9 @@ let
           { urlPath = "/releases";
             dir = "/data/releases";
           }
+          { urlPath = "/binary-cache";
+            dir = "/data/releases/binary-cache";
+          }
         ];
 
       servedFiles =
@@ -76,6 +79,13 @@ let
           ProxyPassReverse  /mturk-sandbox  http://wendy:3001/mturk-sandbox
 
           MaxKeepAliveRequests 0
+
+          # Use a very short error message for 404s in the binary
+          # cache, since those are very frequent and not generally
+          # seen by humans.
+          <Location /releases/binary-cache>
+            ErrorDocument 404 "No such file."
+          </Location>
         '';
 
       extraSubservices =
@@ -246,6 +256,7 @@ rec {
 
     httpd = {
       enable = true;
+      multiProcessingModule = "worker";
       logPerVirtualHost = true;
       adminAddr = "e.dolstra@tudelft.nl";
       hostName = "localhost";
@@ -263,6 +274,8 @@ rec {
           </Location>
         
           ExtendedStatus On
+
+          StartServers 15
         '';
           
       servedFiles =
