@@ -152,4 +152,13 @@
         '';
     };
 
+  jobs."convert-to-binary-channel" =
+    { startOn = "started networking";
+      path = [ pkgs.su ];
+      script =
+        ''
+          su - hydra-mirror -c 'exec >> convert-to-binary-channel.log 2>&1; cd release/channels; while true; do date; ./convert-to-binary-channel.pl; sleep 3600; done'
+        '';
+    };
+
 }
