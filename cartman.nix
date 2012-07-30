@@ -277,6 +277,12 @@ rec {
 
           StartServers 15
         '';
+
+      phpOptions =
+        ''
+          #max_execution_time = 2
+          memory_limit = "32M"
+        '';
           
       servedFiles =
         [ { urlPath = "/releases.css";
@@ -647,4 +653,29 @@ rec {
       exec = "${pkgs.dnsmasq}/bin/dnsmasq --conf-file=${confFile}";
     };
 
+  # Use cgroups to limit Apache's resources.
+  services.cgroups.enable = true;
+
+  services.cgroups.groups =
+    ''
+      mount {
+        cpu = /sys/fs/cgroup/cpu;
+        memory = /sys/fs/cgroup/memory;
+      }
+
+      group httpd {
+        cpu {
+          cpu.shares = "1000";
+        }
+        memory {
+          memory.limit_in_bytes = "1024M";
+          memory.memsw.limit_in_bytes = "1024M";
+        }
+      }
+    '';
+    
+  services.cgroups.rules =
+    ''
+      wwwrun:httpd cpu,memory httpd
+    '';
 }
