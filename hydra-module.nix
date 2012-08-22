@@ -13,7 +13,7 @@ let
       max_servers 50
     '';
     
-  env = ''NIX_REMOTE=daemon HYDRA_DBI="${cfg.dbi}" HYDRA_CONFIG=${cfg.baseDir}/data/hydra.conf HYDRA_DATA=${cfg.baseDir}/data '';
+  env = ''NIX_REMOTE=daemon HYDRA_DBI="${cfg.dbi}" HYDRA_CONFIG=${cfg.baseDir}/data/hydra.conf HYDRA_DATA=${cfg.baseDir}/data HYDRA_DISALLOW_UNFREE=1 '';
   server_env = env + ''HYDRA_LOGO="${cfg.logo}" HYDRA_TRACKER="${cfg.tracker}" '';
 
 in
