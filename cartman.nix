@@ -5,13 +5,27 @@ with pkgs.lib;
 let 
   duplicityBackup = pkgs.writeScript "backup-duplicity" ''
     #! /bin/sh
+    echo "Starting backups"
     export PATH=$PATH:/var/run/current-system/sw/bin
-    time duplicity --no-encryption /data/pt-wiki file:///backup/cartman/pt-wiki
-    time duplicity --no-encryption /data/nixos-mediawiki-upload file:///backup/cartman/nixos-mediawiki-upload
-    time duplicity --no-encryption /data/subversion file:///backup/cartman/subversion
-    time duplicity --no-encryption /data/subversion-nix file:///backup/cartman/subversion-nix
-    time duplicity --no-encryption /data/subversion-ptg file:///backup/cartman/subversion-ptg
-    time duplicity --no-encryption /data/subversion-strategoxt file:///backup/cartman/subversion-strategoxt
+    time duplicity --full-if-older-than 30D --no-encryption /data/pt-wiki file:///backup/cartman/pt-wiki
+    time duplicity --no-encryption --force remove-all-inc-of-but-n-full 1 file:///backup/cartman/pt-wiki
+
+    time duplicity --full-if-older-than 30D --no-encryption /data/nixos-mediawiki-upload file:///backup/cartman/nixos-mediawiki-upload
+    time duplicity --no-encryption --force remove-all-inc-of-but-n-full 1 file:///backup/cartman/nixos-mediawiki-upload
+
+    time duplicity --full-if-older-than 30D --no-encryption /data/subversion file:///backup/cartman/subversion
+    time duplicity --no-encryption --force remove-all-inc-of-but-n-full 1 file:///backup/cartman/subversion
+
+    time duplicity --full-if-older-than 30D --no-encryption /data/subversion-nix file:///backup/cartman/subversion-nix
+    time duplicity --no-encryption --force remove-all-inc-of-but-n-full 1 file:///backup/cartman/subversion-nix
+
+    time duplicity --full-if-older-than 30D --no-encryption /data/subversion-ptg file:///backup/cartman/subversion-ptg
+    time duplicity --no-encryption --force remove-all-inc-of-but-n-full 1 file:///backup/cartman/subversion-ptg
+
+    time duplicity --full-if-older-than 30D --no-encryption /data/subversion-strategoxt file:///backup/cartman/subversion-strategoxt
+    time duplicity --no-encryption --force remove-all-inc-of-but-n-full 1 file:///backup/cartman/subversion-strategoxt
+
+    echo Done
   '';
 
   machines = import ./machines.nix pkgs.lib;
@@ -668,8 +682,8 @@ rec {
           cpu.shares = "1000";
         }
         memory {
-          memory.limit_in_bytes = "1024M";
-          memory.memsw.limit_in_bytes = "1024M";
+          memory.limit_in_bytes = "1500M";
+          memory.memsw.limit_in_bytes = "1500M";
         }
       }
     '';
