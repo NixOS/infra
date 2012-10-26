@@ -172,11 +172,11 @@ rec {
     domain = "buildfarm";
 
     interfaces = [
-      { name = "eth1";
+      { name = "external";
         ipAddress = myIP;
         subnetMask = "255.255.254.0";
       }
-      { name = "eth0";
+      { name = "internal";
         ipAddress = (findSingle (m: m.hostName == "cartman") {} {} machines).ipAddress;
         subnetMask = "22";
       }
@@ -202,7 +202,7 @@ rec {
 
     nat.enable = true;
     nat.internalIPs = "192.168.1.0/22";
-    nat.externalInterface = "eth1";
+    nat.externalInterface = "external";
     nat.externalIP = myIP;
     
     localCommands =
@@ -213,9 +213,9 @@ rec {
         ${pkgs.iptables}/sbin/iptables -t nat -A PREROUTING -p tcp -d ${myIP} --dport 2222 -j DNAT --to 192.168.1.26:22
 
         # Cleanup.
-        ip -6 route flush dev sixxs
-        ip link set dev sixxs down
-        ip tunnel del sixxs
+        ip -6 route flush dev sixxs || true
+        ip link set dev sixxs down || true
+        ip tunnel del sixxs || true
 
         # Set up a SixXS tunnel for IPv6 connectivity.
         ip tunnel add sixxs mode sit local ${myIP} remote 192.87.102.107 ttl 64
@@ -224,27 +224,33 @@ rec {
         ip -6 route add default via 2001:610:600:88d::1 dev sixxs
 
         # Discard all traffic to networks in our prefix that don't exist.
-        ip -6 route add 2001:610:685::/48 dev lo
+        ip -6 route add 2001:610:685::/48 dev lo || true
         
         # Create a local network (prefix:1::/64).
-        ip -6 addr add 2001:610:685:1::1/64 dev eth0
+        ip -6 addr add 2001:610:685:1::1/64 dev internal || true
 
         # Forward traffic to our Nova cloud to "stan".
-        ip -6 route add 2001:610:685:2::/64 via 2001:610:685:1:222:19ff:fe55:bf2e
+        ip -6 route add 2001:610:685:2::/64 via 2001:610:685:1:222:19ff:fe55:bf2e || true
 
         # Amazon MTurk experiment.
-        ${pkgs.iptables}/sbin/iptables -t nat -A PREROUTING -p tcp -d ${myIP} --dport 5998 -j DNAT --to 192.168.1.26:5998
-        ${pkgs.iptables}/sbin/iptables -t nat -A PREROUTING -p tcp -d ${myIP} --dport 5999 -j DNAT --to 192.168.1.26:5999
+        #${pkgs.iptables}/sbin/iptables -t nat -A PREROUTING -p tcp -d ${myIP} --dport 5998 -j DNAT --to 192.168.1.26:5998
+        #${pkgs.iptables}/sbin/iptables -t nat -A PREROUTING -p tcp -d ${myIP} --dport 5999 -j DNAT --to 192.168.1.26:5999
       '';
   };
 
   services = {
 
+    udev.extraRules =
+      ''
+        ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="00:19:d1:19:28:bf", NAME="external"
+        ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="00:04:23:df:f7:bf", NAME="internal"
+      '';
+
     radvd = {
       enable = true;
       config =
         ''
-          interface eth0 {
+          interface internal {
             AdvSendAdvert on;
             prefix 2001:610:685:1::/64 { };
             RDNSS 2001:610:685:1::1 { };
@@ -644,7 +650,7 @@ rec {
           addn-hosts=${hostsFile}
           expand-hosts
           domain=buildfarm
-          interface=eth0
+          interface=internal
 
           server=130.161.158.4
           server=130.161.33.17
