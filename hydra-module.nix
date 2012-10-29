@@ -3,18 +3,32 @@
 with pkgs.lib;
 
 let
+
   cfg = config.services.hydra;
 
-  hydraConf = pkgs.writeScript "hydra.conf" 
+  hydra = "/home/hydra/.nix-profile"; # FIXME
+
+  hydraConf = pkgs.writeScript "hydra.conf"
     ''
       using_frontend_proxy 1
       base_uri ${cfg.hydraURL}
       notification_sender ${cfg.notificationSender}
       max_servers 50
     '';
-    
-  env = ''NIX_REMOTE=daemon HYDRA_DBI="${cfg.dbi}" HYDRA_CONFIG=${cfg.baseDir}/data/hydra.conf HYDRA_DATA=${cfg.baseDir}/data '';
-  server_env = env + ''HYDRA_LOGO="${cfg.logo}" HYDRA_TRACKER="${cfg.tracker}" '';
+
+  env =
+    { NIX_REMOTE = "daemon";
+      HYDRA_DBI = cfg.dbi;
+      HYDRA_CONFIG = "${cfg.baseDir}/data/hydra.conf";
+      HYDRA_DATA = "${cfg.baseDir}/data";
+      #HOME = "/home/hydra";
+      OPENSSL_X509_CERT_FILE = "/etc/ssl/certs/ca-bundle.crt";
+    };
+
+  serverEnv = env //
+    { HYDRA_LOGO = cfg.logo;
+      #HYDRA_TRACKER = cfg.tracker; # FIXME: needs escaping (or should be read from a file)
+    };
 
 in
 
@@ -22,8 +36,9 @@ in
   ###### interface
 
   options = {
+
     services.hydra = rec {
-        
+
       enable = mkOption {
         default = false;
         description = ''
@@ -44,60 +59,60 @@ in
           The user the Hydra services should run as.
         '';
       };
-      
+
       dbi = mkOption {
         default = "dbi:Pg:dbname=hydra;host=wendy;user=hydra;";
         description = ''
           The DBI string for Hydra database connection
         '';
       };
-      
+
       hydraURL = mkOption {
         default = "http://hydra.nixos.org";
         description = ''
-          The base URL for the Hydra webserver instance. Used for links in emails. 
+          The base URL for the Hydra webserver instance. Used for links in emails.
         '';
       };
-      
+
       minimumDiskFree = mkOption {
         default = 5;
         description = ''
-          Threshold of minimum disk space (G) to determine if queue runner should run or not.  
+          Threshold of minimum disk space (GiB) to determine if queue runner should run or not.
         '';
       };
 
       minimumDiskFreeEvaluator = mkOption {
         default = 2;
         description = ''
-          Threshold of minimum disk space (G) to determine if evaluator should run or not.  
+          Threshold of minimum disk space (GiB) to determine if evaluator should run or not.
         '';
       };
 
       notificationSender = mkOption {
         default = "e.dolstra@tudelft.nl";
         description = ''
-          Sender email address used for email notifications. 
+          Sender email address used for email notifications.
         '';
-      }; 
+      };
 
       tracker = mkOption {
         default = "";
         description = ''
           Piece of HTML that is included on all pages.
         '';
-      }; 
-      
+      };
+
       logo = mkOption {
         default = "";
         description = ''
           Path to a file containing the logo of your Hydra instance.
         '';
-      }; 
-      
+      };
+
     };
 
   };
-  
+
 
   ###### implementation
 
@@ -109,7 +124,7 @@ in
         home = cfg.baseDir;
         createHome = true;
         useDefaultShell = true;
-      } 
+      }
     ];
 
     nix.maxJobs = 0;
@@ -117,10 +132,10 @@ in
     nix.manualNixMachines = true;
     nix.useChroot = true;
     nix.nrBuildUsers = 100;
-      
+
     nix.gc.automatic = true;
     nix.gc.options = ''--max-freed "$((400 * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | awk '{ print $4 }')))"'';
-    
+
     nix.extraOptions = ''
       gc-keep-outputs = true
       gc-keep-derivations = true
@@ -136,8 +151,7 @@ in
     '';
 
     jobs."hydra-init" =
-      { name = "hydra-init";
-        startOn = "filesystem";
+      { wantedBy = [ "multi-user.target" ];
         script = ''
           mkdir -p ${cfg.baseDir}/data
           chown ${cfg.user} ${cfg.baseDir}/data
@@ -146,29 +160,52 @@ in
         task = true;
       };
 
-    jobs."hydra-server" =
-      { name = "hydra-server";
-        startOn = "started network-interfaces and started hydra-init";
-        exec = ''
-          ${pkgs.su}/bin/su - ${cfg.user} -c '${server_env} exec hydra-server -f -h \* --max_spare_servers 5 --max_servers 25 --max_requests 100 > ${cfg.baseDir}/data/server.log 2>&1'
-        '';
+    boot.systemd.services."hydra-server" =
+      { wantedBy = [ "multi-user.target" ];
+        wants = [ "hydra-init.service" ];
+        after = [ "hydra-init.service" ];
+        environment = serverEnv;
+        serviceConfig =
+          { ExecStart = "@${hydra}/bin/hydra-server hydra-server -f -h \* --max_spare_servers 5 --max_servers 25 --max_requests 100";
+            User = cfg.user;
+            Restart = "always";
+          };
       };
 
-    jobs."hydra-queue-runner" =
-      { name = "hydra-queue-runner";
-        startOn = "started network-interfaces and started hydra-init";
-        preStart = "${pkgs.su}/bin/su - ${cfg.user} -c '${env} hydra-queue-runner --unlock'";
-        exec = ''
-          ${pkgs.su}/bin/su - ${cfg.user} -c '${env} exec hydra-queue-runner > ${cfg.baseDir}/data/queue_runner.log 2>&1'
-        '';
+    boot.systemd.services."hydra-queue-runner" =
+      { wantedBy = [ "multi-user.target" ];
+        wants = [ "hydra-init.service" ];
+        after = [ "hydra-init.service" "network.target" ];
+        environment = env;
+        serviceConfig =
+          { ExecStartPre = "${hydra}/bin/hydra-queue-runner --unlock";
+            ExecStart = "@${hydra}/bin/hydra-queue-runner hydra-queue-runner";
+            User = cfg.user;
+            Restart = "always";
+          };
       };
 
-    jobs."hydra-evaluator" =
-      { name = "hydra-evaluator";
-        startOn = "started network-interfaces";
-        exec = ''
-          ${pkgs.su}/bin/su - ${cfg.user} -c '${env} exec hydra-evaluator > ${cfg.baseDir}/data/evaluator.log 2>&1'
-        '';
+    boot.systemd.services."hydra-evaluator" =
+      { wantedBy = [ "multi-user.target" ];
+        wants = [ "hydra-init.service" ];
+        after = [ "hydra-init.service" "network.target" ];
+        path = [ pkgs.nettools ];
+        environment = env;
+        serviceConfig =
+          { ExecStart = "@${hydra}/bin/hydra-evaluator hydra-evaluator";
+            User = cfg.user;
+            Restart = "always";
+          };
+      };
+
+    boot.systemd.services."hydra-update-gc-roots" =
+      { wants = [ "hydra-init.service" ];
+        after = [ "hydra-init.service" ];
+        environment = env;
+        serviceConfig =
+          { ExecStart = "@${hydra}/bin/hydra-update-gc-roots hydra-update-gc-roots";
+            User = cfg.user;
+          };
       };
 
     services.cron.systemCronJobs =
@@ -185,18 +222,17 @@ in
                 stop hydra-evaluator
             fi
           '';
-        compressLogs = pkgs.writeScript "compress-logs" 
+        compressLogs = pkgs.writeScript "compress-logs"
           ''
             #! /bin/sh -e
             touch -d 'last month' r
             find /nix/var/log/nix/drvs -type f -a ! -newer r -name '*.drv' | xargs bzip2 -v
           '';
       in
-      [ "*/5 * * * * root  ${checkSpace} &> ${cfg.baseDir}/data/checkspace.log" 
-        "15 5 * * * root  ${compressLogs} &> ${cfg.baseDir}/data/compress.log"
-        "15 02 * * * ${cfg.user} ${env} /home/${cfg.user}/.nix-profile/bin/hydra-update-gc-roots &> ${cfg.baseDir}/data/gc-roots.log"
+      [ "*/5 * * * * root ${checkSpace} &> ${cfg.baseDir}/data/checkspace.log"
+        "15  5 * * * root ${compressLogs} &> ${cfg.baseDir}/data/compress.log"
+        "15  2 * * * root ${pkgs.systemd}/bin/systemctl start hydra-update-gc-roots.service"
       ];
 
-  };  
+  };
 }
-

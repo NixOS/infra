@@ -674,28 +674,7 @@ rec {
     };
 
   # Use cgroups to limit Apache's resources.
-  services.cgroups.enable = true;
-
-  services.cgroups.groups =
-    ''
-      mount {
-        cpu = /sys/fs/cgroup/cpu;
-        memory = /sys/fs/cgroup/memory;
-      }
-
-      group httpd {
-        cpu {
-          cpu.shares = "1000";
-        }
-        memory {
-          memory.limit_in_bytes = "1500M";
-          memory.memsw.limit_in_bytes = "1500M";
-        }
-      }
-    '';
-    
-  services.cgroups.rules =
-    ''
-      wwwrun:httpd cpu,memory httpd
-    '';
+  boot.systemd.services.httpd.serviceConfig.CPUShares = 1000;
+  boot.systemd.services.httpd.serviceConfig.MemoryLimit = "1500M";
+  boot.systemd.services.httpd.serviceConfig.ControlGroupAttribute = [ "memory.memsw.limit_in_bytes 1500M" ];
 }

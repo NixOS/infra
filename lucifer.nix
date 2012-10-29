@@ -84,29 +84,6 @@
           cpu = /dev/cgroup/cpu;
           blkio = /dev/cgroup/blkio;
         }
-        group sshd {
-          cpu {
-            cpu.shares = "2000";
-          }
-        }
-        group hydra-server {
-          cpu {
-            cpu.shares = "700";
-          }
-        }
-        group hydra-build {
-          cpu {
-            cpu.shares = "200";
-          }
-          blkio {
-            blkio.weight = "500";
-          }
-        }
-        group hydra-evaluator {
-          cpu {
-            cpu.shares = "100";
-          }
-        }
         group hydra-mirror {
           cpu {
             cpu.shares = "100";
@@ -115,52 +92,72 @@
       '';
     rules =
       ''
-        root:sshd cpu sshd
-        root:nix-worker cpu,blkio hydra-build
-        root:build-remote.pl cpu,blkio hydra-build
-        hydra:nix-store cpu,blkio hydra-build
-        hydra:.hydra-build-wrapped cpu,blkio hydra-build
-        hydra:.hydra-evaluator-wrapped cpu hydra-evaluator
-        hydra:.hydra-server-wrapped cpu hydra-server
         hydra-mirror cpu hydra-mirror
       '';
   };
   */
 
-  jobs."mirror-nixpkgs" =
-    { startOn = "started networking";
+  # Set some cgroup limits.
+  boot.systemd.services.sshd.serviceConfig.CPUShares = 2000;
+  boot.systemd.services.nix-daemon.serviceConfig.CPUShares = 200;
+  boot.systemd.services.nix-daemon.serviceConfig.BlockIOWeight = 500;
+  boot.systemd.services.hydra-queue-runner.serviceConfig.CPUShares = 200;
+  boot.systemd.services.hydra-evaluator.serviceConfig.CPUShares = 100;
+  boot.systemd.services.hydra-server.serviceConfig.CPUShares = 700;
+
+  boot.systemd.services.mirror-nixpkgs =
+    { description = "Mirror Nixpkgs";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "networking.target" ];
       path = [ pkgs.su ];
       script =
         ''
-          su - hydra-mirror -c 'exec >> nixpkgs-mirror.log 2>&1; rm -rf /data/releases/nixpkgs/.tmp-*; cd release/channels; while true; do date; ./mirror-nixpkgs.sh; sleep 300; done'
+          rm -rf /data/releases/nixpkgs/.tmp-*
+          exec su - hydra-mirror -c 'cd release/channels; exec ./mirror-nixpkgs.sh'
         '';
+      serviceConfig.Restart = "always";
+      serviceConfig.RestartSec = 300;
+      serviceConfig.CPUShares = 100;
     };
 
-  jobs."generate-nixpkgs-patches" =
-    { startOn = "started networking";
+  boot.systemd.services.generate-nixpkgs-patches =
+    { description = "Generate Nixpkgs Patches";
+      wantedBy = [ "multi-user.target" ];
       path = [ pkgs.su ];
       script =
         ''
-          su - hydra-mirror -c 'exec >> nixpkgs-patches.log 2>&1; cd release/channels; while true; do date; ./generate-linear-patch-sequence.sh; sleep 300; done'
+          exec su - hydra-mirror -c 'cd release/channels; exec ./generate-linear-patch-sequence.sh'
         '';
+      serviceConfig.Restart = "always";
+      serviceConfig.RestartSec = 300;
+      serviceConfig.CPUShares = 100;
     };
 
-  jobs."mirror-nixos" =
-    { startOn = "started networking";
+  boot.systemd.services.mirror-nixos =
+    { description = "Mirror NixOS";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "networking.target" ];
       path = [ pkgs.su ];
       script =
         ''
-          su - hydra-mirror -c 'exec >> nixos-mirror.log 2>&1; rm -rf /data/releases/nixos/.tmp-*; cd release/channels; while true; do date; ./mirror-nixos.sh; sleep 300; done'
+          rm -rf /data/releases/nixos/.tmp-*
+          exec su - hydra-mirror -c 'cd release/channels; exec ./mirror-nixos.sh'
         '';
+      serviceConfig.Restart = "always";
+      serviceConfig.RestartSec = 300;
+      serviceConfig.CPUShares = 100;
     };
 
-  jobs."convert-to-binary-channel" =
-    { startOn = "started networking";
+  boot.systemd.services.convert-to-binary-cache =
+    { wantedBy = [ "multi-user.target" ];
       path = [ pkgs.su ];
       script =
         ''
-          su - hydra-mirror -c 'exec >> convert-to-binary-channel.log 2>&1; cd release/channels; while true; do date; ./convert-to-binary-channel.pl; sleep 3600; done'
+          exec su - hydra-mirror -c 'cd release/channels; exec ./convert-to-binary-cache.pl'
         '';
+      serviceConfig.Restart = "always";
+      serviceConfig.RestartSec = 3600;
+      serviceConfig.CPUShares = 100;
     };
 
 }
