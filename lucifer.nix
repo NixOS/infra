@@ -75,6 +75,7 @@
       (gcRemote { machine = "nix@tweek"; gbFree = 3; df = "/usr/gnu/bin/df"; })
     ];
 
+  /*
   services.cgroups = {
     enable = true;
     groups =
@@ -124,6 +125,7 @@
         hydra-mirror cpu hydra-mirror
       '';
   };
+  */
 
   jobs."mirror-nixpkgs" =
     { startOn = "started networking";
