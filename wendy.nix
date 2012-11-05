@@ -82,6 +82,8 @@
       log_duration = off
       log_statement = 'none'
       max_connections = 250
+      work_mem = 16MB
+      shared_buffers = 4GB
     '';
     authentication = ''
       host  all        all 192.168.1.25/32 md5
@@ -91,6 +93,13 @@
       host  zabbix     zabbix    192.168.1.5/32 md5
     ''; 
   };
+
+  # Bump kernel.shmmax for PostgreSQL. FIXME: this should be a NixOS
+  # option around systemd-sysctl.
+  system.activationScripts.setShmMax =
+    ''
+      ${pkgs.procps}/sbin/sysctl -q -w kernel.shmmax=$((6 * 1024**3))
+    '';
 
   nixpkgs.config.packageOverrides = pkgs: { postgresql = pkgs.postgresql91; };
 
