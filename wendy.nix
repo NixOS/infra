@@ -84,6 +84,10 @@
       max_connections = 250
       work_mem = 16MB
       shared_buffers = 4GB
+      # Checkpoint every 256 MB.
+      checkpoint_segments = 16
+      # We can risk losing some transactions.
+      synchronous_commit = off
     '';
     authentication = ''
       host  all        all 192.168.1.25/32 md5
