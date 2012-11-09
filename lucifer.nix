@@ -113,10 +113,9 @@
       script =
         ''
           rm -rf /data/releases/nixpkgs/.tmp-*
-          exec su - hydra-mirror -c 'cd release/channels; exec ./mirror-nixpkgs.sh'
+          exec su - hydra-mirror -c 'cd release/channels; while true; do ./mirror-nixpkgs.sh; sleep 300; done'
         '';
       serviceConfig.Restart = "always";
-      serviceConfig.RestartSec = 300;
       serviceConfig.CPUShares = 100;
     };
 
@@ -126,10 +125,9 @@
       path = [ pkgs.su ];
       script =
         ''
-          exec su - hydra-mirror -c 'cd release/channels; exec ./generate-linear-patch-sequence.sh'
+          exec su - hydra-mirror -c 'cd release/channels; while true; do ./generate-linear-patch-sequence.sh; sleep 300; done'
         '';
       serviceConfig.Restart = "always";
-      serviceConfig.RestartSec = 300;
       serviceConfig.CPUShares = 100;
     };
 
@@ -141,10 +139,9 @@
       script =
         ''
           rm -rf /data/releases/nixos/.tmp-*
-          exec su - hydra-mirror -c 'cd release/channels; exec ./mirror-nixos.sh'
+          exec su - hydra-mirror -c 'cd release/channels; while true; do ./mirror-nixos.sh; sleep 300; done'
         '';
       serviceConfig.Restart = "always";
-      serviceConfig.RestartSec = 300;
       serviceConfig.CPUShares = 100;
     };
 
@@ -153,10 +150,9 @@
       path = [ pkgs.su ];
       script =
         ''
-          exec su - hydra-mirror -c 'cd release/channels; exec ./convert-to-binary-cache.pl'
+          exec su - hydra-mirror -c 'cd release/channels; while true; do ./convert-to-binary-cache.pl; sleep 3600; done'
         '';
       serviceConfig.Restart = "always";
-      serviceConfig.RestartSec = 3600;
       serviceConfig.CPUShares = 100;
     };
 
