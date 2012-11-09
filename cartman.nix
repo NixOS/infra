@@ -64,6 +64,17 @@ let
           { urlPath = "/update";
             dir = "/data/webserver/update";
           }
+          # Backwards compatibility.
+          { urlPath = "/releases/nixpkgs/channels";
+            dir = "/data/releases/channels";
+          }
+          # Backwards compatibility.
+          { urlPath = "/releases/nixos/channels";
+            dir = "/data/releases/channels";
+          }
+          { urlPath = "/channels";
+            dir = "/data/releases/channels";
+          }
           { urlPath = "/releases";
             dir = "/data/releases";
           }
