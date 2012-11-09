@@ -11,4 +11,6 @@
   boot.kernelModules = [ "acpi-cpufreq" "kvm-intel" ];
 
   nix.maxJobs = 8;
+
+  swapDevices = [ { label = "swap"; } ];
 }

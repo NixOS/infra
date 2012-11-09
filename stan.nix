@@ -8,6 +8,8 @@
   boot.initrd.kernelModules = [ "mptsas" ];
   boot.kernelModules = [ "acpi-cpufreq" "kvm-intel" ];
 
+  swapDevices = [ { label = "swap"; } ];
+
   nix.maxJobs = 8;
 
   services.httpd.enable = true;

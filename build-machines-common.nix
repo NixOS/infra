@@ -15,8 +15,6 @@ with pkgs.lib;
       }
     ];
 
-  swapDevices = [ { label = "swap"; } ];
-
   nix.extraOptions =
     ''
       build-max-silent-time = 3600
