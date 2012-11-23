@@ -132,7 +132,35 @@ let
         ];
     };
 
+  strategoxtVHostConfig =
+    { hostName = "strategoxt.org";
+      servedFiles = [ 
+        { urlPath = "/freenode.ver";
+          file = "/data/pt-wiki/pub/freenode.ver";
+        }
+      ];
+      extraSubservices = [
+        { function = import /etc/nixos/services/twiki;
+          startWeb = "Stratego/WebHome";
+          dataDir = "/data/pt-wiki/data";
+          pubDir = "/data/pt-wiki/pub";
+          twikiName = "Stratego/XT Wiki";
+          registrationDomain = "ewi.tudelft.nl";
+        }
+      ];
+    };
 
+  strategoxtSSLConfig =
+    { enableSSL = true;
+      sslServerCert = "/root/ssl-secrets/ssl-strategoxt-org.crt";
+      sslServerKey = "/root/ssl-secrets/ssl-strategoxt-org.key";
+      extraConfig = 
+        ''
+          SSLCertificateChainFile /root/ssl-secrets/startssl-class1.pem
+          SSLCACertificateFile /root/ssl-secrets/startssl-ca.pem
+        '';
+    };
+    
 in
 
 rec {
@@ -400,23 +428,9 @@ rec {
           ];
         }
 
-        { hostName = "strategoxt.org";
-          servedFiles = [ 
-            { urlPath = "/freenode.ver";
-              file = "/data/pt-wiki/pub/freenode.ver";
-            }
-          ] ;
+        strategoxtVHostConfig
 
-          extraSubservices = [
-            { function = import /etc/nixos/services/twiki;
-              startWeb = "Stratego/WebHome";
-              dataDir = "/data/pt-wiki/data";
-              pubDir = "/data/pt-wiki/pub";
-              twikiName = "Stratego/XT Wiki";
-              registrationDomain = "ewi.tudelft.nl";
-            }
-          ];
-        }
+        (strategoxtVHostConfig // strategoxtSSLConfig)
 
         { hostName = "www.strategoxt.org";
           serverAliases = ["www.stratego-language.org"];
@@ -427,15 +441,8 @@ rec {
           globalRedirect = "https://svn.strategoxt.org/";
         }
         
+        ( strategoxtSSLConfig //
         { hostName = "svn.strategoxt.org";
-          enableSSL = true;
-          sslServerCert = "/root/ssl-secrets/ssl-strategoxt-org.crt";
-          sslServerKey = "/root/ssl-secrets/ssl-strategoxt-org.key";
-          extraConfig = 
-            ''
-              SSLCertificateChainFile /root/ssl-secrets/startssl-class1.pem
-              SSLCACertificateFile /root/ssl-secrets/startssl-ca.pem
-            '';
           extraSubservices = [
             { function = import /etc/nixos/services/subversion;
               id = "strategoxt";
@@ -449,7 +456,7 @@ rec {
               };
             }
           ];
-        }
+        })
 
         { hostName = "program-transformation.org";
           serverAliases = ["www.program-transformation.org"];
