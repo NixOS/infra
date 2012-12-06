@@ -18,6 +18,7 @@ let
 
   env =
     { NIX_REMOTE = "daemon";
+      NIX_CONF_DIR = "/etc/nix";
       HYDRA_DBI = cfg.dbi;
       HYDRA_CONFIG = "${cfg.baseDir}/data/hydra.conf";
       HYDRA_DATA = "${cfg.baseDir}/data";
