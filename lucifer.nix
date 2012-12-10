@@ -145,15 +145,4 @@
       serviceConfig.CPUShares = 100;
     };
 
-  boot.systemd.services.convert-to-binary-cache =
-    { wantedBy = [ "multi-user.target" ];
-      path = [ pkgs.su ];
-      script =
-        ''
-          exec su - hydra-mirror -c 'cd release/channels; while true; do ./convert-to-binary-cache.pl; sleep 3600; done'
-        '';
-      serviceConfig.Restart = "always";
-      serviceConfig.CPUShares = 100;
-    };
-
 }
