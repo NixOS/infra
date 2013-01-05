@@ -22,7 +22,7 @@ with pkgs.lib;
 
   nix.gc.automatic = true;
   nix.gc.dates = "15 03,09,15,21 * * *";
-  nix.gc.options = ''--max-freed "$((100 * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | awk '{ print $4 }')))"'';
+  nix.gc.options = ''--max-freed "$((100 * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | ${pkgs.gawk}/bin/awk '{ print $4 }')))"'';
 
   networking.hostName = ""; # obtain from DHCP server
 

@@ -302,7 +302,6 @@ rec {
       systemCronJobs =
         [
           #"15 0 * * *  root  (TZ=CET date; ${pkgs.rsync}/bin/rsync -razv --numeric-ids --delete /data/postgresql /data/webserver/tarballs unixhome.st.ewi.tudelft.nl::bfarm/) >> /var/log/backup.log 2>&1"
-          "0 3 * * * root nix-store --gc --max-freed \"$((50 * 1024**3 - 1024 * $(df /nix/store | tail -n 1 | awk '{ print $4 }')))\" > /var/log/gc.log 2>&1"
           "*  *  * * * root ${pkgs.python}/bin/python ${ZabbixApacheUpdater} -z 192.168.1.5 -c cartman"
           "40 * * * *  root ${duplicityBackup} &>> /var/log/backup-duplicity.log"
 
