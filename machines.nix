@@ -10,7 +10,7 @@ lib: with lib;
     maxJobs = 2;
   }
 
-  /*  
+  /*
   { # APC UPS.
     hostName = "ups";
     ipAddress = "192.168.1.6";
@@ -27,7 +27,7 @@ lib: with lib;
     speedFactor = 2;
     buildUser = "buildfarm";
   }
-  
+
   { # 8-core NixOS build machine.
     hostName = "stan";
     ipAddress = "192.168.1.20";
@@ -35,9 +35,9 @@ lib: with lib;
     systems = [ "x86_64-linux" "i686-linux" ];
     maxJobs = 8;
     speedFactor = 2;
-    buildUser = "buildfarm";
+    #buildUser = "buildfarm";
   }
-  
+
   { # 8-core NixOS build machine.
     hostName = "kyle";
     ipAddress = "192.168.1.21";
@@ -47,7 +47,7 @@ lib: with lib;
     speedFactor = 2;
     buildUser = "buildfarm";
   }
-  
+
   { # Windows XP build machine.
     hostName = "garrison";
     ipAddress = "192.168.1.11";
@@ -67,7 +67,7 @@ lib: with lib;
     maxJobs = 2;
     buildUser = "nix";
   }
-  
+
   { # Old Hydra server.
     hostName = "hydra";
     ipAddress = "192.168.1.18";
@@ -92,14 +92,14 @@ lib: with lib;
     ethernetAddress = "f0:4d:a2:40:1b:be";
     systems = [ "x86_64-linux" ];
   }
-  
+
   { # 48-core NixOS build machine.
     hostName = "ike";
     ipAddress = "192.168.1.27";
     ethernetAddress = "f0:4d:a2:40:1b:91";
     systems = [ "x86_64-linux" ];
   }
-  
+
   { # 48-core NixOS build machine.
     hostName = "shelley";
     ipAddress = "192.168.1.28";
@@ -110,14 +110,14 @@ lib: with lib;
 
   /* Xen VMs hosted on mrhankey.  Note that 00:16:3e is the prefix for
      Xen MAC addresses. */
-  
+
   { # NixOS test machine.
     hostName = "drdoctor";
     ipAddress = "192.168.1.51";
     ethernetAddress = "00:16:3e:00:00:02";
     systems = [ "x86_64-linux" ];
   }
-    
+
   { # Legacy JIRA server, put in its own Xen ghetto because our JIRA
     # is very old and probably insecure.
     hostName = "mrkitty";
@@ -133,9 +133,9 @@ lib: with lib;
     systems = [ "x86_64-linux" ];
   }
 
-  
+
   /* KVM VMs hosted on stan. */
-  
+
   { # 32-bit OpenIndiana 151a (in a VM).
     hostName = "tweek";
     ipAddress = "192.168.1.50";
@@ -151,7 +151,7 @@ lib: with lib;
     ethernetAddress = "00:16:3e:00:00:04";
     systems = [ "i686-freebsd" ];
   }
-    
+
   { # Ubuntu 10.10 test machine.
     hostName = "meerkat";
     ipAddress = "192.168.1.54";
@@ -167,7 +167,7 @@ lib: with lib;
     maxJobs = 1;
     buildUser = "nix";
   }
-  
+
   { # 32-bit FreeBSD build machine (in a VM).
     hostName = "demon";
     ipAddress = "192.168.1.57";
@@ -176,5 +176,5 @@ lib: with lib;
     maxJobs = 1;
     buildUser = "nix";
   }
-  
+
 ]
