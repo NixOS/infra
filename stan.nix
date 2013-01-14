@@ -20,7 +20,7 @@
   networking.firewall.rejectPackets = true;
   networking.firewall.allowPing = true;
 
-  networking.bridges.veth0.interfaces = [ "eth0" ];
+  networking.bridges.veno1.interfaces = [ "eno1" ];
 
   virtualisation.libvirtd.enable = true;
 
@@ -43,7 +43,7 @@
       # advertisements if forwarding is enabled, so we have to
       # configure manually.  Apparently in newer kernels, we can set
       # /proc/sys/net/ipv6/conf/all/accept_ra to 2 instead.
-      ip -6 addr add 2001:610:685:1:222:19ff:fe55:bf2e/64 dev veth0
-      ip -6 route add default via fe80::219:d1ff:fe19:28bf dev veth0
+      ip -6 addr add 2001:610:685:1:222:19ff:fe55:bf2e/64 dev veno1 || true
+      ip -6 route add default via fe80::219:d1ff:fe19:28bf dev veno1 || true
     '';
 }
