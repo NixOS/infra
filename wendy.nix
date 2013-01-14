@@ -12,13 +12,10 @@
       UseCanonicalName On
     '';
 
-  fileSystems =
-    [ { mountPoint = "/backup";
-        device = "130.161.158.5:/dxs/users4/group/buildfarm";
-        fsType = "nfs";
-      }
-    ];
-
+  fileSystems."/backup" =
+    { device = "130.161.158.5:/dxs/users4/group/buildfarm";
+      fsType = "nfs4";
+    };
 
   jobs.mturk_webserver_production =
     { name = "mturk-webserver-production";
@@ -95,7 +92,7 @@
       host  hydra_test hydra     192.168.1.26/32 md5
       host  mediawiki  mediawiki 192.168.1.5/32 md5
       host  zabbix     zabbix    192.168.1.5/32 md5
-    ''; 
+    '';
   };
 
   # Bump kernel.shmmax for PostgreSQL. FIXME: this should be a NixOS
@@ -121,4 +118,5 @@
         ];
     };
 
+  networking.firewall.allowedTCPPorts = [ 80 3000 3001 5432 ];
 }

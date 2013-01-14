@@ -174,29 +174,23 @@ rec {
     loader.grub.copyKernels = true;
     initrd.kernelModules = ["arcmsr"];
     kernelModules = ["kvm-intel"];
-    vesa = false; # otherwise "out of sync" on the KVM switch
-    blacklistedKernelModules = [ "i915" ];
   };
 
-  fileSystems =
-    [ { mountPoint = "/";
-        label = "nixos";
-        options = "acl";
-      }
-      { mountPoint = "/data/releases";
-        device = "192.168.1.25:/data/releases";
-        fsType = "nfs";
-        options = "soft";
-      }
-      { mountPoint = "/backup";
-        device = "130.161.158.5:/dxs/users4/group/buildfarm";
-        fsType = "nfs";
-      }
-    ];
+  fileSystems."/" =
+    { label = "nixos";
+      options = "acl";
+    };
+  fileSystems."/data/releases" =
+    { device = "192.168.1.25:/";
+      fsType = "nfs4";
+      options = "soft";
+    };
+  fileSystems."/backup" =
+    { device = "130.161.158.5:/dxs/users4/group/buildfarm";
+      fsType = "nfs4";
+    };
 
-  swapDevices = [
-    { label = "swap1"; }
-  ];
+  swapDevices = [ { label = "swap1"; } ];
 
   nix = {
     maxJobs = 2;
@@ -229,11 +223,8 @@ rec {
 
     extraHosts = "192.168.1.5 cartman";
 
-    firewall.enable = true;
     firewall.allowedTCPPorts = [ 80 443 843 10051 5999 ];
     firewall.allowedUDPPorts = [ 53 67 ];
-    firewall.rejectPackets = true;
-    firewall.allowPing = true;
     firewall.extraCommands =
       ''
         ip46tables -I nixos-fw-accept -p tcp --dport 843 --syn -j LOG --log-level info --log-prefix "POLICY REQUEST: "

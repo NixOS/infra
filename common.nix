@@ -22,7 +22,9 @@ with pkgs.lib;
 
   boot.supportedFilesystems = [ "nfs" ];
 
-  boot.blacklistedKernelModules = [ "radeonfb" "radeon" ];
+  # Prevent "out of sync" errors on the KVM switch.
+  boot.vesa = false;
+  boot.blacklistedKernelModules = [ "radeonfb" "radeon" "i915" ];
 
   boot.initrd.kernelModules = [ "ext4" ];
 
@@ -67,6 +69,10 @@ with pkgs.lib;
     hostName = "smtp.tudelft.nl";
     domain = "st.ewi.tudelft.nl";
   };
+
+  networking.firewall.enable = true;
+  networking.firewall.rejectPackets = true;
+  networking.firewall.allowPing = true;
 
   # Bump the open files limit so that non-root users can run NixOS VM
   # tests (Samba opens lot of files).

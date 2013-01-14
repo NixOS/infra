@@ -8,6 +8,7 @@
   environment.systemPackages = [ pkgs.wget ];
 
   networking.hostName = "lucifer";
+  networking.firewall.allowedTCPPorts = [ 2049 3000 4000 ];
 
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.copyKernels = true;
@@ -33,14 +34,14 @@
     <!-- End of StatCounter Code -->
   '';
 
-  fileSystems = 
+  fileSystems =
     [ { mountPoint = "/";
         label = "nixos";
       }
       { mountPoint = "/fatdata";
         device = "/dev/fatdisk/fatdata";
         neededForBoot = true;
-      }    
+      }
       { mountPoint = "/nix";
         device = "/fatdata/nix";
         fsType = "none";
