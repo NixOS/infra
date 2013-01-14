@@ -210,16 +210,15 @@ rec {
     hostName = "cartman";
     domain = "buildfarm";
 
-    interfaces = [
-      { name = "external";
-        ipAddress = myIP;
-        subnetMask = "255.255.254.0";
-      }
-      { name = "internal";
-        ipAddress = (findSingle (m: m.hostName == "cartman") {} {} machines).ipAddress;
-        subnetMask = "22";
-      }
-    ];
+    interfaces.external =
+      { ipAddress = myIP;
+        prefixLength = 23;
+      };
+
+    interfaces.internal =
+      { ipAddress = (findSingle (m: m.hostName == "cartman") {} {} machines).ipAddress;
+        prefixLength = 22;
+      };
 
     useDHCP = false;
 
