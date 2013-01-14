@@ -2,7 +2,8 @@
 
 with pkgs.lib;
 
-let 
+let
+
   duplicityBackup = pkgs.writeScript "backup-duplicity" ''
     #! /bin/sh
     echo "Starting backups"
@@ -33,7 +34,7 @@ let
   # Produce the list of Nix build machines in the format expected by
   # the Nix daemon Upstart job.
   buildMachines =
-    let addKey = machine: machine // 
+    let addKey = machine: machine //
       { sshKey = "/root/.ssh/id_buildfarm";
         sshUser = machine.buildUser;
       };
@@ -97,7 +98,7 @@ let
           </Proxy>
 
           ProxyPreserveHost On
-          
+
           ProxyPass         /mturk  http://wendy:3000/mturk retry=5
           ProxyPassReverse  /mturk  http://wendy:3000/mturk
           ProxyPass         /mturk-sandbox  http://wendy:3001/mturk-sandbox retry=5
@@ -134,7 +135,7 @@ let
 
   strategoxtVHostConfig =
     { hostName = "strategoxt.org";
-      servedFiles = [ 
+      servedFiles = [
         { urlPath = "/freenode.ver";
           file = "/data/pt-wiki/pub/freenode.ver";
         }
@@ -154,13 +155,13 @@ let
     { enableSSL = true;
       sslServerCert = "/root/ssl-secrets/ssl-strategoxt-org.crt";
       sslServerKey = "/root/ssl-secrets/ssl-strategoxt-org.key";
-      extraConfig = 
+      extraConfig =
         ''
           SSLCertificateChainFile /root/ssl-secrets/startssl-class1.pem
           SSLCACertificateFile /root/ssl-secrets/startssl-ca.pem
         '';
     };
-    
+
 in
 
 rec {
@@ -196,7 +197,7 @@ rec {
   swapDevices = [
     { label = "swap1"; }
   ];
-  
+
   nix = {
     maxJobs = 2;
     distributedBuilds = true;
@@ -205,7 +206,7 @@ rec {
       gc-keep-outputs = true
     '';
   };
-  
+
   networking = {
     hostName = "cartman";
     domain = "buildfarm";
@@ -242,11 +243,11 @@ rec {
     nat.internalIPs = "192.168.1.0/22";
     nat.externalInterface = "external";
     nat.externalIP = myIP;
-    
+
     localCommands =
       ''
         ${pkgs.iptables}/sbin/iptables -t nat -F PREROUTING
-        
+
         # lucifer ssh (to give Karl/Armijn access for the BAT project)
         ${pkgs.iptables}/sbin/iptables -t nat -A PREROUTING -p tcp -d ${myIP} --dport 2222 -j DNAT --to 192.168.1.26:22
 
@@ -263,7 +264,7 @@ rec {
 
         # Discard all traffic to networks in our prefix that don't exist.
         ip -6 route add 2001:610:685::/48 dev lo || true
-        
+
         # Create a local network (prefix:1::/64).
         ip -6 addr add 2001:610:685:1::1/64 dev internal || true
 
@@ -295,7 +296,7 @@ rec {
           };
         '';
     };
-  
+
     cron = {
       mailto = "rob.vermaas@gmail.com";
       systemCronJobs =
@@ -322,14 +323,14 @@ rec {
       extraConfig =
         ''
           AddType application/nix-package .nixpkg
-        
+
           <Location /server-status>
             SetHandler server-status
-            Allow from 127.0.0.1 # If using a remote host for monitoring replace 127.0.0.1 with its IP. 
+            Allow from 127.0.0.1 # If using a remote host for monitoring replace 127.0.0.1 with its IP.
             Order deny,allow
             Deny from all
           </Location>
-        
+
           ExtendedStatus On
 
           StartServers 15
@@ -340,7 +341,7 @@ rec {
           #max_execution_time = 2
           memory_limit = "32M"
         '';
-          
+
       servedFiles =
         [ { urlPath = "/releases.css";
             file = releasesCSS;
@@ -352,14 +353,14 @@ rec {
             file = releasesCSS;
           }
         ];
-      
+
       virtualHosts = [
 
         { # Catch-all site.
           hostName = "www.nixos.org";
           globalRedirect = "http://nixos.org/";
         }
-        
+
         nixosVHostConfig
 
         (nixosVHostConfig // {
@@ -388,7 +389,7 @@ rec {
               }
             ];
         })
-          
+
         { hostName = "buildfarm.st.ewi.tudelft.nl";
           documentRoot = cleanSource ./webroot;
           enableUserDir = true;
@@ -438,7 +439,7 @@ rec {
         { hostName = "svn.strategoxt.org";
           globalRedirect = "https://svn.strategoxt.org/";
         }
-        
+
         ( strategoxtSSLConfig //
         { hostName = "svn.strategoxt.org";
           extraSubservices = [
@@ -515,12 +516,12 @@ rec {
         { hostName = "svn.nixos.org";
           globalRedirect = "https://nixos.org/repoman";
         }
-        
+
         { hostName = "hydra.nixos.org";
           logFormat = ''"%h %l %u %t \"%r\" %>s %b %D"'';
           extraConfig = ''
             TimeOut 900
-          
+
             <Proxy *>
               Order deny,allow
               Allow from all
@@ -530,7 +531,7 @@ rec {
             ProxyPreserveHost On
             ProxyPass         /       http://lucifer:3000/ retry=5 disablereuse=on
             ProxyPassReverse  /       http://lucifer:3000/
-            
+
             <Location />
               SetOutputFilter DEFLATE
               BrowserMatch ^Mozilla/4\.0[678] no-gzip\
@@ -631,34 +632,34 @@ rec {
             Redirect permanent / http://nixos.org/mturk/
           '';
         }
-        
+
         { hostName = "mturk-view-sandbox.nixos.org";
           extraConfig = ''
             Redirect permanent / http://nixos.org/mturk-sandbox/
           '';
         }
-        
+
       ];
     };
 
     zabbixAgent.enable = true;
-    
+
     zabbixServer.enable = true;
     zabbixServer.dbServer = "wendy";
     zabbixServer.dbPassword = import ./zabbix-password.nix;
 
     flashpolicyd.enable = true;
-    
+
   };
 
   # Needed for the Nixpkgs mirror script.
   environment.pathsToLink = [ "/libexec" ];
 
   environment.systemPackages = [ pkgs.dnsmasq pkgs.duplicity];
-  
+
   jobs.dnsmasq =
     let
-    
+
       confFile = pkgs.writeText "dnsmasq.conf"
         ''
           keep-in-foreground
@@ -680,10 +681,10 @@ rec {
             dhcp-host=${m.ethernetAddress},${m.ipAddress},${m.hostName}
           '')}
         '';
-        
+
       hostsFile = pkgs.writeText "extra-hosts"
         (flip concatMapStrings machines (m: "${m.ipAddress} ${m.hostName}\n"));
-        
+
     in
     { startOn = "started network-interfaces";
       exec = "${pkgs.dnsmasq}/bin/dnsmasq --conf-file=${confFile}";
