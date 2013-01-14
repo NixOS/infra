@@ -119,14 +119,13 @@ in
 
   config = mkIf cfg.enable {
 
-    users.extraUsers = [
+    users.extraUsers = singleton
       { name = cfg.user;
         description = "Hydra";
         home = cfg.baseDir;
         createHome = true;
         useDefaultShell = true;
-      }
-    ];
+      };
 
     nix.maxJobs = 0;
     nix.distributedBuilds = true;
