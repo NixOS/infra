@@ -697,13 +697,19 @@ rec {
 
   boot.systemd.services.mirror-tarballs =
     { description = "Mirror Nixpkgs tarballs";
-      path  = [ config.environment.nix pkgs.curl ];
+      path  = [ config.environment.nix pkgs.curl pkgs.git ];
       #environment.DRY_RUN = "1";
       environment.HYDRA_DISALLOW_UNFREE = "1";
       environment.NIX_PATH = "nixpkgs=/home/tarball-mirror/nixpkgs";
       environment.NIX_REMOTE = "daemon";
+      environment.NIX_CURL_FLAGS = "--silent --show-error";
       serviceConfig.User = "tarball-mirror";
-      script = "exec /etc/nixos/nixpkgs/maintainers/scripts/copy-tarballs.sh";
+      script =
+        ''
+          cd /home/tarball-mirror/nixpkgs
+          git pull
+          exec /etc/nixos/nixpkgs/maintainers/scripts/copy-tarballs.sh
+        '';
     };
 
 }
