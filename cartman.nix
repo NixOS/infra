@@ -702,10 +702,11 @@ rec {
       environment.HYDRA_DISALLOW_UNFREE = "1";
       environment.NIX_PATH = "nixpkgs=/home/tarball-mirror/nixpkgs";
       environment.NIX_REMOTE = "daemon";
-      environment.NIX_CURL_FLAGS = "--silent --show-error";
+      environment.CURL_CA_BUNDLE = "/etc/ssl/certs/ca-bundle.crt";
       serviceConfig.User = "tarball-mirror";
       script =
         ''
+          export NIX_CURL_FLAGS="--silent --show-error --connect-timeout 30"
           cd /home/tarball-mirror/nixpkgs
           git pull
           exec /etc/nixos/nixpkgs/maintainers/scripts/copy-tarballs.sh
