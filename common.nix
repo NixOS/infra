@@ -73,6 +73,7 @@ with pkgs.lib;
   networking.firewall.enable = true;
   networking.firewall.rejectPackets = true;
   networking.firewall.allowPing = true;
+  networking.firewall.allowedTCPPorts = [ 10050 ];
 
   # Bump the open files limit so that non-root users can run NixOS VM
   # tests (Samba opens lot of files).

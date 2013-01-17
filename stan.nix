@@ -16,7 +16,7 @@
   services.httpd.adminAddr = "foo@example.org";
 
   networking.firewall.enable = false;
-  networking.firewall.allowedTCPPorts = [ 80 10050 ];
+  networking.firewall.allowedTCPPorts = [ 80 ];
   networking.firewall.rejectPackets = true;
   networking.firewall.allowPing = true;
 
