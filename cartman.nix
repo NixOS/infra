@@ -577,20 +577,7 @@ rec {
           documentRoot = "/home/karltk/public_html/planet";
         }
 
-        { hostName = "sonar.nixos.org";
-          extraConfig = ''
-            <Proxy *>
-              Order deny,allow
-              Allow from all
-            </Proxy>
-
-            ProxyRequests     Off
-            ProxyPreserveHost On
-            ProxyPass         /       http://lucifer:8080/ retry=5
-            ProxyPassReverse  /       http://lucifer:8080/
-          '';
-        }
-
+        /*
         { hostName = "cloud.nixos.org";
           extraConfig = ''
             <Proxy *>
@@ -604,6 +591,7 @@ rec {
             ProxyPassReverse  /       http://stan:8773/
           '';
         }
+        */
 
         { hostName = "mturk.nixos.org";
           extraConfig = ''
