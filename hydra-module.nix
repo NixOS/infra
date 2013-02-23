@@ -148,6 +148,10 @@ in
       build-cache-failure = true
 
       build-poll-interval = 10
+
+      # Online log compression makes it impossible to get the tail of
+      # builds that are in progress.
+      build-compress-log = false
     '';
 
     jobs."hydra-init" =
