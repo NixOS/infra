@@ -146,19 +146,4 @@
       serviceConfig.CPUShares = 100;
     };
 
-  # Temporary binary cache generation for the Nixpkgs systemd branch.
-  boot.systemd.services.mirror-nixpkgs-systemd =
-    { description = "Mirror Nixpkgs-systemd";
-      wantedBy = [ "multi-user.target" ];
-      after = [ "networking.target" ];
-      path = [ pkgs.su ];
-      script =
-        ''
-          rm -rf /data/releases/nixpkgs-systemd/.tmp-*
-          exec su - hydra-mirror -c 'cd release/channels; while true; do ./mirror-nixpkgs-systemd.sh; sleep 300; done'
-        '';
-      serviceConfig.Restart = "always";
-      serviceConfig.CPUShares = 100;
-    };
-
 }
