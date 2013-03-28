@@ -4,6 +4,22 @@ with pkgs.lib;
 
 let
 
+  zabbixMail = pkgs.writeScriptBin "zabbix-mail" ''
+    #!/bin/sh
+    set -e
+
+    export zabbixemailto="$1"
+    export zabbixsubject="$2"
+    export zabbixbody="$3"
+
+    ${pkgs.ssmtp}/sbin/sendmail -v $zabbixemailto <<EOF
+    Subject: $zabbixsubject
+    To: $zabbixemailto
+    
+    $zabbixbody
+    EOF
+  '';
+
   duplicityBackup = pkgs.writeScript "backup-duplicity" ''
     #! /bin/sh
     echo "Starting backups"
@@ -123,6 +139,7 @@ let
             extraConfig =
               ''
                 $wgEmailConfirmToEdit = true;
+                $wgGroupPermissions['*']['createaccount'] = false;
               '';
             enableUploads = true;
             uploadDir = "/data/nixos-mediawiki-upload";
@@ -635,7 +652,7 @@ rec {
   # Needed for the Nixpkgs mirror script.
   environment.pathsToLink = [ "/libexec" ];
 
-  environment.systemPackages = [ pkgs.dnsmasq pkgs.duplicity];
+  environment.systemPackages = [ pkgs.dnsmasq pkgs.duplicity zabbixMail ];
 
   jobs.dnsmasq =
     let
@@ -671,9 +688,9 @@ rec {
     };
 
   # Use cgroups to limit Apache's resources.
-  boot.systemd.services.httpd.serviceConfig.CPUShares = 1000;
-  boot.systemd.services.httpd.serviceConfig.MemoryLimit = "1500M";
-  boot.systemd.services.httpd.serviceConfig.ControlGroupAttribute = [ "memory.memsw.limit_in_bytes 1500M" ];
+  systemd.services.httpd.serviceConfig.CPUShares = 1000;
+  systemd.services.httpd.serviceConfig.MemoryLimit = "1500M";
+  systemd.services.httpd.serviceConfig.ControlGroupAttribute = [ "memory.memsw.limit_in_bytes 1500M" ];
 
   users.extraUsers.tarball-mirror =
     { description = "Nixpkg starball mirroring user";
@@ -683,7 +700,7 @@ rec {
       openssh.authorizedKeys.keys = singleton "ssh-dss AAAAB3NzaC1kc3MAAACBAOo3foMFsYvc+LEVVTAeXpaxdOFG6O2NE9coxZYN6UtwE477GwkvZ4uKymAekq3TB8I6dDg4QFfE27fIip/rQHJ/Rus+KsxwnTbwPzE0WcZVpkKQsepsoqLkfwMpiPfn5/oxcnJsimwRY/E95aJmmOHdGaYWrc0t4ARa+6teUgdFAAAAFQCSQq2Wil0/X4hDypGGUKlKvYyaWQAAAIAy/0fSDnz1tZOQBGq7q78y406HfWghErrVlrW9g+foJQG5pgXXcdJs9JCIrlaKivUKITDsYnQaCjrZaK8eHnc4ksbkSLfDOxFnR5814ulCftrgEDOv9K1UU3pYketjFMvQCA2U48lR6jG/99CPNXPH55QEFs8H97cIsdLQw9wM4gAAAIEAmzWZlXLzIf3eiHQggXqvw3+C19QvxQITcYHYVTx/XYqZi1VZ/fkY8bNmdcJsWFyOHgEhpEca+xM/SNvH/14rXDmt0wtclLEx/4GVLi59hQCnnKqv7HzJg8RF4v6XTiROBAEEdb4TaFuFn+JCvqPzilTzXTexvZKJECOvfYcY+10= eelco.dolstra@logicblox.com";
     };
 
-  boot.systemd.services.mirror-tarballs =
+  systemd.services.mirror-tarballs =
     { description = "Mirror Nixpkgs tarballs";
       path  = [ config.environment.nix pkgs.curl pkgs.git ];
       #environment.DRY_RUN = "1";

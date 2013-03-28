@@ -164,7 +164,7 @@ in
         task = true;
       };
 
-    boot.systemd.services."hydra-server" =
+    systemd.services."hydra-server" =
       { wantedBy = [ "multi-user.target" ];
         wants = [ "hydra-init.service" ];
         after = [ "hydra-init.service" ];
@@ -176,7 +176,7 @@ in
           };
       };
 
-    boot.systemd.services."hydra-queue-runner" =
+    systemd.services."hydra-queue-runner" =
       { wantedBy = [ "multi-user.target" ];
         wants = [ "hydra-init.service" ];
         after = [ "hydra-init.service" "network.target" ];
@@ -190,7 +190,7 @@ in
           };
       };
 
-    boot.systemd.services."hydra-evaluator" =
+    systemd.services."hydra-evaluator" =
       { wantedBy = [ "multi-user.target" ];
         wants = [ "hydra-init.service" ];
         after = [ "hydra-init.service" "network.target" ];
@@ -203,7 +203,7 @@ in
           };
       };
 
-    boot.systemd.services."hydra-update-gc-roots" =
+    systemd.services."hydra-update-gc-roots" =
       { wants = [ "hydra-init.service" ];
         after = [ "hydra-init.service" ];
         environment = env;

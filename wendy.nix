@@ -118,5 +118,5 @@
         ];
     };
 
-  networking.firewall.allowedTCPPorts = [ 80 3000 3001 5432 ];
+  networking.firewall.allowedTCPPorts = [ 80 3000 3001 4000 5432 ];
 }

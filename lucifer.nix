@@ -99,14 +99,14 @@
   */
 
   # Set some cgroup limits.
-  boot.systemd.services.sshd.serviceConfig.CPUShares = 2000;
-  boot.systemd.services.nix-daemon.serviceConfig.CPUShares = 200;
-  boot.systemd.services.nix-daemon.serviceConfig.BlockIOWeight = 500;
-  boot.systemd.services.hydra-queue-runner.serviceConfig.CPUShares = 200;
-  boot.systemd.services.hydra-evaluator.serviceConfig.CPUShares = 100;
-  boot.systemd.services.hydra-server.serviceConfig.CPUShares = 700;
+  systemd.services.sshd.serviceConfig.CPUShares = 2000;
+  systemd.services.nix-daemon.serviceConfig.CPUShares = 200;
+  systemd.services.nix-daemon.serviceConfig.BlockIOWeight = 500;
+  systemd.services.hydra-queue-runner.serviceConfig.CPUShares = 200;
+  systemd.services.hydra-evaluator.serviceConfig.CPUShares = 100;
+  systemd.services.hydra-server.serviceConfig.CPUShares = 700;
 
-  boot.systemd.services.mirror-nixpkgs =
+  systemd.services.mirror-nixpkgs =
     { description = "Mirror Nixpkgs";
       wantedBy = [ "multi-user.target" ];
       after = [ "networking.target" ];
@@ -120,7 +120,7 @@
       serviceConfig.CPUShares = 100;
     };
 
-  boot.systemd.services.generate-nixpkgs-patches =
+  systemd.services.generate-nixpkgs-patches =
     { description = "Generate Nixpkgs Patches";
       wantedBy = [ "multi-user.target" ];
       path = [ pkgs.su ];
@@ -132,7 +132,7 @@
       serviceConfig.CPUShares = 100;
     };
 
-  boot.systemd.services.mirror-nixos =
+  systemd.services.mirror-nixos =
     { description = "Mirror NixOS";
       wantedBy = [ "multi-user.target" ];
       after = [ "networking.target" ];
