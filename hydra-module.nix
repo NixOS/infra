@@ -177,7 +177,7 @@ in
       };
 
     systemd.services."hydra-queue-runner" =
-      { wantedBy = [ "multi-user.target" ];
+      { #wantedBy = [ "multi-user.target" ];
         wants = [ "hydra-init.service" ];
         after = [ "hydra-init.service" "network.target" ];
         path = [ pkgs.nettools pkgs.ssmtp ];
@@ -185,6 +185,7 @@ in
         serviceConfig =
           { ExecStartPre = "${hydra}/bin/hydra-queue-runner --unlock";
             ExecStart = "@${hydra}/bin/hydra-queue-runner hydra-queue-runner";
+            ExecStopPost = "${hydra}/bin/hydra-queue-runner --unlock";
             User = cfg.user;
             Restart = "always";
           };
