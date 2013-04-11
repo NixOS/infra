@@ -44,6 +44,6 @@
       # configure manually.  Apparently in newer kernels, we can set
       # /proc/sys/net/ipv6/conf/all/accept_ra to 2 instead.
       ip -6 addr add 2001:610:685:1:222:19ff:fe55:bf2e/64 dev veno1 || true
-      ip -6 route add default via fe80::219:d1ff:fe19:28bf dev veno1 || true
+      ip -6 route add default via fe80::204:23ff:fedf:f7bf dev veno1 || true
     '';
 }
