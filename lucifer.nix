@@ -5,7 +5,10 @@
 
   nixpkgs.system = "x86_64-linux";
 
-  environment.systemPackages = [ pkgs.wget ];
+  environment.systemPackages =
+    [ pkgs.wget
+      pkgs.perlPackages.DBDSQLite # for hydra-mirror
+    ];
 
   networking.hostName = "lucifer";
   networking.firewall.allowedTCPPorts = [ 2049 3000 4000 ];
