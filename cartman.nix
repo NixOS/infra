@@ -134,12 +134,18 @@ let
         [ { serviceType = "mediawiki";
             siteName = "Nix Wiki";
             logo = "/logo/nix-wiki.png";
-            defaultSkin = "nixos";
+            #defaultSkin = "nixos";
             skins = [ ./wiki-skins ];
             extraConfig =
               ''
-                $wgEmailConfirmToEdit = true;
-                $wgGroupPermissions['*']['createaccount'] = false;
+                #$wgEmailConfirmToEdit = true;
+
+                # Use a reCAPTCHA to prevent spam.
+                require_once("$IP/extensions/ConfirmEdit/ConfirmEdit.php");
+                require_once("$IP/extensions/ConfirmEdit/ReCaptcha.php");
+                $wgCaptchaClass = 'ReCaptcha';
+                $wgReCaptchaPublicKey = '6Ldevd8SAAAAAFR6MwnU01FOWJ3O4II3aRJpMQ8F';
+                $wgReCaptchaPrivateKey = '${builtins.readFile ./nixos.org-recaptcha-private-key}';
               '';
             enableUploads = true;
             uploadDir = "/data/nixos-mediawiki-upload";
