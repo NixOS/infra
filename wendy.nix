@@ -73,6 +73,7 @@
   services.postgresql = {
     enable = true;
     enableTCPIP = true;
+    package = pkgs.postgresql92;
     dataDir = "/data/postgresql";
     extraConfig = ''
       log_min_duration_statement = 1000
@@ -101,8 +102,6 @@
     ''
       ${pkgs.procps}/sbin/sysctl -q -w kernel.shmmax=$((6 * 1024**3))
     '';
-
-  nixpkgs.config.packageOverrides = pkgs: { postgresql = pkgs.postgresql92; };
 
   services.zabbixAgent.extraConfig = ''
     UserParameter=hydra.queue.total,${pkgs.postgresql}/bin/psql hydra -At -c 'select count(*) from builds where finished = 0'
