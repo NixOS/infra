@@ -146,6 +146,8 @@ let
                 $wgCaptchaClass = 'ReCaptcha';
                 $wgReCaptchaPublicKey = '6Ldevd8SAAAAAFR6MwnU01FOWJ3O4II3aRJpMQ8F';
                 $wgReCaptchaPrivateKey = '${builtins.readFile ./nixos.org-recaptcha-private-key}';
+                $wgCaptchaTriggers['edit']          = true;
+                $wgCaptchaTriggers['create']        = true;
               '';
             enableUploads = true;
             uploadDir = "/data/nixos-mediawiki-upload";
