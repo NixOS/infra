@@ -123,6 +123,7 @@
       serviceConfig.CPUShares = 100;
     };
 
+  /*
   systemd.services.generate-nixpkgs-patches =
     { description = "Generate Nixpkgs Patches";
       wantedBy = [ "multi-user.target" ];
@@ -134,6 +135,7 @@
       serviceConfig.Restart = "always";
       serviceConfig.CPUShares = 100;
     };
+  */
 
   systemd.services.mirror-nixos =
     { description = "Mirror NixOS";
