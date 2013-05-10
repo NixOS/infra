@@ -33,7 +33,7 @@ with pkgs.lib;
   environment.systemPackages =
     [ pkgs.emacs pkgs.subversion pkgs.sysstat pkgs.hdparm pkgs.sdparm # pkgs.lsiutil
       pkgs.htop pkgs.sqlite pkgs.iotop pkgs.lm_sensors pkgs.gitFull pkgs.hwloc
-      pkgs.lsof pkgs.numactl pkgs.gcc
+      pkgs.lsof pkgs.numactl pkgs.gcc pkgs.smartmontools
     ];
 
   services.sshd.enable = true;
