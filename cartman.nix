@@ -192,7 +192,7 @@ in
 rec {
   require = [ ./common.nix ];
 
-  nixpkgs.system = "i686-linux";
+  nixpkgs.system = "x86_64-linux";
 
   boot = {
     loader.grub.device = "/dev/sda";
