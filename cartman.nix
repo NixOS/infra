@@ -215,7 +215,7 @@ rec {
       fsType = "nfs4";
     };
 
-  swapDevices = [ { label = "swap1"; } ];
+  #swapDevices = [ { label = "swap1"; } ];
 
   nix = {
     maxJobs = 2;
