@@ -3,15 +3,6 @@
 {
   require = [ ./build-machines-dell-r815.nix ];
 
-  services.httpd.enable = true;
-  services.httpd.adminAddr = "e.dolstra@tudelft.nl";
-  services.httpd.enableUserDir = true;
-  services.httpd.hostName = "wendy";
-  services.httpd.extraConfig =
-    ''
-      UseCanonicalName On
-    '';
-
   fileSystems."/backup" =
     { device = "130.161.158.5:/dxs/users4/group/buildfarm";
       fsType = "nfs4";
@@ -88,11 +79,12 @@
       synchronous_commit = off
     '';
     authentication = ''
-      host  all        all 192.168.1.25/32 md5
+      host  all        all       192.168.1.25/32 md5
       host  hydra      hydra     192.168.1.26/32 md5
       host  hydra_test hydra     192.168.1.26/32 md5
-      host  mediawiki  mediawiki 192.168.1.5/32 md5
-      host  zabbix     zabbix    192.168.1.5/32 md5
+      host  mediawiki  mediawiki 192.168.1.5/32  md5
+      host  mediawiki  mediawiki 192.168.1.26/32 md5
+      host  zabbix     zabbix    192.168.1.5/32  md5
     '';
   };
 
@@ -110,12 +102,9 @@
     UserParameter=hydra.builds,${pkgs.postgresql}/bin/psql hydra -At -c 'select count(*) from Builds'
   '';
 
-  services.cron = {
-      systemCronJobs =
-        [
-          "15 4 * * * root cp -v /var/backup/postgresql/* /backup/wendy/postgresql/  &> /var/log/backup-db.log"
-        ];
-    };
+  services.cron.systemCronJobs =
+    [ "15 4 * * * root cp -v /var/backup/postgresql/* /backup/wendy/postgresql/  &> /var/log/backup-db.log"
+    ];
 
   networking.firewall.allowedTCPPorts = [ 80 3000 3001 4000 5432 ];
 }

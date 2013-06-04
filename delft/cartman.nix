@@ -557,6 +557,7 @@ rec {
               SetEnvIfNoCase Request_URI /api/ no-gzip dont-vary
               SetEnvIfNoCase Request_URI /download/ no-gzip dont-vary
             </Location>
+
           '';
         }
 
