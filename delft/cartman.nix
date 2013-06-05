@@ -603,22 +603,6 @@ rec {
           documentRoot = "/home/karltk/public_html/planet";
         }
 
-        /*
-        { hostName = "cloud.nixos.org";
-          extraConfig = ''
-            <Proxy *>
-              Order deny,allow
-              Allow from all
-            </Proxy>
-
-            ProxyRequests     Off
-            ProxyPreserveHost On
-            ProxyPass         /       http://stan:8773/ retry=5
-            ProxyPassReverse  /       http://stan:8773/
-          '';
-        }
-        */
-
         { hostName = "mturk.nixos.org";
           extraConfig = ''
             <Proxy *>
@@ -700,31 +684,5 @@ rec {
   systemd.services.httpd.serviceConfig.CPUShares = 1000;
   systemd.services.httpd.serviceConfig.MemoryLimit = "1500M";
   systemd.services.httpd.serviceConfig.ControlGroupAttribute = [ "memory.memsw.limit_in_bytes 1500M" ];
-
-  users.extraUsers.tarball-mirror =
-    { description = "Nixpkg starball mirroring user";
-      home = "/home/tarball-mirror";
-      createHome = true;
-      useDefaultShell = true;
-      openssh.authorizedKeys.keys = singleton "ssh-dss AAAAB3NzaC1kc3MAAACBAOo3foMFsYvc+LEVVTAeXpaxdOFG6O2NE9coxZYN6UtwE477GwkvZ4uKymAekq3TB8I6dDg4QFfE27fIip/rQHJ/Rus+KsxwnTbwPzE0WcZVpkKQsepsoqLkfwMpiPfn5/oxcnJsimwRY/E95aJmmOHdGaYWrc0t4ARa+6teUgdFAAAAFQCSQq2Wil0/X4hDypGGUKlKvYyaWQAAAIAy/0fSDnz1tZOQBGq7q78y406HfWghErrVlrW9g+foJQG5pgXXcdJs9JCIrlaKivUKITDsYnQaCjrZaK8eHnc4ksbkSLfDOxFnR5814ulCftrgEDOv9K1UU3pYketjFMvQCA2U48lR6jG/99CPNXPH55QEFs8H97cIsdLQw9wM4gAAAIEAmzWZlXLzIf3eiHQggXqvw3+C19QvxQITcYHYVTx/XYqZi1VZ/fkY8bNmdcJsWFyOHgEhpEca+xM/SNvH/14rXDmt0wtclLEx/4GVLi59hQCnnKqv7HzJg8RF4v6XTiROBAEEdb4TaFuFn+JCvqPzilTzXTexvZKJECOvfYcY+10= eelco.dolstra@logicblox.com";
-    };
-
-  systemd.services.mirror-tarballs =
-    { description = "Mirror Nixpkgs tarballs";
-      path  = [ config.environment.nix pkgs.curl pkgs.git ];
-      #environment.DRY_RUN = "1";
-      environment.HYDRA_DISALLOW_UNFREE = "1";
-      environment.NIX_PATH = "nixpkgs=/home/tarball-mirror/nixpkgs";
-      environment.NIX_REMOTE = "daemon";
-      environment.CURL_CA_BUNDLE = "/etc/ssl/certs/ca-bundle.crt";
-      serviceConfig.User = "tarball-mirror";
-      script =
-        ''
-          export NIX_CURL_FLAGS="--silent --show-error --connect-timeout 30"
-          cd /home/tarball-mirror/nixpkgs
-          git pull
-          exec /etc/nixos/nixpkgs/maintainers/scripts/copy-tarballs.sh
-        '';
-    };
 
 }
