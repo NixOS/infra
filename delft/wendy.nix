@@ -117,5 +117,12 @@
         ];
     };
 
+  services.udev.extraRules =
+    ''
+      ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="f0:4d:a2:40:1b:be", NAME="external"
+      ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="f0:4d:a2:40:1b:c0", NAME="internal"
+    '';
+
   networking.firewall.allowedTCPPorts = [ 80 3000 3001 4000 5432 ];
+
 }
