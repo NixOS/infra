@@ -8,6 +8,7 @@
   environment.systemPackages =
     [ pkgs.wget
       pkgs.perlPackages.DBDSQLite # for hydra-mirror
+      pkgs.python pkgs.pythonPackages.boto # for upload-binary-cache-s3.py
     ];
 
   networking.hostName = "lucifer";
