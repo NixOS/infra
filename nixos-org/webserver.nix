@@ -13,10 +13,10 @@ let
         [ { urlPath = "/tarballs";
             dir = "/tarballs";
           }
-          /*
           { urlPath = "/irc";
-            dir = "/data/webserver/irc";
+            dir = "/data/irc";
           }
+          /*
           { urlPath = "/update";
             dir = "/data/webserver/update";
           }
@@ -35,11 +35,6 @@ let
           { urlPath = "/releases";
             dir = "/releases";
           }
-          /*
-          { urlPath = "/binary-cache";
-            dir = "/data/releases/binary-cache";
-          }
-          */
         ];
 
       extraConfig =
@@ -64,6 +59,8 @@ let
           <Location /releases/binary-cache>
             ErrorDocument 404 "No such file."
           </Location>
+
+          Redirect /binary-cache http://cache.nixos.org
         '';
 
       extraSubservices =
@@ -88,24 +85,17 @@ let
             enableUploads = true;
             uploadDir = "/data/nixos-mediawiki-upload";
           }
-          { function = import <services/subversion>;
-            id = "nix";
-            urlPrefix = "";
-            toplevelRedirect = false;
-            dataDir = "/data/subversion-nix";
-            notificationSender = "svn@svn.nixos.org";
-            organisation = {
-              name = "Nix";
-              url = http://nixos.org/;
-              logo = "/logo/nixos-lores.png";
-            };
-          }
         ];
     };
 
 in
 
 {
+  networking.firewall.enable = true;
+  networking.firewall.rejectPackets = true;
+  networking.firewall.allowPing = true;
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
+
   security.pam.enableSSHAgentAuth = true;
 
   services.httpd = {
@@ -145,6 +135,33 @@ in
 
         nixosVHostConfig
 
+        (nixosVHostConfig // {
+          enableSSL = true;
+          sslServerCert = "/root/ssl-secrets/ssl-nixos-org.crt";
+          sslServerKey = "/root/ssl-secrets/ssl-nixos-org.key";
+          extraConfig = nixosVHostConfig.extraConfig +
+            ''
+              SSLCertificateChainFile /root/ssl-secrets/startssl-class1.pem
+              SSLCACertificateFile /root/ssl-secrets/startssl-ca.pem
+              # Required by Catalyst.
+              RequestHeader set X-Forwarded-Port 443
+            '';
+          extraSubservices = nixosVHostConfig.extraSubservices ++
+            [ { function = import <services/subversion>;
+                id = "nix";
+                urlPrefix = "";
+                toplevelRedirect = false;
+                dataDir = "/data/subversion-nix";
+                notificationSender = "svn@svn.nixos.org";
+                organisation = {
+                  name = "Nix";
+                  url = http://nixos.org/;
+                  logo = "/logo/nixos-lores.png";
+                };
+              }
+            ];
+        })
+
         { hostName = "tarballs.nixos.org";
           documentRoot = "/tarballs";
         }
@@ -176,12 +193,53 @@ in
         [ "ssh-dss AAAAB3NzaC1kc3MAAACBAOo3foMFsYvc+LEVVTAeXpaxdOFG6O2NE9coxZYN6UtwE477GwkvZ4uKymAekq3TB8I6dDg4QFfE27fIip/rQHJ/Rus+KsxwnTbwPzE0WcZVpkKQsepsoqLkfwMpiPfn5/oxcnJsimwRY/E95aJmmOHdGaYWrc0t4ARa+6teUgdFAAAAFQCSQq2Wil0/X4hDypGGUKlKvYyaWQAAAIAy/0fSDnz1tZOQBGq7q78y406HfWghErrVlrW9g+foJQG5pgXXcdJs9JCIrlaKivUKITDsYnQaCjrZaK8eHnc4ksbkSLfDOxFnR5814ulCftrgEDOv9K1UU3pYketjFMvQCA2U48lR6jG/99CPNXPH55QEFs8H97cIsdLQw9wM4gAAAIEAmzWZlXLzIf3eiHQggXqvw3+C19QvxQITcYHYVTx/XYqZi1VZ/fkY8bNmdcJsWFyOHgEhpEca+xM/SNvH/14rXDmt0wtclLEx/4GVLi59hQCnnKqv7HzJg8RF4v6XTiROBAEEdb4TaFuFn+JCvqPzilTzXTexvZKJECOvfYcY+10= eelco.dolstra@logicblox.com" ];
     };
 
+  users.extraUsers.rbvermaa =
+    { createHome = true;
+      description = "Rob Vermaas";
+      extraGroups = [ "wheel" ];
+      group = "users";
+      home = "/home/rbvermaa";
+      isSystemUser = false;
+      useDefaultShell = true;
+      openssh.authorizedKeys.keys =
+        [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDI6/qMXX80oWm+NyftRw45D+mRJwJQ6gexkUhp1OgZc3MuW6Zm2RO2IZHEjJLSMUndZebbznPmPPM58VxiyQnRYH2+hn+qCrwSsyCUxA8Gz6PpxeaeUMlpbsuXOPFbvBraDZEqIvx/gIK849nIahGz3EcfaY73lVRP+MrrVHBGyQmaOLoNfzrJp8rZfLqokQQXmG1d3DzjkIi87TZLgrdxQewpk/4eKBKf8FDnEYeV3ood78SPa3syS48al99Q7e8JyAEZJfyCQkUSUxgSizU5+se1A5seDJg2Vsqef1Ah23g/lTtSn93vtjjLvObvMJTSplBO8ttG/3ylIewWYER/ rbvermaa@nixos" ];
+    };
+
+  users.extraUsers.irclogs =
+    { createHome = true;
+      description = "#nixos IRC Logging";
+      group = "users";
+      home = "/home/irclogs";
+      isSystemUser = false;
+      useDefaultShell = true;
+      openssh.authorizedKeys.keys =
+        [ "ssh-dss AAAAB3NzaC1kc3MAAACBAMrcUf4qQj8XcG1nfG5/6rbfb4a89nV13KcJLBOVWa3Tn4YHeVz1lQDRHvnLK9YKM7MybDXD2wVG5nKuMbJMW5aZPEGrVUM4SQFXtnaNBgmoACrbG978Da/vNjGY89Q7GS/YqA24ASKnc09cRFsTmU0e/9BCbz9zXO4sJ8GaGHz7AAAAFQDZrJCdxTQ8GVvoFjL9Q1s1VHiClwAAAIBK+6r/kP/9VUzfRepEHCVObTIRYIhC9YcIZe2pMyCQSUIAjkGd5hkA8XQecs5/ym5Ddm2j61Kvt2jtGXQVP2F04wIFDuGK4GAfPpYjvLJaXtVxj1Ho4K2W/+WgKG1NEh466myZNsHr3v1MufbxNIS03lg6s8oJI4TmCaWtVHNW+AAAAIEAqh+ablUfEZAr6" ];
+    };
+
   users.extraUsers.tarball-mirror =
     { description = "Nixpkg starball mirroring user";
       home = "/home/tarball-mirror";
       createHome = true;
       useDefaultShell = true;
       openssh.authorizedKeys.keys = singleton "ssh-dss AAAAB3NzaC1kc3MAAACBAOo3foMFsYvc+LEVVTAeXpaxdOFG6O2NE9coxZYN6UtwE477GwkvZ4uKymAekq3TB8I6dDg4QFfE27fIip/rQHJ/Rus+KsxwnTbwPzE0WcZVpkKQsepsoqLkfwMpiPfn5/oxcnJsimwRY/E95aJmmOHdGaYWrc0t4ARa+6teUgdFAAAAFQCSQq2Wil0/X4hDypGGUKlKvYyaWQAAAIAy/0fSDnz1tZOQBGq7q78y406HfWghErrVlrW9g+foJQG5pgXXcdJs9JCIrlaKivUKITDsYnQaCjrZaK8eHnc4ksbkSLfDOxFnR5814ulCftrgEDOv9K1UU3pYketjFMvQCA2U48lR6jG/99CPNXPH55QEFs8H97cIsdLQw9wM4gAAAIEAmzWZlXLzIf3eiHQggXqvw3+C19QvxQITcYHYVTx/XYqZi1VZ/fkY8bNmdcJsWFyOHgEhpEca+xM/SNvH/14rXDmt0wtclLEx/4GVLi59hQCnnKqv7HzJg8RF4v6XTiROBAEEdb4TaFuFn+JCvqPzilTzXTexvZKJECOvfYcY+10= eelco.dolstra@logicblox.com";
+    };
+
+  systemd.services.mirror-tarballs =
+    { description = "Mirror Nixpkgs tarballs";
+      path  = [ config.environment.nix pkgs.curl pkgs.git ];
+      #environment.DRY_RUN = "1";
+      environment.HYDRA_DISALLOW_UNFREE = "1";
+      environment.NIX_PATH = "nixpkgs=/home/tarball-mirror/nixpkgs";
+      environment.NIX_REMOTE = "daemon";
+      environment.CURL_CA_BUNDLE = "/etc/ssl/certs/ca-bundle.crt";
+      serviceConfig.User = "tarball-mirror";
+      script =
+        ''
+          export NIX_CURL_FLAGS="--silent --show-error --connect-timeout 30"
+          cd /home/tarball-mirror/nixpkgs
+          git pull
+          exec /nix/var/nix/profiles/per-user/root/channels/nixos/nixpkgs/maintainers/scripts/copy-tarballs.sh
+        '';
     };
 
   system.activationScripts.setShmMax =
@@ -192,6 +250,7 @@ in
   services.postgresql = {
     enable = true;
     package = pkgs.postgresql92;
+    dataDir = "/data/postgresql";
     extraConfig = ''
       max_connections = 10
       work_mem = 16MB
@@ -208,4 +267,5 @@ in
       mwusers wwwrun mediawiki
     '';
   };
+
 }
