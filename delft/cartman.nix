@@ -145,12 +145,8 @@ rec {
 
     extraHosts = "192.168.1.5 cartman";
 
-    firewall.allowedTCPPorts = [ 80 443 843 10051 5999 ];
+    firewall.allowedTCPPorts = [ 80 443 10051 5999 ];
     firewall.allowedUDPPorts = [ 53 67 ];
-    firewall.extraCommands =
-      ''
-        ip46tables -I nixos-fw-accept -p tcp --dport 843 --syn -j LOG --log-level info --log-prefix "POLICY REQUEST: "
-      '';
 
     nat.enable = true;
     nat.internalIPs = "192.168.1.0/22";
@@ -481,8 +477,6 @@ rec {
     zabbixServer.enable = true;
     zabbixServer.dbServer = "wendy";
     zabbixServer.dbPassword = import ./zabbix-password.nix;
-
-    flashpolicyd.enable = true;
 
   };
 

@@ -115,7 +115,6 @@ in
       ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="f0:4d:a2:40:1b:c0", NAME="internal"
     '';
 
-
   networking = {
     hostName = "wendy";
     domain = "buildfarm";
@@ -138,11 +137,10 @@ in
 
     extraHosts = "192.168.1.26 wendy";
 
-    firewall.allowedTCPPorts = [ 80 443 843 10051 5999 ];
+    firewall.allowedTCPPorts = [ 80 443 10051 5999 ];
     firewall.allowedUDPPorts = [ 53 67 ];
     firewall.extraCommands =
       ''
-        ip46tables -I nixos-fw-accept -p tcp --dport 843 --syn -j LOG --log-level info --log-prefix "POLICY REQUEST: "
         ip46tables -A nixos-fw -p tcp --dport 5432 -s 192.168.1.25 -j nixos-fw-accept
       '';
 

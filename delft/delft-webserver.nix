@@ -279,8 +279,6 @@ rec {
     zabbixServer.dbServer = "wendy";
     zabbixServer.dbPassword = import ./zabbix-password.nix;
 
-    flashpolicyd.enable = true;
-
   };
 
   environment.systemPackages = [ zabbixMail ];
