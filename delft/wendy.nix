@@ -1,4 +1,10 @@
 { config, pkgs, ... }:
+with pkgs.lib;
+let
+  myIP = "130.161.158.181";
+  machines = import ./machines.nix pkgs.lib;
+
+in
 {
   require = [ ./build-machines-dell-r815.nix ./delft-webserver.nix ];
 
@@ -109,7 +115,76 @@
       ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="f0:4d:a2:40:1b:c0", NAME="internal"
     '';
 
-  networking.firewall.allowedTCPPorts = [ 80 3000 3001 4000 5432 ];
+
+  networking = {
+    hostName = "wendy";
+    domain = "buildfarm";
+
+    interfaces.external =
+      { ipAddress = myIP;
+        prefixLength = 23;
+      };
+
+    interfaces.internal =
+      { ipAddress = (findSingle (m: m.hostName == "wendy") {} {} machines).ipAddress;
+        prefixLength = 22;
+      };
+
+    useDHCP = false;
+
+    defaultGateway = "130.161.158.1";
+
+    nameservers = [ "127.0.0.1" ];
+
+    extraHosts = "192.168.1.26 wendy";
+
+    firewall.allowedTCPPorts = [ 80 443 843 10051 5999 ];
+    firewall.allowedUDPPorts = [ 53 67 ];
+    firewall.extraCommands =
+      ''
+        ip46tables -I nixos-fw-accept -p tcp --dport 843 --syn -j LOG --log-level info --log-prefix "POLICY REQUEST: "
+      '';
+
+    nat.enable = true;
+    nat.internalIPs = "192.168.1.0/22";
+    nat.externalInterface = "external";
+    nat.externalIP = myIP;
+
+
+  };
+
+  jobs.dnsmasq =
+    let
+
+      confFile = pkgs.writeText "dnsmasq.conf"
+        ''
+          keep-in-foreground
+          no-hosts
+          addn-hosts=${hostsFile}
+          expand-hosts
+          domain=buildfarm
+          interface=internal
+
+          server=130.161.158.4
+          server=130.161.33.17
+          server=130.161.180.1
+          server=8.8.8.8
+          server=8.8.4.4
+
+          dhcp-range=192.168.1.150,192.168.3.200
+
+          ${flip concatMapStrings machines (m: optionalString (m ? ethernetAddress) ''
+            dhcp-host=${m.ethernetAddress},${m.ipAddress},${m.hostName}
+          '')}
+        '';
+
+      hostsFile = pkgs.writeText "extra-hosts"
+        (flip concatMapStrings machines (m: "${m.ipAddress} ${m.hostName}\n"));
+
+    in
+    { startOn = "started network-interfaces";
+      exec = "${pkgs.dnsmasq}/bin/dnsmasq --conf-file=${confFile}";
+    };
 
   # Needed for the Nixpkgs mirror script.
   environment.pathsToLink = [ "/libexec" ];

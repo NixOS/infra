@@ -89,7 +89,7 @@ lib: with lib;
   { # 48-core NixOS machine for random hackery.
     hostName = "wendy";
     ipAddress = "192.168.1.26";
-    ethernetAddress = "f0:4d:a2:40:1b:be";
+    ethernetAddress = "f0:4d:a2:40:1b:c0";
     systems = [ "x86_64-linux" ];
   }
 
