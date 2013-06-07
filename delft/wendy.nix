@@ -140,10 +140,10 @@ in
 
     firewall.allowedTCPPorts = [ 80 443 843 10051 5999 ];
     firewall.allowedUDPPorts = [ 53 67 ];
-    firewall.trustedInterfaces = [ "internal" ];
     firewall.extraCommands =
       ''
         ip46tables -I nixos-fw-accept -p tcp --dport 843 --syn -j LOG --log-level info --log-prefix "POLICY REQUEST: "
+        ip46tables -A nixos-fw -p tcp --dport 5432 -s 192.168.1.25 -j nixos-fw-accept
       '';
 
     nat.enable = true;
