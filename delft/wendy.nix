@@ -1,7 +1,6 @@
 { config, pkgs, ... }:
-
 {
-  require = [ ./build-machines-dell-r815.nix ];
+  require = [ ./build-machines-dell-r815.nix ./delft-webserver.nix ];
 
   fileSystems."/backup" =
     { device = "130.161.158.5:/dxs/users4/group/buildfarm";
@@ -58,7 +57,7 @@
 
   services.postgresqlBackup = {
     enable = true;
-    databases = [ "hydra" "jira" "mediawiki" ];
+    databases = [ "hydra" "jira" ];
   };
 
   services.postgresql = {
@@ -82,8 +81,6 @@
       host  all        all       192.168.1.25/32 md5
       host  hydra      hydra     192.168.1.26/32 md5
       host  hydra_test hydra     192.168.1.26/32 md5
-      host  mediawiki  mediawiki 192.168.1.5/32  md5
-      host  mediawiki  mediawiki 192.168.1.26/32 md5
       host  zabbix     zabbix    192.168.1.5/32  md5
     '';
   };
@@ -107,4 +104,15 @@
     ];
 
   networking.firewall.allowedTCPPorts = [ 80 3000 3001 4000 5432 ];
+
+
+  # Needed for the Nixpkgs mirror script.
+  environment.pathsToLink = [ "/libexec" ];
+  environment.systemPackages = [ pkgs.dnsmasq pkgs.duplicity ];
+
+  # Use cgroups to limit Apache's resources.
+  systemd.services.httpd.serviceConfig.CPUShares = 1000;
+  systemd.services.httpd.serviceConfig.MemoryLimit = "1500M";
+  systemd.services.httpd.serviceConfig.ControlGroupAttribute = [ "memory.memsw.limit_in_bytes 1500M" ];
+
 }
