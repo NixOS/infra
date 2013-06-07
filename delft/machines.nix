@@ -5,7 +5,8 @@ lib: with lib;
   { # Web frontend.
     hostName = "cartman";
     ipAddress = "192.168.1.5";
-    system = "i686-linux";
+    ethernetAddress = "00:19:d1:19:28:bf";
+    systems = [ "x86_64-linux" "i686-linux" ];
     aliases = ["main"];
     maxJobs = 2;
   }
