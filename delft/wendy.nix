@@ -115,6 +115,16 @@ in
       ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="f0:4d:a2:40:1b:c0", NAME="internal"
     '';
 
+  services.radvd.enable = true;
+  services.radvd.config =
+    ''
+      interface internal {
+	AdvSendAdvert on;
+	prefix 2001:610:685:1::/64 { };
+	RDNSS 2001:610:685:1::1 { };
+      };
+    '';
+
   networking = {
     hostName = "wendy";
     domain = "buildfarm";
@@ -148,6 +158,38 @@ in
     nat.internalIPs = "192.168.1.0/22";
     nat.externalInterface = "external";
     nat.externalIP = myIP;
+
+    localCommands =
+      ''
+        #${pkgs.iptables}/sbin/iptables -t nat -F PREROUTING
+
+        # lucifer ssh (to give Karl/Armijn access for the BAT project)
+        #${pkgs.iptables}/sbin/iptables -t nat -A PREROUTING -p tcp -d ${myIP} --dport 2222 -j DNAT --to 192.168.1.26:22
+
+        # Cleanup.
+        ip -6 route flush dev sixxs || true
+        ip link set dev sixxs down || true
+        ip tunnel del sixxs || true
+
+        # Set up a SixXS tunnel for IPv6 connectivity.
+        ip tunnel add sixxs mode sit local ${myIP} remote 192.87.102.107 ttl 64
+        ip link set dev sixxs mtu 1280 up
+        ip -6 addr add 2001:610:600:88d::2/64 dev sixxs
+        ip -6 route add default via 2001:610:600:88d::1 dev sixxs
+
+        # Discard all traffic to networks in our prefix that don't exist.
+        ip -6 route add 2001:610:685::/48 dev lo || true
+
+        # Create a local network (prefix:1::/64).
+        ip -6 addr add 2001:610:685:1::1/64 dev internal || true
+
+        # Forward traffic to our Nova cloud to "stan".
+        ip -6 route add 2001:610:685:2::/64 via 2001:610:685:1:222:19ff:fe55:bf2e || true
+
+        # Amazon MTurk experiment.
+        #${pkgs.iptables}/sbin/iptables -t nat -A PREROUTING -p tcp -d ${myIP} --dport 5998 -j DNAT --to 192.168.1.26:5998
+        #${pkgs.iptables}/sbin/iptables -t nat -A PREROUTING -p tcp -d ${myIP} --dport 5999 -j DNAT --to 192.168.1.26:5999
+      '';
   };
 
   jobs.dnsmasq =
