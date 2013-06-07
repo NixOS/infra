@@ -57,9 +57,7 @@ let
 
 in
 
-rec {
-  require = [ ];
-
+{
   services = {
 
     httpd = {
@@ -272,12 +270,6 @@ rec {
 
       ];
     };
-
-    zabbixAgent.enable = true;
-
-    zabbixServer.enable = true;
-    zabbixServer.dbServer = "wendy";
-    zabbixServer.dbPassword = import ./zabbix-password.nix;
 
   };
 

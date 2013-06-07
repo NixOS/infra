@@ -141,15 +141,13 @@ in
     firewall.allowedUDPPorts = [ 53 67 ];
     firewall.extraCommands =
       ''
-        ip46tables -A nixos-fw -p tcp --dport 5432 -s 192.168.1.25 -j nixos-fw-accept
+        iptables -A nixos-fw -p tcp --dport 5432 -i internal -j nixos-fw-accept
       '';
 
     nat.enable = true;
     nat.internalIPs = "192.168.1.0/22";
     nat.externalInterface = "external";
     nat.externalIP = myIP;
-
-
   };
 
   jobs.dnsmasq =
@@ -193,4 +191,8 @@ in
   systemd.services.httpd.serviceConfig.CPUShares = 1000;
   systemd.services.httpd.serviceConfig.MemoryLimit = "1500M";
   systemd.services.httpd.serviceConfig.ControlGroupAttribute = [ "memory.memsw.limit_in_bytes 1500M" ];
+
+  services.zabbixServer.enable = true;
+  services.zabbixServer.dbServer = "wendy";
+  services.zabbixServer.dbPassword = import ./zabbix-password.nix;
 }
