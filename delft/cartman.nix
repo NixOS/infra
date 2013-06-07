@@ -27,14 +27,8 @@ let
     time duplicity --full-if-older-than 30D --no-encryption /data/pt-wiki file:///backup/cartman/pt-wiki
     time duplicity --no-encryption --force remove-all-inc-of-but-n-full 1 file:///backup/cartman/pt-wiki
 
-    time duplicity --full-if-older-than 30D --no-encryption /data/nixos-mediawiki-upload file:///backup/cartman/nixos-mediawiki-upload
-    time duplicity --no-encryption --force remove-all-inc-of-but-n-full 1 file:///backup/cartman/nixos-mediawiki-upload
-
     time duplicity --full-if-older-than 30D --no-encryption /data/subversion file:///backup/cartman/subversion
     time duplicity --no-encryption --force remove-all-inc-of-but-n-full 1 file:///backup/cartman/subversion
-
-    time duplicity --full-if-older-than 30D --no-encryption /data/subversion-nix file:///backup/cartman/subversion-nix
-    time duplicity --no-encryption --force remove-all-inc-of-but-n-full 1 file:///backup/cartman/subversion-nix
 
     time duplicity --full-if-older-than 30D --no-encryption /data/subversion-ptg file:///backup/cartman/subversion-ptg
     time duplicity --no-encryption --force remove-all-inc-of-but-n-full 1 file:///backup/cartman/subversion-ptg
@@ -65,98 +59,6 @@ let
     sha256 = "1q66x429wpqjqcmlsi3x37rkn95i55nj8ldzcrblnx6a0jnjgd2g";
     rev = 94;
   };
-
-  nixosVHostConfig =
-    { hostName = "nixos.org";
-      serverAliases = [ "ipv6.nixos.org" ];
-      documentRoot = "/home/eelco/nix-homepage";
-      enableUserDir = true;
-      servedDirs =
-        [ { urlPath = "/tarballs";
-            dir = "/data/webserver/tarballs";
-          }
-          { urlPath = "/irc";
-            dir = "/data/webserver/irc";
-          }
-          { urlPath = "/update";
-            dir = "/data/webserver/update";
-          }
-          # Backwards compatibility.
-          { urlPath = "/releases/nixpkgs/channels";
-            dir = "/data/releases/channels";
-          }
-          # Backwards compatibility.
-          { urlPath = "/releases/nixos/channels";
-            dir = "/data/releases/channels";
-          }
-          { urlPath = "/channels";
-            dir = "/data/releases/channels";
-          }
-          { urlPath = "/releases";
-            dir = "/data/releases";
-          }
-          { urlPath = "/binary-cache";
-            dir = "/data/releases/binary-cache";
-          }
-        ];
-
-      servedFiles =
-        [ { urlPath = "/releases/css/releases.css";
-            file = releasesCSS;
-          }
-        ];
-
-      extraConfig =
-        ''
-          <Proxy *>
-            Order deny,allow
-            Allow from all
-          </Proxy>
-
-          ProxyPreserveHost On
-
-          ProxyPass         /mturk  http://wendy:3000/mturk retry=5
-          ProxyPassReverse  /mturk  http://wendy:3000/mturk
-          ProxyPass         /mturk-sandbox  http://wendy:3001/mturk-sandbox retry=5
-          ProxyPassReverse  /mturk-sandbox  http://wendy:3001/mturk-sandbox
-
-          MaxKeepAliveRequests 0
-
-          # Use a very short error message for 404s in the binary
-          # cache, since those are very frequent and not generally
-          # seen by humans.
-          <Location /releases/binary-cache>
-            ErrorDocument 404 "No such file."
-          </Location>
-        '';
-
-      extraSubservices =
-        [ { serviceType = "mediawiki";
-            siteName = "Nix Wiki";
-            logo = "/logo/nix-wiki.png";
-            #defaultSkin = "nixos";
-            skins = [ ./wiki-skins ];
-            extraConfig =
-              ''
-                #$wgEmailConfirmToEdit = true;
-
-                # Use a reCAPTCHA to prevent spam.
-                require_once("$IP/extensions/ConfirmEdit/ConfirmEdit.php");
-                require_once("$IP/extensions/ConfirmEdit/ReCaptcha.php");
-                $wgCaptchaClass = 'ReCaptcha';
-                $wgReCaptchaPublicKey = '6Ldevd8SAAAAAFR6MwnU01FOWJ3O4II3aRJpMQ8F';
-                $wgReCaptchaPrivateKey = '${builtins.readFile ./nixos.org-recaptcha-private-key}';
-                $wgCaptchaTriggers['edit']          = true;
-                $wgCaptchaTriggers['create']        = true;
-              '';
-            enableUploads = true;
-            uploadDir = "/data/nixos-mediawiki-upload";
-            dbServer = "wendy";
-            dbUser = "mediawiki";
-            dbPassword = import ./mediawiki-password.nix;
-          }
-        ];
-    };
 
   strategoxtVHostConfig =
     { hostName = "strategoxt.org";
@@ -204,11 +106,6 @@ rec {
   fileSystems."/" =
     { label = "nixos";
       options = "acl";
-    };
-  fileSystems."/data/releases" =
-    { device = "192.168.1.25:/";
-      fsType = "nfs4";
-      options = "soft";
     };
   fileSystems."/backup" =
     { device = "130.161.158.5:/dxs/users4/group/buildfarm";
@@ -374,38 +271,9 @@ rec {
       virtualHosts = [
 
         { # Catch-all site.
-          hostName = "www.nixos.org";
+          hostName = "old.nixos.org";
           globalRedirect = "http://nixos.org/";
         }
-
-        nixosVHostConfig
-
-        (nixosVHostConfig // {
-          enableSSL = true;
-          sslServerCert = "/root/ssl-secrets/ssl-nixos-org.crt";
-          sslServerKey = "/root/ssl-secrets/ssl-nixos-org.key";
-          extraConfig = nixosVHostConfig.extraConfig +
-            ''
-              SSLCertificateChainFile /root/ssl-secrets/startssl-class1.pem
-              SSLCACertificateFile /root/ssl-secrets/startssl-ca.pem
-              # Required by Catalyst.
-              RequestHeader set X-Forwarded-Port 443
-            '';
-          extraSubservices = nixosVHostConfig.extraSubservices ++
-            [ { function = import /etc/nixos/services/subversion;
-                id = "nix";
-                urlPrefix = "";
-                toplevelRedirect = false;
-                dataDir = "/data/subversion-nix";
-                notificationSender = "svn@svn.nixos.org";
-                organisation = {
-                  name = "Nix";
-                  url = http://nixos.org/;
-                  logo = "/logo/nixos-lores.png";
-                };
-              }
-            ];
-        })
 
         { hostName = "buildfarm.st.ewi.tudelft.nl";
           documentRoot = cleanSource ./webroot;
@@ -518,22 +386,6 @@ rec {
           ];
         }
 
-        # Obsolete, kept for backwards compatibility.
-        { hostName = "svn.nixos.org";
-          enableSSL = true;
-          sslServerCert = "/root/ssl-secrets/server.crt";
-          sslServerKey = "/root/ssl-secrets/server.key";
-          extraConfig = ''
-            RedirectMatch permanent ^/$ https://nixos.org/repoman
-            Redirect permanent / https://nixos.org/
-          '';
-        }
-
-        # Obsolete, kept for backwards compatibility.
-        { hostName = "svn.nixos.org";
-          globalRedirect = "https://nixos.org/repoman";
-        }
-
         { hostName = "hydra.nixos.org";
           logFormat = ''"%h %l %u %t \"%r\" %>s %b %D"'';
           extraConfig = ''
@@ -587,14 +439,6 @@ rec {
             ProxyPreserveHost On
             ProxyPass         /       http://meerkat:3000/ retry=5
             ProxyPassReverse  /       http://meerkat:3000/
-          '';
-        }
-
-        # Obsolete, kept for backwards compatibility.
-        { hostName = "wiki.nixos.org";
-          extraConfig = ''
-            RedirectMatch ^/$ https://nixos.org/wiki
-            Redirect / https://nixos.org/
           '';
         }
 
