@@ -62,7 +62,6 @@ in
 
     httpd = {
       enable = true;
-      multiProcessingModule = "worker";
       logPerVirtualHost = true;
       adminAddr = "e.dolstra@tudelft.nl";
       hostName = "localhost";
@@ -80,8 +79,6 @@ in
           </Location>
 
           ExtendedStatus On
-
-          StartServers 15
         '';
 
       phpOptions =
