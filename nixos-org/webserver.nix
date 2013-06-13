@@ -6,7 +6,7 @@ let
 
   nixosVHostConfig =
     { hostName = "nixos.org";
-      serverAliases = [ "test.nixos.org" "test2.nixos.org" "ipv6.nixos.org" ];
+      serverAliases = [ "test.nixos.org" "test2.nixos.org" "ipv6.nixos.org" "localhost" ];
       documentRoot = "/home/eelco/nix-homepage";
       enableUserDir = true;
       servedDirs =
@@ -61,6 +61,13 @@ let
           </Location>
 
           Redirect /binary-cache http://cache.nixos.org
+
+          <Location /server-status>
+            SetHandler server-status
+            Allow from 127.0.0.1
+            Order deny,allow
+            Deny from all
+          </Location>
         '';
 
       extraSubservices =
@@ -96,11 +103,17 @@ in
   networking.firewall.allowPing = true;
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
+  networking.defaultMailServer = {
+    directDelivery = true;
+    hostName = "smtp.tudelft.nl";
+    domain = "st.ewi.tudelft.nl";
+  };
+
   security.pam.enableSSHAgentAuth = true;
 
   services.httpd = {
     enable = true;
-    multiProcessingModule = "worker";
+    #multiProcessingModule = "worker";
     logPerVirtualHost = true;
     adminAddr = "eelco.dolstra@logicblox.com";
     hostName = "localhost";
@@ -109,21 +122,14 @@ in
       ''
         AddType application/nix-package .nixpkg
 
-        <Location /server-status>
-          SetHandler server-status
-          Allow from 127.0.0.1 # If using a remote host for monitoring replace 127.0.0.1 with its IP.
-          Order deny,allow
-          Deny from all
-        </Location>
+        #StartServers 15
 
         ExtendedStatus On
-
-        StartServers 15
       '';
 
     phpOptions =
       ''
-        #max_execution_time = 2
+        ;max_execution_time = 2
         memory_limit = "32M"
       '';
 
@@ -217,8 +223,16 @@ in
     };
 
   users.extraUsers.tarball-mirror =
-    { description = "Nixpkg starball mirroring user";
+    { description = "Nixpkgs tarball mirroring user";
       home = "/home/tarball-mirror";
+      createHome = true;
+      useDefaultShell = true;
+      openssh.authorizedKeys.keys = singleton "ssh-dss AAAAB3NzaC1kc3MAAACBAOo3foMFsYvc+LEVVTAeXpaxdOFG6O2NE9coxZYN6UtwE477GwkvZ4uKymAekq3TB8I6dDg4QFfE27fIip/rQHJ/Rus+KsxwnTbwPzE0WcZVpkKQsepsoqLkfwMpiPfn5/oxcnJsimwRY/E95aJmmOHdGaYWrc0t4ARa+6teUgdFAAAAFQCSQq2Wil0/X4hDypGGUKlKvYyaWQAAAIAy/0fSDnz1tZOQBGq7q78y406HfWghErrVlrW9g+foJQG5pgXXcdJs9JCIrlaKivUKITDsYnQaCjrZaK8eHnc4ksbkSLfDOxFnR5814ulCftrgEDOv9K1UU3pYketjFMvQCA2U48lR6jG/99CPNXPH55QEFs8H97cIsdLQw9wM4gAAAIEAmzWZlXLzIf3eiHQggXqvw3+C19QvxQITcYHYVTx/XYqZi1VZ/fkY8bNmdcJsWFyOHgEhpEca+xM/SNvH/14rXDmt0wtclLEx/4GVLi59hQCnnKqv7HzJg8RF4v6XTiROBAEEdb4TaFuFn+JCvqPzilTzXTexvZKJECOvfYcY+10= eelco.dolstra@logicblox.com";
+    };
+
+  users.extraUsers.hydra-mirror =
+    { description = "Channel mirroring user";
+      home = "/home/hydra-mirror";
       createHome = true;
       useDefaultShell = true;
       openssh.authorizedKeys.keys = singleton "ssh-dss AAAAB3NzaC1kc3MAAACBAOo3foMFsYvc+LEVVTAeXpaxdOFG6O2NE9coxZYN6UtwE477GwkvZ4uKymAekq3TB8I6dDg4QFfE27fIip/rQHJ/Rus+KsxwnTbwPzE0WcZVpkKQsepsoqLkfwMpiPfn5/oxcnJsimwRY/E95aJmmOHdGaYWrc0t4ARa+6teUgdFAAAAFQCSQq2Wil0/X4hDypGGUKlKvYyaWQAAAIAy/0fSDnz1tZOQBGq7q78y406HfWghErrVlrW9g+foJQG5pgXXcdJs9JCIrlaKivUKITDsYnQaCjrZaK8eHnc4ksbkSLfDOxFnR5814ulCftrgEDOv9K1UU3pYketjFMvQCA2U48lR6jG/99CPNXPH55QEFs8H97cIsdLQw9wM4gAAAIEAmzWZlXLzIf3eiHQggXqvw3+C19QvxQITcYHYVTx/XYqZi1VZ/fkY8bNmdcJsWFyOHgEhpEca+xM/SNvH/14rXDmt0wtclLEx/4GVLi59hQCnnKqv7HzJg8RF4v6XTiROBAEEdb4TaFuFn+JCvqPzilTzXTexvZKJECOvfYcY+10= eelco.dolstra@logicblox.com";
