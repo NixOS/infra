@@ -72,7 +72,7 @@ in
     package = pkgs.postgresql92;
     dataDir = "/data/postgresql";
     extraConfig = ''
-      log_min_duration_statement = 1000
+      log_min_duration_statement = 5000
       log_duration = off
       log_statement = 'none'
       max_connections = 250
@@ -82,12 +82,13 @@ in
       checkpoint_segments = 16
       # We can risk losing some transactions.
       synchronous_commit = off
+      effective_cache_size = 24GB
     '';
     authentication = ''
       host  all        all       192.168.1.25/32 md5
       host  hydra      hydra     192.168.1.26/32 md5
       host  hydra_test hydra     192.168.1.26/32 md5
-      host  zabbix     zabbix    192.168.1.5/32  md5
+      host  zabbix     zabbix    192.168.1.26/32  md5
     '';
   };
 
@@ -99,6 +100,7 @@ in
     '';
 
   services.zabbixAgent.extraConfig = ''
+    UserParameter=hydra.evaluations.timesincelast,${pkgs.postgresql}/bin/psql hydra -At -c 'select round(EXTRACT(EPOCH FROM now()) - timestamp) from jobsetevals order by id desc limit 1'
     UserParameter=hydra.queue.total,${pkgs.postgresql}/bin/psql hydra -At -c 'select count(*) from builds where finished = 0'
     UserParameter=hydra.queue.building,${pkgs.postgresql}/bin/psql hydra -At -c 'select count(*) from builds where finished = 0 and busy = 1'
     UserParameter=hydra.queue.buildsteps,${pkgs.postgresql}/bin/psql hydra -At -c 'select count(*) from BuildSteps s join Builds i on s.build = i.id where i.finished = 0 and i.busy = 1 and s.busy = 1'
@@ -227,7 +229,7 @@ in
 
   # Needed for the Nixpkgs mirror script.
   environment.pathsToLink = [ "/libexec" ];
-  environment.systemPackages = [ pkgs.dnsmasq pkgs.duplicity ];
+  environment.systemPackages = [ pkgs.dnsmasq pkgs.duplicity pkgs.db4 ];
 
   # Use cgroups to limit Apache's resources.
   systemd.services.httpd.serviceConfig.CPUShares = 1000;
