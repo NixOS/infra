@@ -3,7 +3,7 @@
   environment.systemPackages = [ pkgs.sysstat ];
 
   services.cron.systemCronJobs =
-    [ "*/10 * * * * root ${pkgs.sysstat}/lib/sa/sa1 -S DISK 1 1"
+    [ "*/1 * * * * root ${pkgs.sysstat}/lib/sa/sa1 -S DISK 1 1"
       "53 23 * * * root ${pkgs.sysstat}/lib/sa/sa2 -A"
     ];
 
