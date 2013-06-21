@@ -118,7 +118,7 @@
       script =
         ''
           rm -rf /data/releases/nixpkgs/.tmp-*
-          exec su - hydra-mirror -c 'cd release/channels; while true; do ./mirror-nixpkgs.sh; sleep 300; done'
+          exec su - hydra-mirror -c 'cd release/channels; while true; do ./mirror-nixpkgs.sh; sleep 1200; done'
         '';
       serviceConfig.Restart = "always";
       serviceConfig.CPUShares = 100;
@@ -146,7 +146,7 @@
       script =
         ''
           rm -rf /data/releases/nixos/.tmp-*
-          exec su - hydra-mirror -c 'cd release/channels; while true; do ./mirror-nixos.sh; sleep 300; done'
+          exec su - hydra-mirror -c 'cd release/channels; while true; do ./mirror-nixos.sh; sleep 1200; done'
         '';
       serviceConfig.Restart = "always";
       serviceConfig.CPUShares = 100;
