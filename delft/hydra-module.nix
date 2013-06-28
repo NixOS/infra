@@ -14,6 +14,12 @@ let
       base_uri ${cfg.hydraURL}
       notification_sender ${cfg.notificationSender}
       max_servers 50
+
+      <hipchat>
+        jobs = (hydra|nixops):.*:.*
+        room = 182482
+        token = ${builtins.readFile ./hipchat-lb-token}
+      </hipchat>
     '';
 
   env =
