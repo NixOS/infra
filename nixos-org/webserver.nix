@@ -37,12 +37,6 @@ let
           }
         ];
 
-      virtualHosts =
-        [ { documentRoot = "/var/www/planet.nixos.org";
-            hostName = "planet.nixos.org";
-          }
-        ];
-
       extraConfig =
         ''
           #<Proxy *>
@@ -178,6 +172,10 @@ in
           documentRoot = "/tarballs";
         }
 
+        { hostName = "planet.nixos.org";
+          documentRoot = "/var/www/planet.nixos.org";
+        }
+
         # Obsolete, kept for backwards compatibility.
         { hostName = "svn.nixos.org";
           globalRedirect = "https://nixos.org/repoman";
@@ -190,6 +188,7 @@ in
             Redirect / https://nixos.org/
           '';
         }
+
       ];
   };
 
@@ -295,13 +294,12 @@ in
     enable = true;
     outputTheme = ./theme;
     outputDirectory = "/var/www/planet.nixos.org";
-    feeds = [
-      {
-        name = "Rok Garbas";
-        feedUrl = "http://garbas.si/blog/category/latest-plone/RSS";
-        homepageUrl= "http://blog.garbas.si";
-      }
-    ];
+    feeds =
+      [ { name = "Rok Garbas";
+          feedUrl = "http://garbas.si/blog/category/latest-nixos/RSS";
+          homepageUrl= "http://blog.garbas.si";
+        }
+      ];
   };
 
 }
