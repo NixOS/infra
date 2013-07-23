@@ -1,0 +1,95 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:py="http://genshi.edgewall.org/">
+
+<!--!
+### Fancy Planet HTML template, converted to Genshi.
+### 
+### When combined with the stylesheet and images in the output/ directory
+### of the Planet source, this gives you a much prettier result than the
+### default examples template and demonstrates how to use the config file
+### to support things like faces
+### 
+### For documentation on the more boring template elements, see
+### http://www.intertwingly.net/code/venus/docs/templates.html
+-->
+
+<head>
+<title>$feed.config.name</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="generator" content="$feed.generator"/>
+<link rel="stylesheet" href="planet.css" type="text/css"/>
+<link py:for="link in feed.links"
+  py:if="link.type in ['application/atom+xml','application/rss+xml']"
+  href="$link.href" rel="alternate" title="$link.title" type="$link.type"/>
+</head>
+
+<body>
+<h1>$feed.config.name</h1>
+
+<py:for each="entry in entries">
+
+<div class="channelgroup" py:strip="not entry.new_date">
+<h2 py:if="entry.new_date">$entry.new_date</h2>
+
+<div class="entrygroup" py:strip="not entry.new_feed">
+<h3 py:if="entry.new_feed"><a href="$entry.link" title="$entry.source.title">$entry.source.config.name</a></h3>
+
+<img py:if="entry.new_feed and entry.source.config.face" class="face" src="images/$entry.source.config.face" width="$entry.source.config.facewidth" height="$entry.source.config.faceheight" alt=""/>
+
+<h4 py:if="entry.title" lang="$entry.title_detail.language"><a href="$entry.link">$entry.title_detail.stream</a></h4>
+
+<div class="entry">
+<div class="content" py:choose="">
+<py:when test="entry.content">${entry.content[0].stream}</py:when>
+<py:when test="entry.summary_detail">${entry.summary_detail.stream}</py:when>
+</div>
+
+<p class="date"><py:if test="entry.author_detail and entry.author_detail.name">by $entry.author_detail.name at </py:if>$entry.updated</p>
+</div>
+
+</div>
+</div>
+
+</py:for>
+
+<div class="sidebar">
+<img src="images/logo.png" width="136" height="136" alt=""/>
+
+<h2>Subscriptions</h2>
+<ul>
+<li py:for="feed in feeds">
+<a py:for="link in feed.links" py:if="link.rel == 'self' and 
+      link.type in ['application/atom+xml','application/rss+xml']"
+  href="$link.href" title="subscribe"><img src="images/feed-icon-10x10.png" alt="(feed)"/></a>
+<py:choose>
+<a py:when="feed.planet_message" href="$feed.link" class="message" title="$feed.planet_message">$feed.config.name</a>
+<a py:otherwise="1" href="$feed.link" title="$feed.title">$feed.config.name</a>
+</py:choose>
+</li>
+</ul>
+
+<p>
+<strong>Last updated:</strong><br/>
+$feed.updated<br/>
+<em>All times are UTC.</em><br/>
+<br/>
+Powered by:<br/>
+<a href="http://intertwingly.net/code/venus/"><img src="images/venus.png" width="80" height="15" alt="Planet Venus" border="0"/></a>
+</p>
+
+<p>
+<h2>Planetarium:</h2>
+<ul>
+<li><a href="http://www.planetapache.org/">Planet Apache</a></li>
+<li><a href="http://planet.freedesktop.org/">Planet freedesktop.org</a></li>
+<li><a href="http://planet.gnome.org/">Planet GNOME</a></li>
+<li><a href="http://planet.debian.net/">Planet Debian</a></li>
+<li><a href="http://planet.fedoraproject.org/">Planet Fedora</a></li>
+<li><a href="http://planets.sun.com/">Planet Sun</a></li>
+<li><a href="http://www.planetplanet.org/">more...</a></li>
+</ul>
+</p>
+</div>
+
+</body>
+</html>
