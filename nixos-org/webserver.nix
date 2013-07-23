@@ -37,6 +37,12 @@ let
           }
         ];
 
+      virtualHosts =
+        [ { documentRoot = "/var/www/planet.nixos.org";
+            hostName = "planet.nixos.org";
+          }
+        ];
+
       extraConfig =
         ''
           #<Proxy *>
@@ -283,6 +289,19 @@ in
       mwusers root   mediawiki
       mwusers wwwrun mediawiki
     '';
+  };
+
+  services.venus = {
+    enable = true;
+    outputTheme = ./theme;
+    outputDirectory = "/var/www/planet.nixos.org";
+    feeds = [
+      {
+        name = "Rok Garbas";
+        feedUrl = "http://garbas.si/blog/category/latest-plone/RSS";
+        homepageUrl= "http://blog.garbas.si";
+      }
+    ];
   };
 
 }
