@@ -280,7 +280,7 @@ in
       # We can risk losing some transactions.
       synchronous_commit = off
     '';
-    authentication = pkgs.lib.mkOverride 10 ''
+    authentication = mkOverride 10 ''
       local mediawiki all ident map=mwusers
       local all       all ident
     '';
