@@ -11,4 +11,8 @@
     feedUrl = "https://www.domenkozar.com/category/nixos/";
     homepageUrl = "https://www.domenkozar.com/";
   }
+  { name = "Sander van der Burg";
+    feedUrl = "http://sandervanderburg.blogspot.com/feeds/posts/default/-/Nix?alt=rss";
+    homepageUrl = "http://sandervanderburg.blogspot.com";
+  }
 ]
