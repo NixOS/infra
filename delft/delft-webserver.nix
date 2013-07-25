@@ -219,6 +219,7 @@ in
           '';
         }
 
+        /*
         { hostName = "hydra-test.nixos.org";
           logFormat = ''"%h %l %u %t \"%r\" %>s %b %D"'';
           extraConfig = ''
@@ -233,12 +234,14 @@ in
             ProxyPassReverse  /       http://wendy:4000/
           '';
         }
+        */
 
         { hostName = "planet.strategoxt.org";
           serverAliases = ["planet.stratego.org"];
           documentRoot = "/home/karltk/public_html/planet";
         }
 
+        /*
         { hostName = "mturk.nixos.org";
           extraConfig = ''
             <Proxy *>
@@ -264,6 +267,7 @@ in
             Redirect permanent / http://nixos.org/mturk-sandbox/
           '';
         }
+        */
 
       ];
     };

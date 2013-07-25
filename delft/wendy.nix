@@ -121,9 +121,9 @@ in
   services.radvd.config =
     ''
       interface internal {
-	AdvSendAdvert on;
-	prefix 2001:610:685:1::/64 { };
-	RDNSS 2001:610:685:1::1 { };
+        AdvSendAdvert on;
+        prefix 2001:610:685:1::/64 { };
+        RDNSS 2001:610:685:1::1 { };
       };
     '';
 
