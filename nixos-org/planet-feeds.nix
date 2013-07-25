@@ -15,4 +15,8 @@
     feedUrl = "http://sandervanderburg.blogspot.com/feeds/posts/default/-/Nix?alt=rss";
     homepageUrl = "http://sandervanderburg.blogspot.com";
   }
+  { name = "Joachim Schiele";
+    feedUrl = "http://blog.lastlog.de/tags/nixos/index.atom";
+    homepageUrl = "http://blog.lastlog.de";
+  }
 ]
