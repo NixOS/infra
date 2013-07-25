@@ -7,4 +7,8 @@
     feedUrl = "http://zef.me/tag/nix/feed";
     homepageUrl= "http://zef.me";
   }
+  { name = "Domen Kozar";
+    feedUrl = "https://www.domenkozar.com/category/nixos/";
+    homepageUrl = "https://www.domenkozar.com/";
+  }
 ]
