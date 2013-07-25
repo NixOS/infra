@@ -299,6 +299,10 @@ in
           feedUrl = "http://garbas.si/blog/category/latest-nixos/RSS";
           homepageUrl= "http://blog.garbas.si";
         }
+        { name = "Zef Hemel";
+          feedUrl = "http://zef.me/tag/nix/feed"
+          homepageUrl= "http://zef.me";
+        }
       ];
   };
 
