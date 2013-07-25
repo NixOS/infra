@@ -300,7 +300,7 @@ in
           homepageUrl= "http://blog.garbas.si";
         }
         { name = "Zef Hemel";
-          feedUrl = "http://zef.me/tag/nix/feed"
+          feedUrl = "http://zef.me/tag/nix/feed";
           homepageUrl= "http://zef.me";
         }
       ];
