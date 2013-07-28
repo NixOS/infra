@@ -7,7 +7,7 @@
 
   environment.systemPackages =
     [ pkgs.wget
-      pkgs.perlPackages.DBDSQLite # for hydra-mirror
+      pkgs.perlPackages.DBDSQLite pkgs.perlPackages.NetAmazonS3 pkgs.perlPackages.ForksSuper # for hydra-mirror
       pkgs.python pkgs.pythonPackages.boto # for upload-binary-cache-s3.py
     ];
 
