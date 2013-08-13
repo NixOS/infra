@@ -7,7 +7,7 @@
 
   environment.systemPackages =
     [ pkgs.wget
-      pkgs.perlPackages.DBDSQLite pkgs.perlPackages.NetAmazonS3 pkgs.perlPackages.ForksSuper # for hydra-mirror
+      pkgs.perlPackages.DBDSQLite pkgs.perlPackages.NetAmazonS3 pkgs.perlPackages.ForksSuper pkgs.nodePackages.jsontool # for hydra-mirror
       pkgs.python pkgs.pythonPackages.boto # for upload-binary-cache-s3.py
     ];
 
@@ -69,7 +69,7 @@
     let
       # Run the garbage collector on ‘machine’ to ensure that at least
       # ‘gbFree’ GiB are free.
-      gcRemote = { machine, gbFree ? 4, df ? "df" }:
+      gcRemote = { machine, gbFree ? 8, df ? "df" }:
         "15 03 * * *  root  ssh -x -i /root/.ssh/id_buildfarm ${machine} " +
         ''nix-store --gc --max-freed '$((${toString gbFree} * 1024**3 - 1024 * $(${df} -P -k /nix/store | tail -n 1 | awk "{ print \$4 }")))' > "/var/log/gc-${machine}.log" 2>&1'';
     in
