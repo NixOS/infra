@@ -9,5 +9,5 @@
   ike = import ./build-machines-dell-r815.nix;
   #shelley = import ./build-machines-dell-r815.nix;
   #mrkitty = import ./mrkitty.nix;
-  mrhankey = import ./mrhankey.nix;
+  #mrhankey = import ./mrhankey.nix;
 }
