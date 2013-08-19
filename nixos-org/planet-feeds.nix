@@ -8,7 +8,7 @@
     homepageUrl= "http://zef.me";
   }
   { name = "Domen Kozar";
-    feedUrl = "https://www.domenkozar.com/category/nixos/";
+    feedUrl = "https://www.domenkozar.com/category/nixos/feed/atom/index.xml";
     homepageUrl = "https://www.domenkozar.com/";
   }
   { name = "Sander van der Burg";
