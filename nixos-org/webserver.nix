@@ -35,6 +35,15 @@ let
           { urlPath = "/releases";
             dir = "/releases";
           }
+          { urlPath = "/nix/manual";
+            dir = "/releases/nix/latest/manual";
+          }
+          { urlPath = "/nixpkgs/manual";
+            dir = "/releases/channels/nixpkgs-unstable/manual";
+          }
+          { urlPath = "/nixos/manual";
+            dir = "/releases/channels/nixos-unstable/manual";
+          }
         ];
 
       extraConfig =
