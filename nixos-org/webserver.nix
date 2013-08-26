@@ -273,6 +273,11 @@ in
         '';
     };
 
+  systemd.timers.mirror-tarballs =
+    { wantedBy = [ "timers.target" ];
+      timerConfig.OnCalendar = "05:30";
+    };
+
   system.activationScripts.setShmMax =
     ''
       ${pkgs.procps}/sbin/sysctl -q -w kernel.shmmax=$((1 * 1024**3))
