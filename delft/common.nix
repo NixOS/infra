@@ -39,10 +39,8 @@ with pkgs.lib;
 
   services.sshd.enable = true;
 
-  boot.postBootCommands =
-    ''
-      echo 60 > /proc/sys/kernel/panic
-    '';
+  boot.kernel.sysctl."kernel.panic" = 60;
+  boot.kernel.sysctl."kernel.panic_on_oops" = 1;
 
   nix.useChroot = true;
 
