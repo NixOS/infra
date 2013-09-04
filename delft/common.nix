@@ -26,7 +26,8 @@ with pkgs.lib;
   boot.vesa = false;
   boot.blacklistedKernelModules = [ "radeonfb" "radeon" "i915" ];
 
-  boot.initrd.kernelModules = [ "ext4" ];
+  hardware.cpu.amd.updateMicrocode = true;
+  hardware.cpu.intel.updateMicrocode = true;
 
   environment.nix = pkgs.nixUnstable;
 
