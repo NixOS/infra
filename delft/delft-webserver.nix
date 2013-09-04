@@ -219,7 +219,6 @@ in
           '';
         }
 
-        /*
         { hostName = "hydra-test.nixos.org";
           logFormat = ''"%h %l %u %t \"%r\" %>s %b %D"'';
           extraConfig = ''
@@ -230,11 +229,10 @@ in
 
             ProxyRequests     Off
             ProxyPreserveHost On
-            ProxyPass         /       http://wendy:4000/ retry=5 disablereuse=off
-            ProxyPassReverse  /       http://wendy:4000/
+            ProxyPass         /       http://lucifer:4000/ retry=5 disablereuse=off
+            ProxyPassReverse  /       http://lucifer:4000/
           '';
         }
-        */
 
         { hostName = "planet.strategoxt.org";
           serverAliases = ["planet.stratego.org"];

@@ -1,10 +1,14 @@
 { config, pkgs, ... }:
+
 with pkgs.lib;
+
 let
+
   myIP = "130.161.158.181";
   machines = import ./machines.nix pkgs.lib;
 
 in
+
 {
   require = [ ./build-machines-dell-r815.nix ./delft-webserver.nix ./sysstat.nix];
 
