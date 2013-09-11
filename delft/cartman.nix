@@ -56,25 +56,12 @@ rec {
 
   nix.maxJobs = 2;
 
-  services = {
-
-    cron = {
-      mailto = "rob.vermaas@gmail.com";
-      systemCronJobs =
-        [
-          #"15 0 * * *  root  (TZ=CET date; ${pkgs.rsync}/bin/rsync -razv --numeric-ids --delete /data/postgresql /data/webserver/tarballs unixhome.st.ewi.tudelft.nl::bfarm/) >> /var/log/backup.log 2>&1"
-          "*  *  * * * root ${pkgs.python}/bin/python ${ZabbixApacheUpdater} -z 192.168.1.5 -c cartman"
-          "40 * * * *  root ${duplicityBackup} &>> /var/log/backup-duplicity.log"
-          "30 1 * * *  root ${config.systemd.package}/bin/systemctl start mirror-tarballs.service"
-
-          # Force the sixxs tunnel to stay alive by periodically
-          # pinging the other side.  This is necessary to remain
-          # reachable from the outside.
-          "*/10 * * * * root ${pkgs.iputils}/sbin/ping6 -c 1 2001:610:600:88d::1"
-        ];
-    };
-
-  };
+  services.cron.mailto = "rob.vermaas@gmail.com";
+  services.cron.systemCronJobs =
+    [ #"15 0 * * *  root  (TZ=CET date; ${pkgs.rsync}/bin/rsync -razv --numeric-ids --delete /data/postgresql /data/webserver/tarballs unixhome.st.ewi.tudelft.nl::bfarm/) >> /var/log/backup.log 2>&1"
+      "*  *  * * * root ${pkgs.python}/bin/python ${ZabbixApacheUpdater} -z 192.168.1.5 -c cartman"
+      "40 * * * *  root ${duplicityBackup} &>> /var/log/backup-duplicity.log"
+    ];
 
   environment.systemPackages = [ pkgs.duplicity ];
 }
