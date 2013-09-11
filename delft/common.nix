@@ -26,6 +26,7 @@ with pkgs.lib;
   boot.vesa = false;
   boot.blacklistedKernelModules = [ "radeonfb" "radeon" "i915" ];
 
+  hardware.enableAllFirmware = true;
   hardware.cpu.amd.updateMicrocode = true;
   hardware.cpu.intel.updateMicrocode = true;
 
@@ -61,7 +62,7 @@ with pkgs.lib;
       UserParameter=vm.memory.ksm.sharing,echo -n $((4096 * $(cat /sys/kernel/mm/ksm/pages_sharing)))
       UserParameter=vm.memory.ksm.unshared,echo -n $((4096 * $(cat /sys/kernel/mm/ksm/pages_unshared)))
       UserParameter=vm.memory.ksm.volatile,echo -n $((4096 * $(cat /sys/kernel/mm/ksm/pages_volatile)))
-    '';
+    ''; # */
 
   networking.defaultMailServer = {
     directDelivery = true;
