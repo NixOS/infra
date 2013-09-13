@@ -20,20 +20,13 @@
   networking.firewall.rejectPackets = true;
   networking.firewall.allowPing = true;
 
-  networking.bridges.veno1.interfaces = [ "eno1" ];
+  networking.bridges.veno1.interfaces = [ config.system.build.mainPhysicalInterface ];
+
+  system.build.mainVirtualInterface = "veno1";
 
   virtualisation.libvirtd.enable = true;
 
-  #virtualisation.nova.enableSingleNode = true;
-
-  virtualisation.nova.extraConfig =
-    ''
-      --network_manager=nova.network.manager.FlatDHCPManager
-      --flat_network_dhcp_start=192.168.80.2
-      --fixed_range=192.168.80.0/24
-      --use_ipv6
-    '';
-
+  /*
   networking.localCommands =
     ''
       # Enable IPv6 forwarding.  Nova/radvd requires this.
@@ -46,4 +39,5 @@
       ip -6 addr add 2001:610:685:1:222:19ff:fe55:bf2e/64 dev veno1 || true
       ip -6 route add default via fe80::204:23ff:fedf:f7bf dev veno1 || true
     '';
+  */
 }

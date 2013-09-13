@@ -12,7 +12,7 @@ let
 in
 {
   require = [ ./common.nix ];
-  
+
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.copyKernels = true;
 
@@ -26,8 +26,6 @@ in
   nix.gc.automatic = true;
   nix.gc.dates = "03,09,15,21:15";
   nix.gc.options = ''--max-freed "$((100 * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | ${pkgs.gawk}/bin/awk '{ print $4 }')))"'';
-
-  networking.hostName = ""; # obtain from DHCP server
 
   services.cron.systemCronJobs = [
     "0,30 * * * * ${m3chown}"

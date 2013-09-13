@@ -95,7 +95,7 @@ in
           globalRedirect = "http://nixos.org/";
         }
 
-        { hostName = "buildfarm.st.ewi.tudelft.nl";
+        { hostName = "wendy.ewi.tudelft.nl";
           documentRoot = cleanSource ./webroot;
           enableUserDir = true;
           extraSubservices = [

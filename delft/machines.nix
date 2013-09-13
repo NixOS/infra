@@ -21,7 +21,7 @@ lib: with lib;
 
   { # 8-core NixOS build machine.
     hostName = "kenny";
-    ipAddress = "192.168.1.19";
+    ipAddress = "131.180.119.71";
     ethernetAddress = "00:22:19:55:cc:0d";
     systems = [ "x86_64-linux" "i686-linux" ];
     maxJobs = 8;
@@ -31,7 +31,7 @@ lib: with lib;
 
   { # 8-core NixOS build machine.
     hostName = "stan";
-    ipAddress = "192.168.1.20";
+    ipAddress = "131.180.119.74";
     ethernetAddress = "00:22:19:55:bf:2e";
     systems = [ "x86_64-linux" "i686-linux" ];
     maxJobs = 8;
@@ -41,7 +41,7 @@ lib: with lib;
 
   { # 8-core NixOS build machine.
     hostName = "kyle";
-    ipAddress = "192.168.1.21";
+    ipAddress = "131.180.119.72";
     ethernetAddress = "00:22:19:55:c1:18";
     systems = [ "x86_64-linux" "i686-linux" ];
     maxJobs = 8;
@@ -61,7 +61,7 @@ lib: with lib;
 
   { # 64-bit Mac OS X build machine.
     hostName = "butters";
-    ipAddress = "192.168.1.23";
+    ipAddress = "131.180.119.68";
     ethernetAddress = "00:24:36:f3:cd:c0";
     system = "x86_64-darwin";
     aliases = ["mac64-1"];
@@ -71,42 +71,44 @@ lib: with lib;
 
   { # Old Hydra server.
     hostName = "hydra";
-    ipAddress = "192.168.1.18";
+    ipAddress = "131.180.119.69";
     ethernetAddress = "00:22:19:55:bf:24";
   }
 
   { # Xen machine.
     hostName = "mrhankey";
     ipAddress = "192.168.1.24";
-    ethernetAddress = "00:1D:09:0E:09:E5";
+    ethernetAddress = "00:1d:09:0e:09:e5";
   }
 
   { # Hydra server.
     hostName = "lucifer";
-    ipAddress = "192.168.1.25";
-    ethernetAddress = "84:2B:2B:0B:98:F0";
+    ipAddress = "131.180.119.73";
+    ethernetAddress = "84:2b:2b:0b:98:f0";
   }
 
-  { # 48-core NixOS machine for random hackery.
+  { # 48-core NixOS front-end proxy, database server, build machine.
     hostName = "wendy";
-    ipAddress = "192.168.1.26";
+    ipAddress = "131.180.119.77";
     ethernetAddress = "f0:4d:a2:40:1b:c0";
     systems = [ "x86_64-linux" ];
   }
 
   { # 48-core NixOS build machine.
     hostName = "ike";
-    ipAddress = "192.168.1.27";
+    ipAddress = "131.180.119.70";
     ethernetAddress = "f0:4d:a2:40:1b:91";
     systems = [ "x86_64-linux" ];
   }
 
+  /*
   { # 48-core NixOS build machine.
     hostName = "shelley";
     ipAddress = "192.168.1.28";
     ethernetAddress = "f0:4d:a2:40:10:6c";
     systems = [ "x86_64-linux" ];
   }
+  */
 
 
   /* Xen VMs hosted on mrhankey.  Note that 00:16:3e is the prefix for
