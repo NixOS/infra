@@ -193,9 +193,24 @@ in
         }
 
         { hostName = "hydra.nixos.org";
+          globalRedirect = "https://hydra.nixos.org/";
+        }
+
+        { hostName = "hydra.nixos.org";
+
+          enableSSL = true;
+          sslServerCert = "/root/ssl-secrets/ssl-nixos-org.crt";
+          sslServerKey = "/root/ssl-secrets/ssl-nixos-org.key";
+
           logFormat = ''"%h %l %u %t \"%r\" %>s %b %D"'';
           extraConfig = ''
             TimeOut 900
+
+            SSLCertificateChainFile /root/ssl-secrets/startssl-class1.pem
+            SSLCACertificateFile /root/ssl-secrets/startssl-ca.pem
+            # Required by Catalyst.
+            RequestHeader set X-Forwarded-Proto https
+            RequestHeader set X-Forwarded-Port 443
 
             <Proxy *>
               Order deny,allow
