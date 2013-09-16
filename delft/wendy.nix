@@ -5,12 +5,10 @@ with pkgs.lib;
 {
   require = [ ./build-machines-dell-r815.nix ./delft-webserver.nix ./sysstat.nix ];
 
-  /*
   fileSystems."/backup" =
     { device = "130.161.158.5:/dxs/users4/group/buildfarm";
       fsType = "nfs4";
     };
-  */
 
   jobs.mturk_webserver_production =
     { name = "mturk-webserver-production";
@@ -109,7 +107,7 @@ with pkgs.lib;
   '';
 
   services.cron.systemCronJobs =
-    [ #"15 4 * * * root cp -v /var/backup/postgresql/* /backup/wendy/postgresql/  &> /var/log/backup-db.log"
+    [ "15 4 * * * root cp -v /var/backup/postgresql/* /backup/wendy/postgresql/  &> /var/log/backup-db.log"
     ];
 
   services.radvd.enable = true;
@@ -171,4 +169,20 @@ with pkgs.lib;
   services.zabbixServer.enable = true;
   services.zabbixServer.dbServer = "wendy";
   services.zabbixServer.dbPassword = import ./zabbix-password.nix;
+
+  # Poor man's time sync for the non-NixOS machines.
+  systemd.services.fix-time =
+    { path = [ pkgs.openssh ];
+      script =
+        ''
+          ssh root@beastie "date $(date +'%Y%m%d%H%M.%S')" || true
+          ssh root@demon "date $(date +'%Y%m%d%H%M.%S')" || true
+        '';
+    };
+
+  systemd.timers.fix-time =
+    { wantedBy = [ "timers.target" ];
+      timerConfig.OnCalendar = "*:03";
+    };
+
 }
