@@ -9,6 +9,7 @@
     [ pkgs.wget
       pkgs.perlPackages.DBDSQLite pkgs.perlPackages.NetAmazonS3 pkgs.perlPackages.ForksSuper pkgs.nodePackages.jsontool # for hydra-mirror
       pkgs.python pkgs.pythonPackages.boto # for upload-binary-cache-s3.py
+      pkgs.megacli
     ];
 
   networking.hostName = "lucifer";

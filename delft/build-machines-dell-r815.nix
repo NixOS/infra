@@ -10,6 +10,8 @@
 
   nix.maxJobs = 48;
 
+  environment.systemPackages = [ pkgs.megacli ];
+
   fileSystems = 
     [ { device = "none"; fsType = "tmpfs"; mountPoint = "/tmp"; options = "size=50%"; neededForBoot = true; } 
     ];
