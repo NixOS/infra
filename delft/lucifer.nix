@@ -81,35 +81,17 @@
       (gcRemote { machine = "nix@tweek"; gbFree = 3; df = "/usr/gnu/bin/df"; })
     ];
 
-  /*
-  services.cgroups = {
-    enable = true;
-    groups =
-      ''
-        mount {
-          cpu = /dev/cgroup/cpu;
-          blkio = /dev/cgroup/blkio;
-        }
-        group hydra-mirror {
-          cpu {
-            cpu.shares = "100";
-          }
-        }
-      '';
-    rules =
-      ''
-        hydra-mirror cpu hydra-mirror
-      '';
-  };
-  */
-
   # Set some cgroup limits.
   systemd.services.sshd.serviceConfig.CPUShares = 2000;
+  systemd.services.sshd.serviceConfig.BlockIOWeight = 1000;
   systemd.services.nix-daemon.serviceConfig.CPUShares = 200;
   systemd.services.nix-daemon.serviceConfig.BlockIOWeight = 500;
   systemd.services.hydra-queue-runner.serviceConfig.CPUShares = 200;
+  systemd.services.hydra-queue-runner.serviceConfig.BlockIOWeight = 200;
   systemd.services.hydra-evaluator.serviceConfig.CPUShares = 100;
+  systemd.services.hydra-evaluator.serviceConfig.BlockIOWeight = 100;
   systemd.services.hydra-server.serviceConfig.CPUShares = 700;
+  systemd.services.hydra-server.serviceConfig.BlockIOWeight = 700;
 
   systemd.services.mirror-nixpkgs =
     { description = "Mirror Nixpkgs";
