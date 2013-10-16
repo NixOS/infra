@@ -95,7 +95,7 @@ in
           globalRedirect = "http://nixos.org/";
         }
 
-        { hostName = "wendy.ewi.tudelft.nl";
+        { hostName = "buildfarm.st.ewi.tudelft.nl";
           documentRoot = cleanSource ./webroot;
           enableUserDir = true;
           extraSubservices = [
@@ -192,8 +192,38 @@ in
           ];
         }
 
+/*
         { hostName = "hydra.nixos.org";
           globalRedirect = "https://hydra.nixos.org/";
+        }
+*/
+
+        { hostName = "hydra.nixos.org";
+
+          logFormat = ''"%h %l %u %t \"%r\" %>s %b %D"'';
+          extraConfig = ''
+            TimeOut 900
+
+            <Proxy *>
+              Order deny,allow
+              Allow from all
+            </Proxy>
+
+            ProxyRequests     Off
+            ProxyPreserveHost On
+            ProxyPass         /       http://lucifer:3000/ retry=5 disablereuse=on
+            ProxyPassReverse  /       http://lucifer:3000/
+
+            <Location />
+              SetOutputFilter DEFLATE
+              BrowserMatch ^Mozilla/4\.0[678] no-gzip\
+              BrowserMatch \bMSI[E] !no-gzip !gzip-only-text/html
+              SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip dont-vary
+              SetEnvIfNoCase Request_URI /api/ no-gzip dont-vary
+              SetEnvIfNoCase Request_URI /download/ no-gzip dont-vary
+            </Location>
+
+          '';
         }
 
         { hostName = "hydra.nixos.org";
@@ -244,8 +274,8 @@ in
 
             ProxyRequests     Off
             ProxyPreserveHost On
-            ProxyPass         /       http://lucifer:4000/ retry=5 disablereuse=off
-            ProxyPassReverse  /       http://lucifer:4000/
+            ProxyPass         /       http://wendy:4000/ retry=5 disablereuse=off
+            ProxyPassReverse  /       http://wendy:4000/
           '';
         }
 
