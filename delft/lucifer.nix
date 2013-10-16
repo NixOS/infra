@@ -121,15 +121,29 @@
     };
   */
 
-  systemd.services.mirror-nixos =
-    { description = "Mirror NixOS";
+  systemd.services.mirror-nixos-unstable =
+    { description = "Mirror NixOS Unstable";
       wantedBy = [ "multi-user.target" ];
       after = [ "networking.target" ];
       path = [ pkgs.su ];
       script =
         ''
-          rm -rf /data/releases/nixos/.tmp-*
-          exec su - hydra-mirror -c 'cd release/channels; while true; do ./mirror-nixos.sh; sleep 1200; done'
+          rm -rf /data/releases/nixos/unstable/.tmp-*
+          exec su - hydra-mirror -c 'cd release/channels; while true; do ./mirror-nixos-unstable.sh; sleep 1200; done'
+        '';
+      serviceConfig.Restart = "always";
+      serviceConfig.CPUShares = 100;
+    };
+
+  systemd.services."mirror-nixos-13.10" =
+    { description = "Mirror NixOS 13.10";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "networking.target" ];
+      path = [ pkgs.su ];
+      script =
+        ''
+          rm -rf /data/releases/nixos/13.10/.tmp-*
+          exec su - hydra-mirror -c 'cd release/channels; while true; do ./mirror-nixos-branch.sh 13.10 release-13.10; sleep 1200; done'
         '';
       serviceConfig.Restart = "always";
       serviceConfig.CPUShares = 100;
