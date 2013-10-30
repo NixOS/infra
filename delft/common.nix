@@ -32,8 +32,6 @@ with pkgs.lib;
   hardware.cpu.amd.updateMicrocode = true;
   hardware.cpu.intel.updateMicrocode = true;
 
-  environment.nix = pkgs.nixUnstable;
-
   environment.systemPackages =
     [ pkgs.emacs pkgs.subversion pkgs.sysstat pkgs.hdparm pkgs.sdparm # pkgs.lsiutil
       pkgs.htop pkgs.sqlite pkgs.iotop pkgs.lm_sensors pkgs.gitFull pkgs.hwloc
@@ -44,6 +42,8 @@ with pkgs.lib;
 
   boot.kernel.sysctl."kernel.panic" = 60;
   boot.kernel.sysctl."kernel.panic_on_oops" = 1;
+
+  nix.package = pkgs.nixUnstable;
 
   nix.useChroot = true;
 

@@ -135,7 +135,6 @@ in
 
     nix.maxJobs = 0;
     nix.distributedBuilds = true;
-    nix.manualNixMachines = true;
     nix.useChroot = true;
     nix.nrBuildUsers = 100;
 
