@@ -31,8 +31,7 @@ in
 
     networking.defaultGateway = mkDefault "131.180.119.1";
 
-    #networking.nameservers = mkDefault [ "192.168.1.26" ];
-    networking.nameservers = mkDefault [ "8.8.8.8" ];
+    networking.nameservers = mkDefault [ "130.161.180.1" "130.161.180.65" "131.155.0.38" ];
 
     networking.extraHosts =
       ''
