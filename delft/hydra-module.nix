@@ -14,6 +14,7 @@ let
       base_uri ${cfg.hydraURL}
       notification_sender ${cfg.notificationSender}
       max_servers 50
+      enable_persona 1
 
       <hipchat>
         jobs = (hydra|nixops):.*:.*
