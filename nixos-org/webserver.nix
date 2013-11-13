@@ -175,6 +175,10 @@ in
                         "http://meta.wikimedia.org/w/index.php?title=Spam_blacklist&action=raw&sb_ver=1"
                     );
 
+                    # Enable DNS blacklisting.
+                    $wgEnableDnsBlacklist = true;
+                    $wgDnsBlacklistUrls = array('xbl.spamhaus.org');
+
                     # Use a reCAPTCHA to prevent spam.
                     require_once("$IP/extensions/ConfirmEdit/ConfirmEdit.php");
                     require_once("$IP/extensions/ConfirmEdit/ReCaptcha.php");
@@ -183,6 +187,7 @@ in
                     $wgReCaptchaPrivateKey = '${builtins.readFile ./nixos.org-recaptcha-private-key}';
                     $wgCaptchaTriggers['edit']          = true;
                     $wgCaptchaTriggers['create']        = true;
+
                   '';
                 enableUploads = true;
                 uploadDir = "/data/nixos-mediawiki-upload";
