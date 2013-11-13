@@ -89,6 +89,17 @@ let
               ''
                 #$wgEmailConfirmToEdit = true;
 
+                #$wgDebugLogFile = "/tmp/mediawiki_debug_log.txt";
+
+                # Turn on the mass deletion feature.
+                require_once("$IP/extensions/Nuke/Nuke.php");
+
+                # Prevent pages with blacklisted links.
+                require_once("$IP/extensions/SpamBlacklist/SpamBlacklist.php");
+                $wgSpamBlacklistFiles = array(
+                    "http://meta.wikimedia.org/w/index.php?title=Spam_blacklist&action=raw&sb_ver=1"
+                );
+
                 # Use a reCAPTCHA to prevent spam.
                 require_once("$IP/extensions/ConfirmEdit/ConfirmEdit.php");
                 require_once("$IP/extensions/ConfirmEdit/ReCaptcha.php");
@@ -257,7 +268,7 @@ in
 
   systemd.services.mirror-tarballs =
     { description = "Mirror Nixpkgs tarballs";
-      path  = [ config.environment.nix pkgs.curl pkgs.git ];
+      path  = [ config.nix.package pkgs.curl pkgs.git ];
       #environment.DRY_RUN = "1";
       environment.HYDRA_DISALLOW_UNFREE = "1";
       environment.NIX_PATH = "nixpkgs=/home/tarball-mirror/nixpkgs";
