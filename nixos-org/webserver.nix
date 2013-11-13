@@ -78,41 +78,6 @@ let
             Deny from all
           </Location>
         '';
-
-      extraSubservices =
-        [ { serviceType = "mediawiki";
-            siteName = "Nix Wiki";
-            logo = "/logo/nix-wiki.png";
-            #defaultSkin = "nixos";
-            #skins = [ ./wiki-skins ];
-            extraConfig =
-              ''
-                #$wgEmailConfirmToEdit = true;
-
-                #$wgDebugLogFile = "/tmp/mediawiki_debug_log.txt";
-
-                # Turn on the mass deletion feature.
-                require_once("$IP/extensions/Nuke/Nuke.php");
-
-                # Prevent pages with blacklisted links.
-                require_once("$IP/extensions/SpamBlacklist/SpamBlacklist.php");
-                $wgSpamBlacklistFiles = array(
-                    "http://meta.wikimedia.org/w/index.php?title=Spam_blacklist&action=raw&sb_ver=1"
-                );
-
-                # Use a reCAPTCHA to prevent spam.
-                require_once("$IP/extensions/ConfirmEdit/ConfirmEdit.php");
-                require_once("$IP/extensions/ConfirmEdit/ReCaptcha.php");
-                $wgCaptchaClass = 'ReCaptcha';
-                $wgReCaptchaPublicKey = '6Ldevd8SAAAAAFR6MwnU01FOWJ3O4II3aRJpMQ8F';
-                $wgReCaptchaPrivateKey = '${builtins.readFile ./nixos.org-recaptcha-private-key}';
-                $wgCaptchaTriggers['edit']          = true;
-                $wgCaptchaTriggers['create']        = true;
-              '';
-            enableUploads = true;
-            uploadDir = "/data/nixos-mediawiki-upload";
-          }
-        ];
     };
 
 in
@@ -159,7 +124,12 @@ in
           globalRedirect = "http://nixos.org/";
         }
 
-        nixosVHostConfig
+        (nixosVHostConfig // {
+          extraConfig = nixosVHostConfig.extraConfig +
+            ''
+              Redirect /wiki https://nixos.org/wiki
+            '';
+        })
 
         (nixosVHostConfig // {
           enableSSL = true;
@@ -172,7 +142,7 @@ in
               # Required by Catalyst.
               RequestHeader set X-Forwarded-Port 443
             '';
-          extraSubservices = nixosVHostConfig.extraSubservices ++
+          extraSubservices =
             [ { function = import <services/subversion>;
                 id = "nix";
                 urlPrefix = "";
@@ -184,6 +154,38 @@ in
                   url = http://nixos.org/;
                   logo = "/logo/nixos-lores.png";
                 };
+              }
+              { serviceType = "mediawiki";
+                siteName = "Nix Wiki";
+                logo = "/logo/nix-wiki.png";
+                #defaultSkin = "nixos";
+                #skins = [ ./wiki-skins ];
+                extraConfig =
+                  ''
+                    #$wgEmailConfirmToEdit = true;
+
+                    #$wgDebugLogFile = "/tmp/mediawiki_debug_log.txt";
+
+                    # Turn on the mass deletion feature.
+                    require_once("$IP/extensions/Nuke/Nuke.php");
+
+                    # Prevent pages with blacklisted links.
+                    require_once("$IP/extensions/SpamBlacklist/SpamBlacklist.php");
+                    $wgSpamBlacklistFiles = array(
+                        "http://meta.wikimedia.org/w/index.php?title=Spam_blacklist&action=raw&sb_ver=1"
+                    );
+
+                    # Use a reCAPTCHA to prevent spam.
+                    require_once("$IP/extensions/ConfirmEdit/ConfirmEdit.php");
+                    require_once("$IP/extensions/ConfirmEdit/ReCaptcha.php");
+                    $wgCaptchaClass = 'ReCaptcha';
+                    $wgReCaptchaPublicKey = '6Ldevd8SAAAAAFR6MwnU01FOWJ3O4II3aRJpMQ8F';
+                    $wgReCaptchaPrivateKey = '${builtins.readFile ./nixos.org-recaptcha-private-key}';
+                    $wgCaptchaTriggers['edit']          = true;
+                    $wgCaptchaTriggers['create']        = true;
+                  '';
+                enableUploads = true;
+                uploadDir = "/data/nixos-mediawiki-upload";
               }
             ];
         })
