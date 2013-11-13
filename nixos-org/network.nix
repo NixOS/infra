@@ -41,30 +41,29 @@ in
       deployment.ec2.zone = zone;
       deployment.ec2.instanceType = "m1.medium";
       deployment.ec2.accessKeyId = accessKeyId;
-      deployment.ec2.keyPair = resources.ec2KeyPairs.default.name;
+      deployment.ec2.keyPair = resources.ec2KeyPairs.default;
       deployment.ec2.securityGroups = [ "public-web" "public-ssh" ];
-      deployment.ec2.elasticIPv4 = "54.217.220.47";
-      #deployment.ec2.elasticIPv4 = resources.elasticIPs."nixos.org".address;
+      deployment.ec2.elasticIPv4 = resources.elasticIPs."nixos.org";
 
       fileSystems."/tarballs" =
         { autoFormat = true;
           fsType = "ext4";
           device = "/dev/xvdf";
-          ec2.disk = "vol-29618e05";
+          ec2.disk = resources.ebsVolumes.tarballs;
         };
 
       fileSystems."/releases" =
         { autoFormat = true;
           fsType = "ext4";
           device = "/dev/xvdg";
-          ec2.disk = "vol-93af41bf";
+          ec2.disk = resources.ebsVolumes.releases;
         };
 
       fileSystems."/data" =
         { autoFormat = true;
           fsType = "ext4";
           device = "/dev/xvdh";
-          ec2.disk = "vol-63957b4f";
+          ec2.disk = resources.ebsVolumes.data;
         };
 
       fileSystems."/data/releases" =
