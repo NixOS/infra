@@ -179,15 +179,19 @@ in
                     $wgEnableDnsBlacklist = true;
                     $wgDnsBlacklistUrls = array('xbl.spamhaus.org');
 
-                    # Use a reCAPTCHA to prevent spam.
+                    # Require users to answer a question.
                     require_once("$IP/extensions/ConfirmEdit/ConfirmEdit.php");
-                    require_once("$IP/extensions/ConfirmEdit/ReCaptcha.php");
-                    $wgCaptchaClass = 'ReCaptcha';
-                    $wgReCaptchaPublicKey = '6Ldevd8SAAAAAFR6MwnU01FOWJ3O4II3aRJpMQ8F';
-                    $wgReCaptchaPrivateKey = '${builtins.readFile ./nixos.org-recaptcha-private-key}';
-                    $wgCaptchaTriggers['edit']          = true;
-                    $wgCaptchaTriggers['create']        = true;
+                    $wgCaptchaTriggers['edit'] = true;
+                    $wgCaptchaTriggers['create'] = true;
 
+                    require_once("$IP/extensions/ConfirmEdit/QuestyCaptcha.php");
+                    $wgCaptchaClass = 'QuestyCaptcha';
+                    $arr = array(
+                        "What is the name of the Linux distribution to which this wiki is dedicated?" => "NixOS",
+                    );
+                    foreach ($arr as $key => $value) {
+                        $wgCaptchaQuestions[] = array('question' => $key, 'answer' => $value);
+                    }
                   '';
                 enableUploads = true;
                 uploadDir = "/data/nixos-mediawiki-upload";
