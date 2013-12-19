@@ -10,10 +10,7 @@ let
       documentRoot = "/home/eelco/nix-homepage";
       enableUserDir = true;
       servedDirs =
-        [ { urlPath = "/tarballs";
-            dir = "/tarballs";
-          }
-          { urlPath = "/irc";
+        [ { urlPath = "/irc";
             dir = "/data/irc";
           }
           /*
@@ -63,6 +60,7 @@ let
           Redirect /releases/nixpkgs/channels /channels
           Redirect /releases/nixos/channels /channels
           Redirect /releases http://releases.nixos.org
+          Redirect /tarballs http://tarballs.nixos.org
 
           <Location /server-status>
             SetHandler server-status
@@ -193,7 +191,12 @@ in
         })
 
         { hostName = "tarballs.nixos.org";
+          serverAliases = [ "tarballs-uncached.nixos.org" ];
           documentRoot = "/tarballs";
+          extraConfig =
+            ''
+              UseCanonicalName on
+            '';
         }
 
         { hostName = "releases.nixos.org";
