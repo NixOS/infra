@@ -21,19 +21,8 @@ let
             dir = "/data/webserver/update";
           }
           */
-          # Backwards compatibility.
-          { urlPath = "/releases/nixpkgs/channels";
-            dir = "/releases/channels";
-          }
-          # Backwards compatibility.
-          { urlPath = "/releases/nixos/channels";
-            dir = "/releases/channels";
-          }
           { urlPath = "/channels";
             dir = "/releases/channels";
-          }
-          { urlPath = "/releases";
-            dir = "/releases";
           }
           { urlPath = "/nix/manual";
             dir = "/releases/nix/latest/manual";
@@ -70,6 +59,10 @@ let
           </Location>
 
           Redirect /binary-cache http://cache.nixos.org
+          Redirect /releases/channels /channels
+          Redirect /releases/nixpkgs/channels /channels
+          Redirect /releases/nixos/channels /channels
+          Redirect /releases http://releases.nixos.org
 
           <Location /server-status>
             SetHandler server-status
@@ -201,6 +194,22 @@ in
 
         { hostName = "tarballs.nixos.org";
           documentRoot = "/tarballs";
+        }
+
+        { hostName = "releases.nixos.org";
+          serverAliases = [ "releases-uncached.nixos.org" ];
+          extraConfig =
+            ''
+              UseCanonicalName on
+
+              # We don't want /channels to be cached by CloudFront.
+              Redirect /channels http://nixos.org/channels
+            '';
+          servedDirs =
+            [ { urlPath = "/";
+                dir = "/releases";
+              }
+            ];
         }
 
         { hostName = "planet.nixos.org";
