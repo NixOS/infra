@@ -16,7 +16,7 @@ in
   resources.ebsVolumes.releases =
     { name = "Nix/Nixpkgs/NixOS releases";
       inherit region zone accessKeyId;
-      size = 250;
+      size = 500;
     };
 
   resources.ebsVolumes.data =
@@ -55,7 +55,7 @@ in
       fileSystems."/releases" =
         { autoFormat = true;
           fsType = "ext4";
-          device = "/dev/xvdg";
+          device = "/dev/xvdi";
           ec2.disk = resources.ebsVolumes.releases;
         };
 
@@ -72,6 +72,6 @@ in
           options = "bind";
         };
 
-      require = [ ./webserver.nix ];
+      imports = [ ./webserver.nix ];
     };
 }
