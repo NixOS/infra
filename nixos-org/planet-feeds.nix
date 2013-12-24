@@ -19,4 +19,8 @@
     feedUrl = "http://blog.lastlog.de/tags/nixos/index.atom";
     homepageUrl = "http://blog.lastlog.de";
   }
+  { name = "Rob Vermaas";
+    feedUrl = "http://nixer.ghost.io/rss/";
+    homepageUrl = "http://nixer.ghost.io";
+  }
 ]
