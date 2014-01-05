@@ -1,4 +1,8 @@
 [
+  { name = "Matej Cotman";
+    feedUrl = "http://matejc.scriptores.com/matejc-nixos/RSS";
+    homepageUrl= "http://matejc.scriptores.com";
+  }
   { name = "Rok Garbas";
     feedUrl = "http://garbas.si/blog/category/latest-nixos/RSS";
     homepageUrl= "http://garbas.si";
