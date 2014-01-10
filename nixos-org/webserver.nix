@@ -57,8 +57,6 @@ let
 
           Redirect /binary-cache http://cache.nixos.org
           Redirect /releases/channels /channels
-          Redirect /releases/nixpkgs/channels /channels
-          Redirect /releases/nixos/channels /channels
           Redirect /releases http://releases.nixos.org
           Redirect /tarballs http://tarballs.nixos.org
 
