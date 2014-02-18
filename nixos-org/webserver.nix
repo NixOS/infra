@@ -7,7 +7,7 @@ let
   nixosVHostConfig =
     { hostName = "nixos.org";
       serverAliases = [ "test.nixos.org" "test2.nixos.org" "ipv6.nixos.org" "localhost" ];
-      documentRoot = "/home/eelco/nix-homepage";
+      documentRoot = "/home/eelco/nixos-homepage";
       enableUserDir = true;
       servedDirs =
         [ { urlPath = "/irc";
@@ -29,6 +29,9 @@ let
           }
           { urlPath = "/nixos/manual";
             dir = "/releases/channels/nixos-13.10/manual";
+          }
+          { urlPath = "/new";
+            dir = "/home/eelco/nixos-homepage-new";
           }
         ];
 
