@@ -62,7 +62,7 @@ with pkgs.lib;
     [ "15 4 * * * root cp -v /var/backup/postgresql/* /backup/wendy/postgresql/  &> /var/log/backup-db.log"
     ];
 
-  services.radvd.enable = true;
+  services.radvd.enable = false;
   services.radvd.config =
     ''
       interface ${config.system.build.mainPhysicalInterface} {
