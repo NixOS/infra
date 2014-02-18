@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  require = [ ./common.nix ./hydra-module.nix ./megacli.nix ];
+  require = [ ./common.nix ./hydra-module.nix ./megacli.nix ./datadog.nix ];
 
   nixpkgs.system = "x86_64-linux";
 
