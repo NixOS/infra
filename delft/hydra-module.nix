@@ -16,6 +16,9 @@ let
       max_servers 50
       enable_persona 1
 
+      binary_cache_key_name = hydra.nixos.org-1
+      binary_cache_private_key_file = /home/hydra/cache-keys/hydra.nixos.org-1.sec
+
       <hipchat>
         jobs = (hydra|nixops):.*:.*
         room = 182482
