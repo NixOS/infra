@@ -60,6 +60,10 @@ with pkgs.lib;
 
   services.cron.systemCronJobs =
     [ "15 4 * * * root cp -v /var/backup/postgresql/* /backup/wendy/postgresql/  &> /var/log/backup-db.log"
+      # Force the sixxs tunnel to stay alive by periodically
+      # pinging the other side.  This is necessary to remain
+      # reachable from the outside.
+      "*/10 * * * * root ${pkgs.iputils}/sbin/ping6 -c 1 2001:610:600:88d::1"
     ];
 
   services.radvd.enable = false;
