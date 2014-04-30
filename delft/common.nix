@@ -5,6 +5,8 @@ with pkgs.lib;
 {
   imports = [ ./static-net-config.nix ];
 
+  nixpkgs.config.allowUnfree = true;
+
   users.extraUsers.root.openssh.authorizedKeys.keys =
     [ # ~/.ssh/id_mass_update
       "ssh-dss AAAAB3NzaC1kc3MAAACBAN/f/VlDwxI0T51Kqen4WLz0ittuJFAgPZ6VwbwPPyHRpmKY/m5Zd2nycY8zDTDF1JJGlFpDC3wsoOlaYr4/AlJvRy/0SUvlnDcocXHs1BM1ZLWV2MdUuG6dCHNUYDsQat8bKm4YdjLmfL1p/PKpKS83+0S59u1PCkPWsoL0Wqc7AAAAFQCU4FSXrHs9GHEKuXQ2zpmsKcx2kwAAAIB40t8aJlEipcDtLPax3wfPxqAtbzDsYPuYrX5VF48tdbH4f/kZPm1qKaU7vq+m5n0uuT3mxsBFzuQpDcPhL7ZXJJEHRDMJgvq3dOCk0ejrXTTdnYHDMWUdC9S2f8kYTJ0lf7Jwro5R97PsTpsjfDRGLWoXUfpF6NARANQ0q+tM3wAAAIA14dh6XTX2NBsh+Cew8YYSX5ZK76zNREEbXxuzecXuP2VP14ZR3fMLXI201QyWP+U1Kj8QsS1v2XQ2MtNnXW3HOCb5C0L2Qs0AIV5YQ+UhXUen2RgA8tITUBBV6hLvdhnrmZ8Odrmf0+iAGXBxTgXwpWqW6X9W3CbXyA1Ncs0ZSQ== root@buildfarm"

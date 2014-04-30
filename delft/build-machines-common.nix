@@ -31,17 +31,6 @@ in
     "0,30 * * * * ${m3chown}"
   ];
 
-  users.extraUsers =
-    [ { name = "buildfarm";
-        description = "Hydra unprivileged build slave";
-        group = "users";
-        home = "/home/buildfarm";
-        useDefaultShell = true;
-        createHome = true;
-        isSystemUser = false;
-      }
-    ];
-
   # !!! Should have a NixOS option for installing files into a declarative user account.
   system.activationScripts.buildfarmSSHKey = stringAfter [ "users" ]
     ''
