@@ -43,7 +43,7 @@ with pkgs.lib;
   boot.kernel.sysctl."kernel.panic" = 60;
   boot.kernel.sysctl."kernel.panic_on_oops" = 1;
 
-  nix.package = pkgs.nixUnstable;
+  #nix.package = pkgs.nixUnstable;
 
   nix.useChroot = true;
 
