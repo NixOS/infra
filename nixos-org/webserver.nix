@@ -28,7 +28,8 @@ let
             dir = "/releases/channels/nixpkgs-unstable/manual";
           }
           { urlPath = "/nixos/manual";
-            dir = "/releases/channels/nixos-13.10/manual";
+            dir = "/releases/channels/nixos-14.04/manual";
+          }
           }
           { urlPath = "/new";
             dir = "/home/eelco/nixos-homepage-new";
