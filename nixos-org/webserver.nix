@@ -30,6 +30,8 @@ let
           { urlPath = "/nixos/manual";
             dir = "/releases/channels/nixos-14.04/manual";
           }
+          { urlPath = "/nixops/manual";
+            dir = "/releases/nixops/latest/manual";
           }
           { urlPath = "/new";
             dir = "/home/eelco/nixos-homepage-new";
