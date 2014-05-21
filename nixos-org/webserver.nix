@@ -89,6 +89,8 @@ in
     domain = "st.ewi.tudelft.nl";
   };
 
+  environment.systemPackages = [ pkgs.perlPackages.XMLSimple ];
+
   security.pam.enableSSHAgentAuth = true;
 
   services.httpd = {
@@ -297,17 +299,19 @@ in
     { description = "Mirror Nixpkgs tarballs";
       path  = [ config.nix.package pkgs.curl pkgs.git ];
       #environment.DRY_RUN = "1";
-      environment.HYDRA_DISALLOW_UNFREE = "1";
       environment.NIX_PATH = "nixpkgs=/home/tarball-mirror/nixpkgs";
       environment.NIX_REMOTE = "daemon";
       environment.CURL_CA_BUNDLE = "/etc/ssl/certs/ca-bundle.crt";
+      environment.NIX_TARBALLS_CACHE = "/tarballs";
+      environment.PERL5LIB = "/run/current-system/sw/lib/perl5/site_perl";
       serviceConfig.User = "tarball-mirror";
       script =
         ''
           export NIX_CURL_FLAGS="--silent --show-error --connect-timeout 30"
           cd /home/tarball-mirror/nixpkgs
+          git checkout release-14.04
           git pull
-          exec /nix/var/nix/profiles/per-user/root/channels/nixos/nixpkgs/maintainers/scripts/copy-tarballs.sh
+          exec /nix/var/nix/profiles/per-user/root/channels/nixos/nixpkgs/maintainers/scripts/copy-tarballs.pl
         '';
     };
 
