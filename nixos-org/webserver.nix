@@ -353,4 +353,6 @@ in
     feeds = import ./planet-feeds.nix;
   };
 
+  nix.gc.automatic = true;
+
 }
