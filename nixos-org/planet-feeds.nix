@@ -3,6 +3,10 @@
     feedUrl = "http://matejc.scriptores.com/matejc-nixos/RSS";
     homepageUrl= "http://matejc.scriptores.com";
   }
+  { name = "Georges Dubus";
+    feedUrl = "http://compiletoi.net/feeds/nixos.atom.xml";
+    homepageUrl = "http://compiletoi.net/";
+  }
   { name = "Rok Garbas";
     feedUrl = "http://garbas.si/blog/category/latest-nixos/RSS";
     homepageUrl= "http://garbas.si";
