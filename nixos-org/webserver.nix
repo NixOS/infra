@@ -91,7 +91,7 @@ in
     domain = "st.ewi.tudelft.nl";
   };
 
-  environment.systemPackages = [ pkgs.perlPackages.XMLSimple ];
+  environment.systemPackages = [ pkgs.perlPackages.XMLSimple pkgs.git pkgs.openssl ];
 
   security.pam.enableSSHAgentAuth = true;
 
