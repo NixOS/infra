@@ -33,9 +33,11 @@ let
           { urlPath = "/nixops/manual";
             dir = "/releases/nixops/latest/manual";
           }
+          /*
           { urlPath = "/new";
             dir = "/home/eelco/nixos-homepage-new";
           }
+          */
         ];
 
       extraConfig =
@@ -313,11 +315,23 @@ in
           git pull
           exec /nix/var/nix/profiles/per-user/root/channels/nixos/nixpkgs/maintainers/scripts/copy-tarballs.pl
         '';
+      startAt = "05:30";
     };
 
-  systemd.timers.mirror-tarballs =
-    { wantedBy = [ "timers.target" ];
-      timerConfig.OnCalendar = "05:30";
+  systemd.services.update-homepage =
+    { description = "Update nixos.org homepage";
+      path = [ config.nix.package pkgs.git pkgs.bash ];
+      serviceConfig.User = "eelco";
+      environment.NIX_PATH = "/nix/var/nix/profiles/per-user/root/channels/nixos";
+      environment.NIX_REMOTE = "daemon";
+      environment.CURL_CA_BUNDLE = "/etc/ssl/certs/ca-bundle.crt";
+      script =
+        ''
+          cd /home/eelco/nixos-homepage
+          git pull
+          exec nix-shell --command 'make UPDATE=1'
+        '';
+      startAt = "*:0/20";
     };
 
   system.activationScripts.setShmMax =
