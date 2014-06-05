@@ -1,7 +1,7 @@
 [
   { name = "Matej Cotman";
-    feedUrl = "http://matejc.scriptores.com/matejc-nixos/RSS";
-    homepageUrl= "http://matejc.scriptores.com";
+    feedUrl = "http://blog.matejc.com/matejc-nixos/RSS";
+    homepageUrl= "http://blog.matejc.com";
   }
   { name = "Georges Dubus";
     feedUrl = "http://compiletoi.net/feeds/nixos.atom.xml";
