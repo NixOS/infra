@@ -120,7 +120,7 @@ with pkgs.lib;
   # Use cgroups to limit Apache's resources.
   systemd.services.httpd.serviceConfig.CPUShares = 1000;
   systemd.services.httpd.serviceConfig.MemoryLimit = "1500M";
-  systemd.services.httpd.serviceConfig.ControlGroupAttribute = [ "memory.memsw.limit_in_bytes 1500M" ];
+  #systemd.services.httpd.serviceConfig.ControlGroupAttribute = [ "memory.memsw.limit_in_bytes 1500M" ];
 
   services.zabbixServer.enable = true;
   services.zabbixServer.dbServer = "wendy";
