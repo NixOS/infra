@@ -27,7 +27,7 @@ let
           { urlPath = "/nixpkgs/manual";
             dir = "/releases/channels/nixpkgs-unstable/manual";
           }
-          { urlPath = "/nixos/manual";
+          { urlPath = "/nixos/manual-raw";
             dir = "/releases/channels/nixos-14.04/manual";
           }
           { urlPath = "/nixops/manual";
