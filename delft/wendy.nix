@@ -1,21 +1,49 @@
 { config, pkgs, ... }:
 
 with pkgs.lib;
+let
+  duplicityBackup = pkgs.writeScript "backup-duplicity" ''
+    #! /bin/sh
+    echo "Starting backups"
+    export PATH=$PATH:/var/run/current-system/sw/bin
+    time duplicity --full-if-older-than 30D --no-encryption /data/pt-wiki file:///backup/cartman/pt-wiki
+    time duplicity --no-encryption --force remove-all-inc-of-but-n-full 1 file:///backup/cartman/pt-wiki
 
+    time duplicity --full-if-older-than 30D --no-encryption /data/subversion file:///backup/cartman/subversion
+    time duplicity --no-encryption --force remove-all-inc-of-but-n-full 1 file:///backup/cartman/subversion
+
+    time duplicity --full-if-older-than 30D --no-encryption /data/subversion-ptg file:///backup/cartman/subversion-ptg
+    time duplicity --no-encryption --force remove-all-inc-of-but-n-full 1 file:///backup/cartman/subversion-ptg
+
+    time duplicity --full-if-older-than 30D --no-encryption /data/subversion-strategoxt file:///backup/cartman/subversion-strategoxt
+    time duplicity --no-encryption --force remove-all-inc-of-but-n-full 1 file:///backup/cartman/subversion-strategoxt
+
+    echo Done
+  '';
+
+in
 {
-  imports = [ ./build-machines-dell-r815.nix ./delft-webserver.nix ./sysstat.nix ];
+  imports = [ ./build-machines-dell-r815.nix ./delft-webserver.nix ./sysstat.nix ./datadog.nix ];
 
   fileSystems."/backup" =
     { device = "130.161.158.5:/dxs/users4/group/buildfarm";
       fsType = "nfs4";
     };
 
-    /*
+  services.dd-agent.postgresqlConfig = ''
+    init_config:
+
+    instances:
+       -   host: localhost
+           port: 5432
+           username: datadog
+           password: ${builtins.readFile ./datadog.secret}
+  '';
+
   services.postgresqlBackup = {
     enable = true;
-    databases = [ "hydra" "jira" ];
+    databases = [ "hydra" ];
   };
-  */
 
   services.postgresql = {
     enable = true;
@@ -64,6 +92,7 @@ with pkgs.lib;
       # pinging the other side.  This is necessary to remain
       # reachable from the outside.
       "*/10 * * * * root ${pkgs.iputils}/sbin/ping6 -c 1 2001:610:600:88d::1"
+      "40 2 * * *  root ${duplicityBackup} &>> /var/log/backup-duplicity.log"
     ];
 
   services.radvd.enable = false;
@@ -136,4 +165,25 @@ with pkgs.lib;
         '';
       startAt = "*:03";
     };
+
+  services.logrotate.enable = true;
+  services.logrotate.config = ''
+    /var/log/httpd/access_log
+    /var/log/httpd/error_log
+    /var/log/httpd/access_log*.nl
+    /var/log/httpd/error_log*.nl
+    /var/log/httpd/access_log*.org
+    /var/log/httpd/error_log*.org
+    {
+      daily
+      dateext
+      rotate 10000
+      compress
+      sharedscripts
+      postrotate
+        ${pkgs.coreutils}/bin/kill -HUP `${pkgs.coreutils}/bin/cat /var/run/httpd/httpd.pid`
+      endscript
+    }
+  '';
+
 }
