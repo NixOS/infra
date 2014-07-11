@@ -141,7 +141,7 @@ in
     nix.distributedBuilds = true;
 
     nix.gc.automatic = true;
-    nix.gc.options = ''--max-freed "$((400 * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | ${pkgs.gawk}/bin/awk '{ print $4 }')))"'';
+    nix.gc.options = ''--max-freed "$((700 * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | ${pkgs.gawk}/bin/awk '{ print $4 }')))"'';
 
     nix.extraOptions = ''
       gc-keep-outputs = true
@@ -229,10 +229,10 @@ in
           ''
             #! /bin/sh
             if [ $(($(stat -f -c '%a' /nix/store) * $(stat -f -c '%S' /nix/store))) -lt $((${toString cfg.minimumDiskFree} * 1024**3)) ]; then
-                stop hydra-queue-runner
+                systemctl stop hydra-queue-runner
             fi
             if [ $(($(stat -f -c '%a' /nix/store) * $(stat -f -c '%S' /nix/store))) -lt $((${toString cfg.minimumDiskFreeEvaluator} * 1024**3)) ]; then
-                stop hydra-evaluator
+                systemctl stop hydra-evaluator
             fi
           '';
         compressLogs = pkgs.writeScript "compress-logs"
@@ -244,7 +244,7 @@ in
       in
       [ "*/5 * * * * root ${checkSpace} &> ${cfg.baseDir}/data/checkspace.log"
         "15  5 * * * root ${compressLogs} &> ${cfg.baseDir}/data/compress.log"
-        "15  2 * * * root ${pkgs.systemd}/bin/systemctl start hydra-update-gc-roots.service"
+        "15  2,14 * * * root ${pkgs.systemd}/bin/systemctl start hydra-update-gc-roots.service"
       ];
 
   };
