@@ -31,11 +31,8 @@ in
     "0,30 * * * * ${m3chown}"
   ];
 
-  # !!! Should have a NixOS option for installing files into a declarative user account.
-  system.activationScripts.buildfarmSSHKey = stringAfter [ "users" ]
+  users.extraUsers.root.openssh.authorizedKeys.keys = singleton
     ''
-      mkdir -m 700 -p /home/buildfarm/.ssh
-      cp ${./id_buildfarm.pub} /home/buildfarm/.ssh/authorized_keys
-      chown -R buildfarm.users /home/buildfarm/.ssh
+      command="nix-store --serve --write" ${readFile ./id_buildfarm.pub}
     '';
 }
