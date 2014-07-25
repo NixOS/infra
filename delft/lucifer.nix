@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  require = [ ./common.nix ./hydra-module.nix ./megacli.nix ./datadog.nix ];
+  require = [ ./common.nix ./hydra-module.nix ./megacli.nix ./datadog.nix ./datadog/hydra.nix ];
 
   nixpkgs.system = "x86_64-linux";
 
@@ -9,7 +9,7 @@
     [ pkgs.wget
       pkgs.perlPackages.DBDSQLite pkgs.perlPackages.NetAmazonS3 pkgs.perlPackages.ForksSuper pkgs.nodePackages.jsontool # for hydra-mirror
       pkgs.python pkgs.pythonPackages.boto # for upload-binary-cache-s3.py
-      pkgs.megacli
+      pkgs.megacli config.boot.kernelPackages.sysdig
     ];
 
   networking.hostName = "lucifer";
@@ -19,6 +19,7 @@
   boot.loader.grub.copyKernels = true;
   boot.initrd.kernelModules = [ "uhci_hcd" "ehci_hcd" "ata_piix" "megaraid_sas" "usbhid" ];
   boot.kernelModules = [ "acpi-cpufreq" "kvm-intel" ];
+  boot.extraModulePackages = [config.boot.kernelPackages.sysdig];
 
   services.hydra.enable = true;
   services.hydra.logo = ./hydra-logo.png;
@@ -143,7 +144,7 @@
       script =
         ''
           rm -rf /data/releases/nixos/13.10/.tmp-*
-          exec su - hydra-mirror -c 'cd release/channels; while true; do ./mirror-nixos-stable.sh 13.10; sleep 1200; done'
+          exec su - hydra-mirror -c 'cd release/channels; while true; do ./mirror-nixos-branch.sh 13.10 release-13.10; sleep 1200; done'
         '';
       serviceConfig.Restart = "always";
       serviceConfig.CPUShares = 100;
@@ -157,7 +158,7 @@
       script =
         ''
           rm -rf /data/releases/nixos/14.04/.tmp-*
-          exec su - hydra-mirror -c 'cd release/channels; while true; do ./mirror-nixos-branch.sh 14.04 release-14.04; sleep 1200; done'
+          exec su - hydra-mirror -c 'cd release/channels; while true; do ./mirror-nixos-stable.sh 14.04; sleep 1200; done'
         '';
       serviceConfig.Restart = "always";
       serviceConfig.CPUShares = 100;
