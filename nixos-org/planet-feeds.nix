@@ -31,4 +31,8 @@
     feedUrl = "http://nixer.ghost.io/rss/";
     homepageUrl = "http://nixer.ghost.io";
   }
+  { name = "Luca Bruno";
+    feedUrl = "http://lethalman.blogspot.com/feeds/posts/default/-/nix";
+    homepageUrl = "http://lethalman.blogspot.com";
+  }
 ]
