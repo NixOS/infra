@@ -4,6 +4,8 @@ with pkgs.lib;
 
 let
 
+  sshKeys = import ../ssh-keys.nix;
+
   nixosVHostConfig =
     { hostName = "nixos.org";
       serverAliases = [ "test.nixos.org" "test2.nixos.org" "ipv6.nixos.org" "localhost" ];
@@ -248,8 +250,7 @@ in
       home = "/home/eelco";
       isSystemUser = false;
       useDefaultShell = true;
-      openssh.authorizedKeys.keys =
-        [ "ssh-dss AAAAB3NzaC1kc3MAAACBAOo3foMFsYvc+LEVVTAeXpaxdOFG6O2NE9coxZYN6UtwE477GwkvZ4uKymAekq3TB8I6dDg4QFfE27fIip/rQHJ/Rus+KsxwnTbwPzE0WcZVpkKQsepsoqLkfwMpiPfn5/oxcnJsimwRY/E95aJmmOHdGaYWrc0t4ARa+6teUgdFAAAAFQCSQq2Wil0/X4hDypGGUKlKvYyaWQAAAIAy/0fSDnz1tZOQBGq7q78y406HfWghErrVlrW9g+foJQG5pgXXcdJs9JCIrlaKivUKITDsYnQaCjrZaK8eHnc4ksbkSLfDOxFnR5814ulCftrgEDOv9K1UU3pYketjFMvQCA2U48lR6jG/99CPNXPH55QEFs8H97cIsdLQw9wM4gAAAIEAmzWZlXLzIf3eiHQggXqvw3+C19QvxQITcYHYVTx/XYqZi1VZ/fkY8bNmdcJsWFyOHgEhpEca+xM/SNvH/14rXDmt0wtclLEx/4GVLi59hQCnnKqv7HzJg8RF4v6XTiROBAEEdb4TaFuFn+JCvqPzilTzXTexvZKJECOvfYcY+10= eelco.dolstra@logicblox.com" ];
+      openssh.authorizedKeys.keys = [ sshKeys.eelco ];
     };
 
   users.extraUsers.rbvermaa =
@@ -260,8 +261,7 @@ in
       home = "/home/rbvermaa";
       isSystemUser = false;
       useDefaultShell = true;
-      openssh.authorizedKeys.keys =
-        [ "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDI6/qMXX80oWm+NyftRw45D+mRJwJQ6gexkUhp1OgZc3MuW6Zm2RO2IZHEjJLSMUndZebbznPmPPM58VxiyQnRYH2+hn+qCrwSsyCUxA8Gz6PpxeaeUMlpbsuXOPFbvBraDZEqIvx/gIK849nIahGz3EcfaY73lVRP+MrrVHBGyQmaOLoNfzrJp8rZfLqokQQXmG1d3DzjkIi87TZLgrdxQewpk/4eKBKf8FDnEYeV3ood78SPa3syS48al99Q7e8JyAEZJfyCQkUSUxgSizU5+se1A5seDJg2Vsqef1Ah23g/lTtSn93vtjjLvObvMJTSplBO8ttG/3ylIewWYER/ rbvermaa@nixos" ];
+      openssh.authorizedKeys.keys = [ sshKeys.rob ];
     };
 
   users.extraUsers.irclogs =
@@ -280,7 +280,7 @@ in
       home = "/home/tarball-mirror";
       createHome = true;
       useDefaultShell = true;
-      openssh.authorizedKeys.keys = singleton "ssh-dss AAAAB3NzaC1kc3MAAACBAOo3foMFsYvc+LEVVTAeXpaxdOFG6O2NE9coxZYN6UtwE477GwkvZ4uKymAekq3TB8I6dDg4QFfE27fIip/rQHJ/Rus+KsxwnTbwPzE0WcZVpkKQsepsoqLkfwMpiPfn5/oxcnJsimwRY/E95aJmmOHdGaYWrc0t4ARa+6teUgdFAAAAFQCSQq2Wil0/X4hDypGGUKlKvYyaWQAAAIAy/0fSDnz1tZOQBGq7q78y406HfWghErrVlrW9g+foJQG5pgXXcdJs9JCIrlaKivUKITDsYnQaCjrZaK8eHnc4ksbkSLfDOxFnR5814ulCftrgEDOv9K1UU3pYketjFMvQCA2U48lR6jG/99CPNXPH55QEFs8H97cIsdLQw9wM4gAAAIEAmzWZlXLzIf3eiHQggXqvw3+C19QvxQITcYHYVTx/XYqZi1VZ/fkY8bNmdcJsWFyOHgEhpEca+xM/SNvH/14rXDmt0wtclLEx/4GVLi59hQCnnKqv7HzJg8RF4v6XTiROBAEEdb4TaFuFn+JCvqPzilTzXTexvZKJECOvfYcY+10= eelco.dolstra@logicblox.com";
+      openssh.authorizedKeys.keys = [ sshKeys.eelco ];
     };
 
   users.extraUsers.hydra-mirror =
@@ -290,7 +290,7 @@ in
       useDefaultShell = true;
       openssh.authorizedKeys.keys =
         [ "ssh-dss AAAAB3NzaC1kc3MAAACBAOIPMVtw25pZ6P3paDOhIJTt+31aqwx3IvV06hTJFM+uy74DQhNZyUf6KDkc5j8JNp/xEHVpA2IVSO2q7Tpn3et8YjkCrz0D5x5Te71haRnJMSQlqUq1E/4oHEnRGxzguPuSWB3wL/zEfw2UFMCxl21JsIwJsULYguERgkx7YG7/AAAAFQDhtQ2xU78YwA1DMx9/wjvAHmYL5wAAAIEAm8uFFbn466OTJIUVh3FAFUgj/rwyasa7EYArgdYXH1LUVpQjuC+UZQrA3imlBh9/7zuuQm5+vaJAxyu5Cf9mq42n80xPzJRgMfw5RYURK/CXAmHLOs4jMk6O/XjhPhv9qoci8S81FVN6wbDkoJhXtjcefetQ0eM4Brhw4Jyai7AAAACAOza+xJqdT0znNi8pLh5xnVmbCoxF0YgeLcqCz5iDWHJv64+8MbBfLAwvYaDrJ9A9v3/JdBfa3NXdr581NtXQEvpzvAeoMcT5j5ASu2Vj8xZp2TEKvAjcOsuWq6nF84H6V27dXuBnwqkD6XSusMeTy8YsBJfJdmGOgXSwoRkmsV8= hydra-mirror@lucifer"
-          "ssh-dss AAAAB3NzaC1kc3MAAACBAOo3foMFsYvc+LEVVTAeXpaxdOFG6O2NE9coxZYN6UtwE477GwkvZ4uKymAekq3TB8I6dDg4QFfE27fIip/rQHJ/Rus+KsxwnTbwPzE0WcZVpkKQsepsoqLkfwMpiPfn5/oxcnJsimwRY/E95aJmmOHdGaYWrc0t4ARa+6teUgdFAAAAFQCSQq2Wil0/X4hDypGGUKlKvYyaWQAAAIAy/0fSDnz1tZOQBGq7q78y406HfWghErrVlrW9g+foJQG5pgXXcdJs9JCIrlaKivUKITDsYnQaCjrZaK8eHnc4ksbkSLfDOxFnR5814ulCftrgEDOv9K1UU3pYketjFMvQCA2U48lR6jG/99CPNXPH55QEFs8H97cIsdLQw9wM4gAAAIEAmzWZlXLzIf3eiHQggXqvw3+C19QvxQITcYHYVTx/XYqZi1VZ/fkY8bNmdcJsWFyOHgEhpEca+xM/SNvH/14rXDmt0wtclLEx/4GVLi59hQCnnKqv7HzJg8RF4v6XTiROBAEEdb4TaFuFn+JCvqPzilTzXTexvZKJECOvfYcY+10= eelco.dolstra@logicblox.com"
+          sshKeys.eelco
         ];
     };
 

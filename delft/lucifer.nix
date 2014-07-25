@@ -164,4 +164,7 @@
       serviceConfig.CPUShares = 100;
     };
 
+  nix.sshServe.enable = true;
+  nix.sshServe.keys = with import ../ssh-keys.nix; [ eelco rob ];
+
 }
