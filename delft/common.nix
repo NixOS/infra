@@ -97,4 +97,10 @@ with pkgs.lib;
           fi
         '';
     };
+
+  # Disable the systemd-journald watchdog. The default timeout (1min)
+  # can easily be triggered on our slow, heavily-loaded disks. And
+  # that may cause services writing to the journal to fail until
+  # they're restarted.
+  systemd.services.systemd-journald.serviceConfig.WatchdogSec = 0;
 }
