@@ -53,6 +53,10 @@ let
             Order deny,allow
             Deny from all
           </Location>
+
+          <Location /irc>
+            ForceType text/plain
+          </Location>
         '';
     };
 
