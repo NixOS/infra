@@ -88,6 +88,7 @@ in
     extraConfig =
       ''
         AddType application/nix-package .nixpkg
+        AddType text/plain .sha256
 
         #StartServers 15
 
