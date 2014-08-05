@@ -15,13 +15,11 @@ let
         [ { urlPath = "/irc";
             dir = "/data/irc";
           }
-          /*
-          { urlPath = "/update";
-            dir = "/data/webserver/update";
-          }
-          */
           { urlPath = "/channels";
             dir = "/releases/channels";
+          }
+          { urlPath = "/releases";
+            dir = "/releases";
           }
           { urlPath = "/nix/manual";
             dir = "/releases/nix/latest/manual";
@@ -41,31 +39,13 @@ let
 
       extraConfig =
         ''
-          #<Proxy *>
-          #  Order deny,allow
-          #  Allow from all
-          #</Proxy>
-          #
-          #ProxyPreserveHost On
-          #
-          #ProxyPass         /mturk  http://wendy:3000/mturk retry=5
-          #ProxyPassReverse  /mturk  http://wendy:3000/mturk
-          #ProxyPass         /mturk-sandbox  http://wendy:3001/mturk-sandbox retry=5
-          #ProxyPassReverse  /mturk-sandbox  http://wendy:3001/mturk-sandbox
-
           MaxKeepAliveRequests 0
-
-          # Use a very short error message for 404s in the binary
-          # cache, since those are very frequent and not generally
-          # seen by humans.
-          <Location /releases/binary-cache>
-            ErrorDocument 404 "No such file."
-          </Location>
 
           Redirect /binary-cache http://cache.nixos.org
           Redirect /releases/channels /channels
-          Redirect /releases http://releases.nixos.org
           Redirect /tarballs http://tarballs.nixos.org
+
+          RedirectMatch ^/releases/(.*\.(iso|ova))$ http://releases.nixos.org/$1
 
           <Location /server-status>
             SetHandler server-status
@@ -137,8 +117,6 @@ in
             ''
               SSLCertificateChainFile /root/ssl-secrets/startssl-class1.pem
               SSLCACertificateFile /root/ssl-secrets/startssl-ca.pem
-              # Required by Catalyst.
-              RequestHeader set X-Forwarded-Port 443
             '';
           extraSubservices =
             [ { function = import <services/subversion>;
