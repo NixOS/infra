@@ -6,7 +6,7 @@ let
 
   machines = import ./machines.nix pkgs.lib;
 
-  machine = findSingle (m: m.hostName == config.deployment.targetHost) {} {} machines;
+  machine = findSingle (m: m.hostName == config.deployment.targetHost or "") {} {} machines;
 
   iface = "enx" + replaceChars [":"] [""] machine.ethernetAddress;
 
