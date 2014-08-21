@@ -35,4 +35,8 @@
     feedUrl = "http://lethalman.blogspot.com/feeds/posts/default/-/nix";
     homepageUrl = "http://lethalman.blogspot.com";
   }
+  { name = "Alexander Flatter";
+    feedUrl = "http://aflatter.de/tag/nixos/rss/";
+    homepageUrl = "http://aflatter.de";
+  }
 ]
