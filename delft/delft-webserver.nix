@@ -274,8 +274,8 @@ in
 
             ProxyRequests     Off
             ProxyPreserveHost On
-            ProxyPass         /       http://wendy:4000/ retry=5 disablereuse=off
-            ProxyPassReverse  /       http://wendy:4000/
+            ProxyPass         /       http://lucifer:4000/ retry=5 disablereuse=off
+            ProxyPassReverse  /       http://lucifer:4000/
           '';
         }
 
