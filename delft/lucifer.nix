@@ -40,24 +40,28 @@
     <!-- End of StatCounter Code -->
   '';
 
-  fileSystems =
-    [ { mountPoint = "/";
-        label = "nixos";
-      }
-      { mountPoint = "/fatdata";
-        device = "/dev/fatdisk/fatdata";
-        neededForBoot = true;
-      }
-      { mountPoint = "/nix";
-        device = "/fatdata/nix";
-        fsType = "none";
-        options = "bind";
-        neededForBoot = true;
-      }
-      { mountPoint = "/data";
-        label = "data";
-      }
-    ];
+  fileSystems."/".device = "/dev/disk/by-label/nixos";
+
+  fileSystems."/fatdata" =
+    { device = "/dev/fatdisk/fatdata";
+      neededForBoot = true;
+    };
+
+  fileSystems."/nix" =
+    { device = "/fatdata/nix";
+      fsType = "none";
+      options = "bind";
+      neededForBoot = true;
+    };
+
+  fileSystems."/nix/var/nix" =
+    { device = "/nix-data";
+      fsType = "none";
+      options = "bind";
+      neededForBoot = true;
+    };
+
+  fileSystems."/data".device = "/dev/disk/by-label/data";
 
   services.nfs.server.enable = true;
   services.nfs.server.exports =
