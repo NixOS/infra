@@ -140,6 +140,7 @@
       serviceConfig.CPUShares = 100;
     };
 
+  /*
   systemd.services.mirror-nixos-13-10 =
     { description = "Mirror NixOS 13.10";
       wantedBy = [ "multi-user.target" ];
@@ -153,6 +154,7 @@
       serviceConfig.Restart = "always";
       serviceConfig.CPUShares = 100;
     };
+  */
 
   systemd.services.mirror-nixos-14-04 =
     { description = "Mirror NixOS 14.04";
@@ -163,6 +165,20 @@
         ''
           rm -rf /data/releases/nixos/14.04/.tmp-*
           exec su - hydra-mirror -c 'cd release/channels; while true; do ./mirror-nixos-stable.sh 14.04; sleep 1200; done'
+        '';
+      serviceConfig.Restart = "always";
+      serviceConfig.CPUShares = 100;
+    };
+
+  systemd.services.mirror-nixos-14-04-small =
+    { description = "Mirror NixOS 14.04-small";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "networking.target" ];
+      path = [ pkgs.su ];
+      script =
+        ''
+          rm -rf /data/releases/nixos/14.04-small/.tmp-*
+          exec su - hydra-mirror -c 'cd release/channels; while true; do ./mirror-nixos-stable.sh 14.04-small; sleep 900; done'
         '';
       serviceConfig.Restart = "always";
       serviceConfig.CPUShares = 100;
