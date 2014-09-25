@@ -15,6 +15,11 @@
   networking.hostName = "lucifer";
   networking.firewall.allowedTCPPorts = [ 2049 3000 4000 ];
 
+  networking.interfaces.enx842b2b0b98f1 =
+    { ipAddress = "172.16.25.81";
+      prefixLength = 21;
+    };
+
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.copyKernels = true;
   boot.initrd.kernelModules = [ "uhci_hcd" "ehci_hcd" "ata_piix" "megaraid_sas" "usbhid" ];
@@ -62,6 +67,12 @@
     };
 
   fileSystems."/data".device = "/dev/disk/by-label/data";
+
+
+  fileSystems."/backup-tud" =
+    { device = "172.16.26.5://vol/vol_backup_linux_fbs_ewi_buildfarm_lucifer/qt_backup_linux_fbs_ewi_buildfarm_lucifer";
+      fsType = "nfs4";
+    };
 
   services.nfs.server.enable = true;
   services.nfs.server.exports =
