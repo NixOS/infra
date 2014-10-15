@@ -122,6 +122,7 @@ in
             ''
               SSLCertificateChainFile /root/ssl-secrets/startssl-class1.pem
               SSLCACertificateFile /root/ssl-secrets/startssl-ca.pem
+              SSLProtocol All -SSLv2 -SSLv3
             '';
           extraSubservices =
             [ { function = import <services/subversion>;
