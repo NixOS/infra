@@ -30,12 +30,17 @@ let
           { urlPath = "/nixos/manual-raw";
             dir = "/releases/channels/nixos-14.04/manual";
           }
-          /*
           { urlPath = "/new";
             dir = "/home/eelco/nixos-homepage-new";
           }
-          */
         ];
+
+      robotsEntries =
+        ''
+          User-agent: *
+          Disallow: /repos/
+          Disallow: /irc/
+        '';
 
       extraConfig =
         ''
