@@ -151,6 +151,20 @@
       serviceConfig.CPUShares = 100;
     };
 
+  systemd.services.mirror-nixos-unstable-small =
+    { description = "Mirror NixOS Unstable-small";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "networking.target" ];
+      path = [ pkgs.su ];
+      script =
+        ''
+          rm -rf /data/releases/nixos/unstable-small/.tmp-*
+          exec su - hydra-mirror -c 'cd release/channels; while true; do ./mirror-nixos-branch.sh unstable-small unstable-small; sleep 1200; done'
+        '';
+      serviceConfig.Restart = "always";
+      serviceConfig.CPUShares = 100;
+    };
+
   /*
   systemd.services.mirror-nixos-13-10 =
     { description = "Mirror NixOS 13.10";
