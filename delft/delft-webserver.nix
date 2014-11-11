@@ -79,9 +79,10 @@ let
         SetOutputFilter DEFLATE
         BrowserMatch ^Mozilla/4\.0[678] no-gzip\
         BrowserMatch \bMSI[E] !no-gzip !gzip-only-text/html
-        SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip dont-vary
+        SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png|narinfo)$ no-gzip dont-vary
         SetEnvIfNoCase Request_URI /api/ no-gzip dont-vary
         SetEnvIfNoCase Request_URI /download/ no-gzip dont-vary
+        SetEnvIfNoCase Request_URI /nar/ no-gzip dont-vary
       </Location>
     '';
 
