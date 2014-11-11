@@ -15,7 +15,7 @@ let
     ${pkgs.ssmtp}/sbin/sendmail -v $zabbixemailto <<EOF
     Subject: $zabbixsubject
     To: $zabbixemailto
-    
+
     $zabbixbody
     EOF
   '';
@@ -54,6 +54,30 @@ let
           SSLCACertificateFile /root/ssl-secrets/startssl-ca.pem
         '';
     };
+
+  hydraProxyConfig =
+    ''
+      TimeOut 900
+
+      <Proxy *>
+        Order deny,allow
+        Allow from all
+      </Proxy>
+
+      ProxyRequests     Off
+      ProxyPreserveHost On
+      ProxyPass         /       http://lucifer:3000/ retry=5 disablereuse=on
+      ProxyPassReverse  /       http://lucifer:3000/
+
+      <Location />
+        SetOutputFilter DEFLATE
+        BrowserMatch ^Mozilla/4\.0[678] no-gzip\
+        BrowserMatch \bMSI[E] !no-gzip !gzip-only-text/html
+        SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip dont-vary
+        SetEnvIfNoCase Request_URI /api/ no-gzip dont-vary
+        SetEnvIfNoCase Request_URI /download/ no-gzip dont-vary
+      </Location>
+    '';
 
 in
 
@@ -192,38 +216,10 @@ in
           ];
         }
 
-/*
-        { hostName = "hydra.nixos.org";
-          globalRedirect = "https://hydra.nixos.org/";
-        }
-*/
-
         { hostName = "hydra.nixos.org";
 
           logFormat = ''"%h %l %u %t \"%r\" %>s %b %D"'';
-          extraConfig = ''
-            TimeOut 900
-
-            <Proxy *>
-              Order deny,allow
-              Allow from all
-            </Proxy>
-
-            ProxyRequests     Off
-            ProxyPreserveHost On
-            ProxyPass         /       http://lucifer:3000/ retry=5 disablereuse=on
-            ProxyPassReverse  /       http://lucifer:3000/
-
-            <Location />
-              SetOutputFilter DEFLATE
-              BrowserMatch ^Mozilla/4\.0[678] no-gzip\
-              BrowserMatch \bMSI[E] !no-gzip !gzip-only-text/html
-              SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip dont-vary
-              SetEnvIfNoCase Request_URI /api/ no-gzip dont-vary
-              SetEnvIfNoCase Request_URI /download/ no-gzip dont-vary
-            </Location>
-
-          '';
+          extraConfig = hydraProxyConfig;
         }
 
         { hostName = "hydra.nixos.org";
@@ -234,33 +230,14 @@ in
 
           logFormat = ''"%h %l %u %t \"%r\" %>s %b %D"'';
           extraConfig = ''
-            TimeOut 900
-
             SSLCertificateChainFile /root/ssl-secrets/startssl-class1.pem
             SSLCACertificateFile /root/ssl-secrets/startssl-ca.pem
+
             # Required by Catalyst.
             RequestHeader set X-Forwarded-Proto https
             RequestHeader set X-Forwarded-Port 443
 
-            <Proxy *>
-              Order deny,allow
-              Allow from all
-            </Proxy>
-
-            ProxyRequests     Off
-            ProxyPreserveHost On
-            ProxyPass         /       http://lucifer:3000/ retry=5 disablereuse=on
-            ProxyPassReverse  /       http://lucifer:3000/
-
-            <Location />
-              SetOutputFilter DEFLATE
-              BrowserMatch ^Mozilla/4\.0[678] no-gzip\
-              BrowserMatch \bMSI[E] !no-gzip !gzip-only-text/html
-              SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip dont-vary
-              SetEnvIfNoCase Request_URI /api/ no-gzip dont-vary
-              SetEnvIfNoCase Request_URI /download/ no-gzip dont-vary
-            </Location>
-
+            ${hydraProxyConfig}
           '';
         }
 
