@@ -260,35 +260,6 @@ in
           serverAliases = ["planet.stratego.org"];
           documentRoot = "/home/karltk/public_html/planet";
         }
-
-        /*
-        { hostName = "mturk.nixos.org";
-          extraConfig = ''
-            <Proxy *>
-              Order deny,allow
-              Allow from all
-            </Proxy>
-
-            ProxyRequests     Off
-            ProxyPreserveHost On
-            ProxyPass         /  http://wendy/~mturk/ retry=5
-            ProxyPassReverse  /  http://wendy/~mturk/
-          '';
-        }
-
-        { hostName = "mturk-view.nixos.org";
-          extraConfig = ''
-            Redirect permanent / http://nixos.org/mturk/
-          '';
-        }
-
-        { hostName = "mturk-view-sandbox.nixos.org";
-          extraConfig = ''
-            Redirect permanent / http://nixos.org/mturk-sandbox/
-          '';
-        }
-        */
-
       ];
     };
 
