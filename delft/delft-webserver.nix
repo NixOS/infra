@@ -74,6 +74,7 @@ let
       CacheEnable disk /
       CacheRoot ${hydraCacheDir}
       CacheMaxFileSize 64000000
+      CacheIgnoreHeaders Set-Cookie
 
       <Location />
         SetOutputFilter DEFLATE
