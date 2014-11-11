@@ -55,6 +55,8 @@ let
         '';
     };
 
+  hydraCacheDir = "/var/cache/hydra-binary-cache";
+
   hydraProxyConfig =
     ''
       TimeOut 900
@@ -68,6 +70,10 @@ let
       ProxyPreserveHost On
       ProxyPass         /       http://lucifer:3000/ retry=5 disablereuse=on
       ProxyPassReverse  /       http://lucifer:3000/
+
+      CacheEnable disk /
+      CacheRoot ${hydraCacheDir}
+      CacheMaxFileSize 64000000
 
       <Location />
         SetOutputFilter DEFLATE
@@ -90,7 +96,8 @@ in
       adminAddr = "e.dolstra@tudelft.nl";
       hostName = "localhost";
 
-      extraModules = ["deflate"];
+      extraModules = [ "deflate" "cache" "disk_cache" ];
+
       extraConfig =
         ''
           AddType application/nix-package .nixpkg
@@ -266,5 +273,11 @@ in
   };
 
   environment.systemPackages = [ zabbixMail ];
+
+  system.activationScripts.createHydraCache =
+    ''
+      mkdir -p ${hydraCacheDir}
+      chown wwwrun ${hydraCacheDir}
+    '';
 
 }
