@@ -175,7 +175,7 @@ in
       { wantedBy = [ "multi-user.target" ];
         wants = [ "hydra-init.service" ];
         after = [ "hydra-init.service" ];
-        environment = serverEnv;
+        environment = serverEnv // { COLUMNS = "80"; };
         serviceConfig =
           { ExecStart = "@${hydra}/bin/hydra-server hydra-server -f -h \* --max_spare_servers 5 --max_servers 25 --max_requests 100";
             User = cfg.user;
