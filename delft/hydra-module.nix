@@ -235,15 +235,8 @@ in
                 systemctl stop hydra-evaluator
             fi
           '';
-        compressLogs = pkgs.writeScript "compress-logs"
-          ''
-            #! /bin/sh -e
-            touch -d 'last month' r
-            find /nix/var/log/nix/drvs -type f -a ! -newer r -name '*.drv' | xargs bzip2 -v
-          '';
       in
       [ "*/5 * * * * root ${checkSpace} &> ${cfg.baseDir}/data/checkspace.log"
-        "15  5 * * * root ${compressLogs} &> ${cfg.baseDir}/data/compress.log"
         "15  2,14 * * * root ${pkgs.systemd}/bin/systemctl start hydra-update-gc-roots.service"
       ];
 
