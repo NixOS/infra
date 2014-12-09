@@ -165,22 +165,6 @@
       serviceConfig.CPUShares = 100;
     };
 
-  /*
-  systemd.services.mirror-nixos-13-10 =
-    { description = "Mirror NixOS 13.10";
-      wantedBy = [ "multi-user.target" ];
-      after = [ "networking.target" ];
-      path = [ pkgs.su ];
-      script =
-        ''
-          rm -rf /data/releases/nixos/13.10/.tmp-*
-          exec su - hydra-mirror -c 'cd release/channels; while true; do ./mirror-nixos-branch.sh 13.10 release-13.10; sleep 1200; done'
-        '';
-      serviceConfig.Restart = "always";
-      serviceConfig.CPUShares = 100;
-    };
-  */
-
   systemd.services.mirror-nixos-14-04 =
     { description = "Mirror NixOS 14.04";
       wantedBy = [ "multi-user.target" ];
@@ -204,6 +188,34 @@
         ''
           rm -rf /data/releases/nixos/14.04-small/.tmp-*
           exec su - hydra-mirror -c 'cd release/channels; while true; do ./mirror-nixos-branch.sh 14.04-small release-14.04-small; sleep 900; done'
+        '';
+      serviceConfig.Restart = "always";
+      serviceConfig.CPUShares = 100;
+    };
+
+  systemd.services.mirror-nixos-14-12 =
+    { description = "Mirror NixOS 14.12";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "networking.target" ];
+      path = [ pkgs.su ];
+      script =
+        ''
+          rm -rf /data/releases/nixos/14.12/.tmp-*
+          exec su - hydra-mirror -c 'cd release/channels; while true; do ./mirror-nixos-stable.sh 14.12; sleep 1200; done'
+        '';
+      serviceConfig.Restart = "always";
+      serviceConfig.CPUShares = 100;
+    };
+
+  systemd.services.mirror-nixos-14-12-small =
+    { description = "Mirror NixOS 14.12-small";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "networking.target" ];
+      path = [ pkgs.su ];
+      script =
+        ''
+          rm -rf /data/releases/nixos/14.12-small/.tmp-*
+          exec su - hydra-mirror -c 'cd release/channels; while true; do ./mirror-nixos-branch.sh 14.12-small release-14.12-small; sleep 900; done'
         '';
       serviceConfig.Restart = "always";
       serviceConfig.CPUShares = 100;
