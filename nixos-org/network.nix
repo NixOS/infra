@@ -39,7 +39,7 @@ in
     { deployment.targetEnv = "ec2";
       deployment.ec2.region = region;
       deployment.ec2.zone = zone;
-      deployment.ec2.instanceType = "m1.medium";
+      deployment.ec2.instanceType = "m3.medium";
       deployment.ec2.accessKeyId = accessKeyId;
       deployment.ec2.keyPair = resources.ec2KeyPairs.default;
       deployment.ec2.securityGroups = [ "public-web" "public-ssh" ];
