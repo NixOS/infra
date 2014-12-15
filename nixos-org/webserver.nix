@@ -84,6 +84,7 @@ in
   security.pam.enableSSHAgentAuth = true;
 
   services.httpd = {
+    package = pkgs.apacheHttpd_2_2;
     enable = true;
     #multiProcessingModule = "worker";
     logPerVirtualHost = true;
