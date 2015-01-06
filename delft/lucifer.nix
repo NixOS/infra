@@ -173,7 +173,7 @@
       script =
         ''
           rm -rf /data/releases/nixos/14.04/.tmp-*
-          exec su - hydra-mirror -c 'cd release/channels; while true; do ./mirror-nixos-stable.sh 14.04; sleep 1200; done'
+          exec su - hydra-mirror -c 'cd release/channels; while true; do ./mirror-nixos-branch.sh 14.04 release-14.04; sleep 1200; done'
         '';
       serviceConfig.Restart = "always";
       serviceConfig.CPUShares = 100;
