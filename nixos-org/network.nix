@@ -1,6 +1,6 @@
 let
   region = "eu-west-1";
-  zone = "eu-west-1a";
+  zone = "eu-west-1a"; # Do not change the zone, due to Reserved Instance.
   accessKeyId = "lb-nixos";
 in
 
