@@ -5,22 +5,22 @@ let
 in
 
 {
-  network.description = "Nixos.org Infrastructure";
+  network.description = "NixOS.org Infrastructure";
 
   resources.ebsVolumes.tarballs =
-    { name = "Nixpkgs source tarball mirror";
+    { tags.Name = "Nixpkgs source tarball mirror";
       inherit region zone accessKeyId;
       size = 100;
     };
 
   resources.ebsVolumes.releases =
-    { name = "Nix/Nixpkgs/NixOS releases";
+    { tags.Name = "Nix/Nixpkgs/NixOS releases";
       inherit region zone accessKeyId;
       size = 500;
     };
 
   resources.ebsVolumes.data =
-    { name = "Misc. data";
+    { tags.Name = "Misc. NixOS.org data";
       inherit region zone accessKeyId;
       size = 10;
     };
@@ -37,6 +37,8 @@ in
     { config, pkgs, resources, ... }:
 
     { deployment.targetEnv = "ec2";
+      deployment.ec2.tags.Name = "NixOS.org Webserver";
+      deployment.owners = [ "eelco.dolstra@logicblox.com" "rob.vermaas@logicblox.com" ];
       deployment.ec2.region = region;
       deployment.ec2.zone = zone;
       deployment.ec2.instanceType = "m3.medium";
