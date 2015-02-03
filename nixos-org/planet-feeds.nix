@@ -39,4 +39,8 @@
     feedUrl = "http://aflatter.de/tag/nixos/rss/";
     homepageUrl = "http://aflatter.de";
   }
+  { name = "Andrey Arapov";
+    feedUrl = "http://nixaid.com/feeds/all.atom.xml";
+    homepageUrl = "http://nixaid.com/";
+  }
 ]
