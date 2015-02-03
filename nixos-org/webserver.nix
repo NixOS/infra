@@ -6,6 +6,8 @@ let
 
   sshKeys = import ../ssh-keys.nix;
 
+  nixosRelease = "14.12";
+
   nixosVHostConfig =
     { hostName = "nixos.org";
       serverAliases = [ "test.nixos.org" "test2.nixos.org" "ipv6.nixos.org" "localhost" ];
@@ -30,7 +32,7 @@ let
             dir = "/releases/channels/nixpkgs-unstable/manual";
           }
           { urlPath = "/nixos/manual-raw";
-            dir = "/releases/channels/nixos-14.04/manual";
+            dir = "/releases/channels/nixos-${nixosRelease}/manual";
           }
           { urlPath = "/new";
             dir = "/home/eelco/nixos-homepage-new";
@@ -300,7 +302,7 @@ in
         ''
           export NIX_CURL_FLAGS="--silent --show-error --connect-timeout 30"
           cd /home/tarball-mirror/nixpkgs
-          git checkout release-14.04
+          git checkout release-${nixosRelease}
           git pull
           exec /nix/var/nix/profiles/per-user/root/channels/nixos/nixpkgs/maintainers/scripts/copy-tarballs.pl
         '';
