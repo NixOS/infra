@@ -156,6 +156,7 @@ in
   services.zabbixServer.dbPassword = import ./zabbix-password.nix;
 
   # Poor man's time sync for the non-NixOS machines.
+  /*
   systemd.services.fix-time =
     { path = [ pkgs.openssh ];
       script =
@@ -165,6 +166,7 @@ in
         '';
       startAt = "*:03";
     };
+  */
 
   services.logrotate.enable = true;
   services.logrotate.config = ''
@@ -185,5 +187,14 @@ in
       endscript
     }
   '';
+
+  systemd.services.htcacheclean =
+    { path = [  ];
+      description = "Clean httpd Cache";
+      serviceConfig.ExecStart =
+        "${config.services.httpd.package}/bin/htcacheclean " +
+        "-v -t -l 32G -p /var/cache/hydra-binary-cache";
+      startAt = "Sat 05:45";
+    };
 
 }
