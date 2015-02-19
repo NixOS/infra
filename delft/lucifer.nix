@@ -117,7 +117,7 @@
       script =
         ''
           rm -rf /data/releases/nixpkgs/.tmp-*
-          exec su - hydra-mirror -c 'cd release/channels; while true; do ./mirror-nixpkgs.sh; sleep 1200; done'
+          exec su - hydra-mirror -c 'cd nixos-channel-scripts; while true; do ./mirror-nixpkgs.sh; sleep 1200; done'
         '';
       serviceConfig.Restart = "always";
       serviceConfig.CPUShares = 100;
@@ -130,7 +130,7 @@
       path = [ pkgs.su ];
       script =
         ''
-          exec su - hydra-mirror -c 'cd release/channels; while true; do ./generate-linear-patch-sequence.sh; sleep 300; done'
+          exec su - hydra-mirror -c 'cd nixos-channel-scripts; while true; do ./generate-linear-patch-sequence.sh; sleep 300; done'
         '';
       serviceConfig.Restart = "always";
       serviceConfig.CPUShares = 100;
@@ -145,7 +145,7 @@
       script =
         ''
           rm -rf /data/releases/nixos/unstable/.tmp-*
-          exec su - hydra-mirror -c 'cd release/channels; while true; do ./mirror-nixos-branch.sh unstable trunk-combined; sleep 1200; done'
+          exec su - hydra-mirror -c 'cd nixos-channel-scripts; while true; do ./mirror-nixos-branch.sh unstable trunk-combined; sleep 1200; done'
         '';
       serviceConfig.Restart = "always";
       serviceConfig.CPUShares = 100;
@@ -159,7 +159,7 @@
       script =
         ''
           rm -rf /data/releases/nixos/unstable-small/.tmp-*
-          exec su - hydra-mirror -c 'cd release/channels; while true; do ./mirror-nixos-branch.sh unstable-small unstable-small; sleep 1200; done'
+          exec su - hydra-mirror -c 'cd nixos-channel-scripts; while true; do ./mirror-nixos-branch.sh unstable-small unstable-small; sleep 1200; done'
         '';
       serviceConfig.Restart = "always";
       serviceConfig.CPUShares = 100;
@@ -173,7 +173,7 @@
       script =
         ''
           rm -rf /data/releases/nixos/14.04/.tmp-*
-          exec su - hydra-mirror -c 'cd release/channels; while true; do ./mirror-nixos-branch.sh 14.04 release-14.04; sleep 1200; done'
+          exec su - hydra-mirror -c 'cd nixos-channel-scripts; while true; do ./mirror-nixos-branch.sh 14.04 release-14.04; sleep 1200; done'
         '';
       serviceConfig.Restart = "always";
       serviceConfig.CPUShares = 100;
@@ -187,7 +187,7 @@
       script =
         ''
           rm -rf /data/releases/nixos/14.04-small/.tmp-*
-          exec su - hydra-mirror -c 'cd release/channels; while true; do ./mirror-nixos-branch.sh 14.04-small release-14.04-small; sleep 900; done'
+          exec su - hydra-mirror -c 'cd nixos-channel-scripts; while true; do ./mirror-nixos-branch.sh 14.04-small release-14.04-small; sleep 900; done'
         '';
       serviceConfig.Restart = "always";
       serviceConfig.CPUShares = 100;
@@ -201,7 +201,7 @@
       script =
         ''
           rm -rf /data/releases/nixos/14.12/.tmp-*
-          exec su - hydra-mirror -c 'cd release/channels; while true; do ./mirror-nixos-stable.sh 14.12; sleep 1200; done'
+          exec su - hydra-mirror -c 'cd nixos-channel-scripts; while true; do ./mirror-nixos-stable.sh 14.12; sleep 1200; done'
         '';
       serviceConfig.Restart = "always";
       serviceConfig.CPUShares = 100;
@@ -215,7 +215,7 @@
       script =
         ''
           rm -rf /data/releases/nixos/14.12-small/.tmp-*
-          exec su - hydra-mirror -c 'cd release/channels; while true; do ./mirror-nixos-branch.sh 14.12-small release-14.12-small; sleep 900; done'
+          exec su - hydra-mirror -c 'cd nixos-channel-scripts; while true; do ./mirror-nixos-branch.sh 14.12-small release-14.12-small; sleep 900; done'
         '';
       serviceConfig.Restart = "always";
       serviceConfig.CPUShares = 100;
