@@ -124,4 +124,11 @@
       startAt = "Sun 01:45";
     };
 
+  users.extraUsers.rbvermaa =
+    { description = "Rob Vermaas";
+      home = "/home/rbvermaa";
+      isNormalUser = true;
+      openssh.authorizedKeys.keys = [ (import ../ssh-keys.nix).rob ];
+    };
+
 }

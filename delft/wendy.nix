@@ -197,4 +197,18 @@ in
       startAt = "Sat 05:45";
     };
 
+  users.extraUsers.eelco =
+    { description = "Eelco Dolstra";
+      home = "/home/eelco";
+      isNormalUser = true;
+      openssh.authorizedKeys.keys = [ (import ../ssh-keys.nix).eelco ];
+    };
+
+  users.extraUsers.rbvermaa =
+    { description = "Rob Vermaas";
+      home = "/home/rbvermaa";
+      isNormalUser = true;
+      openssh.authorizedKeys.keys = [ (import ../ssh-keys.nix).rob ];
+    };
+
 }
