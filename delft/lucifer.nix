@@ -3,7 +3,7 @@
 {
   require =
     [ ./common.nix
-      ./hydra-module.nix
+      ./hydra.nix
       ./hydra-mirror.nix
       ./megacli.nix
       ./datadog.nix
