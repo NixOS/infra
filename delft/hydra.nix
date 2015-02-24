@@ -6,7 +6,7 @@ let
 
   cfg = config.services.hydra;
 
-  hydra = "/home/hydra/.nix-profile"; # FIXME
+  hydra = "/nix/var/nix/profiles/per-user/hydra/profile"; # FIXME
 
   hydraConf = pkgs.writeScript "hydra.conf"
     ''
@@ -29,15 +29,15 @@ let
     { NIX_REMOTE = "daemon";
       NIX_CONF_DIR = "/etc/nix";
       HYDRA_DBI = cfg.dbi;
-      HYDRA_CONFIG = "${cfg.baseDir}/data/hydra.conf";
-      HYDRA_DATA = "${cfg.baseDir}/data";
-      #HOME = "/home/hydra";
-      OPENSSL_X509_CERT_FILE = "/etc/ssl/certs/ca-bundle.crt";
+      HYDRA_CONFIG = hydraConf;
+      HYDRA_DATA = cfg.baseDir;
+      OPENSSL_X509_CERT_FILE = "/etc/ssl/certs/ca-certificates.crt";
     };
 
   serverEnv = env //
     { HYDRA_LOGO = cfg.logo;
-      #HYDRA_TRACKER = cfg.tracker; # FIXME: needs escaping (or should be read from a file)
+      HYDRA_SERVER_DATA = "/var/lib/hydra-server";
+      COLUMNS = "80";
     };
 
 in
@@ -57,16 +57,9 @@ in
       };
 
       baseDir = mkOption {
-        default = "/home/${user.default}";
+        default = "/var/lib/hydra";
         description = ''
           The directory holding configuration, logs and temporary files.
-        '';
-      };
-
-      user = mkOption {
-        default = "hydra";
-        description = ''
-          The user the Hydra services should run as.
         '';
       };
 
@@ -105,13 +98,6 @@ in
         '';
       };
 
-      tracker = mkOption {
-        default = "";
-        description = ''
-          Piece of HTML that is included on all pages.
-        '';
-      };
-
       logo = mkOption {
         default = "";
         description = ''
@@ -128,13 +114,23 @@ in
 
   config = mkIf cfg.enable {
 
-    users.extraUsers = singleton
-      { name = cfg.user;
-        description = "Hydra";
-        home = cfg.baseDir;
+    users.extraUsers.hydra =
+      { description = "Hydra";
+        group = "hydra";
         createHome = true;
+        home = "/home/hydra";
         useDefaultShell = true;
       };
+
+    users.extraUsers.hydra-server =
+      { description = "Hydra Web Server";
+        group = "hydra";
+        createHome = true;
+        home = "/home/hydra-server";
+        useDefaultShell = true;
+      };
+
+    users.extraGroups.hydra = { };
 
     nix.maxJobs = 0;
     nix.distributedBuilds = true;
@@ -163,9 +159,8 @@ in
     jobs."hydra-init" =
       { wantedBy = [ "multi-user.target" ];
         script = ''
-          mkdir -p ${cfg.baseDir}/data
-          chown ${cfg.user} ${cfg.baseDir}/data
-          ln -sf ${hydraConf} ${cfg.baseDir}/data/hydra.conf
+          mkdir -m 0750 -p ${cfg.baseDir}
+          chown hydra.hydra ${cfg.baseDir}
         '';
         task = true;
       };
@@ -174,10 +169,16 @@ in
       { wantedBy = [ "multi-user.target" ];
         wants = [ "hydra-init.service" ];
         after = [ "hydra-init.service" ];
-        environment = serverEnv // { COLUMNS = "80"; };
+        environment = serverEnv;
+        preStart =
+          ''
+            mkdir -m 0700 -p /var/lib/hydra-server
+            chown hydra-server.hydra /var/lib/hydra-server
+          '';
         serviceConfig =
           { ExecStart = "@${hydra}/bin/hydra-server hydra-server -f -h \* --max_spare_servers 5 --max_servers 25 --max_requests 100";
-            User = cfg.user;
+            User = "hydra-server";
+            PermissionsStartOnly = true;
             Restart = "always";
           };
       };
@@ -192,20 +193,20 @@ in
           { ExecStartPre = "${hydra}/bin/hydra-queue-runner --unlock";
             ExecStart = "@${hydra}/bin/hydra-queue-runner hydra-queue-runner";
             ExecStopPost = "${hydra}/bin/hydra-queue-runner --unlock";
-            User = cfg.user;
+            User = "hydra";
             Restart = "always";
           };
       };
 
     systemd.services."hydra-evaluator" =
-      { wantedBy = [ "multi-user.target" ];
+      { #wantedBy = [ "multi-user.target" ];
         wants = [ "hydra-init.service" ];
         after = [ "hydra-init.service" "network.target" ];
         path = [ pkgs.nettools pkgs.ssmtp ];
         environment = env;
         serviceConfig =
           { ExecStart = "@${hydra}/bin/hydra-evaluator hydra-evaluator";
-            User = cfg.user;
+            User = "hydra";
             Restart = "always";
           };
       };
@@ -216,7 +217,7 @@ in
         environment = env;
         serviceConfig =
           { ExecStart = "@${hydra}/bin/hydra-update-gc-roots hydra-update-gc-roots";
-            User = cfg.user;
+            User = "hydra";
           };
       };
 
@@ -235,7 +236,7 @@ in
             fi
           '';
       in
-      [ "*/5 * * * * root ${checkSpace} &> ${cfg.baseDir}/data/checkspace.log"
+      [ "*/5 * * * * root ${checkSpace} &> ${cfg.baseDir}/checkspace.log"
         "15  2,14 * * * root ${pkgs.systemd}/bin/systemctl start hydra-update-gc-roots.service"
       ];
 

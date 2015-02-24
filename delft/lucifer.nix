@@ -31,22 +31,6 @@
 
   services.hydra.enable = true;
   services.hydra.logo = ./hydra-logo.png;
-  services.hydra.tracker = ''
-    <!-- Start of StatCounter Code -->
-    <script type=\"text/javascript\">
-      var sc_project=6818408;
-      var sc_invisible=1;
-      var sc_security=\"8838c8ed\";
-    </script>
-    <script type=\"text/javascript\"
-      src=\"http://www.statcounter.com/counter/counter.js\"></script>
-    <noscript><div class=\"statcounter\"><a title=\"visit tracker
-    on tumblr\" href=\"http://statcounter.com/tumblr/\"
-    target=\"_blank\"><img class=\"statcounter\"
-    src=\"http://c.statcounter.com/6818408/0/8838c8ed/1/\"
-    alt=\"visit tracker on tumblr\"></a></div></noscript>
-    <!-- End of StatCounter Code -->
-  '';
 
   fileSystems."/".device = "/dev/disk/by-label/nixos";
 
@@ -123,6 +107,9 @@
         '';
       startAt = "Sun 01:45";
     };
+
+  users.extraUsers.hydra.openssh.authorizedKeys.keys = with import ../ssh-keys.nix; [ eelco rob ];
+  users.extraUsers.hydra-server.openssh.authorizedKeys.keys = with import ../ssh-keys.nix; [ eelco rob ];
 
   users.extraUsers.rbvermaa =
     { description = "Rob Vermaas";
