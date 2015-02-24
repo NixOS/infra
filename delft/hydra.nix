@@ -156,7 +156,7 @@ in
       build-compress-log = false
     '';
 
-    jobs."hydra-init" =
+    jobs.hydra-init =
       { wantedBy = [ "multi-user.target" ];
         script = ''
           mkdir -m 0750 -p ${cfg.baseDir}
@@ -165,7 +165,7 @@ in
         task = true;
       };
 
-    systemd.services."hydra-server" =
+    systemd.services.hydra-server =
       { wantedBy = [ "multi-user.target" ];
         wants = [ "hydra-init.service" ];
         after = [ "hydra-init.service" ];
@@ -183,7 +183,7 @@ in
           };
       };
 
-    systemd.services."hydra-queue-runner" =
+    systemd.services.hydra-queue-runner =
       { #wantedBy = [ "multi-user.target" ];
         wants = [ "hydra-init.service" ];
         after = [ "hydra-init.service" "network.target" ];
@@ -198,8 +198,8 @@ in
           };
       };
 
-    systemd.services."hydra-evaluator" =
-      { #wantedBy = [ "multi-user.target" ];
+    systemd.services.hydra-evaluator =
+      { wantedBy = [ "multi-user.target" ];
         wants = [ "hydra-init.service" ];
         after = [ "hydra-init.service" "network.target" ];
         path = [ pkgs.nettools pkgs.ssmtp ];
@@ -211,7 +211,7 @@ in
           };
       };
 
-    systemd.services."hydra-update-gc-roots" =
+    systemd.services.hydra-update-gc-roots =
       { wants = [ "hydra-init.service" ];
         after = [ "hydra-init.service" ];
         environment = env;
@@ -219,15 +219,14 @@ in
           { ExecStart = "@${hydra}/bin/hydra-update-gc-roots hydra-update-gc-roots";
             User = "hydra";
           };
+        startAt = "2,14:15";
       };
 
-    services.cron.systemCronJobs =
-      let
-        # If there is less than ... GiB of free disk space, stop the queue
-        # to prevent builds from failing or aborting.
-        checkSpace = pkgs.writeScript "hydra-check-space"
+    # If there is less than ... GiB of free disk space, stop the queue
+    # to prevent builds from failing or aborting.
+    systemd.services.hydra-check-space =
+      { script =
           ''
-            #! /bin/sh
             if [ $(($(stat -f -c '%a' /nix/store) * $(stat -f -c '%S' /nix/store))) -lt $((${toString cfg.minimumDiskFree} * 1024**3)) ]; then
                 systemctl stop hydra-queue-runner
             fi
@@ -235,10 +234,8 @@ in
                 systemctl stop hydra-evaluator
             fi
           '';
-      in
-      [ "*/5 * * * * root ${checkSpace} &> ${cfg.baseDir}/checkspace.log"
-        "15  2,14 * * * root ${pkgs.systemd}/bin/systemctl start hydra-update-gc-roots.service"
-      ];
+        startAt = "*:0/5";
+      };
 
   };
 }
