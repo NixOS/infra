@@ -2,6 +2,14 @@
 
 
 {
+  environment.systemPackages =
+    [ pkgs.wget
+      pkgs.perlPackages.DBDSQLite
+      pkgs.perlPackages.NetAmazonS3
+      pkgs.perlPackages.ForksSuper
+      pkgs.nodePackages.jsontool
+    ];
+
   users.extraUsers.hydra-mirror =
     { description = "Hydra Mirrorer";
       home = "/home/hydra-mirror";
