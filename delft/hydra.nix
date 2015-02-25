@@ -16,7 +16,7 @@ let
       max_servers 50
       enable_persona 1
 
-      binary_cache_secret_key_file = /home/hydra/.keys/hydra.nixos.org-1/secret
+      binary_cache_secret_key_file = /home/hydra-server/.keys/hydra.nixos.org-1/secret
 
       <hipchat>
         jobs = (hydra|nixops):.*:.*
