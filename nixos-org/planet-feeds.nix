@@ -43,4 +43,8 @@
     feedUrl = "http://nixaid.com/feeds/all.atom.xml";
     homepageUrl = "http://nixaid.com/";
   }
+  { name = "Anders Papitto";
+    feedUrl ="http://anderspapitto.com/tags/atom/nixos.xml";
+    homepageUrl = "http://anderspapitto.com";
+  }
 ]
