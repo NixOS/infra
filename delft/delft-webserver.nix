@@ -113,6 +113,9 @@ in
           </Location>
 
           ExtendedStatus On
+
+          SSLProtocol All -SSLv2 -SSLv3
+          SSLCipherSuite HIGH:!aNULL:!MD5:!EXP
         '';
 
       phpOptions =
