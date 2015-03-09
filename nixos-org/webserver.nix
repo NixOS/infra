@@ -133,6 +133,8 @@ in
               SSLCertificateChainFile /root/ssl-secrets/startssl-class1.pem
               SSLCACertificateFile /root/ssl-secrets/startssl-ca.pem
               SSLProtocol All -SSLv2 -SSLv3
+              SSLCipherSuite HIGH:!aNULL:!MD5:!EXP
+              SSLHonorCipherOrder on
             '';
           extraSubservices =
             [ { function = import <services/subversion>;
