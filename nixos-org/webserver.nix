@@ -130,8 +130,7 @@ in
           sslServerKey = "/root/ssl-secrets/ssl-nixos-org.key";
           extraConfig = nixosVHostConfig.extraConfig +
             ''
-              SSLCertificateChainFile /root/ssl-secrets/startssl-class1.pem
-              SSLCACertificateFile /root/ssl-secrets/startssl-ca.pem
+              SSLCertificateChainFile ${./sub.class1.server.ca.pem}
               SSLProtocol All -SSLv2 -SSLv3
               SSLCipherSuite HIGH:!aNULL:!MD5:!EXP
               SSLHonorCipherOrder on
