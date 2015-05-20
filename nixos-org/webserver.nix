@@ -290,7 +290,7 @@ in
     };
 
   systemd.services.mirror-tarballs =
-    { description = "Mirror Nixpkgs tarballs";
+    { description = "Mirror Nixpkgs Tarballs";
       path  = [ config.nix.package pkgs.curl pkgs.git ];
       #environment.DRY_RUN = "1";
       environment.NIX_PATH = "nixpkgs=/home/tarball-mirror/nixpkgs";
@@ -299,6 +299,7 @@ in
       environment.NIX_TARBALLS_CACHE = "/tarballs";
       environment.PERL5LIB = "/run/current-system/sw/lib/perl5/site_perl";
       serviceConfig.User = "tarball-mirror";
+      serviceConfig.Type = "oneshot";
       script =
         ''
           export NIX_CURL_FLAGS="--silent --show-error --connect-timeout 30"
@@ -310,13 +311,23 @@ in
       startAt = "05:30";
     };
 
+  systemd.services.update-channels =
+    { description = "Update Channels";
+      environment.CURL_CA_BUNDLE = "/etc/ssl/certs/ca-bundle.crt";
+      environment.HOME = "/root";
+      serviceConfig.Type = "oneshot";
+      serviceConfig.ExecStart = "${config.nix.package}/bin/nix-channel --update";
+      startAt = "*:0/33";
+    };
+
   systemd.services.update-homepage =
-    { description = "Update nixos.org homepage";
+    { description = "Update nixos.org Homepage";
       path = [ config.nix.package pkgs.git pkgs.bash ];
       serviceConfig.User = "eelco";
       environment.NIX_PATH = "/nix/var/nix/profiles/per-user/root/channels/nixos";
       environment.NIX_REMOTE = "daemon";
       environment.CURL_CA_BUNDLE = "/etc/ssl/certs/ca-bundle.crt";
+      serviceConfig.Type = "oneshot";
       script =
         ''
           cd /home/eelco/nixos-homepage
