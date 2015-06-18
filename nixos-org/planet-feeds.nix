@@ -40,7 +40,7 @@
     homepageUrl = "http://aflatter.de";
   }
   { name = "Andrey Arapov";
-    feedUrl = "http://nixaid.com/feeds/all.atom.xml";
+    feedUrl = "http://nixaid.com/feeds/nixos.atom.xml";
     homepageUrl = "http://nixaid.com/";
   }
   { name = "Anders Papitto";
