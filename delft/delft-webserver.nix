@@ -67,6 +67,8 @@ let
 
       ProxyRequests     Off
       ProxyPreserveHost On
+      ProxyPass         /apache-errors !
+      ErrorDocument 503 /apache-errors/503.html
       ProxyPass         /       http://lucifer:3000/ retry=5 disablereuse=on
       ProxyPassReverse  /       http://lucifer:3000/
 
@@ -124,6 +126,12 @@ in
           memory_limit = "128M"
           max_input_time = 300
         '';
+
+      servedDirs =
+        [ { urlPath = "/apache-errors";
+            dir = ./apache-errors;
+          }
+        ];
 
       virtualHosts = [
 
