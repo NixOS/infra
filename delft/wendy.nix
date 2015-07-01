@@ -25,6 +25,8 @@ in
 {
   imports = [ ./build-machines-dell-r815.nix ./delft-webserver.nix ./sysstat.nix ./datadog.nix ];
 
+  nix.maxJobs = mkForce 24;
+
   fileSystems."/backup" =
     { device = "130.161.158.5:/dxs/users4/group/buildfarm";
       fsType = "nfs4";
