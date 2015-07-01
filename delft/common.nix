@@ -46,7 +46,7 @@ with pkgs.lib;
   nix.extraOptions =
     ''
       build-cores = 0
-      allowed-impure-host-deps = /etc/protocols /etc/services
+      allowed-impure-host-deps = /etc/protocols /etc/services /etc/nsswitch.conf
     '';
 
   services.zabbixAgent.enable = true;
