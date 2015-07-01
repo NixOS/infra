@@ -46,12 +46,11 @@ let
 
   strategoxtSSLConfig =
     { enableSSL = true;
-      sslServerCert = "/root/ssl-secrets/ssl-strategoxt-org.crt";
-      sslServerKey = "/root/ssl-secrets/ssl-strategoxt-org.key";
+      sslServerCert = "/root/ssl-secrets/ssl-strategoxt.org.crt";
+      sslServerKey = "/root/ssl-secrets/ssl-strategoxt.org.key";
       extraConfig =
         ''
-          SSLCertificateChainFile /root/ssl-secrets/startssl-class1.pem
-          SSLCACertificateFile /root/ssl-secrets/startssl-ca.pem
+          SSLCertificateChainFile ${../nixos-org/sub.class1.server.ca.pem}
         '';
     };
 
@@ -239,8 +238,8 @@ in
         { hostName = "hydra.nixos.org";
 
           enableSSL = true;
-          sslServerCert = "/root/ssl-secrets/ssl-nixos-org.crt";
-          sslServerKey = "/root/ssl-secrets/ssl-nixos-org.key";
+          sslServerCert = "/root/ssl-secrets/ssl-nixos.org.crt";
+          sslServerKey = "/root/ssl-secrets/ssl-nixos.org.key";
 
           logFormat = ''"%h %l %u %t \"%r\" %>s %b %D"'';
           extraConfig = ''
