@@ -31,7 +31,7 @@ let
       HYDRA_DBI = cfg.dbi;
       HYDRA_CONFIG = hydraConf;
       HYDRA_DATA = cfg.baseDir;
-      OPENSSL_X509_CERT_FILE = "/etc/ssl/certs/ca-certificates.crt";
+      SSL_CERT_FILE = "/etc/ssl/certs/ca-certificates.crt";
     };
 
   serverEnv = env //
