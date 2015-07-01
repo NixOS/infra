@@ -37,6 +37,7 @@
   fileSystems."/fatdata" =
     { device = "/dev/fatdisk/fatdata";
       neededForBoot = true;
+      options = "defaults,noatime";
     };
 
   fileSystems."/nix" =
