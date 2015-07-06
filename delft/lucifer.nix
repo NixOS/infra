@@ -1,9 +1,11 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
+
+with lib;
 
 {
-  require =
+  imports =
     [ ./common.nix
-      ./hydra.nix
+      ../../hydra/hydra-module.nix
       ./hydra-mirror.nix
       ./megacli.nix
       ./datadog.nix
@@ -28,9 +30,6 @@
   boot.initrd.kernelModules = [ "uhci_hcd" "ehci_hcd" "ata_piix" "megaraid_sas" "usbhid" ];
   boot.kernelModules = [ "acpi-cpufreq" "kvm-intel" ];
   boot.extraModulePackages = [config.boot.kernelPackages.sysdig];
-
-  services.hydra.enable = true;
-  services.hydra.logo = ./hydra-logo.png;
 
   fileSystems."/".device = "/dev/disk/by-label/nixos";
 
@@ -91,11 +90,11 @@
   systemd.services.nix-daemon.serviceConfig.CPUShares = 200;
   systemd.services.nix-daemon.serviceConfig.BlockIOWeight = 500;
   systemd.services.hydra-queue-runner.serviceConfig.CPUShares = 200;
-  systemd.services.hydra-queue-runner.serviceConfig.BlockIOWeight = 200;
+  systemd.services.hydra-queue-runner.serviceConfig.BlockIOWeight = 700;
   systemd.services.hydra-evaluator.serviceConfig.CPUShares = 100;
   systemd.services.hydra-evaluator.serviceConfig.BlockIOWeight = 100;
   systemd.services.hydra-server.serviceConfig.CPUShares = 700;
-  systemd.services.hydra-server.serviceConfig.BlockIOWeight = 700;
+  systemd.services.hydra-server.serviceConfig.BlockIOWeight = 200;
 
   nix.sshServe.enable = true;
   nix.sshServe.keys = with import ../ssh-keys.nix; [ eelco rob ];
@@ -110,7 +109,8 @@
     };
 
   users.extraUsers.hydra.openssh.authorizedKeys.keys = with import ../ssh-keys.nix; [ eelco rob ];
-  users.extraUsers.hydra-server.openssh.authorizedKeys.keys = with import ../ssh-keys.nix; [ eelco rob ];
+  users.extraUsers.hydra-www.openssh.authorizedKeys.keys = with import ../ssh-keys.nix; [ eelco rob ];
+  users.extraUsers.hydra-queue-runner.openssh.authorizedKeys.keys = with import ../ssh-keys.nix; [ eelco rob ];
 
   users.extraUsers.rbvermaa =
     { description = "Rob Vermaas";
@@ -118,5 +118,32 @@
       isNormalUser = true;
       openssh.authorizedKeys.keys = [ (import ../ssh-keys.nix).rob ];
     };
+
+  nix.gc.automatic = true;
+  nix.gc.options = ''--max-freed "$((700 * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | ${pkgs.gawk}/bin/awk '{ print $4 }')))"'';
+
+  # Hydra configuration.
+  services.hydra.enable = true;
+  services.hydra.logo = ./hydra-logo.png;
+  services.hydra.dbi = "dbi:Pg:dbname=hydra;host=wendy;user=hydra;";
+  services.hydra.hydraURL = "http://hydra.nixos.org";
+  services.hydra.notificationSender = "e.dolstra@tudelft.nl"; # FIXME
+  services.hydra.extraConfig =
+    ''
+      max_servers 50
+      enable_persona 1
+
+      binary_cache_secret_key_file = /var/lib/hydra/www/keys/hydra.nixos.org-1/secret
+
+      <hipchat>
+        jobs = (hydra|nixops):.*:.*
+        room = 182482
+        token = ${builtins.readFile ./hipchat-lb-token}
+      </hipchat>
+    '';
+
+  #services.hydra.package = builtins.storePath /nix/store/qrd493zbpnk8hqs2pc01jac0l715xsd4-hydra-0.1pre1234-abcdef;
+
+  users.extraUsers.hydra.home = mkForce "/home/hydra";
 
 }
