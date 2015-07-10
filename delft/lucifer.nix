@@ -99,15 +99,6 @@ with lib;
   nix.sshServe.enable = true;
   nix.sshServe.keys = with import ../ssh-keys.nix; [ eelco rob ];
 
-  systemd.services.nix-compress-logs =
-    { script =
-        ''
-          touch -d 'last month' /root/.r
-          find /nix/var/log/nix/drvs -type f -a ! -newer /root/.r -name '*.drv' | xargs bzip2 -v
-        '';
-      startAt = "Sun 01:45";
-    };
-
   users.extraUsers.hydra.openssh.authorizedKeys.keys = with import ../ssh-keys.nix; [ eelco rob ];
   users.extraUsers.hydra-www.openssh.authorizedKeys.keys = with import ../ssh-keys.nix; [ eelco rob ];
   users.extraUsers.hydra-queue-runner.openssh.authorizedKeys.keys = with import ../ssh-keys.nix; [ eelco rob ];
