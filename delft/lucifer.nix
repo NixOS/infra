@@ -131,6 +131,10 @@ with lib;
         room = 182482
         token = ${builtins.readFile ./hipchat-lb-token}
       </hipchat>
+
+      <Plugin::Session>
+        cache_size = 32m
+      </Plugin::Session>
     '';
 
   #services.hydra.package = builtins.storePath /nix/store/qrd493zbpnk8hqs2pc01jac0l715xsd4-hydra-0.1pre1234-abcdef;
