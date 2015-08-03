@@ -21,6 +21,7 @@ with pkgs.lib;
   # Prevent "out of sync" errors on the KVM switch.
   boot.vesa = false;
   boot.blacklistedKernelModules = [ "radeonfb" "radeon" "i915" ];
+  boot.kernelParams = [ "nomodeset" ];
 
   hardware.enableAllFirmware = true;
   hardware.cpu.amd.updateMicrocode = true;
