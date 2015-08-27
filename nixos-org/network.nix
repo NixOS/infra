@@ -13,10 +13,18 @@ in
       size = 100;
     };
 
+    /*
   resources.ebsVolumes.releases =
     { tags.Name = "Nix/Nixpkgs/NixOS releases";
       inherit region zone accessKeyId;
       size = 500;
+    };
+    */
+
+  resources.ebsVolumes.releases2 =
+    { tags.Name = "Nix/Nixpkgs/NixOS releases";
+      inherit region zone accessKeyId;
+      size = 1024;
     };
 
   resources.ebsVolumes.data =
@@ -57,8 +65,8 @@ in
       fileSystems."/releases" =
         { autoFormat = true;
           fsType = "ext4";
-          device = "/dev/xvdi";
-          ec2.disk = resources.ebsVolumes.releases;
+          device = "/dev/xvdj";
+          ec2.disk = resources.ebsVolumes.releases2;
         };
 
       fileSystems."/data" =
