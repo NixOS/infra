@@ -128,12 +128,13 @@ in
           enableSSL = true;
           sslServerCert = "/root/ssl-secrets/ssl-nixos-org.crt";
           sslServerKey = "/root/ssl-secrets/ssl-nixos-org.key";
+          sslServerChain = ./sub.class1.server.ca.pem;
           extraConfig = nixosVHostConfig.extraConfig +
             ''
-              SSLCertificateChainFile ${./sub.class1.server.ca.pem}
               SSLProtocol All -SSLv2 -SSLv3
               SSLCipherSuite HIGH:!aNULL:!MD5:!EXP
               SSLHonorCipherOrder on
+              #SSLOpenSSLConfCmd DHParameters "${./dhparams.pem}"
             '';
           extraSubservices =
             [ { function = import <services/subversion>;
