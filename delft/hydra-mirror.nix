@@ -73,34 +73,6 @@
       serviceConfig.CPUShares = 100;
     };
 
-  systemd.services.mirror-nixos-14-04 =
-    { description = "Mirror NixOS 14.04";
-      wantedBy = [ "multi-user.target" ];
-      after = [ "networking.target" ];
-      path = [ pkgs.su ];
-      script =
-        ''
-          rm -rf /data/releases/nixos/14.04/.tmp-*
-          exec su - hydra-mirror -c 'cd nixos-channel-scripts; while true; do ./mirror-nixos-branch.sh 14.04 release-14.04; sleep 1200; done'
-        '';
-      serviceConfig.Restart = "always";
-      serviceConfig.CPUShares = 100;
-    };
-
-  systemd.services.mirror-nixos-14-04-small =
-    { description = "Mirror NixOS 14.04-small";
-      wantedBy = [ "multi-user.target" ];
-      after = [ "networking.target" ];
-      path = [ pkgs.su ];
-      script =
-        ''
-          rm -rf /data/releases/nixos/14.04-small/.tmp-*
-          exec su - hydra-mirror -c 'cd nixos-channel-scripts; while true; do ./mirror-nixos-branch.sh 14.04-small release-14.04-small; sleep 900; done'
-        '';
-      serviceConfig.Restart = "always";
-      serviceConfig.CPUShares = 100;
-    };
-
   systemd.services.mirror-nixos-14-12 =
     { description = "Mirror NixOS 14.12";
       wantedBy = [ "multi-user.target" ];
@@ -124,6 +96,34 @@
         ''
           rm -rf /data/releases/nixos/14.12-small/.tmp-*
           exec su - hydra-mirror -c 'cd nixos-channel-scripts; while true; do ./mirror-nixos-branch.sh 14.12-small release-14.12-small; sleep 900; done'
+        '';
+      serviceConfig.Restart = "always";
+      serviceConfig.CPUShares = 100;
+    };
+
+  systemd.services.mirror-nixos-15-09 =
+    { description = "Mirror NixOS 15.09";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "networking.target" ];
+      path = [ pkgs.su ];
+      script =
+        ''
+          rm -rf /data/releases/nixos/15.09/.tmp-*
+          exec su - hydra-mirror -c 'cd nixos-channel-scripts; while true; do ./mirror-nixos-stable.sh 15.09; sleep 1200; done'
+        '';
+      serviceConfig.Restart = "always";
+      serviceConfig.CPUShares = 100;
+    };
+
+  systemd.services.mirror-nixos-15-09-small =
+    { description = "Mirror NixOS 15.09-small";
+      wantedBy = [ "multi-user.target" ];
+      after = [ "networking.target" ];
+      path = [ pkgs.su ];
+      script =
+        ''
+          rm -rf /data/releases/nixos/15.09-small/.tmp-*
+          exec su - hydra-mirror -c 'cd nixos-channel-scripts; while true; do ./mirror-nixos-branch.sh 15.09-small release-15.09-small; sleep 900; done'
         '';
       serviceConfig.Restart = "always";
       serviceConfig.CPUShares = 100;
