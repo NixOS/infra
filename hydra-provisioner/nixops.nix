@@ -17,13 +17,16 @@ in
       deployment.targetEnv = "ec2";
       deployment.ec2.accessKeyId = accessKeyId;
       deployment.ec2.region = region;
-      deployment.ec2.instanceType = "m3.xlarge";
+      deployment.ec2.instanceType = "m4.xlarge";
       deployment.ec2.spotInstancePrice = 10;
       deployment.ec2.keyPair = resources.ec2KeyPairs.default;
-      deployment.ec2.securityGroups = [ "public-ssh" ];
+      deployment.ec2.subnetId = "subnet-0723eb5e";
+      deployment.ec2.associatePublicIpAddress = true;
+      deployment.ec2.securityGroupIds = [ "sg-67a05003" ];
       deployment.ec2.tags.Name = "Hydra Builder";
       deployment.ec2.ebsInitialRootDiskSize = 100;
       deployment.owners = [ "eelco.dolstra@logicblox.com" ];
+
 
       imports = [ <nixpkgs/nixos/modules/profiles/minimal.nix> ];
 
