@@ -141,4 +141,17 @@ with lib;
 
   users.extraUsers.hydra.home = mkForce "/home/hydra";
 
+  programs.ssh.extraConfig = mkAfter
+    ''
+      ServerAliveInterval 120
+      TCPKeepAlive yes
+
+      Host mac1
+      Hostname 83.87.124.39
+      Port 15022
+      Compression yes
+    '';
+
+  services.openssh.knownHosts = [ { hostNames = [ "83.87.124.39" ]; publicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDVTkY4tQ6V29XTW1aKtoFJoF4uyaEy0fms3HqmI56av8UCg3MN5G6CL6EDIvbe46mBsI3++V3uGiOr0pLPbM9fkWC92LYGk5f7fNvCoy9bvuZy5bHwFQ5b5S9IJ1o3yDlCToc9CppmPVbFMMMLgKF06pQiGBeMCUG/VoCfiUBq+UgEGhAifWcuWIOGmdua6clljH5Dcc+7S0HTLoVtrxmPPXBVZUvW+lgAJTM6FXYIZiIqMSC2uZHGVstY87nPcZFXIbzhlYQqxx5H0um2bL3mbS7vdKhSsIWWaUZeck9ghNyUV1fVRLUhuXkQHe/8Z58cAhTv5dDd42YLB0fgjETV"; } ];
+
 }
