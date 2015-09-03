@@ -154,8 +154,8 @@ in
   #systemd.services.httpd.serviceConfig.ControlGroupAttribute = [ "memory.memsw.limit_in_bytes 1500M" ];
 
   services.zabbixServer.enable = true;
-  services.zabbixServer.dbServer = "wendy";
-  services.zabbixServer.dbPassword = import ./zabbix-password.nix;
+  #services.zabbixServer.dbServer = "wendy";
+  #services.zabbixServer.dbPassword = import ./zabbix-password.nix;
 
   # Poor man's time sync for the non-NixOS machines.
   /*

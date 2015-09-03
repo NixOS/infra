@@ -5,6 +5,8 @@ with pkgs.lib;
 {
   imports = [ ./static-net-config.nix ];
 
+  system.stateVersion = "14.12";
+
   nixpkgs.config.allowUnfree = true;
 
   users.mutableUsers = false;

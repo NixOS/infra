@@ -294,4 +294,8 @@ in
       chown wwwrun ${hydraCacheDir}
     '';
 
+  nixpkgs.config.packageOverrides = pkgs: {
+    php = pkgs.php54;
+  };
+
 }

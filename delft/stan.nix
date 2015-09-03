@@ -12,6 +12,7 @@
 
   nix.maxJobs = 8;
 
+  /*
   services.httpd.enable = true;
   services.httpd.adminAddr = "foo@example.org";
 
@@ -19,7 +20,9 @@
   networking.firewall.allowedTCPPorts = [ 80 ];
   networking.firewall.rejectPackets = true;
   networking.firewall.allowPing = true;
+  */
 
+  /*
   networking.bridges.veno1.interfaces = [ config.system.build.mainPhysicalInterface ];
 
   # Libvirt dynamically creates vnet* interfaces to connect interfaces
@@ -35,4 +38,5 @@
   system.build.mainVirtualInterface = "veno1";
 
   virtualisation.libvirtd.enable = true;
+  */
 }
