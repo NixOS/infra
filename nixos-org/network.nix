@@ -82,6 +82,8 @@ in
           options = "bind";
         };
 
+      system.stateVersion = "14.12";
+
       imports = [ ./webserver.nix ];
     };
 }

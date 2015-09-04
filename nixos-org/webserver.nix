@@ -100,6 +100,10 @@ in
         AddType application/nix-package .nixpkg
         AddType text/plain .sha256
 
+        # Serve the package/option databases as automatically
+        # decompressed JSON.
+        AddEncoding x-gzip gz
+
         #StartServers 15
 
         ExtendedStatus On
