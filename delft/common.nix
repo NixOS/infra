@@ -9,6 +9,8 @@ with pkgs.lib;
 
   nixpkgs.config.allowUnfree = true;
 
+  time.timeZone = "Europe/Amsterdam";
+
   users.mutableUsers = false;
 
   users.extraUsers.root.openssh.authorizedKeys.keys =
