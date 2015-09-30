@@ -18,6 +18,8 @@ with pkgs.lib;
 
   services.openssh.authorizedKeysFiles = mkForce [ "/etc/ssh/authorized_keys.d/%u" ];
 
+  boot.kernelPackages = pkgs.linuxPackages_3_14;
+
   boot.kernelModules = [ "coretemp" ];
 
   boot.supportedFilesystems = [ "nfs" ];
