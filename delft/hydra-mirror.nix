@@ -81,7 +81,7 @@
       script =
         ''
           rm -rf /data/releases/nixos/14.12/.tmp-*
-          exec su - hydra-mirror -c 'cd nixos-channel-scripts; while true; do ./mirror-nixos-stable.sh 14.12; sleep 1200; done'
+          exec su - hydra-mirror -c 'cd nixos-channel-scripts; while true; do ./mirror-nixos-branch.sh 14.12; sleep 1200; done'
         '';
       serviceConfig.Restart = "always";
       serviceConfig.CPUShares = 100;
