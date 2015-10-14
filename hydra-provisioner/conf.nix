@@ -7,7 +7,7 @@
 
   systemTypes.x86_64-linux = {
     nixopsExpr = builtins.toPath ./nixops.nix;
-    nixPath = [ "nixpkgs=https://github.com/NixOS/nixpkgs-channels/archive/nixos-14.12.tar.gz" ];
+    nixPath = [ "nixpkgs=https://nixos.org/channels/nixos-15.09-small/nixexprs.tar.xz" ];
     maxMachines = 12;
     ignoredRunnables = 250;
     runnablesPerMachine = 50;

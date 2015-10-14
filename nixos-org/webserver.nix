@@ -6,7 +6,7 @@ let
 
   sshKeys = import ../ssh-keys.nix;
 
-  nixosRelease = "14.12";
+  nixosRelease = "15.09";
 
   nixosVHostConfig =
     { hostName = "nixos.org";
@@ -309,8 +309,8 @@ in
         ''
           export NIX_CURL_FLAGS="--silent --show-error --connect-timeout 30"
           cd /home/tarball-mirror/nixpkgs
-          git checkout release-${nixosRelease}
-          git pull
+          git remote update channels
+          git checkout channels/nixos-${nixosRelease}
           exec /nix/var/nix/profiles/per-user/root/channels/nixos/nixpkgs/maintainers/scripts/copy-tarballs.pl
         '';
       startAt = "05:30";
