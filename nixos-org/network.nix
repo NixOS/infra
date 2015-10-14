@@ -13,14 +13,6 @@ in
       size = 100;
     };
 
-    /*
-  resources.ebsVolumes.releases =
-    { tags.Name = "Nix/Nixpkgs/NixOS releases";
-      inherit region zone accessKeyId;
-      size = 500;
-    };
-    */
-
   resources.ebsVolumes.releases2 =
     { tags.Name = "Nix/Nixpkgs/NixOS releases";
       inherit region zone accessKeyId;
