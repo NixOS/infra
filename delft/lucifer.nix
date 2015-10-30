@@ -101,7 +101,7 @@ with lib;
 
   users.extraUsers.hydra.openssh.authorizedKeys.keys = with import ../ssh-keys.nix; [ eelco rob ];
   users.extraUsers.hydra-www.openssh.authorizedKeys.keys = with import ../ssh-keys.nix; [ eelco rob ];
-  users.extraUsers.hydra-queue-runner.openssh.authorizedKeys.keys = with import ../ssh-keys.nix; [ eelco rob ];
+  users.extraUsers.hydra-queue-runner.openssh.authorizedKeys.keys = with import ../ssh-keys.nix; [ eelco rob provisioner ];
 
   users.extraUsers.rbvermaa =
     { description = "Rob Vermaas";
