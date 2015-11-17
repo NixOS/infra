@@ -47,4 +47,8 @@
     feedUrl ="http://anderspapitto.com/tags/atom/nixos.xml";
     homepageUrl = "http://anderspapitto.com";
   }
+  { name = "Flying Circus";
+    feedUrl = "http://blog.flyingcircus.io/tag/nixos/feed/";
+    homepageUrl = "http://blog.flyingcircus.io/tag/nixos/";
+  }
 ]
