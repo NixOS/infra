@@ -8,8 +8,8 @@
     homepageUrl = "http://compiletoi.net/";
   }
   { name = "Rok Garbas";
-    feedUrl = "http://garbas.si/blog/category/latest-nixos/RSS";
-    homepageUrl= "http://garbas.si";
+    feedUrl = "https://garbas.si/feeds/tag-nixos.atom.xml";
+    homepageUrl= "https://garbas.si";
   }
   { name = "Zef Hemel";
     feedUrl = "http://zef.me/tag/nix/feed";
