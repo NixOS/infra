@@ -51,4 +51,8 @@
     feedUrl = "http://blog.flyingcircus.io/tag/nixos/feed/";
     homepageUrl = "http://blog.flyingcircus.io/tag/nixos/";
   }
+  { name = "Ollie Charles";
+    feedUrl = "https://ocharles.org.uk/blog/posts.rss";
+    homepageUrl = "https://ocharles.org.uk/blog";
+  }
 ]
