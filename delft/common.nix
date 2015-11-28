@@ -113,4 +113,6 @@ with pkgs.lib;
   # that may cause services writing to the journal to fail until
   # they're restarted.
   systemd.services.systemd-journald.serviceConfig.WatchdogSec = 0;
+
+  environment.enableDebugInfo = true;
 }
