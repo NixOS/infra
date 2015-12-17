@@ -85,6 +85,8 @@ in
 
   environment.systemPackages = [ pkgs.perlPackages.XMLSimple pkgs.git pkgs.openssl ];
 
+  nix.nixPath = [ "nixpkgs=https://nixos.org/channels/nixos-15.09-small/nixexprs.tar.xz" ];
+
   security.pam.enableSSHAgentAuth = true;
 
   services.httpd = {
@@ -197,15 +199,6 @@ in
             ];
         })
 
-        { hostName = "tarballs.nixos.org";
-          serverAliases = [ "tarballs-uncached.nixos.org" ];
-          documentRoot = "/tarballs";
-          extraConfig =
-            ''
-              UseCanonicalName on
-            '';
-        }
-
         { hostName = "releases.nixos.org";
           serverAliases = [ "releases-uncached.nixos.org" ];
           extraConfig =
@@ -294,6 +287,7 @@ in
         ];
     };
 
+  /*
   systemd.services.mirror-tarballs =
     { description = "Mirror Nixpkgs Tarballs";
       path  = [ config.nix.package pkgs.curl pkgs.git ];
@@ -315,6 +309,7 @@ in
         '';
       startAt = "05:30";
     };
+  */
 
   systemd.services.update-channels =
     { description = "Update Channels";

@@ -7,13 +7,7 @@ in
 {
   network.description = "NixOS.org Infrastructure";
 
-  resources.ebsVolumes.tarballs =
-    { tags.Name = "Nixpkgs source tarball mirror";
-      inherit region zone accessKeyId;
-      size = 100;
-    };
-
-  resources.ebsVolumes.releases2 =
+  resources.ebsVolumes.releases =
     { tags.Name = "Nix/Nixpkgs/NixOS releases";
       inherit region zone accessKeyId;
       size = 1024;
@@ -33,6 +27,28 @@ in
     { inherit region accessKeyId;
     };
 
+  resources.s3Buckets.nixpkgs-tarballs =
+    { config, ... }:
+    { inherit region accessKeyId;
+      name = "nixpkgs-tarballs";
+      # All files are readable but not listable.
+      policy =
+        ''
+          {
+            "Version": "2008-10-17",
+            "Statement": [
+              {
+                "Sid": "AllowPublicRead",
+                "Effect": "Allow",
+                "Principal": {"AWS": "*"},
+                "Action": ["s3:GetObject"],
+                "Resource": ["${config.arn}/*"]
+              }
+            ]
+          }
+        '';
+    };
+
   webserver =
     { config, pkgs, resources, ... }:
 
@@ -47,18 +63,11 @@ in
       deployment.ec2.securityGroups = [ "public-web" "public-ssh" ];
       deployment.ec2.elasticIPv4 = resources.elasticIPs."nixos.org";
 
-      fileSystems."/tarballs" =
-        { autoFormat = true;
-          fsType = "ext4";
-          device = "/dev/xvdf";
-          ec2.disk = resources.ebsVolumes.tarballs;
-        };
-
       fileSystems."/releases" =
         { autoFormat = true;
           fsType = "ext4";
           device = "/dev/xvdj";
-          ec2.disk = resources.ebsVolumes.releases2;
+          ec2.disk = resources.ebsVolumes.releases;
         };
 
       fileSystems."/data" =
