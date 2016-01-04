@@ -295,7 +295,7 @@ in
     '';
 
   nixpkgs.config.packageOverrides = pkgs: {
-    php = pkgs.php54;
+    php = pkgs.php56;
   };
 
 }
