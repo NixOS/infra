@@ -6,4 +6,6 @@
 
   provisioner = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKDSfHu0xHu2qtWjmCC92rTMZfwZNKXrsJvPCLSoWtzR eelco.dolstra@deploy";
 
+  danny = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDlxgNIC4HbyLXB7jexKOEDkMRmiIfDnjOrx445otnR7w87hAehq8If+lnfK/ezGbss6yuWpTjjlc9gi03AxxL9KJW+xAe8avoC36/EeFfBJtRFMaUTjZ0XrcW09Yl8b9BWKypOXSOoF5JAJjV3yI160p+bzhSa584gY+Gj6A2SkVpnUPQfahm3gj0esqVBYVHfN1KXsHq8S89RxOr9HrRU5mTyZn0xO6YE3w+PG2f77vBhZMutt2+28xcMZCNO0HyY/WkWZo7tmJB/HLEENzz1OYiYCXjSEAgEgMbx69kG8r2fOLkrpbKLc/Wbg6fMsi7DM2G5egFPAEqxF1HXHf9T dan@dans-mbp.ws.tudelft.net";
+
 }

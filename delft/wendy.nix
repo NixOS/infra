@@ -206,11 +206,22 @@ in
       openssh.authorizedKeys.keys = [ (import ../ssh-keys.nix).eelco ];
     };
 
+  users.extraUsers.danny =
+    { description = "Danny Groenewegen";
+      home = "/home/danny";
+      isNormalUser = true;
+      openssh.authorizedKeys.keys = [ (import ../ssh-keys.nix).danny ];
+      extraGroups = [ "wheel" ];
+      createHome = true;
+    };
+
   users.extraUsers.rbvermaa =
     { description = "Rob Vermaas";
       home = "/home/rbvermaa";
       isNormalUser = true;
+      extraGroups = [ "wheel" ];
       openssh.authorizedKeys.keys = [ (import ../ssh-keys.nix).rob ];
     };
 
+  security.pam.enableSSHAgentAuth = true;
 }
