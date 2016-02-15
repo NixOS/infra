@@ -24,8 +24,8 @@
     homepageUrl = "http://sandervanderburg.blogspot.com";
   }
   { name = "Joachim Schiele";
-    feedUrl = "http://blog.lastlog.de/tags/nixos/index.atom";
-    homepageUrl = "http://blog.lastlog.de";
+    feedUrl = "https://lastlog.de/blog/feed.xml";
+    homepageUrl = "http://lastlog.de/blog";
   }
   { name = "Rob Vermaas";
     feedUrl = "http://nixer.ghost.io/rss/";
