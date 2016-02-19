@@ -124,6 +124,9 @@ with lib;
       max_servers 50
       enable_persona 1
 
+      enable_google_login = 1
+      google_client_id = 816926039128-ia4s4rsqrq998rsevce7i09mo6a4nffg.apps.googleusercontent.com
+
       binary_cache_secret_key_file = /var/lib/hydra/www/keys/hydra.nixos.org-1/secret
 
       <hipchat>
