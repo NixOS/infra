@@ -155,26 +155,33 @@ with lib;
       Compression yes
 
       Host mac2
-      Hostname 83.87.147.147
+      Hostname 94.211.55.77
       Port 6001
       Compression yes
 
       Host mac3
-      Hostname 83.87.147.147
+      Hostname 94.211.55.77
       Port 6002
       Compression yes
 
       Host mac4
-      Hostname 83.87.147.147
+      Hostname 94.211.55.77
       Port 6003
       Compression yes
 
       Host mac5
-      Hostname 83.87.147.147
+      Hostname 94.211.55.77
       Port 6004
       Compression yes
     '';
 
-  services.openssh.knownHosts = [ { hostNames = [ "83.87.124.39" ]; publicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDVTkY4tQ6V29XTW1aKtoFJoF4uyaEy0fms3HqmI56av8UCg3MN5G6CL6EDIvbe46mBsI3++V3uGiOr0pLPbM9fkWC92LYGk5f7fNvCoy9bvuZy5bHwFQ5b5S9IJ1o3yDlCToc9CppmPVbFMMMLgKF06pQiGBeMCUG/VoCfiUBq+UgEGhAifWcuWIOGmdua6clljH5Dcc+7S0HTLoVtrxmPPXBVZUvW+lgAJTM6FXYIZiIqMSC2uZHGVstY87nPcZFXIbzhlYQqxx5H0um2bL3mbS7vdKhSsIWWaUZeck9ghNyUV1fVRLUhuXkQHe/8Z58cAhTv5dDd42YLB0fgjETV"; } ];
+  services.openssh.knownHosts =
+    [
+      { hostNames = [ "83.87.124.39" ]; publicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDVTkY4tQ6V29XTW1aKtoFJoF4uyaEy0fms3HqmI56av8UCg3MN5G6CL6EDIvbe46mBsI3++V3uGiOr0pLPbM9fkWC92LYGk5f7fNvCoy9bvuZy5bHwFQ5b5S9IJ1o3yDlCToc9CppmPVbFMMMLgKF06pQiGBeMCUG/VoCfiUBq+UgEGhAifWcuWIOGmdua6clljH5Dcc+7S0HTLoVtrxmPPXBVZUvW+lgAJTM6FXYIZiIqMSC2uZHGVstY87nPcZFXIbzhlYQqxx5H0um2bL3mbS7vdKhSsIWWaUZeck9ghNyUV1fVRLUhuXkQHe/8Z58cAhTv5dDd42YLB0fgjETV"; }
+      { hostNames = [ "[94.211.55.77]:6001" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBC4oeixXSB/Ovl3kewykJ2vV82ATOLqPgZDXPdLCmkPRHYt7dy7GNbWrESv3gQvgjEtKaZavthf7aQsJHNa8aKc="; }
+      { hostNames = [ "[94.211.55.77]:6002" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBO45JPJIqbQVs3I4RmO01ExRv6krTEnuheAvumgKeb6NwUo6oD1kP4/x8KazoMd4LRAFtdWdwnN3Z7IYmqlmd20="; }
+      { hostNames = [ "[94.211.55.77]:6003" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLIMKd1aV7ktAMIZUQV151dbZu/AM7Hszb4dMqwqQ7F8uLOmO+qyyS3nQHrGG6I5VAKbRkbTCn3l0DhYFj7sS6U="; }
+      { hostNames = [ "[94.211.55.77]:6004" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLeZFijo43wK8V2/9lXt7OH3axZb4kyZBV7Hn11YdmjPn8KHNkiRNiq9x/AuEhWmpY//9K1XU8RezV5LkGgyirU="; }
+    ];
 
 }
