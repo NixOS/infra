@@ -168,6 +168,10 @@ in
 
                     #$wgDebugLogFile = "/tmp/mediawiki_debug_log.txt";
 
+                    # Disable editing by all users.
+                    $wgGroupPermissions['*']['edit'] = false;
+                    $wgGroupPermissions['user']['edit'] = false;
+
                     # Turn on the mass deletion feature.
                     require_once("$IP/extensions/Nuke/Nuke.php");
 
