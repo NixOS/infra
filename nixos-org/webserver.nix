@@ -23,20 +23,6 @@ let
           { urlPath = "/releases";
             dir = "/releases";
           }
-          /*
-          { urlPath = "/nix/manual";
-            dir = "/releases/nix/latest/manual";
-          }
-          */
-          { urlPath = "/nixpkgs/manual";
-            dir = "/releases/channels/nixpkgs-unstable/manual";
-          }
-          { urlPath = "/nixos/manual-raw";
-            dir = "/releases/channels/nixos-${nixosRelease}/manual";
-          }
-          { urlPath = "/new";
-            dir = "/home/eelco/nixos-homepage-new";
-          }
         ];
 
       robotsEntries =
