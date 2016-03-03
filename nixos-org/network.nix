@@ -49,6 +49,56 @@ in
         '';
     };
 
+  resources.s3Buckets.nix-cache =
+    { config, ... }:
+    { inherit accessKeyId;
+      region = "us-east-1";
+      name = "nix-cache";
+      policy =
+        ''
+          {
+            "Version": "2008-10-17",
+            "Statement": [
+              {
+                "Sid": "AllowPublicRead",
+                "Effect": "Allow",
+                "Principal": {"AWS": "*"},
+                "Action": ["s3:GetObject"],
+                "Resource": ["${config.arn}/*"]
+              }
+            ]
+          }
+        '';
+    };
+
+  resources.s3Buckets.nix-test-cache =
+    { config, ... }:
+    { inherit region accessKeyId;
+      name = "nix-test-cache";
+      policy =
+        ''
+          {
+            "Version": "2008-10-17",
+            "Statement": [
+              {
+                "Sid": "AllowPublicRead",
+                "Effect": "Allow",
+                "Principal": {"AWS": "*"},
+                "Action": ["s3:GetObject"],
+                "Resource": ["${config.arn}/*"]
+              },
+              {
+                "Sid": "AllowPublicList",
+                "Effect": "Allow",
+                "Principal": {"AWS": "*"},
+                "Action": ["s3:ListBucket"],
+                "Resource": ["${config.arn}"]
+              }
+            ]
+          }
+        '';
+    };
+
   webserver =
     { config, pkgs, resources, ... }:
 
