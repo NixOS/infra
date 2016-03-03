@@ -85,6 +85,8 @@ in
 
   environment.systemPackages = [ pkgs.perlPackages.XMLSimple pkgs.git pkgs.openssl ];
 
+  nix.package = builtins.storePath /nix/store/mynhlpqzslmdx9svyp0ig61hvplxv039-nix-1.12pre1234_abcdef;
+
   nix.nixPath = [ "nixpkgs=https://nixos.org/channels/nixos-15.09-small/nixexprs.tar.xz" ];
 
   security.pam.enableSSHAgentAuth = true;
@@ -274,17 +276,6 @@ in
       createHome = true;
       useDefaultShell = true;
       openssh.authorizedKeys.keys = [ sshKeys.eelco ];
-    };
-
-  users.extraUsers.hydra-mirror =
-    { description = "Channel mirroring user";
-      home = "/home/hydra-mirror";
-      createHome = true;
-      useDefaultShell = true;
-      openssh.authorizedKeys.keys =
-        [ "ssh-dss AAAAB3NzaC1kc3MAAACBAOIPMVtw25pZ6P3paDOhIJTt+31aqwx3IvV06hTJFM+uy74DQhNZyUf6KDkc5j8JNp/xEHVpA2IVSO2q7Tpn3et8YjkCrz0D5x5Te71haRnJMSQlqUq1E/4oHEnRGxzguPuSWB3wL/zEfw2UFMCxl21JsIwJsULYguERgkx7YG7/AAAAFQDhtQ2xU78YwA1DMx9/wjvAHmYL5wAAAIEAm8uFFbn466OTJIUVh3FAFUgj/rwyasa7EYArgdYXH1LUVpQjuC+UZQrA3imlBh9/7zuuQm5+vaJAxyu5Cf9mq42n80xPzJRgMfw5RYURK/CXAmHLOs4jMk6O/XjhPhv9qoci8S81FVN6wbDkoJhXtjcefetQ0eM4Brhw4Jyai7AAAACAOza+xJqdT0znNi8pLh5xnVmbCoxF0YgeLcqCz5iDWHJv64+8MbBfLAwvYaDrJ9A9v3/JdBfa3NXdr581NtXQEvpzvAeoMcT5j5ASu2Vj8xZp2TEKvAjcOsuWq6nF84H6V27dXuBnwqkD6XSusMeTy8YsBJfJdmGOgXSwoRkmsV8= hydra-mirror@lucifer"
-          sshKeys.eelco
-        ];
     };
 
   /*

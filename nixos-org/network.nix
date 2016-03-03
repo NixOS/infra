@@ -85,6 +85,6 @@ in
 
       system.stateVersion = "14.12";
 
-      imports = [ ./webserver.nix ];
+      imports = [ ./webserver.nix ./hydra-mirror.nix ];
     };
 }
