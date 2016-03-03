@@ -69,7 +69,7 @@ in
       host  all        all       131.180.119.77/32 md5
       host  hydra      hydra     131.180.119.73/32 md5
       host  hydra_test hydra     131.180.119.73/32 md5
-      host  zabbix     zabbix    131.180.119.73/32  md5
+      host  zabbix     zabbix    131.180.119.73/32 md5
     '';
   };
 
