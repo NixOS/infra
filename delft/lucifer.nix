@@ -127,7 +127,12 @@ with lib;
       enable_google_login = 1
       google_client_id = 816926039128-ia4s4rsqrq998rsevce7i09mo6a4nffg.apps.googleusercontent.com
 
-      binary_cache_secret_key_file = /var/lib/hydra/www/keys/hydra.nixos.org-1/secret
+      binary_cache_secret_key_file = /var/lib/hydra/queue-runner/keys/cache.nixos.org-1/secret
+      binary_cache_public_key_file = /var/lib/hydra/queue-runner/keys/cache.nixos.org-1/public
+
+      store_mode = s3-binary-cache
+      binary_cache_s3_bucket = nix-cache
+      binary_cache_public_uri = https://cache.nixos.org
 
       <hipchat>
         jobs = (hydra|nixops):.*:.*
