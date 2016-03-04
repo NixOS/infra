@@ -2,8 +2,8 @@
 
   tag = "hydra-provisioned-nixos-org";
 
-  statusCommand = [ "ssh" "-x" "root@lucifer" "PGPASSFILE=/var/lib/hydra/pgpass-queue-runner" "hydra-queue-runner" "--status" ];
-  updateCommand = [ "ssh" "-x" "root@lucifer" "cat > /var/lib/hydra/provisioned.machines" ];
+  statusCommand = [ "ssh" "-x" "hydra-queue-runner@lucifer.ewi.tudelft.nl" "PGPASSFILE=/var/lib/hydra/pgpass-queue-runner" "hydra-queue-runner" "--status" ];
+  updateCommand = [ "ssh" "-x" "hydra-queue-runner@lucifer.ewi.tudelft.nl" "cat > /var/lib/hydra/provisioner/machines" ];
 
   systemTypes.x86_64-linux = {
     nixopsExpr = builtins.toPath ./nixops.nix;
