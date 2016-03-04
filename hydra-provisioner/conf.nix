@@ -8,7 +8,8 @@
   systemTypes.x86_64-linux = {
     nixopsExpr = builtins.toPath ./nixops.nix;
     nixPath = [ "nixpkgs=https://nixos.org/channels/nixos-15.09-small/nixexprs.tar.xz" ];
-    maxMachines = 12;
+    minMachines = 0;
+    maxMachines = 24;
     ignoredRunnables = 250;
     runnablesPerMachine = 50;
     maxJobs = 4;
