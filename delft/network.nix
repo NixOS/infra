@@ -2,7 +2,7 @@
   kenny = import ./build-machines-dell-1950.nix;
   kyle = import ./build-machines-dell-1950.nix;
   hydra = import ./build-machines-dell-1950.nix;
-  stan = import ./stan.nix;
+  stan = import ./build-machines-dell-1950.nix;
   #cartman = import ./cartman.nix;
   lucifer = import ./lucifer.nix;
   wendy = import ./wendy.nix;
