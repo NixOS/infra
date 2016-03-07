@@ -63,8 +63,8 @@ in
 
   systemd =
     fold recursiveUpdate {}
-      [ (makeUpdateChannel "nixos-16.03" "nixos/release-16.03/tested")
-        (makeUpdateChannel "nixos-16.03-small" "nixos/release-16.03-small/tested")
+      [ (makeUpdateChannel "nixos-16.03-beta" "nixos/release-16.03/tested")
+        (makeUpdateChannel "nixos-16.03-beta-small" "nixos/release-16.03-small/tested")
         (makeUpdateChannel "nixos-15.09" "nixos/release-15.09/tested")
         (makeUpdateChannel "nixos-15.09-small" "nixos/release-15.09-small/tested")
         (makeUpdateChannel "nixos-14.12" "nixos/release-14.12/tested")
