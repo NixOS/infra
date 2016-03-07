@@ -4,23 +4,23 @@ with lib;
 
 let
 
-  makeUpdateChannel = channelName: jobset:
-    { timers."update-nixos-${channelName}" =
+  makeUpdateChannel = channelName: mainJob:
+    { timers."update-${channelName}" =
         { wantedBy = [ "timers.target" ];
           timerConfig.OnUnitInactiveSec = 600;
           timerConfig.OnBootSec = 900;
           timerConfig.AccuracySec = 300;
         };
 
-      services."update-nixos-${channelName}" =
-        { description = "Update Channel nixos-${channelName}";
+      services."update-${channelName}" =
+        { description = "Update Channel ${channelName}";
           after = [ "networking.target" ];
           script =
             ''
               source /etc/profile
-              rm -rf /data/releases/nixos/${channelName}/*-tmp || true
               cd /home/hydra-mirror/nixos-channel-scripts
-              exec ./mirror-nixos-branch.pl ${channelName} ${jobset}
+              exec ./mirror-nixos-branch.pl ${channelName} http://hydra.nixos.org/job/${mainJob}/latest-finished \
+                ${optionalString (channelName == "15.09") "1"}
             ''; # */
           serviceConfig.User = "hydra-mirror";
         };
@@ -63,14 +63,15 @@ in
 
   systemd =
     fold recursiveUpdate {}
-      [ (makeUpdateChannel "16.03" "release-16.03")
-        (makeUpdateChannel "16.03-small" "release-16.03-small")
-        (makeUpdateChannel "15.09" "release-15.09")
-        (makeUpdateChannel "15.09-small" "release-15.09-small")
-        (makeUpdateChannel "14.12" "release-14.12")
-        (makeUpdateChannel "14.12-small" "release-14.12-small")
-        (makeUpdateChannel "unstable" "trunk-combined")
-        (makeUpdateChannel "unstable-small" "unstable-small")
+      [ (makeUpdateChannel "nixos-16.03" "nixos/release-16.03/tested")
+        (makeUpdateChannel "nixos-16.03-small" "nixos/release-16.03-small/tested")
+        (makeUpdateChannel "nixos-15.09" "nixos/release-15.09/tested")
+        (makeUpdateChannel "nixos-15.09-small" "nixos/release-15.09-small/tested")
+        (makeUpdateChannel "nixos-14.12" "nixos/release-14.12/tested")
+        (makeUpdateChannel "nixos-14.12-small" "nixos/release-14.12-small/tested")
+        (makeUpdateChannel "nixos-unstable" "nixos/trunk-combined/tested")
+        (makeUpdateChannel "nixos-unstable-small" "nixos/unstable-small/tested")
+        (makeUpdateChannel "nixpkgs-unstable" "nixpkgs/trunk/unstable")
       ];
 
 }
