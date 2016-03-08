@@ -1,6 +1,7 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
-with pkgs.lib;
+with lib;
+
 let
   duplicityBackup = pkgs.writeScript "backup-duplicity" ''
     #! /bin/sh
@@ -42,14 +43,9 @@ in
            password: ${builtins.readFile ./datadog.secret}
   '';
 
-  services.postgresqlBackup = {
-    enable = true;
-    databases = [ "hydra" ];
-  };
-
   services.postgresql = {
     enable = true;
-    enableTCPIP = true;
+    #enableTCPIP = true;
     package = pkgs.postgresql92;
     dataDir = "/data/postgresql";
     extraConfig = ''
@@ -58,38 +54,17 @@ in
       log_statement = 'none'
       max_connections = 250
       work_mem = 16MB
-      shared_buffers = 4GB
+      shared_buffers = 2GB
       # Checkpoint every 256 MB.
       checkpoint_segments = 16
       # We can risk losing some transactions.
       synchronous_commit = off
-      effective_cache_size = 24GB
-    '';
-    authentication = ''
-      host  all        all       131.180.119.77/32 md5
-      host  hydra      hydra     131.180.119.73/32 md5
-      host  hydra_test hydra     131.180.119.73/32 md5
-      host  zabbix     zabbix    131.180.119.73/32 md5
+      effective_cache_size = 8GB
     '';
   };
 
-  # Bump kernel.shmmax for PostgreSQL. FIXME: this should be a NixOS
-  # option around systemd-sysctl.
-  system.activationScripts.setShmMax =
-    ''
-      ${pkgs.procps}/sbin/sysctl -q -w kernel.shmmax=$((6 * 1024**3))
-    '';
-
-  services.zabbixAgent.extraConfig = ''
-    UserParameter=hydra.evaluations.timesincelast,${pkgs.postgresql}/bin/psql hydra -At -c 'select round(EXTRACT(EPOCH FROM now()) - timestamp) from jobsetevals order by id desc limit 1'
-    UserParameter=hydra.queue.total,${pkgs.postgresql}/bin/psql hydra -At -c 'select count(*) from builds where finished = 0'
-    UserParameter=hydra.queue.building,${pkgs.postgresql}/bin/psql hydra -At -c 'select count(*) from builds where finished = 0 and busy = 1'
-    UserParameter=hydra.queue.buildsteps,${pkgs.postgresql}/bin/psql hydra -At -c 'select count(*) from BuildSteps s join Builds i on s.build = i.id where i.finished = 0 and i.busy = 1 and s.busy = 1'
-    UserParameter=hydra.builds,${pkgs.postgresql}/bin/psql hydra -At -c 'select count(*) from Builds'
-  '';
-
   services.cron.systemCronJobs =
-    [ "15 4 * * * root cp -v /var/backup/postgresql/* /backup/wendy/postgresql/  &> /var/log/backup-db.log"
+    [ #"15 4 * * * root cp -v /var/backup/postgresql/* /backup/wendy/postgresql/  &> /var/log/backup-db.log"
       # Force the sixxs tunnel to stay alive by periodically
       # pinging the other side.  This is necessary to remain
       # reachable from the outside.
@@ -111,12 +86,6 @@ in
 
     firewall.allowedTCPPorts = [ 80 443 10051 5432 5999 ];
     firewall.allowedUDPPorts = [ 53 67 ];
-    /*
-    firewall.extraCommands =
-      ''
-        iptables -A nixos-fw -p tcp --dport 5432 -i internal -j nixos-fw-accept
-      '';
-      */
 
     localCommands =
       ''
@@ -144,9 +113,7 @@ in
     dhcpcd.denyInterfaces = [ "sixxs" ];
   };
 
-  # Needed for the Nixpkgs mirror script.
-  environment.pathsToLink = [ "/libexec" ];
-  environment.systemPackages = [ pkgs.dnsmasq pkgs.duplicity pkgs.db4 ];
+  environment.systemPackages = [ pkgs.duplicity ];
 
   # Use cgroups to limit Apache's resources.
   systemd.services.httpd.serviceConfig.CPUShares = 1000;
@@ -156,19 +123,6 @@ in
   services.zabbixServer.enable = true;
   #services.zabbixServer.dbServer = "wendy";
   #services.zabbixServer.dbPassword = import ./zabbix-password.nix;
-
-  # Poor man's time sync for the non-NixOS machines.
-  /*
-  systemd.services.fix-time =
-    { path = [ pkgs.openssh ];
-      script =
-        ''
-          ssh root@beastie "date $(date +'%Y%m%d%H%M.%S')" || true
-          ssh root@demon "date $(date +'%Y%m%d%H%M.%S')" || true
-        '';
-      startAt = "*:03";
-    };
-  */
 
   services.logrotate.enable = true;
   services.logrotate.config = ''
@@ -189,15 +143,6 @@ in
       endscript
     }
   '';
-
-  systemd.services.htcacheclean =
-    { path = [  ];
-      description = "Clean httpd Cache";
-      serviceConfig.ExecStart =
-        "${config.services.httpd.package}/bin/htcacheclean " +
-        "-v -t -l 32G -p /var/cache/hydra-binary-cache";
-      startAt = "Sat 05:45";
-    };
 
   users.extraUsers.eelco =
     { description = "Eelco Dolstra";

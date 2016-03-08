@@ -7,4 +7,5 @@
   wendy = import ./wendy.nix;
   ike = import ./build-machines-dell-r815.nix;
   #shelley = import ./build-machines-dell-r815.nix;
+  chef = import ./chef.nix;
 }
