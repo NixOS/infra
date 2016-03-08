@@ -50,9 +50,10 @@ with pkgs.lib;
 
   nix.nrBuildUsers = 100;
 
+  nix.buildCores = 0;
+
   nix.extraOptions =
     ''
-      build-cores = 0
       allowed-impure-host-deps = /etc/protocols /etc/services /etc/nsswitch.conf
     '';
 
