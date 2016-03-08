@@ -2,15 +2,6 @@ lib: with lib;
 
 [ /* Physical machines. */
 
-  { # Web frontend.
-    hostName = "cartman";
-    ipAddress = "192.168.1.5";
-    ethernetAddress = "00:19:d1:19:28:bf";
-    systems = [ "x86_64-linux" "i686-linux" ];
-    aliases = ["main"];
-    maxJobs = 2;
-  }
-
   /*
   { # APC UPS.
     hostName = "ups";
@@ -49,16 +40,6 @@ lib: with lib;
     buildUser = "buildfarm";
   }
 
-  { # Windows XP build machine.
-    hostName = "garrison";
-    ipAddress = "192.168.1.11";
-    ethernetAddress = "00:19:d1:10:37:54";
-    system = "i686-cygwin";
-    aliases = ["winxp32-1" "winxp32" "winxp"];
-    maxJobs = 2;
-    buildUser = "nix";
-  }
-
   { # 64-bit Mac OS X build machine.
     hostName = "butters";
     ipAddress = "131.180.119.68";
@@ -69,25 +50,19 @@ lib: with lib;
     buildUser = "nix";
   }
 
-  { # Old Hydra server.
+  { # Old Hydra server, now build machine.
     hostName = "hydra";
     ipAddress = "131.180.119.69";
     ethernetAddress = "00:22:19:55:bf:24";
   }
 
-  { # Xen machine.
-    hostName = "mrhankey";
-    ipAddress = "192.168.1.24";
-    ethernetAddress = "00:1d:09:0e:09:e5";
-  }
-
-  { # Hydra server.
+  { # Old Hydra server, now build machine.
     hostName = "lucifer";
     ipAddress = "131.180.119.73";
     ethernetAddress = "84:2b:2b:0b:98:f0";
   }
 
-  { # 48-core NixOS front-end proxy, database server, build machine.
+  { # 48-core NixOS web server (zabbix / wiki), database server, build machine.
     hostName = "wendy";
     ipAddress = "131.180.119.77";
     ethernetAddress = "f0:4d:a2:40:1b:c0";
@@ -109,24 +84,6 @@ lib: with lib;
     systems = [ "x86_64-linux" ];
   }
   */
-
-
-  /* Xen VMs hosted on mrhankey.  Note that 00:16:3e is the prefix for
-     Xen MAC addresses. */
-
-  { # NixOS test machine.
-    hostName = "drdoctor";
-    ipAddress = "192.168.1.51";
-    ethernetAddress = "00:16:3e:00:00:02";
-    systems = [ "x86_64-linux" ];
-  }
-
-  { # Another NixOS test machine.
-    hostName = "clyde";
-    ipAddress = "192.168.1.55";
-    ethernetAddress = "00:16:3e:00:00:06";
-    systems = [ "x86_64-linux" ];
-  }
 
 
   /* KVM VMs hosted on stan. */
