@@ -3,9 +3,17 @@
 { config, pkgs, ... }:
 
 {
-  require = [ ./build-machines-common.nix ];
+  imports = [ ./build-machines-common.nix ];
 
-  nixpkgs.system = "x86_64-linux";
+  boot.loader.grub.device = "/dev/sda";
+  boot.loader.grub.copyKernels = true;
+
+  fileSystems =
+    [ { mountPoint = "/";
+        label = "nixos";
+        options = "noatime";
+      }
+    ];
 
   boot.initrd.kernelModules = [ "mptsas" "ext4" ];
   boot.kernelModules = [ "acpi-cpufreq" "kvm-intel" ];

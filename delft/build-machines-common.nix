@@ -1,18 +1,9 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
-with pkgs.lib;
+with lib;
+
 {
-  require = [ ./common.nix ];
-
-  boot.loader.grub.device = "/dev/sda";
-  boot.loader.grub.copyKernels = true;
-
-  fileSystems =
-    [ { mountPoint = "/";
-        label = "nixos";
-        options = "noatime";
-      }
-    ];
+  imports = [ ./common.nix ];
 
   nix.gc.automatic = true;
   nix.gc.dates = "03,09,15,21:15";
