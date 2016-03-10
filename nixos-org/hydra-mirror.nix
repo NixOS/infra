@@ -67,8 +67,6 @@ in
         (makeUpdateChannel "nixos-16.03-beta-small" "nixos/release-16.03-small/tested")
         (makeUpdateChannel "nixos-15.09" "nixos/release-15.09/tested")
         (makeUpdateChannel "nixos-15.09-small" "nixos/release-15.09-small/tested")
-        (makeUpdateChannel "nixos-14.12" "nixos/release-14.12/tested")
-        (makeUpdateChannel "nixos-14.12-small" "nixos/release-14.12-small/tested")
         (makeUpdateChannel "nixos-unstable" "nixos/trunk-combined/tested")
         (makeUpdateChannel "nixos-unstable-small" "nixos/unstable-small/tested")
         (makeUpdateChannel "nixpkgs-unstable" "nixpkgs/trunk/unstable")
