@@ -19,7 +19,7 @@ let
             ''
               source /etc/profile
               cd /home/hydra-mirror/nixos-channel-scripts
-              exec ./mirror-nixos-branch.pl ${channelName} http://hydra.nixos.org/job/${mainJob}/latest-finished \
+              exec ./mirror-nixos-branch.pl ${channelName} https://hydra.nixos.org/job/${mainJob}/latest-finished \
                 ${optionalString (channelName == "15.09") "1"}
             ''; # */
           serviceConfig.User = "hydra-mirror";
