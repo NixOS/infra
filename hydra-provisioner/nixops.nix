@@ -44,6 +44,12 @@ in
       nix.gc.automatic = true;
       nix.gc.dates = "*:0/30";
       nix.gc.options = ''--max-freed "$((15 * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | ${pkgs.gawk}/bin/awk '{ print $4 }')))"'';
+
+      # Use the cache.nixos.org S3 bucket directly, rather than going
+      # through Cloudfront, since same-region EC2<->S3 traffic is
+      # free. Also it avoids caching of negative lookups by
+      # Cloudfront.
+      nix.binaryCaches = lib.mkForce [ https://nix-cache.s3.amazonaws.com/ ];
     };
 
 }
