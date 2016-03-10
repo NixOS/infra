@@ -1,7 +1,7 @@
 { config, lib, pkgs, ...}:
 
 {
-  imports = [ ./common.nix ./hydra.nix ./hydra-proxy.nix ];
+  imports = [ ./common.nix ./hydra.nix ./hydra-proxy.nix ./datadog.nix ];
 
   deployment.targetEnv = "hetzner";
   deployment.hetzner.mainIPv4 = "46.4.67.10";
