@@ -9,7 +9,7 @@
     nixopsExpr = builtins.toPath ./nixops.nix;
     nixPath = [ "nixpkgs=https://nixos.org/channels/nixos-15.09-small/nixexprs.tar.xz" ];
     minMachines = 0;
-    maxMachines = 24;
+    maxMachines = 12;
     ignoredRunnables = 250;
     runnablesPerMachine = 50;
     maxJobs = 4;
