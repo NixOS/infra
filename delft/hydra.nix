@@ -3,8 +3,7 @@
 with lib;
 
 let
-  hydra = builtins.storePath /nix/store/913ls6qhzcyylnfqc5dd627j2l8c4jmq-hydra-0.1pre1234-abcdef;
-  hydraDebug = builtins.storePath /nix/store/nwgjbc1qifyw1bz7jw4hw4j7zai15bqx-hydra-0.1pre1234-abcdef-debug;
+  hydra = (import ../../hydra/release.nix {}).build.x86_64-linux;
 in
 
 {
@@ -20,6 +19,8 @@ in
     with import ../ssh-keys.nix; [ eelco rob provisioner ];
 
   services.hydra.enable = true;
+  services.hydra.buildMachinesFiles =
+    [ "/etc/nix/machines" "/var/lib/hydra/provisioner/machines" ];
   services.hydra.package = hydra;
   services.hydra.logo = ./hydra-logo.png;
   services.hydra.hydraURL = "https://hydra.nixos.org";
@@ -51,6 +52,9 @@ in
     '';
 
   users.extraUsers.hydra.home = mkForce "/home/hydra";
+
+  systemd.services.hydra-queue-runner.restartIfChanged = false;
+  systemd.services.hydra-queue-runner.wantedBy = mkForce [];
 
   programs.ssh.extraConfig = mkAfter
     ''
