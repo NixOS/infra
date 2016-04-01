@@ -20,7 +20,7 @@ let
               source /etc/profile
               cd /home/hydra-mirror/nixos-channel-scripts
               exec ./mirror-nixos-branch.pl ${channelName} https://hydra.nixos.org/job/${mainJob}/latest-finished \
-                ${optionalString (channelName == "15.09") "1"}
+                ${optionalString (channelName == "nixos-16.03") "1"}
             ''; # */
           serviceConfig.User = "hydra-mirror";
         };
@@ -63,8 +63,8 @@ in
 
   systemd =
     fold recursiveUpdate {}
-      [ (makeUpdateChannel "nixos-16.03-beta" "nixos/release-16.03/tested")
-        (makeUpdateChannel "nixos-16.03-beta-small" "nixos/release-16.03-small/tested")
+      [ (makeUpdateChannel "nixos-16.03" "nixos/release-16.03/tested")
+        (makeUpdateChannel "nixos-16.03-small" "nixos/release-16.03-small/tested")
         (makeUpdateChannel "nixos-15.09" "nixos/release-15.09/tested")
         (makeUpdateChannel "nixos-15.09-small" "nixos/release-15.09-small/tested")
         (makeUpdateChannel "nixos-unstable" "nixos/trunk-combined/tested")

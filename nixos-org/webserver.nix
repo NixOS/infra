@@ -6,7 +6,7 @@ let
 
   sshKeys = import ../ssh-keys.nix;
 
-  nixosRelease = "15.09";
+  nixosRelease = "16.03";
 
   nixosVHostConfig =
     { hostName = "nixos.org";
@@ -73,7 +73,7 @@ in
 
   nix.package = builtins.storePath /nix/store/mynhlpqzslmdx9svyp0ig61hvplxv039-nix-1.12pre1234_abcdef;
 
-  nix.nixPath = [ "nixpkgs=https://nixos.org/channels/nixos-15.09-small/nixexprs.tar.xz" ];
+  nix.nixPath = [ "nixpkgs=https://nixos.org/channels/nixos-16.03-small/nixexprs.tar.xz" ];
 
   security.pam.enableSSHAgentAuth = true;
 
@@ -131,7 +131,8 @@ in
               #SSLOpenSSLConfCmd DHParameters "${./dhparams.pem}"
             '';
           extraSubservices =
-            [ { function = import <services/subversion>;
+            [ /*
+              { function = import <services/subversion>;
                 id = "nix";
                 urlPrefix = "";
                 toplevelRedirect = false;
@@ -143,6 +144,8 @@ in
                   logo = "/logo/nixos-lores.png";
                 };
               }
+              */
+              /*
               { serviceType = "mediawiki";
                 siteName = "Nix Wiki";
                 logo = "/logo/nix-wiki.png";
@@ -188,6 +191,7 @@ in
                 enableUploads = true;
                 uploadDir = "/data/nixos-mediawiki-upload";
               }
+              */
             ];
         })
 

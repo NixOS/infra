@@ -130,7 +130,7 @@ in
       fileSystems."/data/releases" =
         { device = "/releases";
           fsType = "none";
-          options = "bind";
+          options = [ "bind" ];
         };
 
       system.stateVersion = "14.12";
