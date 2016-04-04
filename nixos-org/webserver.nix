@@ -131,8 +131,7 @@ in
               #SSLOpenSSLConfCmd DHParameters "${./dhparams.pem}"
             '';
           extraSubservices =
-            [ /*
-              { function = import <services/subversion>;
+            [ { function = import <services/subversion>;
                 id = "nix";
                 urlPrefix = "";
                 toplevelRedirect = false;
@@ -144,8 +143,6 @@ in
                   logo = "/logo/nixos-lores.png";
                 };
               }
-              */
-              /*
               { serviceType = "mediawiki";
                 siteName = "Nix Wiki";
                 logo = "/logo/nix-wiki.png";
@@ -191,7 +188,6 @@ in
                 enableUploads = true;
                 uploadDir = "/data/nixos-mediawiki-upload";
               }
-              */
             ];
         })
 
