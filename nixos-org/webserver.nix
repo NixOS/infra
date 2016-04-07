@@ -6,6 +6,9 @@ let
 
   sshKeys = import ../ssh-keys.nix;
 
+  acmeKeyDir = "/var/lib/acme/nixos.org";
+  acmeWebRoot = "/var/lib/httpd/acme";
+
   nixosRelease = "16.03";
 
   nixosVHostConfig =
@@ -22,6 +25,9 @@ let
           }
           { urlPath = "/releases";
             dir = "/releases";
+          }
+          { urlPath = "/.well-known/acme-challenge";
+            dir = "${acmeWebRoot}/.well-known/acme-challenge";
           }
         ];
 
@@ -78,7 +84,6 @@ in
   security.pam.enableSSHAgentAuth = true;
 
   services.httpd = {
-    package = pkgs.apacheHttpd_2_2;
     enable = true;
     #multiProcessingModule = "worker";
     logPerVirtualHost = true;
@@ -120,9 +125,8 @@ in
 
         (nixosVHostConfig // {
           enableSSL = true;
-          sslServerCert = "/root/ssl-secrets/ssl-nixos-org.crt";
-          sslServerKey = "/root/ssl-secrets/ssl-nixos-org.key";
-          sslServerChain = ./sub.class1.server.ca.pem;
+          sslServerKey = "${acmeKeyDir}/key.pem";
+          sslServerCert = "${acmeKeyDir}/fullchain.pem";
           extraConfig = nixosVHostConfig.extraConfig +
             ''
               SSLProtocol All -SSLv2 -SSLv3
@@ -131,7 +135,8 @@ in
               #SSLOpenSSLConfCmd DHParameters "${./dhparams.pem}"
             '';
           extraSubservices =
-            [ { function = import <services/subversion>;
+            [ /*
+              { function = import <services/subversion>;
                 id = "nix";
                 urlPrefix = "";
                 toplevelRedirect = false;
@@ -143,6 +148,7 @@ in
                   logo = "/logo/nixos-lores.png";
                 };
               }
+              */
               { serviceType = "mediawiki";
                 siteName = "Nix Wiki";
                 logo = "/logo/nix-wiki.png";
@@ -352,5 +358,27 @@ in
   };
 
   nix.gc.automatic = true;
+
+  # Let's Encrypt configuration.
+  security.acme.certs."nixos.org" =
+    { email = "edolstra@gmail.com";
+      webroot = acmeWebRoot;
+      postRun = "systemctl reload httpd.service";
+    };
+
+  # Generate a dummy self-signed certificate until we get one from
+  # Let's Encrypt.
+  system.activationScripts.createDummyKey =
+    ''
+      dir=${acmeKeyDir}
+      mkdir -m 0700 -p $dir
+      if ! [[ -e $dir/key.pem ]]; then
+        ${pkgs.openssl}/bin/openssl genrsa -passout pass:foo -des3 -out $dir/key-in.pem 1024
+        ${pkgs.openssl}/bin/openssl req -passin pass:foo -new -key $dir/key-in.pem -out $dir/key.csr \
+          -subj "/C=NL/ST=Denial/L=Springfield/O=Dis/CN=www.example.com"
+        ${pkgs.openssl}/bin/openssl rsa -passin pass:foo -in $dir/key-in.pem -out $dir/key.pem
+        ${pkgs.openssl}/bin/openssl x509 -req -days 365 -in $dir/key.csr -signkey $dir/key.pem -out $dir/fullchain.pem
+      fi
+    '';
 
 }
