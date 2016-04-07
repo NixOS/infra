@@ -3,12 +3,13 @@
 with lib;
 
 let
-  hydra = (import ../../hydra/release.nix {}).build.x86_64-linux;
+  hydraSrc = ../../hydra;
+  hydra = (import (hydraSrc + "/release.nix") {}).build.x86_64-linux;
 in
 
 {
   imports =
-    [ "${hydra}/share/nix/hydra-module.nix"
+    [ (hydraSrc + "/hydra-module.nix")
     ];
 
   users.extraUsers.hydra.openssh.authorizedKeys.keys =
@@ -25,6 +26,7 @@ in
   services.hydra.logo = ./hydra-logo.png;
   services.hydra.hydraURL = "https://hydra.nixos.org";
   services.hydra.notificationSender = "edolstra@gmail.com";
+  services.hydra.smtpHost = "localhost";
   services.hydra.extraConfig =
     ''
       max_servers 50
@@ -55,6 +57,7 @@ in
 
   systemd.services.hydra-queue-runner.restartIfChanged = false;
   systemd.services.hydra-queue-runner.wantedBy = mkForce [];
+  systemd.services.hydra-queue-runner.requires = mkForce [];
 
   programs.ssh.extraConfig = mkAfter
     ''
