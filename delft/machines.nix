@@ -12,7 +12,7 @@ lib: with lib;
 
   { # 8-core NixOS build machine.
     hostName = "kenny";
-    ipAddress = "131.180.119.71";
+    ipAddress = "131.180.119.71"; # fe80::222:19ff:fe55:cc0d
     ethernetAddress = "00:22:19:55:cc:0d";
     systems = [ "x86_64-linux" "i686-linux" ];
     maxJobs = 8;
@@ -22,7 +22,7 @@ lib: with lib;
 
   { # 8-core NixOS build machine.
     hostName = "stan";
-    ipAddress = "131.180.119.74";
+    ipAddress = "131.180.119.74"; # fe80::222:19ff:fe55:bf2e
     ethernetAddress = "00:22:19:55:bf:2e";
     systems = [ "x86_64-linux" "i686-linux" ];
     maxJobs = 8;
@@ -32,7 +32,7 @@ lib: with lib;
 
   { # 8-core NixOS build machine.
     hostName = "kyle";
-    ipAddress = "131.180.119.72";
+    ipAddress = "131.180.119.72"; # fe80::222:19ff:fe55:c118
     ethernetAddress = "00:22:19:55:c1:18";
     systems = [ "x86_64-linux" "i686-linux" ];
     maxJobs = 8;
@@ -58,7 +58,7 @@ lib: with lib;
 
   { # Old Hydra server, now build machine.
     hostName = "lucifer";
-    ipAddress = "131.180.119.73";
+    ipAddress = "131.180.119.73"; # fe80::862b:2bff:fe0b:98f0
     ethernetAddress = "84:2b:2b:0b:98:f0";
   }
 
