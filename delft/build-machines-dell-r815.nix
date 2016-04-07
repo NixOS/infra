@@ -8,13 +8,13 @@
 
   fileSystems."/" =
     { label = "nixos";
-      options = "noatime";
+      options = [ "noatime" ];
     };
 
   fileSystems."/tmp" =
     { device = "none";
       fsType = "tmpfs";
-      options = "size=50%";
+      options = [ "size=50%" ];
       neededForBoot = true;
     };
 

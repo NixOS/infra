@@ -11,7 +11,7 @@
   fileSystems =
     [ { mountPoint = "/";
         label = "nixos";
-        options = "noatime";
+        options = [ "noatime" ];
       }
     ];
 

@@ -21,7 +21,7 @@ in
         SUBSYSTEM!="net", GOTO="my_end"
         IMPORT{builtin}="net_id"
         KERNEL=="vnet*", GOTO="my_end"
-        NAME=="", ENV{ID_NET_NAME_MAC}!="", NAME="$env{ID_NET_NAME_MAC}"
+        ENV{ID_NET_NAME_MAC}!="", NAME="$env{ID_NET_NAME_MAC}"
         LABEL="my_end"
       '';
 
@@ -33,6 +33,7 @@ in
 
     networking.nameservers = mkDefault [ "130.161.180.1" "130.161.180.65" "131.155.0.38" ];
 
+    /*
     networking.extraHosts =
       ''
         2001:610:685:1:216:3eff:fe00:1 tweek
@@ -40,6 +41,7 @@ in
         2001:610:685:1:216:3eff:fe00:7 beastie
         2001:610:685:1:216:3eff:fe00:8 demon
       '';
+    */
 
     system.build.mainPhysicalInterface = iface;
 

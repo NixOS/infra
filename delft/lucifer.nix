@@ -30,20 +30,20 @@ with lib;
   fileSystems."/fatdata" =
     { device = "/dev/fatdisk/fatdata";
       neededForBoot = true;
-      options = "defaults,noatime";
+      options = [ "defaults" "noatime" ];
     };
 
   fileSystems."/nix" =
     { device = "/fatdata/nix";
       fsType = "none";
-      options = "bind";
+      options = [ "bind" ];
       neededForBoot = true;
     };
 
   fileSystems."/nix/var/nix" =
     { device = "/nix-data";
       fsType = "none";
-      options = "bind";
+      options = [ "bind" ];
       neededForBoot = true;
     };
 

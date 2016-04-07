@@ -120,7 +120,8 @@ in
                 url = http://www.st.ewi.tudelft.nl/;
                 logo = "/serg-logo.png";
               };
-            } /*
+            }
+            /*
             { function = import /etc/nixos/services/subversion;
               id = "ptg";
               urlPrefix = "/ptg";
@@ -131,7 +132,8 @@ in
                 url = http://www.st.ewi.tudelft.nl/;
                 logo = "/serg-logo.png";
               };
-            } */
+            }
+            */
             { serviceType = "zabbix";
               urlPrefix = "/zabbix";
             }
@@ -217,5 +219,4 @@ in
   nixpkgs.config.packageOverrides = pkgs: {
     php = pkgs.php56;
   };
-
 }
