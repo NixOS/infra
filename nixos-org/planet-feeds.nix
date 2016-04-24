@@ -55,4 +55,8 @@
     feedUrl = "https://ocharles.org.uk/blog/posts.rss";
     homepageUrl = "https://ocharles.org.uk/blog";
   }
+  { name = "Edward Tjörnhammar";
+    feedUrl = "http://edwtjo.me/tags/NixOS/atom.xml";
+    homepageUrl = "http://edwtjo.me/tags/NixOS/";
+  }
 ]
