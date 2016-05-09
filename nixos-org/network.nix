@@ -32,6 +32,7 @@ in
     { inherit region accessKeyId;
       name = "nixpkgs-tarballs";
       # All files are readable but not listable.
+      # The s3-upload-tarballs user can upload files.
       policy =
         ''
           {
@@ -43,6 +44,20 @@ in
                 "Principal": {"AWS": "*"},
                 "Action": ["s3:GetObject"],
                 "Resource": ["${config.arn}/*"]
+              },
+              {
+                "Sid": "AllowUpload",
+                "Effect": "Allow",
+                "Principal": {"AWS": "arn:aws:iam::080433136561:user/s3-upload-tarballs"},
+                "Action": ["s3:PutObject", "s3:PutObjectAcl"],
+                "Resource": ["${config.arn}/*"]
+              },
+              {
+                "Sid": "AllowUpload2",
+                "Effect": "Allow",
+                "Principal": {"AWS": "arn:aws:iam::080433136561:user/s3-upload-tarballs"},
+                "Action": ["s3:ListBucket"],
+                "Resource": ["${config.arn}"]
               }
             ]
           }
@@ -133,8 +148,10 @@ in
           options = [ "bind" ];
         };
 
+      swapDevices = [ { device = "/tmp/swapfile"; size = 1024; } ];
+
       system.stateVersion = "14.12";
 
-      imports = [ ./webserver.nix ./hydra-mirror.nix ];
+      imports = [ ./webserver.nix ./hydra-mirror.nix ./tarball-mirror.nix ];
     };
 }

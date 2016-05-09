@@ -9,8 +9,6 @@ let
   acmeKeyDir = "/var/lib/acme/nixos.org";
   acmeWebRoot = "/var/lib/httpd/acme";
 
-  nixosRelease = "16.03";
-
   nixosVHostConfig =
     { hostName = "nixos.org";
       serverAliases = [ "test.nixos.org" "test2.nixos.org" "ipv6.nixos.org" "localhost" ];
@@ -265,38 +263,6 @@ in
       openssh.authorizedKeys.keys =
         [ "ssh-dss AAAAB3NzaC1kc3MAAACBAMrcUf4qQj8XcG1nfG5/6rbfb4a89nV13KcJLBOVWa3Tn4YHeVz1lQDRHvnLK9YKM7MybDXD2wVG5nKuMbJMW5aZPEGrVUM4SQFXtnaNBgmoACrbG978Da/vNjGY89Q7GS/YqA24ASKnc09cRFsTmU0e/9BCbz9zXO4sJ8GaGHz7AAAAFQDZrJCdxTQ8GVvoFjL9Q1s1VHiClwAAAIBK+6r/kP/9VUzfRepEHCVObTIRYIhC9YcIZe2pMyCQSUIAjkGd5hkA8XQecs5/ym5Ddm2j61Kvt2jtGXQVP2F04wIFDuGK4GAfPpYjvLJaXtVxj1Ho4K2W/+WgKG1NEh466myZNsHr3v1MufbxNIS03lg6s8oJI4TmCaWtVHNW+AAAAIEAqh+ablUfEZAr6" ];
     };
-
-  users.extraUsers.tarball-mirror =
-    { description = "Nixpkgs tarball mirroring user";
-      home = "/home/tarball-mirror";
-      createHome = true;
-      useDefaultShell = true;
-      openssh.authorizedKeys.keys = [ sshKeys.eelco ];
-    };
-
-  /*
-  systemd.services.mirror-tarballs =
-    { description = "Mirror Nixpkgs Tarballs";
-      path  = [ config.nix.package pkgs.curl pkgs.git ];
-      #environment.DRY_RUN = "1";
-      environment.NIX_PATH = "nixpkgs=/home/tarball-mirror/nixpkgs";
-      environment.NIX_REMOTE = "daemon";
-      environment.CURL_CA_BUNDLE = "/etc/ssl/certs/ca-bundle.crt";
-      environment.NIX_TARBALLS_CACHE = "/tarballs";
-      environment.PERL5LIB = "/run/current-system/sw/lib/perl5/site_perl";
-      serviceConfig.User = "tarball-mirror";
-      serviceConfig.Type = "oneshot";
-      script =
-        ''
-          export NIX_CURL_FLAGS="--silent --show-error --connect-timeout 30"
-          cd /home/tarball-mirror/nixpkgs
-          git remote update channels
-          git checkout channels/nixos-${nixosRelease}
-          exec /nix/var/nix/profiles/per-user/root/channels/nixos/nixpkgs/maintainers/scripts/copy-tarballs.pl
-        '';
-      startAt = "05:30";
-    };
-  */
 
   systemd.services.update-channels =
     { description = "Update Channels";
