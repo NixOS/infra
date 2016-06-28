@@ -59,4 +59,8 @@
     feedUrl = "http://edwtjo.me/tags/NixOS/atom.xml";
     homepageUrl = "http://edwtjo.me/tags/NixOS/";
   }
+  { name = "Sheena Artrip";
+    feedUrl = "https://sheenobu.net/categories/nixos/index.xml";
+    homepageUrl = "https://sheenobu.net";
+  }
 ]
