@@ -70,22 +70,22 @@ in
       Compression yes
 
       Host mac2
-      Hostname 94.211.55.77
+      Hostname 213.125.166.74
       Port 6001
       Compression yes
 
       Host mac3
-      Hostname 94.211.55.77
+      Hostname 213.125.166.74
       Port 6002
       Compression yes
 
       Host mac4
-      Hostname 94.211.55.77
+      Hostname 213.125.166.74
       Port 6003
       Compression yes
 
       Host mac5
-      Hostname 94.211.55.77
+      Hostname 213.125.166.74
       Port 6004
       Compression yes
     '';
