@@ -114,4 +114,6 @@ with pkgs.lib;
   systemd.services.systemd-journald.serviceConfig.WatchdogSec = 0;
 
   environment.enableDebugInfo = true;
+
+  systemd.tmpfiles.rules = [ "d /tmp 1777 root root 7d" ];
 }
