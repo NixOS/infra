@@ -1,7 +1,11 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./build-machines-common.nix ./megacli.nix ];
+  imports =
+    [ ./build-machines-common.nix
+      ./megacli.nix
+      ./datadog.nix
+    ];
 
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.copyKernels = true;
