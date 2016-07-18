@@ -47,4 +47,5 @@
 
   networking.defaultMailServer.directDelivery = lib.mkForce false;
   services.postfix.enable = true;
+  services.postfix.hostname = "hydra.nixos.org";
 }
