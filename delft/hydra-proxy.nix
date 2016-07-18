@@ -18,8 +18,8 @@ let
       ProxyPass         /apache-errors !
       ProxyPass         /.well-known !
       ErrorDocument 503 /apache-errors/503.html
-      ProxyPass         /       http://localhost:3000/ retry=5 disablereuse=on
-      ProxyPassReverse  /       http://localhost:3000/
+      ProxyPass         /       http://127.0.0.1:3000/ retry=5 disablereuse=on
+      ProxyPassReverse  /       http://127.0.0.1:3000/
 
       CacheEnable disk /
       CacheRoot ${hydraCacheDir}
