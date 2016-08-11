@@ -4,6 +4,8 @@ with lib;
 
 let
 
+  channelScripts = import <nixos-channel-scripts> { inherit pkgs; };
+
   makeUpdateChannel = channelName: mainJob:
     { timers."update-${channelName}" =
         { wantedBy = [ "timers.target" ];
@@ -15,11 +17,10 @@ let
       services."update-${channelName}" =
         { description = "Update Channel ${channelName}";
           after = [ "networking.target" ];
+          path = [ channelScripts ];
           script =
             ''
-              source /etc/profile
-              cd /home/hydra-mirror/nixos-channel-scripts
-              exec ./mirror-nixos-branch.pl ${channelName} https://hydra.nixos.org/job/${mainJob}/latest-finished \
+              exec mirror-nixos-branch ${channelName} https://hydra.nixos.org/job/${mainJob}/latest-finished \
                 ${optionalString (channelName == "nixos-16.03") "1"}
             ''; # */
           serviceConfig.User = "hydra-mirror";
@@ -29,14 +30,6 @@ let
 in
 
 {
-  environment.systemPackages =
-    [ pkgs.wget
-      pkgs.perlPackages.FileSlurp
-      pkgs.perlPackages.LWP
-      pkgs.perlPackages.LWPProtocolHttps
-      pkgs.perlPackages.ListMoreUtils
-    ];
-
   users.extraUsers.hydra-mirror =
     { description = "Channel mirroring user";
       home = "/home/hydra-mirror";
