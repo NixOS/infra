@@ -58,6 +58,20 @@ in
                 "Principal": {"AWS": "arn:aws:iam::080433136561:user/s3-upload-tarballs"},
                 "Action": ["s3:ListBucket"],
                 "Resource": ["${config.arn}"]
+              },
+              {
+                "Sid": "CopumpkinAllowUpload",
+                "Effect": "Allow",
+                "Principal": {"AWS": "arn:aws:iam::390897850978:root"},
+                "Action": ["s3:PutObject", "s3:PutObjectAcl"],
+                "Resource": ["${config.arn}/*"]
+              },
+              {
+                "Sid": "CopumpkinAllowUpload2",
+                "Effect": "Allow",
+                "Principal": {"AWS": "arn:aws:iam::390897850978:root"},
+                "Action": ["s3:ListBucket"],
+                "Resource": ["${config.arn}"]
               }
             ]
           }
