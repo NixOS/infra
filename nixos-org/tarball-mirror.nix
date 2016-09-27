@@ -33,6 +33,7 @@ in
           cd /home/tarball-mirror/nixpkgs
           git remote update channels
           git checkout channels/nixos-${nixosRelease}
+          # FIXME: use IAM role.
           export AWS_ACCESS_KEY_ID=$(sed 's/aws_access_key_id=\(.*\)/\1/ ; t; d' ~/.aws/credentials)
           export AWS_SECRET_ACCESS_KEY=$(sed 's/aws_secret_access_key=\(.*\)/\1/ ; t; d' ~/.aws/credentials)
           NIX_PATH=nixpkgs=. ./maintainers/scripts/copy-tarballs.pl \

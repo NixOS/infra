@@ -75,7 +75,7 @@ in
 
   environment.systemPackages = [ pkgs.perlPackages.XMLSimple pkgs.git pkgs.openssl ];
 
-  nix.package = builtins.storePath /nix/store/mynhlpqzslmdx9svyp0ig61hvplxv039-nix-1.12pre1234_abcdef;
+  nix.package = pkgs.nixUnstable;
 
   nix.nixPath = [ "nixpkgs=https://nixos.org/channels/nixos-16.03-small/nixexprs.tar.xz" ];
 

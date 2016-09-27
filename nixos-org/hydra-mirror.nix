@@ -20,8 +20,10 @@ let
           path = [ channelScripts ];
           script =
             ''
-              exec mirror-nixos-branch ${channelName} https://hydra.nixos.org/job/${mainJob}/latest-finished \
-                ${optionalString (channelName == "nixos-16.03") "1"}
+              # FIXME: use IAM role.
+              export AWS_ACCESS_KEY_ID=$(sed 's/aws_access_key_id=\(.*\)/\1/ ; t; d' ~/.aws/credentials)
+              export AWS_SECRET_ACCESS_KEY=$(sed 's/aws_secret_access_key=\(.*\)/\1/ ; t; d' ~/.aws/credentials)
+              exec mirror-nixos-branch ${channelName} https://hydra.nixos.org/job/${mainJob}/latest-finished
             ''; # */
           serviceConfig.User = "hydra-mirror";
         };
@@ -38,30 +40,14 @@ in
       uid = 497;
     };
 
-  /*
-  systemd.services.mirror-nixpkgs =
-    { description = "Mirror Nixpkgs";
-      wantedBy = [ "multi-user.target" ];
-      after = [ "networking.target" ];
-      path = [ pkgs.su ];
-      script =
-        ''
-          rm -rf /data/releases/nixpkgs/.tmp-*
-          exec su - hydra-mirror -c 'cd nixos-channel-scripts; while true; do ./mirror-nixpkgs.sh; sleep 1200; done'
-        '';
-      serviceConfig.Restart = "always";
-      serviceConfig.CPUShares = 100;
-    };
-  */
-
   systemd =
     fold recursiveUpdate {} [
       (makeUpdateChannel "nixos-16.09" "nixos/release-16.09/tested")
       (makeUpdateChannel "nixos-16.09-small" "nixos/release-16.09-small/tested")
       (makeUpdateChannel "nixos-16.03" "nixos/release-16.03/tested")
       (makeUpdateChannel "nixos-16.03-small" "nixos/release-16.03-small/tested")
-      (makeUpdateChannel "nixos-15.09" "nixos/release-15.09/tested")
-      (makeUpdateChannel "nixos-15.09-small" "nixos/release-15.09-small/tested")
+      #(makeUpdateChannel "nixos-15.09" "nixos/release-15.09/tested")
+      #(makeUpdateChannel "nixos-15.09-small" "nixos/release-15.09-small/tested")
       (makeUpdateChannel "nixos-unstable" "nixos/trunk-combined/tested")
       (makeUpdateChannel "nixos-unstable-small" "nixos/unstable-small/tested")
       (makeUpdateChannel "nixpkgs-unstable" "nixpkgs/trunk/unstable")

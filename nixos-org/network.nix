@@ -128,6 +128,42 @@ in
         '';
     };
 
+  resources.s3Buckets.nix-releases =
+    { config, ... }:
+    { inherit accessKeyId;
+      name = "nix-releases";
+      region = "eu-west-1";
+      policy =
+        ''
+          {
+            "Version": "2008-10-17",
+            "Statement": [
+              {
+                "Sid": "AllowPublicRead",
+                "Effect": "Allow",
+                "Principal": {"AWS": "*"},
+                "Action": ["s3:GetObject"],
+                "Resource": ["${config.arn}/*"]
+              },
+              {
+                "Sid": "AllowPublicList",
+                "Effect": "Allow",
+                "Principal": {"AWS": "*"},
+                "Action": ["s3:ListBucket"],
+                "Resource": ["${config.arn}"]
+              },
+              {
+                "Sid": "AllowUpload",
+                "Effect": "Allow",
+                "Principal": {"AWS": "arn:aws:iam::080433136561:user/s3-upload-releases"},
+                "Action": ["s3:PutObject", "s3:PutObjectAcl"],
+                "Resource": ["${config.arn}/*"]
+              }
+            ]
+          }
+        '';
+    };
+
   webserver =
     { config, pkgs, resources, ... }:
 
@@ -162,7 +198,7 @@ in
           options = [ "bind" ];
         };
 
-      swapDevices = [ { device = "/tmp/swapfile"; size = 1024; } ];
+      swapDevices = [ { device = "/tmp/swapfile"; size = 3 * 1024; } ];
 
       system.stateVersion = "14.12";
 
