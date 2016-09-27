@@ -154,7 +154,7 @@ in
                 #skins = [ ./wiki-skins ];
                 extraConfig =
                   ''
-                    $wgSiteNotice = "The NixOS wiki is outdated and is being shut down. If you wish to add or improve NixOS documentation, please grab a ticket from the [https://github.com/NixOS/nixpkgs/milestone/8 Move the wiki!] milestone.";
+                    $wgSiteNotice = "${"'''The NixOS wiki is outdated and is being shut down. If you wish to add or improve NixOS documentation, please grab a ticket from the [https://github.com/NixOS/nixpkgs/milestone/8 Move the wiki!] milestone.'''"}";
 
                     #$wgEmailConfirmToEdit = true;
 
