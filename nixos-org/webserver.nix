@@ -190,6 +190,8 @@ in
                     foreach ($arr as $key => $value) {
                         $wgCaptchaQuestions[] = array('question' => $key, 'answer' => $value);
                     }
+
+                    wfLoadSkin('Vector');
                   '';
                 enableUploads = true;
                 uploadDir = "/data/nixos-mediawiki-upload";
