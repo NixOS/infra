@@ -63,4 +63,8 @@
     feedUrl = "https://sheenobu.net/categories/nixos/index.xml";
     homepageUrl = "https://sheenobu.net";
   }
+  { name = "Munich NixOS Meetup";
+    feedUrl = "https://www.meetup.com/Munich-NixOS-Meetup/events/rss/";
+    homepageUrl = "https://www.meetup.com/Munich-NixOS-Meetup/";
+  }
 ]
