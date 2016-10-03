@@ -2,27 +2,6 @@
 
 with lib;
 
-let
-  duplicityBackup = pkgs.writeScript "backup-duplicity" ''
-    #! /bin/sh
-    echo "Starting backups"
-    export PATH=$PATH:/var/run/current-system/sw/bin
-    time duplicity --full-if-older-than 30D --no-encryption /data/pt-wiki file:///backup/cartman/pt-wiki
-    time duplicity --no-encryption --force remove-all-inc-of-but-n-full 1 file:///backup/cartman/pt-wiki
-
-    time duplicity --full-if-older-than 30D --no-encryption /data/subversion file:///backup/cartman/subversion
-    time duplicity --no-encryption --force remove-all-inc-of-but-n-full 1 file:///backup/cartman/subversion
-
-    time duplicity --full-if-older-than 30D --no-encryption /data/subversion-ptg file:///backup/cartman/subversion-ptg
-    time duplicity --no-encryption --force remove-all-inc-of-but-n-full 1 file:///backup/cartman/subversion-ptg
-
-    time duplicity --full-if-older-than 30D --no-encryption /data/subversion-strategoxt file:///backup/cartman/subversion-strategoxt
-    time duplicity --no-encryption --force remove-all-inc-of-but-n-full 1 file:///backup/cartman/subversion-strategoxt
-
-    echo Done
-  '';
-
-in
 {
   imports = [ ./build-machines-dell-r815.nix ./delft-webserver.nix ./sysstat.nix ./datadog.nix ];
 
@@ -63,13 +42,39 @@ in
     '';
   };
 
+  systemd.services.duplicity-backup =
+    {
+      path = [ pkgs.duplicity ];
+
+      unitConfig.RequiresMountsFor = [ "/backup" ];
+
+      script = ''
+        export PATH=$PATH:/var/run/current-system/sw/bin
+        time duplicity --full-if-older-than 30D --no-encryption /data/pt-wiki file:///backup/cartman/pt-wiki
+        time duplicity --no-encryption --force remove-all-inc-of-but-n-full 1 file:///backup/cartman/pt-wiki
+
+        time duplicity --full-if-older-than 30D --no-encryption /data/subversion file:///backup/cartman/subversion
+        time duplicity --no-encryption --force remove-all-inc-of-but-n-full 1 file:///backup/cartman/subversion
+
+        time duplicity --full-if-older-than 30D --no-encryption /data/subversion-ptg file:///backup/cartman/subversion-ptg
+        time duplicity --no-encryption --force remove-all-inc-of-but-n-full 1 file:///backup/cartman/subversion-ptg
+
+        time duplicity --full-if-older-than 30D --no-encryption /data/subversion-strategoxt file:///backup/cartman/subversion-strategoxt
+        time duplicity --no-encryption --force remove-all-inc-of-but-n-full 1 file:///backup/cartman/subversion-strategoxt
+      '';
+
+      startAt = "02:40";
+    };
+
+  systemd.mounts =
+    [ { mountConfig.TimeoutSec = 300;
+        what = "130.161.158.5:/dxs/users4/group/buildfarm";
+        where = "/backup";
+      }
+    ];
+
   services.cron.systemCronJobs =
     [ #"15 4 * * * root cp -v /var/backup/postgresql/* /backup/wendy/postgresql/  &> /var/log/backup-db.log"
-      # Force the sixxs tunnel to stay alive by periodically
-      # pinging the other side.  This is necessary to remain
-      # reachable from the outside.
-      "*/10 * * * * root ${pkgs.iputils}/sbin/ping6 -c 1 2001:610:600:88d::1"
-      "40 2 * * *  root ${duplicityBackup} &>> /var/log/backup-duplicity.log"
     ];
 
   services.radvd.enable = false;
@@ -81,6 +86,15 @@ in
         RDNSS 2001:610:685:1::1 { };
       };
     '';
+
+  # Force the sixxs tunnel to stay alive by periodically
+  # pinging the other side.  This is necessary to remain
+  # reachable from the outside.
+  systemd.services.ping-sixxs =
+    { serviceConfig.ExecStart = "${pkgs.iputils}/sbin/ping6 -c 1 2001:610:600:88d::1";
+      serviceConfig.Type = "oneshot";
+      startAt = "*:0/10";
+    };
 
   networking = {
 
