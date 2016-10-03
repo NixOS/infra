@@ -42,7 +42,7 @@ in
 
       nix.buildCores = 0;
 
-      nix.useChroot = true;
+      nix.useSandbox = true;
 
       nix.gc.automatic = true;
       nix.gc.dates = "*:0/30";
