@@ -133,6 +133,7 @@ in
     /var/log/httpd/access_log*.org
     /var/log/httpd/error_log*.org
     {
+      missingok
       daily
       dateext
       rotate 10000
