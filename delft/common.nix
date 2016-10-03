@@ -35,6 +35,7 @@ with pkgs.lib;
     [ pkgs.emacs pkgs.subversion pkgs.sysstat pkgs.hdparm pkgs.sdparm # pkgs.lsiutil
       pkgs.htop pkgs.sqlite pkgs.iotop pkgs.lm_sensors pkgs.gitFull pkgs.hwloc
       pkgs.lsof pkgs.numactl pkgs.gcc pkgs.smartmontools pkgs.tcpdump pkgs.gdb
+      pkgs.elfutils
     ];
 
   services.sshd.enable = true;
@@ -42,9 +43,9 @@ with pkgs.lib;
   boot.kernel.sysctl."kernel.panic" = 60;
   boot.kernel.sysctl."kernel.panic_on_oops" = 1;
 
-  nix.package = pkgs.nixUnstable;
+  #nix.package = pkgs.nixUnstable;
 
-  nix.useChroot = true;
+  nix.useSandbox = true;
 
   nix.nrBuildUsers = 100;
 
@@ -116,4 +117,7 @@ with pkgs.lib;
   environment.enableDebugInfo = true;
 
   systemd.tmpfiles.rules = [ "d /tmp 1777 root root 7d" ];
+
+  # Disable sending email from cron.
+  services.cron.mailto = "";
 }
