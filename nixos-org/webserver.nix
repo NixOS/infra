@@ -43,8 +43,7 @@ let
           Redirect /binary-cache http://cache.nixos.org
           Redirect /releases/channels /channels
           Redirect /tarballs http://tarballs.nixos.org
-
-          RedirectMatch ^/releases/(.*\.(iso|ova))$ http://releases.nixos.org/$1
+          Redirect /releases/nixos https://d3g5gsiof5omrk.cloudfront.net/nixos
 
           <Location /server-status>
             SetHandler server-status
@@ -199,6 +198,7 @@ in
             ];
         })
 
+        # FIXME: remove
         { hostName = "releases.nixos.org";
           serverAliases = [ "releases-uncached.nixos.org" ];
           extraConfig =
