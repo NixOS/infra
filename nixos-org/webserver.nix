@@ -1,6 +1,6 @@
-{ config, pkgs, resources, ... }:
+{ config, lib, pkgs, resources, ... }:
 
-with pkgs.lib;
+with lib;
 
 let
 
@@ -81,7 +81,7 @@ in
 
   nix.package = pkgs.nixUnstable;
 
-  nix.nixPath = [ "nixpkgs=https://nixos.org/channels/nixos-16.03-small/nixexprs.tar.xz" ];
+  nix.nixPath = [ "nixpkgs=https://nixos.org/channels/nixos-16.09-small/nixexprs.tar.xz" ];
 
   security.pam.enableSSHAgentAuth = true;
 
@@ -273,20 +273,12 @@ in
         [ "ssh-dss AAAAB3NzaC1kc3MAAACBAMrcUf4qQj8XcG1nfG5/6rbfb4a89nV13KcJLBOVWa3Tn4YHeVz1lQDRHvnLK9YKM7MybDXD2wVG5nKuMbJMW5aZPEGrVUM4SQFXtnaNBgmoACrbG978Da/vNjGY89Q7GS/YqA24ASKnc09cRFsTmU0e/9BCbz9zXO4sJ8GaGHz7AAAAFQDZrJCdxTQ8GVvoFjL9Q1s1VHiClwAAAIBK+6r/kP/9VUzfRepEHCVObTIRYIhC9YcIZe2pMyCQSUIAjkGd5hkA8XQecs5/ym5Ddm2j61Kvt2jtGXQVP2F04wIFDuGK4GAfPpYjvLJaXtVxj1Ho4K2W/+WgKG1NEh466myZNsHr3v1MufbxNIS03lg6s8oJI4TmCaWtVHNW+AAAAIEAqh+ablUfEZAr6" ];
     };
 
-  systemd.services.update-channels =
-    { description = "Update Channels";
-      environment.CURL_CA_BUNDLE = "/etc/ssl/certs/ca-bundle.crt";
-      environment.HOME = "/root";
-      serviceConfig.Type = "oneshot";
-      serviceConfig.ExecStart = "${config.nix.package}/bin/nix-channel --update";
-      startAt = "*:0/33";
-    };
-
   systemd.services.update-homepage =
     { description = "Update nixos.org Homepage";
-      path = [ config.nix.package pkgs.git pkgs.bash ];
+      # FIXME: gnutar/xz deps work around a Nix bug.
+      path = [ config.nix.package pkgs.git pkgs.bash pkgs.gnutar pkgs.xz ];
       serviceConfig.User = "eelco";
-      environment.NIX_PATH = "/nix/var/nix/profiles/per-user/root/channels/nixos";
+      environment.NIX_PATH = concatStringsSep ":" config.nix.nixPath;
       environment.NIX_REMOTE = "daemon";
       environment.CURL_CA_BUNDLE = "/etc/ssl/certs/ca-bundle.crt";
       serviceConfig.Type = "oneshot";
