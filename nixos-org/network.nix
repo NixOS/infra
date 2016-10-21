@@ -198,7 +198,17 @@ in
           options = [ "bind" ];
         };
 
-      swapDevices = [ { device = "/tmp/swapfile"; size = 3 * 1024; } ];
+      fileSystems."/scratch" =
+        { autoFormat = true;
+          fsType = "ext4";
+          device = "/dev/xvdk";
+          ec2.size = 64;
+          ec2.volumeType = "gp2";
+        };
+
+      swapDevices =
+        [ { device = "/scratch/swapfile"; size = 8 * 1024; }
+        ];
 
       system.stateVersion = "14.12";
 
