@@ -21,10 +21,10 @@ let
       ProxyPass         /       http://127.0.0.1:3000/ retry=5 disablereuse=on
       ProxyPassReverse  /       http://127.0.0.1:3000/
 
-      CacheEnable disk /
-      CacheRoot ${hydraCacheDir}
-      CacheMaxFileSize 64000000
-      CacheIgnoreHeaders Set-Cookie
+      #CacheEnable disk /
+      #CacheRoot ${hydraCacheDir}
+      #CacheMaxFileSize 64000000
+      #CacheIgnoreHeaders Set-Cookie
 
       <Location />
         SetOutputFilter DEFLATE
@@ -75,6 +75,7 @@ in
 
   };
 
+  /*
   system.activationScripts.createHydraCache =
     ''
       mkdir -p ${hydraCacheDir}
@@ -85,9 +86,10 @@ in
     { description = "Clean httpd Cache";
       serviceConfig.ExecStart =
         "${config.services.httpd.package}/bin/htcacheclean " +
-        "-v -t -l 32G -p /var/cache/hydra-binary-cache";
-      startAt = "Sat 05:45";
+        "-v -t -l 4G -p /var/cache/hydra-binary-cache";
+      startAt = "05:45";
     };
+  */
 
   # Let's Encrypt configuration.
   security.acme.certs."hydra.nixos.org" =
