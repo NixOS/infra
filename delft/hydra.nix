@@ -19,27 +19,23 @@ in
   users.extraUsers.hydra-queue-runner.openssh.authorizedKeys.keys =
     with import ../ssh-keys.nix; [ eelco rob provisioner ];
 
-  services.hydra.enable = true;
-  services.hydra.buildMachinesFiles =
+  services.hydra-dev.enable = true;
+  services.hydra-dev.buildMachinesFiles =
     [ "/etc/nix/machines" "/var/lib/hydra/provisioner/machines" ];
-  services.hydra.package = hydra;
-  services.hydra.logo = ./hydra-logo.png;
-  services.hydra.hydraURL = "https://hydra.nixos.org";
-  services.hydra.notificationSender = "edolstra@gmail.com";
-  services.hydra.smtpHost = "localhost";
-  services.hydra.extraConfig =
+  services.hydra-dev.package = hydra;
+  services.hydra-dev.logo = ./hydra-logo.png;
+  services.hydra-dev.hydraURL = "https://hydra.nixos.org";
+  services.hydra-dev.notificationSender = "edolstra@gmail.com";
+  services.hydra-dev.smtpHost = "localhost";
+  services.hydra-dev.useSubstitutes = false;
+  services.hydra-dev.extraConfig =
     ''
       max_servers 50
-      enable_persona 1
 
       enable_google_login = 1
       google_client_id = 816926039128-ia4s4rsqrq998rsevce7i09mo6a4nffg.apps.googleusercontent.com
 
-      binary_cache_secret_key_file = /var/lib/hydra/queue-runner/keys/cache.nixos.org-1/secret
-      binary_cache_public_key_file = /var/lib/hydra/queue-runner/keys/cache.nixos.org-1/public
-
-      store_mode = s3-binary-cache
-      binary_cache_s3_bucket = nix-cache
+      store_uri = s3://nix-cache?secret-key=/var/lib/hydra/queue-runner/keys/cache.nixos.org-1/secret&write-nar-listing=1
       binary_cache_public_uri = https://cache.nixos.org
 
       <hipchat>
