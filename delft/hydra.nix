@@ -47,6 +47,8 @@ in
       <Plugin::Session>
         cache_size = 32m
       </Plugin::Session>
+
+      xxx-jobset-repeats = patchelf:master:3 nixos:reproducibility:1
     '';
 
   users.extraUsers.hydra.home = mkForce "/home/hydra";

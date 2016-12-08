@@ -2,6 +2,20 @@
 
 with pkgs.lib;
 
+let
+
+  diffoscopeWrapper = pkgs.writeScript "diffoscope-wrapper"
+      ''
+        #! ${pkgs.stdenv.shell}
+        echo ""
+        echo "non-determinism detected in $2; diff with previous round follows:"
+        echo ""
+        ${pkgs.utillinux}/bin/runuser -u diffoscope -- ${pkgs.diffoscope}/bin/diffoscope "$1" "$2"
+        exit 0
+      '';
+
+in
+
 {
   imports = [ ./static-net-config.nix ];
 
@@ -43,7 +57,7 @@ with pkgs.lib;
   boot.kernel.sysctl."kernel.panic" = 60;
   boot.kernel.sysctl."kernel.panic_on_oops" = 1;
 
-  #nix.package = pkgs.nixUnstable;
+  nix.package = pkgs.nixUnstable;
 
   nix.useSandbox = true;
 
@@ -54,6 +68,7 @@ with pkgs.lib;
   nix.extraOptions =
     ''
       allowed-impure-host-deps = /etc/protocols /etc/services /etc/nsswitch.conf
+      diff-hook = ${diffoscopeWrapper}
     '';
 
   services.zabbixAgent.enable = true;
@@ -120,4 +135,9 @@ with pkgs.lib;
 
   # Disable sending email from cron.
   services.cron.mailto = "";
+
+  # Don't run diffoscope as root.
+  users.extraUsers.diffoscope =
+    { description = "Diffoscope containment user";
+    };
 }
