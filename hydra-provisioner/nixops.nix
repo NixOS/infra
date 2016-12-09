@@ -31,6 +31,7 @@ in
       imports =
         [ <nixpkgs/nixos/modules/profiles/minimal.nix>
           <hydra-provisioner/auto-shutdown.nix>
+	  ../delft/diffoscope.nix
         ];
 
       users.extraUsers.root.openssh.authorizedKeys.keys =

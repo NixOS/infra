@@ -7,7 +7,8 @@
 
   systemTypes.x86_64-linux = {
     nixopsExpr = builtins.toPath ./nixops.nix;
-    nixPath = [ "nixpkgs=https://nixos.org/channels/nixos-16.03/nixexprs.tar.xz" ];
+    #nixPath = [ "nixpkgs=https://nixos.org/channels/nixos-16.03/nixexprs.tar.xz" ];
+    nixPath = [ "nixpkgs=/home/eelco.dolstra/src/nixpkgs" ];
     minMachines = 0;
     maxMachines = 12;
     ignoredRunnables = 250;
