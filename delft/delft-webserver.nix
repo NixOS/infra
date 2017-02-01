@@ -110,6 +110,7 @@ in
           documentRoot = cleanSource ./webroot;
           enableUserDir = true;
           extraSubservices = [
+            /*
             { function = import /etc/nixos/services/subversion;
               urlPrefix = "";
               toplevelRedirect = false;
@@ -121,6 +122,7 @@ in
                 logo = "/serg-logo.png";
               };
             }
+            */
             /*
             { function = import /etc/nixos/services/subversion;
               id = "ptg";
@@ -161,6 +163,7 @@ in
         ( strategoxtSSLConfig //
         { hostName = "svn.strategoxt.org";
           extraSubservices = [
+            /*
             { function = import /etc/nixos/services/subversion;
               id = "strategoxt";
               urlPrefix = "";
@@ -172,6 +175,7 @@ in
                 logo = http://strategoxt.org/pub/Stratego/StrategoLogo/StrategoLogoTextlessWhite-100px.png;
               };
             }
+            */
           ];
         })
 
