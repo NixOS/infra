@@ -34,6 +34,7 @@ let
           User-agent: *
           Disallow: /repos/
           Disallow: /irc/
+          Disallow: /wiki/
         '';
 
       extraConfig =
