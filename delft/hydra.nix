@@ -94,6 +94,10 @@ in
       Host mac7
       Hostname 208.78.106.252
       Compression yes
+
+      Host packet-t2-0
+      Hostname 147.75.99.71
+      Compression yes
     '';
 
   services.openssh.knownHosts =
@@ -113,6 +117,7 @@ in
       { hostNames = [ "lucifer.ewi.tudelft.nl" "131.180.119.73" ]; publicKey = "ssh-dss AAAAB3NzaC1kc3MAAACBAPrrqKNWZX/3uDOpxrIiiw25uiyWdoxw6KBqLB073Pa6wCttMEzNMHRXYZ8DeKYu4wme0b0siST+sXHDAiuYfyeTpr0IIQSoSCmVkEbV+qddSQG3j1nsQS/UoOa9+NLeT1A/VjvHLY+84OfCj2cIsH8K5pq2kRgzO8mPMCiBqIvVAAAAFQDM7cuqhTdSz19NPFFTLsxumhDsywAAAIBEnvmdidhrWcyJ8PFn65IaRnU5wrxbfza/+yWXQzsEo83ROIJn9rsa497fm1ZIEddD0GjJcQDYhHRoS1M3Yd4NuPSd4677FnRZwU1oVC+KvjslOfdaWCrSpBZ9Ku6vc8/27gF+HgLdG2mXIqkKMbtEiREOB1RD1C3+1fJ2o2BjjgAAAIEA+uPTp8aZIu9o/E0jyIDQXT6LZ37jTSK2M2LJw9kT1GWpJfLjnntUfvAUmJOoWAaEKuy2abafHLPrefnqKzIWy8OKPUzfwW+Kqre6SUNyKxeEXN+rdqR7LIZhYweoX8tHxbNCf2HkwJvZQw7lx9ACfeOkA5N56krb7kZqtCP6N6I="; }
       { hostNames = [ "stan.ewi.tudelft.nl" "131.180.119.74" ]; publicKey = "ssh-dss AAAAB3NzaC1kc3MAAACBAL0SlYpGjDjPKrLIwoltYHHTYo/d6Ct2FQZKh4ltKOszWPYYAbs/YNSm2eFkvj0CGc3aastFuebz6+pRfvGMvqi4q6IoHwVvOkbWMadyuqrWIO+Z1YemZP/GAG69pLy+UyoydiSI83ycwPe4YARAU/cpBMNKJZbSxyrO80XatmtRAAAAFQC291WK+9M8+zI4KAtk6EqX0vqQ1QAAAIBd1YgRfdfRdu60BpR+3/YMbSYZMjRLFPyoSgmEQR2TtKfqsuKTsTREzB20iMgFlhEWb6C4r5y6jYDU85OOnvpf7zne22j6bKFDIiAbgsjUFHK1EB7+TBltf5yqq0FyNOy/PnLqVzOeGaUeCOc3Ris71Lxkm60oVF4mjut2d2UJ6AAAAIByuCH1bIIRb4za4yiiFQUz2CBX1XHhBn/h/LhNMLuyCTciG6tkppGBAgq5rWrNhjaEc7dIFgZR+E1wE5PQzWG/TBiXctwCOqOOErDB5b95jO2EntIhi8x5PO9Ef6jgis4QRsBIZiENDDeQHxFHCv4q+10TpyV+625O8TXkkcxl0g=="; }
       { hostNames = [ "wendy.ewi.tudelft.nl" "131.180.119.77" ]; publicKey = "ssh-dss AAAAB3NzaC1kc3MAAACBAIDHVZ/xtcBsNHJ6qYxa3f1RX5k+SaRwgemCfIBSOgL8AGnsvD+OomlGg/eDhJU60AzFSZBQjKtrgRYWmAnzqSMOtfb9IIT5JfG5h/27LVjaaq29Mv+PcDpuPLuFNW3G50hDD1gA0hQhrZdZBkBv9MBaJgizFUjV9tb8KZIRS+MDAAAAFQC8YJViwihyk0oIHOgBfBifiTku6QAAAIBHadEeonXcbDWH6Q5esR1IU7dFMw/zS/wg9IgH0b7lRZBkyVkS0yxfJ7r8swCQ0Loh9dvLtbHLXMlegNfEFv3nbmZqE4copO/2wOM7SqhJRykByMFEhY28t1O1M4rYmzqXs92VUtc5xiTR/lv93C05KSkOl7rUfw43jsWgQAzIkgAAAIB3s4ntqW4H0TdNJFOpaVq1wgRJi768BAVq7MnuIKpFfjGiO7P1Wtk+6/8rzP3gx4cFELZWfJiDHZO5pJE2UGtx5yioQihg4nnZPxTw4FJS/Olf15S2CB/EsYgn9NlUAfOR29ApwasHAy8uP89iOv94cP3YMnWoSi0jkq8iSrSy7Q=="; }
+      { hostNames = [ "147.75.99.71" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICmTWtHCtB9eEKt5Atnlyb4pFqNYmbxMN8P2uNilWr7L"; }
     ];
 
 }
