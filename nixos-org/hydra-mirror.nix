@@ -42,12 +42,12 @@ in
 
   systemd =
     fold recursiveUpdate {} [
+      (makeUpdateChannel "nixos-17.03" "nixos/release-17.03/tested")
+      (makeUpdateChannel "nixos-17.03-small" "nixos/release-17.03-small/tested")
       (makeUpdateChannel "nixos-16.09" "nixos/release-16.09/tested")
       (makeUpdateChannel "nixos-16.09-small" "nixos/release-16.09-small/tested")
       (makeUpdateChannel "nixos-16.03" "nixos/release-16.03/tested")
       (makeUpdateChannel "nixos-16.03-small" "nixos/release-16.03-small/tested")
-      #(makeUpdateChannel "nixos-15.09" "nixos/release-15.09/tested")
-      #(makeUpdateChannel "nixos-15.09-small" "nixos/release-15.09-small/tested")
       (makeUpdateChannel "nixos-unstable" "nixos/trunk-combined/tested")
       (makeUpdateChannel "nixos-unstable-small" "nixos/unstable-small/tested")
       (makeUpdateChannel "nixpkgs-unstable" "nixpkgs/trunk/unstable")
