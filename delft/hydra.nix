@@ -49,6 +49,8 @@ in
       </Plugin::Session>
 
       xxx-jobset-repeats = patchelf:master:3 nixos:reproducibility:1
+
+      nar_buffer_size = 12884901888
     '';
 
   users.extraUsers.hydra.home = mkForce "/home/hydra";
