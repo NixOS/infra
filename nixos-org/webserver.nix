@@ -82,7 +82,7 @@ in
 
   nix.package = pkgs.nixUnstable;
 
-  nix.nixPath = [ "nixpkgs=https://nixos.org/channels/nixos-16.09-small/nixexprs.tar.xz" ];
+  nix.nixPath = [ "nixpkgs=https://nixos.org/channels/nixos-17.03-small/nixexprs.tar.xz" ];
 
   security.pam.enableSSHAgentAuth = true;
 
