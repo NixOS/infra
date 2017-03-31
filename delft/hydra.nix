@@ -97,6 +97,26 @@ in
       Hostname 208.78.106.252
       Compression yes
 
+      Host mac8
+      Hostname 213.125.166.74
+      Port 6008
+      Compression yes
+
+      Host mac9
+      Hostname 213.125.166.74
+      Port 6009
+      Compression yes
+
+      Host mac10
+      Hostname 213.125.166.74
+      Port 6010
+      Compression yes
+
+      Host mac11
+      Hostname 213.125.166.74
+      Port 6011
+      Compression yes
+
       Host packet-t2-0
       Hostname 147.75.99.71
       Compression yes
