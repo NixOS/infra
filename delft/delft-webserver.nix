@@ -60,13 +60,12 @@ in
   services = {
 
     httpd = {
-      package = pkgs.apacheHttpd_2_2;
       enable = true;
       logPerVirtualHost = true;
       adminAddr = "e.dolstra@tudelft.nl";
       hostName = "localhost";
 
-      extraModules = [ "deflate" "cache" "disk_cache" ];
+      extraModules = [ "deflate" ];
 
       extraConfig =
         ''
