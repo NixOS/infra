@@ -91,7 +91,7 @@ with lib;
   # pinging the other side.  This is necessary to remain
   # reachable from the outside.
   systemd.services.ping-sixxs =
-    { serviceConfig.ExecStart = "${pkgs.iputils}/sbin/ping6 -c 1 2001:610:600:88d::1";
+    { serviceConfig.ExecStart = "${pkgs.iputils}/sbin/ping -c 1 2001:610:600:88d::1";
       serviceConfig.Type = "oneshot";
       startAt = "*:0/10";
     };
