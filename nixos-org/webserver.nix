@@ -46,10 +46,9 @@ let
           Redirect /tarballs http://tarballs.nixos.org
           Redirect /releases/nixos https://d3g5gsiof5omrk.cloudfront.net/nixos
 
-          # Don't allow access to dot files (like .git).
+          # Don't allow access to .git directories.
           RewriteEngine on
-          RewriteCond %{THE_REQUEST} ^.*/\.
-          RewriteRule ^(.*)$ - [R=404]
+          RewriteRule "^(.*/)?\.git/" - [F,L]
 
           <Location /server-status>
             SetHandler server-status
