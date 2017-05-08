@@ -67,4 +67,9 @@
     feedUrl = "https://www.meetup.com/Munich-NixOS-Meetup/events/rss/";
     homepageUrl = "https://www.meetup.com/Munich-NixOS-Meetup/";
   }
+  {
+    name = "Typing nix";
+    feedUrl = "https://typing-nix.regnat.ovh/index.rss";
+    homepageUrl = "https://typing-nix.regnat.ovh/";
+  }
 ]
