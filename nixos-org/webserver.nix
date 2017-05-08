@@ -137,20 +137,7 @@ in
               #SSLOpenSSLConfCmd DHParameters "${./dhparams.pem}"
             '';
           extraSubservices =
-            [ /*
-              { function = import <services/subversion>;
-                id = "nix";
-                urlPrefix = "";
-                toplevelRedirect = false;
-                dataDir = "/data/subversion-nix";
-                notificationSender = "svn@svn.nixos.org";
-                organisation = {
-                  name = "Nix";
-                  url = http://nixos.org/;
-                  logo = "/logo/nixos-lores.png";
-                };
-              }
-              */
+            [
               { serviceType = "mediawiki";
                 siteName = "Nix Wiki";
                 logo = "/logo/nix-wiki.png";
@@ -222,11 +209,6 @@ in
 
         { hostName = "planet.nixos.org";
           documentRoot = "/var/www/planet.nixos.org";
-        }
-
-        # Obsolete, kept for backwards compatibility.
-        { hostName = "svn.nixos.org";
-          globalRedirect = "https://nixos.org/repoman";
         }
 
         # Obsolete, kept for backwards compatibility.
