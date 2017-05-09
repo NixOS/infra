@@ -34,13 +34,13 @@ let
           User-agent: *
           Disallow: /repos/
           Disallow: /irc/
-          Disallow: /wiki/
         '';
 
       extraConfig =
         ''
           MaxKeepAliveRequests 0
 
+          Redirect /wiki https://nixos.org/nixos/wiki.html
           Redirect /binary-cache http://cache.nixos.org
           Redirect /releases/channels /channels
           Redirect /tarballs http://tarballs.nixos.org
@@ -119,13 +119,6 @@ in
         }
 
         (nixosVHostConfig // {
-          extraConfig = nixosVHostConfig.extraConfig +
-            ''
-              Redirect /wiki https://nixos.org/wiki
-            '';
-        })
-
-        (nixosVHostConfig // {
           enableSSL = true;
           sslServerKey = "${acmeKeyDir}/key.pem";
           sslServerCert = "${acmeKeyDir}/fullchain.pem";
@@ -136,58 +129,6 @@ in
               SSLHonorCipherOrder on
               #SSLOpenSSLConfCmd DHParameters "${./dhparams.pem}"
             '';
-          extraSubservices =
-            [
-              { serviceType = "mediawiki";
-                siteName = "Nix Wiki";
-                logo = "/logo/nix-wiki.png";
-                #defaultSkin = "nixos";
-                #skins = [ ./wiki-skins ];
-                extraConfig =
-                  ''
-                    $wgSiteNotice = "${"'''The NixOS wiki is outdated and is being shut down. If you wish to add or improve NixOS documentation, please grab a ticket from the [https://github.com/NixOS/nixpkgs/milestone/8 Move the wiki!] milestone.'''"}";
-
-                    #$wgEmailConfirmToEdit = true;
-
-                    #$wgDebugLogFile = "/tmp/mediawiki_debug_log.txt";
-
-                    # Disable editing by all users.
-                    $wgGroupPermissions['*']['edit'] = false;
-                    $wgGroupPermissions['user']['edit'] = false;
-
-                    # Turn on the mass deletion feature.
-                    require_once("$IP/extensions/Nuke/Nuke.php");
-
-                    # Prevent pages with blacklisted links.
-                    require_once("$IP/extensions/SpamBlacklist/SpamBlacklist.php");
-                    $wgSpamBlacklistFiles = array(
-                        "http://meta.wikimedia.org/w/index.php?title=Spam_blacklist&action=raw&sb_ver=1"
-                    );
-
-                    # Enable DNS blacklisting.
-                    $wgEnableDnsBlacklist = true;
-                    $wgDnsBlacklistUrls = array('xbl.spamhaus.org');
-
-                    # Require users to answer a question.
-                    require_once("$IP/extensions/ConfirmEdit/ConfirmEdit.php");
-                    $wgCaptchaTriggers['edit'] = true;
-                    $wgCaptchaTriggers['create'] = true;
-
-                    require_once("$IP/extensions/ConfirmEdit/QuestyCaptcha.php");
-                    $wgCaptchaClass = 'QuestyCaptcha';
-                    $arr = array(
-                        "What is the name of the Linux distribution to which this wiki is dedicated?" => "NixOS",
-                    );
-                    foreach ($arr as $key => $value) {
-                        $wgCaptchaQuestions[] = array('question' => $key, 'answer' => $value);
-                    }
-
-                    wfLoadSkin('Vector');
-                  '';
-                enableUploads = true;
-                uploadDir = "/data/nixos-mediawiki-upload";
-              }
-            ];
         })
 
         # FIXME: remove
@@ -210,15 +151,6 @@ in
         { hostName = "planet.nixos.org";
           documentRoot = "/var/www/planet.nixos.org";
         }
-
-        # Obsolete, kept for backwards compatibility.
-        { hostName = "wiki.nixos.org";
-          extraConfig = ''
-            RedirectMatch ^/$ https://nixos.org/wiki
-            Redirect / https://nixos.org/
-          '';
-        }
-
       ];
   };
 
@@ -277,27 +209,6 @@ in
     ''
       ${pkgs.procps}/sbin/sysctl -q -w kernel.shmmax=$((1 * 1024**3))
     '';
-
-  services.postgresql = {
-    enable = true;
-    package = pkgs.postgresql92;
-    dataDir = "/data/postgresql";
-    extraConfig = ''
-      max_connections = 10
-      work_mem = 16MB
-      shared_buffers = 512MB
-      # We can risk losing some transactions.
-      synchronous_commit = off
-    '';
-    authentication = mkOverride 10 ''
-      local mediawiki all ident map=mwusers
-      local all       all ident
-    '';
-    identMap = ''
-      mwusers root   mediawiki
-      mwusers wwwrun mediawiki
-    '';
-  };
 
   services.venus = {
     enable = true;
