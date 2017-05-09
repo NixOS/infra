@@ -40,7 +40,6 @@ let
         ''
           MaxKeepAliveRequests 0
 
-          Redirect /wiki https://nixos.org/nixos/wiki.html
           Redirect /binary-cache http://cache.nixos.org
           Redirect /releases/channels /channels
           Redirect /tarballs http://tarballs.nixos.org
@@ -49,6 +48,8 @@ let
           # Don't allow access to .git directories.
           RewriteEngine on
           RewriteRule "^(.*/)?\.git/" - [F,L]
+
+          RedirectMatch "^/wiki.*" "https://nixos.org/nixos/wiki.html"
 
           <Location /server-status>
             SetHandler server-status
@@ -119,10 +120,7 @@ in
         }
 
         (nixosVHostConfig // {
-          extraConfig = nixosVHostConfig.extraConfig +
-            ''
-              Redirect /wiki https://nixos.org/nixos/wiki.html
-            '';
+          extraConfig = nixosVHostConfig.extraConfig;
         })
 
         (nixosVHostConfig // {
