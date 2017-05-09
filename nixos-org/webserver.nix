@@ -119,6 +119,13 @@ in
         }
 
         (nixosVHostConfig // {
+          extraConfig = nixosVHostConfig.extraConfig +
+            ''
+              Redirect /wiki https://nixos.org/nixos/wiki.html
+            '';
+        })
+
+        (nixosVHostConfig // {
           enableSSL = true;
           sslServerKey = "${acmeKeyDir}/key.pem";
           sslServerCert = "${acmeKeyDir}/fullchain.pem";
