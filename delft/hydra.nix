@@ -54,6 +54,11 @@ in
       nar_buffer_size = 12884901888
 
       upload_logs_to_binary_cache = true
+
+      # FIXME: Cloudfront messes up CORS
+      #log_prefix = https://cache.nixos.org/
+
+      log_prefix = https://nix-cache.s3.amazonaws.com/
     '';
 
   users.extraUsers.hydra.home = mkForce "/home/hydra";
