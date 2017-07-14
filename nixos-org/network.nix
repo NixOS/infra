@@ -94,6 +94,27 @@ in
                 "Principal": {"AWS": "*"},
                 "Action": ["s3:GetObject"],
                 "Resource": ["${config.arn}/*"]
+              },
+              {
+                "Sid": "AllowUploadDebuginfoWrite",
+                "Effect": "Allow",
+                "Principal": {"AWS": "arn:aws:iam::080433136561:user/s3-upload-releases"},
+                "Action": ["s3:PutObject", "s3:PutObjectAcl"],
+                "Resource": ["${config.arn}/debuginfo/*"]
+              },
+              {
+                "Sid": "AllowUploadDebuginfoRead",
+                "Effect": "Allow",
+                "Principal": {"AWS": "arn:aws:iam::080433136561:user/s3-upload-releases"},
+                "Action": ["s3:GetObject"],
+                "Resource": ["${config.arn}/*"]
+              },
+              {
+                "Sid": "AllowUploadDebuginfoRead2",
+                "Effect": "Allow",
+                "Principal": {"AWS": "arn:aws:iam::080433136561:user/s3-upload-releases"},
+                "Action": ["s3:ListBucket", "s3:GetBucketLocation"],
+                "Resource": ["${config.arn}"]
               }
             ]
           }
