@@ -4,28 +4,6 @@ with pkgs.lib;
 
 let
 
-  zabbixMail = pkgs.writeScriptBin "zabbix-mail" ''
-    #!/bin/sh
-    set -e
-
-    export zabbixemailto="$1"
-    export zabbixsubject="$2"
-    export zabbixbody="$3"
-
-    ${pkgs.ssmtp}/sbin/sendmail -v $zabbixemailto <<EOF
-    Subject: $zabbixsubject
-    To: $zabbixemailto
-
-    $zabbixbody
-    EOF
-  '';
-
-  ZabbixApacheUpdater = pkgs.fetchsvn {
-    url = https://www.zulukilo.com/svn/pub/zabbix-apache-stats/trunk/fetch.py;
-    sha256 = "1q66x429wpqjqcmlsi3x37rkn95i55nj8ldzcrblnx6a0jnjgd2g";
-    rev = 94;
-  };
-
   strategoxtVHostConfig =
     { hostName = "strategoxt.org";
       servedFiles = [
@@ -85,13 +63,6 @@ in
           SSLHonorCipherOrder on
         '';
 
-      phpOptions =
-        ''
-          #max_execution_time = 2
-          memory_limit = "128M"
-          max_input_time = 300
-        '';
-
       servedDirs =
         [ { urlPath = "/apache-errors";
             dir = ./apache-errors;
@@ -135,9 +106,6 @@ in
               };
             }
             */
-            { serviceType = "zabbix";
-              urlPrefix = "/zabbix";
-            }
           ];
           servedDirs = [
             { urlPath = "/releases";
@@ -215,11 +183,5 @@ in
       ];
     };
 
-  };
-
-  environment.systemPackages = [ zabbixMail ];
-
-  nixpkgs.config.packageOverrides = pkgs: {
-    php = pkgs.php56;
   };
 }

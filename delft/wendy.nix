@@ -134,10 +134,6 @@ with lib;
   systemd.services.httpd.serviceConfig.MemoryLimit = "1500M";
   #systemd.services.httpd.serviceConfig.ControlGroupAttribute = [ "memory.memsw.limit_in_bytes 1500M" ];
 
-  services.zabbixServer.enable = true;
-  #services.zabbixServer.dbServer = "wendy";
-  #services.zabbixServer.dbPassword = import ./zabbix-password.nix;
-
   services.logrotate.enable = true;
   services.logrotate.config = ''
     /var/log/httpd/access_log
