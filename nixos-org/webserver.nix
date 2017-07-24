@@ -40,7 +40,7 @@ let
         ''
           MaxKeepAliveRequests 0
 
-          Redirect /binary-cache http://cache.nixos.org
+          Redirect /binary-cache https://cache.nixos.org
           Redirect /releases/channels /channels
           Redirect /tarballs http://tarballs.nixos.org
           Redirect /releases/nixos https://d3g5gsiof5omrk.cloudfront.net/nixos
@@ -116,7 +116,7 @@ in
     virtualHosts =
       [ { # Catch-all site.
           hostName = "www.nixos.org";
-          globalRedirect = "http://nixos.org/";
+          globalRedirect = "https://nixos.org/";
         }
 
         (nixosVHostConfig // {
@@ -144,7 +144,7 @@ in
               UseCanonicalName on
 
               # We don't want /channels to be cached by CloudFront.
-              Redirect /channels http://nixos.org/channels
+              Redirect /channels https://nixos.org/channels
             '';
           servedDirs =
             [ { urlPath = "/";

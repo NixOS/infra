@@ -73,7 +73,7 @@ in
 
         { # Catch-all site.
           hostName = "old.nixos.org";
-          globalRedirect = "http://nixos.org/";
+          globalRedirect = "https://nixos.org/";
         }
 
         { hostName = "buildfarm.st.ewi.tudelft.nl";
