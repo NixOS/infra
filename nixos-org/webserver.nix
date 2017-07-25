@@ -49,6 +49,10 @@ let
           RewriteEngine on
           RewriteRule "^(.*/)?\.git/" - [F,L]
 
+          # Rewrite HTTP to HTTPS
+          RewriteCond %{HTTPS} off
+          RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
           RedirectMatch "^/wiki.*" "https://nixos.org/nixos/wiki.html"
 
           <Location /server-status>
@@ -129,6 +133,7 @@ in
           sslServerCert = "${acmeKeyDir}/fullchain.pem";
           extraConfig = nixosVHostConfig.extraConfig +
             ''
+              Header always set Strict-Transport-Security "max-age=86400"
               SSLProtocol All -SSLv2 -SSLv3
               SSLCipherSuite HIGH:!aNULL:!MD5:!EXP
               SSLHonorCipherOrder on

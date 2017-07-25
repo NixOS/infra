@@ -49,7 +49,12 @@ in
     adminAddr = "edolstra@gmail.com";
     hostName = "hydra.nixos.org";
     logFormat = ''"%h %l %u %t \"%r\" %>s %b %D"'';
-    extraConfig = hydraProxyConfig;
+    extraConfig = hydraProxyConfig +
+      ''
+        RewriteEngine On
+        RewriteCond %{HTTPS} off
+        RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+      '';
 
     servedDirs =
       [ { urlPath = "/apache-errors";
@@ -69,6 +74,7 @@ in
           # Required by Catalyst.
           RequestHeader set X-Forwarded-Proto https
           RequestHeader set X-Forwarded-Port 443
+          Header always set Strict-Transport-Security "max-age=86400"
         '';
       }
     ];
