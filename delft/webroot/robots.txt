@@ -4,4 +4,3 @@ Disallow: /viewvc
 Disallow: /repos
 Disallow: /repos-xml
 Disallow: /svnweb
-Disallow: /zabbix
