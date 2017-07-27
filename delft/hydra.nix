@@ -74,35 +74,37 @@ in
 
       Host mac1
       Hostname 213.125.166.74
-      Port 6005
+      Port 6001
       Compression yes
 
       Host mac2
       Hostname 213.125.166.74
-      Port 6001
+      Port 6002
       Compression yes
 
       Host mac3
       Hostname 213.125.166.74
-      Port 6002
+      Port 6003
       Compression yes
 
       Host mac4
       Hostname 213.125.166.74
-      Port 6003
+      Port 6004
       Compression yes
 
       Host mac5
       Hostname 213.125.166.74
-      Port 6004
+      Port 6005
       Compression yes
 
       Host mac6
-      Hostname 208.78.106.251
+      Hostname 213.125.166.74
+      Port 6006
       Compression yes
 
       Host mac7
-      Hostname 208.78.106.252
+      Hostname 213.125.166.74
+      Port 6007
       Compression yes
 
       Host mac8
@@ -115,18 +117,16 @@ in
       Port 6009
       Compression yes
 
-      Host mac10
-      Hostname 213.125.166.74
-      Port 6010
+      Host macstadium1
+      Hostname 208.78.106.251
       Compression yes
 
-      Host mac11
-      Hostname 213.125.166.74
-      Port 6011
+      Host macstadium2
+      Hostname 208.78.106.252
       Compression yes
 
-      Host packet-t2-2
-      Hostname 147.75.68.63
+      Host packet-t2-3
+      Hostname 147.75.69.35
       Compression yes
 
       Host packet-t2a-1
@@ -137,13 +137,17 @@ in
   services.openssh.knownHosts =
     [
       { hostNames = [ "83.87.124.39" ]; publicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDVTkY4tQ6V29XTW1aKtoFJoF4uyaEy0fms3HqmI56av8UCg3MN5G6CL6EDIvbe46mBsI3++V3uGiOr0pLPbM9fkWC92LYGk5f7fNvCoy9bvuZy5bHwFQ5b5S9IJ1o3yDlCToc9CppmPVbFMMMLgKF06pQiGBeMCUG/VoCfiUBq+UgEGhAifWcuWIOGmdua6clljH5Dcc+7S0HTLoVtrxmPPXBVZUvW+lgAJTM6FXYIZiIqMSC2uZHGVstY87nPcZFXIbzhlYQqxx5H0um2bL3mbS7vdKhSsIWWaUZeck9ghNyUV1fVRLUhuXkQHe/8Z58cAhTv5dDd42YLB0fgjETV"; }
-      { hostNames = [ "[213.125.166.74]:6001" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBC4oeixXSB/Ovl3kewykJ2vV82ATOLqPgZDXPdLCmkPRHYt7dy7GNbWrESv3gQvgjEtKaZavthf7aQsJHNa8aKc="; }
-      { hostNames = [ "[213.125.166.74]:6002" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBO45JPJIqbQVs3I4RmO01ExRv6krTEnuheAvumgKeb6NwUo6oD1kP4/x8KazoMd4LRAFtdWdwnN3Z7IYmqlmd20="; }
-      { hostNames = [ "[213.125.166.74]:6003" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLIMKd1aV7ktAMIZUQV151dbZu/AM7Hszb4dMqwqQ7F8uLOmO+qyyS3nQHrGG6I5VAKbRkbTCn3l0DhYFj7sS6U="; }
-      { hostNames = [ "[213.125.166.74]:6004" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLeZFijo43wK8V2/9lXt7OH3axZb4kyZBV7Hn11YdmjPn8KHNkiRNiq9x/AuEhWmpY//9K1XU8RezV5LkGgyirU="; }
-      { hostNames = [ "[213.125.166.74]:6005" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLtsC7NRKoTVErAmKwe+gIyBdcMRcV8LssqmD//fwAEg77bwoc1nukFP0o/MO8WAt/HjIfabqhKmYmrtky793Ao="; }
-      { hostNames = [ "208.78.106.251" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGO7DciBFjk7aLVHCuSghCSMDdGukosx6fvxmAjfW+jAESiaGdAznQTCw2eL5xx9r9vQveaLUL5nHj2LeT6H3tQ="; }
-      { hostNames = [ "208.78.106.252" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBB22WwyB+Y4sp4fm42IoGGW4YWwJ8hC65uLIceChSWCsiAZkaGUvGho8DJpAgJFkdfHdoxutUGEj8ekHAqPU5nI="; }
+      { hostNames = [ "[213.125.166.74]:6001" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBP7xnlcQ4Ymnl+Ewz+6Kmhz72bqBay6KydBx4wsScIYReX8QiqvPH2ozeyl6yQ8rsYC75Z/aPwNzLoemMBmaPzE= "; }
+      { hostNames = [ "[213.125.166.74]:6002" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFw1hBw7UtCIkOP/QOU/oMNqETnm0bQYl3BQsGN9u9vW9ty1MjV/DP/rtT056wg4ZpvxwoSlW17QM5ddKke60RY= "; }
+      { hostNames = [ "[213.125.166.74]:6003" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBNReX6n69253+v9C4JNK6ARQ/eAM1z5IyuR4cpZOJ/XVY72voEx7Q/GsbmGfmejnVdj54OYsOS5eYBUFim65IUM= "; }
+      { hostNames = [ "[213.125.166.74]:6004" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBD2XQ+bjuEfNdFnpCcusD6JW5jT5qdepo2vKb4W5Pt9DdxwNuaIbzWNaiTmvip2lF+43oM274CeE7Do3XdeO1S0= "; }
+      { hostNames = [ "[213.125.166.74]:6005" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBNMoN47gtth42f4MCduo5QclW9dyW+R8GEQDb5m+w3h2soBtDvLLSokYemmyn/3vkbuswQcA8ZthsiqkHJS3pq8= "; }
+      { hostNames = [ "[213.125.166.74]:6006" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJJPXzpnYgA7Y7inIqVG9McCy1Zrqnu6UfJO8etTKegwfyKxMtIwWWBqweNVhfygZlUKJ1y99MwHWE5VDKTUhZk= "; }
+      { hostNames = [ "[213.125.166.74]:6007" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCa4WqiBgZJT9iKb1mKhc4f2LzapOX0SW5uq0bKtvpbzNwG6UVVeKv+/p4QWLadykRVpssoFNpLFoPF73J+duKQ= "; }
+      { hostNames = [ "[213.125.166.74]:6008" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBP5ip9sIKANIVux/aXG4lpUmlaMKqT+GgVEshJxC5ddi2glXkmo6v+VrRs3kTixat1jUHzaYM3mPU90JFJOrg+U= "; }
+      { hostNames = [ "[213.125.166.74]:6009" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOa5gL7S5MBSsTBRh0eeJKK7qPmJj2o3cfI7bZBc9VQIcjHEkETxc7Bv9ap0rkThU2Skzx95YLyndq954cONH/Q= "; }
+      { hostNames = [ "208.78.106.251" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBKrwg2592DfDUG1U0LZxJcBaT35YfEsuKo4helEAzeoujvzOo4DIaBrTCX7+LxcYZlGoi4WvsnwxUG11GY12l2A="; }
+      { hostNames = [ "208.78.106.252" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLV1p6f6Rk3rKwNJbcqvG68wjfT3wPcJfChc1LFU9A3tTFslUDr47FHLmT+FTr+ChkoqD6Gsl+jtSnvkYnTlpGY="; }
       { hostNames = [ "hydra.ewi.tudelft.nl" "131.180.119.69" ]; publicKey = "ssh-dss AAAAB3NzaC1kc3MAAACBAJBHaP+SAMm/eTYciPpQi8x5NULRV8D9/xQPd/SU7s+mQP/TlvLCmgpuHudZMrLgUDWjKclFQThBuhElCvZzHmBcWPP64wzlZdxsizub9525FPAMnhbK5bqQHgji+ilXGTwv+ZvwEC1LJEQz4H5jgXlIgwNzvED4xo8IyLTxKw6TAAAAFQCQE8H+w6xYFMiDLK7tpGaweLj04QAAAIAuES8pfxge4UrDAnKyYEN/IZwTMLznAHoldaa+E+8KYVs7QnhMztJr9kIZWOJOsmEcQ/1SwFJPSU04FbJ25Z25B8jUG6UqMYidiQnzjHqKc29AYo3ZS9xWJ62VS7cW+UeC4zUFMA8jtlaVCfU95uharu+lzM4SecC9+35ObWpn1wAAAIAzgtOQhC7udZJPnvqc4L6AATMoaAQQ3x95nher6oyL3N6Yi6+Sy10v3u5c5uccaDQ/oVjQHBeaFnciNXYTqF0z4u3MmsQ+RtnElJ2+rqqxzvuOUkCms5yNdNq+Ag79MVd5ESlgowtivtZ+p8aH7cIJFab+YkfUpTrZnGDrUl/kEQ=="; }
       { hostNames = [ "ike.ewi.tudelft.nl" "131.180.119.70" ]; publicKey = "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAGNzlom/R/lJ0TZb2HLm19V+BoifFoENHocIJ4MiV9FQCOUlLLQh7kZMKtzVJdM+n1q1BqLp6bll6U7PsLUKAg+rgDU2saHd8ScaeZqhdmWpO4lMMxpNreAETsY1txpSatT4aHvjJMTlT1pmaLiqfhCenqxaqeH3/3XPkVfK48Nk+mo8w=="; }
       { hostNames = [ "kenny.ewi.tudelft.nl" "131.180.119.71" ]; publicKey = "ssh-dss AAAAB3NzaC1kc3MAAACBANmEz1UzFCfab/a/VjWFr/mrwB/trcMPXg15U6vy6iprg34vKbanefX0BJOyBUdueNenSAcuC18mDH/aYrCb7Y5CyhLQH8w7YaTpehbpMIS4SJGC3hRd4LSE7mYBUQf396Syp5coA0CHZJZ6lhLYspZCHDonm1vAfVyMqJOSubPlAAAAFQCNFpbZrLGfyPcWss7e+iF/i/xszwAAAIBONlTGHQpDNadffT9NQ3l8hFe8P9MJvRIUW1q/VEzRRBcbBWQnYh35YXMYPyrZaXaGILv6ma462PUu23VBoF9/twxMRBkKEuWfe1c+YM0w7wd6BA5L99GMhQGsy8ahSyD3FN3sW9kqqzryYt0KgCqCTDo/HAp51UYCeXuflABv8QAAAIB3lV9cSaUrso1jMhkPJU+oIuUjGyd+8stWGp2lXc0+ccud+tkx9rpTr2oZOcM6/2NKSvz6XXQ+9l/iTQxSIlrJpi337Hpv4qkjB2R0cID+xxKT5Y9NLxMtaEipwvpAX4GRtpzK0KJB9x4CM8jiF1SIRPQkBKZme8XPq8B3kdCEIA=="; }
@@ -152,8 +156,8 @@ in
       { hostNames = [ "stan.ewi.tudelft.nl" "131.180.119.74" ]; publicKey = "ssh-dss AAAAB3NzaC1kc3MAAACBAL0SlYpGjDjPKrLIwoltYHHTYo/d6Ct2FQZKh4ltKOszWPYYAbs/YNSm2eFkvj0CGc3aastFuebz6+pRfvGMvqi4q6IoHwVvOkbWMadyuqrWIO+Z1YemZP/GAG69pLy+UyoydiSI83ycwPe4YARAU/cpBMNKJZbSxyrO80XatmtRAAAAFQC291WK+9M8+zI4KAtk6EqX0vqQ1QAAAIBd1YgRfdfRdu60BpR+3/YMbSYZMjRLFPyoSgmEQR2TtKfqsuKTsTREzB20iMgFlhEWb6C4r5y6jYDU85OOnvpf7zne22j6bKFDIiAbgsjUFHK1EB7+TBltf5yqq0FyNOy/PnLqVzOeGaUeCOc3Ris71Lxkm60oVF4mjut2d2UJ6AAAAIByuCH1bIIRb4za4yiiFQUz2CBX1XHhBn/h/LhNMLuyCTciG6tkppGBAgq5rWrNhjaEc7dIFgZR+E1wE5PQzWG/TBiXctwCOqOOErDB5b95jO2EntIhi8x5PO9Ef6jgis4QRsBIZiENDDeQHxFHCv4q+10TpyV+625O8TXkkcxl0g=="; }
       { hostNames = [ "wendy.ewi.tudelft.nl" "131.180.119.77" ]; publicKey = "ssh-dss AAAAB3NzaC1kc3MAAACBAIDHVZ/xtcBsNHJ6qYxa3f1RX5k+SaRwgemCfIBSOgL8AGnsvD+OomlGg/eDhJU60AzFSZBQjKtrgRYWmAnzqSMOtfb9IIT5JfG5h/27LVjaaq29Mv+PcDpuPLuFNW3G50hDD1gA0hQhrZdZBkBv9MBaJgizFUjV9tb8KZIRS+MDAAAAFQC8YJViwihyk0oIHOgBfBifiTku6QAAAIBHadEeonXcbDWH6Q5esR1IU7dFMw/zS/wg9IgH0b7lRZBkyVkS0yxfJ7r8swCQ0Loh9dvLtbHLXMlegNfEFv3nbmZqE4copO/2wOM7SqhJRykByMFEhY28t1O1M4rYmzqXs92VUtc5xiTR/lv93C05KSkOl7rUfw43jsWgQAzIkgAAAIB3s4ntqW4H0TdNJFOpaVq1wgRJi768BAVq7MnuIKpFfjGiO7P1Wtk+6/8rzP3gx4cFELZWfJiDHZO5pJE2UGtx5yioQihg4nnZPxTw4FJS/Olf15S2CB/EsYgn9NlUAfOR29ApwasHAy8uP89iOv94cP3YMnWoSi0jkq8iSrSy7Q=="; }
 
-      # packet-t2-2
-      { hostNames = [ "147.75.68.63" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEjXtd1mrGyykYmWA4Ce97Fhw/ZYCe4N+riWhuqwPpcJ"; }
+      # packet-t2-3
+      { hostNames = [ "147.75.69.35" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINFrR3PRcd2OeCMXnns/I4hIg1QAcNSw0kt2hjUMcBZH"; }
 
       # packet-t2a-1
       { hostNames = [ "147.75.65.54" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINPipUJuE/vHgrakfIBp+mt7iS3DlMlecRdI/hleGm1W"; }
