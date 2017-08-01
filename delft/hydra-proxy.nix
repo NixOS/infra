@@ -74,7 +74,7 @@ in
           # Required by Catalyst.
           RequestHeader set X-Forwarded-Proto https
           RequestHeader set X-Forwarded-Port 443
-          Header always set Strict-Transport-Security "max-age=86400"
+          Header always set Strict-Transport-Security "max-age=15552000"
         '';
       }
     ];
