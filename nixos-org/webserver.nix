@@ -133,7 +133,7 @@ in
           sslServerCert = "${acmeKeyDir}/fullchain.pem";
           extraConfig = nixosVHostConfig.extraConfig +
             ''
-              Header always set Strict-Transport-Security "max-age=86400"
+              Header always set Strict-Transport-Security "max-age=15552000"
               SSLProtocol All -SSLv2 -SSLv3
               SSLCipherSuite HIGH:!aNULL:!MD5:!EXP
               SSLHonorCipherOrder on
