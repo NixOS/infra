@@ -25,7 +25,7 @@ let
             dir = "/releases";
           }
           { urlPath = "/.well-known/acme-challenge";
-            dir = "${acmeWebRoot}/.well-known/acme-challenge";
+            dir = "${acmeWebRoot}/nixos.org/.well-known/acme-challenge";
           }
         ];
 
@@ -232,7 +232,7 @@ in
   # Let's Encrypt configuration.
   security.acme.certs."nixos.org" =
     { email = "edolstra@gmail.com";
-      webroot = acmeWebRoot;
+      webroot = "${acmeWebRoot}/nixos.org";
       postRun = "systemctl reload httpd.service";
     };
 
