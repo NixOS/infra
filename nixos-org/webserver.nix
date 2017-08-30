@@ -160,6 +160,28 @@ in
 
         { hostName = "planet.nixos.org";
           documentRoot = "/var/www/planet.nixos.org";
+          enableSSL = true;
+          sslServerKey = "${acmeKeyDir}/planet.nixos.org/key.pem";
+          sslServerCert = "${acmeKeyDir}/planet.nixos.org/fullchain.pem";
+          extraConfig = nixosVHostConfig.extraConfig +
+            ''
+              Header always set Strict-Transport-Security "max-age=15552000"
+              SSLProtocol All -SSLv2 -SSLv3
+              SSLCipherSuite HIGH:!aNULL:!MD5:!EXP
+              SSLHonorCipherOrder on
+              #SSLOpenSSLConfCmd DHParameters "${./dhparams.pem}"
+
+              # Rewrite HTTP to HTTPS
+              RewriteCond %{HTTPS} off
+              RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+            '';
+
+          servedDirs =
+            [ { urlPath = "/.well-known/acme-challenge";
+                dir = "${acmeWebRoot}/planet.nixos.org/.well-known/acme-challenge";
+              }
+           ];
         }
       ];
   };
@@ -230,11 +252,19 @@ in
   nix.gc.automatic = true;
 
   # Let's Encrypt configuration.
-  security.acme.certs."nixos.org" =
-    { email = "edolstra@gmail.com";
-      webroot = "${acmeWebRoot}/nixos.org";
-      postRun = "systemctl reload httpd.service";
-    };
+  security.acme.certs = {
+    "nixos.org" =
+      { email = "edolstra@gmail.com";
+        webroot = "${acmeWebRoot}/nixos.org";
+        postRun = "systemctl reload httpd.service";
+      };
+    "planet.nixos.org" =
+      { email = "edolstra@gmail.com";
+        webroot = "${acmeWebRoot}/planet.nixos.org";
+        postRun = "systemctl reload httpd.service";
+      };
+  };
+
 
   # Generate a dummy self-signed certificate until we get one from
   # Let's Encrypt.
@@ -256,6 +286,7 @@ in
     in
     ''
       ${mkKeys "${acmeKeyDir}/nixos.org"}
+      ${mkKeys "${acmeKeyDir}/planet.nixos.org"}
     '';
 
 }
