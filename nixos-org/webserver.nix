@@ -25,7 +25,7 @@ let
             dir = "/releases";
           }
           { urlPath = "/.well-known/acme-challenge";
-            dir = "${acmeWebRoot}/nixos.org/.well-known/acme-challenge";
+            dir = "${acmeWebRoot}/.well-known/acme-challenge";
           }
         ];
 
@@ -159,6 +159,10 @@ in
         }
 
         { hostName = "planet.nixos.org";
+          globalRedirect = "https://planet.nixos.org/";
+        }
+
+        { hostName = "planet.nixos.org";
           documentRoot = "/var/www/planet.nixos.org";
           enableSSL = true;
           sslServerKey = "${acmeKeyDir}/planet.nixos.org/key.pem";
@@ -179,7 +183,7 @@ in
 
           servedDirs =
             [ { urlPath = "/.well-known/acme-challenge";
-                dir = "${acmeWebRoot}/planet.nixos.org/.well-known/acme-challenge";
+                dir = "${acmeWebRoot}/.well-known/acme-challenge";
               }
            ];
         }
@@ -255,16 +259,15 @@ in
   security.acme.certs = {
     "nixos.org" =
       { email = "edolstra@gmail.com";
-        webroot = "${acmeWebRoot}/nixos.org";
+        webroot = "${acmeWebRoot}";
         postRun = "systemctl reload httpd.service";
       };
     "planet.nixos.org" =
       { email = "edolstra@gmail.com";
-        webroot = "${acmeWebRoot}/planet.nixos.org";
+        webroot = "${acmeWebRoot}";
         postRun = "systemctl reload httpd.service";
       };
   };
-
 
   # Generate a dummy self-signed certificate until we get one from
   # Let's Encrypt.
