@@ -67,6 +67,8 @@ in
   systemd.services.hydra-queue-runner.wantedBy = mkForce [];
   systemd.services.hydra-queue-runner.requires = mkForce [];
 
+  systemd.services.hydra-evaluator.environment.GC_INITIAL_HEAP_SIZE = "12G";
+
   programs.ssh.extraConfig = mkAfter
     ''
       ServerAliveInterval 120
