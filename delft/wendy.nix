@@ -87,44 +87,11 @@ with lib;
       };
     '';
 
-  # Force the sixxs tunnel to stay alive by periodically
-  # pinging the other side.  This is necessary to remain
-  # reachable from the outside.
-  systemd.services.ping-sixxs =
-    { serviceConfig.ExecStart = "${pkgs.iputils}/sbin/ping -c 1 2001:610:600:88d::1";
-      serviceConfig.Type = "oneshot";
-      startAt = "*:0/10";
-    };
-
   networking = {
 
     firewall.allowedTCPPorts = [ 80 443 10051 5432 5999 ];
     firewall.allowedUDPPorts = [ 53 67 ];
 
-    localCommands =
-      ''
-        # Cleanup.
-        ip -6 route flush dev sixxs || true
-        ip link set dev sixxs down || true
-        ip tunnel del sixxs || true
-
-        # Set up a SixXS tunnel for IPv6 connectivity.
-        ip tunnel add sixxs mode sit local 131.180.119.77 remote 192.87.102.107 ttl 64
-        ip link set dev sixxs mtu 1280 up
-        ip -6 addr add 2001:610:600:88d::2/64 dev sixxs
-        ip -6 route add default via 2001:610:600:88d::1 dev sixxs
-
-        # Discard all traffic to networks in our prefix that don't exist.
-        ip -6 route add 2001:610:685::/48 dev lo || true
-
-        # Create a local network (prefix:1::/64).
-        ip -6 addr add 2001:610:685:1::1/64 dev ${config.system.build.mainPhysicalInterface} || true
-
-        # Forward traffic to our Nova cloud to "stan".
-        #ip -6 route add 2001:610:685:2::/64 via 2001:610:685:1:222:19ff:fe55:bf2e || true
-      '';
-
-    dhcpcd.denyInterfaces = [ "sixxs" ];
   };
 
   environment.systemPackages = [ pkgs.duplicity ];
