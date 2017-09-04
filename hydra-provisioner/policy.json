@@ -1,0 +1,39 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "NoResource",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DescribeKeyPairs",
+                "ec2:ImportKeyPair",
+                "ec2:DeleteKeyPair",
+                "ec2:DescribeInstances",
+                "ec2:DescribeSpotInstanceRequests",
+                "ec2:DescribeImages",
+                "ec2:DescribeInstanceStatus",
+                "ec2:RequestSpotInstances",
+                "ec2:CancelSpotInstanceRequests"
+            ],
+            "Resource": [
+                "*"
+            ],
+            "Condition": {
+                "StringEquals": {
+                    "ec2:Region": "us-east-1"
+                }
+            }
+        },
+        {
+            "Sid": "EC2Resource",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:CreateTags",
+                "ec2:TerminateInstances"
+            ],
+            "Resource": [
+                "arn:aws:ec2:us-east-1:*"
+            ]
+        }
+    ]
+}
