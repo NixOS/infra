@@ -7,6 +7,7 @@
       ./hydra-proxy.nix
       ./datadog.nix
       ./fstrim.nix
+      ./provisioner.nix
     ];
 
   deployment.targetEnv = "hetzner";

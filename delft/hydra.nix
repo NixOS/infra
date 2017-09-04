@@ -17,11 +17,9 @@ in
   users.extraUsers.hydra-www.openssh.authorizedKeys.keys =
     with import ../ssh-keys.nix; [ eelco rob ];
   users.extraUsers.hydra-queue-runner.openssh.authorizedKeys.keys =
-    with import ../ssh-keys.nix; [ eelco rob provisioner ];
+    with import ../ssh-keys.nix; [ eelco rob ];
 
   services.hydra-dev.enable = true;
-  services.hydra-dev.buildMachinesFiles =
-    [ "/etc/nix/machines" "/var/lib/hydra/provisioner/machines" ];
   services.hydra-dev.package = hydra;
   services.hydra-dev.logo = ./hydra-logo.png;
   services.hydra-dev.hydraURL = "https://hydra.nixos.org";
