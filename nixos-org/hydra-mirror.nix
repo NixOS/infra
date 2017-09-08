@@ -50,6 +50,7 @@ in
       (makeUpdateChannel "nixos-16.09-small" "nixos/release-16.09-small/tested")
       (makeUpdateChannel "nixos-unstable" "nixos/trunk-combined/tested")
       (makeUpdateChannel "nixos-unstable-small" "nixos/unstable-small/tested")
+      (makeUpdateChannel "nixpkgs-17.09-darwin" "nixpkgs/nixpkgs-17.09-darwin/darwin-tested")
       (makeUpdateChannel "nixpkgs-unstable" "nixpkgs/trunk/unstable")
     ];
 
