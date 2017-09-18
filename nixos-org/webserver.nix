@@ -318,6 +318,7 @@ in
     ''
       ${mkKeys "${acmeKeyDir}/nixos.org"}
       ${mkKeys "${acmeKeyDir}/planet.nixos.org"}
+      ${mkKeys "${acmeKeyDir}/www.nixos.org"}
     '';
 
 }
