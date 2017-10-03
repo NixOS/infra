@@ -7,6 +7,7 @@ with lib;
 
   nix.maxJobs = mkForce 24;
 
+/*
   fileSystems."/backup" =
     { device = "130.161.158.5:/dxs/users4/group/buildfarm";
       fsType = "nfs4";
@@ -25,7 +26,7 @@ with lib;
   services.postgresql = {
     enable = true;
     #enableTCPIP = true;
-    package = pkgs.postgresql92;
+    package = pkgs.postgresql95;
     dataDir = "/data/postgresql";
     extraConfig = ''
       log_min_duration_statement = 5000
@@ -76,6 +77,7 @@ with lib;
   services.cron.systemCronJobs =
     [ #"15 4 * * * root cp -v /var/backup/postgresql/* /backup/wendy/postgresql/  &> /var/log/backup-db.log"
     ];
+  */
 
   services.radvd.enable = false;
   services.radvd.config =
