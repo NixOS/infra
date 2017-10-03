@@ -4,22 +4,21 @@ with pkgs.lib;
 
 let
 
-  strategoxtVHostConfig =
-    { hostName = "strategoxt.org";
-      servedFiles = [
-        { urlPath = "/freenode.ver";
-          file = "/data/pt-wiki/pub/freenode.ver";
-        }
-      ];
-      extraSubservices = [
-        { function = import /etc/nixos/services/twiki;
-          startWeb = "Stratego/WebHome";
-          dataDir = "/data/pt-wiki/data";
-          pubDir = "/data/pt-wiki/pub";
-          twikiName = "Stratego/XT Wiki";
-          registrationDomain = "ewi.tudelft.nl";
-        }
-      ];
+  twikiIP = "10.233.1.2";
+
+  proxyConfig = hostName:
+    { inherit hostName;
+      extraConfig =
+        ''
+          <Proxy *>
+            Order deny,allow
+            Allow from all
+          </Proxy>
+
+          ProxyRequests     Off
+          ProxyPreserveHost On
+          ProxyPass         /       http://${twikiIP}/ retry=5 disablereuse=on
+        '';
     };
 
   strategoxtSSLConfig =
@@ -40,7 +39,7 @@ in
     httpd = {
       enable = true;
       logPerVirtualHost = true;
-      adminAddr = "e.dolstra@tudelft.nl";
+      adminAddr = "edolstra@gmail.com";
       hostName = "localhost";
 
       extraModules = [ "deflate" ];
@@ -114,72 +113,36 @@ in
           ];
         }
 
-        strategoxtVHostConfig
+        (proxyConfig "strategoxt.org")
 
-        (strategoxtVHostConfig // strategoxtSSLConfig)
+        (proxyConfig "strategoxt.org" // strategoxtSSLConfig)
+
+        (proxyConfig "program-transformation.org")
+
+        (proxyConfig "syntax-definition.org")
 
         { hostName = "www.strategoxt.org";
           serverAliases = ["www.stratego-language.org"];
           globalRedirect = "http://strategoxt.org/";
         }
 
-        { hostName = "svn.strategoxt.org";
-          globalRedirect = "https://svn.strategoxt.org/";
+        { hostName = "www.program-transformation.org";
+          globalRedirect = "http://program-transformation.org/";
         }
 
-        ( strategoxtSSLConfig //
         { hostName = "svn.strategoxt.org";
-          extraSubservices = [
-            /*
-            { function = import /etc/nixos/services/subversion;
-              id = "strategoxt";
-              urlPrefix = "";
-              dataDir = "/data/subversion-strategoxt";
-              notificationSender = "svn@svn.strategoxt.org";
-              organisation = {
-                name = "Stratego/XT";
-                url = http://strategoxt.org/;
-                logo = http://strategoxt.org/pub/Stratego/StrategoLogo/StrategoLogoTextlessWhite-100px.png;
-              };
-            }
-            */
-          ];
-        })
-
-        { hostName = "program-transformation.org";
-          serverAliases = ["www.program-transformation.org"];
-          extraSubservices = [
-            { function = import /etc/nixos/services/twiki;
-              startWeb = "Transform/WebHome";
-              dataDir = "/data/pt-wiki/data";
-              pubDir = "/data/pt-wiki/pub";
-              twikiName = "Program Transformation Wiki";
-              registrationDomain = "ewi.tudelft.nl";
-            }
-          ];
+          globalRedirect = "https://svn.strategoxt.org/";
         }
 
         { hostName = "releases.strategoxt.org";
           documentRoot = "/data/webserver/dist/strategoxt2";
         }
 
-        { hostName = "syntax-definition.org";
-          serverAliases = ["www.syntax-definition.org"];
-          extraSubservices = [
-            { function = import /etc/nixos/services/twiki;
-              startWeb = "Sdf/WebHome";
-              dataDir = "/data/pt-wiki/data";
-              pubDir = "/data/pt-wiki/pub";
-              twikiName = "Syntax Definition Wiki";
-              registrationDomain = "ewi.tudelft.nl";
-            }
-          ];
-        }
-
         { hostName = "planet.strategoxt.org";
           serverAliases = ["planet.stratego.org"];
           documentRoot = "/home/karltk/public_html/planet";
         }
+
       ];
     };
 
