@@ -3,7 +3,11 @@
 with pkgs.lib;
 
 {
-  imports = [ ./static-net-config.nix ./diffoscope.nix ];
+  imports =
+    [ ./static-net-config.nix
+      ./diffoscope.nix
+      (builtins.fetchgit https://github.com/edolstra/dwarffs + "/module.nix")
+    ];
 
   system.stateVersion = "14.12";
 
