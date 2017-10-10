@@ -60,6 +60,8 @@ with pkgs.lib;
       allowed-impure-host-deps = /etc/protocols /etc/services /etc/nsswitch.conf
     '';
 
+  nix.nixPath = [ "nixpkgs=channel:nixos-17.09-small" ];
+
   networking.defaultMailServer = {
     directDelivery = true;
     hostName = "smtp.tudelft.nl";
