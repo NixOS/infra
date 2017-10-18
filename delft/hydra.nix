@@ -5,6 +5,7 @@ with lib;
 let
   hydraSrc = ../../hydra;
   hydra = (import (hydraSrc + "/release.nix") {}).build.x86_64-linux;
+  narCache = "/var/cache/hydra/nar-cache";
 in
 
 {
@@ -33,7 +34,8 @@ in
       enable_google_login = 1
       google_client_id = 816926039128-ia4s4rsqrq998rsevce7i09mo6a4nffg.apps.googleusercontent.com
 
-      store_uri = s3://nix-cache?secret-key=/var/lib/hydra/queue-runner/keys/cache.nixos.org-1/secret&write-nar-listing=1&ls-compression=br&log-compression=br
+      store_uri = s3://nix-cache?secret-key=/var/lib/hydra/queue-runner/keys/cache.nixos.org-1/secret&write-nar-listing=1&ls-compression=br&log-compression=br&local-nar-cache=${narCache}
+      server_store_uri = https://cache.nixos.org?local-nar-cache=${narCache}
       binary_cache_public_uri = https://cache.nixos.org
 
       <hipchat>
@@ -57,6 +59,14 @@ in
       #log_prefix = https://cache.nixos.org/
 
       log_prefix = https://nix-cache.s3.amazonaws.com/
+    '';
+
+  system.activationScripts.createNarCache =
+    ''
+      mkdir -p /var/cache/hydra -m 0755
+      chown hydra.hydra /var/cache/hydra
+      mkdir -p ${narCache} -m 0775
+      chown hydra.hydra ${narCache}
     '';
 
   users.extraUsers.hydra.home = mkForce "/home/hydra";
