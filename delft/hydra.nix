@@ -125,8 +125,8 @@ in
       Hostname 208.78.106.252
       Compression yes
 
-      Host packet-t2-3
-      Hostname 147.75.69.35
+      Host packet-t2-4
+      Hostname 147.75.98.145
       Compression yes
 
       Host packet-t2a-1
@@ -156,8 +156,8 @@ in
       { hostNames = [ "stan.ewi.tudelft.nl" "131.180.119.74" ]; publicKey = "ssh-dss AAAAB3NzaC1kc3MAAACBAL0SlYpGjDjPKrLIwoltYHHTYo/d6Ct2FQZKh4ltKOszWPYYAbs/YNSm2eFkvj0CGc3aastFuebz6+pRfvGMvqi4q6IoHwVvOkbWMadyuqrWIO+Z1YemZP/GAG69pLy+UyoydiSI83ycwPe4YARAU/cpBMNKJZbSxyrO80XatmtRAAAAFQC291WK+9M8+zI4KAtk6EqX0vqQ1QAAAIBd1YgRfdfRdu60BpR+3/YMbSYZMjRLFPyoSgmEQR2TtKfqsuKTsTREzB20iMgFlhEWb6C4r5y6jYDU85OOnvpf7zne22j6bKFDIiAbgsjUFHK1EB7+TBltf5yqq0FyNOy/PnLqVzOeGaUeCOc3Ris71Lxkm60oVF4mjut2d2UJ6AAAAIByuCH1bIIRb4za4yiiFQUz2CBX1XHhBn/h/LhNMLuyCTciG6tkppGBAgq5rWrNhjaEc7dIFgZR+E1wE5PQzWG/TBiXctwCOqOOErDB5b95jO2EntIhi8x5PO9Ef6jgis4QRsBIZiENDDeQHxFHCv4q+10TpyV+625O8TXkkcxl0g=="; }
       { hostNames = [ "wendy.ewi.tudelft.nl" "131.180.119.77" ]; publicKey = "ssh-dss AAAAB3NzaC1kc3MAAACBAIDHVZ/xtcBsNHJ6qYxa3f1RX5k+SaRwgemCfIBSOgL8AGnsvD+OomlGg/eDhJU60AzFSZBQjKtrgRYWmAnzqSMOtfb9IIT5JfG5h/27LVjaaq29Mv+PcDpuPLuFNW3G50hDD1gA0hQhrZdZBkBv9MBaJgizFUjV9tb8KZIRS+MDAAAAFQC8YJViwihyk0oIHOgBfBifiTku6QAAAIBHadEeonXcbDWH6Q5esR1IU7dFMw/zS/wg9IgH0b7lRZBkyVkS0yxfJ7r8swCQ0Loh9dvLtbHLXMlegNfEFv3nbmZqE4copO/2wOM7SqhJRykByMFEhY28t1O1M4rYmzqXs92VUtc5xiTR/lv93C05KSkOl7rUfw43jsWgQAzIkgAAAIB3s4ntqW4H0TdNJFOpaVq1wgRJi768BAVq7MnuIKpFfjGiO7P1Wtk+6/8rzP3gx4cFELZWfJiDHZO5pJE2UGtx5yioQihg4nnZPxTw4FJS/Olf15S2CB/EsYgn9NlUAfOR29ApwasHAy8uP89iOv94cP3YMnWoSi0jkq8iSrSy7Q=="; }
 
-      # packet-t2-3
-      { hostNames = [ "147.75.69.35" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINFrR3PRcd2OeCMXnns/I4hIg1QAcNSw0kt2hjUMcBZH"; }
+      # packet-t2-4
+      { hostNames = [ "147.75.98.145" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIABlJeKJ2B5mgK8TujC3FZ7geAOzQFUDJpay6a8Utdg6"; }
 
       # packet-t2a-1
       { hostNames = [ "147.75.65.54" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINPipUJuE/vHgrakfIBp+mt7iS3DlMlecRdI/hleGm1W"; }
