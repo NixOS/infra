@@ -34,7 +34,7 @@ in
       enable_google_login = 1
       google_client_id = 816926039128-ia4s4rsqrq998rsevce7i09mo6a4nffg.apps.googleusercontent.com
 
-      store_uri = s3://nix-cache?secret-key=/var/lib/hydra/queue-runner/keys/cache.nixos.org-1/secret&write-nar-listing=1&ls-compression=br&log-compression=br&local-nar-cache=${narCache}
+      store_uri = s3://nix-cache?secret-key=/var/lib/hydra/queue-runner/keys/cache.nixos.org-1/secret&write-nar-listing=1&ls-compression=br&log-compression=br
       server_store_uri = https://cache.nixos.org?local-nar-cache=${narCache}
       binary_cache_public_uri = https://cache.nixos.org
 
