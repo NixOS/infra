@@ -61,13 +61,10 @@ in
       log_prefix = https://nix-cache.s3.amazonaws.com/
     '';
 
-  system.activationScripts.createNarCache =
-    ''
-      mkdir -p /var/cache/hydra -m 0755
-      chown hydra.hydra /var/cache/hydra
-      mkdir -p ${narCache} -m 0775
-      chown hydra.hydra ${narCache}
-    '';
+  systemd.tmpfiles.rules =
+    [ "d /var/cache/hydra 0755 hydra hydra -  -"
+      "d ${narCache}      0775 hydra hydra 1d -"
+    ];
 
   users.extraUsers.hydra.home = mkForce "/home/hydra";
 
