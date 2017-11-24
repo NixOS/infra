@@ -4,7 +4,7 @@
 
   systemTypes.x86_64-linux = {
     nixopsExpr = builtins.toPath ./nixops.nix;
-    nixPath = [ "nixpkgs=channel:nixos-17.03" ];
+    nixPath = [ "nixpkgs=channel:nixos-17.09" ];
     minMachines = 0;
     maxMachines = 12;
     ignoredRunnables = 250;
