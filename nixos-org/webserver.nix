@@ -6,8 +6,8 @@ let
 
   sshKeys = import ../ssh-keys.nix;
 
-  acmeKeyDir = "/var/lib/acme/";
-  acmeWebRoot = "/var/lib/httpd/acme";
+  acmeKeyDir = "/data/acme/";
+  acmeWebRoot = "/data/acme/httpd";
 
   nixosVHostConfig =
     { hostName = "nixos.org";
@@ -222,6 +222,7 @@ in
       isSystemUser = false;
       useDefaultShell = true;
       openssh.authorizedKeys.keys = [ sshKeys.eelco ];
+      uid = 1000;
     };
 
   users.extraUsers.rbvermaa =
@@ -233,6 +234,7 @@ in
       isSystemUser = false;
       useDefaultShell = true;
       openssh.authorizedKeys.keys = [ sshKeys.rob ];
+      uid = 1001;
     };
 
   users.extraUsers.irclogs =
@@ -244,6 +246,7 @@ in
       useDefaultShell = true;
       openssh.authorizedKeys.keys =
         [ "ssh-dss AAAAB3NzaC1kc3MAAACBAMrcUf4qQj8XcG1nfG5/6rbfb4a89nV13KcJLBOVWa3Tn4YHeVz1lQDRHvnLK9YKM7MybDXD2wVG5nKuMbJMW5aZPEGrVUM4SQFXtnaNBgmoACrbG978Da/vNjGY89Q7GS/YqA24ASKnc09cRFsTmU0e/9BCbz9zXO4sJ8GaGHz7AAAAFQDZrJCdxTQ8GVvoFjL9Q1s1VHiClwAAAIBK+6r/kP/9VUzfRepEHCVObTIRYIhC9YcIZe2pMyCQSUIAjkGd5hkA8XQecs5/ym5Ddm2j61Kvt2jtGXQVP2F04wIFDuGK4GAfPpYjvLJaXtVxj1Ho4K2W/+WgKG1NEh466myZNsHr3v1MufbxNIS03lg6s8oJI4TmCaWtVHNW+AAAAIEAqh+ablUfEZAr6" ];
+      uid = 1002;
     };
 
   systemd.services.update-homepage =
