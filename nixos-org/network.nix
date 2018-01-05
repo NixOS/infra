@@ -83,6 +83,7 @@ in
             ]
           }
         '';
+      website.enabled = true;
     };
 
   resources.s3Buckets.nix-cache =
