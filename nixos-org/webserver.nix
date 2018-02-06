@@ -6,7 +6,7 @@ let
 
   sshKeys = import ../ssh-keys.nix;
 
-  acmeKeyDir = "/data/acme/";
+  acmeKeyDir = "/data/acme";
   acmeWebRoot = "/data/acme/httpd";
 
   nixosVHostConfig =
@@ -282,6 +282,7 @@ in
   nix.gc.automatic = true;
 
   # Let's Encrypt configuration.
+  security.acme.directory = acmeKeyDir;
   security.acme.certs = {
     "nixos.org" =
       { email = "edolstra@gmail.com";
