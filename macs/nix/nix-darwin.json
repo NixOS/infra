@@ -1,0 +1,7 @@
+{
+  "url": "https://github.com/lnl7/nix-darwin.git",
+  "rev": "cde11cf2b888f495a661e5af52d15900d753d0fa",
+  "date": "2018-03-06T21:25:23+01:00",
+  "sha256": "0g4g5vkf1x9ny86izbb41nfviwxxlvni3banpbw865c105zmk2v7",
+  "fetchSubmodules": true
+}
