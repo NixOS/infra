@@ -85,5 +85,15 @@ in
     cp -f /etc/per-user/root/ssh/authorized_keys ~root/.ssh/authorized_keys
     chown root:wheel ~root ~root/.ssh ~root/.ssh/authorized_keys
     echo "ok"
+
+    printf "setting root's shell to bash... "
+    chsh -s /bin/bash root
+    echo "ok"
+
+    if [ ! -L ~root/.bashrc ]; then
+      printf "setting up root's bashrc to fix remote unqualified nix-store calls... "
+      ln -s /etc/bashrc ~root/.bashrc
+      echo "ok"
+    fi
   '';
 }
