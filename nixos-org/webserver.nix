@@ -86,7 +86,7 @@ in
 
   nix.package = pkgs.nixUnstable;
 
-  nix.nixPath = [ "nixpkgs=channel:nixos-17.03-small" ];
+  nix.nixPath = [ "nixpkgs=channel:nixos-17.09-small" ];
 
   security.pam.enableSSHAgentAuth = true;
 
