@@ -50,8 +50,8 @@
   nix.extraOptions = "gc-keep-outputs = false";
 
   networking.defaultMailServer.directDelivery = lib.mkForce false;
-  services.postfix.enable = true;
-  services.postfix.hostname = "hydra.nixos.org";
+  #services.postfix.enable = true;
+  #services.postfix.hostname = "hydra.nixos.org";
 
   # Don't rate-limit the journal.
   services.journald.rateLimitBurst = 0;
