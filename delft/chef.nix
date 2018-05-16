@@ -55,4 +55,10 @@
 
   # Don't rate-limit the journal.
   services.journald.rateLimitBurst = 0;
+
+  fileSystems."/data" =
+    { device = "/dev/disk/by-label/data";
+      fsType = "ext4";
+    };
+
 }
