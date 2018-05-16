@@ -59,6 +59,10 @@ in
       #log_prefix = https://cache.nixos.org/
 
       log_prefix = https://nix-cache.s3.amazonaws.com/
+
+      evaluator_initial_heap_size = 10G
+
+      max_concurrent_evals = 2
     '';
 
   systemd.tmpfiles.rules =
@@ -71,8 +75,6 @@ in
   systemd.services.hydra-queue-runner.restartIfChanged = false;
   systemd.services.hydra-queue-runner.wantedBy = mkForce [];
   systemd.services.hydra-queue-runner.requires = mkForce [];
-
-  systemd.services.hydra-evaluator.environment.GC_INITIAL_HEAP_SIZE = "4G";
 
   programs.ssh.extraConfig = mkAfter
     ''
