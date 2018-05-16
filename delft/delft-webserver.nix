@@ -50,7 +50,7 @@ in
 
           <Location /server-status>
             SetHandler server-status
-            Allow from 127.0.0.1 # If using a remote host for monitoring replace 127.0.0.1 with its IP.
+            Allow from 127.0.0.1
             Order deny,allow
             Deny from all
           </Location>
