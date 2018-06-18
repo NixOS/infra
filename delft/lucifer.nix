@@ -14,8 +14,8 @@ with lib;
   networking.hostName = "lucifer";
   networking.firewall.allowedTCPPorts = [ 2049 3000 4000 ];
 
-  networking.interfaces.enx842b2b0b98f1 =
-    { ipAddress = "172.16.25.81";
+  networking.interfaces.enx842b2b0b98f1.ipv4.addresses = singleton
+    { address = "172.16.25.81";
       prefixLength = 21;
     };
 

@@ -46,8 +46,7 @@ in
     system.build.mainPhysicalInterface = iface;
 
     networking.interfaces = listToAttrs (singleton (nameValuePair (config.system.build.mainVirtualInterface or config.system.build.mainPhysicalInterface)
-      { ipAddress = machine.ipAddress;
-        prefixLength = 25;
+      { ipv4.addresses = singleton { address = machine.ipAddress; prefixLength = 25; };
       }));
 
   };

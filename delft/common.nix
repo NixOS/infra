@@ -22,6 +22,11 @@ with pkgs.lib;
 
   services.openssh.authorizedKeysFiles = mkForce [ "/etc/ssh/authorized_keys.d/%u" ];
 
+  services.openssh.extraConfig =
+    ''
+      PubkeyAcceptedKeyTypes +ssh-dss
+    '';
+
   #boot.kernelPackages = pkgs.linuxPackages_3_14;
 
   boot.kernelModules = [ "coretemp" ];
@@ -60,7 +65,7 @@ with pkgs.lib;
       allowed-impure-host-deps = /etc/protocols /etc/services /etc/nsswitch.conf
     '';
 
-  nix.nixPath = [ "nixpkgs=channel:nixos-17.09-small" ];
+  nix.nixPath = [ "nixpkgs=channel:nixos-18.03-small" ];
 
   networking.defaultMailServer = {
     directDelivery = true;
