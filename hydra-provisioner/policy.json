@@ -13,7 +13,8 @@
                 "ec2:DescribeImages",
                 "ec2:DescribeInstanceStatus",
                 "ec2:RequestSpotInstances",
-                "ec2:CancelSpotInstanceRequests"
+                "ec2:CancelSpotInstanceRequests",
+                "ec2:DescribeIamInstanceProfileAssociations"
             ],
             "Resource": [
                 "*"
