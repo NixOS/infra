@@ -40,63 +40,61 @@ in
       name = "nixpkgs-tarballs";
       # All files are readable but not listable.
       # The s3-upload-tarballs user can upload files.
-      policy =
-        ''
-          {
-            "Version": "2008-10-17",
-            "Statement": [
+      policy = builtins.toJSON
+        { Version = "2008-10-17";
+          Statement =
+            [
               {
-                "Sid": "AllowPublicRead",
-                "Effect": "Allow",
-                "Principal": {"AWS": "*"},
-                "Action": ["s3:GetObject"],
-                "Resource": ["${config.arn}/*"]
-              },
-              {
-                "Sid": "AllowUpload",
-                "Effect": "Allow",
-                "Principal": {"AWS": "arn:aws:iam::080433136561:user/s3-upload-tarballs"},
-                "Action": ["s3:PutObject", "s3:PutObjectAcl"],
-                "Resource": ["${config.arn}/*"]
-              },
-              {
-                "Sid": "AllowUpload2",
-                "Effect": "Allow",
-                "Principal": {"AWS": "arn:aws:iam::080433136561:user/s3-upload-tarballs"},
-                "Action": ["s3:ListBucket"],
-                "Resource": ["${config.arn}"]
-              },
-              {
-                "Sid": "CopumpkinAllowUpload",
-                "Effect": "Allow",
-                "Principal": {"AWS": "arn:aws:iam::390897850978:root"},
-                "Action": ["s3:PutObject", "s3:PutObjectAcl"],
-                "Resource": ["${config.arn}/*"]
-              },
-              {
-                "Sid": "CopumpkinAllowUpload2",
-                "Effect": "Allow",
-                "Principal": {"AWS": "arn:aws:iam::390897850978:root"},
-                "Action": ["s3:ListBucket"],
-                "Resource": ["${config.arn}"]
-              },
-              {
-                "Sid": "ShlevyAllowUpload",
-                "Effect": "Allow",
-                "Principal": {"AWS": "arn:aws:iam::976576280863:user/shlevy"},
-                "Action": ["s3:PutObject", "s3:PutObjectAcl"],
-                "Resource": ["${config.arn}/*"]
-              },
-              {
-                "Sid": "ShlevyAllowUpload2",
-                "Effect": "Allow",
-                "Principal": {"AWS": "arn:aws:iam::976576280863:user/shlevy"},
-                "Action": ["s3:ListBucket"],
-                "Resource": ["${config.arn}"]
+                Sid = "AllowPublicRead";
+                Effect = "Allow";
+                Principal.AWS = "*";
+                Action = [ "s3:GetObject" ];
+                Resource = [ "${config.arn}/*" ];
               }
-            ]
-          }
-        '';
+              {
+                Sid = "AllowUpload";
+                Effect = "Allow";
+                Principal.AWS = "arn:aws:iam::080433136561:user/s3-upload-tarballs";
+                Action = [ "s3:PutObject" "s3:PutObjectAcl" ];
+                Resource = [ "${config.arn}/*" ];
+              }
+              {
+                Sid = "AllowUpload2";
+                Effect = "Allow";
+                Principal.AWS = "arn:aws:iam::080433136561:user/s3-upload-tarballs";
+                Action = [ "s3:ListBucket" ];
+                Resource = [ "${config.arn}" ];
+              }
+              {
+                Sid = "CopumpkinAllowUpload";
+                Effect = "Allow";
+                Principal.AWS = "arn:aws:iam::390897850978:root";
+                Action = [ "s3:PutObject" "s3:PutObjectAcl" ];
+                Resource = [ "${config.arn}/*" ];
+              }
+              {
+                Sid = "CopumpkinAllowUpload2";
+                Effect = "Allow";
+                Principal.AWS = "arn:aws:iam::390897850978:root";
+                Action = [ "s3:ListBucket" ];
+                Resource = [ "${config.arn}" ];
+              }
+              {
+                Sid = "ShlevyAllowUpload";
+                Effect = "Allow";
+                Principal.AWS = "arn:aws:iam::976576280863:user/shlevy";
+                Action = [ "s3:PutObject" "s3:PutObjectAcl" ];
+                Resource = [ "${config.arn}/*" ];
+              }
+              {
+                Sid = "ShlevyAllowUpload2";
+                Effect = "Allow";
+                Principal.AWS = "arn:aws:iam::976576280863:user/shlevy";
+                Action = [ "s3:ListBucket" ];
+                Resource = [ "${config.arn}" ];
+              }
+            ];
+        };
       website.enabled = true;
     };
 
@@ -105,42 +103,36 @@ in
     { inherit accessKeyId;
       region = "us-east-1";
       name = "nix-cache";
-      policy =
-        ''
-          {
-            "Version": "2008-10-17",
-            "Statement": [
-              {
-                "Sid": "AllowPublicRead",
-                "Effect": "Allow",
-                "Principal": {"AWS": "*"},
-                "Action": ["s3:GetObject"],
-                "Resource": ["${config.arn}/*"]
-              },
-              {
-                "Sid": "AllowUploadDebuginfoWrite",
-                "Effect": "Allow",
-                "Principal": {"AWS": "arn:aws:iam::080433136561:user/s3-upload-releases"},
-                "Action": ["s3:PutObject", "s3:PutObjectAcl"],
-                "Resource": ["${config.arn}/debuginfo/*"]
-              },
-              {
-                "Sid": "AllowUploadDebuginfoRead",
-                "Effect": "Allow",
-                "Principal": {"AWS": "arn:aws:iam::080433136561:user/s3-upload-releases"},
-                "Action": ["s3:GetObject"],
-                "Resource": ["${config.arn}/*"]
-              },
-              {
-                "Sid": "AllowUploadDebuginfoRead2",
-                "Effect": "Allow",
-                "Principal": {"AWS": "arn:aws:iam::080433136561:user/s3-upload-releases"},
-                "Action": ["s3:ListBucket", "s3:GetBucketLocation"],
-                "Resource": ["${config.arn}"]
-              }
-            ]
-          }
-        '';
+      policy = builtins.toJSON {
+        Version = "2008-10-17";
+        Statement =
+          [
+            { Sid = "AllowPublicRead";
+              Effect = "Allow";
+              Principal.AWS = "*";
+              Action = [ "s3:GetObject" ];
+              Resource = [ "${config.arn}/*" ];
+            }
+            { Sid = "AllowUploadDebuginfoWrite";
+              Effect = "Allow";
+              Principal.AWS = "arn:aws:iam::080433136561:user/s3-upload-releases";
+              Action = [ "s3:PutObject" "s3:PutObjectAcl" ];
+              Resource = [ "${config.arn}/debuginfo/*" ];
+            }
+            { Sid = "AllowUploadDebuginfoRead";
+              Effect = "Allow";
+              Principal.AWS = "arn:aws:iam::080433136561:user/s3-upload-releases";
+              Action = [ "s3:GetObject" ];
+              Resource = [ "${config.arn}/*" ];
+            }
+            { Sid = "AllowUploadDebuginfoRead2";
+              Effect = "Allow";
+              Principal.AWS = "arn:aws:iam::080433136561:user/s3-upload-releases";
+              Action = [ "s3:ListBucket" "s3:GetBucketLocation" ];
+              Resource = [ "${config.arn}" ];
+            }
+          ];
+      };
     };
 
   /*
@@ -178,35 +170,33 @@ in
     { inherit accessKeyId;
       name = "nix-releases";
       region = "eu-west-1";
-      policy =
-        ''
-          {
-            "Version": "2008-10-17",
-            "Statement": [
+      policy = builtins.toJSON
+        { Version = "2008-10-17";
+          Statement =
+            [
               {
-                "Sid": "AllowPublicRead",
-                "Effect": "Allow",
-                "Principal": {"AWS": "*"},
-                "Action": ["s3:GetObject"],
-                "Resource": ["${config.arn}/*"]
-              },
-              {
-                "Sid": "AllowPublicList",
-                "Effect": "Allow",
-                "Principal": {"AWS": "*"},
-                "Action": ["s3:ListBucket"],
-                "Resource": ["${config.arn}"]
-              },
-              {
-                "Sid": "AllowUpload",
-                "Effect": "Allow",
-                "Principal": {"AWS": "arn:aws:iam::080433136561:user/s3-upload-releases"},
-                "Action": ["s3:PutObject", "s3:PutObjectAcl"],
-                "Resource": ["${config.arn}/*"]
+                Sid = "AllowPublicRead";
+                Effect = "Allow";
+                Principal.AWS = "*";
+                Action = [ "s3:GetObject" ];
+                Resource = [ "${config.arn}/*" ];
               }
-            ]
-          }
-        '';
+              {
+                Sid = "AllowPublicList";
+                Effect = "Allow";
+                Principal.AWS = "*";
+                Action = [ "s3:ListBucket" ];
+                Resource = [ "${config.arn}" ];
+              }
+              {
+                Sid = "AllowUpload";
+                Effect = "Allow";
+                Principal.AWS = "arn:aws:iam::080433136561:user/s3-upload-releases";
+                Action = [ "s3:PutObject" "s3:PutObjectAcl" ];
+                Resource = [ "${config.arn}/*" ];
+              }
+            ];
+        };
     };
 
   resources.vpc.nixos-org-vpc =
