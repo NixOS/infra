@@ -36,6 +36,25 @@ in
 
   resources.s3Buckets.nixpkgs-tarballs =
     { config, ... }:
+    let
+      allowUser = name: arn:
+        [
+          {
+            Sid = "${name}AllowUpload";
+            Effect = "Allow";
+            Principal.AWS = arn;
+            Action = [ "s3:PutObject" "s3:PutObjectAcl" ];
+            Resource = [ "${config.arn}/*" ];
+          }
+          {
+            Sid = "${name}AllowUpload2";
+            Effect = "Allow";
+            Principal.AWS = arn;
+            Action = [ "s3:ListBucket" ];
+            Resource = [ "${config.arn}" ];
+          }
+        ];
+    in
     { inherit region accessKeyId;
       name = "nixpkgs-tarballs";
       # All files are readable but not listable.
@@ -65,35 +84,11 @@ in
                 Action = [ "s3:ListBucket" ];
                 Resource = [ "${config.arn}" ];
               }
-              {
-                Sid = "CopumpkinAllowUpload";
-                Effect = "Allow";
-                Principal.AWS = "arn:aws:iam::390897850978:root";
-                Action = [ "s3:PutObject" "s3:PutObjectAcl" ];
-                Resource = [ "${config.arn}/*" ];
-              }
-              {
-                Sid = "CopumpkinAllowUpload2";
-                Effect = "Allow";
-                Principal.AWS = "arn:aws:iam::390897850978:root";
-                Action = [ "s3:ListBucket" ];
-                Resource = [ "${config.arn}" ];
-              }
-              {
-                Sid = "ShlevyAllowUpload";
-                Effect = "Allow";
-                Principal.AWS = "arn:aws:iam::976576280863:user/shlevy";
-                Action = [ "s3:PutObject" "s3:PutObjectAcl" ];
-                Resource = [ "${config.arn}/*" ];
-              }
-              {
-                Sid = "ShlevyAllowUpload2";
-                Effect = "Allow";
-                Principal.AWS = "arn:aws:iam::976576280863:user/shlevy";
-                Action = [ "s3:ListBucket" ];
-                Resource = [ "${config.arn}" ];
-              }
-            ];
+            ]
+            ++ allowUser "Copumpkin" "arn:aws:iam::390897850978:root"
+            ++ allowUser "Shlevy" "arn:aws:iam::976576280863:user/shlevy"
+            ++ allowUser "Daiderd" "arn:aws:iam::014292808257:user/lnl7"
+            ;
         };
       website.enabled = true;
     };
