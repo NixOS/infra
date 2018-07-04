@@ -8,7 +8,7 @@ with lib;
 
 let
 
-  nixosRelease = "17.09";
+  nixosRelease = "18.03";
 
 in
 
@@ -18,7 +18,6 @@ in
     { description = "Nixpkgs tarball mirroring user";
       home = "/home/tarball-mirror";
       isNormalUser = true;
-      openssh.authorizedKeys.keys = with import ../ssh-keys.nix; [ eelco ];
     };
 
   systemd.services.mirror-tarballs =
@@ -30,14 +29,18 @@ in
       serviceConfig.PrivateTmp = true;
       script =
         ''
-          cd /home/tarball-mirror/nixpkgs
-          git remote update channels
-          git checkout channels/nixos-${nixosRelease}
+          dir=/home/tarball-mirror/nixpkgs-channels
+          if ! [[ -e $dir ]]; then
+            git clone git://github.com/NixOS/nixpkgs-channels.git $dir
+          fi
+          cd $dir
+          git remote update origin
+          git checkout origin/nixos-${nixosRelease}
           # FIXME: use IAM role.
           export AWS_ACCESS_KEY_ID=$(sed 's/aws_access_key_id=\(.*\)/\1/ ; t; d' ~/.aws/credentials)
           export AWS_SECRET_ACCESS_KEY=$(sed 's/aws_secret_access_key=\(.*\)/\1/ ; t; d' ~/.aws/credentials)
           NIX_PATH=nixpkgs=. ./maintainers/scripts/copy-tarballs.pl \
-            --expr '(import <nixpkgs/pkgs/top-level/release.nix> { scrubJobs = false; })' \
+            --expr 'import <nixpkgs/maintainers/scripts/all-tarballs.nix>' \
             --exclude 'registry.npmjs.org|mirror://kde|mirror://xorg|mirror://kernel|mirror://hackage|mirror://gnome|mirror://apache|mirror://mozilla|pypi.python.org'
         '';
       startAt = "05:30";

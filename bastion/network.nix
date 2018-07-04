@@ -2,6 +2,7 @@ let
   region = "eu-west-1";
   zone = "eu-west-1a";
   accessKeyId = "lb-nixos";
+  sshKeys = import ../ssh-keys.nix;
 in
 
 {
@@ -91,5 +92,17 @@ in
       deployment.ec2.associatePublicIpAddress = true;
       deployment.ec2.ebsInitialRootDiskSize = 40;
       deployment.ec2.elasticIPv4 = resources.elasticIPs."bastion.nixos.org";
+
+      imports =
+        [ ../modules/common.nix
+          ../modules/tarball-mirror.nix
+        ];
+
+      users.extraUsers.tarball-mirror.openssh.authorizedKeys.keys = [ sshKeys.eelco ];
+
+      environment.systemPackages = [ pkgs.git ];
+
+      nix.gc.automatic = true;
+      nix.gc.dates = "hourly";
     };
 }

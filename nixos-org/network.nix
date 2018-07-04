@@ -303,7 +303,7 @@ in
 
       system.stateVersion = "17.09";
 
-      imports = [ ./webserver.nix ./hydra-mirror.nix ./tarball-mirror.nix ];
+      imports = [ ./webserver.nix ./hydra-mirror.nix ];
     };
 
 }

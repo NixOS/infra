@@ -1,24 +1,18 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
-with pkgs.lib;
+with lib;
 
 {
   imports =
     [ ./static-net-config.nix
       ./diffoscope.nix
       (builtins.fetchGit https://github.com/edolstra/dwarffs + "/module.nix")
+      ../modules/common.nix
     ];
 
   system.stateVersion = "14.12";
 
   nixpkgs.config.allowUnfree = true;
-
-  time.timeZone = "Europe/Amsterdam";
-
-  users.mutableUsers = false;
-
-  users.extraUsers.root.openssh.authorizedKeys.keys =
-     with import ../ssh-keys.nix; [ eelco rob ];
 
   services.openssh.authorizedKeysFiles = mkForce [ "/etc/ssh/authorized_keys.d/%u" ];
 
@@ -26,8 +20,6 @@ with pkgs.lib;
     ''
       PubkeyAcceptedKeyTypes +ssh-dss
     '';
-
-  #boot.kernelPackages = pkgs.linuxPackages_3_14;
 
   boot.kernelModules = [ "coretemp" ];
 
@@ -41,8 +33,8 @@ with pkgs.lib;
   hardware.cpu.intel.updateMicrocode = true;
 
   environment.systemPackages =
-    [ pkgs.emacs pkgs.subversion pkgs.sysstat pkgs.hdparm pkgs.sdparm # pkgs.lsiutil
-      pkgs.htop pkgs.sqlite pkgs.iotop pkgs.lm_sensors pkgs.gitFull pkgs.hwloc
+    [ pkgs.emacs pkgs.sysstat pkgs.hdparm pkgs.sdparm # pkgs.lsiutil
+      pkgs.htop pkgs.sqlite pkgs.iotop pkgs.lm_sensors pkgs.hwloc
       pkgs.lsof pkgs.numactl pkgs.gcc pkgs.smartmontools pkgs.tcpdump pkgs.gdb
       pkgs.elfutils
     ];
@@ -54,18 +46,12 @@ with pkgs.lib;
 
   nix.package = pkgs.nixUnstable;
 
-  nix.useSandbox = true;
-
   nix.nrBuildUsers = 100;
-
-  nix.buildCores = 0;
 
   nix.extraOptions =
     ''
       allowed-impure-host-deps = /etc/protocols /etc/services /etc/nsswitch.conf
     '';
-
-  nix.nixPath = [ "nixpkgs=channel:nixos-18.03-small" ];
 
   networking.defaultMailServer = {
     directDelivery = true;
