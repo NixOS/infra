@@ -28,6 +28,7 @@ in
 
   resources.elasticIPs."nixos.org" =
     { inherit region accessKeyId;
+      vpc = true;
     };
 
   resources.ec2KeyPairs.default =
