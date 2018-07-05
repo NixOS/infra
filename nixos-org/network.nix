@@ -1,7 +1,7 @@
 let
   region = "eu-west-1";
   zone = "eu-west-1a";
-  accessKeyId = "lb-nixos";
+  accessKeyId = ""; # FIXME
 in
 
 {
@@ -219,11 +219,16 @@ in
       inherit region accessKeyId;
       vpcId = resources.vpc.nixos-org-vpc;
       rules =
-        [ { toPort =  22; fromPort =  22; sourceIp = "213.125.166.74/32"; } # Utrecht office
-          { toPort =  22; fromPort =  22; sourceIp = "131.180.119.77/32"; } # wendy
-          { toPort =  80; fromPort =  80; sourceIp = "0.0.0.0/0"; }
+        with import ../ip-addresses.nix;
+	[ { toPort =  80; fromPort =  80; sourceIp = "0.0.0.0/0"; }
           { toPort = 443; fromPort = 443; sourceIp = "0.0.0.0/0"; }
-        ];
+	]
+        ++ map
+          (ip: { toPort = 22; fromPort = 22; sourceIp = "${ip}/32"; })
+          [ eelcoHome
+            eelcoEC2
+            "34.254.208.229" # == "bastion.nixos.org"
+          ];
     };
 
   resources.vpcRouteTables.nixos-org-route-table =
