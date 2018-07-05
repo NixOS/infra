@@ -100,7 +100,13 @@ in
 
       users.extraUsers.tarball-mirror.openssh.authorizedKeys.keys = [ sshKeys.eelco ];
 
-      environment.systemPackages = [ pkgs.git ];
+      users.extraUsers.deploy =
+        { description = "NixOps deployments";
+          isNormalUser = true;
+          openssh.authorizedKeys.keys = [ sshKeys.eelco sshKeys.rob ];
+        };
+
+      environment.systemPackages = [ pkgs.nixops ];
 
       nix.gc.automatic = true;
       nix.gc.dates = "hourly";

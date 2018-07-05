@@ -1,6 +1,9 @@
 # This module mirrors most tarballs reachable from Nixpkgs's
 # release.nix to the content-addressed tarball cache at
 # tarballs.nixos.org.
+#
+# Note: this service expects AWS credentials for uploading to
+# s3://nixpkgs-tarballs in /home/tarball-mirror/.aws/credentials.
 
 { config, lib, pkgs, ... }:
 

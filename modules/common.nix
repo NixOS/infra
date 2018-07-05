@@ -19,5 +19,4 @@ with lib;
       pkgs.git
       pkgs.gdb
     ];
-    
 }
