@@ -11,16 +11,6 @@ lib: with lib;
   */
 
   { # 8-core NixOS build machine.
-    hostName = "kenny";
-    ipAddress = "131.180.119.71"; # fe80::222:19ff:fe55:cc0d
-    ethernetAddress = "00:22:19:55:cc:0d";
-    systems = [ "x86_64-linux" "i686-linux" ];
-    maxJobs = 8;
-    speedFactor = 2;
-    buildUser = "buildfarm";
-  }
-
-  { # 8-core NixOS build machine.
     hostName = "stan";
     ipAddress = "131.180.119.74"; # fe80::222:19ff:fe55:bf2e
     ethernetAddress = "00:22:19:55:bf:2e";
@@ -28,26 +18,6 @@ lib: with lib;
     maxJobs = 8;
     speedFactor = 2;
     #buildUser = "buildfarm";
-  }
-
-  { # 8-core NixOS build machine.
-    hostName = "kyle";
-    ipAddress = "131.180.119.72"; # fe80::222:19ff:fe55:c118
-    ethernetAddress = "00:22:19:55:c1:18";
-    systems = [ "x86_64-linux" "i686-linux" ];
-    maxJobs = 8;
-    speedFactor = 2;
-    buildUser = "buildfarm";
-  }
-
-  { # 64-bit Mac OS X build machine.
-    hostName = "butters";
-    ipAddress = "131.180.119.68";
-    ethernetAddress = "00:24:36:f3:cd:c0";
-    system = "x86_64-darwin";
-    aliases = ["mac64-1"];
-    maxJobs = 2;
-    buildUser = "nix";
   }
 
   { # Old Hydra server, now build machine.
