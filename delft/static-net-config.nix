@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ name, config, lib, pkgs, ... }:
 
 with lib;
 
@@ -6,7 +6,7 @@ let
 
   machines = import ./machines.nix pkgs.lib;
 
-  machine = findSingle (m: m.hostName == config.deployment.targetHost or "") {} {} machines;
+  machine = findSingle (m: m.hostName == name) {} {} machines;
 
   iface = "enx" + replaceChars [":"] [""] machine.ethernetAddress;
 

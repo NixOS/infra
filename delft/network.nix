@@ -1,11 +1,7 @@
 {
-  kenny = import ./build-machines-dell-1950.nix;
-  kyle = import ./build-machines-dell-1950.nix;
-  hydra = import ./build-machines-dell-1950.nix;
-  stan = import ./build-machines-dell-1950.nix;
-  lucifer = import ./lucifer.nix;
-  wendy = import ./wendy.nix;
-  ike = import ./build-machines-dell-r815.nix;
-  #shelley = import ./build-machines-dell-r815.nix;
+  hydra = { deployment.targetHost = "hydra.ewi.tudelft.nl"; imports = [ ./build-machines-dell-1950.nix ]; };
+  lucifer = { deployment.targetHost = "lucifer.ewi.tudelft.nl"; imports = [ ./lucifer.nix ]; };
+  wendy = { deployment.targetHost = "wendy.ewi.tudelft.nl"; imports = [ ./wendy.nix ]; };
+  ike = { deployment.targetHost = "wendy.ewi.tudelft.nl"; imports = [ ./build-machines-dell-r815.nix ]; };
   chef = import ./chef.nix;
 }
