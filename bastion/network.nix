@@ -1,7 +1,7 @@
 let
   region = "eu-west-1";
   zone = "eu-west-1a";
-  accessKeyId = "lb-nixos";
+  accessKeyId = ""; # FIXME
   sshKeys = import ../ssh-keys.nix;
 in
 
@@ -34,9 +34,13 @@ in
       inherit region accessKeyId;
       vpcId = resources.vpc.bastion-vpc;
       rules =
-        [ { toPort =  22; fromPort =  22; sourceIp = "213.125.166.74/32"; } # Utrecht office
-          { toPort =  22; fromPort =  22; sourceIp = "131.180.119.77/32"; } # wendy
-        ];
+        with import ../ip-addresses.nix;
+        map
+          (ip: { toPort = 22; fromPort = 22; sourceIp = "${ip}/32"; })
+          [ eelcoHome
+            eelcoEC2
+            "34.254.208.229" # == resources.elasticIPs."bastion.nixos.org".address FIXME: doesn't work
+          ];
     };
 
   resources.vpcRouteTables.bastion-route-table =
@@ -106,9 +110,18 @@ in
           openssh.authorizedKeys.keys = [ sshKeys.eelco sshKeys.rob ];
         };
 
-      environment.systemPackages = [ pkgs.nixops ];
+      environment.systemPackages =
+        [ pkgs.nixops
+          pkgs.awscli
+        ];
 
       nix.gc.automatic = true;
       nix.gc.dates = "hourly";
+
+      # Temporary hack until we have proper users/roles.
+      services.openssh.extraConfig =
+        ''
+          AcceptEnv AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY
+        '';
     };
 }
