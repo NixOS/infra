@@ -39,6 +39,9 @@ in
           (ip: { toPort = 22; fromPort = 22; sourceIp = "${ip}/32"; })
           [ eelcoHome
             eelcoEC2
+            rob1
+            rob2
+            graham
             "34.254.208.229" # == resources.elasticIPs."bastion.nixos.org".address FIXME: doesn't work
           ];
     };
@@ -107,7 +110,7 @@ in
       users.extraUsers.deploy =
         { description = "NixOps deployments";
           isNormalUser = true;
-          openssh.authorizedKeys.keys = [ sshKeys.eelco sshKeys.rob ];
+          openssh.authorizedKeys.keys = [ sshKeys.eelco sshKeys.rob sshKeys.graham ];
         };
 
       environment.systemPackages =
