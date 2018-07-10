@@ -102,12 +102,19 @@ in
           ../modules/tarball-mirror.nix
         ];
 
-      users.extraUsers.tarball-mirror.openssh.authorizedKeys.keys = [ sshKeys.eelco ];
+      users.extraUsers.tarball-mirror.openssh.authorizedKeys.keys = with sshKeys; [
+        eelco
+      ];
 
       users.extraUsers.deploy =
         { description = "NixOps deployments";
           isNormalUser = true;
-          openssh.authorizedKeys.keys = [ sshKeys.eelco sshKeys.rob ];
+          openssh.authorizedKeys.keys = with sshKeys; [ 
+            eelco 
+            grahamc
+            rob
+            zimbatm
+          ];
         };
 
       environment.systemPackages =
