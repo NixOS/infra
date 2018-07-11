@@ -77,4 +77,9 @@
     feedUrl = "https://matthewbauer.us/blog/feed.xml";
     homepageUrl = "https://matthewbauer.us/blog/";
   }
+  {
+    name = "Graham Christensen";
+    feedUrl = "https://grahamc.com/feed/nix.xml";
+    homepageUrl = "https://grahamc.com/";
+  }
 ]
