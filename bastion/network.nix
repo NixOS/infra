@@ -43,6 +43,7 @@ in
             rob2
             graham
             zimbatm
+            amine
             "34.254.208.229" # == resources.elasticIPs."bastion.nixos.org".address FIXME: doesn't work
           ];
     };
@@ -111,7 +112,8 @@ in
       users.extraUsers.deploy =
         { description = "NixOps deployments";
           isNormalUser = true;
-          openssh.authorizedKeys.keys = [ sshKeys.eelco sshKeys.rob sshKeys.graham sshKeys.zimbatm ];
+          openssh.authorizedKeys.keys =
+	    [ sshKeys.eelco sshKeys.rob sshKeys.graham sshKeys.zimbatm sshKeys.amine ];
         };
 
       environment.systemPackages =
