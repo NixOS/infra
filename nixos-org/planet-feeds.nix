@@ -72,4 +72,9 @@
     feedUrl = "https://typing-nix.regnat.ovh/index.rss";
     homepageUrl = "https://typing-nix.regnat.ovh/";
   }
+  {
+    name = "Matthew Bauer";
+    feedUrl = "https://matthewbauer.us/blog/feed.xml";
+    homepageUrl = "https://matthewbauer.us/blog/";
+  }
 ]
