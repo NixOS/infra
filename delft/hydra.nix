@@ -141,6 +141,10 @@ in
       Host packet-t2a-1
       Hostname 147.75.65.54
       Compression yes
+
+      Host packet-epyc-1
+      Hostname 147.75.198.47
+      Compression yes
     '';
 
   services.openssh.knownHosts =
@@ -170,6 +174,9 @@ in
 
       # packet-t2a-1
       { hostNames = [ "147.75.65.54" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINPipUJuE/vHgrakfIBp+mt7iS3DlMlecRdI/hleGm1W"; }
+
+      # packet-epyc-1
+      { hostNames = [ "147.75.198.47" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAt76Jw/xXqvYcrNZSa+BEfKfLCFyvY50LZJuGBWtJwx"; }
     ];
 
 }
