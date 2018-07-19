@@ -59,16 +59,6 @@ with lib;
     domain = "st.ewi.tudelft.nl";
   };
 
-  networking.extraHosts =
-    ''
-      104.130.1.245   rackspace-01
-      104.130.6.26    rackspace-02
-      162.242.229.200 rackspace-03
-      162.242.234.29  rackspace-04
-      162.242.234.77  rackspace-05
-      162.242.234.78  rackspace-06
-    '';
-
   networking.firewall.enable = true;
   networking.firewall.rejectPackets = true;
   networking.firewall.allowPing = true;
