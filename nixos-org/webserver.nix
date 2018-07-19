@@ -43,7 +43,7 @@ let
           Redirect /binary-cache https://cache.nixos.org
           Redirect /releases/channels /channels
           Redirect /tarballs http://tarballs.nixos.org
-          Redirect /releases/nixos https://d3g5gsiof5omrk.cloudfront.net/nixos
+          Redirect /releases/nixos https://releases.nixos.org/nixos
 
           # Don't allow access to .git directories.
           RewriteEngine on
@@ -163,23 +163,6 @@ in
               #SSLOpenSSLConfCmd DHParameters "${./dhparams.pem}"
             '';
         })
-
-        # FIXME: remove
-        { hostName = "releases.nixos.org";
-          serverAliases = [ "releases-uncached.nixos.org" ];
-          extraConfig =
-            ''
-              UseCanonicalName on
-
-              # We don't want /channels to be cached by CloudFront.
-              Redirect /channels https://nixos.org/channels
-            '';
-          servedDirs =
-            [ { urlPath = "/";
-                dir = "/releases";
-              }
-            ];
-        }
 
         { hostName = "planet.nixos.org";
           globalRedirect = "https://planet.nixos.org/";
