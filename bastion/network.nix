@@ -113,12 +113,14 @@ in
         { description = "NixOps deployments";
           isNormalUser = true;
           openssh.authorizedKeys.keys =
-	    [ sshKeys.eelco sshKeys.rob sshKeys.graham sshKeys.zimbatm sshKeys.amine ];
+            [ sshKeys.eelco sshKeys.rob sshKeys.graham sshKeys.zimbatm sshKeys.amine ];
         };
 
       environment.systemPackages =
         [ pkgs.nixops
           pkgs.awscli
+          pkgs.tmux
+          pkgs.terraform
         ];
 
       nix.gc.automatic = true;
