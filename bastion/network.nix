@@ -120,7 +120,7 @@ in
         [ pkgs.nixops
           pkgs.awscli
           pkgs.tmux
-          pkgs.terraform
+          pkgs.terraform-full
         ];
 
       nix.gc.automatic = true;
