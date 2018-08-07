@@ -60,7 +60,8 @@ in
 
       log_prefix = https://nix-cache.s3.amazonaws.com/
 
-      evaluator_initial_heap_size = 10G
+      evaluator_initial_heap_size = 1000000000
+      evaluator_max_heap_size     = 2000000000
 
       max_concurrent_evals = 2
     '';
