@@ -123,7 +123,7 @@ in
           pkgs.terraform-full
         ];
 
-      nix.gc.automatic = true;
+      #nix.gc.automatic = true;
       nix.gc.dates = "daily";
 
       # Temporary hack until we have proper users/roles.
