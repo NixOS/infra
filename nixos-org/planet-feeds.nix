@@ -82,4 +82,9 @@
     feedUrl = "https://grahamc.com/feed/nix.xml";
     homepageUrl = "https://grahamc.com/";
   }
+  {
+    name = "Mayflower";
+    feedUrl = "https://nixos.mayflower.consulting/blog/index.xml";
+    homepageUrl = "https://nixos.mayflower.consulting/";
+  }
 ]
