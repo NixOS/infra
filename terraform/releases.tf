@@ -1,5 +1,13 @@
 resource "aws_s3_bucket" "releases" {
   bucket = "nix-releases"
+
+  cors_rule {
+    allowed_headers = ["*"]
+    allowed_methods = ["HEAD", "GET"]
+    allowed_origins = ["*"]
+    expose_headers  = ["ETag"]
+    max_age_seconds = 3600
+  }
 }
 
 resource "aws_cloudfront_distribution" "releases" {
