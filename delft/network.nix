@@ -4,4 +4,5 @@
   wendy = { deployment.targetHost = "wendy.ewi.tudelft.nl"; imports = [ ./wendy.nix ]; };
   ike = { deployment.targetHost = "ike.ewi.tudelft.nl"; imports = [ ./build-machines-dell-r815.nix ]; };
   chef = import ./chef.nix;
+  eris = import ./eris.nix;
 }
