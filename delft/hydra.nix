@@ -88,12 +88,12 @@ in
       Compression yes
 
       Host mac2
-      Hostname 213.125.166.74
+      Hostname 37.153.215.191
       Port 6002
       Compression yes
 
       Host mac3
-      Hostname 213.125.166.74
+      Hostname 37.153.215.191
       Port 6003
       Compression yes
 
@@ -108,12 +108,12 @@ in
       Compression yes
 
       Host mac6
-      Hostname 213.125.166.74
+      Hostname 37.153.215.191
       Port 6006
       Compression yes
 
       Host mac7
-      Hostname 213.125.166.74
+      Hostname 37.153.215.191
       Port 6007
       Compression yes
 
@@ -156,12 +156,12 @@ in
     [
       { hostNames = [ "83.87.124.39" ]; publicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDVTkY4tQ6V29XTW1aKtoFJoF4uyaEy0fms3HqmI56av8UCg3MN5G6CL6EDIvbe46mBsI3++V3uGiOr0pLPbM9fkWC92LYGk5f7fNvCoy9bvuZy5bHwFQ5b5S9IJ1o3yDlCToc9CppmPVbFMMMLgKF06pQiGBeMCUG/VoCfiUBq+UgEGhAifWcuWIOGmdua6clljH5Dcc+7S0HTLoVtrxmPPXBVZUvW+lgAJTM6FXYIZiIqMSC2uZHGVstY87nPcZFXIbzhlYQqxx5H0um2bL3mbS7vdKhSsIWWaUZeck9ghNyUV1fVRLUhuXkQHe/8Z58cAhTv5dDd42YLB0fgjETV"; }
       { hostNames = [ "[213.125.166.74]:6001" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBP7xnlcQ4Ymnl+Ewz+6Kmhz72bqBay6KydBx4wsScIYReX8QiqvPH2ozeyl6yQ8rsYC75Z/aPwNzLoemMBmaPzE= "; }
-      { hostNames = [ "[213.125.166.74]:6002" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFw1hBw7UtCIkOP/QOU/oMNqETnm0bQYl3BQsGN9u9vW9ty1MjV/DP/rtT056wg4ZpvxwoSlW17QM5ddKke60RY= "; }
-      { hostNames = [ "[213.125.166.74]:6003" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBNReX6n69253+v9C4JNK6ARQ/eAM1z5IyuR4cpZOJ/XVY72voEx7Q/GsbmGfmejnVdj54OYsOS5eYBUFim65IUM= "; }
+      { hostNames = [ "[37.153.215.191]:6002" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMIW/QHCa5004DddnUHgWCHLGnNBnTti7GFezhcO6ss5ZYwS7+xAeTlvB9PjPdc1Mgl8m4ZXMyZavrew/jVmAWM="; }
+      { hostNames = [ "[37.153.215.191]:6003" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBI4Spb70BF3+J09YseyNRxREwlaVdgNcPpZAARQAk01qScfinGeoPZiUyunM5PGpYyTxE67+neGIFdr+DXS2f0w="; }
       { hostNames = [ "[213.125.166.74]:6004" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBD2XQ+bjuEfNdFnpCcusD6JW5jT5qdepo2vKb4W5Pt9DdxwNuaIbzWNaiTmvip2lF+43oM274CeE7Do3XdeO1S0= "; }
       { hostNames = [ "[213.125.166.74]:6005" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBNMoN47gtth42f4MCduo5QclW9dyW+R8GEQDb5m+w3h2soBtDvLLSokYemmyn/3vkbuswQcA8ZthsiqkHJS3pq8= "; }
-      { hostNames = [ "[213.125.166.74]:6006" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJJPXzpnYgA7Y7inIqVG9McCy1Zrqnu6UfJO8etTKegwfyKxMtIwWWBqweNVhfygZlUKJ1y99MwHWE5VDKTUhZk= "; }
-      { hostNames = [ "[213.125.166.74]:6007" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCa4WqiBgZJT9iKb1mKhc4f2LzapOX0SW5uq0bKtvpbzNwG6UVVeKv+/p4QWLadykRVpssoFNpLFoPF73J+duKQ= "; }
+      { hostNames = [ "[37.153.215.191]:6006" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCvvTr79TPi+3IS1s+x9524Gb8PtfKdfGTDroyyU0N5CrkxH/CEKbzh4yFguZdo1hh9tqZsweFTr89/H3tFIILo="; }
+      { hostNames = [ "[37.153.215.191]:6007" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBP5HdFzNXCNSRsdMA/6HUVTCWLDKV9vdtvcacbhlUXOdYNASTIAuU9E6fp3Zj5ATZAsJpffbLoy3YpMGcdW3jcg="; }
       { hostNames = [ "[213.125.166.74]:6008" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBP5ip9sIKANIVux/aXG4lpUmlaMKqT+GgVEshJxC5ddi2glXkmo6v+VrRs3kTixat1jUHzaYM3mPU90JFJOrg+U= "; }
       { hostNames = [ "[213.125.166.74]:6009" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOa5gL7S5MBSsTBRh0eeJKK7qPmJj2o3cfI7bZBc9VQIcjHEkETxc7Bv9ap0rkThU2Skzx95YLyndq954cONH/Q= "; }
       { hostNames = [ "208.78.106.251" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBKrwg2592DfDUG1U0LZxJcBaT35YfEsuKo4helEAzeoujvzOo4DIaBrTCX7+LxcYZlGoi4WvsnwxUG11GY12l2A="; }
