@@ -145,7 +145,7 @@
         boot.extraModulePackages = [];
         hardware.enableAllFirmware = true;
         nix.maxJobs = 48;
-        nix.buildCores = 4;
+        nix.buildCores = lib.mkForce 4;
       })
   ];
 }
