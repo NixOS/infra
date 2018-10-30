@@ -39,8 +39,7 @@ in
           (ip: { toPort = 22; fromPort = 22; sourceIp = "${ip}/32"; })
           [ eelcoHome
             eelcoEC2
-            rob1
-            rob2
+            rob
             graham
             zimbatm
             amine
