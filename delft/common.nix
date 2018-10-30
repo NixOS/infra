@@ -8,6 +8,7 @@ with lib;
       ./diffoscope.nix
       (builtins.fetchGit https://github.com/edolstra/dwarffs + "/module.nix")
       ../modules/common.nix
+      ./prometheus/node.nix
     ];
 
   system.stateVersion = "14.12";
