@@ -51,7 +51,7 @@ in
       # patchelf:master:3
       xxx-jobset-repeats = nixos:reproducibility:1
 
-      nar_buffer_size = 12884901888
+      nar_buffer_size = 8589934592
 
       upload_logs_to_binary_cache = true
 
@@ -63,7 +63,7 @@ in
       evaluator_initial_heap_size = 10000000000
       evaluator_max_heap_size     = 11000000000
 
-      max_concurrent_evals = 2
+      max_concurrent_evals = 1
     '';
 
   systemd.tmpfiles.rules =
