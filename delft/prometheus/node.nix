@@ -1,3 +1,4 @@
+{ pkgs, ... }:
 {
   networking.firewall.allowedTCPPorts = [ 9100 ];
   services.prometheus.exporters.node = {
@@ -12,6 +13,6 @@
     mkdir -pm 0775 /var/lib/prometheus-node-exporter-text-files
 
     cd /var/lib/prometheus-node-exporter-text-files
-    ${./system-version-exporter} | ${pkgs.moreutils}/bin/sponge system-version.prom
+    ${./system-version-exporter.sh} | ${pkgs.moreutils}/bin/sponge system-version.prom
   '';
 }
