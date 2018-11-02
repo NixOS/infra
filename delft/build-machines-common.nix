@@ -13,6 +13,12 @@ with lib;
   # the same time.
   systemd.timers.nix-gc.timerConfig.RandomizedDelaySec = "1800";
 
+  # If we drop below 20GiB during builds, free 20GiB
+  nix.extraOptions = ''
+    min-free = ${toString (20*1024*1024*1024)}
+    max-free = ${toString (40*1024*1024*1024)}
+  '';
+
   users.extraUsers.root.openssh.authorizedKeys.keys = singleton
     ''
       command="nix-store --serve --write" ${readFile ./id_buildfarm.pub}
