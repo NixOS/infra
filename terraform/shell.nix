@@ -1,4 +1,7 @@
 with import <nixpkgs> {};
+let
+  my-terraform = terraform.withPlugins (p: with p; [ aws ]);
+in
 mkShell {
-  buildInputs = [ terraform-full ];
+  buildInputs = [ my-terraform ];
 }
