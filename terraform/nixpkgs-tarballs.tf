@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "nixpkgs-tarballs" {
-  bucket   = "nixpkgs-tarballs"
+  bucket = "nixpkgs-tarballs"
 
   website {
     index_document = "index.html"
@@ -7,7 +7,7 @@ resource "aws_s3_bucket" "nixpkgs-tarballs" {
 }
 
 resource "aws_s3_bucket_policy" "nixpkgs-tarballs" {
-  bucket   = "${aws_s3_bucket.nixpkgs-tarballs.id}"
+  bucket = "${aws_s3_bucket.nixpkgs-tarballs.id}"
 
   # imported from existing
   policy = <<EOF
