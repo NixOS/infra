@@ -3,6 +3,6 @@ provider "aws" {
 }
 
 provider "aws" {
-  alias = "us"
+  alias  = "us"
   region = "us-east-1"
 }

@@ -1,14 +1,16 @@
 resource "aws_cloudfront_distribution" "releases" {
-  enabled             = true
-  is_ipv6_enabled     = true
-  price_class         = "PriceClass_All"
-  aliases             = ["releases.nixos.org"]
+  enabled         = true
+  is_ipv6_enabled = true
+  price_class     = "PriceClass_All"
+  aliases         = ["releases.nixos.org"]
 
   origin {
     origin_id   = "default"
     domain_name = "nix-releases.s3.amazonaws.com"
+
     s3_origin_config {
       origin_access_identity = ""
+
       #origin_access_identity = "${aws_cloudfront_origin_access_identity.releases.cloudfront_access_identity_path}"
     }
   }
@@ -33,8 +35,8 @@ resource "aws_cloudfront_distribution" "releases" {
 
   viewer_certificate {
     cloudfront_default_certificate = true
-    acm_certificate_arn = "${aws_acm_certificate.releases.arn}"
-    ssl_support_method = "sni-only"
+    acm_certificate_arn            = "${aws_acm_certificate.releases.arn}"
+    ssl_support_method             = "sni-only"
   }
 
   restrictions {
@@ -49,7 +51,7 @@ resource "aws_cloudfront_distribution" "releases" {
 }
 
 resource "aws_acm_certificate" "releases" {
-  provider = "aws.us"
+  provider          = "aws.us"
   domain_name       = "releases.nixos.org"
   validation_method = "DNS"
 
@@ -63,3 +65,4 @@ resource "aws_cloudfront_origin_access_identity" "releases" {
   comment = "Cloudfront identity for releases"
 }
 */
+
