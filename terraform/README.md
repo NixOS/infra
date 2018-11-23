@@ -2,21 +2,36 @@
 
 For now this manages only resources in the main AWS account.
 
-## Usage
+## Setup
 
-Make sure to have the AWS key-pair in the environment, in
-`~/.aws/credentials` or as the EC2 metadata service.
+Set the following environment variables:
+
+AWS access key pair:
+
+```sh
+export AWS_ACCESS_KEY_ID=...
+export AWS_SECRET_ACCESS_KEY=...
+```
+
+Fastly token from https://manage.fastly.com/account/personal/tokens with
+global scope.
+
+```sh
+export FASTLY_API_KEY=...
+```
+
+## Usage
 
 The first time the following command has to be run to initialize the state
 file and plugins:
 
-```
+```sh
 nix-shell --run "terraform init"
 ```
 
 Then run the following command to diff the changes and then apply if approved:
 
-```
+```sh
 nix-shell --run "terraform apply"
 ```
 
