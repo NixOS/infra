@@ -21,6 +21,7 @@ in { deployment.targetEnv = "hetzner";
   networking.firewall.allowedTCPPorts = [
     443 80 # nginx
     9090 # prometheus's web UI
+    9200 # hydra-queue-runner rexporter
   ];
 
   services.nginx = {
@@ -55,6 +56,17 @@ in { deployment.targetEnv = "hetzner";
 	  }
 	];
       }
+
+      { job_name = "hydra";
+        metrics_path = "/";
+        static_configs = [
+	  {
+	    targets = [
+              "status.nixos.org:9200"
+            ];
+	  }
+	];
+      }
     ];
   };
 
@@ -64,5 +76,23 @@ in { deployment.targetEnv = "hetzner";
     addr = "0.0.0.0";
     domain = "status.nixos.org";
     rootUrl = "https://status.nixos.org/grafana/";
+  };
+
+  systemd.services.prometheus-hydra-exporter = {
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network.target" ];
+    serviceConfig = {
+      Restart = "always";
+      RestartSec = "60s";
+      PrivateTmp =  true;
+      WorkingDirectory = "/tmp";
+      ExecStart = let
+          python = pkgs.python3.withPackages (p: [
+	     p.requests p.prometheus_client
+	  ]);
+        in ''
+          ${python}/bin/python ${./prometheus/hydra-queue-runner-reexporter.py}
+      '';
+    };
   };
 }
