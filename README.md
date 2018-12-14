@@ -1,18 +1,15 @@
-# nixos.org hardware configuration
+# The NixOS infrastructure configurations
 
 This repository contains all the hardware configuration for the nixos project
 infrastructure.
 
-Amongs other things it contains configuration for:
+All the hosts are currently managed using NixOps. Some of the infrastructure
+is managed using Terraform. There are still a lot of things configured
+manually.
 
-* nixos.org
-* cache.nixos.org
-* hydra.nixos.org and all the build machines
-* releases.nixos.org
-* tarballs.nixos.org
+## Docs
 
-Most of the infrastructure is currently managed using NixOps. Some if it is
-managed using Terraform.
+* [Resources inventory](docs/inventory.md)
 
 ## Team
 
