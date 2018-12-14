@@ -1,3 +1,15 @@
+resource "aws_s3_bucket" "releases" {
+  bucket = "nix-releases"
+
+  cors_rule {
+    allowed_headers = ["*"]
+    allowed_methods = ["HEAD", "GET"]
+    allowed_origins = ["*"]
+    expose_headers  = ["ETag"]
+    max_age_seconds = 3600
+  }
+}
+
 resource "aws_cloudfront_distribution" "releases" {
   enabled         = true
   is_ipv6_enabled = true
@@ -6,7 +18,7 @@ resource "aws_cloudfront_distribution" "releases" {
 
   origin {
     origin_id   = "default"
-    domain_name = "nix-releases.s3.amazonaws.com"
+    domain_name = "${aws_s3_bucket.releases.bucket_regional_domain_name}"
 
     s3_origin_config {
       origin_access_identity = ""
