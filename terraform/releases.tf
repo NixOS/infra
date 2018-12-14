@@ -18,7 +18,7 @@ resource "aws_cloudfront_distribution" "releases" {
 
   origin {
     origin_id   = "default"
-    domain_name = "${aws_s3_bucket.releases.bucket_regional_domain_name}"
+    domain_name = "${aws_s3_bucket.releases.bucket_domain_name}"
 
     s3_origin_config {
       origin_access_identity = ""
