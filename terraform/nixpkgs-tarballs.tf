@@ -1,3 +1,20 @@
+resource "aws_s3_bucket" "nixpkgs-tarballs" {
+  bucket   = "nixpkgs-tarballs"
+
+  website {
+    index_document = "index.html"
+  }
+}
+
+resource "aws_s3_bucket_policy" "nixpkgs-tarballs" {
+  bucket   = "${aws_s3_bucket.nixpkgs-tarballs.id}"
+
+  # imported from existing
+  policy = <<EOF
+{"Version":"2008-10-17","Statement":[{"Sid":"AllowPublicRead","Effect":"Allow","Principal":{"AWS":"*"},"Action":"s3:GetObject","Resource":"arn:aws:s3:::nixpkgs-tarballs/*"},{"Sid":"AllowUpload","Effect":"Allow","Principal":{"AWS":"arn:aws:iam::080433136561:user/s3-upload-tarballs"},"Action":["s3:PutObject","s3:PutObjectAcl"],"Resource":"arn:aws:s3:::nixpkgs-tarballs/*"},{"Sid":"AllowUpload2","Effect":"Allow","Principal":{"AWS":"arn:aws:iam::080433136561:user/s3-upload-tarballs"},"Action":"s3:ListBucket","Resource":"arn:aws:s3:::nixpkgs-tarballs"},{"Sid":"CopumpkinAllowUpload","Effect":"Allow","Principal":{"AWS":"arn:aws:iam::390897850978:root"},"Action":["s3:PutObject","s3:PutObjectAcl"],"Resource":"arn:aws:s3:::nixpkgs-tarballs/*"},{"Sid":"CopumpkinAllowUpload2","Effect":"Allow","Principal":{"AWS":"arn:aws:iam::390897850978:root"},"Action":"s3:ListBucket","Resource":"arn:aws:s3:::nixpkgs-tarballs"},{"Sid":"ShlevyAllowUpload","Effect":"Allow","Principal":{"AWS":"arn:aws:iam::976576280863:user/shlevy"},"Action":["s3:PutObject","s3:PutObjectAcl"],"Resource":"arn:aws:s3:::nixpkgs-tarballs/*"},{"Sid":"ShlevyAllowUpload2","Effect":"Allow","Principal":{"AWS":"arn:aws:iam::976576280863:user/shlevy"},"Action":"s3:ListBucket","Resource":"arn:aws:s3:::nixpkgs-tarballs"},{"Sid":"DaiderdAllowUpload","Effect":"Allow","Principal":{"AWS":"arn:aws:iam::014292808257:user/lnl7"},"Action":["s3:PutObject","s3:PutObjectAcl"],"Resource":"arn:aws:s3:::nixpkgs-tarballs/*"},{"Sid":"DaiderdAllowUpload2","Effect":"Allow","Principal":{"AWS":"arn:aws:iam::014292808257:user/lnl7"},"Action":"s3:ListBucket","Resource":"arn:aws:s3:::nixpkgs-tarballs"}]}
+EOF
+}
+
 resource "aws_cloudfront_distribution" "nixpkgs-tarballs" {
   enabled         = true
   is_ipv6_enabled = true
