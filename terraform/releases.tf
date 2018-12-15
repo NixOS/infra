@@ -10,6 +10,24 @@ resource "aws_s3_bucket" "releases" {
   }
 }
 
+resource "aws_s3_bucket_policy" "releases" {
+  bucket = "${aws_s3_bucket.releases.id}"
+  policy = "${data.aws_iam_policy_document.releases.json}"
+}
+
+data "aws_iam_policy_document" "releases" {
+  statement {
+    sid       = "1"
+    actions   = ["s3:GetObject"]
+    resources = ["${aws_s3_bucket.releases.arn}/*"]
+
+    principals {
+      type        = "AWS"
+      identifiers = ["*"]
+    }
+  }
+}
+
 resource "aws_cloudfront_distribution" "releases" {
   enabled         = true
   is_ipv6_enabled = true
