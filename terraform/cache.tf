@@ -1,3 +1,34 @@
+resource "aws_s3_bucket" "cache" {
+  provider = "aws.us"
+  bucket   = "nix-cache"
+
+  lifecycle_rule {
+    enabled = true
+
+    transition {
+      days          = 365
+      storage_class = "STANDARD_IA"
+    }
+  }
+
+  cors_rule {
+    allowed_headers = ["Authorization"]
+    allowed_methods = ["GET"]
+    allowed_origins = ["*"]
+    max_age_seconds = 3000
+  }
+}
+
+resource "aws_s3_bucket_policy" "cache" {
+  provider = "aws.us"
+  bucket   = "${aws_s3_bucket.cache.id}"
+
+  # imported from existing
+  policy = <<EOF
+{"Version":"2008-10-17","Statement":[{"Sid":"AllowPublicRead","Effect":"Allow","Principal":{"AWS":"*"},"Action":"s3:GetObject","Resource":"arn:aws:s3:::nix-cache/*"},{"Sid":"AllowUploadDebuginfoWrite","Effect":"Allow","Principal":{"AWS":"arn:aws:iam::080433136561:user/s3-upload-releases"},"Action":["s3:PutObject","s3:PutObjectAcl"],"Resource":"arn:aws:s3:::nix-cache/debuginfo/*"},{"Sid":"AllowUploadDebuginfoRead","Effect":"Allow","Principal":{"AWS":"arn:aws:iam::080433136561:user/s3-upload-releases"},"Action":"s3:GetObject","Resource":"arn:aws:s3:::nix-cache/*"},{"Sid":"AllowUploadDebuginfoRead2","Effect":"Allow","Principal":{"AWS":"arn:aws:iam::080433136561:user/s3-upload-releases"},"Action":["s3:ListBucket","s3:GetBucketLocation"],"Resource":"arn:aws:s3:::nix-cache"}]}
+EOF
+}
+
 resource "aws_cloudfront_distribution" "cache" {
   enabled         = true
   is_ipv6_enabled = true
@@ -6,7 +37,7 @@ resource "aws_cloudfront_distribution" "cache" {
 
   origin {
     origin_id   = "S3-nix-cache"
-    domain_name = "nix-cache.s3.amazonaws.com"
+    domain_name = "${aws_s3_bucket.cache.bucket_domain_name}"
 
     s3_origin_config {
       origin_access_identity = "origin-access-identity/cloudfront/E11I84008FX6W9"
