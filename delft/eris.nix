@@ -10,6 +10,8 @@ in { deployment.targetEnv = "hetzner";
     147.75.98.145 packet-t2-4
     147.75.65.54  packet-t2a-1
     147.75.79.198 packet-t2a-2
+    147.75.198.170 packet-t2a-3
+    147.75.111.30 packet-t2a-4
     '' + (let
         nums = lib.lists.range 1 9;
         name = num: ''
@@ -48,11 +50,27 @@ in { deployment.targetEnv = "hetzner";
         static_configs = [
 	  {
 	    targets = [
+              "chef:9100"
+            ];
+	    labels.role = "hydra";
+	  }
+	  {
+	    targets = [
               "packet-epyc-1:9100" "packet-t2-4:9100" "packet-t2a-1:9100"
-              "packet-t2a-2:9100" "chef:9100"
-            ]
-            ++ (builtins.map (n: "mac${toString n}-host:6010") (lib.lists.range 1 9))
-            ++ (builtins.map (n: "mac${toString n}-guest:6010") (lib.lists.range 1 9));
+              "packet-t2a-2:9100" "packet-t2a-3:9100" "packet-t2a-4:9100"
+	      "chef:9100"
+	    ];
+	    labels.role = "builder";
+	  }
+	  {
+	    targets = builtins.map (n: "mac${toString n}-host:6010") (lib.lists.range 1 9);
+	    labels.mac = "host";
+	    labels.role = "macos-hypervisor";
+	  }
+	  {
+	    targets = builtins.map (n: "mac${toString n}-guest:6010") (lib.lists.range 1 9);
+	    labels.mac = "guest";
+	    labels.role = "builder";
 	  }
 	];
       }
@@ -73,6 +91,7 @@ in { deployment.targetEnv = "hetzner";
   services.grafana = {
     enable = true;
     auth.anonymous.enable = true;
+    users.allowSignUp = true;
     addr = "0.0.0.0";
     domain = "status.nixos.org";
     rootUrl = "https://status.nixos.org/grafana/";

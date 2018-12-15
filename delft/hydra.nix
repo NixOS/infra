@@ -82,48 +82,48 @@ in
       ServerAliveInterval 120
       TCPKeepAlive yes
 
-      Host mac1
-      Hostname 213.125.166.74
+      Host mac1-guest
+      Hostname 37.153.215.191
       Port 6001
       Compression yes
 
-      Host mac2
+      Host mac2-guest
       Hostname 37.153.215.191
       Port 6002
       Compression yes
 
-      Host mac3
+      Host mac3-guest
       Hostname 37.153.215.191
       Port 6003
       Compression yes
 
-      Host mac4
-      Hostname 213.125.166.74
+      Host mac4-guest
+      Hostname 37.153.215.191
       Port 6004
       Compression yes
 
-      Host mac5
-      Hostname 213.125.166.74
+      Host mac5-guest
+      Hostname 37.153.215.191
       Port 6005
       Compression yes
 
-      Host mac6
+      Host mac6-guest
       Hostname 37.153.215.191
       Port 6006
       Compression yes
 
-      Host mac7
+      Host mac7-guest
       Hostname 37.153.215.191
       Port 6007
       Compression yes
 
-      Host mac8
-      Hostname 213.125.166.74
+      Host mac8-guest
+      Hostname 37.153.215.191
       Port 6008
       Compression yes
 
-      Host mac9
-      Hostname 213.125.166.74
+      Host mac9-guest
+      Hostname 37.153.215.191
       Port 6009
       Compression yes
 
@@ -147,6 +147,14 @@ in
       Hostname 147.75.79.198
       Compression yes
 
+      Host packet-t2a-3
+      Hostname 147.75.198.170
+      Compression yes
+
+      Host packet-t2a-4
+      Hostname 147.75.111.30
+      Compression yes
+
       Host packet-epyc-1
       Hostname 147.75.198.47
       Compression yes
@@ -155,15 +163,15 @@ in
   services.openssh.knownHosts =
     [
       { hostNames = [ "83.87.124.39" ]; publicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDVTkY4tQ6V29XTW1aKtoFJoF4uyaEy0fms3HqmI56av8UCg3MN5G6CL6EDIvbe46mBsI3++V3uGiOr0pLPbM9fkWC92LYGk5f7fNvCoy9bvuZy5bHwFQ5b5S9IJ1o3yDlCToc9CppmPVbFMMMLgKF06pQiGBeMCUG/VoCfiUBq+UgEGhAifWcuWIOGmdua6clljH5Dcc+7S0HTLoVtrxmPPXBVZUvW+lgAJTM6FXYIZiIqMSC2uZHGVstY87nPcZFXIbzhlYQqxx5H0um2bL3mbS7vdKhSsIWWaUZeck9ghNyUV1fVRLUhuXkQHe/8Z58cAhTv5dDd42YLB0fgjETV"; }
-      { hostNames = [ "[213.125.166.74]:6001" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBP7xnlcQ4Ymnl+Ewz+6Kmhz72bqBay6KydBx4wsScIYReX8QiqvPH2ozeyl6yQ8rsYC75Z/aPwNzLoemMBmaPzE= "; }
-      { hostNames = [ "[37.153.215.191]:6002" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBMIW/QHCa5004DddnUHgWCHLGnNBnTti7GFezhcO6ss5ZYwS7+xAeTlvB9PjPdc1Mgl8m4ZXMyZavrew/jVmAWM="; }
-      { hostNames = [ "[37.153.215.191]:6003" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBI4Spb70BF3+J09YseyNRxREwlaVdgNcPpZAARQAk01qScfinGeoPZiUyunM5PGpYyTxE67+neGIFdr+DXS2f0w="; }
-      { hostNames = [ "[213.125.166.74]:6004" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBD2XQ+bjuEfNdFnpCcusD6JW5jT5qdepo2vKb4W5Pt9DdxwNuaIbzWNaiTmvip2lF+43oM274CeE7Do3XdeO1S0= "; }
-      { hostNames = [ "[213.125.166.74]:6005" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBNMoN47gtth42f4MCduo5QclW9dyW+R8GEQDb5m+w3h2soBtDvLLSokYemmyn/3vkbuswQcA8ZthsiqkHJS3pq8= "; }
-      { hostNames = [ "[37.153.215.191]:6006" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCvvTr79TPi+3IS1s+x9524Gb8PtfKdfGTDroyyU0N5CrkxH/CEKbzh4yFguZdo1hh9tqZsweFTr89/H3tFIILo="; }
-      { hostNames = [ "[37.153.215.191]:6007" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBP5HdFzNXCNSRsdMA/6HUVTCWLDKV9vdtvcacbhlUXOdYNASTIAuU9E6fp3Zj5ATZAsJpffbLoy3YpMGcdW3jcg="; }
-      { hostNames = [ "[213.125.166.74]:6008" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBP5ip9sIKANIVux/aXG4lpUmlaMKqT+GgVEshJxC5ddi2glXkmo6v+VrRs3kTixat1jUHzaYM3mPU90JFJOrg+U= "; }
-      { hostNames = [ "[213.125.166.74]:6009" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOa5gL7S5MBSsTBRh0eeJKK7qPmJj2o3cfI7bZBc9VQIcjHEkETxc7Bv9ap0rkThU2Skzx95YLyndq954cONH/Q= "; }
+
+      # (for i in $(seq 6000 6010); do ssh-keyscan -t ssh-ed25519 -p $i 37.153.215.191 2> /dev/null; done) | sed -e 's/^/      { hostNames = [ "/' -e 's/ ssh/" ]; publicKey = "ssh/' -e 's/$/"; }/'; echo
+      { hostNames = [ "[37.153.215.191]:6002" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKJSLxndBO2SqMklTT4dWsv54CtKVMHDOhXl7v1tC38v"; }
+      { hostNames = [ "[37.153.215.191]:6003" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKdzP9scGjJ31wwDJdcXcO4+wayvrHkFAefP/0I7UB0r"; }
+      { hostNames = [ "[37.153.215.191]:6004" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAaK44azT14aWHTE2fMYJFeJBTg1hQg2n2KAEgu8qlII"; }
+      { hostNames = [ "[37.153.215.191]:6005" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEgJ2Mh0vkrBcIBcWgFoEPsYG9dyPOAUgL0GOhhBoRcD"; }
+      { hostNames = [ "[37.153.215.191]:6006" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICyjTqJsNioHUP0HMmGVfDpej9dCIQH0Bdn5aNbe8oYU"; }
+      { hostNames = [ "[37.153.215.191]:6008" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHHJF0dXSTvZwWtPjN/iUBp2A5pHCPuOUVOvBkjXw+Eu"; }
+
       { hostNames = [ "208.78.106.251" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBKrwg2592DfDUG1U0LZxJcBaT35YfEsuKo4helEAzeoujvzOo4DIaBrTCX7+LxcYZlGoi4WvsnwxUG11GY12l2A="; }
       { hostNames = [ "208.78.106.252" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLV1p6f6Rk3rKwNJbcqvG68wjfT3wPcJfChc1LFU9A3tTFslUDr47FHLmT+FTr+ChkoqD6Gsl+jtSnvkYnTlpGY="; }
       { hostNames = [ "hydra.ewi.tudelft.nl" "131.180.119.69" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIS6QYRKqOt9zfvFej4WWaswLE8Mhq7dOk8enWi/AzoK"; }
@@ -182,6 +190,12 @@ in
 
       # packet-t2a-2
       { hostNames = [ "147.75.79.198" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDCo+z5d8C6SpCyvC8KAPMAcMEtd5J74tRsk+7sm2KgD"; }
+
+      # packet-t2a-3
+      { hostNames = [ "147.75.198.170" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPieDw5aeaN88HMIye2t4tL6DBqgJwQbXH0PzPd0HOVl"; }
+
+      # packet-t2a-4
+      { hostNames = [ "147.75.111.30" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBy1RCBg3iTzruHzYxHdy3KgTytZdmXgQPHjlB/ZjAQe"; }
 
       # packet-epyc-1
       { hostNames = [ "147.75.198.47" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAt76Jw/xXqvYcrNZSa+BEfKfLCFyvY50LZJuGBWtJwx"; }
