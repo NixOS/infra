@@ -2,6 +2,7 @@ locals {
   host_bastion = "34.254.208.229"
   host_chef    = "46.4.67.10"
   host_www     = "54.217.220.47"
+  host_status  = "138.201.32.77"
 }
 
 resource "aws_route53_zone" "nixos" {
@@ -50,6 +51,14 @@ resource "aws_route53_record" "nixos-planet" {
   type    = "A"
   ttl     = "3600"
   records = ["${local.host_www}"]
+}
+
+resource "aws_route53_record" "nixos-status" {
+  zone_id = "${aws_route53_zone.nixos.zone_id}"
+  name    = "status"
+  type    = "A"
+  ttl     = "3600"
+  records = ["${local.host_status}"]
 }
 
 resource "aws_route53_record" "nixos-conf" {
