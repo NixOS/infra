@@ -8,10 +8,12 @@ in { deployment.targetEnv = "hetzner";
     46.4.67.10 chef
     147.75.198.47 packet-epyc-1
     147.75.98.145 packet-t2-4
-    147.75.65.54  packet-t2a-1
     147.75.79.198 packet-t2a-2
     147.75.198.170 packet-t2a-3
-    147.75.111.30 packet-t2a-4
+    139.178.82.19 bigmac-host
+    139.178.82.19 bigmac-guest
+
+
     '' + (let
         nums = lib.lists.range 1 9;
         name = num: ''
@@ -46,44 +48,57 @@ in { deployment.targetEnv = "hetzner";
 
     globalConfig.scrape_interval = "15s";
     scrapeConfigs = [
-      { job_name = "node";
+      {
+        job_name = "node";
         static_configs = [
-	  {
-	    targets = [
+          {
+            targets = [
               "chef:9100"
             ];
-	    labels.role = "hydra";
-	  }
-	  {
-	    targets = [
-              "packet-epyc-1:9100" "packet-t2-4:9100" "packet-t2a-1:9100"
-              "packet-t2a-2:9100" "packet-t2a-3:9100" "packet-t2a-4:9100"
-	      "chef:9100"
-	    ];
-	    labels.role = "builder";
-	  }
-	  {
-	    targets = builtins.map (n: "mac${toString n}-host:6010") (lib.lists.range 1 9);
-	    labels.mac = "host";
-	    labels.role = "macos-hypervisor";
-	  }
-	  {
-	    targets = builtins.map (n: "mac${toString n}-guest:6010") (lib.lists.range 1 9);
-	    labels.mac = "guest";
-	    labels.role = "builder";
-	  }
-	];
+            labels.role = "hydra";
+          }
+          {
+            targets = [
+              "packet-epyc-1:9100" "packet-t2-4:9100"
+              "packet-t2a-2:9100" "packet-t2a-3:9100"
+              "chef:9100"
+            ];
+            labels.role = "builder";
+          }
+          {
+            targets = builtins.map (n: "mac${toString n}-host:6010") (lib.lists.range 1 9);
+            labels.mac = "host";
+            labels.role = "macos-hypervisor";
+          }
+          {
+            targets = builtins.map (n: "mac${toString n}-guest:6010") (lib.lists.range 1 9);
+            labels.mac = "guest";
+            labels.role = "builder";
+          }
+          {
+            targets = [ "bigmac-host:9100" ];
+            labels.mac = "host";
+            labels.role = "macos-hypervisor";
+          }
+          {
+            targets = [ "bigmac-guest:9101" ];
+            labels.mac = "guest";
+            labels.role = "builder";
+          }
+
+        ];
       }
 
-      { job_name = "hydra";
+      {
+        job_name = "hydra";
         metrics_path = "/";
         static_configs = [
-	  {
-	    targets = [
+          {
+            targets = [
               "status.nixos.org:9200"
             ];
-	  }
-	];
+          }
+        ];
       }
     ];
   };
@@ -107,8 +122,8 @@ in { deployment.targetEnv = "hetzner";
       WorkingDirectory = "/tmp";
       ExecStart = let
           python = pkgs.python3.withPackages (p: [
-	     p.requests p.prometheus_client
-	  ]);
+             p.requests p.prometheus_client
+          ]);
         in ''
           ${python}/bin/python ${./prometheus/hydra-queue-runner-reexporter.py}
       '';
