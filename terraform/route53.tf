@@ -158,10 +158,10 @@ resource "aws_route53_record" "nixos-weekly-wild" {
   records = ["nixos.github.io"]
 }
 
-resource "aws_route53_record" "nixos-wild" {
-  zone_id = "${aws_route53_zone.nixos.zone_id}"
-  name    = "*"
-  type    = "A"
-  ttl     = "3600"
-  records = ["${local.host_www}"]
-}
+#resource "aws_route53_record" "nixos-wild" {
+#  zone_id = "${aws_route53_zone.nixos.zone_id}"
+#  name    = "*"
+#  type    = "A"
+#  ttl     = "3600"
+#  records = ["${local.host_www}"]
+#}
