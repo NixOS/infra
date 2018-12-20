@@ -47,7 +47,7 @@ resource "aws_route53_record" "nixos-discourse" {
 
 resource "aws_route53_record" "nixos-cache" {
   zone_id = "${aws_route53_zone.nixos.zone_id}"
-  name    = "tarballs"
+  name    = "cache"
   type    = "CNAME"
   ttl     = "3600"
   records = ["dualstack.v2.shared.global.fastly.net"]
@@ -104,7 +104,7 @@ resource "aws_route53_record" "nixos-planet" {
 
 resource "aws_route53_record" "nixos-releases" {
   zone_id = "${aws_route53_zone.nixos.zone_id}"
-  name    = "tarballs"
+  name    = "releases"
   type    = "CNAME"
   ttl     = "3600"
   records = ["d3g5gsiof5omrk.cloudfront.net."]
@@ -131,7 +131,7 @@ resource "aws_route53_record" "nixos-tarballs" {
   name    = "tarballs"
   type    = "CNAME"
   ttl     = "3600"
-  records = ["d3am6xf9zisc71.cloudfront.net"]
+  records = ["d3am6xf9zisc71.cloudfront.net."]
 }
 
 resource "aws_route53_record" "nixos-tarballs-verification" {
