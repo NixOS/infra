@@ -165,7 +165,3 @@ resource "aws_route53_record" "nixos-wild" {
   ttl     = "3600"
   records = ["${local.host_www}"]
 }
-
-## Domain verification
-
-
