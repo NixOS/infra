@@ -25,7 +25,53 @@ resource "aws_s3_bucket_policy" "cache" {
 
   # imported from existing
   policy = <<EOF
-{"Version":"2008-10-17","Statement":[{"Sid":"AllowPublicRead","Effect":"Allow","Principal":{"AWS":"*"},"Action":"s3:GetObject","Resource":"arn:aws:s3:::nix-cache/*"},{"Sid":"AllowUploadDebuginfoWrite","Effect":"Allow","Principal":{"AWS":"arn:aws:iam::080433136561:user/s3-upload-releases"},"Action":["s3:PutObject","s3:PutObjectAcl"],"Resource":"arn:aws:s3:::nix-cache/debuginfo/*"},{"Sid":"AllowUploadDebuginfoRead","Effect":"Allow","Principal":{"AWS":"arn:aws:iam::080433136561:user/s3-upload-releases"},"Action":"s3:GetObject","Resource":"arn:aws:s3:::nix-cache/*"},{"Sid":"AllowUploadDebuginfoRead2","Effect":"Allow","Principal":{"AWS":"arn:aws:iam::080433136561:user/s3-upload-releases"},"Action":["s3:ListBucket","s3:GetBucketLocation"],"Resource":"arn:aws:s3:::nix-cache"}]}
+{
+  "Version": "2008-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowPublicRead",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "*"
+      },
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::nix-cache/*"
+    },
+    {
+      "Sid": "AllowUploadDebuginfoWrite",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::080433136561:user/s3-upload-releases"
+      },
+      "Action": [
+        "s3:PutObject",
+        "s3:PutObjectAcl"
+      ],
+      "Resource": "arn:aws:s3:::nix-cache/debuginfo/*"
+    },
+    {
+      "Sid": "AllowUploadDebuginfoRead",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::080433136561:user/s3-upload-releases"
+      },
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::nix-cache/*"
+    },
+    {
+      "Sid": "AllowUploadDebuginfoRead2",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::080433136561:user/s3-upload-releases"
+      },
+      "Action": [
+        "s3:ListBucket",
+        "s3:GetBucketLocation"
+      ],
+      "Resource": "arn:aws:s3:::nix-cache"
+    }
+  ]
+}
 EOF
 }
 
