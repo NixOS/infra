@@ -12,20 +12,55 @@ resource "aws_s3_bucket" "releases" {
 
 resource "aws_s3_bucket_policy" "releases" {
   bucket = "${aws_s3_bucket.releases.id}"
-  policy = "${data.aws_iam_policy_document.releases.json}"
-}
-
-data "aws_iam_policy_document" "releases" {
-  statement {
-    sid       = "1"
-    actions   = ["s3:GetObject"]
-    resources = ["${aws_s3_bucket.releases.arn}/*"]
-
-    principals {
-      type        = "AWS"
-      identifiers = ["*"]
+  policy = <<EOF
+{
+  "Version": "2008-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowPublicRead",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "*"
+      },
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::nix-releases/*"
+    },
+    {
+      "Sid": "AllowUploadDebuginfoWrite",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::080433136561:user/s3-upload-releases"
+      },
+      "Action": [
+        "s3:PutObject",
+        "s3:PutObjectAcl"
+      ],
+      "Resource": "arn:aws:s3:::nix-releases/debuginfo/*"
+    },
+    {
+      "Sid": "AllowUploadDebuginfoRead",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::080433136561:user/s3-upload-releases"
+      },
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::nix-releases/*"
+    },
+    {
+      "Sid": "AllowUploadDebuginfoRead2",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::080433136561:user/s3-upload-releases"
+      },
+      "Action": [
+        "s3:ListBucket",
+        "s3:GetBucketLocation"
+      ],
+      "Resource": "arn:aws:s3:::nix-releases"
     }
-  }
+  ]
+}
+EOF
 }
 
 resource "aws_cloudfront_distribution" "releases" {
