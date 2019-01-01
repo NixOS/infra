@@ -35,7 +35,7 @@ resource "aws_s3_bucket_policy" "releases" {
         "s3:PutObject",
         "s3:PutObjectAcl"
       ],
-      "Resource": "arn:aws:s3:::nix-releases/nixos/*"
+      "Resource": "arn:aws:s3:::nix-releases/*"
     },
     {
       "Sid": "AllowUploadDebuginfoRead",
