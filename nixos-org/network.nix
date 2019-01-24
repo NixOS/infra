@@ -141,7 +141,13 @@ in
 
       system.stateVersion = "17.09";
 
-      imports = [ ./webserver.nix ];
+      imports =
+        [ ./webserver.nix
+          ../modules/hydra-mirror-user.nix
+	];
+
+      users.users.hydra-mirror.openssh.authorizedKeys.keys =
+        [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA/r65Jgp3pe+wNh9Vp64jdTxD9G6Gn5F3sidnydinBK hydra-mirror@bastion" ];
     };
 
 }

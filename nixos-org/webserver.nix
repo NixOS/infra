@@ -136,7 +136,6 @@ in
               SSLProtocol All -SSLv2 -SSLv3
               SSLCipherSuite HIGH:!aNULL:!MD5:!EXP
               SSLHonorCipherOrder on
-              #SSLOpenSSLConfCmd DHParameters "${./dhparams.pem}"
             '';
           servedDirs =
             [ { urlPath = "/.well-known/acme-challenge";
@@ -160,7 +159,6 @@ in
               SSLProtocol All -SSLv2 -SSLv3
               SSLCipherSuite HIGH:!aNULL:!MD5:!EXP
               SSLHonorCipherOrder on
-              #SSLOpenSSLConfCmd DHParameters "${./dhparams.pem}"
             '';
         })
 
@@ -179,7 +177,6 @@ in
               SSLProtocol All -SSLv2 -SSLv3
               SSLCipherSuite HIGH:!aNULL:!MD5:!EXP
               SSLHonorCipherOrder on
-              #SSLOpenSSLConfCmd DHParameters "${./dhparams.pem}"
 
               # Rewrite HTTP to HTTPS
               RewriteCond %{HTTPS} off

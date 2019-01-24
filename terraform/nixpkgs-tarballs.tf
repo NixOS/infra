@@ -149,6 +149,7 @@ resource "aws_cloudfront_distribution" "nixpkgs-tarballs" {
       origin_ssl_protocols   = ["TLSv1.2"]
     }
   }
+
   default_cache_behavior {
     allowed_methods        = ["HEAD", "GET"]
     cached_methods         = ["HEAD", "GET"]

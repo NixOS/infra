@@ -1,10 +1,6 @@
 resource "aws_s3_bucket" "releases" {
   bucket = "nix-releases"
 
-  website {
-    index_document = "index.html"
-  }
-
   cors_rule {
     allowed_headers = ["*"]
     allowed_methods = ["HEAD", "GET"]
