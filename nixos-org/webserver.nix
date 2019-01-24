@@ -12,7 +12,7 @@ let
   nixosVHostConfig =
     { hostName = "nixos.org";
       serverAliases = [ "test.nixos.org" "test2.nixos.org" "ipv6.nixos.org" "localhost" ];
-      documentRoot = "/home/eelco/nixos-homepage";
+      documentRoot = "/home/homepage/nixos-homepage";
       enableUserDir = true;
       servedDirs =
         [ { urlPath = "/irc";
@@ -94,7 +94,7 @@ in
     enable = true;
     #multiProcessingModule = "worker";
     logPerVirtualHost = true;
-    adminAddr = "eelco.dolstra@logicblox.com";
+    adminAddr = "edolstra@gmail.com";
     hostName = "localhost";
 
     extraConfig =
@@ -193,7 +193,7 @@ in
       ];
   };
 
-  users.extraUsers.eelco =
+  users.users.eelco =
     { createHome = true;
       description = "Eelco Dolstra";
       extraGroups = [ "wheel" ];
@@ -205,7 +205,7 @@ in
       uid = 1000;
     };
 
-  users.extraUsers.rbvermaa =
+  users.users.rbvermaa =
     { createHome = true;
       description = "Rob Vermaas";
       extraGroups = [ "wheel" ];
@@ -217,7 +217,7 @@ in
       uid = 1001;
     };
 
-  users.extraUsers.irclogs =
+  users.users.irclogs =
     { createHome = true;
       description = "#nixos IRC Logging";
       group = "users";
@@ -229,18 +229,27 @@ in
       uid = 1002;
     };
 
+  users.users.homepage =
+    { createHome = true;
+      description = "nixos.org website";
+      group = "users";
+      home = "/home/homepage";
+      useDefaultShell = true;
+      openssh.authorizedKeys.keys = [ sshKeys.eelco sshKeys.rob ];
+    };
+
   systemd.services.update-homepage =
     { description = "Update nixos.org Homepage";
       # FIXME: gnutar/xz deps work around a Nix bug.
       path = [ config.nix.package pkgs.git pkgs.bash pkgs.gnutar pkgs.xz ];
-      serviceConfig.User = "eelco";
+      serviceConfig.User = "homepage";
       environment.NIX_PATH = concatStringsSep ":" config.nix.nixPath;
       environment.NIX_REMOTE = "daemon";
       environment.CURL_CA_BUNDLE = "/etc/ssl/certs/ca-bundle.crt";
       serviceConfig.Type = "oneshot";
       script =
         ''
-          cd /home/eelco/nixos-homepage
+          cd ~/nixos-homepage
           git pull
           exec nix-shell --command 'make UPDATE=1'
         '';
