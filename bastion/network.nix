@@ -91,7 +91,7 @@ in
       deployment.owners = [ "edolstra@gmail.com" "rob.vermaas@gmail.com" ];
       deployment.ec2.region = region;
       deployment.ec2.zone = zone;
-      deployment.ec2.instanceType = "t2.medium";
+      deployment.ec2.instanceType = "t2.large";
       deployment.ec2.accessKeyId = accessKeyId;
       deployment.ec2.keyPair = resources.ec2KeyPairs.default;
       deployment.ec2.securityGroups = [];
