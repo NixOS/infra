@@ -83,6 +83,12 @@ in
       vpc = true;
     };
 
+  resources.ebsVolumes.scratch =
+    { tags.Name = "Scratch space for the channel generator";
+      inherit region zone accessKeyId;
+      size = 64;
+    };
+
   bastion =
     { config, pkgs, resources, ... }:
 
@@ -104,6 +110,7 @@ in
       imports =
         [ ../modules/common.nix
           ../modules/tarball-mirror.nix
+          ../modules/hydra-mirror.nix
         ];
 
       users.extraUsers.tarball-mirror.openssh.authorizedKeys.keys = [ sshKeys.eelco ];
@@ -130,5 +137,14 @@ in
         ''
           AcceptEnv AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY FASTLY_API_KEY
         '';
+
+      fileSystems."/scratch" =
+        { autoFormat = true;
+          fsType = "ext4";
+          device = "/dev/xvdh";
+          ec2.disk = resources.ebsVolumes.scratch;
+        };
+
+      systemd.tmpfiles.rules = [ "d /scratch/hydra-mirror 0755 hydra-mirror users 10d" ];
     };
 }

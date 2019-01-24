@@ -26,6 +26,7 @@ let
               exec mirror-nixos-branch ${channelName} https://hydra.nixos.org/job/${mainJob}/latest-finished
             ''; # */
           serviceConfig.User = "hydra-mirror";
+          environment.TMPDIR = "/scratch/hydra-mirror";
         };
     };
 
@@ -55,5 +56,4 @@ in
       (makeUpdateChannel "nixpkgs-17.09-darwin" "nixpkgs/nixpkgs-17.09-darwin/darwin-tested")
       (makeUpdateChannel "nixpkgs-unstable" "nixpkgs/trunk/unstable")
     ];
-
 }

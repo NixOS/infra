@@ -13,13 +13,6 @@ in
       size = 1024;
     };
 
-  # FIXME: remove
-  resources.ebsVolumes.data =
-    { tags.Name = "Misc. NixOS.org data";
-      inherit region zone accessKeyId;
-      size = 10;
-    };
-
   resources.ebsVolumes.data-new =
     { tags.Name = "Misc. NixOS.org data";
       inherit region zone accessKeyId;
@@ -33,166 +26,6 @@ in
 
   resources.ec2KeyPairs.default =
     { inherit region accessKeyId;
-    };
-
-  resources.s3Buckets.nixpkgs-tarballs =
-    { config, ... }:
-    let
-      allowUser = name: arn:
-        [
-          {
-            Sid = "${name}AllowUpload";
-            Effect = "Allow";
-            Principal.AWS = arn;
-            Action = [ "s3:PutObject" "s3:PutObjectAcl" ];
-            Resource = [ "${config.arn}/*" ];
-          }
-          {
-            Sid = "${name}AllowUpload2";
-            Effect = "Allow";
-            Principal.AWS = arn;
-            Action = [ "s3:ListBucket" ];
-            Resource = [ "${config.arn}" ];
-          }
-        ];
-    in
-    { inherit region accessKeyId;
-      name = "nixpkgs-tarballs";
-      # All files are readable but not listable.
-      # The s3-upload-tarballs user can upload files.
-      policy = builtins.toJSON
-        { Version = "2008-10-17";
-          Statement =
-            [
-              {
-                Sid = "AllowPublicRead";
-                Effect = "Allow";
-                Principal.AWS = "*";
-                Action = [ "s3:GetObject" ];
-                Resource = [ "${config.arn}/*" ];
-              }
-              {
-                Sid = "AllowUpload";
-                Effect = "Allow";
-                Principal.AWS = "arn:aws:iam::080433136561:user/s3-upload-tarballs";
-                Action = [ "s3:PutObject" "s3:PutObjectAcl" ];
-                Resource = [ "${config.arn}/*" ];
-              }
-              {
-                Sid = "AllowUpload2";
-                Effect = "Allow";
-                Principal.AWS = "arn:aws:iam::080433136561:user/s3-upload-tarballs";
-                Action = [ "s3:ListBucket" ];
-                Resource = [ "${config.arn}" ];
-              }
-            ]
-            ++ allowUser "Copumpkin" "arn:aws:iam::390897850978:root"
-            ++ allowUser "Shlevy" "arn:aws:iam::976576280863:user/shlevy"
-            ++ allowUser "Daiderd" "arn:aws:iam::014292808257:user/lnl7"
-            ;
-        };
-      website.enabled = true;
-    };
-
-  resources.s3Buckets.nix-cache =
-    { config, ... }:
-    { inherit accessKeyId;
-      region = "us-east-1";
-      name = "nix-cache";
-      policy = builtins.toJSON {
-        Version = "2008-10-17";
-        Statement =
-          [
-            { Sid = "AllowPublicRead";
-              Effect = "Allow";
-              Principal.AWS = "*";
-              Action = [ "s3:GetObject" ];
-              Resource = [ "${config.arn}/*" ];
-            }
-            { Sid = "AllowUploadDebuginfoWrite";
-              Effect = "Allow";
-              Principal.AWS = "arn:aws:iam::080433136561:user/s3-upload-releases";
-              Action = [ "s3:PutObject" "s3:PutObjectAcl" ];
-              Resource = [ "${config.arn}/debuginfo/*" ];
-            }
-            { Sid = "AllowUploadDebuginfoRead";
-              Effect = "Allow";
-              Principal.AWS = "arn:aws:iam::080433136561:user/s3-upload-releases";
-              Action = [ "s3:GetObject" ];
-              Resource = [ "${config.arn}/*" ];
-            }
-            { Sid = "AllowUploadDebuginfoRead2";
-              Effect = "Allow";
-              Principal.AWS = "arn:aws:iam::080433136561:user/s3-upload-releases";
-              Action = [ "s3:ListBucket" "s3:GetBucketLocation" ];
-              Resource = [ "${config.arn}" ];
-            }
-          ];
-      };
-    };
-
-  /*
-  resources.s3Buckets.nix-test-cache =
-    { config, ... }:
-    { inherit region accessKeyId;
-      name = "nix-test-cache";
-      policy =
-        ''
-          {
-            "Version": "2008-10-17",
-            "Statement": [
-              {
-                "Sid": "AllowPublicRead",
-                "Effect": "Allow",
-                "Principal": {"AWS": "*"},
-                "Action": ["s3:GetObject"],
-                "Resource": ["${config.arn}/*"]
-              },
-              {
-                "Sid": "AllowPublicList",
-                "Effect": "Allow",
-                "Principal": {"AWS": "*"},
-                "Action": ["s3:ListBucket"],
-                "Resource": ["${config.arn}"]
-              }
-            ]
-          }
-        '';
-    };
-  */
-
-  resources.s3Buckets.nix-releases =
-    { config, ... }:
-    { inherit accessKeyId;
-      name = "nix-releases";
-      region = "eu-west-1";
-      policy = builtins.toJSON
-        { Version = "2008-10-17";
-          Statement =
-            [
-              {
-                Sid = "AllowPublicRead";
-                Effect = "Allow";
-                Principal.AWS = "*";
-                Action = [ "s3:GetObject" ];
-                Resource = [ "${config.arn}/*" ];
-              }
-              {
-                Sid = "AllowPublicList";
-                Effect = "Allow";
-                Principal.AWS = "*";
-                Action = [ "s3:ListBucket" ];
-                Resource = [ "${config.arn}" ];
-              }
-              {
-                Sid = "AllowUpload";
-                Effect = "Allow";
-                Principal.AWS = "arn:aws:iam::080433136561:user/s3-upload-releases";
-                Action = [ "s3:PutObject" "s3:PutObjectAcl" ];
-                Resource = [ "${config.arn}/*" ];
-              }
-            ];
-        };
     };
 
   resources.vpc.nixos-org-vpc =
@@ -308,7 +141,7 @@ in
 
       system.stateVersion = "17.09";
 
-      imports = [ ./webserver.nix ./hydra-mirror.nix ];
+      imports = [ ./webserver.nix ];
     };
 
 }
