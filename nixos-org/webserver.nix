@@ -119,35 +119,9 @@ in
 
     virtualHosts =
       [ { # Catch-all site.
-          hostName = "www.nixos.org";
+          hostName = "nixos.org";
           globalRedirect = "https://nixos.org/";
         }
-
-        { # Catch-all site, SSL
-          hostName = "www.nixos.org";
-          globalRedirect = "https://nixos.org/";
-
-          enableSSL = true;
-          sslServerKey = "${acmeKeyDir}/www.nixos.org/key.pem";
-          sslServerCert = "${acmeKeyDir}/www.nixos.org/fullchain.pem";
-          extraConfig = nixosVHostConfig.extraConfig +
-            ''
-              Header always set Strict-Transport-Security "max-age=15552000"
-              SSLProtocol All -SSLv2 -SSLv3
-              SSLCipherSuite HIGH:!aNULL:!MD5:!EXP
-              SSLHonorCipherOrder on
-            '';
-          servedDirs =
-            [ { urlPath = "/.well-known/acme-challenge";
-                dir = "${acmeWebRoot}/.well-known/acme-challenge";
-              }
-           ];
-
-        }
-
-        (nixosVHostConfig // {
-          extraConfig = nixosVHostConfig.extraConfig;
-        })
 
         (nixosVHostConfig // {
           enableSSL = true;
@@ -283,11 +257,6 @@ in
         webroot = "${acmeWebRoot}";
         postRun = "systemctl reload httpd.service";
       };
-    "www.nixos.org" =
-      { email = "edolstra@gmail.com";
-        webroot = "${acmeWebRoot}";
-        postRun = "systemctl reload httpd.service";
-      };
   };
 
   # Generate a dummy self-signed certificate until we get one from
@@ -311,7 +280,6 @@ in
     ''
       ${mkKeys "${acmeKeyDir}/nixos.org"}
       ${mkKeys "${acmeKeyDir}/planet.nixos.org"}
-      ${mkKeys "${acmeKeyDir}/www.nixos.org"}
     '';
 
 }
