@@ -27,6 +27,7 @@ let
             ''; # */
           serviceConfig.User = "hydra-mirror";
           environment.TMPDIR = "/scratch/hydra-mirror";
+	  environment.GC_INITIAL_HEAP_SIZE = "4g";
         };
     };
 
