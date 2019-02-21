@@ -147,7 +147,7 @@ resource "aws_route53_record" "nixos-weekly" {
   name    = "weekly"
   type    = "CNAME"
   ttl     = "3600"
-  records = ["nixos.github.io"]
+  records = ["nixos-weekly.netlify.com"]
 }
 
 resource "aws_route53_record" "nixos-weekly-wild" {
@@ -155,7 +155,7 @@ resource "aws_route53_record" "nixos-weekly-wild" {
   name    = "*.weekly"
   type    = "CNAME"
   ttl     = "3600"
-  records = ["nixos.github.io"]
+  records = ["nixos-weekly.netlify.com"]
 }
 
 #resource "aws_route53_record" "nixos-wild" {
