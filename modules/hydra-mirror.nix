@@ -38,6 +38,8 @@ in
 
   systemd =
     fold recursiveUpdate {} [
+      (makeUpdateChannel "nixos-19.03" "nixos/release-19.03/tested")
+      (makeUpdateChannel "nixos-19.03-small" "nixos/release-19.03-small/tested")
       (makeUpdateChannel "nixos-18.09" "nixos/release-18.09/tested")
       (makeUpdateChannel "nixos-18.09-small" "nixos/release-18.09-small/tested")
       (makeUpdateChannel "nixos-18.03" "nixos/release-18.03/tested")
