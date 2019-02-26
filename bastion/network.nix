@@ -120,7 +120,10 @@ in
           isNormalUser = true;
           openssh.authorizedKeys.keys =
             [ sshKeys.eelco sshKeys.rob sshKeys.graham sshKeys.zimbatm sshKeys.amine ];
+          extraGroups = [ "wheel" ];
         };
+
+      security.sudo.wheelNeedsPassword = false;
 
       environment.systemPackages =
         [ pkgs.nixops
