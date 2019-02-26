@@ -159,7 +159,11 @@ in
       Host packet-t2a5-qc-centriq-1
       Hostname 147.75.74.238
       Compression yes
-    '';
+
+      Host packet-t2a6-ampere-1
+      Hostname 147.75.107.178
+      Compression yes
+  '';
 
   services.openssh.knownHosts =
     [
@@ -196,6 +200,9 @@ in
 
       # packet-t2a5-qc-centriq-1
       { hostNames = [ "147.75.74.238" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJTGvykBvR6l4d0ssReNLMV2qVV+TKNUrU22OOix//qE"; }
+
+      # packet-t2a6-ampere-1
+      { hostNames = [ "147.75.107.178" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINIPFXDrxqs3PjPa4M5iTd0wPmwG0L45d/T9mGEozHrX"; }
 
       # packet-epyc-1
       { hostNames = [ "147.75.198.47" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAt76Jw/xXqvYcrNZSa+BEfKfLCFyvY50LZJuGBWtJwx"; }

@@ -11,6 +11,7 @@ in { deployment.targetEnv = "hetzner";
     147.75.79.198 packet-t2a-2
     147.75.198.170 packet-t2a-3
     147.75.74.238 packet-t2a5-qc-centriq-1
+    147.75.107.178 packet-t2a6-ampere-1
     139.178.82.19 bigmac-host
     139.178.82.19 bigmac-guest
 
@@ -62,7 +63,7 @@ in { deployment.targetEnv = "hetzner";
             targets = [
               "packet-epyc-1:9100" "packet-t2-4:9100"
               "packet-t2a-2:9100" "packet-t2a-3:9100"
-              "packet-t2a5-qc-centriq-1"
+              "packet-t2a5-qc-centriq-1:9100" "packet-t2a6-ampere-1:9100"
               "chef:9100"
             ];
             labels.role = "builder";
