@@ -87,4 +87,9 @@
     feedUrl = "https://nixos.mayflower.consulting/blog/index.xml";
     homepageUrl = "https://nixos.mayflower.consulting/";
   }
+  {
+    name = "Hercules Labs";
+    feedUrl = "https://blog.hercules-ci.com/feed.xml";
+    homepageUrl = "https://blog.hercules-ci.com/";
+  }
 ]
