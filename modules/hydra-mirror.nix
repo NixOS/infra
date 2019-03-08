@@ -46,6 +46,7 @@ in
       (makeUpdateChannel "nixos-18.03-small" "nixos/release-18.03-small/tested")
       (makeUpdateChannel "nixos-unstable" "nixos/trunk-combined/tested")
       (makeUpdateChannel "nixos-unstable-small" "nixos/unstable-small/tested")
+      (makeUpdateChannel "nixpkgs-19.03-darwin" "nixpkgs/nixpkgs-19.03-darwin/darwin-tested")
       (makeUpdateChannel "nixpkgs-18.09-darwin" "nixpkgs/nixpkgs-18.09-darwin/darwin-tested")
       (makeUpdateChannel "nixpkgs-18.03-darwin" "nixpkgs/nixpkgs-18.03-darwin/darwin-tested")
       (makeUpdateChannel "nixpkgs-unstable" "nixpkgs/trunk/unstable")
