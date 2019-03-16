@@ -36,11 +36,15 @@ let
             export AWS_SECRET_ACCESS_KEY=$(sed 's/aws_secret_access_key=\(.*\)/\1/ ; t; d' ~/.aws/credentials)
             exec mirror-nixos-branch ${channelName} https://hydra.nixos.org/job/${mainJob}/latest-finished
           '';
-        serviceConfig.User = "hydra-mirror";
+        serviceConfig = {
+          Type = "oneshot";
+          RemainAfterExit = false;
+          User = "hydra-mirror";
+        };
         unitConfig.After = [ "networking.target" ];
         environment.TMPDIR = "/scratch/hydra-mirror";
         environment.GC_INITIAL_HEAP_SIZE = "4g";
-        };
+      };
     };
 
     updateJobs = orderLib.mkOrderedChain
