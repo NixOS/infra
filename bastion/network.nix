@@ -90,7 +90,7 @@ in
     };
 
   bastion =
-    { config, pkgs, resources, ... }:
+    { config, lib, pkgs, resources, ... }:
 
     { deployment.targetEnv = "ec2";
       deployment.ec2.tags.Name = "NixOS.org Infrastructure Deployment Server";
@@ -147,6 +147,12 @@ in
           device = "/dev/xvdh";
           ec2.disk = resources.ebsVolumes.scratch;
         };
+
+      # work around releases taking too much memory
+      swapDevices = [{device = "/scratch/swapfile"; size = 32 * 1024; }];
+
+      # avoid swap as much as possible
+      boot.kernel.sysctl."vm.swappiness" = lib.mkDefault 0;
 
       systemd.tmpfiles.rules = [ "d /scratch/hydra-mirror 0755 hydra-mirror users 10d" ];
     };
