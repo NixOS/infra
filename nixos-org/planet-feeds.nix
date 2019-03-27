@@ -92,4 +92,9 @@
     feedUrl = "https://blog.hercules-ci.com/feed.xml";
     homepageUrl = "https://blog.hercules-ci.com/";
   }
+  {
+    name = "Craige McWhirter";
+    feedUrl = "https://mcwhirter.com.au/tags/NixOS/index.atom";
+    homepageUrl = "https://mcwhirter.com.au/";
+  }
 ]
