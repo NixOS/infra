@@ -11,7 +11,7 @@ with lib;
 
 let
 
-  nixosRelease = "18.09";
+  nixosRelease = "19.03";
 
 in
 
