@@ -29,7 +29,7 @@ in
   services.hydra-dev.useSubstitutes = false;
   services.hydra-dev.extraConfig =
     ''
-      max_servers 50
+      max_servers 30
 
       enable_google_login = 1
       google_client_id = 816926039128-ia4s4rsqrq998rsevce7i09mo6a4nffg.apps.googleusercontent.com
@@ -51,7 +51,7 @@ in
       # patchelf:master:3
       xxx-jobset-repeats = nixos:reproducibility:1
 
-      nar_buffer_size = 8589934592
+      nar_buffer_size = 6442450944
 
       upload_logs_to_binary_cache = true
 
@@ -60,8 +60,8 @@ in
 
       log_prefix = https://nix-cache.s3.amazonaws.com/
 
-      evaluator_initial_heap_size = 10000000000
-      evaluator_max_heap_size     = 11000000000
+      evaluator_initial_heap_size = 11000000000
+      evaluator_max_heap_size     = 12000000000
 
       max_concurrent_evals = 1
     '';
@@ -160,8 +160,8 @@ in
       Hostname 147.75.74.238
       Compression yes
 
-      Host packet-t2a6-ampere-1
-      Hostname 147.75.107.178
+      Host packet-c2-large-arm
+      Hostname 147.75.107.234
       Compression yes
   '';
 
@@ -201,8 +201,8 @@ in
       # packet-t2a5-qc-centriq-1
       { hostNames = [ "147.75.74.238" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJTGvykBvR6l4d0ssReNLMV2qVV+TKNUrU22OOix//qE"; }
 
-      # packet-t2a6-ampere-1
-      { hostNames = [ "147.75.107.178" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINIPFXDrxqs3PjPa4M5iTd0wPmwG0L45d/T9mGEozHrX"; }
+      # packet-c2-large-arm
+      { hostNames = [ "147.75.107.234" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHsY9skBvQx3mMFrMyR2zwK50OMEu5Xzw4tMLBH4Nzum"; }
 
       # packet-epyc-1
       { hostNames = [ "147.75.198.47" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAt76Jw/xXqvYcrNZSa+BEfKfLCFyvY50LZJuGBWtJwx"; }

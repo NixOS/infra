@@ -22,7 +22,7 @@
       log_statement = 'none'
       max_connections = 250
       work_mem = 16MB
-      shared_buffers = 4GB
+      shared_buffers = 2GB
 
       # Checkpoint every 256 MB.
       min_wal_size = 128MB
