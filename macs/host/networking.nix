@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, pkgs, config, ... }:
 let
   inherit (lib) mkIf;
 
@@ -16,7 +16,12 @@ in {
     '';
 
     networking.firewall.allowedTCPPorts = [
-      2200 # forwarded port to the guest
+      2200 # forwarded to :22 on the guest for external SSH
+      9101 # forwarded to :9100 on the guest
+      config.services.prometheus.exporters.node.port
+    ];
+    networking.firewall.allowedUDPPorts = [
+      1514 # guest sends logs here
     ];
 
     networking.nat = {
@@ -33,6 +38,11 @@ in {
           destination = "${guestIP}:22";
           proto = "tcp";
           sourcePort = 2200;
+        }
+        {
+          destination = "${guestIP}:9100";
+          proto = "tcp";
+          sourcePort = 9101;
         }
       ];
     };
@@ -79,6 +89,24 @@ in {
         -- Smaller cache size
         cache.size = 10 * MB
       '';
+    };
+
+    services.prometheus.exporters.node = {
+      enable = true;
+    };
+
+    systemd.services.netcatsyslog = {
+      wantedBy = [ "multi-user.target" ];
+      script = let
+          ncl = pkgs.writeScript "ncl" ''
+            #!/bin/sh
+            set -euxo pipefail
+            ${pkgs.netcat}/bin/nc -dklun 1514 | ${pkgs.coreutils}/bin/tr '<' $'\n'
+          '';
+        in ''
+          set -euxo pipefail
+          ${pkgs.expect}/bin/unbuffer ${ncl}
+        '';
     };
   };
 }

@@ -26,10 +26,11 @@ in {
       '';
     };
 
-    systemd.services."run-macos-vm" = {
-      after = [ "create-macos-secrets.service" ];
-      requires = [ "create-macos-secrets.service" ];
+    systemd.services."run-macos-vm" = rec {
+      requires = [ "create-macos-secrets.service" "dhcpd4.service" "kresd.service" "network-online.target" ];
+      after = requires;
       wantedBy = [ "multi-user.target" ];
+      wants = [ "netcatsyslog.service" ];
       path = with pkgs; [ zfs qemu cdrkit rsync findutils ];
 
       serviceConfig.PrivateTmp = true;

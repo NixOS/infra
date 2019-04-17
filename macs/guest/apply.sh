@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
 
+echo "apply started at $(date)" | nc -w0 -u 10.172.170.1 1514
+
+printf '\n*.*\t@10.172.170.1:1514\n' | tee -a /etc/syslog.conf
+pkill syslog
+pkill asl
+
+exec 3>&1
+exec 2> >(nc -u 10.172.170.1 1514)
+exec 1>&2
+
 PS4='${BASH_SOURCE}::${FUNCNAME[0]}::$LINENO '
 set -o pipefail
 set -ex

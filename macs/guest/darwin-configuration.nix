@@ -80,4 +80,14 @@ in
     chown root:wheel ~root ~root/.ssh ~root/.ssh/authorized_keys
     echo "ok"
   '';
+
+  launchd.daemons.prometheus-node-exporter = {
+    script = ''
+      exec ${pkgs.prometheus-node-exporter}/bin/node_exporter
+    '';
+
+    serviceConfig.KeepAlive = true;
+    serviceConfig.StandardErrorPath = "/var/log/prometheus-node-exporter.log";
+    serviceConfig.StandardOutPath = "/var/log/prometheus-node-exporter.log";
+  };
 }
