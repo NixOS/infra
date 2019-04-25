@@ -383,3 +383,12 @@ pre-start: roll-back `execute/hash-name` to the snapshot for
 sudo cp /Volumes/CONFIG/etc/ssh/ssh_host_* /etc/ssh/
 sudo chown root:root /etc/ssh/ssh_host_*_key
 sudo umount /Volumes/CONFIG
+
+
+---
+
+Sending a snapshot from macA to macB:
+
+[nix-shell]$ nixops ssh mac3 -- -A
+
+[root@mac3:~]# zfs send -cv rpool/mac-hdd-2-initial-setup-startup-script.img@pristine | ssh root@192.168.2.104 zfs recv -sv rpool/mac-hdd-2-initial-setup-startup-script.img
