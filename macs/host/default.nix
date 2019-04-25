@@ -4,6 +4,28 @@ let
   inherit (lib) mkOption types;
 in {
   options = {
+    monitorama = {
+      enable = mkOption {
+        default = false;
+        type = types.bool;
+        description = ''
+          Whether to enable a prometheus proxy for prom nodes behind
+          a NAT.
+        '';
+      };
+
+      hosts = mkOption {
+        type = types.attrsOf types.str;
+        description = ''
+          Key, value pairs of name -> ip:port/paths. The name will be
+          used in a proxy's path.
+        '';
+        example = {
+          "/mac1/host" = "http://192.168.2.101:9100/metrics";
+          "/mac1/guest" = "http://192.168.2.101:9101/metrics";
+        };
+      };
+    };
     macosGuest = {
       enable = mkOption {
         default = false;
@@ -187,5 +209,6 @@ in {
   imports = [
     ./networking.nix
     ./qemu.nix
+    ./monitorama.nix
   ];
 }
