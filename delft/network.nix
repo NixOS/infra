@@ -1,8 +1,8 @@
 let
   makeMac = { ip, extra }: {
     deployment = {
-      sshConfigOptionsFile = ../macs/ssh-config;
-      targetHost = ip;
+      targetHost = "localhost";
+      targetPort = 2222;
     };
     macosGuest = {
       enable = true;
