@@ -40,7 +40,7 @@ in {
   eris = import ./eris.nix;
 
   mac1 = makeMac {
-    ip = "mac1";
+    ip = "192.168.2.101";
     extra = {
       imports = [
         ../macs/nodes/mac1.nix
