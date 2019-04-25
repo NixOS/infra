@@ -39,12 +39,12 @@ in {
   chef = import ./chef.nix;
   eris = import ./eris.nix;
 
-  mac2 = makeMac {
-    ip = "192.168.2.102";
+  mac1 = makeMac {
+    ip = "mac1";
     extra = {
       imports = [
-        ../nixos-org-configurations/macs/nodes/mac2.nix
+        ../nixos-org-configurations/macs/nodes/mac1.nix
       ];
     };
-  }
+  };
 }
