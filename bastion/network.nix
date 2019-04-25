@@ -34,7 +34,14 @@ in
       inherit region accessKeyId;
       vpcId = resources.vpc.bastion-vpc;
       rules =
-        with import ../ip-addresses.nix;
+        [
+          {
+            fromPort = 51820;
+            toPort = 51820;
+            sourceIp = "0.0.0.0/0";
+          }
+        ] ++
+        (with import ../ip-addresses.nix;
         map
           (ip: { toPort = 22; fromPort = 22; sourceIp = "${ip}/32"; })
           [ eelcoHome
@@ -44,7 +51,7 @@ in
             zimbatm
             amine
             "34.254.208.229" # == resources.elasticIPs."bastion.nixos.org".address FIXME: doesn't work
-          ];
+          ]);
     };
 
   resources.vpcRouteTables.bastion-route-table =
@@ -109,6 +116,7 @@ in
 
       imports =
         [ ../modules/common.nix
+	  (import ../modules/wireguard.nix "bastion")
           ../modules/tarball-mirror.nix
           ../modules/hydra-mirror.nix
         ];
