@@ -128,7 +128,7 @@ in
       Compression yes
 
       Host bigmac-guest
-      Hostname 139.178.82.19
+      Hostname 147.75.64.174
       Port 2200
       Compression yes
 
@@ -178,6 +178,9 @@ in
       { hostNames = [ "[37.153.215.191]:6007" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKjy5mXHUHqGO+lzeyj09iuADIDtcQtnBtwiPCmV/UBq"; }
       { hostNames = [ "[37.153.215.191]:6008" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHHJF0dXSTvZwWtPjN/iUBp2A5pHCPuOUVOvBkjXw+Eu"; }
       { hostNames = [ "[139.178.82.19]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIyfeCptEJWPP2nsC5jBZ62Z13+Vl1I/5fFQ9acTbQp3"; }
+
+      # bigmac
+      { hostNames = [ "[147.75.64.174]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINM+o3+x2cncVNdRTVZTOeckSzheAJRzVkYdu7PsgDkq"; }
 
       { hostNames = [ "208.78.106.251" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBKrwg2592DfDUG1U0LZxJcBaT35YfEsuKo4helEAzeoujvzOo4DIaBrTCX7+LxcYZlGoi4WvsnwxUG11GY12l2A="; }
       { hostNames = [ "208.78.106.252" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLV1p6f6Rk3rKwNJbcqvG68wjfT3wPcJfChc1LFU9A3tTFslUDr47FHLmT+FTr+ChkoqD6Gsl+jtSnvkYnTlpGY="; }
