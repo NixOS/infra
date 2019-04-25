@@ -24,7 +24,7 @@ let
       };
     };
     imports = [
-      ../nixos-org-configurations/macs/host
+      ../macs/host
       extra
     ];
   };
@@ -43,7 +43,7 @@ in {
     ip = "mac1";
     extra = {
       imports = [
-        ../nixos-org-configurations/macs/nodes/mac1.nix
+        ../macs/nodes/mac1.nix
       ];
     };
   };
