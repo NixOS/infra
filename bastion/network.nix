@@ -39,6 +39,7 @@ in
             fromPort = 51820;
             toPort = 51820;
             sourceIp = "0.0.0.0/0";
+            protocol = "udp";
           }
         ] ++
         (with import ../ip-addresses.nix;
@@ -116,7 +117,7 @@ in
 
       imports =
         [ ../modules/common.nix
-	  (import ../modules/wireguard.nix "bastion")
+	   ../modules/wireguard.nix
           ../modules/tarball-mirror.nix
           ../modules/hydra-mirror.nix
         ];
