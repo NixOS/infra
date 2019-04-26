@@ -117,7 +117,7 @@ in
 
       imports =
         [ ../modules/common.nix
-	  (import ../modules/wireguard.nix "bastion")
+	  ../modules/wireguard.nix
           ../modules/tarball-mirror.nix
           ../modules/hydra-mirror.nix
         ];

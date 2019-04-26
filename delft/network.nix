@@ -43,7 +43,7 @@ in {
     extra = {
       imports = [
         ../macs/nodes/mac1.nix
-	(import ../modules/wireguard.nix "mac1")
+	../modules/wireguard.nix
       ];
     };
   };
@@ -53,7 +53,7 @@ in {
     extra = {
       imports = [
         ../macs/nodes/mac2.nix
-	(import ../modules/wireguard.nix "mac2")
+	../modules/wireguard.nix
       ];
     };
   };
@@ -63,7 +63,7 @@ in {
     extra = {
       imports = [
         ../macs/nodes/mac3.nix
-	(import ../modules/wireguard.nix "mac3")
+	../modules/wireguard.nix
 	({ config, lib, ... }: {
 	  monitorama.enable = true;
           monitorama.hosts = let
@@ -86,7 +86,7 @@ in {
     extra = {
       imports = [
         ../macs/nodes/mac4.nix
-	(import ../modules/wireguard.nix "mac4")
+	../modules/wireguard.nix
       ];
     };
   };
@@ -96,7 +96,7 @@ in {
     extra = {
       imports = [
         ../macs/nodes/mac5.nix
-	(import ../modules/wireguard.nix "mac5")
+	../modules/wireguard.nix
       ];
     };
   };
@@ -106,7 +106,7 @@ in {
     extra = {
       imports = [
         ../macs/nodes/mac6.nix
-	(import ../modules/wireguard.nix "mac6")
+	../modules/wireguard.nix
       ];
     };
   };
@@ -116,7 +116,7 @@ in {
     extra = {
       imports = [
         ../macs/nodes/mac7.nix
-	(import ../modules/wireguard.nix "mac7")
+	../modules/wireguard.nix
       ];
     };
   };
@@ -126,7 +126,7 @@ in {
     extra = {
       imports = [
         ../macs/nodes/mac8.nix
-	(import ../modules/wireguard.nix "mac8")
+	../modules/wireguard.nix
       ];
     };
   };
