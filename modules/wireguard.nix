@@ -9,6 +9,13 @@ let
       publicKey = "nG7I9gegJIynKOZ6tzpvmLdCZ/xScTgRZeFvYLFyil4=";
     };
 
+    chef = {
+      ip = "10.254.1.2";
+      endpoint = "hydra.nixos.org";
+      port = 51820;
+      publicKey = "Y/RHgJ7Znh9vyWlXd2g8p9Zz1YEE50TYgqDduluhjmU=";
+    };
+
     mac1 = {
       ip = "10.254.2.1";
       publicKey = "IiGbZ3l+IYWP/nOjPBhUL0oBh2XJAtUD5DToM9FhTTE=";

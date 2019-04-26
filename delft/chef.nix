@@ -8,6 +8,7 @@
       ./datadog.nix
       ./fstrim.nix
       ./provisioner.nix
+      ../modules/wireguard.nix
     ];
 
   deployment.targetEnv = "hetzner";
