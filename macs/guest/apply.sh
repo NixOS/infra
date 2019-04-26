@@ -65,9 +65,11 @@ echo "%admin ALL = NOPASSWD: ALL" | tee /etc/sudoers.d/passwordless
     ls -la /private/var || true
     ls -la /private/var/run || true
     ln -s /private/var/run /run || true
+    nix-channel --add https://nixos.org/channels/nixos-19.03 nixpkgs
     nix-channel --add https://github.com/LnL7/nix-darwin/archive/master.tar.gz darwin
     nix-channel --update
 
+    sudo -i -H -u nixos -- nix-channel --add https://nixos.org/channels/nixos-19.03 nixpkgs
     sudo -i -H -u nixos -- nix-channel --add https://github.com/LnL7/nix-darwin/archive/master.tar.gz darwin
     sudo -i -H -u nixos -- nix-channel --update
 
