@@ -77,6 +77,7 @@ in
   systemd.services.hydra-queue-runner.wantedBy = mkForce [];
   systemd.services.hydra-queue-runner.requires = mkForce [];
 
+  programs.ssh.hostKeyAlgorithms = [ "ssh-ed25519" "ssh-rsa" "ecdsa-sha2-nistp256" ];
   programs.ssh.extraConfig = mkAfter
     ''
       ServerAliveInterval 120
