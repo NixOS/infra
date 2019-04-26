@@ -43,7 +43,7 @@ in {
     extra = {
       imports = [
         ../macs/nodes/mac1.nix
-	../modules/wireguard.nix
+        ../modules/wireguard.nix
       ];
     };
   };
@@ -53,7 +53,7 @@ in {
     extra = {
       imports = [
         ../macs/nodes/mac2.nix
-	../modules/wireguard.nix
+        ../modules/wireguard.nix
       ];
     };
   };
@@ -63,9 +63,9 @@ in {
     extra = {
       imports = [
         ../macs/nodes/mac3.nix
-	../modules/wireguard.nix
-	({ config, lib, ... }: {
-	  monitorama.enable = true;
+        ../modules/wireguard.nix
+        ({ config, lib, ... }: {
+          monitorama.enable = true;
           monitorama.hosts = let
             nums = lib.lists.range 1 9;
             paths = num: {
@@ -76,7 +76,7 @@ in {
               "mac3-guest" = "http://${config.macosGuest.network.interiorNetworkPrefix}.2:9100/metrics";
             };
           in (builtins.foldl' (a: b: a // b) {} (builtins.map paths nums)) // overrides;
-	})	
+        })
       ];
     };
   };
@@ -86,7 +86,7 @@ in {
     extra = {
       imports = [
         ../macs/nodes/mac4.nix
-	../modules/wireguard.nix
+        ../modules/wireguard.nix
       ];
     };
   };
@@ -96,7 +96,7 @@ in {
     extra = {
       imports = [
         ../macs/nodes/mac5.nix
-	../modules/wireguard.nix
+        ../modules/wireguard.nix
       ];
     };
   };
@@ -106,7 +106,7 @@ in {
     extra = {
       imports = [
         ../macs/nodes/mac6.nix
-	../modules/wireguard.nix
+        ../modules/wireguard.nix
       ];
     };
   };
@@ -116,7 +116,7 @@ in {
     extra = {
       imports = [
         ../macs/nodes/mac7.nix
-	../modules/wireguard.nix
+        ../modules/wireguard.nix
       ];
     };
   };
@@ -126,9 +126,10 @@ in {
     extra = {
       imports = [
         ../macs/nodes/mac8.nix
-	../modules/wireguard.nix
+        ../modules/wireguard.nix
       ];
     };
   };
-  # mac9
+
+  # mac9 never booted
 }
