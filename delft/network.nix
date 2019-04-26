@@ -64,6 +64,19 @@ in {
       imports = [
         ../macs/nodes/mac3.nix
 	(import ../modules/wireguard.nix "mac3")
+	({ config, lib, ... }: {
+	  monitorama.enable = true;
+          monitorama.hosts = let
+            nums = lib.lists.range 1 9;
+            paths = num: {
+              "mac${toString num}-host" = "http://192.168.2.${toString (num + 100)}:9100/metrics";
+              "mac${toString num}-guest" = "http://192.168.2.${toString (num + 100)}:9101/metrics";
+            };
+            overrides = {
+              "mac3-guest" = "http://${config.macosGuest.network.interiorNetworkPrefix}.2:9100/metrics";
+            };
+          in (builtins.foldl' (a: b: a // b) {} (builtins.map paths nums)) // overrides;
+	})	
       ];
     };
   };
