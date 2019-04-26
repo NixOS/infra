@@ -1,8 +1,7 @@
 let
   makeMac = { ip, extra }: {
     deployment = {
-      targetHost = "localhost";
-      targetPort = 2222;
+      targetHost = ip;
     };
     macosGuest = {
       enable = true;
@@ -40,11 +39,83 @@ in {
   eris = import ./eris.nix;
 
   mac1 = makeMac {
-    ip = "192.168.2.101";
+    ip = "10.254.2.1";
     extra = {
       imports = [
         ../macs/nodes/mac1.nix
+	(import ../modules/wireguard.nix "mac1")
       ];
     };
   };
+
+  mac2 = makeMac {
+    ip = "10.254.2.2";
+    extra = {
+      imports = [
+        ../macs/nodes/mac2.nix
+	(import ../modules/wireguard.nix "mac2")
+      ];
+    };
+  };
+
+  mac3 = makeMac {
+    ip = "10.254.2.3";
+    extra = {
+      imports = [
+        ../macs/nodes/mac3.nix
+	(import ../modules/wireguard.nix "mac3")
+      ];
+    };
+  };
+
+  mac4 = makeMac {
+    ip = "10.254.2.4";
+    extra = {
+      imports = [
+        ../macs/nodes/mac4.nix
+	(import ../modules/wireguard.nix "mac4")
+      ];
+    };
+  };
+
+  mac5 = makeMac {
+    ip = "10.254.2.5";
+    extra = {
+      imports = [
+        ../macs/nodes/mac5.nix
+	(import ../modules/wireguard.nix "mac5")
+      ];
+    };
+  };
+
+  mac6 = makeMac {
+    ip = "10.254.2.6";
+    extra = {
+      imports = [
+        ../macs/nodes/mac6.nix
+	(import ../modules/wireguard.nix "mac6")
+      ];
+    };
+  };
+
+  mac7 = makeMac {
+    ip = "10.254.2.7";
+    extra = {
+      imports = [
+        ../macs/nodes/mac7.nix
+	(import ../modules/wireguard.nix "mac7")
+      ];
+    };
+  };
+
+  mac8 = makeMac {
+    ip = "10.254.2.8";
+    extra = {
+      imports = [
+        ../macs/nodes/mac8.nix
+	(import ../modules/wireguard.nix "mac8")
+      ];
+    };
+  };
+  # mac9
 }
