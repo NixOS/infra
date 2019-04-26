@@ -8,7 +8,7 @@ let
       port = 51820;
       publicKey = "nG7I9gegJIynKOZ6tzpvmLdCZ/xScTgRZeFvYLFyil4=";
     };
-    
+
     mac1 = {
       ip = "10.254.2.1";
       publicKey = "IiGbZ3l+IYWP/nOjPBhUL0oBh2XJAtUD5DToM9FhTTE=";
