@@ -33,7 +33,7 @@ parted /dev/sda -- mkpart ESP fat32 1MiB 512MiB
 parted /dev/sda -- set 3 boot on
 ```
 
-2. Create a zpool with `/dev/sda` and mount it:
+2. Create a zpool with `/dev/sda1` and mount it:
 ```
 zpool create -o ashift=12 -o altroot=/mnt rpool /dev/sda1
 zfs create -o mountpoint=legacy rpool/root
