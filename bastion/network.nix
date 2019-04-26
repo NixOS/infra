@@ -39,6 +39,7 @@ in
             fromPort = 51820;
             toPort = 51820;
             sourceIp = "0.0.0.0/0";
+            protocol = "udp";
           }
         ] ++
         (with import ../ip-addresses.nix;
