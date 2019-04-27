@@ -14,7 +14,7 @@ def debug(*args, **kwargs):
 def get_devices(manager):
     devices = []
 
-    page = 'projects/%s/devices?page=%d' % (config['project_id'], 1)
+    page = 'projects/{}/devices?page={}'.format(config['project_id'], 1)
     while page is not None:
         debug(page)
         data = manager.call_api(page)
