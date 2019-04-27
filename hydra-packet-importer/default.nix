@@ -1,20 +1,16 @@
-{ stdenv, python3 }:
-stdenv.mkDerivation {
+{ python3 }:
+python3.pkgs.buildPythonApplication {
   name = "hydra-packet-importer";
   src = ./.;
 
-  buildInputs = [
-    (python3.withPackages (ps: [
-      ps.packet-python
-    ]))
-  ];
+  format = "other";
 
-  buildPhase = ''
-    patchShebangs ./import.py
-  '';
+  propagatedBuildInputs = [
+    python3.pkgs.packet-python
+  ];
 
   installPhase = ''
     mkdir -p $out/bin
-    mv ./import.py $out/bin/hydra-packet-importer
+    mv import.py $out/bin/hydra-packet-importer
   '';
 }
