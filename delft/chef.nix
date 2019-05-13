@@ -9,6 +9,7 @@
       ./fstrim.nix
       ./provisioner.nix
       ../modules/wireguard.nix
+      ./packet-importer.nix
     ];
 
   deployment.targetEnv = "hetzner";
