@@ -18,7 +18,6 @@ let
         zvolName = "rpool/mac-hdd-2-initial-setup-startup-script.img";
         ovmfCodeFile = ../macs/dist/OVMF_CODE.fd;
         ovmfVarsFile = ../macs/dist/OVMF_VARS-1024x768.fd;
-        cloverImage = ../macs/dist/Clover.qcow2;
         guestConfigDir = ../macs/guest;
       };
     };

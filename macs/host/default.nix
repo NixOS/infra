@@ -1,5 +1,5 @@
 
-{ lib, config, ... }:
+{ pkgs, lib, config, ... }:
 let
   inherit (lib) mkOption types;
 in {
@@ -197,6 +197,11 @@ in {
 
         cloverImage = mkOption {
           type = types.path;
+          default = (pkgs.callPackage ./clover.qcow2.nix {
+            # 0x23 means allow dtrace and untrusted kexts
+            # https://github.com/Clover-EFI-Bootloader/clover/blob/6b8018b1fec958d672951f87cefd8b6cfd5318ac/rEFIt_UEFI/Platform/boot.h#L127-L135
+            csrFlag = "0x23";
+          }).clover-image;
           description = ''
             Path to the Clover bootloader.
           '';
