@@ -4,7 +4,11 @@ let
   hosts = {
     bastion = {
       ip = "10.254.1.1";
-      endpoint = "bastion.nixos.org";
+
+      # wg won't retry resolution if it fails... so
+      # hard-code the IP to bastion.nixos.org so we don't lock
+      # ourselves out.
+      endpoint = "34.254.208.229";
       port = 51820;
       publicKey = "nG7I9gegJIynKOZ6tzpvmLdCZ/xScTgRZeFvYLFyil4=";
     };
