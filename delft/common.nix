@@ -6,7 +6,11 @@ with lib;
   imports =
     [ ./static-net-config.nix
       ./diffoscope.nix
-      (builtins.fetchGit https://github.com/edolstra/dwarffs + "/module.nix")
+      # broke due to flakes, and then pinning back a rev didn't compile
+      #((builtins.fetchGit {
+      #  url = https://github.com/edolstra/dwarffs.git;
+      #rev = "8262a00424e646493c809e1bf0a5434940590fb3";
+      # }) + "/module.nix")
       ../modules/common.nix
       ./prometheus/node.nix
     ];
@@ -45,7 +49,7 @@ with lib;
   boot.kernel.sysctl."kernel.panic" = 60;
   boot.kernel.sysctl."kernel.panic_on_oops" = 1;
 
-  nix.package = pkgs.nixUnstable;
+  nix.package = pkgs.nixFlakes;
 
   nix.nrBuildUsers = 100;
 
