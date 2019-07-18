@@ -2,8 +2,6 @@
 
 let
 
-  hydraCacheDir = "/var/cache/hydra-binary-cache";
-
   hydraProxyConfig =
     ''
       TimeOut 900
@@ -20,11 +18,6 @@ let
       ErrorDocument 503 /apache-errors/503.html
       ProxyPass         /       http://127.0.0.1:3000/ retry=5 disablereuse=on
       ProxyPassReverse  /       http://127.0.0.1:3000/
-
-      #CacheEnable disk /
-      #CacheRoot ${hydraCacheDir}
-      #CacheMaxFileSize 64000000
-      #CacheIgnoreHeaders Set-Cookie
 
       <Location />
         SetOutputFilter DEFLATE
@@ -80,22 +73,6 @@ in
     ];
 
   };
-
-  /*
-  system.activationScripts.createHydraCache =
-    ''
-      mkdir -p ${hydraCacheDir}
-      chown wwwrun ${hydraCacheDir}
-    '';
-
-  systemd.services.htcacheclean =
-    { description = "Clean httpd Cache";
-      serviceConfig.ExecStart =
-        "${config.services.httpd.package}/bin/htcacheclean " +
-        "-v -t -l 4G -p /var/cache/hydra-binary-cache";
-      startAt = "05:45";
-    };
-  */
 
   # Let's Encrypt configuration.
   security.acme.certs."hydra.nixos.org" =
