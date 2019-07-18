@@ -12,7 +12,7 @@ with lib;
 
   nix.useSandbox = true;
   nix.buildCores = 0;
-  nix.nixPath = [ "nixpkgs=channel:nixos-18.09-small" ];
+  nix.nixPath = [ "nixpkgs=channel:nixos-19.03-small" ];
 
   environment.systemPackages =
     [ pkgs.emacs
