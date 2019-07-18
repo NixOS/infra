@@ -1,7 +1,7 @@
 { nodes, config, lib, pkgs, ... }:
-let
 
-in { deployment.targetEnv = "hetzner";
+{
+  deployment.targetEnv = "hetzner";
   deployment.hetzner.mainIPv4 = "138.201.32.77";
 
   networking.extraHosts = ''
