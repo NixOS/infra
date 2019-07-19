@@ -36,6 +36,7 @@ in {
   packet-t2-4 = { deployment.targetHost = "147.75.98.145"; imports = [ ./packet/packet-t2-4.nix ./build-machines-common.nix ]; };
   chef = import ./chef.nix;
   eris = import ./eris.nix;
+  ceres = import ./ceres.nix;
 
   mac1 = makeMac {
     ip = "10.254.2.1";

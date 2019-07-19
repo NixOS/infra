@@ -3,13 +3,9 @@
 {
   imports =
     [ ./common.nix
-      ./hydra.nix
-      ./hydra-proxy.nix
       ./datadog.nix
       ./fstrim.nix
-      ./provisioner.nix
       ../modules/wireguard.nix
-      ./packet-importer.nix
     ];
 
   deployment.targetEnv = "hetzner";
@@ -19,6 +15,8 @@
     enable = true;
     package = pkgs.postgresql95;
     extraConfig = ''
+      listen_addresses = '10.254.1.2'
+
       log_min_duration_statement = 5000
       log_duration = off
       log_statement = 'none'
@@ -35,32 +33,20 @@
 
       effective_cache_size = 16GB
     '';
+    # FIXME: don't use 'trust'.
+    authentication = ''
+      host hydra all 10.254.1.3/32 trust
+    '';
   };
 
   networking = {
-
-    firewall.allowedTCPPorts = [ 80 443 ];
+    firewall.interfaces.wg0.allowedTCPPorts = [ 5432 ];
     firewall.allowPing = true;
     firewall.logRefusedConnections = true;
-
   };
-
-  nix.gc.automatic = true;
-  nix.gc.options = ''--max-freed "$((100 * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | ${pkgs.gawk}/bin/awk '{ print $4 }')))"'';
-  nix.gc.dates = "03,09,15,21:15";
-
-  nix.extraOptions = "gc-keep-outputs = false";
-
-  networking.defaultMailServer.directDelivery = lib.mkForce false;
-  #services.postfix.enable = true;
-  #services.postfix.hostname = "hydra.nixos.org";
-
-  # Don't rate-limit the journal.
-  services.journald.rateLimitBurst = 0;
 
   fileSystems."/data" =
     { device = "/dev/disk/by-label/data";
       fsType = "ext4";
     };
-
 }

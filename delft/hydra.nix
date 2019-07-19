@@ -51,7 +51,7 @@ in
       # patchelf:master:3
       xxx-jobset-repeats = nixos:reproducibility:1
 
-      nar_buffer_size = 6442450944
+      nar_buffer_size = ${let gb = 10; in toString (gb * 1024 * 1024 * 1024)}
 
       upload_logs_to_binary_cache = true
 
@@ -60,10 +60,9 @@ in
 
       log_prefix = https://nix-cache.s3.amazonaws.com/
 
-      evaluator_initial_heap_size = ${let gb = 11; in toString (gb * 1000 * 1000 * 1000)}
-      evaluator_max_heap_size     = ${let gb = 12; in toString (gb * 1000 * 1000 * 1000)}
+      evaluator_initial_heap_size = ${let gb = 20; in toString (gb * 1024 * 1024 * 1024)}
 
-      max_concurrent_evals = 1
+      max_concurrent_evals = 2
     '';
 
   systemd.tmpfiles.rules =

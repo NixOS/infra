@@ -20,6 +20,13 @@ let
       publicKey = "Y/RHgJ7Znh9vyWlXd2g8p9Zz1YEE50TYgqDduluhjmU=";
     };
 
+    ceres = {
+      ip = "10.254.1.3";
+      endpoint = "ceres.nixos.org";
+      port = 51820;
+      publicKey = "wkUjkjJtJ9yC1xh2pSbTfyuPkeUnvgxGIHFKxVCGJT8=";
+    };
+
     mac1 = {
       ip = "10.254.2.1";
       publicKey = "IiGbZ3l+IYWP/nOjPBhUL0oBh2XJAtUD5DToM9FhTTE=";
