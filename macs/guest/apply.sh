@@ -49,7 +49,7 @@ echo "%admin ALL = NOPASSWD: ALL" | tee /etc/sudoers.d/passwordless
     export HOME=~root
     export ALLOW_PREEXISTING_INSTALLATION=1
     env
-    curl https://nixos.org/releases/nix/nix-2.1.3/install > ~nixos/install-nix
+    curl https://nixos.org/releases/nix/nix-2.2.2/install > ~nixos/install-nix
     chmod +rwx ~nixos/install-nix
     cat /dev/null | sudo -i -H -u nixos -- sh ~nixos/install-nix --daemon
 )
@@ -65,12 +65,17 @@ echo "%admin ALL = NOPASSWD: ALL" | tee /etc/sudoers.d/passwordless
     ls -la /private/var || true
     ls -la /private/var/run || true
     ln -s /private/var/run /run || true
-    nix-channel --add https://nixos.org/channels/nixos-19.03 nixpkgs
+
+    # todo: clean up this channel business, which is complicated because
+    # channels on darwin are a bit ill defined and have a very bad UX.
+    # If me, Graham, the author of the multi-user darwin installer can't
+    # even figure this out, how can I possibly expect anybody else to know.
     nix-channel --add https://github.com/LnL7/nix-darwin/archive/master.tar.gz darwin
+    nix-channel --add https://nixos.org/channels/nixpkgs-19.03-darwin nixpkgs
     nix-channel --update
 
-    sudo -i -H -u nixos -- nix-channel --add https://nixos.org/channels/nixos-19.03 nixpkgs
     sudo -i -H -u nixos -- nix-channel --add https://github.com/LnL7/nix-darwin/archive/master.tar.gz darwin
+    sudo -i -H -u nixos -- nix-channel --add https://nixos.org/channels/nixpkgs-19.03-darwin nixpkgs
     sudo -i -H -u nixos -- nix-channel --update
 
     export NIX_PATH=$NIX_PATH:darwin=https://github.com/LnL7/nix-darwin/archive/master.tar.gz
@@ -91,5 +96,12 @@ echo "%admin ALL = NOPASSWD: ALL" | tee /etc/sudoers.d/passwordless
     ln -s /etc/static/bashrc /etc/bashrc
     . /etc/static/bashrc
     cat /Volumes/CONFIG/darwin-configuration.nix | sudo -u nixos -- tee ~nixos/.nixpkgs/darwin-configuration.nix
+
+    while ! sudo -i -H -u nixos -- nix ping-store; do
+        cat /var/log/nix-daemon.log
+        sleep 1
+    done
+
     sudo -i -H -u nixos -- darwin-rebuild switch
 )
+
