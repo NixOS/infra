@@ -30,7 +30,8 @@ in {
       requires = [ "create-macos-secrets.service" "dhcpd4.service" "kresd.service" "network-online.target" ];
       after = requires;
       wantedBy = [ "multi-user.target" ];
-      wants = [ "netcatsyslog.service" ];
+      wants = [ "netcatsyslog.service" "healthcheck-macos-vm.timer" ];
+      before = [ "healthcheck-macos-vm.timer" ];
       path = with pkgs; [ zfs qemu cdrkit rsync findutils ];
 
       serviceConfig.PrivateTmp = true;
@@ -69,6 +70,32 @@ in {
             -netdev tap,id=net0,ifname=tap0,script=no,downscript=no -device e1000-82545em,netdev=net0,id=net0,mac=${config.macosGuest.guest.MACAddress} \
             -vnc 127.0.0.1:0 \
             -no-reboot
+      '';
+    };
+
+    systemd.timers.healthcheck-macos-vm = {
+      enable = true;
+      description = "Verify the macOS VM is listening";
+      partOf = [ "run-macos-vm.service"];
+
+      timerConfig = {
+        OnActiveSec = 900;
+        OnCalendar = "hourly";
+        Unit = "healthcheck-macos-vm.service";
+        Persistent = "yes";
+      };
+    };
+
+    systemd.services.healthcheck-macos-vm = {
+      enable = true;
+
+      script = ''
+        if ${pkgs.curl}/bin/curl ${config.macosGuest.network.interiorNetworkPrefix}.2 > /dev/null; then
+          echo "Appears to be up!"
+        else
+          echo "Appears to be down, restarting run-macos-vm"
+          systemctl restart run-macos-vm.service
+        fi
       '';
     };
   };
