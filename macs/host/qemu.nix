@@ -90,7 +90,7 @@ in {
       enable = true;
 
       script = ''
-        if ${pkgs.curl}/bin/curl ${config.macosGuest.network.interiorNetworkPrefix}.2 > /dev/null; then
+        if ${pkgs.curl}/bin/curl ${config.macosGuest.network.interiorNetworkPrefix}.2:9100 > /dev/null; then
           echo "Appears to be up!"
         else
           echo "Appears to be down, restarting run-macos-vm"
