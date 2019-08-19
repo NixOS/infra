@@ -171,7 +171,8 @@ in
       { hostNames = [ "[10.254.2.5]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEgJ2Mh0vkrBcIBcWgFoEPsYG9dyPOAUgL0GOhhBoRcD"; }
       { hostNames = [ "[10.254.2.6]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICyjTqJsNioHUP0HMmGVfDpej9dCIQH0Bdn5aNbe8oYU"; }
       { hostNames = [ "[10.254.2.7]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKjy5mXHUHqGO+lzeyj09iuADIDtcQtnBtwiPCmV/UBq"; }
-
+      { hostNames = [ "[10.254.2.8]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHHJF0dXSTvZwWtPjN/iUBp2A5pHCPuOUVOvBkjXw+Eu"; }
+      
       # bigmac
       { hostNames = [ "[147.75.64.174]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINM+o3+x2cncVNdRTVZTOeckSzheAJRzVkYdu7PsgDkq"; }
 
