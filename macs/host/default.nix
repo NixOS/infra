@@ -44,6 +44,13 @@ in {
           '';
         };
 
+	sshInterface = mkOption {
+          type = types.str;
+          description = ''
+            Public network interface to receive SSH connections on.
+          '';
+        };
+
         interiorNetworkPrefix = mkOption {
           type = types.str;
           description = ''

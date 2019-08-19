@@ -35,11 +35,6 @@ in {
       ];
       forwardPorts = [
         {
-          destination = "${guestIP}:22";
-          proto = "tcp";
-          sourcePort = 2200;
-        }
-        {
           destination = "${guestIP}:9100";
           proto = "tcp";
           sourcePort = 9101;
@@ -108,5 +103,14 @@ in {
           ${pkgs.expect}/bin/unbuffer ${ncl}
         '';
     };
+
+    systemd.services.forward-wg0-ssh-to-guest = {
+      wantedBy = [ "multi-user.target" ];
+      script = ''
+          set -euxo pipefail
+          exec ${pkgs.socat}/bin/socat TCP-LISTEN:2200,fork,so-bindtodevice=${config.macosGuest.network.sshInterface} TCP:${guestIP}:22
+        '';
+    };
+    
   };
 }

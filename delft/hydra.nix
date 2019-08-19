@@ -83,52 +83,47 @@ in
       TCPKeepAlive yes
 
       Host mac1-guest
-      Hostname 37.153.215.191
-      Port 6001
+      Hostname 10.254.2.1
+      Port 2200
       Compression yes
 
       Host mac2-guest
-      Hostname 37.153.215.191
-      Port 6002
+      Hostname 10.254.2.2
+      Port 2200
       Compression yes
 
       Host mac3-guest
-      Hostname 37.153.215.191
-      Port 6003
+      Hostname 10.254.2.3
+      Port 2200
       Compression yes
 
       Host mac4-guest
-      Hostname 37.153.215.191
-      Port 6004
+      Hostname 10.254.2.4
+      Port 2200
       Compression yes
 
       Host mac5-guest
-      Hostname 37.153.215.191
-      Port 6005
+      Hostname 10.254.2.5
+      Port 2200
       Compression yes
 
       Host mac6-guest
-      Hostname 37.153.215.191
-      Port 6006
+      Hostname 10.254.2.6
+      Port 2200
       Compression yes
 
       Host mac7-guest
-      Hostname 37.153.215.191
-      Port 6007
+      Hostname 10.254.2.7
+      Port 2200
       Compression yes
 
       Host mac8-guest
-      Hostname 37.153.215.191
-      Port 6008
+      Hostname 10.254.2.8
+      Port 2200
       Compression yes
 
       Host mac9-guest
-      Hostname 37.153.215.191
-      Port 6009
-      Compression yes
-
-      Host bigmac-guest
-      Hostname 147.75.64.174
+      Hostname 10.254.2.9
       Port 2200
       Compression yes
 
@@ -170,14 +165,12 @@ in
       { hostNames = [ "83.87.124.39" ]; publicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDVTkY4tQ6V29XTW1aKtoFJoF4uyaEy0fms3HqmI56av8UCg3MN5G6CL6EDIvbe46mBsI3++V3uGiOr0pLPbM9fkWC92LYGk5f7fNvCoy9bvuZy5bHwFQ5b5S9IJ1o3yDlCToc9CppmPVbFMMMLgKF06pQiGBeMCUG/VoCfiUBq+UgEGhAifWcuWIOGmdua6clljH5Dcc+7S0HTLoVtrxmPPXBVZUvW+lgAJTM6FXYIZiIqMSC2uZHGVstY87nPcZFXIbzhlYQqxx5H0um2bL3mbS7vdKhSsIWWaUZeck9ghNyUV1fVRLUhuXkQHe/8Z58cAhTv5dDd42YLB0fgjETV"; }
 
       # (for i in $(seq 6000 6010); do ssh-keyscan -t ssh-ed25519 -p $i 37.153.215.191 2> /dev/null; done) | sed -e 's/^/      { hostNames = [ "/' -e 's/ ssh/" ]; publicKey = "ssh/' -e 's/$/"; }/'; echo
-      { hostNames = [ "[37.153.215.191]:6002" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKJSLxndBO2SqMklTT4dWsv54CtKVMHDOhXl7v1tC38v"; }
-      { hostNames = [ "[37.153.215.191]:6003" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKdzP9scGjJ31wwDJdcXcO4+wayvrHkFAefP/0I7UB0r"; }
-      { hostNames = [ "[37.153.215.191]:6004" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAaK44azT14aWHTE2fMYJFeJBTg1hQg2n2KAEgu8qlII"; }
-      { hostNames = [ "[37.153.215.191]:6005" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEgJ2Mh0vkrBcIBcWgFoEPsYG9dyPOAUgL0GOhhBoRcD"; }
-      { hostNames = [ "[37.153.215.191]:6006" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICyjTqJsNioHUP0HMmGVfDpej9dCIQH0Bdn5aNbe8oYU"; }
-      { hostNames = [ "[37.153.215.191]:6007" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKjy5mXHUHqGO+lzeyj09iuADIDtcQtnBtwiPCmV/UBq"; }
-      { hostNames = [ "[37.153.215.191]:6008" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHHJF0dXSTvZwWtPjN/iUBp2A5pHCPuOUVOvBkjXw+Eu"; }
-      { hostNames = [ "[139.178.82.19]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIyfeCptEJWPP2nsC5jBZ62Z13+Vl1I/5fFQ9acTbQp3"; }
+      { hostNames = [ "[10.254.2.2]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKJSLxndBO2SqMklTT4dWsv54CtKVMHDOhXl7v1tC38v"; }
+      { hostNames = [ "[10.254.2.3]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKdzP9scGjJ31wwDJdcXcO4+wayvrHkFAefP/0I7UB0r"; }
+      { hostNames = [ "[10.254.2.4]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAaK44azT14aWHTE2fMYJFeJBTg1hQg2n2KAEgu8qlII"; }
+      { hostNames = [ "[10.254.2.5]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEgJ2Mh0vkrBcIBcWgFoEPsYG9dyPOAUgL0GOhhBoRcD"; }
+      { hostNames = [ "[10.254.2.6]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICyjTqJsNioHUP0HMmGVfDpej9dCIQH0Bdn5aNbe8oYU"; }
+      { hostNames = [ "[10.254.2.7]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKjy5mXHUHqGO+lzeyj09iuADIDtcQtnBtwiPCmV/UBq"; }
 
       # bigmac
       { hostNames = [ "[147.75.64.174]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINM+o3+x2cncVNdRTVZTOeckSzheAJRzVkYdu7PsgDkq"; }

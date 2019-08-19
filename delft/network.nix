@@ -8,6 +8,7 @@ let
       network = {
         interiorNetworkPrefix = "10.172.170"; #172="n", 170="x"
         externalInterface = "enp3s0f0";
+        sshInterface = "wg0";
       };
 
       guest = {
