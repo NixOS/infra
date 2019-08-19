@@ -15,14 +15,14 @@ let
 
     chef = {
       ip = "10.254.1.2";
-      endpoint = "hydra.nixos.org";
-      port = 51820;
+#      endpoint = "hydra.nixos.org";
+#      port = 51820;
       publicKey = "Y/RHgJ7Znh9vyWlXd2g8p9Zz1YEE50TYgqDduluhjmU=";
     };
 
     ceres = {
       ip = "10.254.1.3";
-      endpoint = "ceres.nixos.org";
+      endpoint = "46.4.66.184";
       port = 51820;
       publicKey = "wkUjkjJtJ9yC1xh2pSbTfyuPkeUnvgxGIHFKxVCGJT8=";
     };
