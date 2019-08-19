@@ -6,11 +6,11 @@ with lib;
   imports =
     [ ./static-net-config.nix
       ./diffoscope.nix
-      # broke due to flakes, and then pinning back a rev didn't compile
-      #((builtins.fetchGit {
-      #  url = https://github.com/edolstra/dwarffs.git;
-      #rev = "8262a00424e646493c809e1bf0a5434940590fb3";
-      # }) + "/module.nix")
+      # broke due to flakes, and then pinned back
+      ((builtins.fetchGit {
+        url = https://github.com/edolstra/dwarffs.git;
+      rev = "531a2338101f0b6db2d9d512c3f98145f7b75397";
+       }) + "/module.nix")
       ../modules/common.nix
       ./prometheus/node.nix
     ];
