@@ -13,6 +13,10 @@
   deployment.targetEnv = "hetzner";
   deployment.hetzner.mainIPv4 = "46.4.66.184";
 
+  # FIXME: manually changed nvme0n1p1 to a /boot disk. We can't use
+  # GRUB on a RAID-0 disk because it doesn't support the "large_dir"
+  # ext4 option.
+  /*
   deployment.hetzner.partitions = ''
     clearpart --all --initlabel --drives=nvme0n1,nvme1n1
 
@@ -25,6 +29,14 @@
     raid swap --level=1 --device=md0 --fstype=swap --label=root raid.1 raid.2
     raid /    --level=1 --device=md1 --fstype=ext4 --label=root raid.3 raid.4
   '';
+  */
+
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-label/boot";
+      fsType = "ext4";
+    };
+
+  swapDevices = lib.mkForce [];
 
   networking = {
     firewall.allowedTCPPorts = [ 80 443 ];
@@ -33,6 +45,9 @@
   };
 
   services.hydra-dev.dbi = "dbi:Pg:dbname=hydra;host=10.254.1.2;user=hydra;";
+  #systemd.services.hydra-init.wants = [ "sys-devices-virtual-net-wg0.device" ];
+
+  services.hydra-dev.buildMachinesFiles = [ "/etc/nix/machines" ];
 
   nix.gc.automatic = true;
   nix.gc.options = ''--max-freed "$((100 * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | ${pkgs.gawk}/bin/awk '{ print $4 }')))"'';
