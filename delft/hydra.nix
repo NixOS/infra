@@ -38,11 +38,11 @@ in
       server_store_uri = https://cache.nixos.org?local-nar-cache=${narCache}
       binary_cache_public_uri = https://cache.nixos.org
 
-      <hipchat>
-        jobs = (hydra|nixops):.*:.*
-        room = 182482
-        token = ${builtins.readFile ./hipchat-lb-token}
-      </hipchat>
+      #<hipchat>
+      #  jobs = (hydra|nixops):.*:.*
+      #  room = 182482
+      #  token = ${builtins.readFile ./hipchat-lb-token}
+      #</hipchat>
 
       <Plugin::Session>
         cache_size = 32m
