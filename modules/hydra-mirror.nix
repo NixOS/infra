@@ -18,10 +18,6 @@ let
       "nixos-18.09"          = "nixos/release-18.09/tested";
       "nixos-18.09-small"    = "nixos/release-18.09-small/tested";
       "nixpkgs-18.09-darwin" = "nixpkgs/nixpkgs-18.09-darwin/darwin-tested";
-
-      "nixos-18.03"          = "nixos/release-18.03/tested";
-      "nixos-18.03-small"    = "nixos/release-18.03-small/tested";
-      "nixpkgs-18.03-darwin" = "nixpkgs/nixpkgs-18.03-darwin/darwin-tested";
   };
 
   channelScripts = import <nixos-channel-scripts> { inherit pkgs; };
