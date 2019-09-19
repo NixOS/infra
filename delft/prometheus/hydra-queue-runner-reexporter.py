@@ -24,6 +24,13 @@ class EvaporatingDict:
         else:
             return val
 
+    def preserving_read_default(self, key, default):
+        try:
+            val = self.preserving_read(key)
+            return val
+        except KeyError:
+            return default
+
     def destructive_read(self, key):
         val = self.preserving_read(key)
         del self._state[key]
@@ -208,32 +215,33 @@ class HydraScrapeImporter:
         yield self.trivial_counter(
             "notifications_total",
             "Total number of notifications sent",
-            self.preserving_read("nrNotificationsDone") + self.preserving_read("nrNotificationsFailed")
+            self.preserving_read_default("nrNotificationsDone", 0) +
+            self.preserving_read_default("nrNotificationsFailed", 0)
         )
         yield self.trivial_counter(
             "notifications_done",
             "Number of notifications completed",
-            self.destructive_read("nrNotificationsDone")
+            self.destructive_read_default("nrNotificationsDone", 0)
         )
         yield self.trivial_counter(
             "notifications_failed",
             "Number of notifications failed",
-            self.destructive_read("nrNotificationsFailed")
+            self.destructive_read_default("nrNotificationsFailed", 0)
         )
         yield self.trivial_counter(
             "notifications_in_progress",
             "Number of notifications in_progress",
-            self.destructive_read("nrNotificationsInProgress")
+            self.destructive_read_default("nrNotificationsInProgress", 0)
         )
         yield self.trivial_counter(
             "notifications_pending",
             "Number of notifications pending",
-            self.destructive_read("nrNotificationsPending")
+            self.destructive_read_default("nrNotificationsPending", 0)
         )
         yield self.trivial_counter(
             "notifications_seconds",
             "Time spent delivering notifications",
-            self.destructive_read("nrNotificationTimeMs") / 1000
+            self.destructive_read_default("nrNotificationTimeMs", 0) / 1000
         )
         self.unused_metric("nrNotificationTimeAvgMs")
 
@@ -394,8 +402,14 @@ class HydraScrapeImporter:
     def preserving_read(self, key):
         return self._status.preserving_read(key)
 
+    def preserving_read_default(self, key, default):
+        return self._status.preserving_read_default(key, default)
+
     def destructive_read(self, key):
         return self._status.destructive_read(key)
+
+    def destructive_read_default(self, key, default):
+        return self._status.destructive_read_default(key, default)
 
     def uncollected_status(self):
         return self._status.remaining_state()
