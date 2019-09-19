@@ -50,7 +50,39 @@
   services.hydra-dev.buildMachinesFiles = [ "/etc/nix/machines" ];
 
   nix.gc.automatic = true;
-  nix.gc.options = ''--max-freed "$((100 * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | ${pkgs.gawk}/bin/awk '{ print $4 }')))"'';
+  nix.gc.options = let
+    calculator = pkgs.writeShellScript "calculate-bytes-free"
+      ''
+        PATH=${pkgs.gawk}/bin:$PATH
+
+        wantedGigabytesFree=400
+        wantedInodesPercentFree=25
+        # Estimate how many megabytes will prune 1% of inodes. Doesn't
+        # have to be very exact.
+        megabytesPerPercent=500
+
+        diskSpaceAvailableKb=$(df -P -k /nix/store | tail -n1 | awk '{ print $4; }')
+        inodesPercentUsed=$(df -P -i /nix/store | tail -n1 | awk '{ print $5; }' | sed -e 's/%$//')
+
+        wantedBytesFree=$((wantedGigabytesFree * 1024**3))
+        toFreeForBytes=$((wantedBytesFree - 1024 * diskSpaceAvailableKb))
+        if [ $toFreeForBytes -lt 0 ]; then
+          toFreeForBytes=0
+        fi
+
+        inodesHighWaterMark=$((100 - wantedInodesPercentFree))
+        bytesPerPercent=$((megabytesPerPercent * 1024**2))
+        inodesPercentOverBudget=$((inodesPercentUsed - inodesHighWaterMark));
+
+        if [ $inodesPercentOverBudget -gt 0 ]; then
+          toFreeForInodes=$((inodesPercentOverBudget * bytesPerPercent))
+        else
+          toFreeForInodes=0
+        fi
+
+        echo $((toFreeForBytes + toFreeForInodes))
+      '';
+  in ''--max-freed "$(${calculator})"'';
   nix.gc.dates = "03,09,15,21:15";
 
   nix.extraOptions = "gc-keep-outputs = false";
