@@ -64,7 +64,8 @@ in {
         job_name = "node";
         static_configs = [
           {
-           targets = flip mapAttrsToList resources.machines (machine: v: "${v.networking.hostName}:9100");
+            targets = flip mapAttrsToList resources.machines (machine: v: "${v.networking.hostName}:9100");
+            labels.role = "unknown";
           }
           {
             targets = [
@@ -78,6 +79,11 @@ in {
           {
             targets = flip mapAttrsToList macs (machine: v: "${machine}:9101");
             labels.mac = "guest";
+            labels.role = "builder";
+          }
+          {
+            targets = flip mapAttrsToList macs (machine: v: "${machine}:9100");
+            labels.mac = "host";
             labels.role = "builder";
           }
         ];
