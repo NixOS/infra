@@ -12,8 +12,6 @@
     147.75.198.170 packet-t2a-3
     147.75.74.238 packet-t2a5-qc-centriq-1
     147.75.107.178 packet-t2a6-ampere-1
-    139.178.82.19 bigmac-host
-    139.178.82.19 bigmac-guest
 
 
     '' + (let
@@ -83,17 +81,6 @@
             labels.mac = "guest";
             labels.role = "builder";
           }
-          {
-            targets = [ "bigmac-host:9100" ];
-            labels.mac = "host";
-            labels.role = "macos-hypervisor";
-          }
-          {
-            targets = [ "bigmac-guest:9101" ];
-            labels.mac = "guest";
-            labels.role = "builder";
-          }
-
         ];
       }
 

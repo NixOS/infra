@@ -172,9 +172,6 @@ in
       { hostNames = [ "[10.254.2.6]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICyjTqJsNioHUP0HMmGVfDpej9dCIQH0Bdn5aNbe8oYU"; }
       { hostNames = [ "[10.254.2.7]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKjy5mXHUHqGO+lzeyj09iuADIDtcQtnBtwiPCmV/UBq"; }
       { hostNames = [ "[10.254.2.8]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHHJF0dXSTvZwWtPjN/iUBp2A5pHCPuOUVOvBkjXw+Eu"; }
-      
-      # bigmac
-      { hostNames = [ "[147.75.64.174]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINM+o3+x2cncVNdRTVZTOeckSzheAJRzVkYdu7PsgDkq"; }
 
       { hostNames = [ "208.78.106.251" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBKrwg2592DfDUG1U0LZxJcBaT35YfEsuKo4helEAzeoujvzOo4DIaBrTCX7+LxcYZlGoi4WvsnwxUG11GY12l2A="; }
       { hostNames = [ "208.78.106.252" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLV1p6f6Rk3rKwNJbcqvG68wjfT3wPcJfChc1LFU9A3tTFslUDr47FHLmT+FTr+ChkoqD6Gsl+jtSnvkYnTlpGY="; }
