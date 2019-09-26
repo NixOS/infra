@@ -50,7 +50,7 @@
   services.hydra-dev.buildMachinesFiles = [ "/etc/nix/machines" ];
 
   nix.gc.automatic = true;
-  nix.gc.options = ''--max-freed "$((100 * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | ${pkgs.gawk}/bin/awk '{ print $4 }')))"'';
+  nix.gc.options = ''--max-freed "$((400 * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | ${pkgs.gawk}/bin/awk '{ print $4 }')))"'';
   nix.gc.dates = "03,09,15,21:15";
 
   nix.extraOptions = "gc-keep-outputs = false";

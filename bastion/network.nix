@@ -147,7 +147,7 @@ in
       # Temporary hack until we have proper users/roles.
       services.openssh.extraConfig =
         ''
-          AcceptEnv AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY FASTLY_API_KEY
+          AcceptEnv AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY FASTLY_API_KEY GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL
         '';
 
       fileSystems."/scratch" =
