@@ -4,11 +4,6 @@ let
 
   macs = filterAttrs (_: v: (v.macosGuest or {}).enable or false) resources.machines;
 in {
-  imports =
-    [
-      ../modules/wireguard.nix
-    ];
-
   deployment.targetEnv = "hetzner";
   deployment.hetzner.mainIPv4 = "138.201.32.77";
 

@@ -6,7 +6,6 @@
       ./hydra.nix
       ./hydra-proxy.nix
       ./fstrim.nix
-      ../modules/wireguard.nix
       ./packet-importer.nix
     ];
 

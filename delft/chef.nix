@@ -5,7 +5,6 @@
     [ ./common.nix
       ./datadog.nix
       ./fstrim.nix
-      ../modules/wireguard.nix
     ];
 
   deployment.targetEnv = "hetzner";

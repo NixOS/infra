@@ -29,6 +29,9 @@ let
   };
 
 in {
+  defaults = {
+    imports = [ ../modules/wireguard.nix ];
+  };
   hydra = { deployment.targetHost = "hydra.ewi.tudelft.nl"; imports = [ ./build-machines-dell-1950.nix ]; };
   lucifer = { deployment.targetHost = "lucifer.ewi.tudelft.nl"; imports = [ ./lucifer.nix ]; };
   wendy = { deployment.targetHost = "wendy.ewi.tudelft.nl"; imports = [ ./wendy.nix ]; };
@@ -44,7 +47,6 @@ in {
     extra = {
       imports = [
         ../macs/nodes/mac1.nix
-        ../modules/wireguard.nix
       ];
     };
   };
@@ -54,7 +56,6 @@ in {
     extra = {
       imports = [
         ../macs/nodes/mac2.nix
-        ../modules/wireguard.nix
       ];
     };
   };
@@ -64,7 +65,6 @@ in {
     extra = {
       imports = [
         ../macs/nodes/mac3.nix
-        ../modules/wireguard.nix
         ({ config, lib, ... }: {
           monitorama.enable = true;
           monitorama.hosts = let
@@ -87,7 +87,6 @@ in {
     extra = {
       imports = [
         ../macs/nodes/mac4.nix
-        ../modules/wireguard.nix
       ];
     };
   };
@@ -97,7 +96,6 @@ in {
     extra = {
       imports = [
         ../macs/nodes/mac5.nix
-        ../modules/wireguard.nix
       ];
     };
   };
@@ -107,7 +105,6 @@ in {
     extra = {
       imports = [
         ../macs/nodes/mac6.nix
-        ../modules/wireguard.nix
       ];
     };
   };
@@ -117,7 +114,6 @@ in {
     extra = {
       imports = [
         ../macs/nodes/mac7.nix
-        ../modules/wireguard.nix
       ];
     };
   };
@@ -127,7 +123,6 @@ in {
     extra = {
       imports = [
         ../macs/nodes/mac8.nix
-        ../modules/wireguard.nix
       ];
     };
   };
