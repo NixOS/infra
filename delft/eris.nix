@@ -1,6 +1,9 @@
-{ nodes, config, lib, pkgs, ... }:
+{ resources, config, lib, pkgs, ... }:
+let
+  inherit (lib) filterAttrs flip mapAttrsToList;
 
-{
+  macs = filterAttrs (_: v: (v.macosGuest or {}).enable or false) resources.machines;
+in {
   imports =
     [
       ../modules/wireguard.nix
@@ -9,8 +12,8 @@
   deployment.targetEnv = "hetzner";
   deployment.hetzner.mainIPv4 = "138.201.32.77";
 
+
   networking.extraHosts = ''
-    46.4.67.10 chef
     147.75.198.47 packet-epyc-1
     147.75.98.145 packet-t2-4
     147.75.79.198 packet-t2a-2
@@ -19,13 +22,9 @@
     147.75.107.178 packet-t2a6-ampere-1
 
 
-    '' + (let
-        nums = lib.lists.range 1 9;
-        name = num: ''
-          37.153.215.191 mac${toString num}-host
-          37.153.215.191 mac${toString num}-guest
-        '';
-      in lib.strings.concatMapStrings name nums);
+    '' + (toString (flip mapAttrsToList macs (machine: v: ''
+    ${v.deployment.targetHost} ${machine}
+    '')));
 
   networking.firewall.allowedTCPPorts = [
     443 80 # nginx
@@ -62,10 +61,7 @@
         job_name = "node";
         static_configs = [
           {
-            targets = [
-              "chef:9100"
-            ];
-            labels.role = "hydra";
+           targets = flip mapAttrsToList resources.machines (machine: v: "${v.networking.hostName}:9100");
           }
           {
             targets = [
@@ -77,12 +73,7 @@
             labels.role = "builder";
           }
           {
-            targets = builtins.map (n: "mac${toString n}-host:6010") (lib.lists.range 1 9);
-            labels.mac = "host";
-            labels.role = "macos-hypervisor";
-          }
-          {
-            targets = builtins.map (n: "mac${toString n}-guest:6010") (lib.lists.range 1 9);
+            targets = flip mapAttrsToList macs (machine: v: "${machine}:9101");
             labels.mac = "guest";
             labels.role = "builder";
           }
