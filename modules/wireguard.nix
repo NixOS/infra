@@ -27,6 +27,13 @@ let
       publicKey = "wkUjkjJtJ9yC1xh2pSbTfyuPkeUnvgxGIHFKxVCGJT8=";
     };
 
+    eris = {
+      ip = "10.254.1.4";
+      endpoint = "138.201.32.77";
+      port = 51820;
+      publicKey = "H/Y+sbNETKZugxGFbOS0m5BSr28jRDL19U37wEw07D8=";
+    };
+
     mac1 = {
       ip = "10.254.2.1";
       publicKey = "IiGbZ3l+IYWP/nOjPBhUL0oBh2XJAtUD5DToM9FhTTE=";
