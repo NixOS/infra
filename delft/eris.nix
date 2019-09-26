@@ -9,13 +9,21 @@ in {
 
 
   networking.extraHosts = ''
-    147.75.198.47 packet-epyc-1
-    147.75.98.145 packet-t2-4
     147.75.79.198 packet-t2a-2
     147.75.198.170 packet-t2a-3
     147.75.74.238 packet-t2a5-qc-centriq-1
     147.75.107.178 packet-t2a6-ampere-1
 
+    10.254.1.1 bastion
+    10.254.1.2 chef
+    10.254.1.3 ceres
+
+    10.254.1.5 ike
+    10.254.1.6 hydra
+    10.254.1.7 lucifer
+    10.254.1.8 wendy
+    10.254.1.9 packet-epyc-1
+    10.254.1.10 packet-t2-4
 
     '' + (toString (flip mapAttrsToList macs (machine: v: ''
     ${v.deployment.targetHost} ${machine}

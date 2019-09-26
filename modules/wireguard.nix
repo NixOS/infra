@@ -34,6 +34,44 @@ let
       publicKey = "H/Y+sbNETKZugxGFbOS0m5BSr28jRDL19U37wEw07D8=";
     };
 
+    ike = {
+      ip = "10.254.1.5";
+      endpoint = "131.180.119.70";
+      port = 51820;
+      publicKey = "0Gnpua+K9Ms4m56j99KLrHNTbqDBLLp96eY9vmJbozQ=";
+    };
+
+    hydra = {
+      ip = "10.254.1.6";
+      endpoint = "131.180.119.69";
+      port = 51820;
+      publicKey = "daWQGiSHeWX1aELsppFoq740geXwIjGCLdmdQWC0Ymg=";
+    };
+
+    lucifer = {
+      ip = "10.254.1.7";
+      endpoint = "131.180.119.73";
+      port = 51820;
+    };
+
+    wendy = {
+      ip = "10.254.1.8";
+      enpdoint = "131.180.119.77";
+      port = 51820;
+    };
+
+    packet-epyc-1 = {
+      ip = "10.254.1.9";
+      enpdoint = "147.75.198.47";
+      port = 51820;
+    };
+
+    packet-t2-4 = {
+      ip = "10.254.1.10";
+      enpdoint = "147.75.98.145";
+      port = 51820;
+    };
+
     mac1 = {
       ip = "10.254.2.1";
       publicKey = "IiGbZ3l+IYWP/nOjPBhUL0oBh2XJAtUD5DToM9FhTTE=";
