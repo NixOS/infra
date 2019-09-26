@@ -82,6 +82,38 @@ in {
           }
         ];
       }
+      {
+        job_name = "packet_nodes";
+        file_sd_configs = [
+          {
+            files = [ "/var/lib/packet-sd/packet-sd.json" ];
+            refresh_interval = "30s";
+          }
+        ];
+        relabel_configs = [
+          {
+            source_labels = [ "__meta_packet_public_ipv4" ];
+            target_label = "__address__";
+            replacement = "\${1}:9100";
+            action = "replace";
+          }
+          {
+            source_labels = [ "__meta_packet_facility" ];
+            target_label = "facility";
+          }
+          {
+            source_labels = [ "__meta_packet_public_ipv4" ];
+            target_label = "instance";
+          }
+          {
+            source_labels = [ "__meta_packet_tags" ];
+            target_label = "role";
+            regex = ".*hydra.*";
+            replacement = "builder";
+            action = "replace";
+          }
+        ];
+      }
 
       {
         job_name = "hydra";
@@ -90,6 +122,18 @@ in {
           {
             targets = [
               "status.nixos.org:9200"
+            ];
+          }
+        ];
+      }
+
+      {
+        job_name = "prometheus-packet-sd";
+        metrics_path = "/metrics";
+        static_configs = [
+          {
+            targets = [
+              "127.0.0.1:9465"
             ];
           }
         ];
@@ -121,6 +165,36 @@ in {
         in ''
           ${python}/bin/python ${./prometheus/hydra-queue-runner-reexporter.py}
       '';
+    };
+  };
+
+  deployment.keys."packet-sd-env" = {
+    keyFile = ../prometheus-packet-service-discovery;
+    user = "packet-sd";
+  };
+
+  users.extraUsers.packet-sd = {
+    description = "Prometheus Packet Service Discovery";
+  };
+
+  systemd.tmpfiles.rules = [
+    "d /var/lib/packet-sd 0755 packet-sd - -"
+    "f /var/lib/packet-sd/packet-sd.json 0644 packet-sd - -"
+  ];
+
+  systemd.services.prometheus-packet-sd = let
+    sd = pkgs.callPackage ./prometheus/packet-sd.nix {};
+  in {
+    wantedBy = [ "multi-user.target" "prometheus.service" ];
+    after = [ "network.target" ];
+
+    serviceConfig = {
+      User = "packet-sd";
+      Group = "keys";
+      ExecStart = "${sd}/bin/prometheus-packet-sd --output.file=/var/lib/packet-sd/packet-sd.json";
+      EnvironmentFile = "/run/keys/packet-sd-env";
+      Restart = "always";
+      RestartSec = "60s";
     };
   };
 }
