@@ -12,7 +12,6 @@
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "firewire_ohci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
   boot.kernelModules = [ "kvm-intel" ];
-  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # The broadcom_sta is commented and wl, cfg80211 are blacklisted
   # to prevent spamming of wl_cfg80211 dmesg errors.
