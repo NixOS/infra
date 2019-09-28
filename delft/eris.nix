@@ -98,9 +98,9 @@ in {
         ];
         relabel_configs = [
           {
-            source_labels = [ "__meta_packet_public_ipv4" ];
+            source_labels = [ "__meta_packet_short_id" ];
             target_label = "__address__";
-            replacement = "\${1}:9100";
+            replacement = "\${1}.packethost.net:9100";
             action = "replace";
           }
           {
@@ -108,8 +108,10 @@ in {
             target_label = "facility";
           }
           {
-            source_labels = [ "__meta_packet_public_ipv4" ];
+            source_labels = [ "__meta_packet_short_id" ];
             target_label = "instance";
+            replacement = "\${1}.packethost.net";
+            action = "replace";
           }
           {
             source_labels = [ "__meta_packet_tags" ];
