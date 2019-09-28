@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+set -ex
+
+parted /dev/sda -- mklabel gpt
+parted /dev/sda -- mkpart primary 512MiB -16GiB
+parted /dev/sda -- mkpart primary linux-swap -16GiB -1MiB
+parted /dev/sda -- mkpart ESP fat32 1MiB 512MiB
+parted /dev/sda -- set 3 boot on
+
+zpool create -o ashift=12 -o altroot=/mnt rpool /dev/sda1
+zfs create -o mountpoint=legacy rpool/root
+mount -t zfs rpool/root /mnt
+
+mkfs.fat -F 32 -n boot /dev/sda3
+mkdir /mnt/boot
+mount /dev/sda3 /mnt/boot
+
+mkswap -L swap /dev/sda2
+
+nixos-generate-config --root /mnt
+
+hostId=$(head -c 8 /etc/machine-id)
+
+cat > /mnt/etc/nixos/bootstrap-config.nix <<EOF
+{ config, pkgs, lib, ...}:
+{ boot.supportedFilesystems = [ "zfs" ];
+  networking.hostId = "$hostId";
+  nixpkgs.config.allowUnfree = true;
+  fileSystems."/boot".device = lib.mkOverride 0 "/dev/disk/by-label/boot";
+  swapDevices = lib.mkOverride 0 [ { device = "/dev/disk/by-label/swap"; } ];
+}
+EOF
+
+sed -i 's|powerManagement.cpuFreqGovernor|#powerManagement.cpuFreqGovernor|' /mnt/etc/nixos/hardware-configuration.nix
+
+sed -i 's|hardware-configuration.nix|hardware-configuration.nix ./bootstrap-config.nix|' /mnt/etc/nixos/configuration.nix
+
+sed -i 's|# services.openssh.enable|services.openssh.enable|' /mnt/etc/nixos/configuration.nix
+
+mkdir -p /mnt/root/.ssh
+chmod 0700 /mnt/root
+chmod 0700 /mnt/root/.ssh
+cat > /mnt/root/.ssh/authorized_keys <<EOF
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDHp3/OZP2nRS5bM9E1xN8Q2L398kC+m4guORjKsmGjwnnHvYnTml5puE2ogl8Wdenbk7hf82+vKyB+Tktrhx+IBSym4lY+czR6W+39hlPYdLbi980yxYT9KEMSyMWJEgPVJ1BZvHqsHQiad/L3eoPmAIMDmcn4mLh9rya5/oMW/ZgsA6j28ClvWkDRyaTmTLOa0Im4nLoSbdo8kJqU+JX/YcXlMKUvFfdMcj4T9YYwV98LPWHnEHFmjtBBUXRUAIESMXS6pm3Pep3czkKUL4UF0u9f17b40OWlLOF4IQWE2jM9yK09DiIQUzeU2XKRNW116DnmDL5QIRNrYnhkYeeQI3U6WnVTPdTU9kBVTDjhM+6U6/LClGJaWiglwwrzHtVELHgMi280qRefQEftb4CI/IbcPNAxetJevV68I5NAjfdnmMx8YbhfIiEqAJtBi4TvoH7HjDH+72+ZFjQ10fpz/p+DgUtiNlRKz8tXSZ+mbLuhmOJOxtGQTH3viYbSpG/4F9uKW1ekX0RMyRxVvpjMxHtCL4daJI4RTHFXy4R16OKAlYe7gs9sqv7O0IujLJPex/rnN2U4syGaSH5q3UnGxci6qgn8yLEhSP+Gj0xdv5H3fVjr/kNNZGWDOz6nDUaJT+eWlmWU7hOvm0ricrz9GEPUTQ0Rh70sWTQFq3poWQ== cardno:000606167509
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDY8wRHQtq9uBzdiAYzpSNmF+nmIHmW+AOeBTDNmdva+CFGIBbB56q7w6GCOhfXs8edrPY4qOcQGaOD0ussIvHnqkVfw8e6CbxnpXKeAuIz7+1V72AhLPzOkif4yPrI6tSYF5nvzq6U4Yk1qFnXiLQjkA1s4EcZH6V0KbHMsu7Mtv3Irspdn8KUI3j2UwZcssFu1EuLHhLNussziRQK9tOg9ixb0U1WXuUJn7Noh9odTAsAt6jLFdr5eN/IINgC9WQqvY/W94Tc2/z5TWR7z382pEkMBR/3sf+nYKA82069tagkyrtJ/YXi00CWU4vjpnMvwPEYcmtCddfCPi8ZIUrn grahamc@Morbo
+EOF
+chmod 0600 /mnt/root/.ssh/authorized_keys
+
+nixos-install
