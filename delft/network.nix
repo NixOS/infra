@@ -42,6 +42,7 @@ in {
   eris = import ./eris.nix;
   ceres = import ./ceres.nix;
 
+/*
   mac1 = makeMac {
     ip = "10.254.2.1";
     extra = {
@@ -128,4 +129,5 @@ in {
   };
 
   # mac9 never booted
+  */
 }
