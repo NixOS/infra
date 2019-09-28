@@ -22,13 +22,12 @@
       fsType = "zfs";
     };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/8534-A160";
-      fsType = "vfat";
-    };
-
-  swapDevices = [ ];
-
   nix.maxJobs = lib.mkDefault 4;
   #powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+
+  boot.supportedFilesystems = [ "zfs" ];
+  networking.hostId = "dbcdda15";
+  nixpkgs.config.allowUnfree = true;
+  fileSystems."/boot".device = lib.mkOverride 0 "/dev/disk/by-label/boot";
+  swapDevices = lib.mkOverride 0 [ { device = "/dev/disk/by-label/swap"; } ];
 }
