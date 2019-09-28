@@ -61,7 +61,7 @@ in {
   };
 
   mac3 = makeMac {
-    ip = "mac3";
+    ip = "10.254.2.3";
     extra = {
       imports = [
         ../macs/nodes/mac3.nix
@@ -70,7 +70,7 @@ in {
   };
 
   mac4 = makeMac {
-    ip = "mac4";
+    ip = "10.254.2.4";
     extra = {
       imports = [
         ../macs/nodes/mac4.nix
@@ -79,7 +79,7 @@ in {
   };
 
   mac5 = makeMac {
-    ip = "mac5";
+    ip = "10.254.2.5";
     extra = {
       imports = [
         ../macs/nodes/mac5.nix
@@ -88,7 +88,7 @@ in {
   };
 
   mac6 = makeMac {
-    ip = "mac6";
+    ip = "10.254.2.6";
     extra = {
       imports = [
         ../macs/nodes/mac6.nix
@@ -97,7 +97,7 @@ in {
   };
 
   mac7 = makeMac {
-    ip = "mac7";
+    ip = "10.254.2.7";
     extra = {
       imports = [
         ../macs/nodes/mac7.nix
@@ -106,7 +106,7 @@ in {
   };
 
   mac8 = makeMac {
-    ip = "mac8";
+    ip = "10.254.2.8";
     extra = {
       imports = [
         ../macs/nodes/mac8.nix
@@ -115,7 +115,7 @@ in {
   };
 
   mac9 = makeMac {
-    ip = "mac9";
+    ip = "10.254.2.9";
     extra = {
       imports = [
         ../macs/nodes/mac8.nix

@@ -77,24 +77,35 @@ let
     };
     mac2 = {
       ip = "10.254.2.2";
+      publicKey = "m0xJg1OBZIqPu8maxpldLQ1Y39aPS3cnj7hqpVUSuFg=";
     };
     mac3 = {
       ip = "10.254.2.3";
+      publicKey = "6urTLKp3ihXw0fy4ImhpiQu/sOxrJYewtg2cbT3jv3g=";
     };
     mac4 = {
       ip = "10.254.2.4";
+      publicKey = "ojkldeD0xJw54nAeGSHQw7BMSXnc6c2e6GP4nJ/1xEo=";
     };
     mac5 = {
       ip = "10.254.2.5";
+      publicKey = "UgbjJz7BPlD5oDNPr1Bpr4XqeuoL9G5+oUDyU9EVYgg=";
     };
     mac6 = {
       ip = "10.254.2.6";
+      publicKey = "5t67sluyRwuDXeY17CG7sbpt0gZNybHzvJYd7NAESis=";
     };
     mac7 = {
       ip = "10.254.2.7";
+      publicKey = "q/8YvHa/M0Epyqflp+fEXvBmJuOBaBJPcaAkScCYvHA=";
     };
     mac8 = {
       ip = "10.254.2.8";
+      publicKey = "aw/8/5oEn0cZa/WnUE7E7MEukDvzUzaAUEL6PMhLFmE=";
+    };
+    mac9 = {
+      ip = "10.254.2.9";
+      publicKey = "i3fOonYJsDhhF8YXrWfaLQgb4J3OphOs7DTTCGTDNCQ=";
     };
   };
 

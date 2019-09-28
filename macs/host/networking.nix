@@ -52,6 +52,8 @@ in {
       ];
     };
 
+    services.openssh.enable = true;
+
     services.dhcpd4 = {
       enable = true;
       interfaces = [ "tap0" ];
@@ -111,6 +113,6 @@ in {
           exec ${pkgs.socat}/bin/socat TCP-LISTEN:2200,fork,so-bindtodevice=${config.macosGuest.network.sshInterface} TCP:${guestIP}:22
         '';
     };
-    
+
   };
 }
