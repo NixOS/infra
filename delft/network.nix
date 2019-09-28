@@ -42,9 +42,8 @@ in {
   eris = import ./eris.nix;
   ceres = import ./ceres.nix;
 
-/*
   mac1 = makeMac {
-    ip = "10.254.2.1";
+    ip = "mac1";
     extra = {
       imports = [
         ../macs/nodes/mac1.nix
@@ -62,29 +61,16 @@ in {
   };
 
   mac3 = makeMac {
-    ip = "10.254.2.3";
+    ip = "mac3";
     extra = {
       imports = [
         ../macs/nodes/mac3.nix
-        ({ config, lib, ... }: {
-          monitorama.enable = true;
-          monitorama.hosts = let
-            nums = lib.lists.range 1 9;
-            paths = num: {
-              "mac${toString num}-host" = "http://192.168.2.${toString (num + 100)}:9100/metrics";
-              "mac${toString num}-guest" = "http://192.168.2.${toString (num + 100)}:9101/metrics";
-            };
-            overrides = {
-              "mac3-guest" = "http://${config.macosGuest.network.interiorNetworkPrefix}.2:9100/metrics";
-            };
-          in (builtins.foldl' (a: b: a // b) {} (builtins.map paths nums)) // overrides;
-        })
       ];
     };
   };
 
   mac4 = makeMac {
-    ip = "10.254.2.4";
+    ip = "mac4";
     extra = {
       imports = [
         ../macs/nodes/mac4.nix
@@ -93,7 +79,7 @@ in {
   };
 
   mac5 = makeMac {
-    ip = "10.254.2.5";
+    ip = "mac5";
     extra = {
       imports = [
         ../macs/nodes/mac5.nix
@@ -102,7 +88,7 @@ in {
   };
 
   mac6 = makeMac {
-    ip = "10.254.2.6";
+    ip = "mac6";
     extra = {
       imports = [
         ../macs/nodes/mac6.nix
@@ -111,7 +97,7 @@ in {
   };
 
   mac7 = makeMac {
-    ip = "10.254.2.7";
+    ip = "mac7";
     extra = {
       imports = [
         ../macs/nodes/mac7.nix
@@ -120,7 +106,7 @@ in {
   };
 
   mac8 = makeMac {
-    ip = "10.254.2.8";
+    ip = "mac8";
     extra = {
       imports = [
         ../macs/nodes/mac8.nix
@@ -128,6 +114,12 @@ in {
     };
   };
 
-  # mac9 never booted
-  */
+  mac9 = makeMac {
+    ip = "mac9";
+    extra = {
+      imports = [
+        ../macs/nodes/mac8.nix
+      ];
+    };
+  };
 }
