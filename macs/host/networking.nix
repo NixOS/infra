@@ -33,13 +33,6 @@ in {
       internalIPs = [
         "${subnetIP}/24"
       ];
-      forwardPorts = [
-        {
-          destination = "${guestIP}:9100";
-          proto = "tcp";
-          sourcePort = 9101;
-        }
-      ];
     };
 
     networking.interfaces."tap0" = {
@@ -111,6 +104,14 @@ in {
       script = ''
           set -euxo pipefail
           exec ${pkgs.socat}/bin/socat TCP-LISTEN:2200,fork,so-bindtodevice=${config.macosGuest.network.sshInterface} TCP:${guestIP}:22
+        '';
+    };
+
+    systemd.services.forward-wg0-prometheus-to-guest = {
+      wantedBy = [ "multi-user.target" ];
+      script = ''
+          set -euxo pipefail
+          exec ${pkgs.socat}/bin/socat TCP-LISTEN:9101,fork,so-bindtodevice=${config.macosGuest.network.sshInterface} TCP:${guestIP}:9100
         '';
     };
 
