@@ -134,30 +134,6 @@ in
       Host macstadium2
       Hostname 208.78.106.252
       Compression yes
-
-      Host packet-t2-4
-      Hostname 147.75.98.145
-      Compression yes
-
-      Host packet-t2a-2
-      Hostname 147.75.79.198
-      Compression yes
-
-      Host packet-t2a-3
-      Hostname 147.75.198.170
-      Compression yes
-
-      Host packet-epyc-1
-      Hostname 147.75.198.47
-      Compression yes
-
-      Host packet-t2a5-qc-centriq-1
-      Hostname 147.75.74.238
-      Compression yes
-
-      Host packet-c2-large-arm
-      Hostname 147.75.107.234
-      Compression yes
   '';
 
   services.openssh.knownHosts =
@@ -185,24 +161,6 @@ in
       { hostNames = [ "lucifer.ewi.tudelft.nl" "131.180.119.73" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDz6dxwVdxPpwtjO3wA9nMp62qFLGy2ETpSQ6JWTOs5P"; }
       { hostNames = [ "stan.ewi.tudelft.nl" "131.180.119.74" ]; publicKey = "ssh-dss AAAAB3NzaC1kc3MAAACBAL0SlYpGjDjPKrLIwoltYHHTYo/d6Ct2FQZKh4ltKOszWPYYAbs/YNSm2eFkvj0CGc3aastFuebz6+pRfvGMvqi4q6IoHwVvOkbWMadyuqrWIO+Z1YemZP/GAG69pLy+UyoydiSI83ycwPe4YARAU/cpBMNKJZbSxyrO80XatmtRAAAAFQC291WK+9M8+zI4KAtk6EqX0vqQ1QAAAIBd1YgRfdfRdu60BpR+3/YMbSYZMjRLFPyoSgmEQR2TtKfqsuKTsTREzB20iMgFlhEWb6C4r5y6jYDU85OOnvpf7zne22j6bKFDIiAbgsjUFHK1EB7+TBltf5yqq0FyNOy/PnLqVzOeGaUeCOc3Ris71Lxkm60oVF4mjut2d2UJ6AAAAIByuCH1bIIRb4za4yiiFQUz2CBX1XHhBn/h/LhNMLuyCTciG6tkppGBAgq5rWrNhjaEc7dIFgZR+E1wE5PQzWG/TBiXctwCOqOOErDB5b95jO2EntIhi8x5PO9Ef6jgis4QRsBIZiENDDeQHxFHCv4q+10TpyV+625O8TXkkcxl0g=="; }
       { hostNames = [ "wendy.ewi.tudelft.nl" "131.180.119.77" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBQOW9V+azndhOiWApltwo7Khnc5/MNEAW8Rf5J/NyBx"; }
-
-      # packet-t2-4
-      { hostNames = [ "147.75.98.145" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIABlJeKJ2B5mgK8TujC3FZ7geAOzQFUDJpay6a8Utdg6"; }
-
-      # packet-t2a-2
-      { hostNames = [ "147.75.79.198" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDCo+z5d8C6SpCyvC8KAPMAcMEtd5J74tRsk+7sm2KgD"; }
-
-      # packet-t2a-3
-      { hostNames = [ "147.75.198.170" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPieDw5aeaN88HMIye2t4tL6DBqgJwQbXH0PzPd0HOVl"; }
-
-      # packet-t2a5-qc-centriq-1
-      { hostNames = [ "147.75.74.238" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJTGvykBvR6l4d0ssReNLMV2qVV+TKNUrU22OOix//qE"; }
-
-      # packet-c2-large-arm
-      { hostNames = [ "147.75.107.234" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHsY9skBvQx3mMFrMyR2zwK50OMEu5Xzw4tMLBH4Nzum"; }
-
-      # packet-epyc-1
-      { hostNames = [ "147.75.198.47" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAt76Jw/xXqvYcrNZSa+BEfKfLCFyvY50LZJuGBWtJwx"; }
 
       { hostNames = [ "t2m.cunat.cz" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBP9351NRVeQYvNV1bBbC5MX0iSmrXhVcBYMcn6AMo11U2zlOYRqBPzGLPjz9u31t4FxHNovxCrkFTqJY9zbsmTs="; }
       { hostNames = [ "t2a.cunat.cz" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIu3itg4hn5e4KrnyoreAUN3RIbAcvqc7yWx5i6EWqAu"; }
