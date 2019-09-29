@@ -1,6 +1,7 @@
 {
     "token": "You read only API token",
     "project_id": "Your project's unique ID",
+    "mandatory_tags": [ "tags which each", "server", "must have" ],
     "skip_tags": [ "tags which will", "exclude a server from", "being imported" ],
     "plans": {
         "c2.large.arm": {

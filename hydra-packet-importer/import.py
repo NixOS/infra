@@ -26,9 +26,8 @@ def get_devices(manager):
         for device in data['devices']:
             if device['state'] != 'active':
                 continue
-            if 'spot_instance' not in device:
-                continue
-            if device['spot_instance'] != True:
+
+            if not set(config['mandatory_tags']).issubset(device['tags']):
                 continue
 
             if not set(device['tags']).isdisjoint(config['skip_tags']):
