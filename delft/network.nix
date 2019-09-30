@@ -41,11 +41,10 @@ in {
   ceres = import ./ceres.nix;
 
   mac1 = makeMac {
-    ip = "83.162.34.61";
+    ip = "10.254.2.1";
     extra = {
       imports = [
         ../macs/nodes/mac1.nix
-        { deployment.targetPort = 6001; }
       ];
     };
   };
