@@ -4,6 +4,9 @@ let
 
   macs = filterAttrs (_: v: (v.macosGuest or {}).enable or false) resources.machines;
 in {
+  imports =  [
+    ../modules/prometheus
+  ];
   deployment.targetEnv = "hetzner";
   deployment.hetzner.mainIPv4 = "138.201.32.77";
 
@@ -75,6 +78,20 @@ in {
             targets = flip mapAttrsToList macs (machine: v: "${machine}:9100");
             labels.mac = "host";
             labels.role = "builder";
+          }
+        ];
+      }
+      {
+        job_name = "nixos";
+        static_configs = [
+          {
+            targets = flip mapAttrsToList resources.machines (machine: v: "${v.networking.hostName}:9300");
+          }
+          {
+            targets = [
+              "nixos.org:9300"
+            ];
+            labels.role = "webserver";
           }
         ];
       }

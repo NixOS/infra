@@ -12,7 +12,7 @@ with lib;
       rev = "531a2338101f0b6db2d9d512c3f98145f7b75397";
        }) + "/module.nix")
       ../modules/common.nix
-      ./prometheus/node.nix
+      ../modules/prometheus
     ];
 
   system.stateVersion = "14.12";
