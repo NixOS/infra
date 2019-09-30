@@ -21,6 +21,8 @@ in {
     10.254.1.7 lucifer
     10.254.1.8 wendy
 
+    10.254.3.1 webserver
+
     '' + (toString (flip mapAttrsToList macs (machine: v: ''
     ${v.deployment.targetHost} ${machine}
     '')));
@@ -66,13 +68,12 @@ in {
           {
             targets = [
               "chef:9100"
-              "nixos.org:9100"
             ];
             labels.role = "builder";
           }
           {
             targets = [
-              "nixos.org:9100"
+              "webserver:9100"
             ];
             labels.role = "webserver";
           }
@@ -96,7 +97,7 @@ in {
           }
           {
             targets = [
-              "nixos.org:9300"
+              "webserver:9300"
             ];
             labels.role = "webserver";
           }

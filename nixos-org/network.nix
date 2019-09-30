@@ -145,6 +145,7 @@ in
         [ ./webserver.nix
           ../modules/hydra-mirror-user.nix
           ../modules/prometheus
+          ../modules/wireguard.nix
 	];
 
       users.users.hydra-mirror.openssh.authorizedKeys.keys =

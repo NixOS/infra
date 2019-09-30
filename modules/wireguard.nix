@@ -96,6 +96,14 @@ let
       ip = "10.254.2.9";
       publicKey = "i3fOonYJsDhhF8YXrWfaLQgb4J3OphOs7DTTCGTDNCQ=";
     };
+
+
+    webserver = {
+      ip = "10.254.3.1";
+      publicKey = "/N5//y0elGZdeekUv+IzKZiZ9wcKSOHc2bHmPU8FaCM=";
+      enpdoint = "54.217.220.47";
+      port = 51820;
+    };
   };
 
   peerable = selfHost: lib.filterAttrs (hostname: hostcfg:
