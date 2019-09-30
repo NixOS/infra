@@ -66,8 +66,15 @@ in {
           {
             targets = [
               "chef:9100"
+              "nixos.org:9100"
             ];
             labels.role = "builder";
+          }
+          {
+            targets = [
+              "nixos.org:9100"
+            ];
+            labels.role = "webserver";
           }
           {
             targets = flip mapAttrsToList macs (machine: v: "${machine}:9101");
