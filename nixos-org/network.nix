@@ -144,6 +144,7 @@ in
       imports =
         [ ./webserver.nix
           ../modules/hydra-mirror-user.nix
+          ../modules/prometheus
 	];
 
       users.users.hydra-mirror.openssh.authorizedKeys.keys =
