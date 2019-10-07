@@ -66,7 +66,12 @@ def get_device_key(manager, device):
             # will return None because we never reach this message.
             return ssh_key
         if event['type'] == 'user.1001':
-            ssh_key = event['body']
+            ssh_key_parts = event['body'].rsplit(" ", 1)
+            if len(ssh_key_parts) == 2:
+                ssh_key = ssh_key_parts[0] + "\n"
+            else:
+                debug("# Skipped due keyscan failed to split on ' '")
+
     return None
 
 def main(config):
