@@ -33,13 +33,41 @@ def get_devices(manager):
             if not set(device['tags']).isdisjoint(config['skip_tags']):
                 continue
 
+            host_key = get_device_key(manager, device)
+            if host_key is None:
+                continue
+
             devices.append({
                 "hostname": device['hostname'],
                 "address": "{}.packethost.net".format(device['short_id']),
-                "type": device['plan']['name']
+                "type": device['plan']['name'],
+                "host_key": host_key,
             })
 
     return devices
+
+def get_device_key(manager, device):
+    # ... 50 is probably enough.
+    events_url = 'devices/{}/events?per_page=50'.format(device['id'])
+    debug(events_url)
+    data = manager.call_api(events_url)
+
+    ssh_key = None
+    for event in data['events']:
+        if event['type'] == 'provisioning.104.01':
+            # we reached a "Device connected to DHCP system" event,
+            # indicating a reboot.
+            #
+            # The most first SSH key after DHCP is the one we want,
+            # in case someone sends a bogus SSH key to the metadata
+            # API after the post-boot hook.
+            #
+            # If we receive a LOT of spam (> 50 spams!) like that, we
+            # will return None because we never reach this message.
+            return ssh_key
+        if event['type'] == 'user.1001':
+            ssh_key = event['body']
+    return None
 
 def main(config):
     rows = []
@@ -64,20 +92,6 @@ def main(config):
         lookup = lambda key: specific_stats.get(key, device.get(key, default_stats.get(key)))
         lookup_default = lambda key, default: default if not lookup(key) else lookup(key)
 
-        r = subprocess.check_output([
-                                     "ssh-keyscan",
-                                     "-4", # force IPv4
-                                     "-T", "5", # Timeout 5 seconds
-                                     "-t", "ed25519", # Only ed25519 keys
-                                     lookup("address")
-                                     ]).decode("utf-8")
-
-        elems = r.split(" ", 1)
-        if len(elems) != 2:
-            debug("# Skipped due keyscan failed to split on ' '")
-            continue
-        key = elems[1]
-
         # root@address system,list /var/lib/ssh.key maxJobs speedFactor feature,list mandatory,features public-host-key
         rows.append(" ".join([
                "{user}@{host}".format(user=lookup("user"),host=lookup("address")),
@@ -87,7 +101,7 @@ def main(config):
                str(lookup("speed_factor")),
                ",".join(lookup_default("features", ["-"])),
                ",".join(lookup_default("mandatory_features", ["-"])),
-               base64.b64encode(key.encode()).decode("utf-8")
+               base64.b64encode(device['host_key'].encode()).decode("utf-8")
         ]))
 
     debug("# {} / {}".format(len(rows),found))
