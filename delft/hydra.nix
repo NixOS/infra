@@ -3,16 +3,10 @@
 with lib;
 
 let
-  hydraSrc = ../../hydra;
-  hydra = (import (hydraSrc + "/release.nix") { nixpkgs = pkgs.path; }).build.x86_64-linux;
   narCache = "/var/cache/hydra/nar-cache";
 in
 
 {
-  imports =
-    [ (hydraSrc + "/hydra-module.nix")
-    ];
-
   users.extraUsers.hydra.openssh.authorizedKeys.keys =
     with import ../ssh-keys.nix; [ eelco rob ];
   users.extraUsers.hydra-www.openssh.authorizedKeys.keys =
@@ -21,7 +15,6 @@ in
     with import ../ssh-keys.nix; [ eelco rob ];
 
   services.hydra-dev.enable = true;
-  services.hydra-dev.package = hydra;
   services.hydra-dev.logo = ./hydra-logo.png;
   services.hydra-dev.hydraURL = "https://hydra.nixos.org";
   services.hydra-dev.notificationSender = "edolstra@gmail.com";
@@ -37,12 +30,6 @@ in
       store_uri = s3://nix-cache?secret-key=/var/lib/hydra/queue-runner/keys/cache.nixos.org-1/secret&write-nar-listing=1&ls-compression=br&log-compression=br
       server_store_uri = https://cache.nixos.org?local-nar-cache=${narCache}
       binary_cache_public_uri = https://cache.nixos.org
-
-      #<hipchat>
-      #  jobs = (hydra|nixops):.*:.*
-      #  room = 182482
-      #  token = ${builtins.readFile ./hipchat-lb-token}
-      #</hipchat>
 
       <Plugin::Session>
         cache_size = 32m
@@ -62,7 +49,7 @@ in
 
       evaluator_initial_heap_size = ${let gb = 20; in toString (gb * 1024 * 1024 * 1024)}
 
-      max_concurrent_evals = 2
+      max_concurrent_evals = 1
     '';
 
   systemd.tmpfiles.rules =

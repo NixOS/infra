@@ -1,3 +1,5 @@
+{ self, nix, nixops }:
+
 let
   region = "eu-west-1";
   zone = "eu-west-1a";
@@ -42,7 +44,7 @@ in
             protocol = "udp";
           }
         ] ++
-        (with import ../ip-addresses.nix;
+        (with import /home/deploy/src/nixos-org-configurations/ip-addresses.nix; # FIXME
         map
           (ip: { toPort = 22; fromPort = 22; sourceIp = "${ip}/32"; })
           [ eelcoHome
@@ -122,6 +124,11 @@ in
           ../modules/hydra-mirror.nix
         ];
 
+      nixpkgs.overlays =
+        [ nix.overlay
+          nixops.overlay
+        ];
+
       users.extraUsers.tarball-mirror.openssh.authorizedKeys.keys = [ sshKeys.eelco ];
 
       users.extraUsers.deploy =
@@ -143,6 +150,11 @@ in
 
       #nix.gc.automatic = true;
       nix.gc.dates = "daily";
+
+      nix.extraOptions =
+        ''
+          experimental-features = nix-command flakes ca-references
+        '';
 
       # Temporary hack until we have proper users/roles.
       services.openssh.extraConfig =

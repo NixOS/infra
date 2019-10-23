@@ -4,7 +4,7 @@ let
 in
 {
   deployment.keys."hydra-packet-import.json" = {
-    keyFile = ../hydra-packet-import.json;
+    keyFile = /home/deploy/src/nixos-org-configurations/hydra-packet-import.json;
     user = "hydra-packet";
   };
 

@@ -20,7 +20,7 @@ let
       "nixpkgs-18.09-darwin" = "nixpkgs/nixpkgs-18.09-darwin/darwin-tested";
   };
 
-  channelScripts = import <nixos-channel-scripts> { inherit pkgs; };
+  channelScripts = import /home/deploy/src/nixos-channel-scripts { inherit pkgs; }; # FIXME
   orderLib = import ../lib/service-order.nix { inherit lib; };
 
   makeUpdateChannel = channelName: mainJob:

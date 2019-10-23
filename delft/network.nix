@@ -1,3 +1,5 @@
+flakes:
+
 let
   makeMac = { ip, extra }: {
     deployment = {
@@ -39,9 +41,21 @@ in {
   lucifer = { deployment.targetHost = "lucifer.ewi.tudelft.nl"; imports = [ ./lucifer.nix ]; };
   wendy = { deployment.targetHost = "wendy.ewi.tudelft.nl"; imports = [ ./wendy.nix ]; };
   ike = { deployment.targetHost = "ike.ewi.tudelft.nl"; imports = [ ./build-machines-dell-r815.nix ]; };
-  chef = import ./chef.nix;
+
+  chef = {
+    system.configurationRevision = flakes.self.rev;
+    imports = [./chef.nix ];
+  };
+
   eris = import ./eris.nix;
-  ceres = import ./ceres.nix;
+
+  ceres = {
+    system.configurationRevision = flakes.self.rev;
+    imports =
+      [ ./ceres.nix
+        flakes.hydra.nixosModules.hydra
+      ];
+  };
 
   mac1 = makeMac {
     ip = "10.254.2.1";
