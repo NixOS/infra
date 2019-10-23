@@ -12,7 +12,11 @@ with lib;
 
   nix.useSandbox = true;
   nix.buildCores = 0;
-  nix.nixPath = [ "nixpkgs=channel:nixos-19.03-small" ];
+  nix.nixPath = [ "nixpkgs=channel:nixos-19.09-small" ];
+  nix.extraOptions =
+    ''
+      experimental-features = nix-command flakes ca-references
+    '';
 
   environment.systemPackages =
     [ pkgs.emacs

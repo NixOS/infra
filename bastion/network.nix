@@ -151,11 +151,6 @@ in
       #nix.gc.automatic = true;
       nix.gc.dates = "daily";
 
-      nix.extraOptions =
-        ''
-          experimental-features = nix-command flakes ca-references
-        '';
-
       # Temporary hack until we have proper users/roles.
       services.openssh.extraConfig =
         ''

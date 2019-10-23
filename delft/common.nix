@@ -49,8 +49,6 @@ with lib;
   boot.kernel.sysctl."kernel.panic" = 60;
   boot.kernel.sysctl."kernel.panic_on_oops" = 1;
 
-  nix.package = pkgs.nixFlakes;
-
   nix.nrBuildUsers = 100;
 
   nix.extraOptions =
