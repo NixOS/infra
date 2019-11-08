@@ -52,7 +52,7 @@ in {
   services.prometheus = {
     enable = true;
     extraFlags = [
-      "-storage.local.retention=${toString (120 * 24)}h"
+      "--storage.tsdb.retention=${toString (120 * 24)}h"
       "--web.external-url=https://status.nixos.org/prometheus/"
     ];
 
@@ -121,6 +121,14 @@ in {
           {
             source_labels = [ "__meta_packet_facility" ];
             target_label = "facility";
+          }
+          {
+            source_labels = [ "__meta_packet_plan" ];
+            target_label = "plan";
+          }
+          {
+            source_labels = [ "__meta_packet_state" ];
+            target_label = "state";
           }
           {
             source_labels = [ "__meta_packet_short_id" ];
@@ -192,7 +200,7 @@ in {
   };
 
   deployment.keys."packet-sd-env" = {
-    keyFile = ../prometheus-packet-service-discovery;
+    keyFile = /home/deploy/src/nixos-org-configurations/prometheus-packet-service-discovery;
     user = "packet-sd";
   };
 
