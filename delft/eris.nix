@@ -57,6 +57,59 @@ in {
       "--web.external-url=https://status.nixos.org/prometheus/"
     ];
 
+    rules = [ (builtins.toJSON {
+      groups = [
+        {
+          name = "hydra";
+          rules = [
+            {
+              alert = "BuildsStuckOverOneDay";
+              expr = ''hydra_machine_build_duration_bucket{le="172800"} - ignoring(le) hydra_machine_build_duration_bucket{le="86400"} > 0'';
+              labels.severity = "page";
+              annotations.summary = "https://status.nixos.org/grafana/d/j0hJAY1Wk/in-progress-build-duration-heatmap";
+            }
+          ];
+        }
+
+        {
+          name = "system";
+          rules = [
+            {
+              alert = "RootPartitionNoFreeInodes4HrsAway";
+              expr = ''predict_linear(node_filesystem_files_free{mountpoint="/"}[1h], 4 * 3600) <= 0'';
+              labels.severity = "page";
+              annotations.summary = "https://status.nixos.org/grafana/d/5LANB9pZk/per-instance-metrics?orgId=1&refresh=30s&var-instance={{ $labels.instance }}";
+            }
+
+            {
+              alert = "RootPartitionNoFreeSpace4HrsAway";
+              expr = ''predict_linear(node_filesystem_avail_bytes{mountpoint="/"}[1h], 4 * 3600) <= 0'';
+              labels.severity = "page";
+              annotations.summary = "https://status.nixos.org/grafana/d/5LANB9pZk/per-instance-metrics?orgId=1&refresh=30s&var-instance={{ $labels.instance }}";
+            }
+          ];
+        }
+
+        {
+          name = "scheduled-jobs";
+          rules = [
+            {
+              alert = "ChannelUpdateStuck";
+              expr = ''node_systemd_unit_state{name=~"^update-nix.*.service$", state="failed"} == 1'';
+              labels.severity = "page";
+              annotations.summary = "https://status.nixos.org/grafana/d/fBW4tL1Wz/scheduled-task-state-channels-website?orgId=1&refresh=10s";
+            }
+            {
+              alert = "HomepageUpdateStuck";
+              expr = ''node_systemd_unit_state{name=~"^update-homepage.service$", state="failed"} == 1'';
+              labels.severity = "page";
+              annotations.summary = "https://status.nixos.org/grafana/d/fBW4tL1Wz/scheduled-task-state-channels-website?orgId=1&refresh=10s";
+            }
+          ];
+        }
+      ];
+    }) ];
+
     globalConfig.scrape_interval = "15s";
     scrapeConfigs = [
       {
