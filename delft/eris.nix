@@ -148,7 +148,7 @@ in {
       }
 
       {
-        job_name = "hydra";
+        job_name = "hydra-reexport";
         metrics_path = "/";
         static_configs = [
           {
@@ -158,6 +158,19 @@ in {
           }
         ];
       }
+      {
+        job_name = "hydra";
+        metrics_path = "/prometheus";
+        scheme = "https";
+        static_configs = [
+          {
+            targets = [
+              "hydra.nixos.org:443"
+            ];
+          }
+        ];
+      }
+
 
       {
         job_name = "prometheus-packet-sd";
