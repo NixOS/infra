@@ -6,6 +6,7 @@ let
 in {
   imports =  [
     ../modules/prometheus
+    ./eris/packet-spot-market-prices.nix
   ];
   deployment.targetEnv = "hetzner";
   deployment.hetzner.mainIPv4 = "138.201.32.77";
@@ -169,6 +170,19 @@ in {
           }
         ];
       }
+
+      {
+        job_name = "prometheus-packet-spot-price-exporter";
+        metrics_path = "/metrics";
+        static_configs = [
+          {
+            targets = [
+              "127.0.0.1:9400"
+            ];
+          }
+        ];
+      }
+
     ];
   };
 
