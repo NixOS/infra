@@ -79,6 +79,12 @@ in {
             labels.role = "webserver";
           }
           {
+            targets = [
+              "bastion:9100"
+            ];
+            labels.role = "bastion";
+          }
+          {
             targets = flip mapAttrsToList macs (machine: v: "${machine}:9101");
             labels.mac = "guest";
             labels.role = "builder";
@@ -101,6 +107,12 @@ in {
               "webserver:9300"
             ];
             labels.role = "webserver";
+          }
+          {
+            targets = [
+              "bastion:9300"
+            ];
+            labels.role = "bastion";
           }
         ];
       }

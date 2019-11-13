@@ -120,6 +120,7 @@ in
       imports =
         [ ../modules/common.nix
           ../modules/wireguard.nix
+          ../modules/prometheus
           ../modules/tarball-mirror.nix
           ../modules/hydra-mirror.nix
         ];
