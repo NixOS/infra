@@ -44,6 +44,8 @@ let
           Redirect /releases/channels /channels
           Redirect /tarballs http://tarballs.nixos.org
           Redirect /releases/nixos https://releases.nixos.org/nixos
+          # Added for https://github.com/NixOS/nixos-homepage/pull/318
+          Redirect /nixos/support.html /nixos/learn.html
 
           # Don't allow access to .git directories.
           RewriteEngine on
