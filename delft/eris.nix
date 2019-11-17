@@ -63,8 +63,8 @@ in {
           name = "hydra";
           rules = [
             {
-              alert = "BuildsStuckOverOneDay";
-              expr = ''hydra_machine_build_duration_bucket{le="172800"} - ignoring(le) hydra_machine_build_duration_bucket{le="86400"} > 0'';
+              alert = "BuildsStuckOverTwoDays";
+              expr = ''hydra_machine_build_duration_bucket{le="259200"} - ignoring(le) hydra_machine_build_duration_bucket{le="172800"} > 0'';
               labels.severity = "page";
               annotations.summary = "https://status.nixos.org/grafana/d/j0hJAY1Wk/in-progress-build-duration-heatmap";
             }
