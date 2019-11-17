@@ -179,9 +179,9 @@ in {
         ];
         relabel_configs = [
           {
-            source_labels = [ "__meta_packet_short_id" ];
+            source_labels = [ "__meta_packet_public_ipv4" ];
             target_label = "__address__";
-            replacement = "\${1}.packethost.net:9100";
+            replacement = "\${1}:9100";
             action = "replace";
           }
           {
@@ -189,12 +189,28 @@ in {
             target_label = "facility";
           }
           {
+            source_labels = [ "__meta_packet_facility" ];
+            target_label = "packet_facility";
+          }
+          {
             source_labels = [ "__meta_packet_plan" ];
             target_label = "plan";
           }
           {
+            source_labels = [ "__meta_packet_plan" ];
+            target_label = "packet_plan";
+          }
+          { # todo: change from _id to _uuid
+            source_labels = [ "__meta_packet_switch_id" ];
+            target_label = "packet_switch_id";
+          }
+          {
+            source_labels = [ "__meta_packet_device_id" ];
+            target_label = "packet_device_id";
+          }
+          {
             source_labels = [ "__meta_packet_state" ];
-            target_label = "state";
+            target_label = "packet_device_state";
           }
           {
             source_labels = [ "__meta_packet_short_id" ];
