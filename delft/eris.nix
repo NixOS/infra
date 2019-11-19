@@ -7,6 +7,7 @@ in {
   imports =  [
     ../modules/prometheus
     ./eris/packet-spot-market-prices.nix
+    ./eris/alertmanager-irc-forwarder.nix
   ];
   deployment.targetEnv = "hetzner";
   deployment.hetzner.mainIPv4 = "138.201.32.77";
@@ -56,6 +57,42 @@ in {
       "--storage.tsdb.retention=${toString (120 * 24)}h"
       "--web.external-url=https://status.nixos.org/prometheus/"
     ];
+
+    alertmanagers = [
+      {
+        scheme = "http";
+        static_configs = [
+          {
+            targets = [ "localhost:${toString config.services.prometheus.alertmanager.port}" ];
+          }
+        ];
+      }
+    ];
+
+    alertmanager = {
+      enable = true;
+      configuration = {
+        global = {};
+        route = {
+          receiver = "default_receiver";
+          group_wait = "30s";
+          group_interval = "5m";
+          repeat_interval = "1m";
+          group_by = [ "alertname" ];
+        };
+        receivers = [
+          {
+            name = "default_receiver";
+            webhook_configs = [
+              {
+                url = "http://127.0.0.1:9080/?target_id=%23nixos-dev";
+                send_resolved = true;
+              }
+            ];
+          }
+        ];
+      };
+    };
 
     rules = [ (builtins.toJSON {
       groups = [
