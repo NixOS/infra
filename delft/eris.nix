@@ -77,7 +77,7 @@ in {
           receiver = "default_receiver";
           group_wait = "30s";
           group_interval = "5m";
-          repeat_interval = "1m";
+          repeat_interval = "4h";
           group_by = [ "alertname" ];
         };
         receivers = [
