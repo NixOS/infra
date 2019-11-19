@@ -4,45 +4,45 @@
             "inputs": {
                 "nixpkgs": {
                     "inputs": {},
-                    "narHash": "sha256-ALTr2z3J1mE/2OAuEIALIq5pxgADfKvq7rF7gqxT4c0=",
+                    "narHash": "sha256-ZzR2l1dovxeZ555KXxz7SAXrC72BfaR4BeqvJzRdmwQ=",
                     "originalUrl": "nixpkgs/release-19.09",
-                    "url": "github:edolstra/nixpkgs/bcceb882ccdfa818c1e18f4c1e88f2db68964305"
+                    "url": "github:edolstra/nixpkgs/d37927a77e70a2b3408ceaa2e763b6df1f4d941a"
                 }
             },
-            "narHash": "sha256-Y1cdnCNoJmjqyC/a+Nt2N+5L3Ttg7K7zOD7gmtg1QzA=",
+            "narHash": "sha256-QkNmRAXbMDREi6/so10tAJBg7kw7aza62AVOTQDlWHw=",
             "originalUrl": "nix",
-            "url": "github:NixOS/nix/9cac895406724e0304dff140379783c4d786e855"
+            "url": "github:NixOS/nix/9b8cb6809ba0c17d9d25d7baee9b12496af091cf"
         },
         "nixops": {
             "inputs": {
                 "nixops-aws": {
                     "inputs": {},
-                    "narHash": "sha256-ptjXve2UWSR7K8/QMUu8J5ybzZfuuPlxp24YxZtBiCU=",
+                    "narHash": "sha256-XIiiRQZL5IhIYcVKFeBV3Whl+VzkYfqmYZL0YTCIPrY=",
                     "originalUrl": "github:NixOS/nixops-aws",
-                    "url": "github:NixOS/nixops-aws/48a97f5b4825ff136d06340306d43996ff1fac5b"
+                    "url": "github:NixOS/nixops-aws/1bd5ee0c4d715c6b394d40f296967861cbb42206"
                 },
                 "nixops-hetzner": {
                     "inputs": {},
-                    "narHash": "sha256-Qf2XY0S59CXy3UvjqM8OuQdX3yHNmTMRdfKxg5OOlpU=",
+                    "narHash": "sha256-2YDEG+84zjmLoyvDiNZAXPhhtt5yMlnwr9QB1Xu/8vo=",
                     "originalUrl": "github:NixOS/nixops-hetzner",
-                    "url": "github:NixOS/nixops-hetzner/ef99acaa329476beb45fc10753d9de3d2d257671"
+                    "url": "github:NixOS/nixops-hetzner/6245ca44f3682e45d6d82cee7d873f76b51ff693"
                 },
                 "nixpkgs": {
                     "inputs": {},
-                    "narHash": "sha256-ALTr2z3J1mE/2OAuEIALIq5pxgADfKvq7rF7gqxT4c0=",
+                    "narHash": "sha256-ZzR2l1dovxeZ555KXxz7SAXrC72BfaR4BeqvJzRdmwQ=",
                     "originalUrl": "nixpkgs/release-19.09",
-                    "url": "github:edolstra/nixpkgs/bcceb882ccdfa818c1e18f4c1e88f2db68964305"
+                    "url": "github:edolstra/nixpkgs/d37927a77e70a2b3408ceaa2e763b6df1f4d941a"
                 }
             },
-            "narHash": "sha256-qy9Kx5/I1inue43i2gR8nSZYVjnOo/oNjRuW5/8OJPk=",
+            "narHash": "sha256-7ED4ReT5LVjZ20mMyY1ZiD5eR+LvKqMsNin7t+FWMDs=",
             "originalUrl": "nixops",
-            "url": "github:NixOS/nixops/a9d9996c3564c4b34c92f97e6e658ffe6140460c"
+            "url": "github:NixOS/nixops/1819a44ddec5ff7f8c75941679379e09d3c4b67d"
         },
         "nixpkgs": {
             "inputs": {},
-            "narHash": "sha256-ALTr2z3J1mE/2OAuEIALIq5pxgADfKvq7rF7gqxT4c0=",
+            "narHash": "sha256-ZzR2l1dovxeZ555KXxz7SAXrC72BfaR4BeqvJzRdmwQ=",
             "originalUrl": "nixpkgs/release-19.09",
-            "url": "github:edolstra/nixpkgs/bcceb882ccdfa818c1e18f4c1e88f2db68964305"
+            "url": "github:edolstra/nixpkgs/d37927a77e70a2b3408ceaa2e763b6df1f4d941a"
         }
     },
     "version": 3
