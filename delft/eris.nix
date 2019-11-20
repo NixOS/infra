@@ -112,15 +112,17 @@ in {
           name = "system";
           rules = [
             {
-              alert = "RootPartitionNoFreeInodes4HrsAway";
-              expr = ''predict_linear(node_filesystem_files_free{mountpoint="/"}[1h], 4 * 3600) <= 0'';
+              alert = "RootPartitionLowInodes";
+              expr = ''node_filesystem_files_free{mountpoint="/"} <= 10000'';
+              for = "30m";
               labels.severity = "page";
               annotations.summary = "https://status.nixos.org/grafana/d/5LANB9pZk/per-instance-metrics?orgId=1&refresh=30s&var-instance={{ $labels.instance }}";
             }
 
             {
-              alert = "RootPartitionNoFreeSpace4HrsAway";
-              expr = ''predict_linear(node_filesystem_avail_bytes{mountpoint="/"}[1h], 4 * 3600) <= 0'';
+              alert = "RootPartitionLowDiskSpace";
+              expr = ''node_filesystem_avail_bytes{mountpoint="/"} <= 10000000000'';
+              for = "30m";
               labels.severity = "page";
               annotations.summary = "https://status.nixos.org/grafana/d/5LANB9pZk/per-instance-metrics?orgId=1&refresh=30s&var-instance={{ $labels.instance }}";
             }
@@ -133,12 +135,14 @@ in {
             {
               alert = "ChannelUpdateStuck";
               expr = ''node_systemd_unit_state{name=~"^update-nix.*.service$", state="failed"} == 1'';
+              for = "30m";
               labels.severity = "page";
               annotations.summary = "https://status.nixos.org/grafana/d/fBW4tL1Wz/scheduled-task-state-channels-website?orgId=1&refresh=10s";
             }
             {
               alert = "HomepageUpdateStuck";
               expr = ''node_systemd_unit_state{name=~"^update-homepage.service$", state="failed"} == 1'';
+              for = "30m";
               labels.severity = "page";
               annotations.summary = "https://status.nixos.org/grafana/d/fBW4tL1Wz/scheduled-task-state-channels-website?orgId=1&refresh=10s";
             }
