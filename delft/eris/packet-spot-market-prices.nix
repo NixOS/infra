@@ -3,8 +3,8 @@ let
   exporter = pkgs.fetchFromGitHub {
     owner = "grahamc";
     repo = "prometheus-packet-spot-market-price-exporter";
-    rev = "48ec8f06ae8fb358cf11e85c6ec9a87419ddb58f";
-    sha256 = "sha256-VI44jSKw7lxILhRQAjWO5gCHV5gkpicWAUKECvnBAxg=";
+    rev = "b894f5dc061e2ab2d0ef101c28fce390285ad492";
+    sha256 = "sha256-I2WolAAM+siE8JfZbEZ3Mmk7/XqVio/PzUKqZUYCBfE=";
   };
 in {
   deployment.keys.prometheus-packet-spot-market-price-exporter = {
