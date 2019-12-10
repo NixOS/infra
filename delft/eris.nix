@@ -7,6 +7,7 @@ in {
   imports =  [
     ../modules/prometheus
     ./eris/packet-spot-market-prices.nix
+    ./eris/github-project-monitor.nix
     ./eris/alertmanager-irc-forwarder.nix
   ];
   deployment.targetEnv = "hetzner";
@@ -313,6 +314,18 @@ in {
           {
             targets = [
               "127.0.0.1:9400"
+            ];
+          }
+        ];
+      }
+
+      {
+        job_name = "prometheus-github-exporter";
+        metrics_path = "/";
+        static_configs = [
+          {
+            targets = [
+              "127.0.0.1:9401"
             ];
           }
         ];
