@@ -6,69 +6,32 @@ let
 
   sshKeys = import ../ssh-keys.nix;
 
-  acmeKeyDir = "/var/lib/acme";
-  acmeWebRoot = "/data/acme/httpd";
+  commonConfig =
+    ''
+      MaxKeepAliveRequests 0
 
-  nixosVHostConfig =
-    { hostName = "nixos.org";
-      serverAliases = [ "test.nixos.org" "test2.nixos.org" "ipv6.nixos.org" "localhost" ];
-      documentRoot = "/home/homepage/nixos-homepage";
-      enableUserDir = true;
-      servedDirs =
-        [ { urlPath = "/irc";
-            dir = "/data/irc";
-          }
-          { urlPath = "/channels";
-            dir = "/releases/channels";
-          }
-          { urlPath = "/releases";
-            dir = "/releases";
-          }
-          { urlPath = "/.well-known/acme-challenge";
-            dir = "${acmeWebRoot}/.well-known/acme-challenge";
-          }
-        ];
+      Redirect /binary-cache https://cache.nixos.org
+      Redirect /releases/channels /channels
+      Redirect /tarballs http://tarballs.nixos.org
+      Redirect /releases/nixos https://releases.nixos.org/nixos
+      # Added for https://github.com/NixOS/nixos-homepage/pull/318
+      Redirect /nixos/support.html /nixos/learn.html
 
-      robotsEntries =
-        ''
-          User-agent: *
-          Disallow: /repos/
-          Disallow: /irc/
-        '';
+      # Don't allow access to .git directories.
+      RewriteEngine on
+      RewriteRule "^(.*/)?\.git/" - [F,L]
 
-      extraConfig =
-        ''
-          MaxKeepAliveRequests 0
+      RedirectMatch "^/wiki.*" "https://nixos.org/nixos/wiki.html"
 
-          Redirect /binary-cache https://cache.nixos.org
-          Redirect /releases/channels /channels
-          Redirect /tarballs http://tarballs.nixos.org
-          Redirect /releases/nixos https://releases.nixos.org/nixos
-          # Added for https://github.com/NixOS/nixos-homepage/pull/318
-          Redirect /nixos/support.html /nixos/learn.html
+      <Location /server-status>
+        SetHandler server-status
+        Require ip 127.0.0.1
+      </Location>
 
-          # Don't allow access to .git directories.
-          RewriteEngine on
-          RewriteRule "^(.*/)?\.git/" - [F,L]
-
-          # Rewrite HTTP to HTTPS
-          RewriteCond %{HTTPS} off
-          RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
-
-          RedirectMatch "^/wiki.*" "https://nixos.org/nixos/wiki.html"
-
-          <Location /server-status>
-            SetHandler server-status
-            Allow from 127.0.0.1
-            Order deny,allow
-            Deny from all
-          </Location>
-
-          <Location /irc>
-            ForceType text/plain
-          </Location>
-        '';
-    };
+      <Location /irc>
+        ForceType text/plain
+      </Location>
+    '';
 
 in
 
@@ -95,9 +58,8 @@ in
   services.httpd = {
     enable = true;
     #multiProcessingModule = "worker";
-    logPerVirtualHost = true;
     adminAddr = "edolstra@gmail.com";
-    hostName = "localhost";
+    sslProtocol = "All -SSLv2 -SSLv3";
 
     extraConfig =
       ''
@@ -119,54 +81,47 @@ in
         memory_limit = "32M"
       '';
 
-    virtualHosts =
-      [ { # Catch-all site.
-          hostName = "nixos.org";
-          globalRedirect = "https://nixos.org/";
-        }
+    virtualHosts."nixos.org" =
+      {
+        serverAliases = [ "test.nixos.org" "test2.nixos.org" "ipv6.nixos.org" "localhost" ];
+        forceSSL = true;
+        enableACME = true;
+        enableUserDir = true;
+        documentRoot = "/home/homepage/nixos-homepage";
+        extraConfig = commonConfig + ''
+          Header always set Strict-Transport-Security "max-age=15552000"
+        '';
 
-        (nixosVHostConfig // {
-          enableSSL = true;
-          sslServerKey = "${acmeKeyDir}/nixos.org/key.pem";
-          sslServerCert = "${acmeKeyDir}/nixos.org/fullchain.pem";
-          extraConfig = nixosVHostConfig.extraConfig +
-            ''
-              Header always set Strict-Transport-Security "max-age=15552000"
-              SSLProtocol All -SSLv2 -SSLv3
-              SSLCipherSuite HIGH:!aNULL:!MD5:!EXP
-              SSLHonorCipherOrder on
-            '';
-        })
+        servedDirs =
+          [ { urlPath = "/irc";
+              dir = "/data/irc";
+            }
+            { urlPath = "/channels";
+              dir = "/releases/channels";
+            }
+            { urlPath = "/releases";
+              dir = "/releases";
+            }
+          ];
 
-        { hostName = "planet.nixos.org";
-          globalRedirect = "https://planet.nixos.org/";
-        }
+        robotsEntries =
+          ''
+            User-agent: *
+            Disallow: /repos/
+            Disallow: /irc/
+          '';
+      };
 
-        { hostName = "planet.nixos.org";
-          documentRoot = "/var/www/planet.nixos.org";
-          enableSSL = true;
-          sslServerKey = "${acmeKeyDir}/planet.nixos.org/key.pem";
-          sslServerCert = "${acmeKeyDir}/planet.nixos.org/fullchain.pem";
-          extraConfig = nixosVHostConfig.extraConfig +
-            ''
-              Header always set Strict-Transport-Security "max-age=15552000"
-              SSLProtocol All -SSLv2 -SSLv3
-              SSLCipherSuite HIGH:!aNULL:!MD5:!EXP
-              SSLHonorCipherOrder on
-
-              # Rewrite HTTP to HTTPS
-              RewriteCond %{HTTPS} off
-              RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
-
-            '';
-
-          servedDirs =
-            [ { urlPath = "/.well-known/acme-challenge";
-                dir = "${acmeWebRoot}/.well-known/acme-challenge";
-              }
-           ];
-        }
-      ];
+    virtualHosts."planet.nixos.org" =
+      {
+        forceSSL = true;
+        enableACME = true;
+        documentRoot = "/var/www/planet.nixos.org";
+        extraConfig = commonConfig +
+          ''
+            Header always set Strict-Transport-Security "max-age=15552000"
+          '';
+      };
   };
 
   users.users.eelco =
@@ -245,42 +200,5 @@ in
   };
 
   nix.gc.automatic = true;
-
-  # Let's Encrypt configuration.
-  security.acme.certs = {
-    "nixos.org" =
-      { email = "edolstra@gmail.com";
-        webroot = "${acmeWebRoot}";
-        postRun = "systemctl reload httpd.service";
-      };
-    "planet.nixos.org" =
-      { email = "edolstra@gmail.com";
-        webroot = "${acmeWebRoot}";
-        postRun = "systemctl reload httpd.service";
-      };
-  };
-
-  # Generate a dummy self-signed certificate until we get one from
-  # Let's Encrypt.
-  system.activationScripts.createDummyKey =
-    let
-      mkKeys = dir:
-        ''
-          dir=${dir}
-          mkdir -m 0700 -p $dir
-          if ! [[ -e $dir/key.pem ]]; then
-            ${pkgs.openssl}/bin/openssl genrsa -passout pass:foo -des3 -out $dir/key-in.pem 1024
-            ${pkgs.openssl}/bin/openssl req -passin pass:foo -new -key $dir/key-in.pem -out $dir/key.csr \
-              -subj "/C=NL/ST=Denial/L=Springfield/O=Dis/CN=www.example.com"
-            ${pkgs.openssl}/bin/openssl rsa -passin pass:foo -in $dir/key-in.pem -out $dir/key.pem
-            ${pkgs.openssl}/bin/openssl x509 -req -days 365 -in $dir/key.csr -signkey $dir/key.pem -out $dir/fullchain.pem
-          fi
-      '';
-
-    in
-    ''
-      ${mkKeys "${acmeKeyDir}/nixos.org"}
-      ${mkKeys "${acmeKeyDir}/planet.nixos.org"}
-    '';
 
 }
