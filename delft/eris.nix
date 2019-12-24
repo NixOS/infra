@@ -5,6 +5,7 @@ let
   macs = filterAttrs (_: v: (v.macosGuest or {}).enable or false) resources.machines;
 in {
   imports =  [
+    ../modules/rfc39.nix
     ../modules/prometheus
     ./eris/packet-spot-market-prices.nix
     ./eris/github-project-monitor.nix
@@ -133,6 +134,13 @@ in {
         {
           name = "scheduled-jobs";
           rules = [
+            {
+              alert = "RFC39MaintainerSync";
+              expr = ''node_systemd_unit_state{name=~"^rfc39-sync.service$", state="failed"} == 1'';
+              for = "30m";
+              labels.severity = "page";
+              annotations.summary = "https://status.nixos.org/grafana/d/fBW4tL1Wz/scheduled-task-state-channels-website?orgId=1&refresh=10s";
+            }
             {
               alert = "ChannelUpdateStuck";
               expr = ''node_systemd_unit_state{name=~"^update-nix.*.service$", state="failed"} == 1'';
@@ -269,7 +277,17 @@ in {
           }
         ];
       }
-
+      {
+        job_name = "rfc39";
+        metrics_path = "/";
+        static_configs = [
+          {
+            targets = [
+              "127.0.0.1:9190"
+            ];
+          }
+        ];
+      }
       {
         job_name = "hydra-reexport";
         metrics_path = "/";
