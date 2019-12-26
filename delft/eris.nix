@@ -10,6 +10,7 @@ in {
     ./eris/packet-spot-market-prices.nix
     ./eris/github-project-monitor.nix
     ./eris/alertmanager-irc-forwarder.nix
+    ./eris/channel-monitor.nix
   ];
   deployment.targetEnv = "hetzner";
   deployment.hetzner.mainIPv4 = "138.201.32.77";
@@ -355,6 +356,18 @@ in {
           {
             targets = [
               "127.0.0.1:9401"
+            ];
+          }
+        ];
+      }
+
+      {
+        job_name = "channel-updates";
+        metrics_path = "/";
+        static_configs = [
+          {
+            targets = [
+              "127.0.0.1:9402"
             ];
           }
         ];
