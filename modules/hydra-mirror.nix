@@ -1,7 +1,7 @@
 { lib, pkgs, ... }:
 
 let
-  channels = (import ../channels.nix).channels;
+  channels = (import ../channels.nix).channels-with-urls;
 
   channelScripts = import /home/deploy/src/nixos-channel-scripts { inherit pkgs; }; # FIXME
   orderLib = import ../lib/service-order.nix { inherit lib; };
