@@ -173,7 +173,7 @@ in {
             targets = [
               "chef:9100"
             ];
-            labels.role = "builder";
+            labels.role = "database";
           }
           {
             targets = [
@@ -274,6 +274,17 @@ in {
             regex = ".*hydra.*";
             replacement = "builder";
             action = "replace";
+          }
+        ];
+      }
+      {
+        job_name = "postgresql";
+        metrics_path = "/metrics";
+        static_configs = [
+          {
+            targets = [
+              "10.254.1.2:9187"
+            ];
           }
         ];
       }

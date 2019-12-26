@@ -21,7 +21,9 @@
       log_statement = 'none'
       max_connections = 250
       work_mem = 16MB
-      shared_buffers = 2GB
+
+      # 25% of memory
+      shared_buffers = 8GB
 
       # Checkpoint every 256 MB.
       min_wal_size = 128MB
@@ -35,6 +37,12 @@
     # FIXME: don't use 'trust'.
     authentication = ''
       host hydra all 10.254.1.3/32 trust
+      local all root peer map=prometheus
+    '';
+
+    identMap = ''
+      prometheus root root
+      prometheus postgres-exporter root
     '';
   };
 
@@ -42,6 +50,13 @@
     firewall.interfaces.wg0.allowedTCPPorts = [ 5432 ];
     firewall.allowPing = true;
     firewall.logRefusedConnections = true;
+  };
+
+  services.prometheus.exporters.postgres = {
+    enable = true;
+    dataSourceName = "user=root database=hydra host=/run/postgresql sslmode=disable";
+    firewallFilter = "-i wg0 -p tcp -m tcp --dport 9187";
+    openFirewall = true;
   };
 
   fileSystems."/data" =
