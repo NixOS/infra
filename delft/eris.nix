@@ -372,8 +372,18 @@ in {
           }
         ];
       }
-
-    ];
+    ] ++ lib.mapAttrsToList (name: value: {
+        job_name = "channel-job-${name}";
+        scheme = "https";
+        metrics_path = "/job/${value.job}/prometheus";
+        static_configs = [ {
+          labels = {
+            current = if value.current then "1" else "0";
+            channel = name;
+          };
+          targets = [ "hydra.nixos.org:443" ];
+        } ];
+      }) (import ../channels.nix).channels;
   };
 
   services.grafana = {
