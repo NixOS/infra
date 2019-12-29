@@ -57,5 +57,5 @@ rec {
       };
   };
 
-  channel-with-urls = (builtins.mapAttrs (name: about: about.job) channels);
+  channels-with-urls = (builtins.mapAttrs (name: about: about.job) channels);
 }
