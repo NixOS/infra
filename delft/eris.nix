@@ -144,14 +144,14 @@ in {
             }
             {
               alert = "ChannelUpdateStuck";
-              expr = ''node_systemd_unit_state{name=~"^update-nix.*.service$", state="failed"} == 1'';
+              expr = ''sum(node_systemd_unit_state{name=~"^update-nix.*.service$",state=~"activating|failed"}) without(state) == 1'';
               for = "30m";
               labels.severity = "page";
               annotations.summary = "https://status.nixos.org/grafana/d/fBW4tL1Wz/scheduled-task-state-channels-website?orgId=1&refresh=10s";
             }
             {
               alert = "HomepageUpdateStuck";
-              expr = ''node_systemd_unit_state{name=~"^update-homepage.service$", state="failed"} == 1'';
+              expr = ''sum(node_systemd_unit_state{name=~"^update-homepage.*.service$",state=~"activating|failed"}) without(state) == 1'';
               for = "30m";
               labels.severity = "page";
               annotations.summary = "https://status.nixos.org/grafana/d/fBW4tL1Wz/scheduled-task-state-channels-website?orgId=1&refresh=10s";
