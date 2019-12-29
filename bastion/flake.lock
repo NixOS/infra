@@ -17,15 +17,15 @@
             "inputs": {
                 "nixops-aws": {
                     "inputs": {},
-                    "narHash": "sha256-XIiiRQZL5IhIYcVKFeBV3Whl+VzkYfqmYZL0YTCIPrY=",
+                    "narHash": "sha256:09c886dwa63flxqzkf7fjz6rp717pi5k3l6g5dxj8nclxnyxgn56",
                     "originalUrl": "github:NixOS/nixops-aws",
-                    "url": "github:NixOS/nixops-aws/1bd5ee0c4d715c6b394d40f296967861cbb42206"
+                    "url": "github:NixOS/nixops-aws/48a97f5b4825ff136d06340306d43996ff1fac5b"
                 },
                 "nixops-hetzner": {
                     "inputs": {},
-                    "narHash": "sha256-2YDEG+84zjmLoyvDiNZAXPhhtt5yMlnwr9QB1Xu/8vo=",
+                    "narHash": "sha256:15cnis9q7cgjfl8k76fd47gmf1xr1v7siqsbvpr2bx5r8iirgza1",
                     "originalUrl": "github:NixOS/nixops-hetzner",
-                    "url": "github:NixOS/nixops-hetzner/6245ca44f3682e45d6d82cee7d873f76b51ff693"
+                    "url": "github:NixOS/nixops-hetzner/ef99acaa329476beb45fc10753d9de3d2d257671"
                 },
                 "nixpkgs": {
                     "inputs": {},
@@ -34,9 +34,9 @@
                     "url": "github:edolstra/nixpkgs/bcceb882ccdfa818c1e18f4c1e88f2db68964305"
                 }
             },
-            "narHash": "sha256-7ED4ReT5LVjZ20mMyY1ZiD5eR+LvKqMsNin7t+FWMDs=",
+            "narHash": "sha256:1y941vzyg5hvil6zm8yf75b5h9lxgh2dmqldggp2kmn8kz3llbxb",
             "originalUrl": "nixops",
-            "url": "github:NixOS/nixops/1819a44ddec5ff7f8c75941679379e09d3c4b67d"
+            "url": "github:NixOS/nixops/a9d9996c3564c4b34c92f97e6e658ffe6140460c"
         },
         "nixpkgs": {
             "inputs": {},
