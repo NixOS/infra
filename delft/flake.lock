@@ -22,9 +22,9 @@
                     "url": "github:edolstra/nixpkgs/d37927a77e70a2b3408ceaa2e763b6df1f4d941a"
                 }
             },
-            "narHash": "sha256-CsMWrfhGKYZC36DuYcPeRW3aAOIoNUHI6/aoFC3u5As=",
+            "narHash": "sha256-KWX1gQq6lwJ2fLszqq2QXganKSnKXoHqMotGvD1CbIM=",
             "originalUrl": "hydra",
-            "url": "github:NixOS/hydra/d24de1b5deaf632850fc25c606a8b2e331d32b2d"
+            "url": "github:NixOS/hydra/5cac40a43845d9fc4a627a8e85b981cd10f65add"
         },
         "nixpkgs": {
             "inputs": {},
