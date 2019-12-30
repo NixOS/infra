@@ -32,6 +32,7 @@ const revisionData = fetchData('query', {
       channel: metric.channel,
       value: {
         revision: metric.revision,
+        short_revision: metric.revision.substring(0, 12),
         github_url: `https://github.com/NixOS/nixpkgs/commit/${metric.revision}`,
       },
     }))
@@ -122,6 +123,7 @@ Promise.all([revisionData, updateTimeData, jobsetData])
       jobset['channel'] = channel;
       if (revisions[channel] != undefined) {
         jobset['revision'] = revisions[channel]['revision'];
+        jobset['short_revision'] = revisions[channel]['short_revision'];
         jobset['github_url'] = revisions[channel]['github_url'];
       } else {
         continue
@@ -163,7 +165,7 @@ Promise.all([revisionData, updateTimeData, jobsetData])
       row.getElementsByClassName("age")[0].innerText = record['update_time_relative'];
       row.getElementsByClassName("age")[0].title = record['update_time_local'];
       row.getElementsByClassName("age")[0].classList.add("label-" + record['update_age']);
-      row.getElementsByClassName("revision")[0].innerText = record['revision'];
+      row.getElementsByClassName("revision")[0].innerText = record['short_revision'];
       row.getElementsByClassName("revision")[0].href = record['github_url'];
 
       row.getElementsByClassName("hydra-link")[0].href = record['hydra_url'];
@@ -173,7 +175,7 @@ Promise.all([revisionData, updateTimeData, jobsetData])
         ")";
 
       if (record['job_history'][record['job_history'].length - 1] == 0) {
-        row.getElementsByClassName("status")[0].innerHTML += '<span class="label label-important">Failing</span>';
+        row.getElementsByClassName("status")[0].innerHTML += '<span class="label label-important">Build problem</span>';
 
       }
       return row;
