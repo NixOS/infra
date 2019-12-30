@@ -3,7 +3,6 @@
 let
   channels = (import ../channels.nix).channels-with-urls;
 
-  channelScripts = import /home/deploy/src/nixos-channel-scripts { inherit pkgs; }; # FIXME
   orderLib = import ../lib/service-order.nix { inherit lib; };
 
   makeUpdateChannel = channelName: mainJob:
@@ -11,7 +10,7 @@ let
       name = "update-${channelName}";
       value = {
         description = "Update Channel ${channelName}";
-        path = [ channelScripts ];
+        path = [ pkgs.nixos-channel-scripts ];
         script =
           ''
             # FIXME: use IAM role.

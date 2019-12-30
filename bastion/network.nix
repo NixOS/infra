@@ -1,4 +1,4 @@
-{ self, nix, nixops }:
+{ self, nix, nixops, nixos-channel-scripts }:
 
 let
   region = "eu-west-1";
@@ -128,6 +128,7 @@ in
       nixpkgs.overlays =
         [ nix.overlay
           nixops.overlay
+          nixos-channel-scripts.overlay
         ];
 
       users.extraUsers.tarball-mirror.openssh.authorizedKeys.keys = [ sshKeys.eelco ];
