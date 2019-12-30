@@ -43,12 +43,7 @@ in {
     virtualHosts."status.nixos.org" = {
       enableACME = true;
       forceSSL = true;
-      root = pkgs.writeTextDir "index.html" ''
-        <ul>
-          <li><a href="/grafana">Grafana</a></li>
-          <li><a href="/prometheus">Prometheus</a></li>
-        </ul>
-      '';
+      root = ./eris/status-page;
       locations."/grafana/".proxyPass = "http://${config.services.grafana.addr}:${toString config.services.grafana.port}/";
       locations."/prometheus".proxyPass = "http://${config.services.prometheus.listenAddress}";
     };

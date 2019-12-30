@@ -1,0 +1,29 @@
+
+.stale {
+  opacity: 60%;
+}
+
+.channel {
+  font-family: monospace;
+  max-width: 20em;
+}
+
+.agetd {
+  max-width: 15em;
+}
+
+.github {
+  max-width: 10em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: monospace;
+}
+
+.hydra {
+  max-width: 20em;
+}
+
+#channel-status {
+  max-width: 100%;
+}
+
