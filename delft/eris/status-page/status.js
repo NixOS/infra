@@ -93,6 +93,7 @@ const jobsetData = fetchData('query_range', {
           jobset,
           job,
           job_history: values.map(state => state[1] == 0),
+          oldest_status: values[0][0],
           hydra_url: `https://hydra.nixos.org/job/${project}/${jobset}/${job}`,
         },
       };
@@ -123,6 +124,7 @@ Promise.all([revisionData, updateTimeData, jobsetData])
     var combined = [];
 
     for (let [channel, jobset] of Object.entries(jobsets)) {
+      jobset['oldest_status_relative'] = moment.unix(jobset['oldest_status']).fromNow()
       // Ensure each jobset here is in each other dataset, guaranteeing we have
       // complete data.
       jobset['channel'] = channel;
@@ -158,7 +160,7 @@ Promise.all([revisionData, updateTimeData, jobsetData])
   .then(data => {
     return data.map(record => {
       var row = document.createElement('tr');
-      row.innerHTML = '<td class="channel" /><td><span class="age label"></span></td><td class="github"><a class="revision" /></td><td class="hydra" title="The state of the job over time"><a class="hydra-link" /></td><td class="status"></td>';
+      row.innerHTML = '<td class="channel" /><td><span class="age label"></span></td><td class="github"><a class="revision" /></td><td class="hydra"><a class="hydra-link" /></td><td class="status"></td>';
       if (record['current']) {
         row.classList.add("current")
       } else {
@@ -178,6 +180,7 @@ Promise.all([revisionData, updateTimeData, jobsetData])
       row.getElementsByClassName("hydra")[0].style.backgroundImage = "linear-gradient(to right, " +
         (record['job_history'].map(val => val ? "#b5ffb5" : "#ff9e9e")).join(", ") +
         ")";
+      row.getElementsByClassName("hydra")[0].title = `The Hydra job's state over time, since ${record['oldest_status_relative']}`;
 
       if (record['job_history'][record['job_history'].length - 1] == 0) {
         row.getElementsByClassName("status")[0].innerHTML += '<span class="label label-important">Build problem</span>';
