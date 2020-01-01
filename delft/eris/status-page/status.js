@@ -1,3 +1,8 @@
+window.onload = (_) => {
+    var tbody = document.getElementById("channel-status");
+    tbody.innerHTML = "<tr><td class='jsfallback' colspan='5'>Loading data from Prometheus...</td></tr>";
+};
+
 function aggregateByChannel(result) {
   return result.reduce((acc, {
     channel,
@@ -183,6 +188,7 @@ Promise.all([revisionData, updateTimeData, jobsetData])
   })
   .then(rows => {
     var tbody = document.getElementById("channel-status");
+    tbody.innerHTML = "";
     rows.forEach(row => {
       tbody.appendChild(row);
     });

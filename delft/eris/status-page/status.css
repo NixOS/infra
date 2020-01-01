@@ -27,3 +27,10 @@
   max-width: 100%;
 }
 
+td.jsfallback {
+    font-weight: bold;
+    font-style: italics;
+    text-align: center;
+    padding-top: 3em;
+    padding-bottom: 3em;
+}
