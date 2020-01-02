@@ -27,7 +27,7 @@
   max-width: 100%;
 }
 
-td.jsfallback {
+.jsfallback {
     font-weight: bold;
     font-style: italics;
     text-align: center;

@@ -60,11 +60,13 @@
       <div class="hero12">
         <h2>Nix Channel Status</h2>
         <p>See <a href="http://howoldis.herokuapp.com/">HowOldIs</a> and the <a href="https://nixos.wiki/wiki/Nix_channels">NixOS Wiki</a> for information on how channel updates progress.</p>
-        </p>
-        </p>
       </div>
 
       <div class="hero12">
+        <noscript>
+          <p class="jsfallback">This page requires Javascript.</p>
+        </noscript>
+
         <table class="table table-striped">
           <thead>
             <tr>
@@ -75,11 +77,7 @@
               <th>Channel Status</th>
             </tr>
           </thead>
-          <tbody id="channel-status">
-            <noscript>
-              <tr><td class="jsfallback" colspan="5">This page requires Javascript.</td></tr>
-            </noscript>
-          </tbody>
+          <tbody id="channel-status"></tbody>
         </table>
       </div>
     </div>
