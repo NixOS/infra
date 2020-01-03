@@ -60,9 +60,9 @@
                     "url": "github:edolstra/nixpkgs/03f3def66a104a221aac8b751eeb7075374848fd"
                 }
             },
-            "narHash": "sha256-cu/QimvqT2lqX1bm7AADtftFA7dto2y2oew/ZFGjEvo=",
+            "narHash": "sha256-K8eX/4qUwPxLLq5C7s5sGNMf7KgLCNglcrxb6pIMC1M=",
             "originalUrl": "github:NixOS/nixos-channel-scripts",
-            "url": "github:NixOS/nixos-channel-scripts/5146d2cb25c33a2ad4ec3b1154523751c97257bb"
+            "url": "github:NixOS/nixos-channel-scripts/579cbfc508044bd777a45d9e6268e2b97ea24174"
         },
         "nixpkgs": {
             "inputs": {},
