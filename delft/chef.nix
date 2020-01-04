@@ -25,9 +25,10 @@
       # 25% of memory
       shared_buffers = 8GB
 
-      # Checkpoint every 256 MB.
+      # Checkpoint every 1GB. (default)
+      # increased after seeing many warninsg about frequent checkpoints
       min_wal_size = 128MB
-      max_wal_size = 256MB
+      max_wal_size = 1GB
 
       # We can risk losing some transactions.
       synchronous_commit = off
