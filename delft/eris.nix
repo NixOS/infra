@@ -358,6 +358,19 @@ in {
       }
 
       {
+        job_name = "r13y";
+        scheme = "https";
+        metrics_path = "/metrics";
+        static_configs = [
+          {
+            targets = [
+              "r13y.com"
+            ];
+          }
+        ];
+      }
+
+      {
         job_name = "channel-updates";
         metrics_path = "/";
         static_configs = [
