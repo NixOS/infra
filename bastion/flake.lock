@@ -23,9 +23,9 @@
                 },
                 "nixops-hetzner": {
                     "inputs": {},
-                    "narHash": "sha256-2YDEG+84zjmLoyvDiNZAXPhhtt5yMlnwr9QB1Xu/8vo=",
-                    "originalUrl": "github:NixOS/nixops-hetzner",
-                    "url": "github:NixOS/nixops-hetzner/6245ca44f3682e45d6d82cee7d873f76b51ff693"
+                    "narHash": "sha256-4UVLwdLw17YHs1ZJR3eJGINgv1TdZytJIRrh+w6TtN4=",
+                    "originalUrl": "github:NixOS/nixops-hetzner/zfs",
+                    "url": "github:NixOS/nixops-hetzner/33256100466e9624af21312d2ae0da8b0b80354a"
                 },
                 "nixpkgs": {
                     "inputs": {},
@@ -34,9 +34,9 @@
                     "url": "github:edolstra/nixpkgs/44603b4103dbce2c9c18e6cc0df51a74f5eb8975"
                 }
             },
-            "narHash": "sha256-dLVhuo1KvhwBWCr7mjWEOwc8qZ8AnM26TrV8AHWdxWI=",
+            "narHash": "sha256-AEEir6CFO2+QuL4YhAIM242bUiIs83evMGEfD7NHIxE=",
             "originalUrl": "nixops",
-            "url": "github:NixOS/nixops/5333e1917e00d700ef97129be938a6eba98d7f23"
+            "url": "github:NixOS/nixops/893ea3f4cc6760a6baa9d7e899884cccc11e6a4f"
         },
         "nixos-channel-scripts": {
             "inputs": {
