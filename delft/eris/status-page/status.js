@@ -1,7 +1,12 @@
-window.onload = (_) => {
-    var tbody = document.getElementById("channel-status");
-    tbody.innerHTML = "<tr><td class='jsfallback' colspan='5'>Loading data from Prometheus...</td></tr>";
-};
+function init() {
+  return new Promise(resolve => {
+    window.onload = () => {
+      var tbody = document.getElementById("channel-status");
+      tbody.innerHTML = "<tr><td class='jsfallback' colspan='5'>Loading data from Prometheus...</td></tr>";
+      resolve();
+    };
+  });
+}
 
 function aggregateByChannel(result) {
   return result.reduce((acc, {
@@ -119,7 +124,8 @@ function cmp_channels(left, right) {
   return normalize_channel(left) < normalize_channel(right)
 }
 
-Promise.all([revisionData, updateTimeData, jobsetData])
+init()
+  .then(() => Promise.all([revisionData, updateTimeData, jobsetData]))
   .then(([revisions, update_times, jobsets]) => {
     var combined = [];
 
