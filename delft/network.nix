@@ -57,6 +57,11 @@ in {
       ];
   };
 
+  haumea = {
+    system.configurationRevision = flakes.self.rev;
+    imports = [ ./haumea.nix ];
+  };
+
   mac1 = makeMac {
     ip = "10.254.2.1";
     extra = {

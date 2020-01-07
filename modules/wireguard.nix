@@ -60,6 +60,13 @@ let
       port = 51820;
     };
 
+    haumea = {
+      ip = "10.254.1.9";
+      endpoint = "46.4.89.205";
+      port = 51820;
+      publicKey = "Fb41wGKT1TdC4MG5i2NRx6yduddmqm+N+UOtqtDuBG4=";
+    };
+
     mac1 = {
       ip = "10.254.2.1";
       publicKey = "T49/SyORWekPRmIzIJjpKQiLzrIhiskGSRD+MH8Jim0=";
@@ -96,7 +103,6 @@ let
       ip = "10.254.2.9";
       publicKey = "i3fOonYJsDhhF8YXrWfaLQgb4J3OphOs7DTTCGTDNCQ=";
     };
-
 
     webserver = {
       ip = "10.254.3.1";
