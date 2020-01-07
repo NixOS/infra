@@ -3,6 +3,30 @@ window.onload = (_) => {
     tbody.innerHTML = "<tr><td class='jsfallback' colspan='5'>Loading data from Prometheus...</td></tr>";
 };
 
+async function fetchIssues(label) {
+    const response = await fetch(`https://api.github.com/repos/NixOS/nixpkgs/issues?labels=${label}`);
+    return await response.json();
+}
+
+fetchIssues("1.severity%3A%20channel%20blocker")
+    .then(data => data.map(issue => {
+        var el = document.createElement('div');
+        el.classList = "alert alert-warning";
+        el.innerHTML = '<span class="issue-age"></span> <a class="issue-link"></a>';
+        const since = moment(issue['created_at']).fromNow();
+        el.getElementsByClassName('issue-age')[0].innerText = since;
+        el.getElementsByClassName('issue-link')[0].href = issue['html_url'];
+        el.getElementsByClassName('issue-link')[0].innerText = issue['title'];
+        if (issue['labels'].find(label => label['name'] == 'infrastructure')) {
+            el.innerHTML += ' <span class="label label-important">Infrastructure</span>'
+        }
+        return el;
+    }))
+    .then(elems => {
+        var alerts = document.getElementById('alerts');
+        elems.forEach(el => alerts.appendChild(el));
+    });
+
 function aggregateByChannel(result) {
   return result.reduce((acc, {
     channel,
@@ -13,7 +37,7 @@ function aggregateByChannel(result) {
   }), {});
 }
 
-async function fetchData(queryType, queryArgs = {}) {
+async function fetchMetrics(queryType, queryArgs = {}) {
   const params = new URLSearchParams();
   for (const [key, value] of Object.entries(queryArgs)) {
     params.set(key, String(value));
@@ -27,7 +51,7 @@ async function fetchData(queryType, queryArgs = {}) {
   return data.result;
 }
 
-const revisionData = fetchData('query', {
+const revisionData = fetchMetrics('query', {
     query: 'channel_revision'
   })
   .then(records => (
@@ -45,7 +69,7 @@ const revisionData = fetchData('query', {
   .then(aggregateByChannel);
 
 
-const updateTimeData = fetchData('query', {
+const updateTimeData = fetchMetrics('query', {
     query: 'channel_update_time'
   })
   .then(records => (
@@ -70,7 +94,7 @@ if (idealStart > earliestStart) {
     start = earliestStart;
 }
 var end = moment.utc().format();
-const jobsetData = fetchData('query_range', {
+const jobsetData = fetchMetrics('query_range', {
     query: 'hydra_job_failed',
     start: start.format(),
     end,

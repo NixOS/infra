@@ -12,6 +12,10 @@
   max-width: 15em;
 }
 
+.issue-link {
+    margin-left: 3em;
+}
+
 .github {
   max-width: 10em;
   overflow: hidden;
