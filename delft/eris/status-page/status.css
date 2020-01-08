@@ -12,8 +12,13 @@
   max-width: 15em;
 }
 
-.issue-link {
-    margin-left: 3em;
+#alerts {
+    margin-top: 10px;
+}
+
+.issue-age {
+    display: inline-block;
+    min-width: 6em;
 }
 
 .github {
