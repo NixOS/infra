@@ -12,6 +12,15 @@
   max-width: 15em;
 }
 
+#alerts {
+    margin-top: 10px;
+}
+
+.issue-age {
+    display: inline-block;
+    min-width: 6em;
+}
+
 .github {
   max-width: 10em;
   overflow: hidden;
