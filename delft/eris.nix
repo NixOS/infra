@@ -25,6 +25,7 @@ in {
     10.254.1.6 hydra
     10.254.1.7 lucifer
     10.254.1.8 wendy
+    10.254.1.9 haumea
 
     10.254.3.1 webserver
 
@@ -169,6 +170,7 @@ in {
           {
             targets = [
               "chef:9100"
+              "haumea:9100"
             ];
             labels.role = "database";
           }
@@ -280,7 +282,18 @@ in {
         static_configs = [
           {
             targets = [
-              "10.254.1.2:9187"
+              "10.254.1.2:9187" # chef but stupidly named
+            ];
+          }
+        ];
+      }
+      {
+        job_name = "haumea-postgresql";
+        metrics_path = "/metrics";
+        static_configs = [
+          {
+            targets = [
+              "haumea:9187"
             ];
           }
         ];

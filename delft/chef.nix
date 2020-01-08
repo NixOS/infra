@@ -38,6 +38,7 @@
     # FIXME: don't use 'trust'.
     authentication = ''
       host hydra all 10.254.1.3/32 trust
+      host hydra all 10.254.1.9/32 trust
       local all root peer map=prometheus
     '';
 
