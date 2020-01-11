@@ -169,12 +169,15 @@ init()
         var m = moment.unix(update_times[channel]['update_time']);
         jobset['update_time_relative'] = m.fromNow()
         jobset['update_time_local'] = m.format()
-        if (m > moment().subtract(3, 'days')) {
+        // do not use color indications on outdated channels
+        if (jobset['current']) {
+          if (m > moment().subtract(3, 'days')) {
           jobset['update_age'] = "success";
-        } else if (m > moment().subtract(10, 'days')) {
+          } else if (m > moment().subtract(10, 'days')) {
           jobset['update_age'] = "warning";
-        } else {
+          } else {
           jobset['update_age'] = "important";
+          }
         }
       } else {
         continue
@@ -191,29 +194,37 @@ init()
     return data.map(record => {
       var row = document.createElement('tr');
       row.innerHTML = '<td class="channel" /><td><span class="age label"></span></td><td class="github"><a class="revision" /></td><td class="hydra"><a class="hydra-link" /></td><td class="status"></td>';
+      var status = row.getElementsByClassName("status")[0];
+
       if (record['current']) {
         row.classList.add("current")
       } else {
         row.classList.add("stale")
-        row.getElementsByClassName("status")[0].innerHTML += '<span class="label label-important">End of life</span>';
+        status.innerHTML += '<span class="label label-important">End of life</span>';
       }
       row.getElementsByClassName("channel")[0].innerText = record['channel'];
 
-      row.getElementsByClassName("age")[0].innerText = record['update_time_relative'];
-      row.getElementsByClassName("age")[0].title = record['update_time_local'];
-      row.getElementsByClassName("age")[0].classList.add("label-" + record['update_age']);
-      row.getElementsByClassName("revision")[0].innerText = record['short_revision'];
-      row.getElementsByClassName("revision")[0].href = record['github_url'];
+      var date = row.getElementsByClassName("age")[0];
+      date.innerText = record['update_time_relative'];
+      date.title = record['update_time_local'];
+      date.classList.add("label-" + record['update_age']);
 
-      row.getElementsByClassName("hydra-link")[0].href = record['hydra_url'];
-      row.getElementsByClassName("hydra-link")[0].innerText = [record['project'], record['jobset'], record['job']].join('/');
-      row.getElementsByClassName("hydra")[0].style.backgroundImage = "linear-gradient(to right, " +
+      var revisions = row.getElementsByClassName("revision")[0];
+      revisions.innerText = record['short_revision'];
+      revisions.href = record['github_url'];
+
+      var hydraLink = row.getElementsByClassName("hydra-link")[0];
+      hydraLink.href = record['hydra_url'];
+      hydraLink.innerText = [record['project'], record['jobset'], record['job']].join('/');
+
+      var hydra = row.getElementsByClassName("hydra")[0];
+      hydra.style.backgroundImage = "linear-gradient(to right, " +
         (record['job_history'].map(val => val ? "#b5ffb5" : "#ff9e9e")).join(", ") +
         ")";
-      row.getElementsByClassName("hydra")[0].title = `The Hydra job's state over time, since ${record['oldest_status_relative']}`;
+      hydra.title = `The Hydra job's state over time, since ${record['oldest_status_relative']}`;
 
       if (record['job_history'][record['job_history'].length - 1] == 0) {
-        row.getElementsByClassName("status")[0].innerHTML += '<span class="label label-important">Build problem</span>';
+        status.innerHTML += '<span class="label label-important">Build problem</span>';
 
       }
       return row;
