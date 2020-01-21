@@ -6,20 +6,20 @@
                     "inputs": {
                         "nixpkgs": {
                             "inputs": {},
-                            "narHash": "sha256-HKuPcp/pBpKNBOnDlrSzObee5eB0LdzhI0RpRjTVxik=",
+                            "narHash": "sha256-HkMF+s/yqNOOxqZGp+rscaC8LPtOGc50nEAjLFsnJpg=",
                             "originalUrl": "nixpkgs/release-19.09",
-                            "url": "github:edolstra/nixpkgs/03f3def66a104a221aac8b751eeb7075374848fd"
+                            "url": "github:edolstra/nixpkgs/e7223c602152ee4544b05157fc9d88a3feed22c2"
                         }
                     },
-                    "narHash": "sha256-wiOmdFFMhuBGEcAURvj7c1LAcVbO82QjcFr+5WjuNzM=",
+                    "narHash": "sha256-krYwU0ENuDqUIsqs9Fa/ig2MoMeVacoNU+oQkpwRYeU=",
                     "originalUrl": "nix",
-                    "url": "github:NixOS/nix/c7866733d7ce2836fbb43de90dd64d17b0d20753"
+                    "url": "github:NixOS/nix/6fadb3fc03a1a3d51a1aaea003bfbe347c3879b3"
                 },
                 "nixpkgs": {
                     "inputs": {},
-                    "narHash": "sha256-HKuPcp/pBpKNBOnDlrSzObee5eB0LdzhI0RpRjTVxik=",
+                    "narHash": "sha256-HkMF+s/yqNOOxqZGp+rscaC8LPtOGc50nEAjLFsnJpg=",
                     "originalUrl": "nixpkgs/release-19.09",
-                    "url": "github:edolstra/nixpkgs/03f3def66a104a221aac8b751eeb7075374848fd"
+                    "url": "github:edolstra/nixpkgs/e7223c602152ee4544b05157fc9d88a3feed22c2"
                 }
             },
             "narHash": "sha256-IsiJTeLnVOc/Ij6C6ctsBTTyUwJ7C49vfhM9ZrB64dw=",
@@ -28,9 +28,9 @@
         },
         "nixpkgs": {
             "inputs": {},
-            "narHash": "sha256-HKuPcp/pBpKNBOnDlrSzObee5eB0LdzhI0RpRjTVxik=",
+            "narHash": "sha256-HkMF+s/yqNOOxqZGp+rscaC8LPtOGc50nEAjLFsnJpg=",
             "originalUrl": "nixpkgs/release-19.09",
-            "url": "github:edolstra/nixpkgs/03f3def66a104a221aac8b751eeb7075374848fd"
+            "url": "github:edolstra/nixpkgs/e7223c602152ee4544b05157fc9d88a3feed22c2"
         }
     },
     "version": 3
