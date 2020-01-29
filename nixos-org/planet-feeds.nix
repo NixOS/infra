@@ -97,4 +97,9 @@
     feedUrl = "https://mcwhirter.com.au/tags/NixOS/index.atom";
     homepageUrl = "https://mcwhirter.com.au/";
   }
+  {
+    name = "Cachix";
+    feedUrl = "https://blog.cachix.org/index.xml";
+    homepageUrl = "https://www.cachix.org";
+  }
 ]
