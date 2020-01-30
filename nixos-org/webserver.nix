@@ -88,8 +88,6 @@ in
 
   nix.package = pkgs.nixUnstable;
 
-  nix.nixPath = [ "nixpkgs=channel:nixos-18.09-small" ];
-
   security.pam.enableSSHAgentAuth = true;
 
   services.httpd = {
