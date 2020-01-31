@@ -150,8 +150,10 @@ in
           pkgs.terraform-full
         ];
 
-      #nix.gc.automatic = true;
+      nix.gc.automatic = true;
       nix.gc.dates = "daily";
+      nix.gc.options = ''--max-freed "$((30 * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | ${pkgs.gawk}/bin/awk '{ print $4 }')))"'';
+
 
       # Temporary hack until we have proper users/roles.
       services.openssh.extraConfig =
