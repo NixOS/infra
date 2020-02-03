@@ -1,10 +1,10 @@
 {
   edition = 201909;
 
-  inputs.nixpkgs.uri = "nixpkgs/release-19.09";
+  inputs.nixpkgs.url = "nixpkgs/release-19.09";
   #inputs.nixops.uri = "/home/deploy/src/nixops";
 
-  inputs.nixos-channel-scripts.uri = github:NixOS/nixos-channel-scripts;
+  inputs.nixos-channel-scripts.url = github:NixOS/nixos-channel-scripts;
 
   outputs = { self, nixpkgs, nix, nixops, nixos-channel-scripts }: {
 
