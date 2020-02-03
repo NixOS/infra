@@ -126,7 +126,7 @@ in
         ];
 
       system.configurationRevision = flakes.self.rev
-        or throw "Cannot deploy from an unclean source tree!";
+        or (throw "Cannot deploy from an unclean source tree!");
 
       nixpkgs.overlays =
         [ nix.overlay
