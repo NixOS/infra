@@ -1,4 +1,4 @@
-{ self, nix, nixops, nixos-channel-scripts }:
+flakes @ { self, nix, nixops, nixos-channel-scripts }:
 
 let
   region = "eu-west-1";
@@ -124,6 +124,9 @@ in
           ../modules/tarball-mirror.nix
           ../modules/hydra-mirror.nix
         ];
+
+      system.configurationRevision = flakes.self.rev
+        or throw "Cannot deploy from an unclean source tree!";
 
       nixpkgs.overlays =
         [ nix.overlay
