@@ -1,37 +1,164 @@
 {
-    "inputs": {
-        "hydra": {
-            "inputs": {
-                "nix": {
-                    "inputs": {
-                        "nixpkgs": {
-                            "inputs": {},
-                            "narHash": "sha256-HkMF+s/yqNOOxqZGp+rscaC8LPtOGc50nEAjLFsnJpg=",
-                            "originalUrl": "nixpkgs/release-19.09",
-                            "url": "github:edolstra/nixpkgs/e7223c602152ee4544b05157fc9d88a3feed22c2"
-                        }
-                    },
-                    "narHash": "sha256-krYwU0ENuDqUIsqs9Fa/ig2MoMeVacoNU+oQkpwRYeU=",
-                    "originalUrl": "nix",
-                    "url": "github:NixOS/nix/6fadb3fc03a1a3d51a1aaea003bfbe347c3879b3"
-                },
-                "nixpkgs": {
-                    "inputs": {},
-                    "narHash": "sha256-HkMF+s/yqNOOxqZGp+rscaC8LPtOGc50nEAjLFsnJpg=",
-                    "originalUrl": "nixpkgs/release-19.09",
-                    "url": "github:edolstra/nixpkgs/e7223c602152ee4544b05157fc9d88a3feed22c2"
-                }
-            },
-            "narHash": "sha256-IsiJTeLnVOc/Ij6C6ctsBTTyUwJ7C49vfhM9ZrB64dw=",
-            "originalUrl": "hydra",
-            "url": "github:NixOS/hydra/e7f2139e251cb73195eea6fb84e2a6167b4db968"
+  "inputs": {
+    "dwarffs": {
+      "info": {
+        "lastModified": 1577739225,
+        "narHash": "sha256-xsBEEuAhHhZgDz2ARhD8teFTuVgxc1a2x20wSFZMeu0="
+      },
+      "inputs": {
+        "nixpkgs": {
+          "info": {
+            "narHash": "sha256-HKuPcp/pBpKNBOnDlrSzObee5eB0LdzhI0RpRjTVxik="
+          },
+          "inputs": {},
+          "locked": {
+            "owner": "edolstra",
+            "repo": "nixpkgs",
+            "rev": "03f3def66a104a221aac8b751eeb7075374848fd",
+            "type": "github"
+          },
+          "original": {
+            "id": "nixpkgs",
+            "ref": "release-19.09",
+            "type": "indirect"
+          }
+        }
+      },
+      "locked": {
+        "owner": "edolstra",
+        "repo": "dwarffs",
+        "rev": "47218f1b8f971925241b1b307a1e770a7c220b5e",
+        "type": "github"
+      },
+      "original": {
+        "id": "dwarffs",
+        "type": "indirect"
+      }
+    },
+    "hydra": {
+      "info": {
+        "lastModified": 1580750046,
+        "narHash": "sha256-xsEq3SU9KyycQAcxp0yXuZ2s+fG/uagfCeQ67RUqERM="
+      },
+      "inputs": {
+        "nix": {
+          "info": {
+            "lastModified": 1580749449,
+            "narHash": "sha256-wEPYfs8ULx0dK6R4hrsXC/r8omxJLc86OhQg39eCo0c="
+          },
+          "inputs": {
+            "nixpkgs": {
+              "info": {
+                "narHash": "sha256-V4jz8Hbt+mZkXhH+3KmUQcRGETOFd8mVPhgQlS4Lu5E="
+              },
+              "inputs": {},
+              "locked": {
+                "owner": "edolstra",
+                "repo": "nixpkgs",
+                "rev": "dd45a16733f4469a0dded6ad0bf9a662ea39bdea",
+                "type": "github"
+              },
+              "original": {
+                "id": "nixpkgs",
+                "ref": "release-19.09",
+                "type": "indirect"
+              }
+            }
+          },
+          "locked": {
+            "owner": "NixOS",
+            "repo": "nix",
+            "rev": "0a4e911cf478d0d38082a8840a5acc8f57d00086",
+            "type": "github"
+          },
+          "original": {
+            "id": "nix",
+            "type": "indirect"
+          }
         },
         "nixpkgs": {
-            "inputs": {},
-            "narHash": "sha256-HkMF+s/yqNOOxqZGp+rscaC8LPtOGc50nEAjLFsnJpg=",
-            "originalUrl": "nixpkgs/release-19.09",
-            "url": "github:edolstra/nixpkgs/e7223c602152ee4544b05157fc9d88a3feed22c2"
+          "info": {
+            "lastModified": 1580555706,
+            "narHash": "sha256-ly5Gxl9yZgW2w1F3aDU5bvg34Ct+juUaOg8vue+Mkbo="
+          },
+          "inputs": {},
+          "locked": {
+            "owner": "edolstra",
+            "repo": "nixpkgs",
+            "rev": "43e283790fbe330b723ac44b584824cf6d85c1ee",
+            "type": "github"
+          },
+          "original": {
+            "id": "nixpkgs",
+            "ref": "release-19.09",
+            "type": "indirect"
+          }
         }
+      },
+      "locked": {
+        "owner": "NixOS",
+        "repo": "hydra",
+        "rev": "f0e8e56f8963cac54e8dd07573acc3de79769f58",
+        "type": "github"
+      },
+      "original": {
+        "id": "hydra",
+        "type": "indirect"
+      }
     },
-    "version": 3
+    "nix": {
+      "info": {
+        "lastModified": 1580749449,
+        "narHash": "sha256-wEPYfs8ULx0dK6R4hrsXC/r8omxJLc86OhQg39eCo0c="
+      },
+      "inputs": {
+        "nixpkgs": {
+          "info": {
+            "narHash": "sha256-V4jz8Hbt+mZkXhH+3KmUQcRGETOFd8mVPhgQlS4Lu5E="
+          },
+          "inputs": {},
+          "locked": {
+            "owner": "edolstra",
+            "repo": "nixpkgs",
+            "rev": "dd45a16733f4469a0dded6ad0bf9a662ea39bdea",
+            "type": "github"
+          },
+          "original": {
+            "id": "nixpkgs",
+            "ref": "release-19.09",
+            "type": "indirect"
+          }
+        }
+      },
+      "locked": {
+        "owner": "NixOS",
+        "repo": "nix",
+        "rev": "0a4e911cf478d0d38082a8840a5acc8f57d00086",
+        "type": "github"
+      },
+      "original": {
+        "id": "nix",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs": {
+      "info": {
+        "lastModified": 1580555706,
+        "narHash": "sha256-ly5Gxl9yZgW2w1F3aDU5bvg34Ct+juUaOg8vue+Mkbo="
+      },
+      "inputs": {},
+      "locked": {
+        "owner": "edolstra",
+        "repo": "nixpkgs",
+        "rev": "43e283790fbe330b723ac44b584824cf6d85c1ee",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "release-19.09",
+        "type": "indirect"
+      }
+    }
+  },
+  "version": 4
 }

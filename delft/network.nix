@@ -35,15 +35,20 @@ in {
     imports = [
       ../modules/wireguard.nix
       ../modules/prometheus
+      flakes.dwarffs.nixosModules.dwarffs
+      { system.configurationRevision = flakes.self.rev
+          or (throw "Cannot deploy from an unclean source tree!");
+        nixpkgs.overlays = [ flakes.nix.overlay ];
+      }
     ];
   };
+
   hydra = { deployment.targetHost = "hydra.ewi.tudelft.nl"; imports = [ ./build-machines-dell-1950.nix ]; };
   lucifer = { deployment.targetHost = "lucifer.ewi.tudelft.nl"; imports = [ ./lucifer.nix ]; };
   wendy = { deployment.targetHost = "wendy.ewi.tudelft.nl"; imports = [ ./wendy.nix ]; };
   ike = { deployment.targetHost = "ike.ewi.tudelft.nl"; imports = [ ./build-machines-dell-r815.nix ]; };
 
   chef = {
-    system.configurationRevision = flakes.self.rev;
     imports = [./chef.nix ];
   };
 

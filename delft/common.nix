@@ -6,11 +6,6 @@ with lib;
   imports =
     [ ./static-net-config.nix
       ./diffoscope.nix
-      # broke due to flakes, and then pinned back
-      ((builtins.fetchGit {
-        url = https://github.com/edolstra/dwarffs.git;
-      rev = "531a2338101f0b6db2d9d512c3f98145f7b75397";
-       }) + "/module.nix")
       ../modules/common.nix
       ../modules/prometheus
     ];
