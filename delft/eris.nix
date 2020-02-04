@@ -73,15 +73,27 @@ in {
       configuration = {
         global = {};
         route = {
-          receiver = "default_receiver";
+          receiver = "ignore";
           group_wait = "30s";
           group_interval = "5m";
           repeat_interval = "4h";
           group_by = [ "alertname" ];
+
+          routes = [
+            {
+              receiver = "nixos_dev";
+              group_wait = "30s";
+              match.severity = "page";
+            }
+          ];
         };
         receivers = [
           {
-            name = "default_receiver";
+            # with no *_config, this will drop all alerts directed to it
+            name = "ignore";
+          }
+          {
+            name = "nixos_dev";
             webhook_configs = [
               {
                 url = "http://127.0.0.1:9080/?target_id=%23nixos-dev";
@@ -143,7 +155,6 @@ in {
               alert = "ChannelUpdateStuck";
               expr = ''max_over_time(node_systemd_unit_state{name=~"^update-nix.*.service$",state=~"failed"}[5m]) == 1'';
               for = "30m";
-              labels.severity = "page";
               annotations.summary = "https://status.nixos.org/grafana/d/fBW4tL1Wz/scheduled-task-state-channels-website?orgId=1&refresh=10s";
             }
             {
