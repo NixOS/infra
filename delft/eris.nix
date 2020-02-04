@@ -78,7 +78,6 @@ in {
           group_interval = "5m";
           repeat_interval = "4h";
           group_by = [ "alertname" ];
-          match.severity = "page";
         };
         receivers = [
           {
@@ -144,7 +143,7 @@ in {
               alert = "ChannelUpdateStuck";
               expr = ''max_over_time(node_systemd_unit_state{name=~"^update-nix.*.service$",state=~"failed"}[5m]) == 1'';
               for = "30m";
-              # labels.severity = "page";
+              labels.severity = "page";
               annotations.summary = "https://status.nixos.org/grafana/d/fBW4tL1Wz/scheduled-task-state-channels-website?orgId=1&refresh=10s";
             }
             {
