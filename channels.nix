@@ -2,7 +2,8 @@ rec {
   channels = {
       # "Channel name" = {
       #   job = "project/jobset/jobname"; like https://hydra.nixos.org/job/<value>/latest-finished
-      #   current = true; # when adding a new version, mark the oldest as "not current"
+      #   # when adding a new version, mark the oldest as "not current". New releases should always be current.
+      #   current = true;
       # };
       "nixos-unstable" = {
         job = "nixos/trunk-combined/tested";
@@ -14,6 +15,19 @@ rec {
       };
       "nixpkgs-unstable" = {
         job = "nixpkgs/trunk/unstable";
+        current = true;
+      };
+
+      "nixos-20.03" = {
+        job = "nixos/release-20.03/tested";
+        current = true;
+      };
+      "nixos-20.03-small" = {
+        job = "nixos/release-20.03-small/tested";
+        current = true;
+      };
+      "nixos-20.03-darwin" = {
+        job = "nixos/release-20.03-darwin/darwin-tested";
         current = true;
       };
 
