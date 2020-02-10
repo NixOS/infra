@@ -3,6 +3,7 @@ rec {
       # "Channel name" = {
       #   job = "project/jobset/jobname"; like https://hydra.nixos.org/job/<value>/latest-finished
       #   # when adding a new version, mark the oldest as "not current". New releases should always be current.
+      #   # Channels where `current = false` are marked `end-of-life` on https://status.nixos.org/ and alerting is disabled.
       #   current = true;
       # };
       "nixos-unstable" = {
