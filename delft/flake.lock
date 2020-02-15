@@ -37,14 +37,14 @@
     },
     "hydra": {
       "info": {
-        "lastModified": 1581427396,
-        "narHash": "sha256-N6JBgzwp5egQDXASrJGcPOqLE107OycLtyFaJOys+Ng="
+        "lastModified": 1581778774,
+        "narHash": "sha256-DYCHf2pEzVhP1LR22s6eFb2TsENVq4ibQBRBYEyPjZg="
       },
       "inputs": {
         "nix": {
           "info": {
-            "lastModified": 1581081721,
-            "narHash": "sha256-Axhas6uySMqevQrjdLaIfFQZgyCueBngzUV7CEYhbWI="
+            "lastModified": 1581719021,
+            "narHash": "sha256-x3c+ShqMxlEeuRuo44MEFhuTde1SsVKWKpbS7umesnU="
           },
           "inputs": {
             "nixpkgs": {
@@ -69,7 +69,7 @@
           "locked": {
             "owner": "NixOS",
             "repo": "nix",
-            "rev": "d2032edb2f86e955a8a7724a27c0c3225f386500",
+            "rev": "eb19ff3b82240326fc0e999e09f81b6c8ed98640",
             "type": "github"
           },
           "original": {
@@ -99,7 +99,7 @@
       "locked": {
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "881b7449fd202ad13c4f5132c4693518fb61ed0f",
+        "rev": "345512a6d0743eaac9d451833ecc1a71d12809c9",
         "type": "github"
       },
       "original": {
@@ -109,8 +109,8 @@
     },
     "nix": {
       "info": {
-        "lastModified": 1581081721,
-        "narHash": "sha256-Axhas6uySMqevQrjdLaIfFQZgyCueBngzUV7CEYhbWI="
+        "lastModified": 1581719021,
+        "narHash": "sha256-x3c+ShqMxlEeuRuo44MEFhuTde1SsVKWKpbS7umesnU="
       },
       "inputs": {
         "nixpkgs": {
@@ -135,7 +135,7 @@
       "locked": {
         "owner": "NixOS",
         "repo": "nix",
-        "rev": "d2032edb2f86e955a8a7724a27c0c3225f386500",
+        "rev": "eb19ff3b82240326fc0e999e09f81b6c8ed98640",
         "type": "github"
       },
       "original": {
@@ -145,14 +145,14 @@
     },
     "nixpkgs": {
       "info": {
-        "lastModified": 1580555706,
-        "narHash": "sha256-ly5Gxl9yZgW2w1F3aDU5bvg34Ct+juUaOg8vue+Mkbo="
+        "lastModified": 1581348815,
+        "narHash": "sha256-ZYGphR59gsdFhtZYDoeuCtULm8ym/qJSHIslih9b1s8="
       },
       "inputs": {},
       "locked": {
         "owner": "edolstra",
         "repo": "nixpkgs",
-        "rev": "43e283790fbe330b723ac44b584824cf6d85c1ee",
+        "rev": "d959778e0934c4c93896d509a65de798909c7cdd",
         "type": "github"
       },
       "original": {
