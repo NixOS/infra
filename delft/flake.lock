@@ -37,8 +37,8 @@
     },
     "hydra": {
       "info": {
-        "lastModified": 1581778774,
-        "narHash": "sha256-DYCHf2pEzVhP1LR22s6eFb2TsENVq4ibQBRBYEyPjZg="
+        "lastModified": 1581781216,
+        "narHash": "sha256-TH58Sqx9pUJk71S+IbanxTp/GPDfk0wI3AzhgVskCNM="
       },
       "inputs": {
         "nix": {
@@ -99,7 +99,7 @@
       "locked": {
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "345512a6d0743eaac9d451833ecc1a71d12809c9",
+        "rev": "68bdf834ee7fe4208f287aa5d14f86e50086de1a",
         "type": "github"
       },
       "original": {
