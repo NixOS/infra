@@ -48,7 +48,8 @@ in
 
       log_prefix = https://nix-cache.s3.amazonaws.com/
 
-      evaluator_initial_heap_size = ${let gb = 30; in toString (gb * 1024 * 1024 * 1024)}
+      evaluator_workers = 8
+      evaluator_max_memory_size = 4096
 
       max_concurrent_evals = 1
     '';
