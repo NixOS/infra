@@ -148,4 +148,23 @@
     firewallFilter = "-i wg0 -p tcp -m tcp --dport 9187";
     openFirewall = true;
   };
+
+  services.znapzend = {
+    enable = true;
+    autoCreation = true;
+    pure = true;
+    zetup = {
+      "rpool/safe" = {
+        enable = true;
+        plan = "15min=>5min,1hour=>15min,1day=>1hour,4day=>1day,3week=>1week";
+        recursive = true;
+        timestampFormat = "%Y-%m-%dT%H%M%SZ";
+        destinations.ogden = {
+          plan = "1hour=>5min,4day=>1hour,1week=>1day,1year=>1week,10year=>1month";
+          host = "hydraexport@lord-nibbler.gsc.io";
+          dataset = "rpool/backups/nixos.org/haumea/safe";
+        };
+      };
+    };
+  };
 }
