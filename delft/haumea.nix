@@ -149,6 +149,8 @@
     openFirewall = true;
   };
 
+  services.zfs.autoScrub.enable = true;
+
   services.znapzend = {
     enable = true;
     autoCreation = true;
