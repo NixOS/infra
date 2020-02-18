@@ -29,7 +29,10 @@ resource "aws_s3_bucket_policy" "releases" {
       "Sid": "AllowUploadDebuginfoWrite",
       "Effect": "Allow",
       "Principal": {
-        "AWS": "arn:aws:iam::080433136561:user/s3-upload-releases"
+        "AWS": [
+          "arn:aws:iam::080433136561:user/s3-upload-releases",
+          "arn:aws:iam::065343343465:user/nixos-s3-upload-releases"
+        ]
       },
       "Action": [
         "s3:PutObject",
@@ -41,7 +44,10 @@ resource "aws_s3_bucket_policy" "releases" {
       "Sid": "AllowUploadDebuginfoRead",
       "Effect": "Allow",
       "Principal": {
-        "AWS": "arn:aws:iam::080433136561:user/s3-upload-releases"
+        "AWS": [
+          "arn:aws:iam::080433136561:user/s3-upload-releases",
+          "arn:aws:iam::065343343465:user/nixos-s3-upload-releases"
+        ]
       },
       "Action": "s3:GetObject",
       "Resource": "arn:aws:s3:::nix-releases/*"
@@ -50,7 +56,10 @@ resource "aws_s3_bucket_policy" "releases" {
       "Sid": "AllowUploadDebuginfoRead2",
       "Effect": "Allow",
       "Principal": {
-        "AWS": "arn:aws:iam::080433136561:user/s3-upload-releases"
+        "AWS": [
+          "arn:aws:iam::080433136561:user/s3-upload-releases",
+          "arn:aws:iam::065343343465:user/nixos-s3-upload-releases"
+        ]
       },
       "Action": [
         "s3:ListBucket",
