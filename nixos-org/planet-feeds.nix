@@ -102,4 +102,9 @@
     feedUrl = "https://blog.cachix.org/index.xml";
     homepageUrl = "https://www.cachix.org";
   }
+  {
+    name = "nixbuild.net";
+    feedUrl = "https://blog.nixbuild.net/index.xml";
+    homepageUrl = "https://blog.nixbuild.net";
+  }
 ]
