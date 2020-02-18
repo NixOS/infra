@@ -156,11 +156,18 @@
     autoCreation = true;
     pure = true;
     zetup = {
+      "rpool/local" = {
+        enable = true;
+        recursive = true;
+        plan = "15min=>5min,1hour=>15min,1day=>1hour,4day=>1day,3week=>1week";
+        timestampFormat = "%Y-%m-%dT%H:%M:%SZ";
+      };
+
       "rpool/safe" = {
         enable = true;
         plan = "15min=>5min,1hour=>15min,1day=>1hour,4day=>1day,3week=>1week";
         recursive = true;
-        timestampFormat = "%Y-%m-%dT%H%M%SZ";
+        timestampFormat = "%Y-%m-%dT%H:%M:%SZ";
         destinations.ogden = {
           plan = "1hour=>5min,4day=>1hour,1week=>1day,1year=>1week,10year=>1month";
           host = "hydraexport@lord-nibbler.gsc.io";
