@@ -191,6 +191,18 @@ in
       uid = 1001;
     };
 
+  users.users.rok =
+    { createHome = true;
+      description = "Rok Garbas";
+      extraGroups = [ "wheel" ];
+      group = "users";
+      home = "/home/rok";
+      isSystemUser = false;
+      useDefaultShell = true;
+      openssh.authorizedKeys.keys = [ sshKeys.garbas ];
+      uid = 1002;
+    };
+
   users.users.irclogs =
     { createHome = true;
       description = "#nixos IRC Logging";
