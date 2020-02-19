@@ -200,7 +200,7 @@ in
       isSystemUser = false;
       useDefaultShell = true;
       openssh.authorizedKeys.keys = [ sshKeys.garbas ];
-      uid = 1002;
+      uid = 1006;
     };
 
   users.users.irclogs =
