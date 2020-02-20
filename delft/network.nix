@@ -55,7 +55,6 @@ in {
   eris = import ./eris.nix;
 
   ceres = {
-    system.configurationRevision = flakes.self.rev;
     imports =
       [ ./ceres.nix
         flakes.hydra.nixosModules.hydra
@@ -63,7 +62,6 @@ in {
   };
 
   haumea = {
-    system.configurationRevision = flakes.self.rev;
     imports = [ ./haumea.nix ];
   };
 
