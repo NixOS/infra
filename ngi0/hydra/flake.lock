@@ -1,11 +1,23 @@
 {
-    "inputs": {
-        "nixpkgs": {
-            "inputs": {},
-            "narHash": "sha256-UcPmWgmf7Xgr4Ta8YjLuuxqzLmIYSk+uL2gPy/5bqmk=",
-            "originalUrl": "nixpkgs/release-19.09",
-            "url": "github:edolstra/nixpkgs/44603b4103dbce2c9c18e6cc0df51a74f5eb8975"
-        }
-    },
-    "version": 3
+  "inputs": {
+    "nixpkgs": {
+      "info": {
+        "lastModified": 1582398521,
+        "narHash": "sha256-IDCGqxxpb3g1HSoAlX4g+ZTrVNje6J2rR7IFU/RqaWI="
+      },
+      "inputs": {},
+      "locked": {
+        "owner": "edolstra",
+        "repo": "nixpkgs",
+        "rev": "581caef4f5d58573c96ab6e9dbf1160209372029",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "release-19.09",
+        "type": "indirect"
+      }
+    }
+  },
+  "version": 4
 }
