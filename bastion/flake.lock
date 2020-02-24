@@ -2,8 +2,8 @@
   "inputs": {
     "nix": {
       "info": {
-        "lastModified": 1581081721,
-        "narHash": "sha256-Axhas6uySMqevQrjdLaIfFQZgyCueBngzUV7CEYhbWI="
+        "lastModified": 1582238822,
+        "narHash": "sha256-QMm+HqYMZM+krNF/Q/nLGMCUOuDdHD/PWZ5p2fwJMZs="
       },
       "inputs": {
         "nixpkgs": {
@@ -28,7 +28,7 @@
       "locked": {
         "owner": "NixOS",
         "repo": "nix",
-        "rev": "d2032edb2f86e955a8a7724a27c0c3225f386500",
+        "rev": "4a4521f46253e87a06af9333381c050e983b3c2f",
         "type": "github"
       },
       "original": {
