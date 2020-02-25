@@ -3,7 +3,7 @@
 
   inputs.nixpkgs.uri = "nixpkgs/release-19.09";
 
-  outputs = { self, nixpkgs }: {
+  outputs = { self, nixpkgs, nix, hydra }: {
 
     nixopsConfigurations.default = {
       inherit nixpkgs;
@@ -11,7 +11,20 @@
       makemake =
         { config, lib, pkgs, ... }:
 
-        {
+        { imports =
+            [ ../../modules/common.nix
+              hydra.nixosModules.hydra
+              ./hydra.nix
+              ./hydra-proxy.nix
+            ];
+
+          nixpkgs.overlays =
+            [ nix.overlay
+            ];
+
+          #system.configurationRevision = flakes.self.rev
+          #  or (throw "Cannot deploy from an unclean source tree!");
+
           deployment.targetEnv = "hetzner";
           deployment.hetzner.mainIPv4 = "116.202.113.248"; # 2a01:4f8:231:4187::2
           deployment.hetzner.createSubAccount = false;
@@ -71,12 +84,19 @@
               fsType = "zfs";
             };
 
-          networking.hostId = "5240310e";
+          networking = {
+            hostId = "5240310e";
+            firewall.allowedTCPPorts = [ 80 443 ];
+            firewall.allowPing = true;
+            firewall.logRefusedConnections = true;
+          };
 
           boot.loader.grub.devices = [ "/dev/nvme0n1" "/dev/nvme1n1" ];
           boot.loader.grub.copyKernels = true;
-        };
 
+          users.extraUsers.root.openssh.authorizedKeys.keys =
+            with import ../../ssh-keys.nix; [ zimbatm ];
+        };
     };
 
   };
