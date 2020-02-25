@@ -61,6 +61,7 @@ in
           [ eelcoHome
             eelcoEC2
             "34.254.208.229" # == "bastion.nixos.org"
+            garbasHome
           ];
     };
 
