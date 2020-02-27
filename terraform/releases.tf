@@ -26,7 +26,19 @@ resource "aws_s3_bucket_policy" "releases" {
       "Resource": "arn:aws:s3:::nix-releases/*"
     },
     {
-      "Sid": "AllowUploadDebuginfoWrite",
+      "Sid": "AllowPublicList",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "*"
+      },
+      "Action": [
+        "s3:ListBucket",
+        "s3:GetBucketLocation"
+      ],
+      "Resource": "arn:aws:s3:::nix-releases"
+    },
+    {
+      "Sid": "AllowUpload",
       "Effect": "Allow",
       "Principal": {
         "AWS": [
@@ -39,33 +51,6 @@ resource "aws_s3_bucket_policy" "releases" {
         "s3:PutObjectAcl"
       ],
       "Resource": "arn:aws:s3:::nix-releases/*"
-    },
-    {
-      "Sid": "AllowUploadDebuginfoRead",
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": [
-          "arn:aws:iam::080433136561:user/s3-upload-releases",
-          "arn:aws:iam::065343343465:user/nixos-s3-upload-releases"
-        ]
-      },
-      "Action": "s3:GetObject",
-      "Resource": "arn:aws:s3:::nix-releases/*"
-    },
-    {
-      "Sid": "AllowUploadDebuginfoRead2",
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": [
-          "arn:aws:iam::080433136561:user/s3-upload-releases",
-          "arn:aws:iam::065343343465:user/nixos-s3-upload-releases"
-        ]
-      },
-      "Action": [
-        "s3:ListBucket",
-        "s3:GetBucketLocation"
-      ],
-      "Resource": "arn:aws:s3:::nix-releases"
     }
   ]
 }
@@ -77,6 +62,7 @@ resource "aws_cloudfront_distribution" "releases" {
   is_ipv6_enabled = true
   price_class     = "PriceClass_All"
   aliases         = ["releases.nixos.org"]
+  default_root_object = "index.html"
 
   origin {
     origin_id   = "default"
@@ -139,4 +125,3 @@ resource "aws_cloudfront_origin_access_identity" "releases" {
   comment = "Cloudfront identity for releases"
 }
 */
-
