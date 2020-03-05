@@ -6,18 +6,22 @@ import base64
 from pprint import pprint
 import subprocess
 import sys
+from typing import Union, Dict, Any, List, Optional
 
-def debug(*args, **kwargs):
+Device = Dict[str, Any]
+DeviceKeys =Union[None, List[Dict[str, Any]], str]
+
+def debug(*args: Any, **kwargs: Any) -> None:
     print(*args, file=sys.stderr, **kwargs)
 
 
-def get_devices(manager):
-    devices = []
+def get_devices(manager: Any) -> List[Device]:
+    devices: List[Device] = []
 
-    page = 'projects/{}/devices?page={}'.format(config['project_id'], 1)
+    page: Optional[str] = 'projects/{}/devices?page={}'.format(config['project_id'], 1)
     while page is not None:
         debug(page)
-        data = manager.call_api(page)
+        data: Dict[str, Any] = manager.call_api(page)
         if data['meta']['next'] is None:
             page = None
         else:
@@ -46,7 +50,7 @@ def get_devices(manager):
 
     return devices
 
-def get_device_key(manager, device):
+def get_device_key(manager, device: Device) -> DeviceKeys:
     # ... 50 is probably enough.
     events_url = 'devices/{}/events?per_page=50'.format(device['id'])
     debug(events_url)
@@ -66,15 +70,18 @@ def get_device_key(manager, device):
             # will return None because we never reach this message.
             return ssh_key
         if event['type'] == 'user.1001':
-            ssh_key_parts = event['body'].rsplit(" ", 1)
-            if len(ssh_key_parts) == 2:
-                ssh_key = ssh_key_parts[0] + "\n"
-            else:
-                debug("# Skipped due keyscan failed to split on ' '")
+            try:
+                ssh_key = json.loads(event['body'])
+            except:
+                ssh_key_parts = event['body'].rsplit(" ", 1)
+                if len(ssh_key_parts) == 2:
+                    ssh_key = ssh_key_parts[0] + "\n"
+                else:
+                    debug("# Skipped due keyscan failed to split on ' '")
 
     return None
 
-def main(config):
+def main(config: Dict[str, Any]) -> None:
     rows = []
     manager = packet.Manager(auth_token=config['token'])
     found = 0
@@ -97,6 +104,22 @@ def main(config):
         lookup = lambda key: specific_stats.get(key, device.get(key, default_stats.get(key)))
         lookup_default = lambda key, default: default if not lookup(key) else lookup(key)
 
+        keys: DeviceKeys = device["host_key"]
+        key: Optional[str] = None
+        if keys is None:
+            debug("# no key data")
+        elif isinstance(keys, str):
+            key = keys
+        else:
+            keys_matching = [keyrec["key"] for keyrec in keys
+                             if keyrec['system'] in lookup("system_types")]
+            keys_matching = sorted(keys_matching)
+            if len(keys_matching) > 0:
+                key = keys_matching[0]
+
+        if key is None:
+            debug("# no matching data")
+
         # root@address system,list /var/lib/ssh.key maxJobs speedFactor feature,list mandatory,features public-host-key
         rows.append(" ".join([
                "{user}@{host}".format(user=lookup("user"),host=lookup("address")),
@@ -106,7 +129,7 @@ def main(config):
                str(lookup("speed_factor")),
                ",".join(lookup_default("features", ["-"])),
                ",".join(lookup_default("mandatory_features", ["-"])),
-               base64.b64encode(device['host_key'].encode()).decode("utf-8")
+               base64.b64encode(key.encode()).decode("utf-8")
         ]))
 
     debug("# {} / {}".format(len(rows),found))
@@ -116,3 +139,4 @@ if __name__ == "__main__":
     with open(sys.argv[1]) as config_file:
         config = json.load(config_file)
         main(config)
+
