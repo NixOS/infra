@@ -123,6 +123,11 @@ in
       Host macstadium2
       Hostname 208.78.106.252
       Compression yes
+
+      Host c2largearmarmv7l
+      Hostname 147.75.204.174
+      Port 2200
+      Compression yes
   '';
 
   services.openssh.knownHosts =
@@ -156,6 +161,7 @@ in
       { hostNames = [ "t2a.cunat.cz" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIu3itg4hn5e4KrnyoreAUN3RIbAcvqc7yWx5i6EWqAu"; }
       { hostNames = [ "t4a.cunat.cz" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILXgOInIZ+1DdWDeXBO1ILtlM53ZrYOtrBlfZ7dIzCyu"; }
       { hostNames = [ "t4b.cunat.cz" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC/jE8c0lkc/DlK3R7A+zBr6j/lfEQrhqSD/YOEVs8za"; }
+      { hostNames = [ "[147.75.204.174]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIsIjberXP4Jc1yRlor6a1SaYF5QWuWIRu2L26iePeA6"; }
 
     ];
 
