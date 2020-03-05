@@ -157,13 +157,6 @@ in {
               for = "30m";
               annotations.summary = "https://status.nixos.org/grafana/d/fBW4tL1Wz/scheduled-task-state-channels-website?orgId=1&refresh=10s";
             }
-            {
-              alert = "HomepageUpdateStuck";
-              expr = ''max_over_time(node_systemd_unit_state{name=~"^update-homepage.*.service$",state=~"failed"}[5m]) == 1'';
-              for = "30m";
-              labels.severity = "page";
-              annotations.summary = "https://status.nixos.org/grafana/d/fBW4tL1Wz/scheduled-task-state-channels-website?orgId=1&refresh=10s";
-            }
           ];
         }
       ];
