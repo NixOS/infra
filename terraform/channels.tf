@@ -5,6 +5,14 @@ resource "aws_s3_bucket" "channels" {
   website {
     index_document = "index.html"
   }
+
+  cors_rule {
+    allowed_headers = ["*"]
+    allowed_methods = ["HEAD", "GET"]
+    allowed_origins = ["*"]
+    expose_headers  = ["ETag"]
+    max_age_seconds = 3600
+  }
 }
 
 resource "aws_s3_bucket_policy" "channels" {
