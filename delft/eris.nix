@@ -53,7 +53,7 @@ in {
   services.prometheus = {
     enable = true;
     extraFlags = [
-      "--storage.tsdb.retention=${toString (120 * 24)}h"
+      "--storage.tsdb.retention=${toString (90 * 24)}h"
       "--web.external-url=https://status.nixos.org/prometheus/"
     ];
 
