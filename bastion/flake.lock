@@ -2,8 +2,8 @@
   "inputs": {
     "nix": {
       "info": {
-        "lastModified": 1583764121,
-        "narHash": "sha256-o48N/W0dIqA0h/rdiMxc4XsV3pqfW7B+co4JtvUmgfY="
+        "lastModified": 1583864507,
+        "narHash": "sha256-ZlxmjWQfL0v/GoI1Hxk0HrJn4ysZXS0I0keV723/riw="
       },
       "inputs": {
         "nixpkgs": {
@@ -28,12 +28,14 @@
       "locked": {
         "owner": "NixOS",
         "repo": "nix",
-        "rev": "73769b28e376cf1fb3e7248bafaa17c35527925d",
+        "rev": "cfc38257cfcdabd34151d723906b38873e7ef6d0",
         "type": "github"
       },
       "original": {
-        "id": "nix",
-        "type": "indirect"
+        "owner": "NixOS",
+        "repo": "nix",
+        "rev": "cfc38257cfcdabd34151d723906b38873e7ef6d0",
+        "type": "github"
       }
     },
     "nixops": {
