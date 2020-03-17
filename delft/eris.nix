@@ -278,6 +278,11 @@ in {
             replacement = "builder";
             action = "replace";
           }
+          {
+            source_labels = [ "__meta_packet_tags" ];
+            regex = ".*prometheus-scraping-disabled.*";
+            action = "drop";
+          }
         ];
       }
       {
