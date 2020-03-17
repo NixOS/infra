@@ -110,8 +110,8 @@
     },
     "nixos-channel-scripts": {
       "info": {
-        "lastModified": 1583850174,
-        "narHash": "sha256-xPPdDUqXCOFmT3tm8Q1+3qc9NY2a/6yGTnAz/W1le3I="
+        "lastModified": 1584447717,
+        "narHash": "sha256-b7Z2tl8EOvRsZeBI37+jgbxf1Iq/drgW2m7uBeaANLY="
       },
       "inputs": {
         "nix": {
@@ -172,7 +172,7 @@
       "locked": {
         "owner": "NixOS",
         "repo": "nixos-channel-scripts",
-        "rev": "faa521b1940931e5323744cee0a06a6663aa2dc6",
+        "rev": "6ba4a482630b854f6c7e0e6b72deaad3e1ff1dd0",
         "type": "github"
       },
       "original": {
