@@ -149,6 +149,22 @@
     openFirewall = true;
   };
 
+  programs.ssh = {
+    extraConfig = ''
+      Host rob-backup-server
+      Hostname 83.162.34.61
+      User nixosfoundationbackups
+      Port 6666
+    '';
+
+    knownHosts = {
+      rob-backup-server = {
+        hostNames = [ "[83.162.34.61]:6666" ];
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKKUSblYu3vgZOY4hsezAx8pwwsgVyDsnZLT9M0zZsgZ";
+      };
+    };
+  };
+
   services.zfs.autoScrub.enable = true;
 
   services.znapzend = {
@@ -173,6 +189,11 @@
             plan = "1hour=>5min,4day=>1hour,1week=>1day,1year=>1week,10year=>1month";
             host = "hydraexport@lord-nibbler.gsc.io";
             dataset = "rpool/backups/nixos.org/haumea/safe";
+          };
+          rob = {
+            plan = "1hour=>5min,4day=>1hour,1week=>1day,1year=>1week,10year=>1month";
+            host = "rob-backup-server";
+            dataset = "tank/nixos-org/haumea/safe";
           };
         };
       };
