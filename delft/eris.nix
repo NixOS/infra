@@ -18,7 +18,6 @@ in {
 
   networking.extraHosts = ''
     10.254.1.1 bastion
-    10.254.1.2 chef
     10.254.1.3 ceres
 
     10.254.1.5 ike
@@ -173,7 +172,6 @@ in {
           }
           {
             targets = [
-              "chef:9100"
               "haumea:9100"
             ];
             labels.role = "database";
@@ -282,17 +280,6 @@ in {
             source_labels = [ "__meta_packet_tags" ];
             regex = ".*prometheus-scraping-disabled.*";
             action = "drop";
-          }
-        ];
-      }
-      {
-        job_name = "postgresql";
-        metrics_path = "/metrics";
-        static_configs = [
-          {
-            targets = [
-              "10.254.1.2:9187" # chef but stupidly named
-            ];
           }
         ];
       }

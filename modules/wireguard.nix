@@ -13,12 +13,7 @@ let
       publicKey = "nG7I9gegJIynKOZ6tzpvmLdCZ/xScTgRZeFvYLFyil4=";
     };
 
-    chef = {
-      ip = "10.254.1.2";
-#      endpoint = "hydra.nixos.org";
-#      port = 51820;
-      publicKey = "Y/RHgJ7Znh9vyWlXd2g8p9Zz1YEE50TYgqDduluhjmU=";
-    };
+    # tombstone: 10.254.1.2 chef
 
     ceres = {
       ip = "10.254.1.3";
