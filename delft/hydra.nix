@@ -52,6 +52,8 @@ in
       evaluator_max_memory_size = 4096
 
       max_concurrent_evals = 1
+
+      max_unsupported_time = 86400
     '';
 
   systemd.tmpfiles.rules =
