@@ -109,8 +109,8 @@
     },
     "nix": {
       "info": {
-        "lastModified": 1585410670,
-        "narHash": "sha256-XV+F6auExmDLa2gWkZKN0BWOYFIs0ihyo+GuAKkLWOQ="
+        "lastModified": 1585415150,
+        "narHash": "sha256-pQmPLXS4sSUa2bG6OijnG/xrRJ5E6QO7J+EroFILku0="
       },
       "inputs": {
         "nixpkgs": {
@@ -135,7 +135,7 @@
       "locked": {
         "owner": "NixOS",
         "repo": "nix",
-        "rev": "5f75d56c9bb4937b7cc9b7f20b31ef151adf4497",
+        "rev": "2287e2f279ac544a2c11921be51f2f556cb78abc",
         "type": "github"
       },
       "original": {
