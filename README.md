@@ -21,7 +21,7 @@ This is currently the list of people part of the @NixOS/nixos-infra team:
 * @rbvermaa
 * @zimbatm
 
-The responsability of the team is to provide infrastructure for the Nix and
+The responsibility of the team is to provide infrastructure for the Nix and
 NixOS community.
 
 All the members should be watching this repository for changes.
