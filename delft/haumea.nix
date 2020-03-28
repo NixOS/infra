@@ -160,7 +160,7 @@
     knownHosts = {
       graham-backup-server = {
         hostNames = [ "lord-nibbler.gsc.io" "67.246.1.194" ];
-        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDtLQLzTAITZZ6F/A9SAN1FaF4s3WC2yg1HjFQTRB/UM";
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEjBFLoalf56exb7GptkI151ee+05CwvXzoyBuvzzUbK";
       };
       rob-backup-server = {
         hostNames = [ "[83.162.34.61]:6666" ];
