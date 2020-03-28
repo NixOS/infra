@@ -40,8 +40,8 @@
     },
     "nixops": {
       "info": {
-        "lastModified": 1578425074,
-        "narHash": "sha256-AEEir6CFO2+QuL4YhAIM242bUiIs83evMGEfD7NHIxE="
+        "lastModified": 1585419613,
+        "narHash": "sha256-2zh32MmDgP/jpMeh1q7rfN+carvb8hWNquP89+o/Bt8="
       },
       "inputs": {
         "nixops-aws": "nixops-aws",
@@ -51,7 +51,7 @@
       "locked": {
         "owner": "NixOS",
         "repo": "nixops",
-        "rev": "893ea3f4cc6760a6baa9d7e899884cccc11e6a4f",
+        "rev": "5924367f14dbac8596034426f12ec09f18c239bd",
         "type": "github"
       },
       "original": {
@@ -60,6 +60,7 @@
       }
     },
     "nixops-aws": {
+      "flake": false,
       "info": {
         "narHash": "sha256-52bD9sLWFjZxP9P2/2pjeoiqnN5Bic0o6mX/5B1IDKo="
       },
@@ -76,6 +77,7 @@
       }
     },
     "nixops-hetzner": {
+      "flake": false,
       "info": {
         "narHash": "sha256-4UVLwdLw17YHs1ZJR3eJGINgv1TdZytJIRrh+w6TtN4="
       },
@@ -132,12 +134,13 @@
     },
     "nixpkgs_2": {
       "info": {
-        "narHash": "sha256-UcPmWgmf7Xgr4Ta8YjLuuxqzLmIYSk+uL2gPy/5bqmk="
+        "lastModified": 1583402222,
+        "narHash": "sha256-j7WJlbJD7AO8mhtAMvsqvAFxCprYzg234H8QPaQEWgE="
       },
       "locked": {
         "owner": "edolstra",
         "repo": "nixpkgs",
-        "rev": "44603b4103dbce2c9c18e6cc0df51a74f5eb8975",
+        "rev": "54a27fb2fc5fbd8927f9f6dc77fe1de1faa05266",
         "type": "github"
       },
       "original": {
