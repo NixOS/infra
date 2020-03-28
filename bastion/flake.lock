@@ -1,34 +1,36 @@
 {
-  "inputs": {
+  "nodes": {
     "nix": {
       "info": {
-        "lastModified": 1585415150,
-        "narHash": "sha256-pQmPLXS4sSUa2bG6OijnG/xrRJ5E6QO7J+EroFILku0="
+        "lastModified": 1585418976,
+        "narHash": "sha256-SB+GivLIbbShh13ova5YRsFF/trvoCUBGlhXmNzfcis="
       },
       "inputs": {
-        "nixpkgs": {
-          "info": {
-            "lastModified": 1584712526,
-            "narHash": "sha256-aoYSp+cpgZT7o4tC7XeXqHCC60Acw7SSGxMvdnQfuZQ="
-          },
-          "inputs": {},
-          "locked": {
-            "owner": "NixOS",
-            "repo": "nixpkgs",
-            "rev": "81fa5f4501372671b464fe0104fe47f5327b46fe",
-            "type": "github"
-          },
-          "original": {
-            "id": "nixpkgs",
-            "ref": "nixos-20.03-small",
-            "type": "indirect"
-          }
-        }
+        "nixpkgs": "nixpkgs"
       },
       "locked": {
         "owner": "NixOS",
         "repo": "nix",
-        "rev": "2287e2f279ac544a2c11921be51f2f556cb78abc",
+        "rev": "2fccef0c59f57ad276a60f6d3ae59dcc36a51027",
+        "type": "github"
+      },
+      "original": {
+        "id": "nix",
+        "type": "indirect"
+      }
+    },
+    "nix_2": {
+      "info": {
+        "lastModified": 1583764121,
+        "narHash": "sha256-o48N/W0dIqA0h/rdiMxc4XsV3pqfW7B+co4JtvUmgfY="
+      },
+      "inputs": {
+        "nixpkgs": "nixpkgs_3"
+      },
+      "locked": {
+        "owner": "NixOS",
+        "repo": "nix",
+        "rev": "73769b28e376cf1fb3e7248bafaa17c35527925d",
         "type": "github"
       },
       "original": {
@@ -42,58 +44,9 @@
         "narHash": "sha256-AEEir6CFO2+QuL4YhAIM242bUiIs83evMGEfD7NHIxE="
       },
       "inputs": {
-        "nixops-aws": {
-          "info": {
-            "narHash": "sha256-52bD9sLWFjZxP9P2/2pjeoiqnN5Bic0o6mX/5B1IDKo="
-          },
-          "inputs": {},
-          "locked": {
-            "owner": "NixOS",
-            "repo": "nixops-aws",
-            "rev": "0da38bb5de82d7a118ac32ebefa7a2d5869ba5ab",
-            "type": "github"
-          },
-          "original": {
-            "owner": "NixOS",
-            "repo": "nixops-aws",
-            "type": "github"
-          }
-        },
-        "nixops-hetzner": {
-          "info": {
-            "narHash": "sha256-4UVLwdLw17YHs1ZJR3eJGINgv1TdZytJIRrh+w6TtN4="
-          },
-          "inputs": {},
-          "locked": {
-            "owner": "NixOS",
-            "repo": "nixops-hetzner",
-            "rev": "33256100466e9624af21312d2ae0da8b0b80354a",
-            "type": "github"
-          },
-          "original": {
-            "owner": "NixOS",
-            "ref": "zfs",
-            "repo": "nixops-hetzner",
-            "type": "github"
-          }
-        },
-        "nixpkgs": {
-          "info": {
-            "narHash": "sha256-UcPmWgmf7Xgr4Ta8YjLuuxqzLmIYSk+uL2gPy/5bqmk="
-          },
-          "inputs": {},
-          "locked": {
-            "owner": "edolstra",
-            "repo": "nixpkgs",
-            "rev": "44603b4103dbce2c9c18e6cc0df51a74f5eb8975",
-            "type": "github"
-          },
-          "original": {
-            "id": "nixpkgs",
-            "ref": "release-19.09",
-            "type": "indirect"
-          }
-        }
+        "nixops-aws": "nixops-aws",
+        "nixops-hetzner": "nixops-hetzner",
+        "nixpkgs": "nixpkgs_2"
       },
       "locked": {
         "owner": "NixOS",
@@ -106,66 +59,47 @@
         "type": "indirect"
       }
     },
+    "nixops-aws": {
+      "info": {
+        "narHash": "sha256-52bD9sLWFjZxP9P2/2pjeoiqnN5Bic0o6mX/5B1IDKo="
+      },
+      "locked": {
+        "owner": "NixOS",
+        "repo": "nixops-aws",
+        "rev": "0da38bb5de82d7a118ac32ebefa7a2d5869ba5ab",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixops-aws",
+        "type": "github"
+      }
+    },
+    "nixops-hetzner": {
+      "info": {
+        "narHash": "sha256-4UVLwdLw17YHs1ZJR3eJGINgv1TdZytJIRrh+w6TtN4="
+      },
+      "locked": {
+        "owner": "NixOS",
+        "repo": "nixops-hetzner",
+        "rev": "33256100466e9624af21312d2ae0da8b0b80354a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "zfs",
+        "repo": "nixops-hetzner",
+        "type": "github"
+      }
+    },
     "nixos-channel-scripts": {
       "info": {
         "lastModified": 1585207486,
         "narHash": "sha256-Bh/shvmZYJeBl/uhPQ23kd7Brpegw3cX4gIA6ZCI0Wk="
       },
       "inputs": {
-        "nix": {
-          "info": {
-            "lastModified": 1583764121,
-            "narHash": "sha256-o48N/W0dIqA0h/rdiMxc4XsV3pqfW7B+co4JtvUmgfY="
-          },
-          "inputs": {
-            "nixpkgs": {
-              "info": {
-                "lastModified": 1580555706,
-                "narHash": "sha256-ly5Gxl9yZgW2w1F3aDU5bvg34Ct+juUaOg8vue+Mkbo="
-              },
-              "inputs": {},
-              "locked": {
-                "owner": "edolstra",
-                "repo": "nixpkgs",
-                "rev": "43e283790fbe330b723ac44b584824cf6d85c1ee",
-                "type": "github"
-              },
-              "original": {
-                "id": "nixpkgs",
-                "ref": "release-19.09",
-                "type": "indirect"
-              }
-            }
-          },
-          "locked": {
-            "owner": "NixOS",
-            "repo": "nix",
-            "rev": "73769b28e376cf1fb3e7248bafaa17c35527925d",
-            "type": "github"
-          },
-          "original": {
-            "id": "nix",
-            "type": "indirect"
-          }
-        },
-        "nixpkgs": {
-          "info": {
-            "lastModified": 1583402222,
-            "narHash": "sha256-j7WJlbJD7AO8mhtAMvsqvAFxCprYzg234H8QPaQEWgE="
-          },
-          "inputs": {},
-          "locked": {
-            "owner": "edolstra",
-            "repo": "nixpkgs",
-            "rev": "54a27fb2fc5fbd8927f9f6dc77fe1de1faa05266",
-            "type": "github"
-          },
-          "original": {
-            "id": "nixpkgs",
-            "ref": "release-19.09",
-            "type": "indirect"
-          }
-        }
+        "nix": "nix_2",
+        "nixpkgs": "nixpkgs_4"
       },
       "locked": {
         "owner": "NixOS",
@@ -181,10 +115,59 @@
     },
     "nixpkgs": {
       "info": {
+        "lastModified": 1584712526,
+        "narHash": "sha256-aoYSp+cpgZT7o4tC7XeXqHCC60Acw7SSGxMvdnQfuZQ="
+      },
+      "locked": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "81fa5f4501372671b464fe0104fe47f5327b46fe",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-20.03-small",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_2": {
+      "info": {
+        "narHash": "sha256-UcPmWgmf7Xgr4Ta8YjLuuxqzLmIYSk+uL2gPy/5bqmk="
+      },
+      "locked": {
+        "owner": "edolstra",
+        "repo": "nixpkgs",
+        "rev": "44603b4103dbce2c9c18e6cc0df51a74f5eb8975",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "release-19.09",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_3": {
+      "info": {
+        "lastModified": 1580555706,
+        "narHash": "sha256-ly5Gxl9yZgW2w1F3aDU5bvg34Ct+juUaOg8vue+Mkbo="
+      },
+      "locked": {
+        "owner": "edolstra",
+        "repo": "nixpkgs",
+        "rev": "43e283790fbe330b723ac44b584824cf6d85c1ee",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "release-19.09",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_4": {
+      "info": {
         "lastModified": 1583402222,
         "narHash": "sha256-j7WJlbJD7AO8mhtAMvsqvAFxCprYzg234H8QPaQEWgE="
       },
-      "inputs": {},
       "locked": {
         "owner": "edolstra",
         "repo": "nixpkgs",
@@ -196,7 +179,33 @@
         "ref": "release-19.09",
         "type": "indirect"
       }
+    },
+    "nixpkgs_5": {
+      "info": {
+        "lastModified": 1583402222,
+        "narHash": "sha256-j7WJlbJD7AO8mhtAMvsqvAFxCprYzg234H8QPaQEWgE="
+      },
+      "locked": {
+        "owner": "edolstra",
+        "repo": "nixpkgs",
+        "rev": "54a27fb2fc5fbd8927f9f6dc77fe1de1faa05266",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "release-19.09",
+        "type": "indirect"
+      }
+    },
+    "root": {
+      "inputs": {
+        "nix": "nix",
+        "nixops": "nixops",
+        "nixos-channel-scripts": "nixos-channel-scripts",
+        "nixpkgs": "nixpkgs_5"
+      }
     }
   },
-  "version": 4
+  "root": "root",
+  "version": 5
 }
