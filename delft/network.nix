@@ -5,6 +5,10 @@ let
     deployment = {
       targetHost = ip;
     };
+
+    # work around nix#3462
+    documentation.nixos.enable = false;
+
     macosGuest = {
       enable = true;
       network = {
