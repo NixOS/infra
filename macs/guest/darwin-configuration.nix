@@ -36,12 +36,6 @@ in
       gbFree = 50;
   in "--max-freed $((${toString gbFree} * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | awk '{ print $4 }')))";
 
-  # If we drop below 20GiB during builds, free 20GiB
-  nix.extraOptions = ''
-    min-free = ${toString (30*1024*1024*1024)}
-    max-free = ${toString (50*1024*1024*1024)}
-  '';
-
   environment.etc."per-user/root/ssh/authorized_keys".text = concatStringsSep "\n"
     ([
       (authorizedNixStoreKey sshKeys.hydra-queue-runner)
