@@ -69,7 +69,7 @@ in {
 
     services.kresd = {
       enable = true;
-      interfaces = [ "::1" "127.0.0.1" routerIP ];
+      listenPlain = [ "[::1]:53" "127.0.0.1:53" "${routerIP}:53" ];
       extraConfig = ''
         modules = {
           'policy',   -- Block queries to local zones/bad sites
