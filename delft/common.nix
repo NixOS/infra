@@ -93,4 +93,6 @@ with lib;
 
   # Disable sending email from cron.
   services.cron.mailto = "";
+
+  documentation.nixos.enable = false;
 }
