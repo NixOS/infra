@@ -27,7 +27,7 @@ in {
     };
 
     systemd.services."run-macos-vm" = rec {
-      requires = [ "create-macos-secrets.service" "dhcpd4.service" "kresd.service" "network-online.target" ];
+      requires = [ "create-macos-secrets.service" "dhcpd4.service" "kresd@1.service" "network-online.target" ];
       after = requires;
       wantedBy = [ "multi-user.target" ];
       wants = [ "netcatsyslog.service" "healthcheck-macos-vm.timer" ];
