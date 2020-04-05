@@ -21,6 +21,7 @@ in {
   };
 
   systemd.services.rfc39-sync = {
+    enable = false;
     description = "Sync the Maintainer Team ";
     path  = [ config.nix.package pkgs.git rfc39 ];
     startAt = "*:0/30";
