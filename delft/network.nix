@@ -36,6 +36,8 @@ let
 
 in {
   defaults = {
+    documentation.nixos.enable = false;
+
     security.acme.acceptTerms = true;
     security.acme.email = "webmaster@nixos.org";
 
