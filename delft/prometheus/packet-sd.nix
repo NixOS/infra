@@ -1,16 +1,16 @@
-{ buildGoModule, fetchFromGitHub, lib }:
-buildGoModule rec {
+{ buildGo112Module, fetchFromGitHub, lib }:
+buildGo112Module rec {
   pname = "prometheus-packet-sd";
-  version = "2019-09-28";
+  version = "v0.0.3";
 
   src = fetchFromGitHub {
     owner = "packethost";
     repo = "prometheus-packet-sd";
-    rev = "2944af336b2fda49d5840d6cc28877afad0fd031";
-    sha256 = "01464m88pcv0zfd6hm4m02phf5b9gj2k04qdd71iir4zvvjgyd6g";
+    rev = "v0.0.3";
+    sha256 = "sha256-2k8AsmyhQNNZCzpVt6JdgvI8IFb5pRi4ic6Yn2NqHMM=";
   };
 
-  modSha256 = "sha256-vP1O2YFMCu2P7YnV67yrMSyvWxLwun4cm/Hm5y6W1FY=";
+  modSha256 = "sha256-I2QSxtNH5KcY7YBDI5XgoIa3bzGBIhDrxweqc34L0Ug=";
 
   subPackages = [ "." ];
 
