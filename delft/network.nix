@@ -36,6 +36,9 @@ let
 
 in {
   defaults = {
+    security.acme.acceptTerms = true;
+    security.acme.email = "webmaster@nixos.org";
+
     imports = [
       ../modules/wireguard.nix
       ../modules/prometheus
