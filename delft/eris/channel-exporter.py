@@ -41,11 +41,19 @@ def measure_channel(name):
     try:
         with CHANNEL_REQUEST_FAILURES.count_exceptions():
             result = requests.get(f"https://nixos.org/channels/{name}/git-revision")
-        return {
-            "timestamp": parse(result.headers["last-modified"]).timestamp(),
-            "revision": result.text
-        }
+
+            try:
+                return {
+                    "timestamp": parse(result.headers["last-modified"]).timestamp(),
+                    "revision": result.text
+                }
+            except KeyError as e:
+                print(f"Got KeyError after getting our result for {name}:")
+                pprint(e)
+                pprint(result)
+
     except Exception as e:
+        print(f"Got a mystery error for {name}:")
         pprint(e)
 
 
