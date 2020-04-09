@@ -7,7 +7,7 @@
       },
       "inputs": {
         "nix": "nix",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs_2"
       },
       "locked": {
         "owner": "edolstra",
@@ -27,7 +27,7 @@
       },
       "inputs": {
         "nix": "nix_2",
-        "nixpkgs": "nixpkgs_3"
+        "nixpkgs": "nixpkgs_4"
       },
       "locked": {
         "owner": "NixOS",
@@ -65,7 +65,7 @@
         "narHash": "sha256-QbAxdnDkVvSVgkCNRbt3fUPUSNbeq9y3u7Vek/7Ib44="
       },
       "inputs": {
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_3"
       },
       "locked": {
         "owner": "NixOS",
@@ -84,7 +84,7 @@
         "narHash": "sha256-7YxrpRPmAOoCSl6KtepKCXcae5MUm1Pl+lwDunBFGoo="
       },
       "inputs": {
-        "nixpkgs": "nixpkgs_4"
+        "nixpkgs": "nixpkgs_5"
       },
       "locked": {
         "owner": "NixOS",
@@ -133,6 +133,23 @@
     },
     "nixpkgs_3": {
       "info": {
+        "lastModified": 1585405475,
+        "narHash": "sha256-bESW0n4KgPmZ0luxvwJ+UyATrC6iIltVCsGdLiphVeE="
+      },
+      "locked": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "b88ff468e9850410070d4e0ccd68c7011f15b2be",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-20.03-small",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_4": {
+      "info": {
         "lastModified": 1585388205,
         "narHash": "sha256-lOXYmCE6FSikoOHr1HFIkNLnA0qdYhe8CxB8rE6+SnE="
       },
@@ -148,7 +165,7 @@
         "type": "indirect"
       }
     },
-    "nixpkgs_4": {
+    "nixpkgs_5": {
       "info": {
         "lastModified": 1585405475,
         "narHash": "sha256-bESW0n4KgPmZ0luxvwJ+UyATrC6iIltVCsGdLiphVeE="
@@ -165,7 +182,7 @@
         "type": "indirect"
       }
     },
-    "nixpkgs_5": {
+    "nixpkgs_6": {
       "info": {
         "lastModified": 1586219474,
         "narHash": "sha256-fvfrMnEA2lDnXvH/eInGV5i0sO/EGLVHa4pOek8VG78="
@@ -187,7 +204,7 @@
         "dwarffs": "dwarffs",
         "hydra": "hydra",
         "nix": "nix_3",
-        "nixpkgs": "nixpkgs_5"
+        "nixpkgs": "nixpkgs_6"
       }
     }
   },
