@@ -28,7 +28,7 @@ rec {
         current = true;
       };
       "nixpkgs-20.03-darwin" = {
-        job = "nixpkgs/release-20.03-darwin/darwin-tested";
+        job = "nixpkgs/nixpkgs-20.03-darwin/darwin-tested";
         current = true;
       };
 
