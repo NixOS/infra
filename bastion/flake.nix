@@ -1,8 +1,7 @@
 {
   edition = 201909;
 
-  inputs.nixpkgs.url = "nixpkgs/release-19.09";
-  #inputs.nixops.url = "/home/deploy/src/nixops";
+  inputs.nixpkgs.url = "nixpkgs/nixos-20.03-small";
   inputs.nixos-channel-scripts.url = github:NixOS/nixos-channel-scripts;
 
   outputs = { self, nixpkgs, nix, nixops, nixos-channel-scripts }: {
