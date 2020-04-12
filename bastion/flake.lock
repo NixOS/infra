@@ -137,18 +137,18 @@
     },
     "nixpkgs_2": {
       "info": {
-        "lastModified": 1586219474,
-        "narHash": "sha256-fvfrMnEA2lDnXvH/eInGV5i0sO/EGLVHa4pOek8VG78="
+        "lastModified": 1586543772,
+        "narHash": "sha256-NQHEdPWK1vmRvfZSC3k06qody9zeY2ShNRMJRi4PCmQ="
       },
       "locked": {
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "29eddfc36d720dcc4822581175217543b387b1e8",
+        "rev": "66d8a2bda511e1fc46725322f94261c8a4083757",
         "type": "github"
       },
       "original": {
         "id": "nixpkgs",
-        "ref": "nixos-20.03",
+        "ref": "nixos-20.03-small",
         "type": "indirect"
       }
     },
@@ -186,29 +186,12 @@
         "type": "indirect"
       }
     },
-    "nixpkgs_5": {
-      "info": {
-        "lastModified": 1586543772,
-        "narHash": "sha256-NQHEdPWK1vmRvfZSC3k06qody9zeY2ShNRMJRi4PCmQ="
-      },
-      "locked": {
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "66d8a2bda511e1fc46725322f94261c8a4083757",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "ref": "nixos-20.03-small",
-        "type": "indirect"
-      }
-    },
     "root": {
       "inputs": {
         "nix": "nix",
         "nixops": "nixops",
         "nixos-channel-scripts": "nixos-channel-scripts",
-        "nixpkgs": "nixpkgs_5"
+        "nixpkgs": "nixpkgs_2"
       }
     }
   },
