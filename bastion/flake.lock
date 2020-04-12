@@ -40,8 +40,8 @@
     },
     "nixops": {
       "info": {
-        "lastModified": 1585419613,
-        "narHash": "sha256-2zh32MmDgP/jpMeh1q7rfN+carvb8hWNquP89+o/Bt8="
+        "lastModified": 1586701146,
+        "narHash": "sha256-JMfzMXFTYuUEtEiMhbmGdlQYxBwIF/5R8DIa9sGBVe4="
       },
       "inputs": {
         "nixops-aws": "nixops-aws",
@@ -51,7 +51,7 @@
       "locked": {
         "owner": "NixOS",
         "repo": "nixops",
-        "rev": "5924367f14dbac8596034426f12ec09f18c239bd",
+        "rev": "0a636f2d59955a7cc1e6cb5bb132aea325c631cf",
         "type": "github"
       },
       "original": {
@@ -62,16 +62,18 @@
     "nixops-aws": {
       "flake": false,
       "info": {
-        "narHash": "sha256-52bD9sLWFjZxP9P2/2pjeoiqnN5Bic0o6mX/5B1IDKo="
+        "lastModified": 1586700941,
+        "narHash": "sha256-9yh7iHMJ8F8wA4nwTjm8rcmceFM/6URHK/Q/AuCkdzE="
       },
       "locked": {
         "owner": "NixOS",
         "repo": "nixops-aws",
-        "rev": "0da38bb5de82d7a118ac32ebefa7a2d5869ba5ab",
+        "rev": "af97c16f179cd0df94a6fc3ef470092122253f60",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
+        "ref": "flake",
         "repo": "nixops-aws",
         "type": "github"
       }
@@ -79,12 +81,13 @@
     "nixops-hetzner": {
       "flake": false,
       "info": {
-        "narHash": "sha256-4UVLwdLw17YHs1ZJR3eJGINgv1TdZytJIRrh+w6TtN4="
+        "lastModified": 1586701048,
+        "narHash": "sha256-q1QhsSp3N4nffnpUnGrF0Jg7VyLvi9JXiD82oxaM/Jg="
       },
       "locked": {
         "owner": "NixOS",
         "repo": "nixops-hetzner",
-        "rev": "33256100466e9624af21312d2ae0da8b0b80354a",
+        "rev": "663b02618ece7a92a72da408a552528ee8dd354c",
         "type": "github"
       },
       "original": {
@@ -134,18 +137,18 @@
     },
     "nixpkgs_2": {
       "info": {
-        "lastModified": 1583402222,
-        "narHash": "sha256-j7WJlbJD7AO8mhtAMvsqvAFxCprYzg234H8QPaQEWgE="
+        "lastModified": 1586219474,
+        "narHash": "sha256-fvfrMnEA2lDnXvH/eInGV5i0sO/EGLVHa4pOek8VG78="
       },
       "locked": {
-        "owner": "edolstra",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "54a27fb2fc5fbd8927f9f6dc77fe1de1faa05266",
+        "rev": "29eddfc36d720dcc4822581175217543b387b1e8",
         "type": "github"
       },
       "original": {
         "id": "nixpkgs",
-        "ref": "release-19.09",
+        "ref": "nixos-20.03",
         "type": "indirect"
       }
     },
