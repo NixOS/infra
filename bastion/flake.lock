@@ -185,18 +185,18 @@
     },
     "nixpkgs_5": {
       "info": {
-        "lastModified": 1583402222,
-        "narHash": "sha256-j7WJlbJD7AO8mhtAMvsqvAFxCprYzg234H8QPaQEWgE="
+        "lastModified": 1586543772,
+        "narHash": "sha256-NQHEdPWK1vmRvfZSC3k06qody9zeY2ShNRMJRi4PCmQ="
       },
       "locked": {
-        "owner": "edolstra",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "54a27fb2fc5fbd8927f9f6dc77fe1de1faa05266",
+        "rev": "66d8a2bda511e1fc46725322f94261c8a4083757",
         "type": "github"
       },
       "original": {
         "id": "nixpkgs",
-        "ref": "release-19.09",
+        "ref": "nixos-20.03-small",
         "type": "indirect"
       }
     },
