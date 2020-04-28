@@ -1,7 +1,7 @@
 {
   edition = 201909;
 
-  inputs.nixpkgs.uri = "nixpkgs/release-19.09";
+  inputs.nixpkgs.uri = "nixpkgs/nixos-20.03";
 
   outputs = { self, nixpkgs, nix, hydra }: {
 
@@ -22,8 +22,8 @@
             [ nix.overlay
             ];
 
-          #system.configurationRevision = flakes.self.rev
-          #  or (throw "Cannot deploy from an unclean source tree!");
+          system.configurationRevision = self.rev
+            or (throw "Cannot deploy from an unclean source tree!");
 
           deployment.targetEnv = "hetzner";
           deployment.hetzner.mainIPv4 = "116.202.113.248"; # 2a01:4f8:231:4187::2

@@ -40,7 +40,6 @@ in
   services.httpd = {
     enable = true;
     adminAddr = "ngi@nixos.org";
-    hostName = "hydra.ngi0.nixos.org";
     logFormat = ''"%h %l %u %t \"%r\" %>s %b %D"'';
     extraConfig = hydraProxyConfig +
       ''
@@ -49,18 +48,8 @@ in
         RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
       '';
 
-    servedDirs =
-      [ { urlPath = "/apache-errors";
-          dir = ../../delft/apache-errors;
-        }
-        { urlPath = "/.well-known/acme-challenge";
-          dir = "${acmeWebRoot}/.well-known/acme-challenge";
-        }
-      ];
-
-    virtualHosts = [
-      { hostName = "hydra.nixos.org";
-        enableSSL = true;
+    virtualHosts."hydra.ngi0.nixos.org" =
+      { addSSL = true;
         sslServerKey = "${acmeKeyDir}/key.pem";
         sslServerCert = "${acmeKeyDir}/fullchain.pem";
         extraConfig = ''
@@ -69,12 +58,20 @@ in
           RequestHeader set X-Forwarded-Port 443
           Header always set Strict-Transport-Security "max-age=15552000"
         '';
-      }
-    ];
+        servedDirs =
+          [ { urlPath = "/apache-errors";
+              dir = ../../delft/apache-errors;
+            }
+            { urlPath = "/.well-known/acme-challenge";
+              dir = "${acmeWebRoot}/.well-known/acme-challenge";
+            }
+          ];
+      };
 
   };
 
   # Let's Encrypt configuration.
+  security.acme.acceptTerms = true;
   security.acme.certs."hydra.ngi0.nixos.org" =
     { email = "ngi@nixos.org";
       webroot = acmeWebRoot;
