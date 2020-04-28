@@ -2,7 +2,7 @@
 
 {
   services.hydra-dev.enable = true;
-  #services.hydra-dev.logo = ./hydra-logo.png;
+  services.hydra-dev.logo = ./ngi-logo.svg;
   services.hydra-dev.hydraURL = "https://hydra.ngi0.nixos.org";
   services.hydra-dev.notificationSender = "ngi@nixos.org";
   services.hydra-dev.smtpHost = "localhost";
