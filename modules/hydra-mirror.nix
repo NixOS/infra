@@ -39,8 +39,8 @@ in
 
   systemd.tmpfiles.rules = [
     ''
-      F /scratch/hydra-mirror/nixos-files.sqlite - - - 8d -
-      e /scratch/hydra-mirror/release-*          - - - 1d -
+      F /scratch/hydra-mirror/nixos-files.sqlite - - - 8d
+      e /scratch/hydra-mirror/release-*/*        - - - 1d -
     ''
   ];
 
