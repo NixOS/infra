@@ -37,6 +37,13 @@ in
 {
   imports = [ ./hydra-mirror-user.nix ];
 
+  systemd.tmpfiles.rules = [
+    ''
+      F /scratch/hydra-mirror/nixos-files.sqlite - - - 8d -
+      e /scratch/hydra-mirror/release-*          - - - 1d -
+    ''
+  ];
+
   systemd.services = (lib.listToAttrs updateJobs) // {
     "update-all-channels" = {
       description = "Start all channel updates.";
