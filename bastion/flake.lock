@@ -21,8 +21,8 @@
     },
     "nix_2": {
       "info": {
-        "lastModified": 1586440843,
-        "narHash": "sha256-7YxrpRPmAOoCSl6KtepKCXcae5MUm1Pl+lwDunBFGoo="
+        "lastModified": 1588846396,
+        "narHash": "sha256-hUaWny0R5mBgHkP8Z+NBR7uBR7zp2FyxhcDi5LK4qxI="
       },
       "inputs": {
         "nixpkgs": "nixpkgs_3"
@@ -30,7 +30,7 @@
       "locked": {
         "owner": "NixOS",
         "repo": "nix",
-        "rev": "3aaceeb7e2d3fb8a07a1aa5a21df1dca6bbaa0ef",
+        "rev": "14a3a62bfca6c572b9a415cfa80cdbd7ad4326b3",
         "type": "github"
       },
       "original": {
@@ -99,8 +99,8 @@
     },
     "nixos-channel-scripts": {
       "info": {
-        "lastModified": 1586742026,
-        "narHash": "sha256-iyuxFEGLIRLGszOQxUTx09fjayZVP3PddVxH5CNPQ9I="
+        "lastModified": 1589291677,
+        "narHash": "sha256-tlPi/hqH7WDA6Cq0AlYjrGfAI9L2B8qML5BxpJHr50Q="
       },
       "inputs": {
         "nix": "nix_2",
@@ -109,7 +109,7 @@
       "locked": {
         "owner": "NixOS",
         "repo": "nixos-channel-scripts",
-        "rev": "7a681103b2b3ce150f7f96394f19aa0ad4797ca1",
+        "rev": "f3aa3bae4c06453fb9012abdbbd9ee422e6d5669",
         "type": "github"
       },
       "original": {
