@@ -2,8 +2,8 @@
   "nodes": {
     "hydra": {
       "info": {
-        "lastModified": 1586991338,
-        "narHash": "sha256-pZmU931Tx4DN0rWYy3WeWdhkBzub+XoXP1Q75Z2nQ+8="
+        "lastModified": 1589990287,
+        "narHash": "sha256-IQB1wKIL1LpYbGF1zzxKgFMEqvVXRCY4c5oeSFE37ec="
       },
       "inputs": {
         "nix": "nix",
@@ -12,7 +12,7 @@
       "locked": {
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "87837f1d82904bf48e11b5641258b6be2f663c3b",
+        "rev": "3c6b724f921132b06a16d933d5f215788f88d0e1",
         "type": "github"
       },
       "original": {
@@ -22,8 +22,8 @@
     },
     "nix": {
       "info": {
-        "lastModified": 1586440843,
-        "narHash": "sha256-7YxrpRPmAOoCSl6KtepKCXcae5MUm1Pl+lwDunBFGoo="
+        "lastModified": 1588846396,
+        "narHash": "sha256-hUaWny0R5mBgHkP8Z+NBR7uBR7zp2FyxhcDi5LK4qxI="
       },
       "inputs": {
         "nixpkgs": "nixpkgs"
@@ -31,7 +31,7 @@
       "locked": {
         "owner": "NixOS",
         "repo": "nix",
-        "rev": "3aaceeb7e2d3fb8a07a1aa5a21df1dca6bbaa0ef",
+        "rev": "14a3a62bfca6c572b9a415cfa80cdbd7ad4326b3",
         "type": "github"
       },
       "original": {
@@ -41,8 +41,8 @@
     },
     "nix_2": {
       "info": {
-        "lastModified": 1588020791,
-        "narHash": "sha256-I+GqqEKT1WTD+nAp1qU/9+cT40YwkvF4CJikMtzri8c="
+        "lastModified": 1589546290,
+        "narHash": "sha256-mGWF0XCVLLxRk7r5prEOMZz58PnyKgywRqUPpU28pow="
       },
       "inputs": {
         "nixpkgs": "nixpkgs_3"
@@ -50,7 +50,7 @@
       "locked": {
         "owner": "NixOS",
         "repo": "nix",
-        "rev": "6521c92ce8289a5f9e959c6789ab24dacdad082e",
+        "rev": "5f64655ff429be08aa0787761697787e7050f373",
         "type": "github"
       },
       "original": {
@@ -111,13 +111,13 @@
     },
     "nixpkgs_4": {
       "info": {
-        "lastModified": 1588027483,
-        "narHash": "sha256-DcNFRegA72g1fmVWp+kFxxD4JuAwwM7XjYy0ebRa56U="
+        "lastModified": 1589967776,
+        "narHash": "sha256-LN8eYrzWsgCPlXS5C5l0sZz2Fai73uC90JC+FGQ0h4A="
       },
       "locked": {
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "2faa76db27c4a8045d050d9b390dbb2249b0f3c0",
+        "rev": "f45ccd9d20b4e90e43c4562b9941ea1dbd8f07a4",
         "type": "github"
       },
       "original": {
