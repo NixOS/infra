@@ -194,11 +194,13 @@
             host = "hydraexport@lord-nibbler.gsc.io";
             dataset = "rpool/backups/nixos.org/haumea/safe";
           };
+/*
           rob = {
             plan = "1hour=>5min,4day=>1hour,1week=>1day,1year=>1week,10year=>1month";
             host = "rob-backup-server";
             dataset = "tank/nixos-org/haumea/safe";
           };
+*/
         };
       };
     };
