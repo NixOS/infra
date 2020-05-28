@@ -54,6 +54,8 @@ in
       max_concurrent_evals = 1
 
       max_unsupported_time = 86400
+
+      allow_import_from_derivation = false
     '';
 
   systemd.tmpfiles.rules =
