@@ -9,13 +9,11 @@ from pprint import pprint
 import json
 
 
-def new_revision_registry():
-    return Gauge(
-        "channel_revision",
-        "Current revision, exported as a hack",
-        ["channel", "revision"],
-        registry=None
-    )
+CHANNEL_REVISION = Gauge(
+    "channel_revision",
+    "Current revision, exported as a hack",
+    ["channel", "revision"],
+)
 
 
 CHANNEL_REQUEST_TIME = Histogram(
@@ -63,18 +61,16 @@ if __name__ == "__main__":
     with open(sys.argv[1]) as channel_data:
         channels = json.load(channel_data)
 
-    previous_channel_revision = None
+    revisions = {}
+
     while True:
-        CHANNEL_REVISION = new_revision_registry()
         for (channel, about) in channels.items():
+            if channel in revisions:
+                CHANNEL_REVISION.remove(channel, revisions.pop(channel))
+
             measurement = measure_channel(channel)
             if measurement is not None:
                 CHANNEL_UPDATE_TIME.labels(channel=channel).set(measurement['timestamp'])
                 CHANNEL_REVISION.labels(channel=channel, revision=measurement['revision']).set(1)
                 CHANNEL_CURRENT.labels(channel=channel).set(int(about['current']))
-
-        if previous_channel_revision is not None:
-            REGISTRY.unregister(previous_channel_revision)
-        REGISTRY.register(CHANNEL_REVISION)
-        previous_channel_revision = CHANNEL_REVISION
-        time.sleep(55)
+                revisions[channel] = measurement['revision']
