@@ -65,12 +65,14 @@ if __name__ == "__main__":
 
     while True:
         for (channel, about) in channels.items():
-            if channel in revisions:
-                CHANNEL_REVISION.remove(channel, revisions.pop(channel))
-
             measurement = measure_channel(channel)
             if measurement is not None:
+                revision = measurement['revision']
                 CHANNEL_UPDATE_TIME.labels(channel=channel).set(measurement['timestamp'])
                 CHANNEL_REVISION.labels(channel=channel, revision=measurement['revision']).set(1)
                 CHANNEL_CURRENT.labels(channel=channel).set(int(about['current']))
-                revisions[channel] = measurement['revision']
+                print('updated {}'.format(channel))
+                previous_revision = revisions.pop(channel, None)
+                revisions[channel] = revision
+                if previous_revision and previous_revision != revision:
+                    CHANNEL_REVISION.remove(channel, previous_revision)
