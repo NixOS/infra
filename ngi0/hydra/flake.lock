@@ -6,11 +6,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1589990287,
-        "narHash": "sha256-IQB1wKIL1LpYbGF1zzxKgFMEqvVXRCY4c5oeSFE37ec=",
+        "lastModified": 1591779437,
+        "narHash": "sha256-37oEOEINolSsa0KeWfz45MMb+A7vJ8E8VmM975Zih6s=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "3c6b724f921132b06a16d933d5f215788f88d0e1",
+        "rev": "1831866a52df4a2821faf902c8440136cdf4c827",
         "type": "github"
       },
       "original": {
