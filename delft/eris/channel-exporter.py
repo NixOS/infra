@@ -38,7 +38,7 @@ CHANNEL_REQUEST_FAILURES = Counter(
 def measure_channel(name):
     try:
         with CHANNEL_REQUEST_FAILURES.count_exceptions():
-            result = requests.get(f"https://nixos.org/channels/{name}/git-revision")
+            result = requests.get(f"https://nixos.org/channels/{name}/git-revision", timeout=10)
 
             try:
                 return {
