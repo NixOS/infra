@@ -24,11 +24,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1589292860,
-        "narHash": "sha256-0rxcBxu62n3JNywgNVNdwUVqkW+9TiMStLlxYEC2u64=",
+        "lastModified": 1591779437,
+        "narHash": "sha256-37oEOEINolSsa0KeWfz45MMb+A7vJ8E8VmM975Zih6s=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "15a45f1a8a867369bb58991fbcf58366b10cc62d",
+        "rev": "1831866a52df4a2821faf902c8440136cdf4c827",
         "type": "github"
       },
       "original": {
