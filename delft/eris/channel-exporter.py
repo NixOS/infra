@@ -5,6 +5,7 @@ from dateutil.parser import parse
 from prometheus_client import Counter, Histogram, Gauge, start_http_server, REGISTRY
 import time
 import sys
+import logging
 from pprint import pprint
 import json
 
@@ -38,7 +39,7 @@ CHANNEL_REQUEST_FAILURES = Counter(
 def measure_channel(name):
     try:
         with CHANNEL_REQUEST_FAILURES.count_exceptions():
-            result = requests.get(f"https://nixos.org/channels/{name}/git-revision")
+            result = requests.get(f"https://nixos.org/channels/{name}/git-revision", timeout=10)
 
             try:
                 return {
@@ -56,6 +57,7 @@ def measure_channel(name):
 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.DEBUG)
     start_http_server(9402)
 
     with open(sys.argv[1]) as channel_data:
