@@ -24,11 +24,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1594205402,
-        "narHash": "sha256-s8WmEI9uJ3fnrtJK36HqAU9AZxjjn9ktZYCxqHAg9NI=",
+        "lastModified": 1595929664,
+        "narHash": "sha256-GMFmXhXclCG62Wj4pwlnOtkpzQ4qfR8q3/2kvr1Bpd0=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "7985757a1dbb74926d5de0cf5efe46e10e46ca2c",
+        "rev": "58a8b1c91cf8ed234a3e4ba61e45dd1f064fb945",
         "type": "github"
       },
       "original": {
@@ -63,23 +63,6 @@
         "owner": "NixOS",
         "repo": "nix",
         "rev": "1ab9da915422405452118ebb17b88cdfc90b1e10",
-        "type": "github"
-      },
-      "original": {
-        "id": "nix",
-        "type": "indirect"
-      }
-    },
-    "nix_3": {
-      "inputs": {
-        "nixpkgs": "nixpkgs_5"
-      },
-      "locked": {
-        "lastModified": 1594216519,
-        "narHash": "sha256-ylTRaRg44LtpUDDrANTulkJw8cQQaNzhcMO7WtmOz8g=",
-        "owner": "NixOS",
-        "repo": "nix",
-        "rev": "9223603908abaa62711296aa224e1bc3d7fb0a91",
         "type": "github"
       },
       "original": {
@@ -149,26 +132,11 @@
     },
     "nixpkgs_5": {
       "locked": {
-        "lastModified": 1591633336,
-        "narHash": "sha256-oVXv4xAnDJB03LvZGbC72vSVlIbbJr8tpjEW5o/Fdek=",
+        "lastModified": 1595891366,
+        "narHash": "sha256-emx8s0LWUxxm4kh4zcacVP9NmCR5eT/JhzIXn111mAE=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "70717a337f7ae4e486ba71a500367cad697e5f09",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "ref": "nixos-20.03-small",
-        "type": "indirect"
-      }
-    },
-    "nixpkgs_6": {
-      "locked": {
-        "lastModified": 1594117931,
-        "narHash": "sha256-x7nZvITCLJiK7miPXU6yl2zdq+MlhjHicggfvjLguFg=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "c9d124e39dbeefc53c7b3e09fbfc2c26bcbd4845",
+        "rev": "eeb91b03a5cef25c3931bdd4438f006a293adef9",
         "type": "github"
       },
       "original": {
@@ -181,8 +149,11 @@
       "inputs": {
         "dwarffs": "dwarffs",
         "hydra": "hydra",
-        "nix": "nix_3",
-        "nixpkgs": "nixpkgs_6"
+        "nix": [
+          "hydra",
+          "nix"
+        ],
+        "nixpkgs": "nixpkgs_5"
       }
     }
   },
