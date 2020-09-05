@@ -57,19 +57,6 @@ rec {
         job = "nixpkgs/nixpkgs-19.09-darwin/darwin-tested";
         current = true;
       };
-
-      "nixos-19.03" = {
-        job = "nixos/release-19.03/tested";
-        current = false;
-      };
-      "nixos-19.03-small" = {
-        job = "nixos/release-19.03-small/tested";
-        current = false;
-      };
-      "nixpkgs-19.03-darwin" = {
-        job = "nixpkgs/nixpkgs-19.03-darwin/darwin-tested";
-        current = false;
-      };
   };
 
   channels-with-urls = (builtins.mapAttrs (name: about: about.job) channels);
