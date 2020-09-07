@@ -19,6 +19,19 @@ rec {
         current = true;
       };
 
+      "nixos-20.09" = {
+        job = "nixos/release-20.09/tested";
+        current = true;
+      };
+      "nixos-20.09-small" = {
+        job = "nixos/release-20.09-small/tested";
+        current = true;
+      };
+      "nixpkgs-20.09-darwin" = {
+        job = "nixpkgs/nixpkgs-20.09-darwin/darwin-tested";
+        current = true;
+      };
+
       "nixos-20.03" = {
         job = "nixos/release-20.03/tested";
         current = true;
@@ -34,27 +47,14 @@ rec {
 
       "nixos-19.09" = {
         job = "nixos/release-19.09/tested";
-        current = true;
+        current = false;
       };
       "nixos-19.09-small" = {
         job = "nixos/release-19.09-small/tested";
-        current = true;
+        current = false;
       };
       "nixpkgs-19.09-darwin" = {
         job = "nixpkgs/nixpkgs-19.09-darwin/darwin-tested";
-        current = true;
-      };
-
-      "nixos-19.03" = {
-        job = "nixos/release-19.03/tested";
-        current = false;
-      };
-      "nixos-19.03-small" = {
-        job = "nixos/release-19.03-small/tested";
-        current = false;
-      };
-      "nixpkgs-19.03-darwin" = {
-        job = "nixpkgs/nixpkgs-19.03-darwin/darwin-tested";
         current = false;
       };
   };
