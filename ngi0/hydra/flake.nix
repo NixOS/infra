@@ -1,5 +1,6 @@
 {
   inputs.nixpkgs.url = "nixpkgs/nixos-20.03";
+  inputs.nix.follows = "hydra/nix";
 
   outputs = { self, nixpkgs, nix, hydra }: {
 
