@@ -107,4 +107,9 @@
     feedUrl = "https://blog.nixbuild.net/index.xml";
     homepageUrl = "https://blog.nixbuild.net";
   }
+  {
+    name = "Guillaume (layus) Maudoux";
+    feedUrl = "https://blog.layus.be/tags/nix.rss";
+    homepageUrl = "https://blog.layus.be";
+  }
 ]
