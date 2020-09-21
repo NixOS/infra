@@ -27,7 +27,7 @@ let
       sslServerKey = "/root/ssl-secrets/ssl-strategoxt.org.key";
       extraConfig =
         ''
-          SSLCertificateChainFile ${../nixos-org/sub.class1.server.ca.pem}
+          SSLCertificateChainFile ${./sub.class1.server.ca.pem}
         '';
     };
 
