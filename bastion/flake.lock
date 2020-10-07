@@ -112,11 +112,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1601670028,
-        "narHash": "sha256-TACHjnLFZaxSDdjYLxPL1r7W6boJxvmbzerwJA1gj6M=",
+        "lastModified": 1602053139,
+        "narHash": "sha256-vyZuaAhLdxwM27bguaCdYLDdjY4t7Jv71qMYnBAA2Ck=",
         "owner": "NixOS",
         "repo": "nixos-channel-scripts",
-        "rev": "7c442a2f67c77344a71e5aae7e4cd2a1554420a9",
+        "rev": "f8db1d7bf9b902086d3a2b1a77bfa4c08fac3733",
         "type": "github"
       },
       "original": {
