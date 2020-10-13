@@ -70,6 +70,9 @@ in
 
   };
 
+  # Ensure that httpd can read the SSL certificates.
+  systemd.services.httpd.serviceConfig.User = lib.mkForce "root";
+
   # Let's Encrypt configuration.
   security.acme.acceptTerms = true;
   security.acme.certs."hydra.nixos.org" =
