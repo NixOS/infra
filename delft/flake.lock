@@ -28,11 +28,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1600168973,
-        "narHash": "sha256-Vd5kLLvSJ8drgr5AZkwE8IoWasDmGukg+8Y5jezmKso=",
+        "lastModified": 1602585436,
+        "narHash": "sha256-ZFWoZHLnWu1pGzyF6JKyFTwgDf01Rcp3+2qCOIYUfos=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "46a8d6d531d065a8a9b8325ca101de242ef8f60e",
+        "rev": "869671e55630e1348cb7e8e1a3eb43883ea6cba7",
         "type": "github"
       },
       "original": {
@@ -124,16 +124,16 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1599903709,
-        "narHash": "sha256-tinVKY7zRdSXmVOp7BAulNtIb2iP5nvNp5UAxihKXNI=",
+        "lastModified": 1602230526,
+        "narHash": "sha256-3/ucBPYg42P+1ji5/7q227Ek/Eq2C7zeiB9sZl5UpIY=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "252bfe0107587d40092057f338e9ffcf7bbd90cb",
+        "rev": "0b8799ecaaf0dc6b4c11583a3c96ca5b40fcfdfb",
         "type": "github"
       },
       "original": {
         "id": "nixpkgs",
-        "ref": "nixos-20.03",
+        "ref": "nixos-20.09",
         "type": "indirect"
       }
     },
