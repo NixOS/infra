@@ -30,9 +30,6 @@ let
       </Location>
     '';
 
-  acmeKeyDir = "/var/lib/acme/hydra.nixos.org";
-  acmeWebRoot = "/var/lib/httpd/acme";
-
 in
 
 {
@@ -50,8 +47,7 @@ in
 
     virtualHosts."hydra.nixos.org" =
       { addSSL = true;
-        sslServerKey = "${acmeKeyDir}/key.pem";
-        sslServerCert = "${acmeKeyDir}/fullchain.pem";
+        enableACME = true;
         extraConfig = ''
           # Required by Catalyst.
           RequestHeader set X-Forwarded-Proto https
@@ -62,38 +58,9 @@ in
           [ { urlPath = "/apache-errors";
               dir = ./apache-errors;
             }
-            { urlPath = "/.well-known/acme-challenge";
-              dir = "${acmeWebRoot}/.well-known/acme-challenge";
-            }
           ];
       };
 
   };
-
-  # Ensure that httpd can read the SSL certificates.
-  systemd.services.httpd.serviceConfig.User = lib.mkForce "root";
-
-  # Let's Encrypt configuration.
-  security.acme.acceptTerms = true;
-  security.acme.certs."hydra.nixos.org" =
-    { email = "edolstra@gmail.com";
-      webroot = acmeWebRoot;
-      postRun = "systemctl reload httpd.service";
-    };
-
-  # Generate a dummy self-signed certificate until we get one from
-  # Let's Encrypt.
-  system.activationScripts.createDummyKey =
-    ''
-      dir=${acmeKeyDir}
-      mkdir -m 0700 -p $dir
-      if ! [[ -e $dir/key.pem ]]; then
-        ${pkgs.openssl}/bin/openssl genrsa -passout pass:foo -des3 -out $dir/key-in.pem 1024
-        ${pkgs.openssl}/bin/openssl req -passin pass:foo -new -key $dir/key-in.pem -out $dir/key.csr \
-          -subj "/C=NL/ST=Denial/L=Springfield/O=Dis/CN=www.example.com"
-        ${pkgs.openssl}/bin/openssl rsa -passin pass:foo -in $dir/key-in.pem -out $dir/key.pem
-        ${pkgs.openssl}/bin/openssl x509 -req -days 365 -in $dir/key.csr -signkey $dir/key.pem -out $dir/fullchain.pem
-      fi
-    '';
 
 }
