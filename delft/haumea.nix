@@ -86,43 +86,41 @@
     enable = true;
     package = pkgs.postgresql_11;
     # https://pgtune.leopard.in.ua/#/
-    extraConfig = ''
-      listen_addresses = '10.254.1.9'
-      max_connections = 50
+    settings = {
+      listen_addresses = lib.mkForce "10.254.1.9";
 
-      effective_cache_size = 48GB
-      checkpoint_completion_target = 0.9
-      default_statistics_target = 100
+      checkpoint_completion_target = "0.9";
+      default_statistics_target = 100;
 
-      log_min_duration_statement = 5000
-      log_duration = off
-      log_statement = 'none'
-      max_connections = 250
-      work_mem = 20MB
-      maintenance_work_mem = 2GB
+      log_min_duration_statement = 5000;
+      log_duration = "off";
+      log_statement = "none";
+      max_connections = 250;
+      work_mem = "20MB";
+      maintenance_work_mem = "2GB";
 
       # 25% of memory
-      shared_buffers = 16GB
+      shared_buffers = "16GB";
 
       # Checkpoint every 1GB. (default)
       # increased after seeing many warninsg about frequent checkpoints
-      min_wal_size = 1GB
-      max_wal_size = 2GB
-      wal_buffers = 16MB
+      min_wal_size = "1GB";
+      max_wal_size = "2GB";
+      wal_buffers = "16MB";
 
-      max_worker_processes = 16
-      max_parallel_workers_per_gather = 8
-      max_parallel_workers = 16
+      max_worker_processes = 16;
+      max_parallel_workers_per_gather = 8;
+      max_parallel_workers = 16;
 
       # NVMe related performance tuning
-      effective_io_concurrency = 200
-      random_page_cost = 1.1
+      effective_io_concurrency = 200;
+      random_page_cost = "1.1";
 
       # We can risk losing some transactions.
-      synchronous_commit = off
+      synchronous_commit = "off";
 
-      effective_cache_size = 16GB
-    '';
+      effective_cache_size = "16GB";
+    };
 
     # FIXME: don't use 'trust'.
     authentication = ''
