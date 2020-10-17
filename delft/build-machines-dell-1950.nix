@@ -8,12 +8,10 @@
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.copyKernels = true;
 
-  fileSystems =
-    [ { mountPoint = "/";
-        label = "nixos";
-        options = [ "noatime" ];
-      }
-    ];
+  fileSystems."/" = {
+    label = "nixos";
+    options = [ "noatime" ];
+  };
 
   boot.initrd.kernelModules = [ "mptsas" "ext4" ];
   boot.kernelModules = [ "acpi-cpufreq" "kvm-intel" ];
