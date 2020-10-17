@@ -85,6 +85,7 @@
   services.postgresql = {
     enable = true;
     package = pkgs.postgresql_11;
+    dataDir = "/var/db/postgresql";
     # https://pgtune.leopard.in.ua/#/
     settings = {
       listen_addresses = lib.mkForce "10.254.1.9";
