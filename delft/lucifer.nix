@@ -49,11 +49,6 @@ with lib;
 
   fileSystems."/data".device = "/dev/disk/by-label/data";
 
-  fileSystems."/backup-tud" =
-    { device = "172.16.26.5://vol/vol_backup_linux_fbs_ewi_buildfarm_lucifer/qt_backup_linux_fbs_ewi_buildfarm_lucifer";
-      fsType = "nfs4";
-    };
-
   users.extraUsers.rbvermaa =
     { description = "Rob Vermaas";
       home = "/home/rbvermaa";
