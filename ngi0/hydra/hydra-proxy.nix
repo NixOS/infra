@@ -46,7 +46,7 @@ in
       '';
 
     virtualHosts."hydra.ngi0.nixos.org" =
-      { addSSL = true;
+      { forceSSL = true;
         enableACME = true;
         extraConfig = ''
           # Required by Catalyst.
