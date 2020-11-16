@@ -207,11 +207,6 @@ class HydraScrapeImporter:
             "Number of in-progress database updates",
             self.destructive_read("nrActiveDbUpdates")
         )
-        yield self.trivial_gauge(
-            "memory_tokens_in_use",
-            "Number of in-use memory tokens",
-            self.destructive_read("memoryTokensInUse")
-        )
         yield self.trivial_counter(
             "notifications_total",
             "Total number of notifications sent",
