@@ -45,7 +45,7 @@ in {
       forceSSL = true;
       root = ./eris/status-page;
       locations."/grafana/".proxyPass = "http://${config.services.grafana.addr}:${toString config.services.grafana.port}/";
-      locations."/prometheus".proxyPass = "http://${config.services.prometheus.listenAddress}";
+      locations."/prometheus".proxyPass = "http://${config.services.prometheus.listenAddress}:${toString config.service.prometheus.port}/";
     };
   };
 
