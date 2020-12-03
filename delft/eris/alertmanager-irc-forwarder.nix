@@ -21,7 +21,7 @@
 
     environment = {
       FLASK_APP = ./prometheus-alertmanager-irc-notifier.py;
-      EXTERNAL_URL = "https://prometheus.nixos.org/alerts";
+      EXTERNAL_URL = "https://monitoring.nixos.org/prometheus/alerts";
     };
 
     serviceConfig = {
