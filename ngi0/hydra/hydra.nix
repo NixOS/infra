@@ -29,7 +29,7 @@ in
       # patchelf:master:3
       xxx-jobset-repeats = nixos:reproducibility:1
 
-      # https://status.nixos.org/prometheus/graph?g0.range_input=2w&g0.expr=hydra_memory_tokens_in_use&g0.tab=0
+      # https://prometheus.nixos.org/graph?g0.range_input=2w&g0.expr=hydra_memory_tokens_in_use&g0.tab=0
       nar_buffer_size = ${let gb = 8; in toString (gb * 1024 * 1024 * 1024)}
 
       #upload_logs_to_binary_cache = true

@@ -40,12 +40,15 @@ in {
 
   services.nginx = {
     enable = true;
-    virtualHosts."status.nixos.org" = {
+    virtualHosts."grafana.nixos.org" = {
       enableACME = true;
       forceSSL = true;
-      root = ./eris/status-page;
-      locations."/grafana/".proxyPass = "http://${config.services.grafana.addr}:${toString config.services.grafana.port}/";
-      locations."/prometheus".proxyPass = "http://${config.services.prometheus.listenAddress}:${toString config.services.prometheus.port}";
+      locations."/".proxyPass = "http://${config.services.grafana.addr}:${toString config.services.grafana.port}/";
+    };
+    virtualHosts."prometheus.nixos.org" = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/".proxyPass = "http://${config.services.prometheus.listenAddress}:${toString config.services.prometheus.port}";
     };
   };
 
@@ -53,7 +56,7 @@ in {
     enable = true;
     extraFlags = [
       "--storage.tsdb.retention=${toString (150 * 24)}h"
-      "--web.external-url=https://status.nixos.org/prometheus/"
+      "--web.external-url=https://prometheus.nixos.org/"
     ];
 
     alertmanagers = [
@@ -114,7 +117,7 @@ in {
               expr = ''hydra_machine_build_duration_bucket{le="259200"} - ignoring(le) hydra_machine_build_duration_bucket{le="172800"} > 0'';
               for = "30m";
               labels.severity = "page";
-              annotations.summary = "https://status.nixos.org/grafana/d/j0hJAY1Wk/in-progress-build-duration-heatmap";
+              annotations.summary = "https://grafana.nixos.org/d/j0hJAY1Wk/in-progress-build-duration-heatmap";
             }
           ];
         }
@@ -127,7 +130,7 @@ in {
               expr = ''node_filesystem_files_free{mountpoint="/"} <= 10000'';
               for = "30m";
               labels.severity = "page";
-              annotations.summary = "https://status.nixos.org/grafana/d/5LANB9pZk/per-instance-metrics?orgId=1&refresh=30s&var-instance={{ $labels.instance }}";
+              annotations.summary = "https://grafana.nixos.org/d/5LANB9pZk/per-instance-metrics?orgId=1&refresh=30s&var-instance={{ $labels.instance }}";
             }
 
             {
@@ -135,7 +138,7 @@ in {
               expr = ''node_filesystem_avail_bytes{mountpoint="/"} <= 10000000000'';
               for = "30m";
               labels.severity = "page";
-              annotations.summary = "https://status.nixos.org/grafana/d/5LANB9pZk/per-instance-metrics?orgId=1&refresh=30s&var-instance={{ $labels.instance }}";
+              annotations.summary = "https://grafana.nixos.org/d/5LANB9pZk/per-instance-metrics?orgId=1&refresh=30s&var-instance={{ $labels.instance }}";
             }
           ];
         }
@@ -148,13 +151,13 @@ in {
               expr = ''node_systemd_unit_state{name=~"^rfc39-sync.service$", state="failed"} == 1'';
               for = "30m";
               labels.severity = "page";
-              annotations.summary = "https://status.nixos.org/grafana/d/fBW4tL1Wz/scheduled-task-state-channels-website?orgId=1&refresh=10s";
+              annotations.summary = "https://grafana.nixos.org/d/fBW4tL1Wz/scheduled-task-state-channels-website?orgId=1&refresh=10s";
             }
             {
               alert = "ChannelUpdateStuck";
               expr = ''max_over_time(node_systemd_unit_state{name=~"^update-nix.*.service$",state=~"failed"}[5m]) == 1'';
               for = "30m";
-              annotations.summary = "https://status.nixos.org/grafana/d/fBW4tL1Wz/scheduled-task-state-channels-website?orgId=1&refresh=10s";
+              annotations.summary = "https://grafana.nixos.org/d/fBW4tL1Wz/scheduled-task-state-channels-website?orgId=1&refresh=10s";
             }
           ];
         }
@@ -311,7 +314,7 @@ in {
         static_configs = [
           {
             targets = [
-              "status.nixos.org:9200"
+              "prometheus.nixos.org:9200"
             ];
           }
         ];
@@ -409,8 +412,8 @@ in {
     auth.anonymous.enable = true;
     users.allowSignUp = true;
     addr = "0.0.0.0";
-    domain = "status.nixos.org";
-    rootUrl = "https://status.nixos.org/grafana/";
+    domain = "grafana.nixos.org";
+    rootUrl = "https://grafana.nixos.org/";
   };
 
   systemd.services.prometheus-hydra-exporter = {
