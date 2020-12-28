@@ -67,7 +67,7 @@ in {
               --dump-metrics --metrics-delay=240 --metrics-addr=0.0.0.0:9190 \
               --credentials /run/keys/rfc39-credentials.nix \
               --maintainers ./maintainers/maintainer-list.nix \
-              sync-team NixOS 3345117 --limit 10 \
+              sync-team NixOS 3345117 --limit 50 \
               --invited-list "$recordsdir/invitations"
 
           cd "$recordsdir"
