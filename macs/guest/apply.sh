@@ -49,7 +49,7 @@ echo "%admin ALL = NOPASSWD: ALL" | tee /etc/sudoers.d/passwordless
     export HOME=~root
     export ALLOW_PREEXISTING_INSTALLATION=1
     env
-    curl https://nixos.org/releases/nix/nix-2.3.3/install > ~nixos/install-nix
+    curl -vL https://nixos.org/releases/nix/nix-2.3.3/install > ~nixos/install-nix
     chmod +rwx ~nixos/install-nix
     cat /dev/null | sudo -i -H -u nixos -- sh ~nixos/install-nix --daemon
 )
