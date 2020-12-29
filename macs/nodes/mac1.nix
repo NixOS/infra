@@ -9,9 +9,10 @@
     ];
 
   boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.canTouchEfiVariables = false;
+  boot.loader.grub.efiInstallAsRemovable = true;
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "firewire_ohci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "firewire_ohci" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" "nvme" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" "wl" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
@@ -30,9 +31,9 @@
     [ { device = "/dev/disk/by-label/swap"; }
     ];
 
-  nix.maxJobs = lib.mkDefault 4;
+  nix.maxJobs = lib.mkDefault 6;
 
-  networking.hostId = "29bdef97";
+  networking.hostId = "443c1836";
   nixpkgs.config.allowUnfree = true;
   boot.supportedFilesystems = ["zfs"];
 }
