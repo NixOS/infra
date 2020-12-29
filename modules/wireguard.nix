@@ -64,7 +64,7 @@ let
 
     mac1 = {
       ip = "10.254.2.1";
-      publicKey = "T49/SyORWekPRmIzIJjpKQiLzrIhiskGSRD+MH8Jim0=";
+      publicKey = "ZIzROtHaFWjrhhdXAE8Tq+EhUsSIURLcwsISfudndTk=";
     };
     mac2 = {
       ip = "10.254.2.2";
