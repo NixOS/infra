@@ -14,17 +14,17 @@ in
   };
 
   systemd.tmpfiles.rules = [
-    "d /var/lib/hydra/packet-import 0755 hydra-packet hydra -"
-    "f /var/lib/hydra/packet-import/machines 0644 hydra-packet hydra -"
+    "d /var/lib/hydra-packet-import 0755 hydra-packet hydra -"
+    "f /var/lib/hydra-packet-import/machines 0644 hydra-packet hydra -"
   ];
 
   services.hydra-dev.buildMachinesFiles = [
-    "/var/lib/hydra/packet-import/machines"
+    "/var/lib/hydra-packet-import/machines"
   ];
 
   systemd.services.hydra-packet-import = {
     path = with pkgs; [ openssh moreutils ];
-    script = "${importer}/bin/hydra-packet-importer /run/keys/hydra-packet-import.json | sponge /var/lib/hydra/packet-import/machines";
+    script = "${importer}/bin/hydra-packet-importer /run/keys/hydra-packet-import.json | sponge /var/lib/hydra-packet-import/machines";
     serviceConfig = {
       User = "hydra-packet";
       Group = "keys";
