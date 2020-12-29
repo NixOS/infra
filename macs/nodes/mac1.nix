@@ -6,7 +6,10 @@
 {
   imports =
     [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
+      ../host/networking.nix
     ];
+
+  macosGuest.network.externalInterface = lib.mkForce "ens1";
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = false;
