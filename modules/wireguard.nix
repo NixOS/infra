@@ -94,9 +94,30 @@ let
       ip = "10.254.2.8";
       publicKey = "aw/8/5oEn0cZa/WnUE7E7MEukDvzUzaAUEL6PMhLFmE=";
     };
-    mac9 = {
-      ip = "10.254.2.9";
-      publicKey = "i3fOonYJsDhhF8YXrWfaLQgb4J3OphOs7DTTCGTDNCQ=";
+
+    mac-m1-1 = {
+      ip = "10.254.2.101";
+      publicKey = "r9EEig5zzGS+MlMqK1jCzXB4Rm11Q/c812i7dxGj8gQ=";
+    };
+    mac-m1-2 = {
+      ip = "10.254.2.102";
+      publicKey = "J0JajIlwirjrry4QsuVzzyyWSGesQWHk16IR99rcwjY=";
+    };
+    mac-m1-3 = {
+      ip = "10.254.2.103";
+      publicKey = "E/eHbib8pEnPmT6nWjXlv3H5Ww1DfWxZdbz+Cn+jCX0=";
+    };
+    mac-m1-4 = {
+      ip = "10.254.2.104";
+      publicKey = "qQ0LO8kU+zFPxCk7JBD9OrfGS3Ryl08ePyF+KQxGl2U=";
+    };
+    mac-m1-5 = {
+      ip = "10.254.2.105";
+      publicKey = "5VWVUb/fiZmAJqCfqMPH2yIa8xze6hEU11ZKYPOtQyQ=";
+    };
+    mac-m1-6 = {
+      ip = "10.254.2.106";
+      publicKey = "S20ha1NoMUgR67696vi7hmSdSxK/GJM550S0uR2odlA=";
     };
 
     webserver = {
