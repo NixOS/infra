@@ -143,6 +143,13 @@ in
     mac8-guest = { hostNames = [ "[10.254.2.8]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAYH18PbDKKNmRaRYdMbbSqJSC+g5yB83LLSNemxhoCE"; };
     mac9-guest = { hostNames = [ "[10.254.2.9]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP4oOQBk3nRMKcPsDAL54jMAfSy9fwCyfH1qWwp1jwQt"; };
 
+    mac-m1-1 = { hostNames = [ "10.254.2.101" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILIpNE/evvR5mVLslm4G5AV6pQ2wdpIl7FPGDh5wZPLF"; };
+    mac-m1-2 = { hostNames = [ "10.254.2.102" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDyGCqoDh+BWnV1NIV2ucyb0WsXz5fH2hKDgC1dhN+Wq"; };
+    mac-m1-3 = { hostNames = [ "10.254.2.103" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGtPVTcBWTENjQ3e9ry7pOTFHk316Ahm3VW1Ys0cMhVf"; };
+    mac-m1-4 = { hostNames = [ "10.254.2.104" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOk2OLBHfCV3yxXzAsgX0r9cQ3KvpESak6s+tYGJq6J4"; };
+    mac-m1-5 = { hostNames = [ "10.254.2.105" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHbYjdeghSNg7bU/ER/pTSGwP7Fyd7+OteD06dP4gCfP"; };
+    mac-m1-6 = { hostNames = [ "10.254.2.106" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA8B5Ek8GhWCO5Qahl20CHn/txxvAweupuIbFmuLjciG"; };
+
     macstadium1 = { hostNames = [ "208.78.106.251" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBKrwg2592DfDUG1U0LZxJcBaT35YfEsuKo4helEAzeoujvzOo4DIaBrTCX7+LxcYZlGoi4WvsnwxUG11GY12l2A="; };
     macstadium2 =  { hostNames = [ "208.78.106.252" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLV1p6f6Rk3rKwNJbcqvG68wjfT3wPcJfChc1LFU9A3tTFslUDr47FHLmT+FTr+ChkoqD6Gsl+jtSnvkYnTlpGY="; };
     hydra = { hostNames = [ "hydra.ewi.tudelft.nl" "131.180.119.69" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIS6QYRKqOt9zfvFej4WWaswLE8Mhq7dOk8enWi/AzoK"; };
