@@ -120,6 +120,30 @@ in
       Port 2200
       Compression yes
 
+      Host mac-m1-1
+      Hostname 10.254.2.101
+      Compression yes
+
+      Host mac-m1-2
+      Hostname 10.254.2.102
+      Compression yes
+
+      Host mac-m1-3
+      Hostname 10.254.2.103
+      Compression yes
+
+      Host mac-m1-4
+      Hostname 10.254.2.104
+      Compression yes
+
+      Host mac-m1-5
+      Hostname 10.254.2.105
+      Compression yes
+
+      Host mac-m1-6
+      Hostname 10.254.2.106
+      Compression yes
+
       Host macstadium1
       Hostname 208.78.106.251
       Compression yes
