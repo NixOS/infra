@@ -53,6 +53,10 @@ in
           RequestHeader set X-Forwarded-Proto https
           RequestHeader set X-Forwarded-Port 443
           Header always set Strict-Transport-Security "max-age=15552000"
+
+          RewriteEngine On
+          RewriteCond %{QUERY_STRING} ^query=pkgs.chromium$
+          RewriteRule ^/search$ - [L,R=429,NC]
         '';
         servedDirs =
           [ { urlPath = "/apache-errors";
