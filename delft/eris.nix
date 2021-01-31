@@ -393,6 +393,7 @@ in {
     ] ++ lib.mapAttrsToList (name: value: {
         job_name = "channel-job-${name}";
         scheme = "https";
+        scrape_interval = "5m";
         metrics_path = "/job/${value.job}/prometheus";
         static_configs = [ {
           labels = {
