@@ -95,6 +95,11 @@ let
       publicKey = "aw/8/5oEn0cZa/WnUE7E7MEukDvzUzaAUEL6PMhLFmE=";
     };
 
+    macofborg1 = {
+      ip = "10.254.2.51";
+      publicKey = "RPD07xoZYB3aq9hS4pX+qnCHwSbNunK69HGdf8pRtCQ=";
+    };
+
     mac-m1-1 = {
       ip = "10.254.2.101";
       publicKey = "r9EEig5zzGS+MlMqK1jCzXB4Rm11Q/c812i7dxGj8gQ=";
