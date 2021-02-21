@@ -72,10 +72,18 @@ in {
 
   mac1 = makeMac {
     ip = "10.254.2.1";
-    extra = {
+    extra = { pkgs, lib, ... }: {
       imports = [
         ../macs/nodes/mac1.nix
       ];
+
+      macosGuest = {
+        guest = {
+          zvolName = lib.mkForce "rpool/catalina";
+          guestConfigDir = lib.mkForce ../macs/guest-catalina;
+          cloverImage = (pkgs.callPackage ../macs/dist/clover-catalina {}).clover-image;
+        };
+      };
     };
   };
 
