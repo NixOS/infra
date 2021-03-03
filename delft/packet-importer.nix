@@ -24,12 +24,13 @@ in
 
   systemd.services.hydra-packet-import = {
     path = with pkgs; [ openssh moreutils ];
-    script = "${importer}/bin/hydra-packet-importer /run/keys/hydra-packet-import.json | sponge /var/lib/hydra-packet-import/machines";
+    script = "${importer}/bin/hydra-packet-importer /run/keys/hydra-packet-import.json | sort | sponge /var/lib/hydra-packet-import/machines";
     serviceConfig = {
       User = "hydra-packet";
       Group = "keys";
       SupplementaryGroups = [ "hydra" "keys" ];
       Type = "oneshot";
+      RuntimeMaxSec = 1800;
     };
   };
 
