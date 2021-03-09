@@ -84,7 +84,7 @@
 
   services.postgresql = {
     enable = true;
-    package = pkgs.postgresql_11;
+    package = pkgs.postgresql_12;
     dataDir = "/var/db/postgresql";
     # https://pgtune.leopard.in.ua/#/
     settings = {
