@@ -87,15 +87,26 @@
     package = pkgs.postgresql_12;
     dataDir = "/var/db/postgresql";
     # https://pgtune.leopard.in.ua/#/
+    logLinePrefix = "%t [%p]: user=%u,db=%d,app=%a,client=%h ";
     settings = {
       listen_addresses = lib.mkForce "10.254.1.9";
 
       checkpoint_completion_target = "0.9";
       default_statistics_target = 100;
 
-      log_min_duration_statement = 5000;
       log_duration = "off";
       log_statement = "none";
+
+      # pgbadger-compatible logging
+      log_transaction_sample_rate = 0.01;
+      log_min_duration_statement = 5000;
+      log_checkpoints = "on";
+      log_connections = "on";
+      log_disconnections = "on";
+      log_lock_waits = "on";
+      log_temp_files = 0;
+      log_autovacuum_min_duration = 0;
+
       max_connections = 250;
       work_mem = "20MB";
       maintenance_work_mem = "2GB";
