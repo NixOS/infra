@@ -87,7 +87,7 @@
     package = pkgs.postgresql_12;
     dataDir = "/var/db/postgresql";
     # https://pgtune.leopard.in.ua/#/
-    logLinePrefix = "%t [%p]: user=%u,db=%d,app=%a,client=%h ";
+    logLinePrefix = "user=%u,db=%d,app=%a,client=%h ";
     settings = {
       listen_addresses = lib.mkForce "10.254.1.9";
 
