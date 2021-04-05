@@ -170,6 +170,19 @@ in {
             }
           ];
         }
+
+        {
+          name = "blackbox";
+          rules = [
+            {
+              alert = "CertificateExpiry";
+              expr = "probe_ssl_earliest_cert_expiry - time() < 86400 * 14";
+              for = "10m";
+              labels.severity = "page";
+              annotations.summary = "Certificate for {{ $labels.instance }} is expiring soon.";
+            }
+          ];
+        }
       ];
     }) ];
 
