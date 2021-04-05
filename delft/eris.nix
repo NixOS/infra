@@ -56,6 +56,18 @@ in {
       "--web.external-url=https://monitoring.nixos.org/prometheus/"
     ];
 
+    exporters.blackbox = {
+      enable = true;
+      listenAddress = "127.0.0.1";
+      configFile = builtins.writeText "probes.yml" (builtins.toJSON {
+        modules.https_success = {
+          prober = "http";
+          tcp.tls = true;
+          http.headers.User-Agent: "blackbox-exporter";
+        };
+      });
+    }
+
     alertmanagers = [
       {
         scheme = "http";
@@ -390,7 +402,47 @@ in {
           }
         ];
       }
-    ] ++ lib.mapAttrsToList (name: value: {
+    ]
+    ++ (let
+      mkProbe = module: targets: {
+        job_name = "blackbox-${module}";
+        metrics_path = "/probe";
+        params = {
+          module = [ module ];
+        };
+        static_configs = [{ inherit targets; }];
+        relabel_configs = [ {
+          source_labels = [ "__address__" ];
+          target_label = "__param_target";
+        } {
+          source_labels = [ "__param_target" ];
+          target_label = "instance";
+        } {
+          target_label = "__address__";
+          replacement = "localhost:9115";
+        } ];
+      }; in [
+        (mkProbe "https_success" [
+          "https://cache.nixos.org"
+          "https://channels.nixos.org"
+          "https://common-styles.nixos.org"
+          "https://conf.nixos.org"
+          "https://discourse.nixos.org"
+          "https://hydra.nixos.org"
+          "https://mobile.nixos.org"
+          "https://monitoring.nixos.org"
+          "https://nixos.org"
+          "https://planet.nixos.org"
+          "https://releases.nixos.org"
+          "https://status.nixos.org"
+          "https://survey.nixos.org"
+          "https://tarballs.nixos.org"
+          "https://weekly.nixos.org"
+          "https://www.nixos.org"
+        ])
+      ]
+    )
+    ++ lib.mapAttrsToList (name: value: {
         job_name = "channel-job-${name}";
         scheme = "https";
         scrape_interval = "5m";
