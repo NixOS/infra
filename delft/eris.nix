@@ -59,14 +59,14 @@ in {
     exporters.blackbox = {
       enable = true;
       listenAddress = "127.0.0.1";
-      configFile = builtins.writeText "probes.yml" (builtins.toJSON {
+      configFile = pkgs.writeText "probes.yml" (builtins.toJSON {
         modules.https_success = {
           prober = "http";
           tcp.tls = true;
-          http.headers.User-Agent: "blackbox-exporter";
+          http.headers.User-Agent = "blackbox-exporter";
         };
       });
-    }
+    };
 
     alertmanagers = [
       {
