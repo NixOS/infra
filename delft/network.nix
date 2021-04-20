@@ -48,6 +48,8 @@ in {
       { system.configurationRevision = flakes.self.rev
           or (throw "Cannot deploy from an unclean source tree!");
         nixpkgs.overlays = [ flakes.nix.overlay ];
+        nix.registry.nixpkgs.flake = flakes.nixpkgs;
+        nix.nixPath = [ "nixpkgs=${flakes.nixpkgs}" ];
       }
     ];
   };

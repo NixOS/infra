@@ -1,4 +1,4 @@
-flakes @ { self, nix, nixops, nixos-channel-scripts }:
+flakes @ { self, nixpkgs, nix, nixops, nixos-channel-scripts }:
 
 let
   region = "eu-west-1";
@@ -128,6 +128,9 @@ in
       system.configurationRevision = flakes.self.rev
         or (throw "Cannot deploy from an unclean source tree!");
 
+      nix.registry.nixpkgs.flake = flakes.nixpkgs;
+      nix.nixPath = [ "nixpkgs=${flakes.nixpkgs}" ];
+
       nixpkgs.overlays =
         [ nix.overlay
           nixops.overlay
@@ -167,7 +170,7 @@ in
       fileSystems."/scratch" =
         { autoFormat = true;
           fsType = "ext4";
-          device = "/dev/xvdh";
+          device = "/dev/nvme1n1";
           ec2.disk = resources.ebsVolumes.scratch;
         };
 

@@ -7,7 +7,7 @@
 
     nixopsConfigurations.default =
       { inherit nixpkgs; }
-      // import ./network.nix { inherit self nix nixops nixos-channel-scripts; };
+      // import ./network.nix { inherit self nixpkgs nix nixops nixos-channel-scripts; };
 
   };
 }
