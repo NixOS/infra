@@ -167,9 +167,8 @@ in
       fileSystems."/scratch" =
         { autoFormat = true;
           fsType = "ext4";
-          device = "/dev/disk/by-id/nvme-Amazon_Elastic_Block_Store_vol05abc1e7f806e6c7d";
+          device = "/dev/xvdh";
           ec2.disk = resources.ebsVolumes.scratch;
-          options = [ "nofail" ];
         };
 
       # work around releases taking too much memory
