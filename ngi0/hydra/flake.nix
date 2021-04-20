@@ -24,6 +24,9 @@
           system.configurationRevision = self.rev
             or (throw "Cannot deploy from an unclean source tree!");
 
+          nix.registry.nixpkgs.flake = nixpkgs;
+          nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
+
           deployment.targetEnv = "hetzner";
           deployment.hetzner.mainIPv4 = "116.202.113.248"; # 2a01:4f8:231:4187::2
           deployment.hetzner.createSubAccount = false;
