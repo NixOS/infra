@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   narCache = "/var/cache/hydra/nar-cache";
@@ -44,4 +44,10 @@ in
 
       max_concurrent_evals = 2
     '';
+
+  nix.extraOptions = lib.mkForce
+    ''
+      experimental-features = nix-command flakes ca-references ca-derivations
+    '';
+
 }
