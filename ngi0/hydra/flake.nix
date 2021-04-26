@@ -97,7 +97,7 @@
           boot.loader.grub.copyKernels = true;
 
           users.extraUsers.root.openssh.authorizedKeys.keys =
-            with import ../../ssh-keys.nix; [ zimbatm ];
+            with import ../../ssh-keys.nix; [ zimbatm regnat ];
         };
     };
 
