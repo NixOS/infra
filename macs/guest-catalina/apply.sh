@@ -96,7 +96,11 @@ echo "%admin ALL = NOPASSWD: ALL" | tee /etc/sudoers.d/passwordless
     rm -f /etc/bashrc
     ln -s /etc/static/bashrc /etc/bashrc
     . /etc/static/bashrc
-    cat /Volumes/CONFIG/darwin-configuration.nix | sudo -u nixos -- tee ~nixos/.nixpkgs/darwin-configuration.nix
+    pushd /Volumes/CONFIG
+    for f in *.nix ; do
+        cat $f | sudo -u nixos -- tee ~nixos/.nixpkgs/$f
+    done
+    popd
 
     while ! sudo -i -H -u nixos -- nix ping-store; do
         cat /var/log/nix-daemon.log
