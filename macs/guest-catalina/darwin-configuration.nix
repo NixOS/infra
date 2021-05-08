@@ -70,4 +70,6 @@ in
     serviceConfig.StandardErrorPath = "/var/log/prometheus-node-exporter.log";
     serviceConfig.StandardOutPath = "/var/log/prometheus-node-exporter.log";
   };
+
+  imports = lib.optional (builtins.pathExists ./extra.nix) ./extra.nix;
 }
