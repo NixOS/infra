@@ -260,7 +260,10 @@ which is probably near the top
 press `z` then `/` then select `ANSI` and click Done
 21. Click the magnifying glass in the top bar
 22. Type "term" and press enter on Terminal
-23. Run `sudo systemsetup -setremotelogin on` to turn on SSH.
+23. Run `sudo systemsetup -setremotelogin on` to turn on SSH. On Catalina,
+    you may first need to go to the Apple menu > System Preferences >
+    Security & Privacy > Privacy tab, choose "Full Disk Access" and add the
+    "Terminal" application.
     IMPORTANT: DO NOT TEST SSH AT THIS STAGE!
 Testing SSH now would cause the image to generate an SSH host key, and
 cause it to be fixed in a generic disk image too soon.
