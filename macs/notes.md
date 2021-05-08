@@ -277,6 +277,7 @@ software: `sudo spctl --master-disable`
 26. Load the auto-run script, add the following to
     /Library/LaunchDaemons/org.nixos.bootup.plist:
 
+```
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -298,6 +299,7 @@ software: `sudo spctl --master-disable`
     <true/>
 </dict>
 </plist>
+```
 
 Copy-paste it, or if that doesn't work (it doesn't for me,) use a
 pastebin. It is annoying to get this wrong, so be careful.
