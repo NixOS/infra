@@ -5,7 +5,10 @@ with lib;
 {
   imports = [ ./build-machines-dell-r815.nix ./sysstat.nix ./datadog.nix ];
 
-  nix.maxJobs = mkForce 24;
+  nix = {
+    maxJobs = mkForce 24;
+    buildCores = mkForce 12;
+  };
 
   users.extraUsers.eelco =
     { description = "Eelco Dolstra";
