@@ -84,7 +84,11 @@
 
   services.postgresql = {
     enable = true;
-    package = pkgs.postgresql_12;
+    package = pkgs.postgresql_12.overrideAttrs({ nativeBuildInputs, configureFlags, ...}: {
+      # Enable JIT compilation of queries, remove after https://github.com/NixOS/nixpkgs/pull/124804
+      nativeBuildInputs = nativeBuildInputs ++ [ pkgs.llvm pkgs.clang ];
+      configureFlags = configureFlags ++ [ "--with-llvm" ];
+    });
     dataDir = "/var/db/postgresql";
     # https://pgtune.leopard.in.ua/#/
     logLinePrefix = "user=%u,db=%d,app=%a,client=%h ";
@@ -132,6 +136,9 @@
       synchronous_commit = "off";
 
       effective_cache_size = "16GB";
+
+      # Enable JIT compilation if possible.
+      jit = "on";
     };
 
     # FIXME: don't use 'trust'.
