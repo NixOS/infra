@@ -1,6 +1,10 @@
 flakes:
 
 let
+  networkoverlay = self: super: {
+    prometheus-postgres-exporter = self.callPackage ./prometheus/postgres-exporter.nix {};
+  };
+
   makeMac = { ip, extra }: {
     deployment = {
       targetHost = ip;
@@ -47,7 +51,10 @@ in {
       flakes.dwarffs.nixosModules.dwarffs
       { system.configurationRevision = flakes.self.rev
           or (throw "Cannot deploy from an unclean source tree!");
-        nixpkgs.overlays = [ flakes.nix.overlay ];
+        nixpkgs.overlays = [
+          flakes.nix.overlay
+          networkoverlay
+        ];
         nix.registry.nixpkgs.flake = flakes.nixpkgs;
         nix.nixPath = [ "nixpkgs=${flakes.nixpkgs}" ];
       }
