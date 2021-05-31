@@ -19,6 +19,19 @@ rec {
         current = true;
       };
 
+      "nixos-21.05" = {
+        job = "nixos/release-21.05/tested";
+        current = true;
+      };
+      "nixos-21.05-small" = {
+        job = "nixos/release-21.05-small/tested";
+        current = true;
+      };
+      "nixpkgs-21.05-darwin" = {
+        job = "nixpkgs/nixpkgs-21.05-darwin/darwin-tested";
+        current = true;
+      };
+
       "nixos-20.09" = {
         job = "nixos/release-20.09/tested";
         current = true;
