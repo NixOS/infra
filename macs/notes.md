@@ -260,7 +260,10 @@ which is probably near the top
 press `z` then `/` then select `ANSI` and click Done
 21. Click the magnifying glass in the top bar
 22. Type "term" and press enter on Terminal
-23. Run `sudo systemsetup -setremotelogin on` to turn on SSH.
+23. Run `sudo systemsetup -setremotelogin on` to turn on SSH. On Catalina,
+    you may first need to go to the Apple menu > System Preferences >
+    Security & Privacy > Privacy tab, choose "Full Disk Access" and add the
+    "Terminal" application.
     IMPORTANT: DO NOT TEST SSH AT THIS STAGE!
 Testing SSH now would cause the image to generate an SSH host key, and
 cause it to be fixed in a generic disk image too soon.
@@ -274,6 +277,7 @@ software: `sudo spctl --master-disable`
 26. Load the auto-run script, add the following to
     /Library/LaunchDaemons/org.nixos.bootup.plist:
 
+```
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -295,6 +299,7 @@ software: `sudo spctl --master-disable`
     <true/>
 </dict>
 </plist>
+```
 
 Copy-paste it, or if that doesn't work (it doesn't for me,) use a
 pastebin. It is annoying to get this wrong, so be careful.
