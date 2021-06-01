@@ -139,6 +139,16 @@
 
       # Enable JIT compilation if possible.
       jit = "on";
+
+      # autovacuum and autoanalyze much more frequently:
+      # at these values vacuum should run approximately
+      # every 2 mass rebuilds, or a couple times a day
+      # on the builds table. Some of those queries really
+      # benefit from frequent vacuums, so this should
+      # help. In particular, I'm thinking the jobsets
+      # pages.
+      autovacuum_vacuum_scale_factor = 0.002;
+      autovacuum_analyze_scale_factor = 0.001;
     };
 
     # FIXME: don't use 'trust'.
