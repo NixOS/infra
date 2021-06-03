@@ -31,6 +31,10 @@ rec {
         job = "nixpkgs/nixpkgs-21.05-darwin/darwin-tested";
         current = true;
       };
+      "nixos-21.05-aarch64" = {
+        job = "nixos/release-21.05-aarch64/tested";
+        current = true;
+      };
 
       "nixos-20.09" = {
         job = "nixos/release-20.09/tested";
@@ -42,6 +46,10 @@ rec {
       };
       "nixpkgs-20.09-darwin" = {
         job = "nixpkgs/nixpkgs-20.09-darwin/darwin-tested";
+        current = true;
+      };
+      "nixos-20.09-aarch64" = {
+        job = "nixos/release-20.09-aarch64/tested";
         current = true;
       };
 
