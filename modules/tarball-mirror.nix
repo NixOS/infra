@@ -32,9 +32,9 @@ in
       serviceConfig.PrivateTmp = true;
       script =
         ''
-          dir=/home/tarball-mirror/nixpkgs-channels
+          dir=/home/tarball-mirror/nixpkgs
           if ! [[ -e $dir ]]; then
-            git clone git://github.com/NixOS/nixpkgs-channels.git $dir
+            git clone git://github.com/NixOS/nixpkgs.git $dir
           fi
           cd $dir
           git remote update origin
