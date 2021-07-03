@@ -38,19 +38,19 @@ rec {
 
       "nixos-20.09" = {
         job = "nixos/release-20.09/tested";
-        current = true;
+        current = false;
       };
       "nixos-20.09-small" = {
         job = "nixos/release-20.09-small/tested";
-        current = true;
+        current = false;
       };
       "nixpkgs-20.09-darwin" = {
         job = "nixpkgs/nixpkgs-20.09-darwin/darwin-tested";
-        current = true;
+        current = false;
       };
       "nixos-20.09-aarch64" = {
         job = "nixos/release-20.09-aarch64/tested";
-        current = true;
+        current = false;
       };
 
       "nixos-20.03" = {
