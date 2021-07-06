@@ -106,6 +106,27 @@ resource "aws_s3_bucket_policy" "nixpkgs-tarballs" {
       },
       "Action": "s3:ListBucket",
       "Resource": "arn:aws:s3:::nixpkgs-tarballs"
+    },
+    {
+      "Sid": "LovesegfaultAllowUpload",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::839273551904:root"
+      },
+      "Action": [
+        "s3:PutObject",
+        "s3:PutObjectAcl"
+      ],
+      "Resource": "arn:aws:s3:::nixpkgs-tarballs/*"
+    },
+    {
+      "Sid": "LovesegfaultAllowUpload2",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::839273551904:root"
+      },
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::nixpkgs-tarballs"
     }
   ]
 }
