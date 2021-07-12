@@ -49,19 +49,19 @@ in {
             git clone git@github.com:NixOS/rfc39-record.git "$recordsdir"
           fi
           cd "$recordsdir"
-          git remote update origin
+          git fetch origin --no-auto-maintenance
           git checkout main
           git reset --hard origin/main
-          git gc
+          git maintenance run --auto
 
           nixpkgsdir=$HOME/nixpkgs
           if ! [[ -e $nixpkgsdir ]]; then
             git clone https://github.com/NixOS/nixpkgs.git $nixpkgsdir
           fi
           cd $nixpkgsdir
-          git remote update origin
+          git fetch origin --no-auto-maintenance
           git checkout origin/master
-          git gc
+          git maintenance run --auto
 
           rfc39 \
               --dump-metrics --metrics-delay=240 --metrics-addr=0.0.0.0:9190 \
