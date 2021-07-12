@@ -18,6 +18,9 @@ in
       enable_google_login = 1
       google_client_id = 816926039128-splu8iepg00ntgp9ngm6ic6fu8uenuir.apps.googleusercontent.com
 
+      github_client_id = 18d98ddcf417b17601a1
+      github_client_secret_file = /var/lib/hydra/www/keys/hydra-github-client-secret
+
       store_uri = s3://ngi0-cache?secret-key=/var/lib/hydra/queue-runner/keys/cache.ngi0.nixos.org-1/secret&write-nar-listing=1&ls-compression=br&log-compression=br&region=eu-west-1
       server_store_uri = https://cache.ngi0.nixos.org?local-nar-cache=${narCache}
       binary_cache_public_uri = https://cache.ngi0.nixos.org
