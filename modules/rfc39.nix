@@ -72,7 +72,7 @@ in {
 
           cd "$recordsdir"
 
-          if git diff --quiet; then
+          if ! git diff --quiet; then
             git add .
             git commit -m "Automated team sync results."
             git push origin main
