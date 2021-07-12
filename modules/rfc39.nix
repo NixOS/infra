@@ -71,9 +71,12 @@ in {
               --invited-list "$recordsdir/invitations"
 
           cd "$recordsdir"
-          git add .
-          git commit -m "Automated team sync results."
-          git push origin main
+
+          if git diff --quiet; then
+            git add .
+            git commit -m "Automated team sync results."
+            git push origin main
+          fi
         '';
     };
 
