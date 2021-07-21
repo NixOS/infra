@@ -1,6 +1,7 @@
 {
   inputs.nixpkgs.url = "nixpkgs/nixos-20.09";
   inputs.nix.follows = "hydra/nix";
+  inputs.hydra.url = github:regnat/hydra/nix-ca;
 
   outputs = { self, nixpkgs, nix, hydra }: {
 
