@@ -10,28 +10,48 @@
         ]
       },
       "locked": {
-        "lastModified": 1625530527,
-        "narHash": "sha256-+8ysotoZ7Mvfe9fNmajB5F1MeA2+ccBfD6FAGg4X1hQ=",
-        "owner": "NixOS",
+        "lastModified": 1626762322,
+        "narHash": "sha256-CompknZoxSd6g10Nr/9H/KkCgoMqFx+JRLwP+J2TVzo=",
+        "owner": "regnat",
         "repo": "hydra",
-        "rev": "2bb1ba22d3717f38a162e632471407f0c09923b0",
+        "rev": "a1b6e82bd07ebe783bbec65a56501a81c56c92ff",
         "type": "github"
       },
       "original": {
-        "id": "hydra",
-        "type": "indirect"
+        "owner": "regnat",
+        "ref": "nix-ca",
+        "repo": "hydra",
+        "type": "github"
+      }
+    },
+    "lowdown-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1617481909,
+        "narHash": "sha256-SqnfOFuLuVRRNeVJr1yeEPJue/qWoCp5N6o5Kr///p4=",
+        "owner": "kristapsdz",
+        "repo": "lowdown",
+        "rev": "148f9b2f586c41b7e36e73009db43ea68c7a1a4d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kristapsdz",
+        "ref": "VERSION_0_8_4",
+        "repo": "lowdown",
+        "type": "github"
       }
     },
     "nix": {
       "inputs": {
+        "lowdown-src": "lowdown-src",
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1619080380,
-        "narHash": "sha256-DKXtLoiSMuNaq5km6FAWqJOpilSCFJQ0or8btfWH6mo=",
+        "lastModified": 1626718517,
+        "narHash": "sha256-0qy8sUNSG2PbuDjOibGEOyoTSzF9GCbWZH9knYrRdUU=",
         "owner": "NixOS",
         "repo": "nix",
-        "rev": "d9864be4b757468d33bc49edddce5e4f04ef4b90",
+        "rev": "1af3f63be53018ab764090acab36e7c5401609cd",
         "type": "github"
       },
       "original": {
@@ -41,16 +61,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1614309161,
-        "narHash": "sha256-93kRxDPyEW9QIpxU71kCaV1r+hgOgP6/aVgC7vvO8IU=",
+        "lastModified": 1624862269,
+        "narHash": "sha256-JFcsh2+7QtfKdJFoPibLFPLgIW6Ycnv8Bts9a7RYme0=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "0e499fde7af3c28d63e9b13636716b86c3162b93",
+        "rev": "f77036342e2b690c61c97202bf48f2ce13acc022",
         "type": "github"
       },
       "original": {
         "id": "nixpkgs",
-        "ref": "nixos-20.09-small",
+        "ref": "nixos-21.05-small",
         "type": "indirect"
       }
     },
