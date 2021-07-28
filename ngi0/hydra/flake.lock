@@ -10,11 +10,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1626762322,
-        "narHash": "sha256-CompknZoxSd6g10Nr/9H/KkCgoMqFx+JRLwP+J2TVzo=",
+        "lastModified": 1627465018,
+        "narHash": "sha256-l/X24qD0GXREiLZLF1/L5fBeHfVfZ+A5PbwvZV3WIfg=",
         "owner": "regnat",
         "repo": "hydra",
-        "rev": "a1b6e82bd07ebe783bbec65a56501a81c56c92ff",
+        "rev": "4fca5a7ddf7fc45286eac9102b8730a7a5ad9f01",
         "type": "github"
       },
       "original": {
