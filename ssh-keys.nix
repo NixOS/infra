@@ -20,4 +20,6 @@
 
   regnat = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINOPHs47r7r7W55vVlH9Dm9JEud+HOh80YbtrlVSuBm4";
 
+  silvan = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHjY4cuUk4IWgBgnEJSULkIHO+njUmIFP+WSWy7IobBs infinisil@vario";
+
 }
