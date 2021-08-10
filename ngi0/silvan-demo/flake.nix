@@ -20,6 +20,7 @@
           {
             ec2.hvm = true;
             networking.hostName = "modules";
+            networking.firewall.allowedTCPPorts = [ 222 ];
             system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
             nix.package = pkgs.nixUnstable;
             nix.registry.nixpkgs.flake = nixpkgs;
