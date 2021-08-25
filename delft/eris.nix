@@ -353,6 +353,18 @@ in {
           }
         ];
       }
+      {
+        job_name = "hydra_notify";
+        metrics_path = "/metrics";
+        scheme = "http";
+        static_configs = [
+          {
+            targets = [
+              "hydra.nixos.org:9199"
+            ];
+          }
+        ];
+      }
 
       {
         job_name = "hydra-webserver";
