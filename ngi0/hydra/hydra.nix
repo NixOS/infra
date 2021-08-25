@@ -54,4 +54,9 @@ in
       allowed-uris = https://github.com/ https://git.savannah.gnu.org/
     '';
 
+  systemd.tmpfiles.rules =
+    [ "d /var/cache/hydra 0755 hydra hydra -  -"
+      "d ${narCache}      0775 hydra hydra 1d -"
+    ];
+
 }
