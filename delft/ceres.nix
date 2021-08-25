@@ -38,7 +38,10 @@
   swapDevices = lib.mkForce [];
 
   networking = {
-    firewall.allowedTCPPorts = [ 80 443 ];
+    firewall.allowedTCPPorts = [
+      80 443
+      9199 # hydra-notify's prometheus
+    ];
     firewall.allowPing = true;
     firewall.logRefusedConnections = true;
   };

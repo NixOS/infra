@@ -56,6 +56,13 @@ in
       max_unsupported_time = 86400
 
       allow_import_from_derivation = false
+
+      <hydra_notify>
+        <prometheus>
+          listen_address = 0.0.0.0
+          port = 9199
+        </prometheus>
+      </hydra_notify>
     '';
 
   systemd.tmpfiles.rules =
