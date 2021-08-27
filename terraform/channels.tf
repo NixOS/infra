@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "channels" {
-  provider = "aws.us"
+  provider = aws.us
   bucket   = "nix-channels"
 
   website {
@@ -16,8 +16,8 @@ resource "aws_s3_bucket" "channels" {
 }
 
 resource "aws_s3_bucket_policy" "channels" {
-  provider = "aws.us"
-  bucket   = "${aws_s3_bucket.channels.id}"
+  provider = aws.us
+  bucket   = aws_s3_bucket.channels.id
   policy   = <<EOF
 {
   "Version": "2008-10-17",
@@ -72,7 +72,7 @@ resource "aws_cloudfront_distribution" "channels" {
 
   origin {
     origin_id   = "default"
-    domain_name = "${aws_s3_bucket.channels.website_endpoint}"
+    domain_name = aws_s3_bucket.channels.website_endpoint
 
     custom_origin_config {
       http_port              = "80"
@@ -101,7 +101,7 @@ resource "aws_cloudfront_distribution" "channels" {
   }
 
   viewer_certificate {
-    acm_certificate_arn = "${aws_acm_certificate.channels.arn}"
+    acm_certificate_arn = aws_acm_certificate.channels.arn
     ssl_support_method  = "sni-only"
   }
 
@@ -117,7 +117,7 @@ resource "aws_cloudfront_distribution" "channels" {
 }
 
 resource "aws_acm_certificate" "channels" {
-  provider          = "aws.us"
+  provider          = aws.us
   domain_name       = "channels.nixos.org"
   validation_method = "DNS"
 

@@ -9,14 +9,14 @@ locals {
 resource "fastly_service_v1" "nixpkgs-tarballs" {
   name          = "nixpkgs-tarballs"
   force_destroy = true
-  default_host  = "${local.tarballs_backend}"
+  default_host  = local.tarballs_backend
 
   domain {
-    name = "${local.tarballs_domain}"
+    name = local.tarballs_domain
   }
 
   backend {
-    address = "${local.tarballs_backend}"
+    address = local.tarballs_backend
     name    = "AWS S3 website"
 
     # S3 websites don't binds on port 443

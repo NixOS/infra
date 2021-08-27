@@ -7,7 +7,7 @@ resource "aws_s3_bucket" "nixpkgs-tarballs" {
 }
 
 resource "aws_s3_bucket_policy" "nixpkgs-tarballs" {
-  bucket = "${aws_s3_bucket.nixpkgs-tarballs.id}"
+  bucket = aws_s3_bucket.nixpkgs-tarballs.id
 
   # imported from existing
   policy = <<EOF
@@ -134,9 +134,9 @@ EOF
 }
 
 resource "aws_s3_bucket_object" "nixpkgs-tarballs-index" {
-  bucket       = "${aws_s3_bucket.nixpkgs-tarballs.id}"
+  bucket       = aws_s3_bucket.nixpkgs-tarballs.id
   content_type = "text/html"
-  etag         = "${md5(file("${path.module}/nixpkgs-tarballs/index.html"))}"
+  etag         = md5(file("${path.module}/nixpkgs-tarballs/index.html"))
   key          = "index.html"
   source       = "${path.module}/nixpkgs-tarballs/index.html"
 }
@@ -154,7 +154,7 @@ resource "aws_cloudfront_distribution" "nixpkgs-tarballs" {
     origin_id   = "default"
     domain_name = "nixpkgs-tarballs.s3-eu-west-1.amazonaws.com"
     s3_origin_config {
-      origin_access_identity = "${aws_cloudfront_origin_access_identity.nixpkgs-tarballs-identity.cloudfront_access_identity_path}"
+      origin_access_identity = aws_cloudfront_origin_access_identity.nixpkgs-tarballs-identity.cloudfront_access_identity_path
     }
   }
   */
@@ -190,7 +190,7 @@ resource "aws_cloudfront_distribution" "nixpkgs-tarballs" {
   }
   viewer_certificate {
     cloudfront_default_certificate = false
-    acm_certificate_arn            = "${aws_acm_certificate.nixpkgs-tarballs.arn}"
+    acm_certificate_arn            = aws_acm_certificate.nixpkgs-tarballs.arn
     ssl_support_method             = "sni-only"
   }
   restrictions {
@@ -204,7 +204,7 @@ resource "aws_cloudfront_distribution" "nixpkgs-tarballs" {
 }
 
 resource "aws_acm_certificate" "nixpkgs-tarballs" {
-  provider          = "aws.us"
+  provider          = aws.us
   domain_name       = "tarballs.nixos.org"
   validation_method = "DNS"
 
@@ -218,4 +218,3 @@ resource "aws_cloudfront_origin_access_identity" "nixpkgs-tarballs" {
   comment = "Cloudfront identity for nixpkgs-tarballs"
 }
 */
-

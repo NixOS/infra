@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "cache" {
-  provider = "aws.us"
+  provider = aws.us
   bucket   = "nix-cache"
 
   lifecycle_rule {
@@ -20,8 +20,8 @@ resource "aws_s3_bucket" "cache" {
 }
 
 resource "aws_s3_bucket_policy" "cache" {
-  provider = "aws.us"
-  bucket   = "${aws_s3_bucket.cache.id}"
+  provider = aws.us
+  bucket   = aws_s3_bucket.cache.id
 
   # imported from existing
   policy = <<EOF
@@ -83,7 +83,7 @@ resource "aws_cloudfront_distribution" "cache" {
 
   origin {
     origin_id   = "S3-nix-cache"
-    domain_name = "${aws_s3_bucket.cache.bucket_domain_name}"
+    domain_name = aws_s3_bucket.cache.bucket_domain_name
 
     s3_origin_config {
       origin_access_identity = "origin-access-identity/cloudfront/E11I84008FX6W9"
@@ -110,7 +110,7 @@ resource "aws_cloudfront_distribution" "cache" {
 
   viewer_certificate {
     cloudfront_default_certificate = false
-    acm_certificate_arn            = "${aws_acm_certificate.cache.arn}"
+    acm_certificate_arn            = aws_acm_certificate.cache.arn
     ssl_support_method             = "sni-only"
   }
 
@@ -140,7 +140,7 @@ resource "aws_cloudfront_distribution" "cache" {
 }
 
 resource "aws_acm_certificate" "cache" {
-  provider          = "aws.us"
+  provider          = aws.us
   domain_name       = "cache.nixos.org"
   validation_method = "DNS"
 

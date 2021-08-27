@@ -10,7 +10,7 @@ resource "aws_route53_zone" "nixos" {
 }
 
 resource "aws_route53_record" "nixos-mx" {
-  zone_id = "${aws_route53_zone.nixos.zone_id}"
+  zone_id = aws_route53_zone.nixos.zone_id
   name    = ""
   type    = "MX"
   ttl     = "14300"
@@ -22,23 +22,23 @@ resource "aws_route53_record" "nixos-mx" {
 }
 
 resource "aws_route53_record" "nixos-a" {
-  zone_id = "${aws_route53_zone.nixos.zone_id}"
+  zone_id = aws_route53_zone.nixos.zone_id
   name    = ""
   type    = "A"
   ttl     = "500"
-  records = ["${local.host_www}"]
+  records = [local.host_www]
 }
 
 resource "aws_route53_record" "nixos-bastion" {
-  zone_id = "${aws_route53_zone.nixos.zone_id}"
+  zone_id = aws_route53_zone.nixos.zone_id
   name    = "bastion"
   type    = "A"
   ttl     = "600"
-  records = ["${local.host_bastion}"]
+  records = [local.host_bastion]
 }
 
 resource "aws_route53_record" "nixos-discourse" {
-  zone_id = "${aws_route53_zone.nixos.zone_id}"
+  zone_id = aws_route53_zone.nixos.zone_id
   name    = "discourse"
   type    = "CNAME"
   ttl     = "3600"
@@ -46,7 +46,7 @@ resource "aws_route53_record" "nixos-discourse" {
 }
 
 resource "aws_route53_record" "nixos-cache" {
-  zone_id = "${aws_route53_zone.nixos.zone_id}"
+  zone_id = aws_route53_zone.nixos.zone_id
   name    = "cache"
   type    = "CNAME"
   ttl     = "3600"
@@ -54,7 +54,7 @@ resource "aws_route53_record" "nixos-cache" {
 }
 
 resource "aws_route53_record" "nixos-cache-verification" {
-  zone_id = "${aws_route53_zone.nixos.zone_id}"
+  zone_id = aws_route53_zone.nixos.zone_id
   name    = "_d47a77b375708cea087182ee599174c0.cache"
   type    = "CNAME"
   ttl     = "600"
@@ -63,7 +63,7 @@ resource "aws_route53_record" "nixos-cache-verification" {
 
 # NOTE: this should be moved to the nixcon.org domain
 resource "aws_route53_record" "nixos-conf" {
-  zone_id = "${aws_route53_zone.nixos.zone_id}"
+  zone_id = aws_route53_zone.nixos.zone_id
   name    = "conf"
   type    = "CNAME"
   ttl     = "3600"
@@ -71,7 +71,7 @@ resource "aws_route53_record" "nixos-conf" {
 }
 
 resource "aws_route53_record" "nixos-conf-wild" {
-  zone_id = "${aws_route53_zone.nixos.zone_id}"
+  zone_id = aws_route53_zone.nixos.zone_id
   name    = "*.conf"
   type    = "CNAME"
   ttl     = "3600"
@@ -79,15 +79,15 @@ resource "aws_route53_record" "nixos-conf-wild" {
 }
 
 resource "aws_route53_record" "nixos-hydra-v4" {
-  zone_id = "${aws_route53_zone.nixos.zone_id}"
+  zone_id = aws_route53_zone.nixos.zone_id
   name    = "hydra"
   type    = "A"
   ttl     = "3600"
-  records = ["${local.host_chef}"]
+  records = [local.host_chef]
 }
 
 resource "aws_route53_record" "nixos-hydra-v6" {
-  zone_id = "${aws_route53_zone.nixos.zone_id}"
+  zone_id = aws_route53_zone.nixos.zone_id
   name    = "hydra"
   type    = "AAAA"
   ttl     = "3600"
@@ -95,15 +95,15 @@ resource "aws_route53_record" "nixos-hydra-v6" {
 }
 
 resource "aws_route53_record" "nixos-planet" {
-  zone_id = "${aws_route53_zone.nixos.zone_id}"
+  zone_id = aws_route53_zone.nixos.zone_id
   name    = "planet"
   type    = "A"
   ttl     = "3600"
-  records = ["${local.host_www}"]
+  records = [local.host_www]
 }
 
 resource "aws_route53_record" "nixos-releases" {
-  zone_id = "${aws_route53_zone.nixos.zone_id}"
+  zone_id = aws_route53_zone.nixos.zone_id
   name    = "releases"
   type    = "CNAME"
   ttl     = "3600"
@@ -111,7 +111,7 @@ resource "aws_route53_record" "nixos-releases" {
 }
 
 resource "aws_route53_record" "nixos-releases-verification" {
-  zone_id = "${aws_route53_zone.nixos.zone_id}"
+  zone_id = aws_route53_zone.nixos.zone_id
   name    = "_d8f6310f3e219676be295c56e7084ed2.releases"
   type    = "CNAME"
   ttl     = "600"
@@ -119,15 +119,15 @@ resource "aws_route53_record" "nixos-releases-verification" {
 }
 
 resource "aws_route53_record" "nixos-status" {
-  zone_id = "${aws_route53_zone.nixos.zone_id}"
+  zone_id = aws_route53_zone.nixos.zone_id
   name    = "status"
   type    = "A"
   ttl     = "3600"
-  records = ["${local.host_status}"]
+  records = [local.host_status]
 }
 
 resource "aws_route53_record" "nixos-tarballs" {
-  zone_id = "${aws_route53_zone.nixos.zone_id}"
+  zone_id = aws_route53_zone.nixos.zone_id
   name    = "tarballs"
   type    = "CNAME"
   ttl     = "3600"
@@ -135,7 +135,7 @@ resource "aws_route53_record" "nixos-tarballs" {
 }
 
 resource "aws_route53_record" "nixos-tarballs-verification" {
-  zone_id = "${aws_route53_zone.nixos.zone_id}"
+  zone_id = aws_route53_zone.nixos.zone_id
   name    = "_ea68264b3470fb78960575f8dda9b40b.tarballs"
   type    = "CNAME"
   ttl     = "600"
@@ -143,7 +143,7 @@ resource "aws_route53_record" "nixos-tarballs-verification" {
 }
 
 resource "aws_route53_record" "nixos-weekly" {
-  zone_id = "${aws_route53_zone.nixos.zone_id}"
+  zone_id = aws_route53_zone.nixos.zone_id
   name    = "weekly"
   type    = "CNAME"
   ttl     = "3600"
@@ -151,7 +151,7 @@ resource "aws_route53_record" "nixos-weekly" {
 }
 
 resource "aws_route53_record" "nixos-weekly-wild" {
-  zone_id = "${aws_route53_zone.nixos.zone_id}"
+  zone_id = aws_route53_zone.nixos.zone_id
   name    = "*.weekly"
   type    = "CNAME"
   ttl     = "3600"
@@ -159,9 +159,9 @@ resource "aws_route53_record" "nixos-weekly-wild" {
 }
 
 #resource "aws_route53_record" "nixos-wild" {
-#  zone_id = "${aws_route53_zone.nixos.zone_id}"
+#  zone_id = aws_route53_zone.nixos.zone_id
 #  name    = "*"
 #  type    = "A"
 #  ttl     = "3600"
-#  records = ["${local.host_www}"]
+#  records = [local.host_www]
 #}

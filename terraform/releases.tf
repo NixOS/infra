@@ -11,7 +11,7 @@ resource "aws_s3_bucket" "releases" {
 }
 
 resource "aws_s3_bucket_policy" "releases" {
-  bucket = "${aws_s3_bucket.releases.id}"
+  bucket = aws_s3_bucket.releases.id
   policy = <<EOF
 {
   "Version": "2008-10-17",
@@ -66,12 +66,12 @@ resource "aws_cloudfront_distribution" "releases" {
 
   origin {
     origin_id   = "default"
-    domain_name = "${aws_s3_bucket.releases.bucket_domain_name}"
+    domain_name = aws_s3_bucket.releases.bucket_domain_name
 
     s3_origin_config {
       origin_access_identity = ""
 
-      #origin_access_identity = "${aws_cloudfront_origin_access_identity.releases.cloudfront_access_identity_path}"
+      #origin_access_identity = aws_cloudfront_origin_access_identity.releases.cloudfront_access_identity_path
     }
   }
 
@@ -95,7 +95,7 @@ resource "aws_cloudfront_distribution" "releases" {
 
   viewer_certificate {
     cloudfront_default_certificate = false
-    acm_certificate_arn            = "${aws_acm_certificate.releases.arn}"
+    acm_certificate_arn            = aws_acm_certificate.releases.arn
     ssl_support_method             = "sni-only"
   }
 
@@ -111,7 +111,7 @@ resource "aws_cloudfront_distribution" "releases" {
 }
 
 resource "aws_acm_certificate" "releases" {
-  provider          = "aws.us"
+  provider          = aws.us
   domain_name       = "releases.nixos.org"
   validation_method = "DNS"
 
