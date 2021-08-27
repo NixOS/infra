@@ -1,6 +1,6 @@
 resource "aws_s3_bucket" "channels" {
   provider = "aws.us"
-  bucket = "nix-channels"
+  bucket   = "nix-channels"
 
   website {
     index_document = "index.html"
@@ -17,8 +17,8 @@ resource "aws_s3_bucket" "channels" {
 
 resource "aws_s3_bucket_policy" "channels" {
   provider = "aws.us"
-  bucket = "${aws_s3_bucket.channels.id}"
-  policy = <<EOF
+  bucket   = "${aws_s3_bucket.channels.id}"
+  policy   = <<EOF
 {
   "Version": "2008-10-17",
   "Statement": [
@@ -64,10 +64,10 @@ EOF
 }
 
 resource "aws_cloudfront_distribution" "channels" {
-  enabled         = true
-  is_ipv6_enabled = true
-  price_class     = "PriceClass_All"
-  aliases         = ["channels.nixos.org"]
+  enabled             = true
+  is_ipv6_enabled     = true
+  price_class         = "PriceClass_All"
+  aliases             = ["channels.nixos.org"]
   default_root_object = "index.html"
 
   origin {
@@ -101,8 +101,8 @@ resource "aws_cloudfront_distribution" "channels" {
   }
 
   viewer_certificate {
-    acm_certificate_arn            = "${aws_acm_certificate.channels.arn}"
-    ssl_support_method             = "sni-only"
+    acm_certificate_arn = "${aws_acm_certificate.channels.arn}"
+    ssl_support_method  = "sni-only"
   }
 
   restrictions {

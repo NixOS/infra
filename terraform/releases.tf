@@ -58,10 +58,10 @@ EOF
 }
 
 resource "aws_cloudfront_distribution" "releases" {
-  enabled         = true
-  is_ipv6_enabled = true
-  price_class     = "PriceClass_All"
-  aliases         = ["releases.nixos.org"]
+  enabled             = true
+  is_ipv6_enabled     = true
+  price_class         = "PriceClass_All"
+  aliases             = ["releases.nixos.org"]
   default_root_object = "index.html"
 
   origin {
