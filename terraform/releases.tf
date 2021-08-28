@@ -68,11 +68,11 @@ resource "aws_cloudfront_distribution" "releases" {
     origin_id   = "default"
     domain_name = aws_s3_bucket.releases.bucket_domain_name
 
-    s3_origin_config {
-      origin_access_identity = ""
+    #s3_origin_config {
+    #  origin_access_identity = ""
 
-      #origin_access_identity = aws_cloudfront_origin_access_identity.releases.cloudfront_access_identity_path
-    }
+    #  #origin_access_identity = aws_cloudfront_origin_access_identity.releases.cloudfront_access_identity_path
+    #}
   }
 
   default_cache_behavior {
