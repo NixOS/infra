@@ -218,3 +218,34 @@ resource "aws_cloudfront_origin_access_identity" "nixpkgs-tarballs" {
   comment = "Cloudfront identity for nixpkgs-tarballs"
 }
 */
+
+locals {
+  tarballs_domain = "tarballs.nixos.org"
+}
+
+resource "fastly_service_v1" "nixpkgs-tarballs" {
+  name          = local.tarballs_domain
+  default_ttl = 86400
+
+  backend {
+    address               = "s3.amazonaws.com"
+    auto_loadbalance      = false
+    between_bytes_timeout = 10000
+    connect_timeout       = 5000
+    error_threshold       = 0
+    first_byte_timeout    = 15000
+    max_conn              = 200
+    name                  = "s3.amazonaws.com"
+    override_host         = aws_s3_bucket.nixpkgs-tarballs.bucket_domain_name
+    port                  = 443
+    shield                = "bwi-va-us"
+    ssl_cert_hostname     = "s3.amazonaws.com"
+    ssl_check_cert        = true
+    use_ssl               = true
+    weight                = 100
+  }
+
+  domain {
+    name = local.tarballs_domain
+  }
+}
