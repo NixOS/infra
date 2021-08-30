@@ -221,6 +221,10 @@ resource "aws_cloudfront_origin_access_identity" "nixpkgs-tarballs" {
 
 locals {
   tarballs_domain = "tarballs.nixos.org"
+  # Use the website endpoint because the bucket is configured with website
+  # enabled. This also means we can't use TLS between Fastly and AWS because
+  # the website endpoint only has port 80 open.
+  tarballs_backend = aws_s3_bucket.nixpkgs-tarballs.website_endpoint
 }
 
 resource "fastly_service_v1" "nixpkgs-tarballs" {
@@ -228,20 +232,18 @@ resource "fastly_service_v1" "nixpkgs-tarballs" {
   default_ttl = 86400
 
   backend {
-    address               = "s3.amazonaws.com"
+    address               = local.tarballs_backend
     auto_loadbalance      = false
     between_bytes_timeout = 10000
     connect_timeout       = 5000
     error_threshold       = 0
     first_byte_timeout    = 15000
     max_conn              = 200
-    name                  = "s3.amazonaws.com"
-    override_host         = aws_s3_bucket.nixpkgs-tarballs.bucket_domain_name
-    port                  = 443
+    name                  = local.tarballs_backend
+    override_host         = local.tarballs_backend
+    port                  = 80
     shield                = "bwi-va-us"
-    ssl_cert_hostname     = "s3.amazonaws.com"
-    ssl_check_cert        = true
-    use_ssl               = true
+    use_ssl               = false
     weight                = 100
   }
 
