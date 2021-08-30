@@ -250,3 +250,9 @@ resource "fastly_service_v1" "cache" {
     type     = "fetch"
   }
 }
+
+resource "fastly_tls_subscription" "cache" {
+  domains               = [for domain in fastly_service_v1.cache.domain : domain.name]
+  configuration_id      = local.fastly_tls12_sni_configuration_id
+  certificate_authority = "globalsign"
+}
