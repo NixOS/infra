@@ -299,3 +299,14 @@ resource "fastly_service_v1" "nixpkgs-tarballs" {
     type     = "fetch"
   }
 }
+
+resource "fastly_tls_subscription" "nixpkgs-tarballs" {
+  domains               = [for domain in fastly_service_v1.nixpkgs-tarballs.domain : domain.name]
+  configuration_id      = local.fastly_tls12_sni_configuration_id
+  certificate_authority = "globalsign"
+}
+
+# TODO: move the DNS config to terraform
+output "nixpkgs-tarballs-managed_dns_challenge" {
+  value = fastly_tls_subscription.nixpkgs-tarballs.managed_dns_challenge
+}
