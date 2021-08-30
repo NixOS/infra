@@ -5,4 +5,13 @@ terraform {
     key     = "targets/terraform"
     region  = "eu-west-1"
   }
+
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+    }
+    fastly = {
+      source = "fastly/fastly"
+    }
+  }
 }
