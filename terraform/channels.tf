@@ -1,3 +1,13 @@
+locals {
+  channels_domain = "channels.nixos.org"
+
+  channels_index = templatefile("${path.module}/s3_listing.html.tpl", {
+    bucket_name    = aws_s3_bucket.channels.bucket
+    bucket_url     = "https://${aws_s3_bucket.channels.bucket_domain_name}"
+    bucket_website = "https://${local.channels_domain}"
+  })
+}
+
 resource "aws_s3_bucket" "channels" {
   provider = aws.us
   bucket   = "nix-channels"
@@ -13,6 +23,17 @@ resource "aws_s3_bucket" "channels" {
     expose_headers  = ["ETag"]
     max_age_seconds = 3600
   }
+}
+
+resource "aws_s3_bucket_object" "channels-index-html" {
+  provider = aws.us
+
+  acl          = "public-read"
+  bucket       = aws_s3_bucket.channels.bucket
+  content_type = "text/html"
+  etag         = md5(local.channels_index)
+  key          = "index.html"
+  content      = local.channels_index
 }
 
 resource "aws_s3_bucket_policy" "channels" {
