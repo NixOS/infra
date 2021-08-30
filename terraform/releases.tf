@@ -1,3 +1,13 @@
+locals {
+  releases_domain = "releases.nixos.org"
+
+  releases_index = templatefile("${path.module}/s3_listing.html.tpl", {
+    bucket_name    = aws_s3_bucket.releases.bucket
+    bucket_url     = "https://${aws_s3_bucket.releases.bucket_domain_name}"
+    bucket_website = "https://${local.releases_domain}"
+  })
+}
+
 resource "aws_s3_bucket" "releases" {
   bucket = "nix-releases"
 
@@ -8,6 +18,15 @@ resource "aws_s3_bucket" "releases" {
     expose_headers  = ["ETag"]
     max_age_seconds = 3600
   }
+}
+
+resource "aws_s3_bucket_object" "releases-index-html" {
+  acl          = "public-read"
+  bucket       = aws_s3_bucket.releases.bucket
+  content_type = "text/html"
+  etag         = md5(local.releases_index)
+  key          = "index.html"
+  content      = local.releases_index
 }
 
 resource "aws_s3_bucket_policy" "releases" {
@@ -61,7 +80,7 @@ resource "aws_cloudfront_distribution" "releases" {
   enabled             = true
   is_ipv6_enabled     = true
   price_class         = "PriceClass_All"
-  aliases             = ["releases.nixos.org"]
+  aliases             = [local.releases_domain]
   default_root_object = "index.html"
 
   origin {
@@ -112,16 +131,10 @@ resource "aws_cloudfront_distribution" "releases" {
 
 resource "aws_acm_certificate" "releases" {
   provider          = aws.us
-  domain_name       = "releases.nixos.org"
+  domain_name       = local.releases_domain
   validation_method = "DNS"
 
   lifecycle {
     create_before_destroy = true
   }
 }
-
-/*
-resource "aws_cloudfront_origin_access_identity" "releases" {
-  comment = "Cloudfront identity for releases"
-}
-*/
