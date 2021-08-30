@@ -30,6 +30,17 @@ resource "aws_s3_bucket_object" "cache-nix-cache-info" {
   source       = "${path.module}/cache/nix-cache-info"
 }
 
+resource "aws_s3_bucket_object" "cache-index-html" {
+  provider = aws.us
+
+  acl          = "public-read"
+  bucket       = aws_s3_bucket.cache.bucket
+  content_type = "text/html"
+  etag         = filemd5("${path.module}/cache/index.html")
+  key          = "index.html"
+  source       = "${path.module}/cache/index.html"
+}
+
 resource "aws_s3_bucket_policy" "cache" {
   provider = aws.us
   bucket   = aws_s3_bucket.cache.id
