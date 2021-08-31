@@ -6,6 +6,8 @@ locals {
     bucket_url     = "https://${aws_s3_bucket.releases.bucket_domain_name}"
     bucket_website = "https://${local.releases_domain}"
   })
+
+  releases_backend = "nix-releases.s3-eu-west-1.amazonaws.com"
 }
 
 resource "aws_s3_bucket" "releases" {
@@ -144,18 +146,18 @@ resource "fastly_service_v1" "releases" {
   default_ttl = 86400
 
   backend {
-    address               = "s3.amazonaws.com"
+    address               = local.releases_backend
     auto_loadbalance      = false
     between_bytes_timeout = 10000
     connect_timeout       = 5000
     error_threshold       = 0
     first_byte_timeout    = 15000
     max_conn              = 200
-    name                  = "s3.amazonaws.com"
-    override_host         = aws_s3_bucket.releases.bucket_domain_name
+    name                  = local.releases_backend
+    override_host         = local.releases_backend
     port                  = 443
     shield                = "bwi-va-us"
-    ssl_cert_hostname     = "s3.amazonaws.com"
+    ssl_cert_hostname     = local.releases_backend
     ssl_check_cert        = true
     use_ssl               = true
     weight                = 100
