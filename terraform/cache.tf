@@ -1,3 +1,7 @@
+locals {
+  cache_domain = "cache.nixos.org"
+}
+
 resource "aws_s3_bucket" "cache" {
   provider = aws.us
   bucket   = "nix-cache"
@@ -95,10 +99,6 @@ resource "aws_s3_bucket_policy" "cache" {
   ]
 }
 EOF
-}
-
-locals {
-  cache_domain = "cache.nixos.org"
 }
 
 resource "fastly_service_v1" "cache" {
