@@ -1,6 +1,6 @@
 resource "aws_s3_bucket" "inventory" {
   provider = aws.us
-  bucket = "nixos-inventory"
+  bucket   = "nixos-inventory"
 
   lifecycle_rule {
     enabled = true
@@ -12,8 +12,8 @@ resource "aws_s3_bucket" "inventory" {
 
 resource "aws_s3_bucket_inventory" "cache-inventory" {
   provider = aws.us
-  bucket = aws_s3_bucket.cache.id
-  name   = "WeeklyInventory"
+  bucket   = aws_s3_bucket.cache.id
+  name     = "WeeklyInventory"
 
   included_object_versions = "All"
 
