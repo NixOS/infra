@@ -89,69 +89,6 @@ resource "aws_s3_bucket_policy" "channels" {
 EOF
 }
 
-resource "aws_cloudfront_distribution" "channels" {
-  enabled             = true
-  is_ipv6_enabled     = true
-  price_class         = "PriceClass_All"
-  aliases             = ["channels.nixos.org"]
-  default_root_object = "index.html"
-
-  origin {
-    origin_id   = "default"
-    domain_name = aws_s3_bucket.channels.website_endpoint
-
-    custom_origin_config {
-      http_port              = "80"
-      https_port             = "443"
-      origin_protocol_policy = "http-only"
-      origin_ssl_protocols   = ["TLSv1", "TLSv1.1", "TLSv1.2"]
-    }
-  }
-
-  default_cache_behavior {
-    viewer_protocol_policy = "redirect-to-https"
-    compress               = true
-    allowed_methods        = ["GET", "HEAD"]
-    cached_methods         = ["GET", "HEAD"]
-    target_origin_id       = "default"
-    min_ttl                = 0
-    default_ttl            = 60
-    max_ttl                = 86400
-
-    forwarded_values {
-      query_string = false
-      cookies {
-        forward = "none"
-      }
-    }
-  }
-
-  viewer_certificate {
-    acm_certificate_arn = aws_acm_certificate.channels.arn
-    ssl_support_method  = "sni-only"
-  }
-
-  restrictions {
-    geo_restriction {
-      restriction_type = "none"
-    }
-  }
-
-  logging_config {
-    bucket = "nix-cache-logs.s3.amazonaws.com"
-  }
-}
-
-resource "aws_acm_certificate" "channels" {
-  provider          = aws.us
-  domain_name       = "channels.nixos.org"
-  validation_method = "DNS"
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}
-
 resource "fastly_service_v1" "channels" {
   name        = local.channels_domain
   default_ttl = 86400
