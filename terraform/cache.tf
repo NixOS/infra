@@ -24,7 +24,7 @@ resource "aws_s3_bucket_object" "cache-nix-cache-info" {
 
   acl          = "public-read"
   bucket       = aws_s3_bucket.cache.bucket
-  content_type = "application/octet-stream"
+  content_type = "text/x-nix-cache-info"
   etag         = filemd5("${path.module}/cache/nix-cache-info")
   key          = "nix-cache-info"
   source       = "${path.module}/cache/nix-cache-info"
