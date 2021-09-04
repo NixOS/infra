@@ -1,4 +1,4 @@
-#!/usr/bin/env nix-shell
+#!/usr/bin/env nix-shell 
 #!nix-shell -i bash -p bind.dnsutils -p mtr -p curl
 # shellcheck shell=bash
 # impure: needs ping
@@ -17,7 +17,7 @@ run() {
 
 curl_w="
 time_namelookup:    %{time_namelookup}
-time_connect:       %{time_connect}
+time_connect:       %{time_connect} 
 time_appconnect:    %{time_appconnect}
 time_pretransfer:   %{time_pretransfer}
 time_redirect:      %{time_redirect}
