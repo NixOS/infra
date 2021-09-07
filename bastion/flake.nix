@@ -12,9 +12,17 @@
       modules = [ (import ./configuration.nix flakes) ];
     };
 
-    nixopsConfigurations.default =
-      { inherit nixpkgs; }
-      // import ./network.nix flakes;
+    devShell.x86_64-linux =
+      with nixpkgs.legacyPackages.x86_64-linux;
+      mkShell {
+        nativeBuildInputs = [
+          awscli
+          (terraform_0_15.withPlugins (p: with p; [ aws p.null external ]))
+        ];
 
+        shellHook = ''
+          alias tf=terraform
+        '';
+      };
   };
 }
