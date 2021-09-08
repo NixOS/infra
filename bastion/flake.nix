@@ -6,11 +6,15 @@
   inputs.nixops.inputs.nixpkgs.follows = "nixpkgs";
   inputs.nix.inputs.nixpkgs.follows = "nixpkgs";
 
-  outputs = { self, nixpkgs, nix, nixops, nixos-channel-scripts }: {
+  outputs = flakes @ { self, nixpkgs, nix, nixops, nixos-channel-scripts }: {
+    nixosConfigurations.bastion = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [ (import ./configuration.nix flakes) ];
+    };
 
     nixopsConfigurations.default =
       { inherit nixpkgs; }
-      // import ./network.nix { inherit self nixpkgs nix nixops nixos-channel-scripts; };
+      // import ./network.nix flakes;
 
   };
 }
