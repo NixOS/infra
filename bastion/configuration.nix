@@ -59,7 +59,7 @@ in
   '';
 
   boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/disk/by-label/nixos";
+  boot.loader.grub.device = "nodev";
 
   fileSystems."/" = {
     fsType = "ext4";
