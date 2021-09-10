@@ -123,7 +123,7 @@ in {
           rules = [
             {
               alert = "BuildsStuckOverTwoDays";
-              expr = ''hydra_machine_build_duration_bucket{le="259200"} - ignoring(le) hydra_machine_build_duration_bucket{le="172800"} > 0'';
+              expr = ''hydra_machine_build_duration_bucket{le="+Inf"} - ignoring(le) hydra_machine_build_duration_bucket{le="172800"} > 0'';
               for = "30m";
               labels.severity = "page";
               annotations.summary = "https://monitoring.nixos.org/grafana/d/j0hJAY1Wk/in-progress-build-duration-heatmap";
