@@ -139,3 +139,19 @@ resource "aws_eip" "bastion" {
   instance = aws_instance.bastion.id
   vpc      = true
 }
+
+module "bastion_deploy" {
+  source = "github.com/numtide/terraform-deploy-nixos-flakes"
+
+  target_host = aws_eip.bastion.public_ip
+  target_user = "deploy"
+
+  flake      = path.module
+  flake_host = "bastion"
+
+  ssh_agent = true
+
+  triggers = {
+    machine_id = aws_instance.bastion.id
+  }
+}
