@@ -4,8 +4,7 @@ with lib;
 
 {
   imports =
-    [ ./static-net-config.nix
-      ./diffoscope.nix
+    [ ./diffoscope.nix
       ../modules/common.nix
       ../modules/prometheus
     ];
