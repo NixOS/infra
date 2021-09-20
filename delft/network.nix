@@ -61,9 +61,6 @@ in {
     ];
   };
 
-  hydra = { deployment.targetHost = "hydra.ewi.tudelft.nl"; imports = [ ./build-machines-dell-1950.nix ]; };
-  lucifer = { deployment.targetHost = "lucifer.ewi.tudelft.nl"; imports = [ ./lucifer.nix ]; };
-
   eris = import ./eris.nix;
 
   ceres = {

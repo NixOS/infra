@@ -182,18 +182,6 @@ owner: Graham
 
 1 aarch64 for ofborg *and* community use
 
-## delft
-
-Univesity Data Center that contains a bunch of machines.
-
-
-- delft/machines.nix that has all the IPs and mac address of machines there
-- hydra (machine name); build slave
-- lucifer: build slave
-
-+ bunch of dead machines
-
-
 ## Hetzner:
 
 owner: Eelco and Rob, owned by the NixOS Foundation

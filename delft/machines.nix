@@ -20,18 +20,6 @@ lib: with lib;
     #buildUser = "buildfarm";
   }
 
-  { # Old Hydra server, now build machine.
-    hostName = "hydra";
-    ipAddress = "131.180.119.69";
-    ethernetAddress = "00:22:19:55:bf:24";
-  }
-
-  { # Old Hydra server, now build machine.
-    hostName = "lucifer";
-    ipAddress = "131.180.119.73"; # fe80::862b:2bff:fe0b:98f0
-    ethernetAddress = "84:2b:2b:0b:98:f0";
-  }
-
   /*
   { # 48-core NixOS build machine.
     hostName = "shelley";
