@@ -188,10 +188,8 @@ Univesity Data Center that contains a bunch of machines.
 
 
 - delft/machines.nix that has all the IPs and mac address of machines there
-- wendy; 48 core machine; dying 😕  both for build slave and used to deploy all the other infrastructure (eg: hydra.nixos.org)
 - hydra (machine name); build slave
 - lucifer: build slave
-- ike: build slave
 
 + bunch of dead machines
 

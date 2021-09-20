@@ -32,20 +32,6 @@ lib: with lib;
     ethernetAddress = "84:2b:2b:0b:98:f0";
   }
 
-  { # 48-core NixOS web server (wiki), database server, build machine.
-    hostName = "wendy";
-    ipAddress = "131.180.119.77";
-    ethernetAddress = "f0:4d:a2:40:1b:c0";
-    systems = [ "x86_64-linux" ];
-  }
-
-  { # 48-core NixOS build machine.
-    hostName = "ike";
-    ipAddress = "131.180.119.70";
-    ethernetAddress = "f0:4d:a2:40:1b:91";
-    systems = [ "x86_64-linux" ];
-  }
-
   /*
   { # 48-core NixOS build machine.
     hostName = "shelley";
