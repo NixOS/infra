@@ -320,6 +320,17 @@ in {
         ];
       }
       {
+        job_name = "fastly";
+        metrics_path = "/metrics";
+        static_configs = [
+          {
+            targets = [
+              "127.0.0.1:9118"
+            ];
+          }
+        ];
+      }
+      {
         job_name = "rfc39";
         metrics_path = "/";
         static_configs = [
@@ -547,6 +558,29 @@ in {
       Group = "keys";
       ExecStart = "${sd}/bin/prometheus-packet-sd --output.file=/var/lib/packet-sd/packet-sd.json";
       EnvironmentFile = "/run/keys/packet-sd-env";
+      Restart = "always";
+      RestartSec = "60s";
+    };
+  };
+
+  deployment.keys."fastly-read-only-api-token" = {
+    keyFile = /home/deploy/src/nixos-org-configurations/fastly-read-only-api-token;
+  };
+
+  systemd.services.prometheus-fastly-exporter = let
+    fastly = pkgs.callPackage ./prometheus/fastly.nix {};
+  in {
+    wantedBy = [ "multi-user.target" "prometheus.service" ];
+    after = [ "network.target" ];
+
+    script = ''
+      export FASTLY_API_TOKEN=$(cat /run/keys/fastly-read-only-api-token)
+      ${fastly}/bin/fastly-exporter \
+        -endpoint http://127.0.0.1:9118/metrics
+    '';
+
+    serviceConfig = {
+      Group = "keys";
       Restart = "always";
       RestartSec = "60s";
     };
