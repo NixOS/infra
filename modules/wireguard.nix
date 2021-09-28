@@ -29,32 +29,6 @@ let
       publicKey = "H/Y+sbNETKZugxGFbOS0m5BSr28jRDL19U37wEw07D8=";
     };
 
-    ike = {
-      ip = "10.254.1.5";
-      endpoint = "131.180.119.70";
-      port = 51820;
-      publicKey = "0Gnpua+K9Ms4m56j99KLrHNTbqDBLLp96eY9vmJbozQ=";
-    };
-
-    hydra = {
-      ip = "10.254.1.6";
-      endpoint = "131.180.119.69";
-      port = 51820;
-      publicKey = "daWQGiSHeWX1aELsppFoq740geXwIjGCLdmdQWC0Ymg=";
-    };
-
-    lucifer = {
-      ip = "10.254.1.7";
-      endpoint = "131.180.119.73";
-      port = 51820;
-    };
-
-    wendy = {
-      ip = "10.254.1.8";
-      enpdoint = "131.180.119.77";
-      port = 51820;
-    };
-
     haumea = {
       ip = "10.254.1.9";
       endpoint = "46.4.89.205";

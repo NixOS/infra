@@ -20,10 +20,6 @@ in {
     10.254.1.1 bastion
     10.254.1.3 ceres
 
-    10.254.1.5 ike
-    10.254.1.6 hydra
-    10.254.1.7 lucifer
-    10.254.1.8 wendy
     10.254.1.9 haumea
 
     10.254.3.1 webserver
