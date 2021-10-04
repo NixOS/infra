@@ -8,3 +8,13 @@ provider "aws" {
 }
 
 provider "fastly" {}
+
+# Create a token at https://app.netlify.com/user/applications/personal
+# And then import using `tf import secret_resource.netlify_token <TOKEN>`
+resource "secret_resource" "netlify_token" {
+  lifecycle { prevent_destroy = true }
+}
+
+provider "netlify" {
+  token = secret_resource.netlify_token.value
+}
