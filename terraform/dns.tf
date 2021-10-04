@@ -150,6 +150,16 @@ locals {
       type     = "CNAME"
       value    = "nixos-weekly.netlify.com"
     },
+    {
+      hostname = "_github-challenge-nixos.nixos.org"
+      type     = "TXT"
+      value    = "9e10a04a4b"
+    },
+    {
+      hostname = "nixos.org"
+      type     = "TXT"
+      value    = "v=spf1 include:spf.improvmx.com ~all"
+    },
   ]
 }
 
@@ -182,4 +192,20 @@ resource "netlify_dns_record" "nixos" {
   hostname = each.value.hostname
   type     = each.value.type
   value    = each.value.value
+}
+
+# FIXME: both records have the same priority because the provider doesn't
+# support the "priority" argument.
+resource "netlify_dns_record" "nixos_MX1" {
+  zone_id  = local.zone_id
+  hostname = "nixos.org"
+  type     = "MX"
+  value    = "mx1.improvmx.com"
+}
+
+resource "netlify_dns_record" "nixos_MX2" {
+  zone_id  = local.zone_id
+  hostname = "nixos.org"
+  type     = "MX"
+  value    = "mx2.improvmx.com"
 }
