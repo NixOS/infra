@@ -10,6 +10,8 @@
           (terraform.withPlugins (p: with p; [
             aws
             fastly
+            netlify
+            secret
           ]))
         ];
 
