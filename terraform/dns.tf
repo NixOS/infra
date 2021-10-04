@@ -1,4 +1,10 @@
 # Our DNS is managed by Netlify
+#
+# NOTES on the provider:
+#
+# * NETLIFY and NETLIFY6 resource types are missing because no support
+# * The TTL is 3600 everywhere because the "ttl" attribute is not supported
+# * The MX records both have 10 priority because no support
 
 locals {
   # Shortcut to keep this a bit leaner
@@ -168,24 +174,6 @@ resource "netlify_dns_zone" "nixos" {
   name    = "nixos.org"
 }
 
-# Import fails on all types with:
-#
-#   Error: &{0 } (*models.Error) is not supported by the TextConsumer, can be resolved by supporting TextUnmarshaler interface
-#
-# resource "netlify_dns_record" "nixos" {
-#   zone_id  = local.zone_id
-#
-#   hostname = "nixos.org"
-#   type     = "NETLIFY"
-#   value    = "nixos-homepage.netlify.com"
-# }
-#
-# New entries can be created if they are not of NETLIFY type.
-#
-# TTL is not supported.
-
-# netlify api getDnsRecords -d '{ "zone_id": "5e6ce1b8b6f808aa16acd1ff" }'
-
 resource "netlify_dns_record" "nixos" {
   for_each = { for v in local.dns_records : "${v.hostname}-${v.type}" => v }
   zone_id  = local.zone_id
@@ -194,8 +182,9 @@ resource "netlify_dns_record" "nixos" {
   value    = each.value.value
 }
 
-# FIXME: both records have the same priority because the provider doesn't
-# support the "priority" argument.
+# MX records both have the same hostname and type and would clash on the above
+# mapping.
+
 resource "netlify_dns_record" "nixos_MX1" {
   zone_id  = local.zone_id
   hostname = "nixos.org"
