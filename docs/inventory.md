@@ -5,27 +5,28 @@ This is the current list of hardware and services that everyone has access to.
 # Accounts
 ## GitHub
 
-owner: Eelco, Rob, Domen, Garbas
+owner: @edolstra @domenkozar @garbas @grahamc @rbvermaa
 
 ## Domains
 
-owner: Eelco
+owner: @edolstra
 * nixos.org - https://www.uniteddomains.com/
 
 ## DNS
 
-owner: Eelco
-Managed manually be Eelco via the United Domains web UI
+owner: Foundation
+
+Managed by Netlify.
 
 ## AWS account
 
-owner:  Infor
+owner: Infor
 alias: lb-nixos
-access: Rob and Eelco
+access: @rbvermaa and @edolstra
 
 ## Packet.net
 
-owner: Graham
+owner: @grahamc
 
 ## Hetzner Cloud
 
@@ -39,61 +40,25 @@ url: https://logs.nix.samueldr.com/nixos/
 nick: <code>{\`-\`}</code>
 config: https://gitlab.com/samueldr.nix/overlays/irclogger
 
-## Channels.nix.gsc.io
-
-owner: Graham
-
-Tracks all the channel updates
-
-Gives you a graph when all the channels where updated and history.
-
-To help bisect things.
-
-hosted on Packet (personal account)
-
-## search.nix.gsc.io
-
-owner: Graham
-
-Searches all of the nixos project repositories with editor integration.
-
-Useful for spelunking.
-
-hosted on Packet (personal account)
-
-## events.nix.gsc.io
-
-owner: Graham
-
-rabbit MQ instance which can send you all the NixOS organization activity.
-
-hosted on Packet (personal account)
-
 ## nix.ci
 
-owner: Graham
+owner: @grahamc
 
 ofborg instance and logs
 
 hosted on Packet.
 
-## howoldis.herokuapp.com
-
-owner: madjar/howoldis
-url: https://howoldis.herokuapp.com/
-repo: http://github.com/madjar/howoldis
-
-Domen might have access
-
-Tells you how old channels are and some doc
-
 ## arch64 community builder
 
-owner: Graham
+owner: @grahamc
 access: community members that have asked access to it
 host: Packet
 
 lots of cores to build for the aarch64 platform
+
+## survey.nixos.org
+
+owner: @davidak
 
 ## nixcon2017.org
 
@@ -102,14 +67,7 @@ owner: Christine?
 
 ## nixcon2018.org
 
-owner: zimbatm
-
-
-## YouTube channel for recorded talks
-
-owner: Cillian?
-url: https://www.youtube.com/channel/UCjqkNrQ8F3OhKSCfCgagWLg
-
+owner: @zimbatm
 
 ## NixOS community wiki + bot
 
