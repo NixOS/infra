@@ -62,11 +62,6 @@ locals {
       value    = "138.201.32.77"
     },
     {
-      hostname = "planet.nixos.org"
-      type     = "A"
-      value    = "54.217.220.47"
-    },
-    {
       hostname = "survey.nixos.org"
       type     = "A"
       value    = "78.47.220.153"
@@ -134,7 +129,7 @@ locals {
     {
       hostname = "planet.nixos.org"
       type     = "CNAME"
-      value    = "nixos-planet.netlify.com"
+      value    = "nixos-planet.netlify.app"
     },
     {
       hostname = "releases.nixos.org"
