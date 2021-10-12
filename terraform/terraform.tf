@@ -13,5 +13,11 @@ terraform {
     fastly = {
       source = "fastly/fastly"
     }
+    netlify = {
+      source = "AegirHealth/netlify"
+    }
+    secret = {
+      source = "nixpkgs/secret"
+    }
   }
 }
