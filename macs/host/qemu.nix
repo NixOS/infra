@@ -36,13 +36,22 @@ in {
 
       serviceConfig.PrivateTmp = true;
 
-      preStart = ''
+      preStart = let
+        nixInstall = pkgs.fetchurl {
+          url = "https://nixos.org/releases/nix/nix-2.3.10/install";
+          sha256 = "8fa6f064bf758adf501deb35c6837b8c4f9402f66ff86964537524103376958e";
+        };
+        in ''
         zfs rollback ${snapshot}
 
         # Create a cloud-init style cdrom
         rm -rf /tmp/cdr
         cp -r ${persistentConfigDir} /tmp/cdr
         rsync -r ${guestConfigDir}/ /tmp/cdr
+
+        cp ${nixInstall} /tmp/cdr/install
+        chmod +x /tmp/cdr/install
+
         cd /tmp/cdr
         find .
         genisoimage -v -J -r -V CONFIG -o /tmp/config.iso .
