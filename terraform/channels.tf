@@ -91,7 +91,7 @@ EOF
 
 resource "fastly_service_v1" "channels" {
   name        = local.channels_domain
-  default_ttl = 86400
+  default_ttl = 3600
 
   backend {
     address               = local.channels_backend
