@@ -1,6 +1,6 @@
 {
   inputs.nixpkgs.url = "nixpkgs/nixos-21.05";
-  inputs.nixos-channel-scripts.url = github:NixOS/nixos-channel-scripts/channels-cache-control;
+  inputs.nixos-channel-scripts.url = github:NixOS/nixos-channel-scripts;
   inputs.nixos-channel-scripts.inputs.nix.follows = "nix";
   inputs.nixos-channel-scripts.inputs.nixpkgs.follows = "nixpkgs";
   inputs.nixops.inputs.nixpkgs.follows = "nixpkgs";

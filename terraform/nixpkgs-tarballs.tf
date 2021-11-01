@@ -237,6 +237,13 @@ resource "fastly_service_v1" "nixpkgs-tarballs" {
   }
 
   snippet {
+    content  = "set req.url = querystring.remove(req.url);"
+    name     = "Remove all query strings"
+    priority = 50
+    type     = "recv"
+  }
+
+  snippet {
     content  = <<-EOT
       if (beresp.status == 403) {
         set beresp.status = 404;
