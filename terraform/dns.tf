@@ -117,9 +117,39 @@ locals {
       value    = "nixconberlin.github.io"
     },
     {
-      hostname = "discourse.nixos.org"
+      hostname = "olddiscourse.nixos.org"
       type     = "CNAME"
       value    = "nixos1.hosted-by-discourse.com"
+    },
+    {
+      hostname = "discourse.nixos.org"
+      type     = "A"
+      value    = "195.62.126.31"
+    },
+    {
+      hostname = "discourse.nixos.org"
+      type     = "AAAA"
+      value    = "2a02:248:101:62::146f"
+    },
+    {
+      hostname = "discourse.nixos.org"
+      type     = "MX"
+      value    = "mail.nixosdiscourse.fcio.net."
+    },
+    {
+      hostname = "discourse.nixos.org"
+      type     = "TXT"
+      value    = "v=spf1 ip4:185.105.252.151 ip6:2a02:248:101:62::1479 ~all"
+    },
+    {
+      hostname = "_dmarc.discourse.nixos.org"
+      type     = "TXT"
+      value    = "v=DMARC1; p=none"
+    },
+    {
+      hostname = "mail._domainkey.discourse.nixos.org"
+      type     = "TXT"
+      value    = "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDmxDhMfDl6lnueSRCjYiWIDeTAJXR9Yw0PfpBfG7GPUIkMyqy9jVGpb4ECVTt9S1zfpr4dbtCgir781oVwZiwGIWzC8y8XsD37wernQIPN4Yubnrnpw+6lill4uA/AuyU/ghbeZ5lW03pHD//2EW4YEu+Jw4aS4rF0Wtk+BlJRCwIDAQAB"
     },
     {
       hostname = "mobile.nixos.org"
