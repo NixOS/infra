@@ -144,6 +144,11 @@ locals {
     {
       hostname = "_dmarc.discourse.nixos.org"
       type     = "TXT"
+      value    = "v=DMARC1; p=none"
+    },
+    {
+      hostname = "mail._domainkey.discourse.nixos.org"
+      type     = "TXT"
       value    = "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDmxDhMfDl6lnueSRCjYiWIDeTAJXR9Yw0PfpBfG7GPUIkMyqy9jVGpb4ECVTt9S1zfpr4dbtCgir781oVwZiwGIWzC8y8XsD37wernQIPN4Yubnrnpw+6lill4uA/AuyU/ghbeZ5lW03pHD//2EW4YEu+Jw4aS4rF0Wtk+BlJRCwIDAQAB"
     },
     {
