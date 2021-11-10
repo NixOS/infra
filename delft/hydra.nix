@@ -158,6 +158,26 @@ in
       Host macstadium2
       Hostname 208.78.106.252
       Compression yes
+
+      Host macstadium-x86-44911507
+      Hostname 208.83.1.186
+      Compression yes
+
+      Host macstadium-x86-44911362
+      Hostname 208.83.1.175
+      Compression yes
+
+      Host macstadium-x86-44911305
+      Hostname 208.83.1.173
+      Compression yes
+
+      Host macstadium-m1-44911104
+      Hostname 208.83.1.181
+      Compression yes
+
+      Host macstadium-m1-44911207
+      Hostname 208.83.1.145
+      Compression yes
   '';
 
   services.openssh.knownHosts = {
@@ -183,6 +203,14 @@ in
 
     macstadium1 = { hostNames = [ "208.78.106.251" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBKrwg2592DfDUG1U0LZxJcBaT35YfEsuKo4helEAzeoujvzOo4DIaBrTCX7+LxcYZlGoi4WvsnwxUG11GY12l2A="; };
     macstadium2 =  { hostNames = [ "208.78.106.252" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLV1p6f6Rk3rKwNJbcqvG68wjfT3wPcJfChc1LFU9A3tTFslUDr47FHLmT+FTr+ChkoqD6Gsl+jtSnvkYnTlpGY="; };
+
+    macstadium-x86-44911305 = { hostNames = [ "208.83.1.173" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOtMZwCu5D/CRTTC8wvZWP+H7xkCCHjQZ//XVM4vmdZU"; };
+    macstadium-x86-44911362 = { hostNames = [ "208.83.1.175" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHjQFkuDYP5qBgvFZvwbJb0g4CTV8/FcHPCOT7Wmlkmr"; };
+    macstadium-x86-44911507 = { hostNames = [ "208.83.1.186" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMOMJFJhA4y5w72n3eRlb1RtcZc4gsc4UNHVQkBf6xZY"; };
+    macstadium-m1-44911104 = { hostNames = [ "208.83.1.181" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOX5EjsuYGcHEoIIX9c3J12xkL+z3Dz/3xby9KnTGpVG"; };
+    macstadium-m1-44911207 = { hostNames = [ "208.83.1.145" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICFDCv348yhWE2Tok+b2MALh8kNlgLGCCZqdaNLYN2U0"; };
+
+
     stan = { hostNames = [ "stan.ewi.tudelft.nl" "131.180.119.74" ]; publicKey = "ssh-dss AAAAB3NzaC1kc3MAAACBAL0SlYpGjDjPKrLIwoltYHHTYo/d6Ct2FQZKh4ltKOszWPYYAbs/YNSm2eFkvj0CGc3aastFuebz6+pRfvGMvqi4q6IoHwVvOkbWMadyuqrWIO+Z1YemZP/GAG69pLy+UyoydiSI83ycwPe4YARAU/cpBMNKJZbSxyrO80XatmtRAAAAFQC291WK+9M8+zI4KAtk6EqX0vqQ1QAAAIBd1YgRfdfRdu60BpR+3/YMbSYZMjRLFPyoSgmEQR2TtKfqsuKTsTREzB20iMgFlhEWb6C4r5y6jYDU85OOnvpf7zne22j6bKFDIiAbgsjUFHK1EB7+TBltf5yqq0FyNOy/PnLqVzOeGaUeCOc3Ris71Lxkm60oVF4mjut2d2UJ6AAAAIByuCH1bIIRb4za4yiiFQUz2CBX1XHhBn/h/LhNMLuyCTciG6tkppGBAgq5rWrNhjaEc7dIFgZR+E1wE5PQzWG/TBiXctwCOqOOErDB5b95jO2EntIhi8x5PO9Ef6jgis4QRsBIZiENDDeQHxFHCv4q+10TpyV+625O8TXkkcxl0g=="; };
 
     t2m = { hostNames = [ "t2m.cunat.cz" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBP9351NRVeQYvNV1bBbC5MX0iSmrXhVcBYMcn6AMo11U2zlOYRqBPzGLPjz9u31t4FxHNovxCrkFTqJY9zbsmTs="; };
