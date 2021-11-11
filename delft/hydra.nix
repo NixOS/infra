@@ -151,14 +151,6 @@ in
       Hostname 10.254.2.106
       Compression yes
 
-      Host macstadium1
-      Hostname 208.78.106.251
-      Compression yes
-
-      Host macstadium2
-      Hostname 208.78.106.252
-      Compression yes
-
       Host macstadium-x86-44911507
       Hostname 208.83.1.186
       Compression yes
@@ -201,9 +193,9 @@ in
     mac-m1-5 = { hostNames = [ "10.254.2.105" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHbYjdeghSNg7bU/ER/pTSGwP7Fyd7+OteD06dP4gCfP"; };
     mac-m1-6 = { hostNames = [ "10.254.2.106" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA8B5Ek8GhWCO5Qahl20CHn/txxvAweupuIbFmuLjciG"; };
 
-    macstadium1 = { hostNames = [ "208.78.106.251" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBKrwg2592DfDUG1U0LZxJcBaT35YfEsuKo4helEAzeoujvzOo4DIaBrTCX7+LxcYZlGoi4WvsnwxUG11GY12l2A="; };
-    macstadium2 =  { hostNames = [ "208.78.106.252" ]; publicKey = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBLV1p6f6Rk3rKwNJbcqvG68wjfT3wPcJfChc1LFU9A3tTFslUDr47FHLmT+FTr+ChkoqD6Gsl+jtSnvkYnTlpGY="; };
 
+    # Note that these IPS and SSH public keys are correct, but the machines are dedicated to ofborg for now,
+    # and therefore should not and cannot be put in to rotation in hydra.
     macstadium-x86-44911305 = { hostNames = [ "208.83.1.173" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOtMZwCu5D/CRTTC8wvZWP+H7xkCCHjQZ//XVM4vmdZU"; };
     macstadium-x86-44911362 = { hostNames = [ "208.83.1.175" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHjQFkuDYP5qBgvFZvwbJb0g4CTV8/FcHPCOT7Wmlkmr"; };
     macstadium-x86-44911507 = { hostNames = [ "208.83.1.186" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMOMJFJhA4y5w72n3eRlb1RtcZc4gsc4UNHVQkBf6xZY"; };
