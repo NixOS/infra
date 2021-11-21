@@ -103,7 +103,7 @@ in {
             name = "go-neb";
             webhook_configs = [
               {
-                url = "${config.services.go-neb.baseUrl}:4050/services/hooks/YWxlcnRtYW5hZ2VyX3NlcnZpY2UK";
+                url = "${config.services.go-neb.baseUrl}:4050/services/hooks/YWxlcnRtYW5hZ2VyX3NlcnZpY2U";
                 send_resolved = true;
               }
             ];

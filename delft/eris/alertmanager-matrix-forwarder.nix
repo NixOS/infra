@@ -47,7 +47,7 @@ in {
           Type = "alertmanager";
           UserId = "@bot:nixos.org";
           Config = {
-            webhook_url = "http://localhost:5040/services/hooks/YWxlcnRtYW5hZ2VyX3NlcnZpY2UK";
+            webhook_url = "http://localhost:5040/services/hooks/YWxlcnRtYW5hZ2VyX3NlcnZpY2U";
             rooms = {
               "!QLQqibtFaVtDgurUAE:nixos.org" = { #bots:nixos.org
                 text_template = ''
