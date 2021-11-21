@@ -9,7 +9,7 @@ in {
     ../modules/prometheus
     ./eris/packet-spot-market-prices.nix
     ./eris/github-project-monitor.nix
-    ./eris/alertmanager-irc-forwarder.nix
+    ./eris/alertmanager-matrix-forwarder.nix
     ./eris/channel-monitor.nix
   ];
   deployment.targetEnv = "hetzner";
@@ -88,7 +88,7 @@ in {
 
           routes = [
             {
-              receiver = "nixos_dev";
+              receiver = "go-neb";
               group_wait = "30s";
               match.severity = "page";
             }
@@ -100,10 +100,10 @@ in {
             name = "ignore";
           }
           {
-            name = "nixos_dev";
+            name = "go-neb";
             webhook_configs = [
               {
-                url = "http://127.0.0.1:9080/?target_id=%23nixos-dev";
+                url = "${config.services.go-neb.baseUrl}:4050/services/hooks/YWxlcnRtYW5hZ2VyX3NlcnZpY2UK";
                 send_resolved = true;
               }
             ];
