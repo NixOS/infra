@@ -69,7 +69,12 @@ in {
                     {{ else }}
                       <font color='green'><b>[RESOLVED]</b></font>
                     {{ end }}
-                    {{ index .Labels "alertname"}}: {{ index .Annotations "summary"}} (<a href="{{ .GeneratorURL }}">source</a>, <a href="{{ .SilenceURL }}">silence</a>)<br/>
+                    {{ index .Labels "alertname"}}: {{ index .Annotations "summary"}}
+                    (
+                      <a href="{{ index .Annotations "grafana" }}">📈</a>,
+                      <a href="{{ .GeneratorURL }}">source</a>,
+                      <a href="{{ .SilenceURL }}">silence</a>
+                    )<br/>
                   {{end -}}'';
                 msg_type = "m.text"; # Must be either `m.text` or `m.notice`
               };
