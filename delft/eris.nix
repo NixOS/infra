@@ -90,7 +90,7 @@ in {
             {
               receiver = "go-neb";
               group_wait = "30s";
-              match.severity = "page";
+              match.severity = "warning";
             }
           ];
         };
@@ -121,7 +121,7 @@ in {
               alert = "BuildsStuckOverTwoDays";
               expr = ''hydra_machine_build_duration_bucket{le="+Inf"} - ignoring(le) hydra_machine_build_duration_bucket{le="172800"} > 0'';
               for = "30m";
-              labels.severity = "page";
+              labels.severity = "warning";
               annotations.summary = "https://monitoring.nixos.org/grafana/d/j0hJAY1Wk/in-progress-build-duration-heatmap";
             }
           ];
@@ -134,7 +134,7 @@ in {
               alert = "RootPartitionLowInodes";
               expr = ''node_filesystem_files_free{mountpoint="/"} <= 10000'';
               for = "30m";
-              labels.severity = "page";
+              labels.severity = "warning";
               annotations.summary = "https://monitoring.nixos.org/grafana/d/5LANB9pZk/per-instance-metrics?orgId=1&refresh=30s&var-instance={{ $labels.instance }}";
             }
 
@@ -142,7 +142,7 @@ in {
               alert = "RootPartitionLowDiskSpace";
               expr = ''node_filesystem_avail_bytes{mountpoint="/"} <= 10000000000'';
               for = "30m";
-              labels.severity = "page";
+              labels.severity = "warning";
               annotations.summary = "https://monitoring.nixos.org/grafana/d/5LANB9pZk/per-instance-metrics?orgId=1&refresh=30s&var-instance={{ $labels.instance }}";
             }
           ];
@@ -155,14 +155,14 @@ in {
               alert = "RFC39MaintainerSync";
               expr = ''node_systemd_unit_state{name=~"^rfc39-sync.service$", state="failed"} == 1'';
               for = "30m";
-              labels.severity = "page";
+              labels.severity = "warning";
               annotations.summary = "https://monitoring.nixos.org/grafana/d/fBW4tL1Wz/scheduled-task-state-channels-website?orgId=1&refresh=10s";
             }
             {
               alert = "ChannelUpdateStuck";
               expr = ''max_over_time(node_systemd_unit_state{name=~"^update-nix.*.service$",state=~"failed"}[5m]) == 1'';
               for = "30m";
-              labels.severity = "page";
+              labels.severity = "warning";
               annotations.summary = "https://monitoring.nixos.org/grafana/d/fBW4tL1Wz/scheduled-task-state-channels-website?orgId=1&refresh=10s";
             }
           ];
@@ -175,7 +175,7 @@ in {
               alert = "CertificateExpiry";
               expr = "probe_ssl_earliest_cert_expiry - time() < 86400 * 14";
               for = "10m";
-              labels.severity = "page";
+              labels.severity = "warning";
               annotations.summary = "Certificate for {{ $labels.instance }} is expiring soon.";
             }
           ];
