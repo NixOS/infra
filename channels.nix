@@ -18,6 +18,23 @@ rec {
         job = "nixpkgs/trunk/unstable";
         current = true;
       };
+      
+      "nixos-21.11" = {
+        job = "nixos/release-21.11/tested";
+        current = true;
+      };
+      "nixos-21.11-small" = {
+        job = "nixos/release-21.11-small/tested";
+        current = true;
+      };
+      "nixpkgs-21.11-darwin" = {
+        job = "nixpkgs/nixpkgs-21.11-darwin/darwin-tested";
+        current = true;
+      };
+      "nixos-21.11-aarch64" = {
+        job = "nixos/release-21.11-aarch64/tested";
+        current = true;
+      };
 
       "nixos-21.05" = {
         job = "nixos/release-21.05/tested";
