@@ -71,9 +71,9 @@ in {
                     {{ end }}
                     {{ index .Labels "alertname"}}: {{ index .Annotations "summary"}}
                     (
-                      <a href="{{ index .Annotations "grafana" }}">📈</a>,
-                      <a href="{{ .GeneratorURL }}">source</a>,
-                      <a href="{{ .SilenceURL }}">silence</a>
+                      <a href="{{ index .Annotations "grafana" }}">📈 Grafana</a>,
+                      <a href="{{ .GeneratorURL }}">🔥 Prometheus</a>,
+                      <a href="{{ .SilenceURL }}">🔕 Silence</a>
                     )<br/>
                   {{end -}}'';
                 msg_type = "m.text"; # Must be either `m.text` or `m.notice`
