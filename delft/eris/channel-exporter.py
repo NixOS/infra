@@ -13,7 +13,7 @@ import json
 CHANNEL_REVISION = Gauge(
     "channel_revision",
     "Current revision, exported as a hack",
-    ["channel", "revision"],
+    ["channel", "revision", "status", "variant", "current"],
 )
 
 
@@ -70,9 +70,12 @@ if __name__ == "__main__":
             measurement = measure_channel(channel)
             if measurement is not None:
                 revision = measurement['revision']
+                status = about.get('status', '')
+                variant = about.get('variant', '')
+                current = int(status != 'unmaintained')
                 CHANNEL_UPDATE_TIME.labels(channel=channel).set(measurement['timestamp'])
-                CHANNEL_REVISION.labels(channel=channel, revision=measurement['revision']).set(1)
-                CHANNEL_CURRENT.labels(channel=channel).set(int(about['current']))
+                CHANNEL_REVISION.labels(channel=channel, revision=revision, status=status, variant=variant, current=current).set(1)
+                CHANNEL_CURRENT.labels(channel=channel).set(current)
                 print('updated {}'.format(channel))
                 previous_revision = revisions.pop(channel, None)
                 revisions[channel] = revision
