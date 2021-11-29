@@ -499,7 +499,7 @@ in {
         metrics_path = "/job/${value.job}/prometheus";
         static_configs = [ {
           labels = {
-            current = if value.current then "1" else "0";
+            current = if value.status != "unmaintained" then "1" else "0";
             channel = name;
           };
           targets = [ "hydra.nixos.org:443" ];
