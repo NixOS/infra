@@ -101,22 +101,6 @@ rec {
       variant = "aarch64";
       status = "unmaintained";
     };
-
-    "nixos-20.03" = {
-      job = "nixos/release-20.03/tested";
-      variant = "primary";
-      status = "unmaintained";
-    };
-    "nixos-20.03-small" = {
-      job = "nixos/release-20.03-small/tested";
-      variant = "small";
-      status = "unmaintained";
-    };
-    "nixpkgs-20.03-darwin" = {
-      job = "nixpkgs/nixpkgs-20.03-darwin/darwin-tested";
-      variant = "darwin";
-      status = "unmaintained";
-    };
   };
 
   channels-with-urls = (builtins.mapAttrs (name: about: about.job) channels);
