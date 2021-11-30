@@ -80,4 +80,4 @@ if __name__ == "__main__":
                 previous_revision = revisions.pop(channel, None)
                 revisions[channel] = revision
                 if previous_revision and previous_revision != revision:
-                    CHANNEL_REVISION.remove(channel, previous_revision)
+                    CHANNEL_REVISION.remove(channel, previous_revision, status, variant, current)
