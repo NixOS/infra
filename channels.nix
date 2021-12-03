@@ -42,43 +42,43 @@ rec {
     "nixos-21.11" = {
       job = "nixos/release-21.11/tested";
       variant = "primary";
-      status = "beta";
+      status = "stable";
     };
     "nixos-21.11-small" = {
       job = "nixos/release-21.11-small/tested";
       variant = "small";
-      status = "beta";
+      status = "stable";
     };
     "nixpkgs-21.11-darwin" = {
       job = "nixpkgs/nixpkgs-21.11-darwin/darwin-tested";
       variant = "darwin";
-      status = "beta";
+      status = "stable";
     };
     "nixos-21.11-aarch64" = {
       job = "nixos/release-21.11-aarch64/tested";
       variant = "aarch64";
-      status = "beta";
+      status = "stable";
     };
 
     "nixos-21.05" = {
       job = "nixos/release-21.05/tested";
       variant = "primary";
-      status = "stable";
+      status = "deprecated";
     };
     "nixos-21.05-small" = {
       job = "nixos/release-21.05-small/tested";
       variant = "small";
-      status = "stable";
+      status = "deprecated";
     };
     "nixpkgs-21.05-darwin" = {
       job = "nixpkgs/nixpkgs-21.05-darwin/darwin-tested";
       variant = "darwin";
-      status = "stable";
+      status = "deprecated";
     };
     "nixos-21.05-aarch64" = {
       job = "nixos/release-21.05-aarch64/tested";
       variant = "aarch64";
-      status = "stable";
+      status = "deprecated";
     };
 
     "nixos-20.09" = {
