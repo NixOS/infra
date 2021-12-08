@@ -223,3 +223,10 @@ resource "netlify_dns_record" "nixos_MX2" {
   type     = "MX"
   value    = "mx2.improvmx.com"
 }
+
+resource "netlify_dns_record" "nixos_google_verification" {
+  zone_id  = local.zone_id
+  hostname = "nixos.org"
+  type     = "TXT"
+  value    = "google-site-verification=Pm5opvmNjJOwdb7JnuVJ_eFBPaZYWNcAavY-08AJoGc"
+}
