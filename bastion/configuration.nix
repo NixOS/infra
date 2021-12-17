@@ -1,6 +1,6 @@
 flakes @ { self, nixpkgs, nix, nixops, nixos-channel-scripts }:
 
-{ config, lib, pkgs, ... }:
+{ modulesPath, config, lib, pkgs, ... }:
 let
   sshKeys = import ../ssh-keys.nix;
 in
@@ -11,7 +11,10 @@ in
     ../modules/prometheus
     ../modules/tarball-mirror.nix
     ../modules/wireguard.nix
+    "${modulesPath}/virtualisation/amazon-image.nix"
   ];
+
+  ec2.hvm = true;
 
   networking.hostName = "bastion";
 
@@ -57,14 +60,6 @@ in
   services.openssh.extraConfig = ''
     AcceptEnv AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY FASTLY_API_KEY GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL
   '';
-
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "nodev";
-
-  fileSystems."/" = {
-    fsType = "ext4";
-    device = "/dev/disk/by-label/nixos";
-  };
 
   fileSystems."/scratch" = {
     autoFormat = true;
