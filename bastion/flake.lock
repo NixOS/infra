@@ -1,34 +1,17 @@
 {
   "nodes": {
-    "lowdown-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1633514407,
-        "narHash": "sha256-Dw32tiMjdK9t3ETl5fzGrutQTzh2rufgZV4A/BbxuD4=",
-        "owner": "kristapsdz",
-        "repo": "lowdown",
-        "rev": "d2c2b44ff6c27b936ec27358a2653caaef8f73b8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "kristapsdz",
-        "repo": "lowdown",
-        "type": "github"
-      }
-    },
     "nix": {
       "inputs": {
-        "lowdown-src": "lowdown-src",
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1639738809,
-        "narHash": "sha256-RZSWOJUPkXIlMNYMC5a+WNrOjpqAHyhzyqD57BGfNY8=",
+        "lastModified": 1619080380,
+        "narHash": "sha256-DKXtLoiSMuNaq5km6FAWqJOpilSCFJQ0or8btfWH6mo=",
         "owner": "NixOS",
         "repo": "nix",
-        "rev": "6e6e998930f0d7361d64644eb37d9134e74e8501",
+        "rev": "d9864be4b757468d33bc49edddce5e4f04ef4b90",
         "type": "github"
       },
       "original": {
@@ -38,22 +21,57 @@
     },
     "nixops": {
       "inputs": {
+        "nixops-aws": "nixops-aws",
+        "nixops-hetzner": "nixops-hetzner",
         "nixpkgs": [
           "nixpkgs"
-        ],
-        "utils": "utils"
+        ]
       },
       "locked": {
-        "lastModified": 1638353199,
-        "narHash": "sha256-YRsl35Pfa0MVHVZZ1qj+wkK54C2WLt/TC1bCgfNLXx4=",
+        "lastModified": 1586701146,
+        "narHash": "sha256-JMfzMXFTYuUEtEiMhbmGdlQYxBwIF/5R8DIa9sGBVe4=",
         "owner": "NixOS",
         "repo": "nixops",
-        "rev": "0c989d79c9052ebf52f12964131f4fc31ac20a18",
+        "rev": "0a636f2d59955a7cc1e6cb5bb132aea325c631cf",
         "type": "github"
       },
       "original": {
         "id": "nixops",
         "type": "indirect"
+      }
+    },
+    "nixops-aws": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1586700941,
+        "narHash": "sha256-9yh7iHMJ8F8wA4nwTjm8rcmceFM/6URHK/Q/AuCkdzE=",
+        "owner": "NixOS",
+        "repo": "nixops-aws",
+        "rev": "af97c16f179cd0df94a6fc3ef470092122253f60",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "flake",
+        "repo": "nixops-aws",
+        "type": "github"
+      }
+    },
+    "nixops-hetzner": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1586701048,
+        "narHash": "sha256-q1QhsSp3N4nffnpUnGrF0Jg7VyLvi9JXiD82oxaM/Jg=",
+        "owner": "NixOS",
+        "repo": "nixops-hetzner",
+        "rev": "663b02618ece7a92a72da408a552528ee8dd354c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "zfs",
+        "repo": "nixops-hetzner",
+        "type": "github"
       }
     },
     "nixos-channel-scripts": {
@@ -81,16 +99,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1639161226,
-        "narHash": "sha256-75Y08ynJDTq6HHGIF+8IADBJSVip0UyWQH7jqSFnRR8=",
+        "lastModified": 1630927478,
+        "narHash": "sha256-y2z+/r1QhRRkPr0Dzl0O7qXdZ0jfr32w7OlfXr2XNik=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "573095944e7c1d58d30fc679c81af63668b54056",
+        "rev": "fd6dba47199a7c249e64c1aa1fef01ee78e58481",
         "type": "github"
       },
       "original": {
         "id": "nixpkgs",
-        "ref": "nixos-21.11",
+        "ref": "nixos-21.05",
         "type": "indirect"
       }
     },
@@ -100,21 +118,6 @@
         "nixops": "nixops",
         "nixos-channel-scripts": "nixos-channel-scripts",
         "nixpkgs": "nixpkgs"
-      }
-    },
-    "utils": {
-      "locked": {
-        "lastModified": 1610051610,
-        "narHash": "sha256-U9rPz/usA1/Aohhk7Cmc2gBrEEKRzcW4nwPWMPwja4Y=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "3982c9903e93927c2164caa727cd3f6a0e6d14cc",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
       }
     }
   },
