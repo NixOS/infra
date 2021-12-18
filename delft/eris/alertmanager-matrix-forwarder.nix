@@ -1,32 +1,8 @@
 { config, pkgs, ... }:
-let
-  finalConfigFile = "/var/run/go-neb/config.yaml";
-
-  settingsFormat = pkgs.formats.yaml {};
-  configFile = settingsFormat.generate "config.yaml" config.services.go-neb.config;
-
-  go-neb = pkgs.callPackage ./go-neb-backport.nix {};
-in {
+{
   deployment.keys."alertmanager-matrix-forwarder" = {
     keyFile = /home/deploy/src/nixos-org-configurations/keys/alertmanager-matrix-forwarder;
     # user = config.systemd.services.go-neb.serviceConfig.User;
-  };
-
-  systemd.services.go-neb = {
-    serviceConfig = {
-      ExecStartPre = pkgs.writeShellScript "pre-start" ''
-        umask 077
-        export $(xargs < /run/keys/alertmanager-matrix-forwarder)
-        ${pkgs.envsubst}/bin/envsubst -i "${configFile}" > ${finalConfigFile}
-        chown go-neb ${finalConfigFile}
-      '';
-      ExecStart = pkgs.lib.mkForce "${go-neb}/bin/go-neb";
-      User = "go-neb";
-      SupplementaryGroups = [ "keys" ];
-      RuntimeDirectory = "go-neb";
-      PermissionsStartOnly = true;
-    };
-    environment.CONFIG_FILE = pkgs.lib.mkForce finalConfigFile;
   };
 
   services.go-neb = {
