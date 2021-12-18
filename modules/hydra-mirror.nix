@@ -22,8 +22,12 @@ let
           Type = "oneshot";
           RemainAfterExit = false;
           User = "hydra-mirror";
+          # Allow the unit to use 80% of the system's RAM and 100% of the system's swap
+          MemoryHigh = "80%";
         };
-        unitConfig.After = [ "networking.target" ];
+        unitConfig = {
+          After = [ "networking.target" ];
+        };
         environment.TMPDIR = "/scratch/hydra-mirror";
         environment.GC_INITIAL_HEAP_SIZE = "4g";
       };
