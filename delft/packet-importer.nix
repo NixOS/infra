@@ -8,9 +8,10 @@ in
     user = "hydra-packet";
   };
 
-  users.extraUsers.hydra-packet = {
+  users.users.hydra-packet = {
     description = "Hydra Packet Machine Importer";
     group = "hydra";
+    isSystemUser = true;
   };
 
   systemd.tmpfiles.rules = [
