@@ -12,9 +12,12 @@ in {
     user = "spot-price-exporter";
   };
 
-  users.extraUsers.spot-price-exporter = {
+  users.users.spot-price-exporter = {
     description = "Prometheus Packet Spot Market Price Exporter";
+    isSystemUser = true;
+    group = "spot-price-exporter";
   };
+  users.groups.spot-price-exporter = {};
 
   systemd.services.prometheus-packet-spot-market-price-exporter = {
     wantedBy = [ "multi-user.target" ];

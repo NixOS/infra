@@ -539,9 +539,12 @@ in {
     user = "packet-sd";
   };
 
-  users.extraUsers.packet-sd = {
+  users.users.packet-sd = {
     description = "Prometheus Packet Service Discovery";
+    isSystemUser = true;
+    group = "packet-sd";
   };
+  users.groups.packet-sd = {};
 
   systemd.tmpfiles.rules = [
     "d /var/lib/packet-sd 0755 packet-sd - -"

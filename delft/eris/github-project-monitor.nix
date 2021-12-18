@@ -15,9 +15,12 @@ let
     ];
   });
 in {
-  users.extraUsers.github-exporter = {
+  users.users.github-exporter = {
     description = "Prometheus Github Exporter";
+    isSystemUser = true;
+    group = "github-exporter";
   };
+  users.groups.github-exporter = {};
 
   systemd.services.prometheus-github-exporter = {
     wantedBy = [ "multi-user.target" ];
