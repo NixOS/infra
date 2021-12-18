@@ -73,5 +73,7 @@ in
   # avoid swap as much as possible
   boot.kernel.sysctl."vm.swappiness" = lib.mkDefault 0;
 
+  boot.loader.grub.device = lib.mkForce "/dev/disk/by-id/nvme-Amazon_Elastic_Block_Store_vol0631f5232321abda4";
+
   systemd.tmpfiles.rules = [ "d /scratch/hydra-mirror 0755 hydra-mirror users 10d" ];
 }
