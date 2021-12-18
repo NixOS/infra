@@ -70,8 +70,8 @@ in
   # work around releases taking too much memory
   swapDevices = [{ device = "/scratch/swapfile"; size = 32 * 1024; }];
 
-  # avoid swap as much as possible
-  boot.kernel.sysctl."vm.swappiness" = lib.mkDefault 0;
+  # Enable swap so mirroring the channels doesn't make AWS think this machine is dead
+  boot.kernel.sysctl."vm.swappiness" = lib.mkDefault 60;
 
   boot.loader.grub.device = lib.mkForce "/dev/disk/by-id/nvme-Amazon_Elastic_Block_Store_vol0631f5232321abda4";
 
