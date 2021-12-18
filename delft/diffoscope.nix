@@ -25,8 +25,11 @@ in
     '';
 
   # Don't run diffoscope as root.
-  users.extraUsers.diffoscope =
-    { description = "Diffoscope containment user";
-    };
+  users.extraUsers.diffoscope = {
+    description = "Diffoscope containment user";
+    group = "diffoscope";
+    isSystemUser = true;
+  };
+  users.groups.diffoscope = {};
 
 }
