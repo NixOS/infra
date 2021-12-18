@@ -69,6 +69,7 @@ in
 
   # work around releases taking too much memory
   swapDevices = [{ device = "/scratch/swapfile"; size = 32 * 1024; }];
+  zramSwap.enable = true;
 
   # Enable swap so mirroring the channels doesn't make AWS think this machine is dead
   boot.kernel.sysctl."vm.swappiness" = lib.mkDefault 60;
