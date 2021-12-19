@@ -70,11 +70,11 @@ in {
             -drive if=pflash,format=raw,snapshot=on,file=${ovmfVarsFile} \
             -smbios type=2 \
             -device ich9-intel-hda -device hda-duplex \
-            -device ide-drive,bus=ide.2,drive=Clover \
+            -device ide-hd,bus=ide.2,drive=Clover \
             -drive id=Clover,if=none,snapshot=on,format=qcow2,file='${cloverImage}' \
-            -device ide-drive,bus=ide.1,drive=MacHDD \
+            -device ide-hd,bus=ide.1,drive=MacHDD \
             -drive id=MacHDD,cache=unsafe,if=none,file=${zvolDevice},format=raw \
-            -device ide-drive,bus=ide.0,drive=config \
+            -device ide-cd,bus=ide.0,drive=config \
             -drive id=config,if=none,snapshot=on,media=cdrom,file=/tmp/config.iso \
             -netdev tap,id=net0,ifname=tap0,script=no,downscript=no -device e1000-82545em,netdev=net0,id=net0,mac=${config.macosGuest.guest.MACAddress} \
             -vnc 127.0.0.1:0 \
