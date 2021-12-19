@@ -105,6 +105,20 @@ let
       enpdoint = "54.217.220.47";
       port = 51820;
     };
+
+    hyperchicken = {
+      # Graham's machine, since he's lost stable IPv4 addresses
+      publicKey = "sXj7LhGQBczgMhEvLewWgyHsmYMMg88vUsz1rrn7fWM=";
+      ip = "10.254.4.1";
+      port = 51820;
+    };
+
+    scruffy = {
+      # Graham's second machine, since he's lost stable IPv4 addresses
+      publicKey = "kamC5o3H6UhrfNZjxU6vqdHi3I1+KDOj9tMeuFjiIyk=";
+      ip = "10.254.4.2";
+      port = 51820;
+    };
   };
 
   peerable = selfHost: lib.filterAttrs (hostname: hostcfg:
