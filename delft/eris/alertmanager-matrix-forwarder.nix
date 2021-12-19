@@ -33,14 +33,14 @@
                 # $$severity otherwise envsubst replaces $severity with an empty string
                 html_template = ''
                   {{range .Alerts -}}
-                    {{ $$severity := index .Labels "severity" }}
+                    {{ $severity := index .Labels "severity" }}
                     {{ if eq .Status "firing" }}
-                      {{ if eq $$severity "critical"}}
+                      {{ if eq $severity "critical"}}
                         <font color='red'><b>[FIRING - CRITICAL]</b></font>
-                      {{ else if eq $$severity "warning"}}
+                      {{ else if eq $severity "warning"}}
                         <font color='orange'><b>[FIRING - WARNING]</b></font>
                       {{ else }}
-                        <b>[FIRING - {{ $$severity }}]</b>
+                        <b>[FIRING - {{ $severity }}]</b>
                       {{ end }}
                     {{ else }}
                       <font color='green'><b>[RESOLVED]</b></font>
