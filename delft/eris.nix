@@ -150,7 +150,7 @@ in {
               expr = ''
                 (node_filesystem_avail_bytes{${diskSelector}} * 10^(-9) <= 10)
                 or
-                (((node_filesystem_avail_bytes{${diskSelector}} / node_filesystem_size_bytes) * 100) <= 10)";
+                (((node_filesystem_avail_bytes{${diskSelector}} / node_filesystem_size_bytes) * 100) <= 10)
               '';
               for = "30m";
               labels.severity = "warning";
