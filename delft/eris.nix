@@ -130,10 +130,15 @@ in {
 
         {
           name = "system";
-          rules = [
+          rules = let
+            diskSelector = ''mountpoint=~"(/|/scratch)"'';
+          in
+          [
             {
-              alert = "RootPartitionLowInodes";
-              expr = ''node_filesystem_files_free{mountpoint="/"} <= 10000'';
+              alert = "PartitionLowInodes";
+              expr = ''
+                node_filesystem_files_free{${diskSelector}} <= 10000
+              '';
               for = "30m";
               labels.severity = "warning";
               annotations.summary = "{{ $labels.device }} mounted to {{ $labels.mountpoint }} ({{ $labels.fstype }}) on {{ $labels.instance }} has {{ $value }} inodes free.";
@@ -141,11 +146,15 @@ in {
             }
 
             {
-              alert = "RootPartitionLowDiskSpace";
-              expr = ''node_filesystem_avail_bytes{mountpoint="/"} <= 10000000000'';
+              alert = "PartitionLowDiskSpace";
+              expr = ''
+                (node_filesystem_avail_bytes{${diskSelector}} * 10^(-9) <= 10)
+                or
+                (((node_filesystem_avail_bytes{${diskSelector}} / node_filesystem_size_bytes) * 100) <= 10)";
+              '';
               for = "30m";
               labels.severity = "warning";
-              annotations.summary = "{{ $labels.device }} mounted to {{ $labels.mountpoint }} ({{ $labels.fstype }}) on {{ $labels.instance }} has {{ $value }} bytes free.";
+              annotations.summary = "{{ $labels.device }} mounted to {{ $labels.mountpoint }} ({{ $labels.fstype }}) on {{ $labels.instance }} has {{ $value }} GB free.";
               annotations.grafana = "https://monitoring.nixos.org/grafana/d/5LANB9pZk/per-instance-metrics?orgId=1&refresh=30s&var-instance={{ $labels.instance }}";
             }
           ];
