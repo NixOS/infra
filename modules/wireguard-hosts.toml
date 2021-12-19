@@ -1,5 +1,15 @@
 network = 16
 
+# IP Plan for 10.254.x.y
+#
+# 10.254.1.x: infrastructure services (not builders)
+# 10.254.2.x: macOS builders
+#            1 -  10: x86 mac minis running NixOS with macOS in a VM
+#           50 -  60: x86 mac minis reserved for ofborg
+#          100 - 110: m1 mac minis running macOS on the hardware
+# 10.254.3.x: (defunct) NixOS.org hosting infrastructure
+# 10.254.4.x: infra team administrator machines, for connecting to the bastion
+
 [hosts.bastion]
 # wg won't retry resolution if it fails... so
 # hard-code the IP to bastion.nixos.org so we don't lock
@@ -65,7 +75,6 @@ publicKey = "aw/8/5oEn0cZa/WnUE7E7MEukDvzUzaAUEL6PMhLFmE="
 ip = "10.254.2.51"
 publicKey = "RPD07xoZYB3aq9hS4pX+qnCHwSbNunK69HGdf8pRtCQ="
 
-
 [hosts.mac-m1-1]
 ip = "10.254.2.101"
 publicKey = "r9EEig5zzGS+MlMqK1jCzXB4Rm11Q/c812i7dxGj8gQ="
@@ -93,7 +102,7 @@ publicKey = "S20ha1NoMUgR67696vi7hmSdSxK/GJM550S0uR2odlA="
 [hosts.webserver]
 enpdoint = "54.217.220.47"
 ip = "10.254.3.1"
-port = 51_820
+port = 51820
 publicKey = "/N5//y0elGZdeekUv+IzKZiZ9wcKSOHc2bHmPU8FaCM="
 
 
