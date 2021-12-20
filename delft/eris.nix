@@ -81,6 +81,7 @@ in {
 
     alertmanager = {
       enable = true;
+      webExternalUrl = "http://10.254.1.4:9093/";
       configuration = {
         global = {};
         route = {
