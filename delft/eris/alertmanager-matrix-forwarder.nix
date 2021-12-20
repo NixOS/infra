@@ -5,12 +5,16 @@
     # user = config.systemd.services.go-neb.serviceConfig.User;
   };
 
+  systemd.services.go-neb.serviceConfig.SupplementaryGroups = [ "keys" ];
+
   services.go-neb = {
     enable = true;
     baseUrl = "http://localhost";
+    secretFile = "/run/keys/alertmanager-matrix-forwarder";
     config = {
       clients = [
-        { UserId = "@bot:nixos.org";
+        {
+          UserId = "@bot:nixos.org";
           AccessToken = "$CHANGEME";
           HomeServerUrl = "https://nixos.ems.host";
           Sync = true;
@@ -19,13 +23,15 @@
         }
       ];
       services = [
-        { ID = "alertmanager_service";
+        {
+          ID = "alertmanager_service";
           Type = "alertmanager";
           UserId = "@bot:nixos.org";
           Config = {
-            webhook_url = "http://localhost:5040/services/hooks/YWxlcnRtYW5hZ2VyX3NlcnZpY2U";
+            webhook_url = "http://localhost:4050/services/hooks/YWxlcnRtYW5hZ2VyX3NlcnZpY2U";
             rooms = {
-              "!QLQqibtFaVtDgurUAE:nixos.org" = { #bots:nixos.org
+              "!QLQqibtFaVtDgurUAE:nixos.org" = {
+                #bots:nixos.org
                 text_template = ''
                   {{range .Alerts -}} [{{ .Status }}] {{index .Labels "alertname" }}: {{index .Annotations "description"}} {{ end -}}
                 '';
