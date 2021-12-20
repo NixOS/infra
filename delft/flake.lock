@@ -32,16 +32,18 @@
         ]
       },
       "locked": {
-        "lastModified": 1639753388,
-        "narHash": "sha256-JPkw3heasqX9iWju7BWjKDsyoS+HmLIKM2ibwHq5+Ko=",
-        "owner": "NixOS",
+        "lastModified": 1640031674,
+        "narHash": "sha256-sC1tdFK/p7nJ0elhQvNmy6U0j3JlDWl0mjMzqjB4n/I=",
+        "owner": "DeterminateSystems",
         "repo": "hydra",
-        "rev": "e1e5fafdff63c1e1595d2edb8c9854710211a0d7",
+        "rev": "7c061135e221dddb58a1d4aae3cf00206c58d408",
         "type": "github"
       },
       "original": {
-        "id": "hydra",
-        "type": "indirect"
+        "owner": "DeterminateSystems",
+        "ref": "faster-notifications",
+        "repo": "hydra",
+        "type": "github"
       }
     },
     "lowdown-src": {
