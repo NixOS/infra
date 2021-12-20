@@ -34,6 +34,10 @@ in {
     9200 # hydra-queue-runner rexporter
   ];
 
+  networking.firewall.interfaces.wg0.allowedTCPPorts = [
+    9093 # alertmanager
+  ];
+
   services.nginx = {
     enable = true;
     virtualHosts."monitoring.nixos.org" = {
