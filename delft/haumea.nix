@@ -84,7 +84,7 @@
 
   services.postgresql = {
     enable = true;
-    package = if true then pkgs.postgresql_12 else pkgs.postgresql_12.overrideAttrs({ nativeBuildInputs, configureFlags, ...}: {
+    package = if true then pkgs.postgresql_14 else pkgs.postgresql_14.overrideAttrs({ nativeBuildInputs, configureFlags, ...}: {
       # Enable JIT compilation of queries, remove after https://github.com/NixOS/nixpkgs/pull/124804
       nativeBuildInputs = nativeBuildInputs ++ [ pkgs.llvm pkgs.clang ];
       configureFlags = configureFlags ++ [ "--with-llvm" ];
