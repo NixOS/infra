@@ -101,6 +101,7 @@ in {
 
     systemd.services.forward-wg0-ssh-to-guest = {
       wantedBy = [ "multi-user.target" ];
+      after = [ "wireguard-wg0.service" ];
       script = ''
           set -euxo pipefail
           exec ${pkgs.socat}/bin/socat TCP-LISTEN:2200,fork,so-bindtodevice=${config.macosGuest.network.sshInterface} TCP:${guestIP}:22
@@ -109,6 +110,7 @@ in {
 
     systemd.services.forward-wg0-prometheus-to-guest = {
       wantedBy = [ "multi-user.target" ];
+      after = [ "wireguard-wg0.service" ];
       script = ''
           set -euxo pipefail
           exec ${pkgs.socat}/bin/socat TCP-LISTEN:9101,fork,so-bindtodevice=${config.macosGuest.network.sshInterface} TCP:${guestIP}:9100
