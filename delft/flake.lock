@@ -32,11 +32,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1642179935,
-        "narHash": "sha256-1PZPZFXwIAdKzfVwFvwhxcbKgFJ1Z1TMw1j1Mx/sZ20=",
+        "lastModified": 1642183352,
+        "narHash": "sha256-LMhE5O+nMMIyTFAXnVgyR7VuGF1MbNANPAGzI/chNvQ=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "dc4a4aa038f5f61c6aad00619737debf455f9e46",
+        "rev": "95eb14591f01c3dd17b9aabeb7d0e2d65878c31b",
         "type": "github"
       },
       "original": {
