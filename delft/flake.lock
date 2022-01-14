@@ -32,18 +32,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1641925684,
-        "narHash": "sha256-mRnij+lXILGBFf6e04Ip1iuBPj4TjtEpwf3sf/kzpMQ=",
-        "owner": "DeterminateSystems",
+        "lastModified": 1642179935,
+        "narHash": "sha256-1PZPZFXwIAdKzfVwFvwhxcbKgFJ1Z1TMw1j1Mx/sZ20=",
+        "owner": "NixOS",
         "repo": "hydra",
-        "rev": "459790f0f869e53269a9de0dcad5792e391c4b2a",
+        "rev": "dc4a4aa038f5f61c6aad00619737debf455f9e46",
         "type": "github"
       },
       "original": {
-        "owner": "DeterminateSystems",
-        "ref": "hydra-eval-jobset-notifications-sub-send_cached_finished_queued",
-        "repo": "hydra",
-        "type": "github"
+        "id": "hydra",
+        "type": "indirect"
       }
     },
     "lowdown-src": {
