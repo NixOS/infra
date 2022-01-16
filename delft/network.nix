@@ -5,7 +5,7 @@ let
     prometheus-postgres-exporter = self.callPackage ./prometheus/postgres-exporter.nix {};
   };
 
-  makeMac = { ip, extra }: {
+  makeMac = { ip, extra, useCatalina ? false }: {
     deployment = {
       targetHost = ip;
     };
@@ -13,31 +13,42 @@ let
     # work around nix#3462
     documentation.nixos.enable = false;
 
-    macosGuest = {
-      enable = true;
-      network = {
-        interiorNetworkPrefix = "10.172.170"; #172="n", 170="x"
-        externalInterface = "enp3s0f0";
-        sshInterface = "wg0";
-      };
-
-      guest = {
-        sockets = 1;
-        cores = 2;
-        threads = 2;
-        memoryInMegs = 6 * 1024;
-        zvolName = "rpool/mac-hdd-2-initial-setup-startup-script.img";
-        ovmfCodeFile = ../macs/dist/OVMF_CODE.fd;
-        ovmfVarsFile = ../macs/dist/OVMF_VARS-1024x768.fd;
-        guestConfigDir = ../macs/guest;
-      };
-    };
     imports = [
       ../macs/host
       extra
+      ({ lib, pkgs, ... }: {
+        macosGuest = {
+
+          enable = true;
+          network = {
+            interiorNetworkPrefix = "10.172.170"; #172="n", 170="x"
+            externalInterface = "enp3s0f0";
+            sshInterface = "wg0";
+          };
+
+          guest = {
+            sockets = 1;
+            cores = 2;
+            threads = 2;
+            memoryInMegs = 6 * 1024;
+            ovmfCodeFile = ../macs/dist/OVMF_CODE.fd;
+            ovmfVarsFile = ../macs/dist/OVMF_VARS-1024x768.fd;
+          } // (if useCatalina then
+            {
+              zvolName = lib.mkForce "rpool/catalina";
+              guestConfigDir = lib.mkForce ../macs/guest-catalina;
+              cloverImage = (pkgs.callPackage ../macs/dist/clover-catalina {}).clover-image;
+            }
+          else
+            {
+              zvolName = "rpool/mac-hdd-2-initial-setup-startup-script.img";
+              guestConfigDir = ../macs/guest;
+            }
+          );
+        };
+      })
     ];
   };
-
 in {
   defaults = {
     documentation.nixos.enable = false;
@@ -93,6 +104,7 @@ in {
 
   mac2 = makeMac {
     ip = "10.254.2.2";
+    useCatalina = true;
     extra = {
       imports = [
         ../macs/nodes/mac2.nix
