@@ -104,7 +104,7 @@ in {
 
   mac2 = makeMac {
     ip = "10.254.2.2";
-    useCatalina = true;
+    useCatalina = false;
     extra = {
       imports = [
         ../macs/nodes/mac2.nix
