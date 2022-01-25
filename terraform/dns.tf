@@ -64,7 +64,7 @@ locals {
     {
       hostname = "survey.nixos.org"
       type     = "A"
-      value    = "78.47.220.153"
+      value    = "54.72.253.2"
     },
     {
       hostname = "survey.nixos.org"
