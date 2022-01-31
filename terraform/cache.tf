@@ -175,7 +175,7 @@ resource "fastly_service_v1" "cache" {
   # Allow CORS GET requests.
   header {
     destination = "http.access-control-allow-origin"
-    type        = "cache"
+    type        = "response"
     action      = "set"
     name        = "CORS Allow"
     source      = "\"*\""
