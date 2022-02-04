@@ -202,6 +202,12 @@ in
     macstadium-m1-44911104 = { hostNames = [ "208.83.1.181" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOX5EjsuYGcHEoIIX9c3J12xkL+z3Dz/3xby9KnTGpVG"; };
     macstadium-m1-44911207 = { hostNames = [ "208.83.1.145" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICFDCv348yhWE2Tok+b2MALh8kNlgLGCCZqdaNLYN2U0"; };
 
+    # These IPs and SSH public keys are specifically provisioned for Hydra
+    hetzner-m1-1638981 = { hostNames = [ "23.88.75.215" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMXOk44SDOmkZNtOcviM5LIA6yVOmEclPRQTqndvIxyU"; };
+    hetzner-m1-1640609 = { hostNames = [ "142.132.141.35" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF+kukRUsxSBsW5xITI65pAixwoWx4b6LtASRzFqM2xX"; };
+    hetzner-m1-1640635 = { hostNames = [ "23.88.76.161" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH6Y9cfoJ+6TNS1EbE3OUocnyUtnTtJ0fJybK2+gyVmN"; };
+    hetzner-m1-1643080 = { hostNames = [ "23.88.76.75" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEIUYnFY0tnASbzZOHruwj3n4nX5gT0Zco2Xjv7frINn"; };
+    hetzner-m1-1643228 = { hostNames = [ "142.132.140.199" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINEevWFDXtUmbaZYiOmPL4uZVXVdHfQ2fMAMGunfDAAT"; };
 
     stan = { hostNames = [ "stan.ewi.tudelft.nl" "131.180.119.74" ]; publicKey = "ssh-dss AAAAB3NzaC1kc3MAAACBAL0SlYpGjDjPKrLIwoltYHHTYo/d6Ct2FQZKh4ltKOszWPYYAbs/YNSm2eFkvj0CGc3aastFuebz6+pRfvGMvqi4q6IoHwVvOkbWMadyuqrWIO+Z1YemZP/GAG69pLy+UyoydiSI83ycwPe4YARAU/cpBMNKJZbSxyrO80XatmtRAAAAFQC291WK+9M8+zI4KAtk6EqX0vqQ1QAAAIBd1YgRfdfRdu60BpR+3/YMbSYZMjRLFPyoSgmEQR2TtKfqsuKTsTREzB20iMgFlhEWb6C4r5y6jYDU85OOnvpf7zne22j6bKFDIiAbgsjUFHK1EB7+TBltf5yqq0FyNOy/PnLqVzOeGaUeCOc3Ris71Lxkm60oVF4mjut2d2UJ6AAAAIByuCH1bIIRb4za4yiiFQUz2CBX1XHhBn/h/LhNMLuyCTciG6tkppGBAgq5rWrNhjaEc7dIFgZR+E1wE5PQzWG/TBiXctwCOqOOErDB5b95jO2EntIhi8x5PO9Ef6jgis4QRsBIZiENDDeQHxFHCv4q+10TpyV+625O8TXkkcxl0g=="; };
 
