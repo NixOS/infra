@@ -170,6 +170,26 @@ in
       Host macstadium-m1-44911207
       Hostname 208.83.1.145
       Compression yes
+
+      Host hetzner-m1-1638981
+      Hostname 23.88.75.215
+      Compression yes
+
+      Host hetzner-m1-1640609
+      Hostname 142.132.141.35
+      Compression yes
+
+      Host hetzner-m1-1640635
+      Hostname 23.88.76.161
+      Compression yes
+
+      Host hetzner-m1-1643080
+      Hostname 23.88.76.75
+      Compression yes
+
+      Host hetzner-m1-1643228
+      Hostname 142.132.140.199
+      Compression yes
   '';
 
   services.openssh.knownHosts = {
