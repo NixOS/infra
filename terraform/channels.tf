@@ -104,7 +104,7 @@ resource "fastly_service_v1" "channels" {
     name                  = local.channels_backend
     override_host         = local.channels_backend
     port                  = 80
-    shield                = "bwi-va-us"
+    shield                = local.fastly_shield
     use_ssl               = false
     weight                = 100
   }

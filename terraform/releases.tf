@@ -93,7 +93,7 @@ resource "fastly_service_v1" "releases" {
     name                  = local.releases_backend
     override_host         = local.releases_backend
     port                  = 443
-    shield                = "bwi-va-us"
+    shield                = local.fastly_shield
     ssl_cert_hostname     = local.releases_backend
     ssl_check_cert        = true
     use_ssl               = true
