@@ -137,12 +137,13 @@ in {
           name = "system";
           rules = let
             diskSelector = ''mountpoint=~"(/|/scratch)"'';
+            relevantLabels = "device,fstype,instance,mountpoint";
           in
           [
             {
               alert = "PartitionLowInodes";
               expr = ''
-                node_filesystem_files_free{${diskSelector}} <= 10000
+                avg (node_filesystem_files_free{${diskSelector}} <= 10000) by (${relevantLabels})
               '';
               for = "30m";
               labels.severity = "warning";
@@ -153,9 +154,9 @@ in {
             {
               alert = "PartitionLowDiskSpace";
               expr = ''
-                (node_filesystem_avail_bytes{${diskSelector}} * 10^(-9) <= 10)
+                (avg (round(node_filesystem_avail_bytes{${diskSelector}} * 10^(-9) <= 10)) by (${relevantLabels}))
                 or
-                (((node_filesystem_avail_bytes{${diskSelector}} / node_filesystem_size_bytes) * 100) <= 10)
+                (avg (((node_filesystem_avail_bytes{${diskSelector}} / node_filesystem_size_bytes) * 100) <= 10) by (${relevantLabels}))
               '';
               for = "30m";
               labels.severity = "warning";

@@ -116,7 +116,7 @@ resource "fastly_service_v1" "cache" {
     name                  = "s3.amazonaws.com"
     override_host         = aws_s3_bucket.cache.bucket_domain_name
     port                  = 443
-    shield                = "bwi-va-us"
+    shield                = local.fastly_shield
     ssl_cert_hostname     = "s3.amazonaws.com"
     ssl_check_cert        = true
     use_ssl               = true
@@ -175,7 +175,7 @@ resource "fastly_service_v1" "cache" {
   # Allow CORS GET requests.
   header {
     destination = "http.access-control-allow-origin"
-    type        = "cache"
+    type        = "response"
     action      = "set"
     name        = "CORS Allow"
     source      = "\"*\""
