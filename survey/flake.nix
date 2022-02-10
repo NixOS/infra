@@ -6,24 +6,58 @@
 #   $ nixos-rebuild switch --flake ~/nixos-org-configurations/survey
 
 {
-  inputs.nixpkgs.url = "nixpkgs/nixos-21.11";
+  # TODO: temporary bump until the following PR is merged
+  #       https://github.com/NixOS/nixpkgs/pull/157832
+  inputs.nixpkgs.url = "github:garbas/nixpkgs/update-limesurvey";
 
-  outputs = flakes @ { self, nixpkgs }: {
+  outputs = flakes @ { self, nixpkgs }: 
+    let
+      customOverlay = final: prev: {
+        limesurvey = prev.limesurvey.overrideAttrs (old: {
+          installPhase = old.installPhase + ''
+            mkdir -p $out/share/limesurvey/upload/themes/survey/generalfiles/
+            ln -s ${./nixos-lores.png} $out/share/limesurvey/upload/themes/survey/generalfiles/
+          '';
+        });
+      };
+    in {
     nixosConfigurations.survey = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules =
         [
           "${nixpkgs}/nixos/modules/virtualisation/amazon-image.nix"
           ../modules/common.nix
-          ({ config, pkgs, ... }:
+          ({ config, pkgs, lib, ... }:
           {
             ec2.hvm = true;
+
             networking.hostName = "survey";
             networking.firewall.allowedTCPPorts = [ 80 443 ];
+
             system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
+
             nix.package = pkgs.nixUnstable;
             nix.registry.nixpkgs.flake = nixpkgs;
+
+            nixpkgs.overlays = [ customOverlay ];
+
+            # needed since we use latest nixpkgs and we should probably
+            # backport the limesurvey update to 21.11 channel
+            nix.extraOptions = lib.mkForce ''
+              experimental-features = nix-command flakes
+            '';
+
             users.users.root.openssh.authorizedKeys.keys = with import ../ssh-keys.nix; [ eelco garbas ];
+
+            services.limesurvey.enable = true;
+            services.limesurvey.virtualHost.hostName = "survey.nixos.org";
+            services.limesurvey.virtualHost.adminAddr = "webmaster@nixos.org";
+            services.limesurvey.virtualHost.enableACME = true;
+            services.limesurvey.virtualHost.forceSSL = true;
+
+            security.acme.defaults.email = "webmaster@nixos.org";
+            security.acme.acceptTerms = true;
+
           })
         ];
     };
