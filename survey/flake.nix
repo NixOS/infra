@@ -10,7 +10,17 @@
   #       https://github.com/NixOS/nixpkgs/pull/157832
   inputs.nixpkgs.url = "github:garbas/nixpkgs/update-limesurvey";
 
-  outputs = flakes @ { self, nixpkgs }: {
+  outputs = flakes @ { self, nixpkgs }: 
+    let
+      customOverlay = final: prev: {
+        limesurvey = prev.limesurvey.overrideAttrs (old: {
+          installPhase = old.installPhase + ''
+            mkdir -p $out/share/limesurvey/upload/themes/survey/generalfiles/
+            ln -s ${./nixos-lores.png} $out/share/limesurvey/upload/themes/survey/generalfiles/
+          '';
+        });
+      };
+    in {
     nixosConfigurations.survey = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules =
@@ -29,12 +39,13 @@
             nix.package = pkgs.nixUnstable;
             nix.registry.nixpkgs.flake = nixpkgs;
 
+            nixpkgs.overlays = [ customOverlay ];
+
             # needed since we use latest nixpkgs and we should probably
             # backport the limesurvey update to 21.11 channel
-            nix.extraOptions = lib.mkForce
-              ''
-                experimental-features = nix-command flakes
-              '';
+            nix.extraOptions = lib.mkForce ''
+              experimental-features = nix-command flakes
+            '';
 
             users.users.root.openssh.authorizedKeys.keys = with import ../ssh-keys.nix; [ eelco garbas ];
 
