@@ -130,6 +130,17 @@ in {
               annotations.summary = "{{ $labels.machine }} has {{ $value }} over-age jobs.";
               annotations.grafana = "https://monitoring.nixos.org/grafana/d/j0hJAY1Wk/in-progress-build-duration-heatmap";
             }
+
+            {
+              alert = "BuilderTypeMissing";
+              expr = ''
+                hydra_machine_type_runnable > 0 and hydra_machine_type_running == 0 and (hydra_machine_type_last_active_total < time() - 60)
+              '';
+              for = "30m";
+              labels.severity = "warning";
+              annotations.summary = "Runnable jobs for {{ $labels.machineType }}, but no runners to execute.";
+              annotations.summary = "https://monitoring.nixos.org/grafana/d/MJw9PcAiz/hydra-jobs?orgId=1&from=now-7d&to=now&refresh=5m&var-machine=All&viewPanel=2";
+            }
           ];
         }
 
