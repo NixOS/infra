@@ -139,7 +139,7 @@ in {
               for = "30m";
               labels.severity = "warning";
               annotations.summary = "Runnable jobs for {{ $labels.machineType }}, but no runners to execute.";
-              annotations.summary = "https://monitoring.nixos.org/grafana/d/MJw9PcAiz/hydra-jobs?orgId=1&from=now-7d&to=now&refresh=5m&var-machine=All&viewPanel=2";
+              annotations.grafana = "https://monitoring.nixos.org/grafana/d/MJw9PcAiz/hydra-jobs?orgId=1&from=now-7d&to=now&refresh=5m&var-machine=All&viewPanel=2";
             }
           ];
         }
