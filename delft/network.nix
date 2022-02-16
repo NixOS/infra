@@ -59,7 +59,7 @@ in {
     imports = [
       ../modules/wireguard.nix
       ../modules/prometheus
-      flakes.dwarffs.nixosModules.dwarffs
+      # flakes.dwarffs.nixosModules.dwarffs # broken by Nix 2.6
       { system.configurationRevision = flakes.self.rev
           or (throw "Cannot deploy from an unclean source tree!");
         nixpkgs.overlays = [
