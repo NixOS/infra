@@ -56,6 +56,8 @@ in
       max_unsupported_time = 86400
 
       allow_import_from_derivation = false
+      
+      max_output_size = 3221225472 # 3 << 30 = 3 GB
 
       <hydra_notify>
         <prometheus>
