@@ -46,6 +46,8 @@
     firewall.logRefusedConnections = true;
   };
 
+  zramSwap.enable = true;
+
   services.hydra-dev.dbi = "dbi:Pg:dbname=hydra;host=10.254.1.9;user=hydra;";
   #systemd.services.hydra-init.wants = [ "sys-devices-virtual-net-wg0.device" ];
 
