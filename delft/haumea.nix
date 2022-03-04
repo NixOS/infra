@@ -82,7 +82,10 @@
   boot.loader.grub.devices = [ "/dev/nvme0n1" "/dev/nvme1n1" ];
   boot.loader.grub.copyKernels = true;
 
-  systemd.services.postgresql.requires = [ "wireguard-wg0.service" ];
+  systemd.services.postgresql = {
+    after = [ "wireguard-wg0.service" ];
+    requires = [ "wireguard-wg0.service" ];
+  };
   services.postgresql = {
     enable = true;
     package = if true then pkgs.postgresql_14 else pkgs.postgresql_14.overrideAttrs({ nativeBuildInputs, configureFlags, ...}: {
