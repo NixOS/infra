@@ -53,7 +53,9 @@
     after = [ "wireguard-wg0.service" ];
     requires = [ "wireguard-wg0.service" ];
   };
-
+  systemd.services.hydra-queue-runner = {
+    serviceConfig.ManagedOOMPreference = "avoid";
+  };
   services.hydra-dev.buildMachinesFiles = [ "/etc/nix/machines" ];
 
   nix.gc.automatic = true;
