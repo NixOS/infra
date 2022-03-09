@@ -49,7 +49,10 @@
   # zramSwap.enable = true;
 
   services.hydra-dev.dbi = "dbi:Pg:dbname=hydra;host=10.254.1.9;user=hydra;";
-  #systemd.services.hydra-init.wants = [ "sys-devices-virtual-net-wg0.device" ];
+  systemd.services.hydra-init = {
+    after = [ "wireguard-wg0.service" ];
+    requires = [ "wireguard-wg0.service" ];
+  };
 
   services.hydra-dev.buildMachinesFiles = [ "/etc/nix/machines" ];
 
