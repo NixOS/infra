@@ -197,6 +197,20 @@ resource "fastly_service_v1" "cache" {
     type     = "recv"
   }
 
+  # Work around the 2GB size limit for large files
+  #
+  # See https://docs.fastly.com/en/guides/segmented-caching
+  snippet {
+    content  = <<-EOT
+      if (req.url.path ~ "^/nar/") {
+        set req.enable_segmented_caching = true;
+      }
+    EOT
+    name     = "Enable segment caching for NAR files"
+    priority = 60
+    type     = "recv"
+  }
+
   snippet {
     content  = <<-EOT
       if (beresp.status == 403) {
