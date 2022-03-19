@@ -58,6 +58,7 @@ in
       allow_import_from_derivation = false
       
       max_output_size = 3221225472 # 3 << 30 = 3 GB
+      max_db_connections = 350
 
       <hydra_notify>
         <prometheus>
