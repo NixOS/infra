@@ -155,6 +155,7 @@
       autovacuum_analyze_scale_factor = 0.001;
 
       shared_preload_libraries = "pg_stat_statements";
+      compute_query_id = "on";
     };
 
     # FIXME: don't use 'trust'.
