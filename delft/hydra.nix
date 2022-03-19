@@ -195,6 +195,7 @@ in
   '';
 
   services.openssh.knownHosts = {
+    "*.cloudscalehydra.detsys.dev" = { certAuthority = true; publicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC6HhovazfX+rqm2YuOwgM1X16Z7bJpLLj4DXWUsuGGqG/OlwIyioVodKPd3dYwsltQD8W4YrWQCOXlqyV50xpngKJX6OXdDt0IWwwgHdW0bT/l+4Yd/B57PbSnXGKLwa7slBwMCGkxpivMwnkQm+1zfQEdVNX5UPiH6xwZSwgsaRHCpumpVUrLNWlWxI5+g3alez/mfp29bgSvMdnIu72Ykb8u0uKOvGVQY7UD9sVU00NSQ16m+NhvvFvVomIF6OXMinBkATuSsoa4jOIg4UTsS5mo8Up8RdZ1qyzxvqf874osn5sYkMVnRZ5G/0bmwdwyYs7mjKh3agt37Fnaj8obyfVRm9aRlKT+Gwc5U2XZF/AdhOq+TdRL2HgaNYwJspHYUQ2jm5YilOgcEfTOgunxDfMIGueqnM6nZoGe7EHA6affr8QLrOXEUVA9uwIMInpLWiDZXk74owDGhIpg8WBpWch+x3SqaLDwLlUYDseJR0BdH9al+UZW1eBinAiEVl6H7KzVLpLqYss38CWT9c7Cq/gltUuwIqgziXFCR4skXfpN5Ozg0Sr9OmkJbxHjGdOmMVT0VKC05KsUEkWW9J18WX3uN1O3Mqu7vWgK9VOqbsnsknP0oBSznniFZYblK0vRgcrKPMAGTZ7RMdTBbys28sj3HKY/CQPv08KV0xgOJQ=="; };
 
     # (for i in 10.254.2.{1,2,3,4,5,6,7,8,9}; do ssh-keyscan -t ssh-ed25519 -p 2200 $i 2> /dev/null; done) | sed -e 's/^/      { hostNames = [ "/' -e 's/ ssh/" ]; publicKey = "ssh/' -e 's/$/"; };/'; echo
 
