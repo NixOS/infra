@@ -174,6 +174,20 @@ resource "fastly_service_v1" "releases" {
     type     = "recv"
   }
 
+  # Work around the 2GB size limit for large files
+  #
+  # See https://docs.fastly.com/en/guides/segmented-caching
+  snippet {
+    content  = <<-EOT
+      if (req.url.path ~ "^/nixos/") {
+        set req.enable_segmented_caching = true;
+      }
+    EOT
+    name     = "Enable segment caching for ISOs and friends"
+    priority = 60
+    type     = "recv"
+  }
+
   snippet {
     content  = <<-EOT
       if (beresp.status == 403) {
