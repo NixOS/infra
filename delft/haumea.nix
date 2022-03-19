@@ -153,6 +153,8 @@
       # pages.
       autovacuum_vacuum_scale_factor = 0.002;
       autovacuum_analyze_scale_factor = 0.001;
+
+      shared_preload_libraries = "pg_stat_statements";
     };
 
     # FIXME: don't use 'trust'.
