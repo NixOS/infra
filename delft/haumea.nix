@@ -115,7 +115,7 @@
       log_temp_files = 0;
       log_autovacuum_min_duration = 0;
 
-      max_connections = 250;
+      max_connections = 500;
       work_mem = "20MB";
       maintenance_work_mem = "2GB";
 
