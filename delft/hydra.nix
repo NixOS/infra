@@ -78,6 +78,7 @@ in
   systemd.services.hydra-queue-runner.restartIfChanged = false;
   systemd.services.hydra-queue-runner.wantedBy = mkForce [];
   systemd.services.hydra-queue-runner.requires = mkForce [];
+  systemd.services.hydra-queue-runner.serviceConfig.LimitNOFILE = 65535;
 
   programs.ssh.hostKeyAlgorithms = [ "rsa-sha2-512-cert-v01@openssh.com" "ssh-ed25519" "ssh-rsa" "ecdsa-sha2-nistp256"];
   programs.ssh.extraConfig = mkAfter
