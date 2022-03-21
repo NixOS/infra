@@ -10,16 +10,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1647748607,
+        "lastModified": 1647867954,
         "narHash": "sha256-P9Z/JSI25tc0rGYBKLHO4nIkNpGQRdC4uomjqYqTYvY=",
-        "owner": "DeterminateSystems",
+        "owner": "NixOS",
         "repo": "hydra",
-        "rev": "e5393c2cf87909b251d0ddcdc1ea254956d79660",
+        "rev": "01fb23ddf647ee7b6dc3abc1f012eaf9f5306c88",
         "type": "github"
       },
       "original": {
-        "owner": "DeterminateSystems",
-        "ref": "hydra-update-gc-roots/network-traffic",
+        "owner": "NixOS",
+        "ref": "master",
         "repo": "hydra",
         "type": "github"
       }
