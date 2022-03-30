@@ -37,7 +37,7 @@ publicKey = "H/Y+sbNETKZugxGFbOS0m5BSr28jRDL19U37wEw07D8="
 endpoint = "5.9.122.43"
 ip = "10.254.1.5"
 port = 51820
-# publicKey = ""
+publicKey = "eIsaf/JYsxL/G5pCzKo10GeiqgdEwp8v9G4BSUBo3h0="
 
 [hosts.haumea]
 endpoint = "46.4.89.205"
