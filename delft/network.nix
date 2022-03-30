@@ -85,6 +85,10 @@ in {
     imports = [ ./haumea.nix ];
   };
 
+  rhea = {
+    imports = [ ./rhea.nix ];
+  };
+
   mac1 = makeMac {
     ip = "10.254.2.1";
     extra = { pkgs, lib, ... }: {

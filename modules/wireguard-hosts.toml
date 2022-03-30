@@ -33,6 +33,12 @@ ip = "10.254.1.4"
 port = 51820
 publicKey = "H/Y+sbNETKZugxGFbOS0m5BSr28jRDL19U37wEw07D8="
 
+[hosts.rhea]
+endpoint = "5.9.122.43"
+ip = "10.254.1.5"
+port = 51820
+# publicKey = ""
+
 [hosts.haumea]
 endpoint = "46.4.89.205"
 ip = "10.254.1.9"
