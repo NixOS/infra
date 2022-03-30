@@ -10,8 +10,6 @@
 #      ../packet-importer.nix
     ];
 
-  users.users.root.openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKFclIiTNjds+cgXNGJOpNF+7t4U0WTHBzKsOZZ/9cSu" ];
-
   # This is a Hetzner machine, but when trying to set this machine up
   # I found the Hetzner NixOps plugin isn't able to create robot
   # sub-accounts, and even if I can get past that with
