@@ -86,7 +86,7 @@ in {
   };
 
   rhea = {
-    imports = [ ./rhea.nix ];
+    imports = [ ./rhea ];
   };
 
   mac1 = makeMac {
