@@ -30,7 +30,7 @@
   '';
   */
 
-  users.users.root.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFGb3dx+qYxNXvU27fIX5YUG57+dRN1k1hRXkFZ17ZrX root@rhea" ];
+  users.users.root.openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFGb3dx+qYxNXvU27fIX5YUG57+dRN1k1hRXkFZ17ZrX root@rhea" ];
 
   fileSystems."/boot" =
     { device = "/dev/disk/by-label/boot";
