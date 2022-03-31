@@ -48,13 +48,8 @@ locals {
     },
     {
       hostname = "hydra.nixos.org"
-      type     = "A"
-      value    = "46.4.66.184"
-    },
-    {
-      hostname = "hydra.nixos.org"
-      type     = "AAAA"
-      value    = "2a01:4f8:140:244c::"
+      type     = "CNAME"
+      value    = "rhea.nixos.org"
     },
     {
       hostname = "monitoring.nixos.org"
