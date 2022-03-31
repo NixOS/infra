@@ -41,6 +41,7 @@ in {
 
   services.nginx = {
     enable = true;
+    recommendedProxySettings = true;
     virtualHosts."monitoring.nixos.org" = {
       enableACME = true;
       forceSSL = true;
