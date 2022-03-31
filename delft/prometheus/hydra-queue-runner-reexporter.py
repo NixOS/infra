@@ -170,12 +170,12 @@ class HydraScrapeImporter:
         yield self.trivial_counter(
             "step_time",
             "Total time spent executing steps",
-            self.destructive_read("totalStepTime")
+            self.destructive_read_default("totalStepTime", 0)
         )
         yield self.trivial_counter(
             "step_build_time",
             "Total time spent executing builds steps (???)",
-            self.destructive_read("totalStepBuildTime")
+            self.destructive_read_default("totalStepBuildTime", 0)
         )
         self.unused_metric("avgStepTime")
         self.unused_metric("avgStepBuildTime")
