@@ -86,7 +86,10 @@ in {
   };
 
   rhea = {
-    imports = [ ./rhea ];
+    imports = [
+      ./rhea
+      flakes.hydra.nixosModules.hydra
+    ];
   };
 
   mac1 = makeMac {
