@@ -3,10 +3,7 @@
 {
   imports =
     [ ./common.nix
-      ./hydra.nix
-      ./hydra-proxy.nix
       ./fstrim.nix
-      ./packet-importer.nix
     ];
 
   deployment.targetEnv = "hetzner";
@@ -30,8 +27,6 @@
   '';
   */
 
-  users.users.root.openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFGb3dx+qYxNXvU27fIX5YUG57+dRN1k1hRXkFZ17ZrX root@rhea" ];
-
   fileSystems."/boot" =
     { device = "/dev/disk/by-label/boot";
       fsType = "ext4";
@@ -49,16 +44,6 @@
   };
 
   # zramSwap.enable = true;
-
-  services.hydra-dev.dbi = "dbi:Pg:dbname=hydra;host=10.254.1.9;user=hydra;";
-  systemd.services.hydra-init = {
-    after = [ "wireguard-wg0.service" ];
-    requires = [ "wireguard-wg0.service" ];
-  };
-  systemd.services.hydra-queue-runner = {
-    serviceConfig.ManagedOOMPreference = "avoid";
-  };
-  services.hydra-dev.buildMachinesFiles = [ "/etc/nix/machines" ];
 
   nix.gc.automatic = true;
   nix.gc.options = ''--max-freed "$((400 * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | ${pkgs.gawk}/bin/awk '{ print $4 }')))"'';

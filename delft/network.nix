@@ -77,7 +77,6 @@ in {
   ceres = {
     imports =
       [ ./ceres.nix
-        flakes.hydra.nixosModules.hydra
       ];
   };
 
