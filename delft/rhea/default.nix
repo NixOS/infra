@@ -4,10 +4,9 @@
     [ ./hardware-configuration.nix
       ./hetzner.nix
       ../common.nix
-#      ../hydra.nix
-#      ../hydra-proxy.nix
-#      ../fstrim.nix
-#      ../packet-importer.nix
+      ../hydra.nix
+      ../hydra-proxy.nix
+      ../packet-importer.nix
     ];
 
   # This is a Hetzner machine, but when trying to set this machine up
@@ -32,5 +31,28 @@
 
   time.timeZone = lib.mkForce "UTC";
   system.stateVersion = lib.mkForce "21.11";
+
+  services.hydra-dev.dbi = "dbi:Pg:dbname=hydra;host=10.254.1.9;user=hydra;";
+  systemd.services.hydra-init = {
+    after = [ "wireguard-wg0.service" ];
+    requires = [ "wireguard-wg0.service" ];
+  };
+  systemd.services.hydra-queue-runner = {
+    serviceConfig.ManagedOOMPreference = "avoid";
+  };
+  services.hydra-dev.buildMachinesFiles = [ "/etc/nix/machines" ];
+
+#  nix.gc.automatic = true;
+#  nix.gc.options = ''--max-freed "$((400 * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | ${pkgs.gawk}/bin/awk '{ print $4 }')))"'';
+#  nix.gc.dates = "03,09,15,21:15";
+
+  nix.extraOptions = "gc-keep-outputs = false";
+
+  networking.defaultMailServer.directDelivery = lib.mkForce false;
+  #services.postfix.enable = true;
+  #services.postfix.hostname = "hydra.nixos.org";
+
+  # Don't rate-limit the journal.
+  services.journald.rateLimitBurst = 0;
 }
 
