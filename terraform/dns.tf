@@ -62,6 +62,16 @@ locals {
       value    = "138.201.32.77"
     },
     {
+      hostname = "rhea.nixos.org"
+      type     = "A"
+      value    = "5.9.122.43"
+    },
+    {
+      hostname = "rhea.nixos.org"
+      type     = "AAAA"
+      value    = "2a01:4f8:162:71eb::"
+    },
+    {
       hostname = "survey.nixos.org"
       type     = "A"
       value    = "54.72.253.2"
