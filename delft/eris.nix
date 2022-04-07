@@ -394,6 +394,18 @@ in {
           }
         ];
       }
+      {
+        job_name = "hydra_queue_runner";
+        metrics_path = "/metrics";
+        scheme = "http";
+        static_configs = [
+          {
+            targets = [
+              "hydra.nixos.org:9198"
+            ];
+          }
+        ];
+      }
 
       {
         job_name = "hydra-webserver";
