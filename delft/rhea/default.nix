@@ -23,6 +23,7 @@
   networking = {
     firewall.allowedTCPPorts = [
       80 443
+      9198 # hydra-queue-runner's prometheus
       9199 # hydra-notify's prometheus
     ];
     firewall.allowPing = true;

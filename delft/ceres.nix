@@ -38,7 +38,6 @@
     firewall.allowedTCPPorts = [
       80 443
       9199 # hydra-notify's prometheus
-      9198 # hydra-queue-runner's prometheus
     ];
     firewall.allowPing = true;
     firewall.logRefusedConnections = true;
