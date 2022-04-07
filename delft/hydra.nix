@@ -60,7 +60,7 @@ in
       max_output_size = 3221225472 # 3 << 30 = 3 GB
       max_db_connections = 350
 
-      queue_runner_metrics_address = 0.0.0.0:9198
+      queue_runner_metrics_address = [::]:9198
 
       <hydra_notify>
         <prometheus>
