@@ -11,11 +11,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1649442284,
-        "narHash": "sha256-s5p0RCdK0hHszH0Dq3NNWIEeU4yjQWMEMjG54NHWzwc=",
+        "lastModified": 1649469569,
+        "narHash": "sha256-q0HpcxivlYPypJ00nlXSF9lcZxIkbuk/HxfZkNOfAIo=",
         "owner": "DeterminateSystems",
         "repo": "hydra",
-        "rev": "039f6c32d04a7a1b1e45632f3e03b87643a09c97",
+        "rev": "81517cdbfb22156f94461c451a7b6014aaafdd98",
         "type": "github"
       },
       "original": {
