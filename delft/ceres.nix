@@ -4,6 +4,7 @@
   imports =
     [ ./common.nix
       ./fstrim.nix
+      ./build-machine-common.nix
     ];
 
   deployment.targetEnv = "hetzner";
@@ -45,9 +46,9 @@
 
   # zramSwap.enable = true;
 
-  nix.gc.automatic = true;
-  nix.gc.options = ''--max-freed "$((400 * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | ${pkgs.gawk}/bin/awk '{ print $4 }')))"'';
-  nix.gc.dates = "03,09,15,21:15";
+  #nix.gc.automatic = true;
+  #nix.gc.options = ''--max-freed "$((400 * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | ${pkgs.gawk}/bin/awk '{ print $4 }')))"'';
+  #nix.gc.dates = "03,09,15,21:15";
 
   nix.extraOptions = "gc-keep-outputs = false";
 
