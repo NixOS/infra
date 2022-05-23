@@ -39,6 +39,27 @@ rec {
       status = "rolling";
     };
 
+    "nixos-22.05" = {
+      job = "nixos/release-22.05/tested";
+      variant = "primary";
+      status = "beta";
+    };
+    "nixos-22.05-small" = {
+      job = "nixos/release-22.05-small/tested";
+      variant = "small";
+      status = "beta";
+    };
+    "nixpkgs-22.05-darwin" = {
+      job = "nixpkgs/nixpkgs-22.05-darwin/darwin-tested";
+      variant = "darwin";
+      status = "beta";
+    };
+    "nixos-22.05-aarch64" = {
+      job = "nixos/release-22.05-aarch64/tested";
+      variant = "aarch64";
+      status = "beta";
+    };
+
     "nixos-21.11" = {
       job = "nixos/release-21.11/tested";
       variant = "primary";
