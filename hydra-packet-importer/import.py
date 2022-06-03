@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import json
-import packet
+import packet  # type: ignore
 import base64
 from pprint import pprint
 import subprocess
@@ -12,11 +12,11 @@ DeviceKeys = List[Dict[str, Any]]
 
 if sys.version_info >= (3, 8):
     from typing import TypedDict
+
     class Metadata(TypedDict):
         features: List[str]
         max_jobs: int
         system_types: List[str]
-
 
     class RemoteBuilder(TypedDict):
         metadata: Metadata
@@ -32,11 +32,14 @@ if sys.version_info >= (3, 8):
         system: str
         port: int
         key: str
+
+
 else:
     Device = Dict[str, Any]
     RemoteBuilder = Dict[str, Any]
     HostKey = Dict[str, Any]
     Metadata = Dict[str, Any]
+
 
 def debug(*args: Any, **kwargs: Any) -> None:
     print(*args, file=sys.stderr, **kwargs)
@@ -45,42 +48,45 @@ def debug(*args: Any, **kwargs: Any) -> None:
 def get_devices(manager: Any) -> List[Device]:
     devices: List[Device] = []
 
-    page: Optional[str] = 'projects/{}/devices?page={}'.format(config['project_id'], 1)
+    page: Optional[str] = "projects/{}/devices?page={}".format(config["project_id"], 1)
     while page is not None:
         debug(page)
         data: Dict[str, Any] = manager.call_api(page)
-        if data['meta']['next'] is None:
+        if data["meta"]["next"] is None:
             page = None
         else:
-            page = data['meta']['next']['href']
+            page = data["meta"]["next"]["href"]
 
-        for device in data['devices']:
-            if device['state'] != 'active':
+        for device in data["devices"]:
+            if device["state"] != "active":
                 continue
 
-            if not set(config['mandatory_tags']).issubset(device['tags']):
+            if not set(config["mandatory_tags"]).issubset(device["tags"]):
                 continue
 
-            if not set(device['tags']).isdisjoint(config['skip_tags']):
+            if not set(device["tags"]).isdisjoint(config["skip_tags"]):
                 continue
 
-            remote_builder_info = get_remote_builder_info(manager, device['id'])
+            remote_builder_info = get_remote_builder_info(manager, device["id"])
             if remote_builder_info is None:
                 continue
 
-            devices.append({
-                "hostname": device['hostname'],
-                "address": "{}.packethost.net".format(device['short_id']),
-                "type": device['plan']['name'],
-                "remote_builder_info": remote_builder_info,
-            })
+            devices.append(
+                {
+                    "hostname": device["hostname"],
+                    "address": "{}.packethost.net".format(device["short_id"]),
+                    "type": device["plan"]["name"],
+                    "remote_builder_info": remote_builder_info,
+                }
+            )
 
     return devices
+
 
 def get_remote_builder_info(manager, device_id: str) -> Union[RemoteBuilder, str, None]:
     # ... 50 is probably enough.
     try:
-        events_url = 'devices/{}/events?per_page=50'.format(device_id)
+        events_url = "devices/{}/events?per_page=50".format(device_id)
         debug(events_url)
         data = manager.call_api(events_url)
     except:
@@ -90,8 +96,8 @@ def get_remote_builder_info(manager, device_id: str) -> Union[RemoteBuilder, str
     host_key: Optional[HostKey] = None
     ssh_key: Optional[str] = None
     metadata: Optional[Metadata] = None
-    for event in data['events']:
-        if event['type'] == 'provisioning.104.01':
+    for event in data["events"]:
+        if event["type"] == "provisioning.104.01":
             # we reached a "Device connected to DHCP system" event,
             # indicating a reboot.
             #
@@ -102,24 +108,27 @@ def get_remote_builder_info(manager, device_id: str) -> Union[RemoteBuilder, str
             # If we receive a LOT of spam (> 50 spams!) like that, we
             # will return None because we never reach this message.
             if host_key is not None:
-                key = strip_ssh_key_comment(host_key['key'])
+                key = strip_ssh_key_comment(host_key["key"])
                 if key is not None:
                     if metadata is not None:
-                        return { "metadata": metadata, "ssh_key": key }
+                        return {"metadata": metadata, "ssh_key": key}
                     else:
                         return key
             else:
                 return ssh_key
-        if event['type'] == 'user.1001':
+        if event["type"] == "user.1001":
             try:
-                host_keys: List[HostKey] = [key for key in json.loads(event['body']) if key['port'] == 22]
+                host_keys: List[HostKey] = [
+                    key for key in json.loads(event["body"]) if key["port"] == 22
+                ]
                 host_key = host_keys[0]
             except:
-                ssh_key = strip_ssh_key_comment(event['body'])
-        if event['type'] == 'user.1002':
-            metadata = json.loads(event['body'])
+                ssh_key = strip_ssh_key_comment(event["body"])
+        if event["type"] == "user.1002":
+            metadata = json.loads(event["body"])
 
     return None
+
 
 def strip_ssh_key_comment(key: str) -> Optional[str]:
     ssh_key_parts = key.rsplit(" ", 1)
@@ -132,62 +141,78 @@ def strip_ssh_key_comment(key: str) -> Optional[str]:
 
 def main(config: Dict[str, Any]) -> None:
     rows = []
-    manager = packet.Manager(auth_token=config['token'])
+    manager = packet.Manager(auth_token=config["token"])
     found = 0
     for device in get_devices(manager):
         found += 1
-        debug("# {} ({})".format(device['hostname'], device['address']))
-        if device['type'] not in config['plans']:
-            debug("# Skipping {} (type {}) as it has no configured plan".format(
-                device['hostname'],
-                device['type'])
+        debug("# {} ({})".format(device["hostname"], device["address"]))
+        if device["type"] not in config["plans"]:
+            debug(
+                "# Skipping {} (type {}) as it has no configured plan".format(
+                    device["hostname"], device["type"]
+                )
             )
             continue
 
-        builder_info = device['remote_builder_info']
-        default_stats = config['plans'][device['type']]
-        if device['hostname'] in config['name_overrides']:
-            specific_stats = config['name_overrides'][device['hostname']]
+        builder_info = device["remote_builder_info"]
+        default_stats = config["plans"][device["type"]]
+        if device["hostname"] in config["name_overrides"]:
+            specific_stats = config["name_overrides"][device["hostname"]]
         else:
             specific_stats = {}
-        lookup = lambda key: specific_stats.get(key, device.get(key, default_stats.get(key)))
+        lookup = lambda key: specific_stats.get(
+            key, device.get(key, default_stats.get(key))
+        )
 
-        lookup_default = lambda key, default: default if not lookup(key) else lookup(key)
+        lookup_default = (
+            lambda key, default: default if not lookup(key) else lookup(key)
+        )
 
         if isinstance(builder_info, str):
             key = builder_info
             # root@address system,list /var/lib/ssh.key maxJobs speedFactor feature,list mandatory,features public-host-key
-            rows.append(" ".join([
-               "{user}@{host}".format(user=lookup("user"),host=lookup("address")),
-               ",".join(lookup("system_types")),
-               str(lookup("ssh_key")),
-               str(lookup("max_jobs")),
-               str(lookup("speed_factor")),
-               ",".join(lookup_default("features", ["-"])),
-               ",".join(lookup_default("mandatory_features", ["-"])),
-               base64.b64encode(key.encode()).decode("utf-8")
-            ]))
+            rows.append(
+                " ".join(
+                    [
+                        "{user}@{host}".format(
+                            user=lookup("user"), host=lookup("address")
+                        ),
+                        ",".join(lookup("system_types")),
+                        str(lookup("ssh_key")),
+                        str(lookup("max_jobs")),
+                        str(lookup("speed_factor")),
+                        ",".join(lookup_default("features", ["-"])),
+                        ",".join(lookup_default("mandatory_features", ["-"])),
+                        base64.b64encode(key.encode()).decode("utf-8"),
+                    ]
+                )
+            )
         else:
             # root@address system,list /var/lib/ssh.key maxJobs speedFactor feature,list mandatory,features public-host-key
-            rows.append(" ".join([
-               "{user}@{host}".format(user=lookup("user"),host=lookup("address")),
-               ",".join(builder_info['metadata']['system_types']),
-               str(lookup("ssh_key")),
-               str(builder_info['metadata']['max_jobs']),
-               str(lookup("speed_factor")),
-               ",".join(builder_info['metadata']['features']),
-               ",".join(lookup_default("mandatory_features", ["-"])),
-               base64.b64encode(builder_info['ssh_key'].encode()).decode("utf-8")
-            ]))
+            rows.append(
+                " ".join(
+                    [
+                        "{user}@{host}".format(
+                            user=lookup("user"), host=lookup("address")
+                        ),
+                        ",".join(builder_info["metadata"]["system_types"]),
+                        str(lookup("ssh_key")),
+                        str(builder_info["metadata"]["max_jobs"]),
+                        str(lookup("speed_factor")),
+                        ",".join(builder_info["metadata"]["features"]),
+                        ",".join(lookup_default("mandatory_features", ["-"])),
+                        base64.b64encode(builder_info["ssh_key"].encode()).decode(
+                            "utf-8"
+                        ),
+                    ]
+                )
+            )
 
-
-
-
-    debug("# {} / {}".format(len(rows),found))
+    debug("# {} / {}".format(len(rows), found))
     print("\n".join(rows))
+
 
 if __name__ == "__main__":
     with open(sys.argv[1]) as config_file:
         config = json.load(config_file)
         main(config)
-
