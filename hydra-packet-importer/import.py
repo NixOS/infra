@@ -23,7 +23,7 @@ class RemoteBuilder(TypedDict):
     ssh_key: str
 
 
-class Device(TypedDict):
+class Builder(TypedDict):
     hostname: str
     address: str
     type: str
@@ -40,8 +40,8 @@ def debug(*args: Any, **kwargs: Any) -> None:
     print(*args, file=sys.stderr, **kwargs)
 
 
-def get_devices(manager: Any) -> List[Device]:
-    devices: List[Device] = []
+def get_builders(manager: Any) -> List[Builder]:
+    builders: List[Builder] = []
 
     page: Optional[str] = "projects/{}/devices?page={}".format(config["project_id"], 1)
     while page is not None:
@@ -66,7 +66,7 @@ def get_devices(manager: Any) -> List[Device]:
             if remote_builder_info is None:
                 continue
 
-            devices.append(
+            builders.append(
                 {
                     "hostname": device["hostname"],
                     "address": "{}.packethost.net".format(device["short_id"]),
@@ -75,7 +75,7 @@ def get_devices(manager: Any) -> List[Device]:
                 }
             )
 
-    return devices
+    return builders
 
 
 def get_remote_builder_info(manager, device_id: str) -> Union[RemoteBuilder, str, None]:
@@ -138,25 +138,25 @@ def main(config: Dict[str, Any]) -> None:
     rows = []
     manager = packet.Manager(auth_token=config["token"])
     found = 0
-    for device in get_devices(manager):
+    for builder in get_builders(manager):
         found += 1
-        debug("# {} ({})".format(device["hostname"], device["address"]))
-        if device["type"] not in config["plans"]:
+        debug("# {} ({})".format(builder["hostname"], builder["address"]))
+        if builder["type"] not in config["plans"]:
             debug(
                 "# Skipping {} (type {}) as it has no configured plan".format(
-                    device["hostname"], device["type"]
+                    builder["hostname"], builder["type"]
                 )
             )
             continue
 
-        builder_info = device["remote_builder_info"]
-        default_stats = config["plans"][device["type"]]
-        if device["hostname"] in config["name_overrides"]:
-            specific_stats = config["name_overrides"][device["hostname"]]
+        builder_info = builder["remote_builder_info"]
+        default_stats = config["plans"][builder["type"]]
+        if builder["hostname"] in config["name_overrides"]:
+            specific_stats = config["name_overrides"][builder["hostname"]]
         else:
             specific_stats = {}
         lookup = lambda key: specific_stats.get(
-            key, device.get(key, default_stats.get(key))
+            key, builder.get(key, default_stats.get(key))
         )
 
         lookup_default = (
