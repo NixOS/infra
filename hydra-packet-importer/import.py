@@ -13,9 +13,12 @@ DeviceKeys = List[Dict[str, Any]]
 
 
 class Metadata(TypedDict):
+    user: Optional[str]
     features: List[str]
+    mandatory_features: List[str]
     max_jobs: int
     system_types: List[str]
+    speed_factor: Optional[int]
 
 
 class RemoteBuilder(TypedDict):
@@ -26,7 +29,6 @@ class RemoteBuilder(TypedDict):
 class Builder(TypedDict):
     hostname: str
     address: str
-    type: str
     remote_builder_info: RemoteBuilder
 
 
@@ -88,7 +90,6 @@ def get_builders(manager: Any) -> List[Builder]:
                 {
                     "hostname": device["hostname"],
                     "address": "{}.packethost.net".format(device["short_id"]),
-                    "type": device["plan"]["name"],
                     "remote_builder_info": remote_builder_info,
                 }
             )
@@ -155,39 +156,23 @@ def main(config: Dict[str, Any]) -> None:
     for builder in get_builders(manager):
         found += 1
         debug("# {} ({})".format(builder["hostname"], builder["address"]))
-        if builder["type"] not in config["plans"]:
-            debug(
-                "# Skipping {} (type {}) as it has no configured plan".format(
-                    builder["hostname"], builder["type"]
-                )
-            )
-            continue
 
         builder_info = builder["remote_builder_info"]
-        default_stats = config["plans"][builder["type"]]
-        if builder["hostname"] in config["name_overrides"]:
-            specific_stats = config["name_overrides"][builder["hostname"]]
-        else:
-            specific_stats = {}
-        lookup = lambda key: specific_stats.get(
-            key, builder.get(key, default_stats.get(key))
-        )
-
-        lookup_default = (
-            lambda key, default: default if not lookup(key) else lookup(key)
-        )
 
         # root@address system,list /var/lib/ssh.key maxJobs speedFactor feature,list mandatory,features public-host-key
         rows.append(
             " ".join(
                 [
-                    "{user}@{host}".format(user=lookup("user"), host=lookup("address")),
+                    "{user}@{host}".format(
+                        user=builder_info["metadata"].get("user", "root"),
+                        host=builder["hostname"],
+                    ),
                     ",".join(builder_info["metadata"]["system_types"]),
-                    str(lookup("ssh_key")),
+                    str(config["ssh_key"]),
                     str(builder_info["metadata"]["max_jobs"]),
-                    str(lookup("speed_factor")),
+                    str(builder_info["metadata"].get("speed_factor", 1)),
                     ",".join(builder_info["metadata"]["features"]),
-                    ",".join(lookup_default("mandatory_features", ["-"])),
+                    ",".join(builder_info["metadata"].get("mandatory_features", ["-"])),
                     base64.b64encode(builder_info["ssh_key"].encode()).decode("utf-8"),
                 ]
             )
