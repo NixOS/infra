@@ -165,7 +165,7 @@ def main(config: Dict[str, Any]) -> None:
                 [
                     "{user}@{host}".format(
                         user=builder_info["metadata"].get("user", "root"),
-                        host=builder["hostname"],
+                        host=builder["address"],
                     ),
                     ",".join(builder_info["metadata"]["system_types"]),
                     str(config["ssh_key"]),
