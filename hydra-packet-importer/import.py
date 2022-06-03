@@ -36,6 +36,24 @@ class HostKey(TypedDict):
     key: str
 
 
+class Plan(TypedDict):
+    name: str
+
+
+class Device(TypedDict):
+    state: str
+    tags: str
+    id: str
+    hostname: str
+    short_id: str
+    plan: Plan
+
+
+class ProjectDeviceList(TypedDict):
+    meta: Dict[str, Any]
+    devices: List[Device]
+
+
 def debug(*args: Any, **kwargs: Any) -> None:
     print(*args, file=sys.stderr, **kwargs)
 
@@ -46,7 +64,7 @@ def get_builders(manager: Any) -> List[Builder]:
     page: Optional[str] = "projects/{}/devices?page={}".format(config["project_id"], 1)
     while page is not None:
         debug(page)
-        data: Dict[str, Any] = manager.call_api(page)
+        data: ProjectDeviceList = manager.call_api(page)
         if data["meta"]["next"] is None:
             page = None
         else:
