@@ -7,38 +7,33 @@ from pprint import pprint
 import subprocess
 import sys
 from typing import Union, Dict, Any, List, Optional
+from typing import TypedDict
 
 DeviceKeys = List[Dict[str, Any]]
 
-if sys.version_info >= (3, 8):
-    from typing import TypedDict
 
-    class Metadata(TypedDict):
-        features: List[str]
-        max_jobs: int
-        system_types: List[str]
-
-    class RemoteBuilder(TypedDict):
-        metadata: Metadata
-        ssh_key: str
-
-    class Device(TypedDict):
-        hostname: str
-        address: str
-        type: str
-        remote_builder_info: Union[RemoteBuilder, str]
-
-    class HostKey(TypedDict):
-        system: str
-        port: int
-        key: str
+class Metadata(TypedDict):
+    features: List[str]
+    max_jobs: int
+    system_types: List[str]
 
 
-else:
-    Device = Dict[str, Any]
-    RemoteBuilder = Dict[str, Any]
-    HostKey = Dict[str, Any]
-    Metadata = Dict[str, Any]
+class RemoteBuilder(TypedDict):
+    metadata: Metadata
+    ssh_key: str
+
+
+class Device(TypedDict):
+    hostname: str
+    address: str
+    type: str
+    remote_builder_info: Union[RemoteBuilder, str]
+
+
+class HostKey(TypedDict):
+    system: str
+    port: int
+    key: str
 
 
 def debug(*args: Any, **kwargs: Any) -> None:
