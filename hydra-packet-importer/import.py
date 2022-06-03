@@ -27,7 +27,7 @@ class Builder(TypedDict):
     hostname: str
     address: str
     type: str
-    remote_builder_info: Union[RemoteBuilder, str]
+    remote_builder_info: RemoteBuilder
 
 
 class HostKey(TypedDict):
@@ -96,7 +96,7 @@ def get_builders(manager: Any) -> List[Builder]:
     return builders
 
 
-def get_remote_builder_info(manager, device_id: str) -> Union[RemoteBuilder, str, None]:
+def get_remote_builder_info(manager, device_id: str) -> Optional[RemoteBuilder]:
     # ... 50 is probably enough.
     try:
         events_url = "devices/{}/events?per_page=50".format(device_id)
@@ -122,13 +122,9 @@ def get_remote_builder_info(manager, device_id: str) -> Union[RemoteBuilder, str
             # will return None because we never reach this message.
             if host_key is not None:
                 key = strip_ssh_key_comment(host_key["key"])
-                if key is not None:
-                    if metadata is not None:
-                        return {"metadata": metadata, "ssh_key": key}
-                    else:
-                        return key
-            else:
-                return ssh_key
+                if key is not None and metadata is not None:
+                    return {"metadata": metadata, "ssh_key": key}
+            return None
         if event["type"] == "user.1001":
             try:
                 host_keys: List[HostKey] = [
@@ -136,7 +132,7 @@ def get_remote_builder_info(manager, device_id: str) -> Union[RemoteBuilder, str
                 ]
                 host_key = host_keys[0]
             except:
-                ssh_key = strip_ssh_key_comment(event["body"])
+                pass
         if event["type"] == "user.1002":
             metadata = json.loads(event["body"])
 
@@ -181,45 +177,21 @@ def main(config: Dict[str, Any]) -> None:
             lambda key, default: default if not lookup(key) else lookup(key)
         )
 
-        if isinstance(builder_info, str):
-            key = builder_info
-            # root@address system,list /var/lib/ssh.key maxJobs speedFactor feature,list mandatory,features public-host-key
-            rows.append(
-                " ".join(
-                    [
-                        "{user}@{host}".format(
-                            user=lookup("user"), host=lookup("address")
-                        ),
-                        ",".join(lookup("system_types")),
-                        str(lookup("ssh_key")),
-                        str(lookup("max_jobs")),
-                        str(lookup("speed_factor")),
-                        ",".join(lookup_default("features", ["-"])),
-                        ",".join(lookup_default("mandatory_features", ["-"])),
-                        base64.b64encode(key.encode()).decode("utf-8"),
-                    ]
-                )
+        # root@address system,list /var/lib/ssh.key maxJobs speedFactor feature,list mandatory,features public-host-key
+        rows.append(
+            " ".join(
+                [
+                    "{user}@{host}".format(user=lookup("user"), host=lookup("address")),
+                    ",".join(builder_info["metadata"]["system_types"]),
+                    str(lookup("ssh_key")),
+                    str(builder_info["metadata"]["max_jobs"]),
+                    str(lookup("speed_factor")),
+                    ",".join(builder_info["metadata"]["features"]),
+                    ",".join(lookup_default("mandatory_features", ["-"])),
+                    base64.b64encode(builder_info["ssh_key"].encode()).decode("utf-8"),
+                ]
             )
-        else:
-            # root@address system,list /var/lib/ssh.key maxJobs speedFactor feature,list mandatory,features public-host-key
-            rows.append(
-                " ".join(
-                    [
-                        "{user}@{host}".format(
-                            user=lookup("user"), host=lookup("address")
-                        ),
-                        ",".join(builder_info["metadata"]["system_types"]),
-                        str(lookup("ssh_key")),
-                        str(builder_info["metadata"]["max_jobs"]),
-                        str(lookup("speed_factor")),
-                        ",".join(builder_info["metadata"]["features"]),
-                        ",".join(lookup_default("mandatory_features", ["-"])),
-                        base64.b64encode(builder_info["ssh_key"].encode()).decode(
-                            "utf-8"
-                        ),
-                    ]
-                )
-            )
+        )
 
     debug("# {} / {}".format(len(rows), found))
     print("\n".join(rows))
