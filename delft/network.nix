@@ -74,12 +74,6 @@ in {
 
   eris = import ./eris.nix;
 
-  ceres = {
-    imports =
-      [ ./ceres.nix
-      ];
-  };
-
   haumea = {
     imports = [ ./haumea.nix ];
   };
