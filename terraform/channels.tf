@@ -196,6 +196,19 @@ resource "fastly_service_v1" "channels" {
     priority = 100
     type     = "fetch"
   }
+
+  s3logging {
+    name              = "${local.channels_domain}-to-s3"
+    bucket_name       = module.fastlylogs.bucket_name
+    compression_codec = "zstd"
+    domain            = module.fastlylogs.s3_domain
+    format            = module.fastlylogs.format
+    format_version    = 2
+    path              = "${local.channels_domain}/"
+    period            = module.fastlylogs.period
+    message_type      = "blank"
+    s3_iam_role       = module.fastlylogs.iam_role_arn
+  }
 }
 
 resource "fastly_tls_subscription" "channels" {
