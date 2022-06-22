@@ -17,7 +17,6 @@ locals {
       value    = "34.254.208.229"
     },
     {
-    {
       hostname = "haumea.nixos.org"
       type     = "A"
       value    = "46.4.89.205"
