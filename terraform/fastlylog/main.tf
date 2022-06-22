@@ -1,7 +1,7 @@
 
 
 resource "aws_s3_bucket" "logs" {
-  bucket_prefix = "fastly-logs"
+  bucket_prefix = "fastly-logs-"
 
   lifecycle_rule {
     enabled = true
