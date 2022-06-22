@@ -21,7 +21,7 @@ resource "aws_iam_role" "fastly_log_forwarder" {
 
 resource "aws_iam_policy" "policy" {
   name_prefix = "FastlyLogForwarder"
-  path        = "/system"
+  path        = "/system/"
   description = "Allow Fastly to write logs to ${aws_s3_bucket.logs.bucket}."
 
   policy = data.aws_iam_policy_document.fastly_write.json
