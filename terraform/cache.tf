@@ -180,14 +180,15 @@ resource "fastly_service_v1" "cache" {
     source      = "\"*\""
   }
 
-  response_object {
-    name            = "404-page"
-    cache_condition = "is-404"
-    content         = "404"
-    content_type    = "text/plain"
-    response        = "Not Found"
-    status          = 404
-  }
+  # Serve a smaller 404 response. Unfortunately, this breaks caching.
+  #response_object {
+  #  name            = "404-page"
+  #  cache_condition = "is-404"
+  #  content         = "404"
+  #  content_type    = "text/plain"
+  #  response        = "Not Found"
+  #  status          = 404
+  #}
 
   snippet {
     content  = "set req.url = querystring.remove(req.url);"
@@ -211,15 +212,17 @@ resource "fastly_service_v1" "cache" {
   }
 
   snippet {
+    name     = "cache-errors"
     content  = <<-EOT
       if (beresp.status == 403) {
         set beresp.status = 404;
+      }
+      if (beresp.status == 404) {
         set beresp.ttl = 86400s;
-        set beresp.grace = 0s;
+        set beresp.stale_if_error = 3600s;
         set beresp.cacheable = true;
       }
     EOT
-    name     = "Change 403 from S3 to 404"
     priority = 100
     type     = "fetch"
   }
