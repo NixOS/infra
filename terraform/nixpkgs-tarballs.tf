@@ -164,7 +164,6 @@ resource "fastly_service_v1" "nixpkgs-tarballs" {
     name                  = local.tarballs_backend
     override_host         = local.tarballs_backend
     port                  = 80
-    shield                = local.fastly_shield
     use_ssl               = false
     weight                = 100
   }
