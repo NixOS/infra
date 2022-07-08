@@ -116,6 +116,7 @@ resource "fastly_service_v1" "cache" {
     name                  = "s3.amazonaws.com"
     override_host         = aws_s3_bucket.cache.bucket_domain_name
     port                  = 443
+    shield                = local.fastly_shield
     ssl_cert_hostname     = "s3.amazonaws.com"
     ssl_check_cert        = true
     use_ssl               = true

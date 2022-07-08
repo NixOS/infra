@@ -100,6 +100,7 @@ resource "fastly_service_v1" "channels" {
     name                  = local.channels_backend
     override_host         = local.channels_backend
     request_condition     = "not-flake-registry"
+    shield                = local.fastly_shield
   }
 
   backend {
