@@ -212,15 +212,12 @@ resource "fastly_service_v1" "cache" {
   }
 
   snippet {
+    name     = "cache-errors"
     content  = <<-EOT
       if (beresp.status == 403) {
         set beresp.status = 404;
-        set beresp.ttl = 86400s;
-        set beresp.grace = 0s;
-        set beresp.cacheable = true;
       }
     EOT
-    name     = "Change 403 from S3 to 404"
     priority = 100
     type     = "fetch"
   }
