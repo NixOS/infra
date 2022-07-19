@@ -186,6 +186,11 @@ locals {
       type     = "TXT"
       value    = "v=spf1 include:spf.improvmx.com ~all"
     },
+    {
+      hostname = "live.nixos.org"
+      type     = "A"
+      value    = "167.235.51.204"
+    },
   ]
 }
 
