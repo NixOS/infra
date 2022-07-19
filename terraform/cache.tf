@@ -172,6 +172,18 @@ resource "fastly_service_v1" "cache" {
     name        = "remove x-amz-id-2"
   }
 
+  # Enable Streaming Miss.
+  # https://docs.fastly.com/en/guides/streaming-miss
+  # https://github.com/NixOS/nixos-org-configurations/issues/212#issuecomment-1187568233
+  header {
+    priority    = 20
+    destination = "do_stream"
+    type        = "cache"
+    action      = "set"
+    name        = "Enabling Streaming Miss"
+    source      = "true"
+  }
+
   # Allow CORS GET requests.
   header {
     destination = "http.access-control-allow-origin"
