@@ -189,7 +189,7 @@ locals {
     {
       hostname = "live.nixos.org"
       type     = "TXT"
-      value    = "machine-owner=@bryanhonof provider=hetzner-cloud service=owncloud"
+      value    = "machine-owner=@bryanhonof provider=hetzner-cloud service=owncast"
     },
     {
       hostname = "live.nixos.org"
