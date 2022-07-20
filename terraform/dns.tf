@@ -188,8 +188,18 @@ locals {
     },
     {
       hostname = "live.nixos.org"
+      type     = "TXT"
+      value    = "machine-owner=@bryanhonof provider=hetzner-cloud service=owncloud"
+    },
+    {
+      hostname = "live.nixos.org"
       type     = "A"
       value    = "167.235.51.204"
+    },
+    {
+      hostname = "live.nixos.org"
+      type     = "AAAA"
+      value    = "2a01:4f8:c0c:96cc::42"
     },
   ]
 }
