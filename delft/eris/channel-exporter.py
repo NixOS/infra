@@ -81,3 +81,4 @@ if __name__ == "__main__":
                 revisions[channel] = revision
                 if previous_revision and previous_revision != revision:
                     CHANNEL_REVISION.remove(channel, previous_revision, status, variant, current)
+        time.sleep(55)
