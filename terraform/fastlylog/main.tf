@@ -1,5 +1,3 @@
-
-
 resource "aws_s3_bucket" "logs" {
   bucket_prefix = "fastly-logs-"
 
@@ -11,6 +9,36 @@ resource "aws_s3_bucket" "logs" {
     }
   }
 }
+
+resource "aws_s3_bucket_policy" "logs" {
+  bucket = aws_s3_bucket.logs.id
+  policy = <<EOF
+{
+  "Version": "2008-10-17",
+  "Statement": [
+    {
+      "Sid": "AllowNixOSOrgRead",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::008826681144:user/eelco.dolstra"
+      },
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::${aws_s3_bucket.logs.id}/*"
+    },
+    {
+      "Sid": "AllowNixOSOrgList",
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::008826681144:user/eelco.dolstra"
+      },
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::${aws_s3_bucket.logs.id}"
+    }
+  ]
+}
+EOF
+}
+
 
 resource "aws_iam_role" "fastly_log_forwarder" {
   name = "FastlyLogForwarder"
