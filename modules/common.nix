@@ -14,7 +14,7 @@ with lib;
   nix.buildCores = 0;
   nix.extraOptions =
     ''
-      experimental-features = nix-command flakes ca-references
+      experimental-features = nix-command flakes
     '';
 
   environment.systemPackages =

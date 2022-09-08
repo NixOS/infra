@@ -18,6 +18,8 @@ in
 
   networking.hostName = "bastion";
 
+  system.stateVersion = "18.03";
+
   system.configurationRevision = flakes.self.rev
     or (throw "Cannot deploy from an unclean source tree!");
 
@@ -26,9 +28,9 @@ in
   nix.trustedUsers = [ "deploy" ];
 
   nixpkgs.overlays = [
-    nix.overlay
-    nixops.overlay
-    nixos-channel-scripts.overlay
+    nix.overlays.default
+    #nixops.overlay
+    nixos-channel-scripts.overlays.default
   ];
 
   users.extraUsers.tarball-mirror.openssh.authorizedKeys.keys = [ sshKeys.eelco ];
@@ -45,7 +47,7 @@ in
 
   environment.systemPackages = [
     pkgs.awscli
-    pkgs.nixops
+    #pkgs.nixops
     pkgs.terraform-full
     pkgs.tmux
   ];
