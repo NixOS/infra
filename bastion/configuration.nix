@@ -1,4 +1,4 @@
-flakes @ { self, nixpkgs, nix, nixos-channel-scripts }:
+flakes @ { self, nixpkgs, nix, nixops, nixos-channel-scripts }:
 
 { modulesPath, config, lib, pkgs, ... }:
 let
@@ -20,8 +20,8 @@ in
 
   system.stateVersion = "18.03";
 
-  system.configurationRevision = flakes.self.rev
-    or (throw "Cannot deploy from an unclean source tree!");
+  #system.configurationRevision = flakes.self.rev
+  #  or (throw "Cannot deploy from an unclean source tree!");
 
   nix.registry.nixpkgs.flake = flakes.nixpkgs;
   nix.nixPath = [ "nixpkgs=${flakes.nixpkgs}" ];
@@ -29,13 +29,12 @@ in
 
   nixpkgs.overlays = [
     nix.overlays.default
-    #nixops.overlay
     nixos-channel-scripts.overlays.default
   ];
 
   # Needed for nixops.
   nixpkgs.config.permittedInsecurePackages = [
-    "python2.7-pyjwt-1.7.1"
+    "python2.7-urllib3-1.26.2"
   ];
 
   users.extraUsers.tarball-mirror.openssh.authorizedKeys.keys = [ sshKeys.eelco ];
@@ -52,7 +51,7 @@ in
 
   environment.systemPackages = [
     pkgs.awscli
-    pkgs.nixops
+    nixops.defaultPackage.x86_64-linux
     pkgs.terraform-full
     pkgs.tmux
   ];
