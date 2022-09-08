@@ -21,14 +21,15 @@
         "lowdown-src": "lowdown-src",
         "nixpkgs": [
           "nixpkgs"
-        ]
+        ],
+        "nixpkgs-regression": "nixpkgs-regression"
       },
       "locked": {
-        "lastModified": 1639738809,
-        "narHash": "sha256-RZSWOJUPkXIlMNYMC5a+WNrOjpqAHyhzyqD57BGfNY8=",
+        "lastModified": 1662478591,
+        "narHash": "sha256-D83pW9kXqPw5LBKyoXe0zRQVxSQHC7ybbafphNBwa+0=",
         "owner": "NixOS",
         "repo": "nix",
-        "rev": "6e6e998930f0d7361d64644eb37d9134e74e8501",
+        "rev": "96001098796c9011d1670cc8a7acd00ef49b2d7a",
         "type": "github"
       },
       "original": {
@@ -38,57 +39,22 @@
     },
     "nixops": {
       "inputs": {
-        "nixops-aws": "nixops-aws",
-        "nixops-hetzner": "nixops-hetzner",
         "nixpkgs": [
           "nixpkgs"
-        ]
+        ],
+        "utils": "utils"
       },
       "locked": {
-        "lastModified": 1586701146,
-        "narHash": "sha256-JMfzMXFTYuUEtEiMhbmGdlQYxBwIF/5R8DIa9sGBVe4=",
+        "lastModified": 1657388807,
+        "narHash": "sha256-MtTM5KUHIDqnY254chIOp00EmsbYsXR3mXrnbbY4wg0=",
         "owner": "NixOS",
         "repo": "nixops",
-        "rev": "0a636f2d59955a7cc1e6cb5bb132aea325c631cf",
+        "rev": "dcafae5258773dc0fbdd31b425f1ad3fb59173fe",
         "type": "github"
       },
       "original": {
         "id": "nixops",
         "type": "indirect"
-      }
-    },
-    "nixops-aws": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1586700941,
-        "narHash": "sha256-9yh7iHMJ8F8wA4nwTjm8rcmceFM/6URHK/Q/AuCkdzE=",
-        "owner": "NixOS",
-        "repo": "nixops-aws",
-        "rev": "af97c16f179cd0df94a6fc3ef470092122253f60",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "flake",
-        "repo": "nixops-aws",
-        "type": "github"
-      }
-    },
-    "nixops-hetzner": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1586701048,
-        "narHash": "sha256-q1QhsSp3N4nffnpUnGrF0Jg7VyLvi9JXiD82oxaM/Jg=",
-        "owner": "NixOS",
-        "repo": "nixops-hetzner",
-        "rev": "663b02618ece7a92a72da408a552528ee8dd354c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "zfs",
-        "repo": "nixops-hetzner",
-        "type": "github"
       }
     },
     "nixos-channel-scripts": {
@@ -116,17 +82,33 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1639161226,
-        "narHash": "sha256-75Y08ynJDTq6HHGIF+8IADBJSVip0UyWQH7jqSFnRR8=",
+        "lastModified": 1662099760,
+        "narHash": "sha256-MdZLCTJPeHi/9fg6R9fiunyDwP3XHJqDd51zWWz9px0=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "573095944e7c1d58d30fc679c81af63668b54056",
+        "rev": "67e45078141102f45eff1589a831aeaa3182b41e",
         "type": "github"
       },
       "original": {
         "id": "nixpkgs",
-        "ref": "nixos-21.11",
+        "ref": "nixos-22.05",
         "type": "indirect"
+      }
+    },
+    "nixpkgs-regression": {
+      "locked": {
+        "lastModified": 1643052045,
+        "narHash": "sha256-uGJ0VXIhWKGXxkeNnq4TvV3CIOkUJ3PAoLZ3HMzNVMw=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "215d4d0fd80ca5163643b03a33fde804a29cc1e2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "215d4d0fd80ca5163643b03a33fde804a29cc1e2",
+        "type": "github"
       }
     },
     "root": {
@@ -135,6 +117,21 @@
         "nixops": "nixops",
         "nixos-channel-scripts": "nixos-channel-scripts",
         "nixpkgs": "nixpkgs"
+      }
+    },
+    "utils": {
+      "locked": {
+        "lastModified": 1634851050,
+        "narHash": "sha256-N83GlSGPJJdcqhUxSCS/WwW5pksYf3VP1M13cDRTSVA=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "c91f3de5adaf1de973b797ef7485e441a65b8935",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
       }
     }
   },
