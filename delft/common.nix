@@ -51,12 +51,6 @@ with lib;
       allowed-uris = https://github.com/ https://git.savannah.gnu.org/
     '';
 
-  networking.defaultMailServer = {
-    directDelivery = true;
-    hostName = "smtp.tudelft.nl";
-    domain = "st.ewi.tudelft.nl";
-  };
-
   networking.firewall.enable = true;
   networking.firewall.rejectPackets = true;
   networking.firewall.allowPing = true;

@@ -54,7 +54,7 @@ in {
     documentation.nixos.enable = false;
 
     security.acme.acceptTerms = true;
-    security.acme.email = "webmaster@nixos.org";
+    security.acme.defaults.email = "webmaster@nixos.org";
 
     imports = [
       ../modules/wireguard.nix
@@ -63,7 +63,7 @@ in {
       { system.configurationRevision = flakes.self.rev
           or (throw "Cannot deploy from an unclean source tree!");
         nixpkgs.overlays = [
-          flakes.nix.overlay
+          flakes.nix.overlays.default
           networkoverlay
         ];
         nix.registry.nixpkgs.flake = flakes.nixpkgs;
