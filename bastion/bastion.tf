@@ -111,12 +111,13 @@ resource "aws_instance" "bastion" {
   }
 
   root_block_device {
-    iops = 300
+    delete_on_termination = false
+    iops = 450
     tags = {
       "Name"   = "Unnamed NixOps network [bastion - /dev/xvda1]"
       "Owners" = "edolstra@gmail.com, rob.vermaas@gmail.com"
     }
-    volume_size = 100
+    volume_size = 150
     volume_type = "gp2"
   }
 
