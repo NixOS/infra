@@ -1,4 +1,4 @@
-flakes @ { self, nixpkgs, nix, nixops, nixos-channel-scripts }:
+flakes @ { self, nixpkgs, nix, nixos-channel-scripts }:
 
 { modulesPath, config, lib, pkgs, ... }:
 let
@@ -33,6 +33,11 @@ in
     nixos-channel-scripts.overlays.default
   ];
 
+  # Needed for nixops.
+  nixpkgs.config.permittedInsecurePackages = [
+    "python2.7-pyjwt-1.7.1"
+  ];
+
   users.extraUsers.tarball-mirror.openssh.authorizedKeys.keys = [ sshKeys.eelco ];
 
   users.extraUsers.deploy = {
@@ -47,7 +52,7 @@ in
 
   environment.systemPackages = [
     pkgs.awscli
-    #pkgs.nixops
+    pkgs.nixops
     pkgs.terraform-full
     pkgs.tmux
   ];
