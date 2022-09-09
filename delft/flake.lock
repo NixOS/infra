@@ -1,23 +1,5 @@
 {
   "nodes": {
-    "cpiotools": {
-      "inputs": {
-        "nixpkgs": "nixpkgs_3"
-      },
-      "locked": {
-        "lastModified": 1655642194,
-        "narHash": "sha256-PHF4K1sLixSDM7lvMpuCj4ygLHGEZFQzzGIGMhsE8K0=",
-        "owner": "DeterminateSystems",
-        "repo": "cpiotools",
-        "rev": "926af143c453d387b585c52d5004fb5fe70fe730",
-        "type": "github"
-      },
-      "original": {
-        "owner": "DeterminateSystems",
-        "repo": "cpiotools",
-        "type": "github"
-      }
-    },
     "dwarffs": {
       "inputs": {
         "nix": "nix",
@@ -114,25 +96,6 @@
         "type": "indirect"
       }
     },
-    "nix-netboot-serve": {
-      "inputs": {
-        "cpiotools": "cpiotools",
-        "nixpkgs": "nixpkgs_4"
-      },
-      "locked": {
-        "lastModified": 1664484325,
-        "narHash": "sha256-2AD0A/dFkvtamwq+/SLvZG6578q/BAw9e/T4TdIp3sw=",
-        "owner": "DeterminateSystems",
-        "repo": "nix-netboot-serve",
-        "rev": "ae8ee4acfba0a307c3e5d0944d048153924f2282",
-        "type": "github"
-      },
-      "original": {
-        "owner": "DeterminateSystems",
-        "repo": "nix-netboot-serve",
-        "type": "github"
-      }
-    },
     "nix_2": {
       "inputs": {
         "lowdown-src": "lowdown-src_2",
@@ -140,11 +103,11 @@
         "nixpkgs-regression": "nixpkgs-regression_2"
       },
       "locked": {
-        "lastModified": 1662728070,
-        "narHash": "sha256-PZE+ALZoBrNKaTzbRmOlQizIQNLvJaiEhAdNO0xpz88=",
-        "owner": "edolstra",
+        "lastModified": 1661606874,
+        "narHash": "sha256-9+rpYzI+SmxJn+EbYxjGv68Ucp22bdFUSy/4LkHkkDQ=",
+        "owner": "NixOS",
         "repo": "nix",
-        "rev": "1bcfd7b166c7d512cd506cca98a62695ad825d13",
+        "rev": "11e45768b34fdafdcf019ddbd337afa16127ff0f",
         "type": "github"
       },
       "original": {
@@ -220,38 +183,6 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1655567057,
-        "narHash": "sha256-Cc5hQSMsTzOHmZnYm8OSJ5RNUp22bd5NADWLHorULWQ=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "e0a42267f73ea52adc061a64650fddc59906fc99",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_4": {
-      "locked": {
-        "lastModified": 1655306633,
-        "narHash": "sha256-nv4FfWWV/dEelByjXJtJkoDPOHIsKfLq50RN3Hqq5Yk=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "b1957596ff1c7aa8c55c4512b7ad1c9672502e8e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_5": {
-      "locked": {
         "lastModified": 1662576620,
         "narHash": "sha256-yw0dBGrnbMQ73U+AIm8vA2vvoWWqMr0D6LegWuq4J6k=",
         "owner": "NixOS",
@@ -273,8 +204,7 @@
           "hydra",
           "nix"
         ],
-        "nix-netboot-serve": "nix-netboot-serve",
-        "nixpkgs": "nixpkgs_5"
+        "nixpkgs": "nixpkgs_3"
       }
     }
   },
