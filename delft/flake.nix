@@ -4,6 +4,7 @@
   inputs.nix.follows = "hydra/nix";
   inputs.hydra.url = "github:NixOS/hydra";
   inputs.nix-netboot-serve.url = "github:DeterminateSystems/nix-netboot-serve";
+  inputs.hydra.inputs.nix.url = "github:edolstra/nix/hydra-temp";
   #inputs.hydra.url = "github:DeterminateSystems/hydra/queue-runner-exporter";
   outputs = flakes @ { self, nixpkgs, nix, hydra /*, dwarffs */ }: {
 
