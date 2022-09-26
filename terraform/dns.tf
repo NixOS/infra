@@ -201,6 +201,36 @@ locals {
       type     = "AAAA"
       value    = "2a01:4f8:c0c:96cc::42"
     },
+    {
+      # hetzner m1 1638981
+      hostname = "intense-heron.mac.nixos.org"
+      type     = "A"
+      value    = "23.88.75.215"
+    },
+    {
+      # hetzner m1 1640609
+      hostname = "sweeping-filly.mac.nixos.org"
+      type     = "A"
+      value    = "142.132.141.35"
+    },
+    {
+      # hetzner m1 1640635
+      hostname = "maximum-snail.mac.nixos.org"
+      type     = "A"
+      value    = "23.88.76.161"
+    },
+    {
+      # hetzner m1 1643080
+      hostname = "growing-jennet.mac.nixos.org"
+      type     = "A"
+      value    = "23.88.76.75"
+    },
+    {
+      # hetzner m1 1643228
+      hostname = "enormous-catfish.mac.nixos.org"
+      type     = "A"
+      value    = "142.132.140.199"
+    }
   ]
 }
 
