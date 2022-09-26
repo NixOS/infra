@@ -237,6 +237,16 @@ in
             ];
             labels.role = "bastion";
           }
+          {
+            targets = [
+              "intense-heron.mac.nixos.org:9100"
+              "sweeping-filly.mac.nixos.org:9100"
+              "maximum-snail.mac.nixos.org:9100"
+              "growing-jennet.mac.nixos.org:9100"
+              "enormous-catfish.mac.nixos.org:9100"
+            ];
+            labels.role = "mac";
+          }
         ];
       }
       {
