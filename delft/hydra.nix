@@ -88,52 +88,7 @@ in
     ''
       ServerAliveInterval 120
       TCPKeepAlive yes
-
-      Host mac1-guest
-      Hostname 10.254.2.1
-      Port 2200
-      Compression yes
-
-      Host mac2-guest
-      Hostname 10.254.2.2
-      Port 2200
-      Compression yes
-
-      Host mac3-guest
-      Hostname 10.254.2.3
-      Port 2200
-      Compression yes
-
-      Host mac4-guest
-      Hostname 10.254.2.4
-      Port 2200
-      Compression yes
-
-      Host mac5-guest
-      Hostname 10.254.2.5
-      Port 2200
-      Compression yes
-
-      Host mac6-guest
-      Hostname 10.254.2.6
-      Port 2200
-      Compression yes
-
-      Host mac7-guest
-      Hostname 10.254.2.7
-      Port 2200
-      Compression yes
-
-      Host mac8-guest
-      Hostname 10.254.2.8
-      Port 2200
-      Compression yes
-
-      Host mac9-guest
-      Hostname 10.254.2.9
-      Port 2200
-      Compression yes
-
+      
       Host mac-m1-1
       Hostname 10.254.2.101
       Compression yes
@@ -201,18 +156,6 @@ in
 
   services.openssh.knownHosts = {
     "*.cloudscalehydra.detsys.dev" = { certAuthority = true; publicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC6HhovazfX+rqm2YuOwgM1X16Z7bJpLLj4DXWUsuGGqG/OlwIyioVodKPd3dYwsltQD8W4YrWQCOXlqyV50xpngKJX6OXdDt0IWwwgHdW0bT/l+4Yd/B57PbSnXGKLwa7slBwMCGkxpivMwnkQm+1zfQEdVNX5UPiH6xwZSwgsaRHCpumpVUrLNWlWxI5+g3alez/mfp29bgSvMdnIu72Ykb8u0uKOvGVQY7UD9sVU00NSQ16m+NhvvFvVomIF6OXMinBkATuSsoa4jOIg4UTsS5mo8Up8RdZ1qyzxvqf874osn5sYkMVnRZ5G/0bmwdwyYs7mjKh3agt37Fnaj8obyfVRm9aRlKT+Gwc5U2XZF/AdhOq+TdRL2HgaNYwJspHYUQ2jm5YilOgcEfTOgunxDfMIGueqnM6nZoGe7EHA6affr8QLrOXEUVA9uwIMInpLWiDZXk74owDGhIpg8WBpWch+x3SqaLDwLlUYDseJR0BdH9al+UZW1eBinAiEVl6H7KzVLpLqYss38CWT9c7Cq/gltUuwIqgziXFCR4skXfpN5Ozg0Sr9OmkJbxHjGdOmMVT0VKC05KsUEkWW9J18WX3uN1O3Mqu7vWgK9VOqbsnsknP0oBSznniFZYblK0vRgcrKPMAGTZ7RMdTBbys28sj3HKY/CQPv08KV0xgOJQ=="; };
-
-    # (for i in 10.254.2.{1,2,3,4,5,6,7,8,9}; do ssh-keyscan -t ssh-ed25519 -p 2200 $i 2> /dev/null; done) | sed -e 's/^/      { hostNames = [ "/' -e 's/ ssh/" ]; publicKey = "ssh/' -e 's/$/"; };/'; echo
-
-    mac1-guest = { hostNames = [ "[10.254.2.1]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINkWZobdUDgoXyqzpcWUyBXz7pRCcqxRMS9z6Nyg8lJ/"; };
-    mac2-guest = { hostNames = [ "[10.254.2.2]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICIzkQ2sjmphJL2oo1FSA/3F7/G+YTraWuPYUXBdZJ/t"; };
-    mac3-guest = { hostNames = [ "[10.254.2.3]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHDnJQyL2LlWjIE+4wGBZyTapXlCgwTZ+uBh7eoaGPfL"; };
-    mac4-guest = { hostNames = [ "[10.254.2.4]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBq44jmyZD6fQY+WLPH3Dx9mQXzCK7ZBpfmYjATVvT7T"; };
-    mac5-guest = { hostNames = [ "[10.254.2.5]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEKH3SXo9u27y105FLNz1PxrDMBZ0gAsBsC9t2ErHbx4"; };
-    mac6-guest = { hostNames = [ "[10.254.2.6]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBNU5/bIy24ea7twM6j7QAKs1KWJADYNfov94N9YjlVz"; };
-    mac7-guest = { hostNames = [ "[10.254.2.7]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN8AwqnYcZhj1jINB5HMAT+VBl+rPH9TCeHPtZMwMIUJ"; };
-    mac8-guest = { hostNames = [ "[10.254.2.8]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAYH18PbDKKNmRaRYdMbbSqJSC+g5yB83LLSNemxhoCE"; };
-    mac9-guest = { hostNames = [ "[10.254.2.9]:2200" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP4oOQBk3nRMKcPsDAL54jMAfSy9fwCyfH1qWwp1jwQt"; };
 
     mac-m1-1 = { hostNames = [ "10.254.2.101" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILIpNE/evvR5mVLslm4G5AV6pQ2wdpIl7FPGDh5wZPLF"; };
     mac-m1-2 = { hostNames = [ "10.254.2.102" ]; publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDyGCqoDh+BWnV1NIV2ucyb0WsXz5fH2hKDgC1dhN+Wq"; };

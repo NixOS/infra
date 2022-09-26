@@ -21,6 +21,15 @@ publicKey = "nG7I9gegJIynKOZ6tzpvmLdCZ/xScTgRZeFvYLFyil4="
 
 # tombstone: 10.254.1.2 chef
 # tomstone: 10.254.1.3 ceres
+# tombstone: 10.254.2.1 mac1 (host/guest)
+# tombstone: 10.254.2.2 mac2 (host/guest)
+# tombstone: 10.254.2.3 mac3 (host/guest)
+# tombstone: 10.254.2.4 mac4 (host/guest)
+# tombstone: 10.254.2.5 mac5 (host/guest)
+# tombstone: 10.254.2.6 mac6 (host/guest)
+# tombstone: 10.254.2.7 mac7 (host/guest)
+# tombstone: 10.254.2.8 mac8 (host/guest)
+# tombstone: 10.254.2.9 mac9 (host/guest)
 
 [hosts.eris]
 endpoint = "138.201.32.77"
@@ -39,38 +48,6 @@ endpoint = "46.4.89.205"
 ip = "10.254.1.9"
 port = 51820
 publicKey = "Fb41wGKT1TdC4MG5i2NRx6yduddmqm+N+UOtqtDuBG4="
-
-[hosts.mac1]
-ip = "10.254.2.1"
-publicKey = "ZIzROtHaFWjrhhdXAE8Tq+EhUsSIURLcwsISfudndTk="
-
-[hosts.mac2]
-ip = "10.254.2.2"
-publicKey = "m0xJg1OBZIqPu8maxpldLQ1Y39aPS3cnj7hqpVUSuFg="
-
-[hosts.mac3]
-ip = "10.254.2.3"
-publicKey = "6urTLKp3ihXw0fy4ImhpiQu/sOxrJYewtg2cbT3jv3g="
-
-[hosts.mac4]
-ip = "10.254.2.4"
-publicKey = "ojkldeD0xJw54nAeGSHQw7BMSXnc6c2e6GP4nJ/1xEo="
-
-[hosts.mac5]
-ip = "10.254.2.5"
-publicKey = "UgbjJz7BPlD5oDNPr1Bpr4XqeuoL9G5+oUDyU9EVYgg="
-
-[hosts.mac6]
-ip = "10.254.2.6"
-publicKey = "5t67sluyRwuDXeY17CG7sbpt0gZNybHzvJYd7NAESis="
-
-[hosts.mac7]
-ip = "10.254.2.7"
-publicKey = "q/8YvHa/M0Epyqflp+fEXvBmJuOBaBJPcaAkScCYvHA="
-
-[hosts.mac8]
-ip = "10.254.2.8"
-publicKey = "aw/8/5oEn0cZa/WnUE7E7MEukDvzUzaAUEL6PMhLFmE="
 
 [hosts.macofborg1]
 ip = "10.254.2.51"

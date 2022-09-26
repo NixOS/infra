@@ -1,8 +1,6 @@
 { resources, config, lib, pkgs, ... }:
 let
   inherit (lib) filterAttrs flip mapAttrsToList;
-
-  macs = filterAttrs (_: v: (v.macosGuest or { }).enable or false) resources.machines;
 in
 {
   imports = [
@@ -24,10 +22,7 @@ in
     10.254.1.9 haumea
 
     10.254.3.1 webserver
-
-  '' + (toString (flip mapAttrsToList macs (machine: v: ''
-    ${v.deployment.targetHost} ${machine}
-  '')));
+  '';
 
   networking.firewall.allowedTCPPorts = [
     443
@@ -241,16 +236,6 @@ in
               "bastion:9100"
             ];
             labels.role = "bastion";
-          }
-          {
-            targets = flip mapAttrsToList macs (machine: v: "${machine}:9101");
-            labels.mac = "guest";
-            labels.role = "builder";
-          }
-          {
-            targets = flip mapAttrsToList macs (machine: v: "${machine}:9100");
-            labels.mac = "host";
-            labels.role = "builder";
           }
         ];
       }
