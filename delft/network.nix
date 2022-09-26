@@ -2,7 +2,7 @@ flakes:
 
 let
   networkoverlay = self: super: {
-    prometheus-postgres-exporter = self.callPackage ./prometheus/postgres-exporter.nix {};
+    prometheus-postgres-exporter = self.callPackage ./prometheus/postgres-exporter.nix { };
   };
 
   makeMac = { ip, extra, useCatalina ? false }: {
@@ -37,7 +37,7 @@ let
             {
               zvolName = lib.mkForce "rpool/catalina";
               guestConfigDir = lib.mkForce ../macs/guest-catalina;
-              cloverImage = (pkgs.callPackage ../macs/dist/clover-catalina {}).clover-image;
+              cloverImage = (pkgs.callPackage ../macs/dist/clover-catalina { }).clover-image;
             }
           else
             {
@@ -49,7 +49,8 @@ let
       })
     ];
   };
-in {
+in
+{
   defaults = {
     documentation.nixos.enable = false;
 
@@ -60,7 +61,8 @@ in {
       ../modules/wireguard.nix
       ../modules/prometheus
       # flakes.dwarffs.nixosModules.dwarffs # broken by Nix 2.6
-      { system.configurationRevision = flakes.self.rev
+      {
+        system.configurationRevision = flakes.self.rev
           or (throw "Cannot deploy from an unclean source tree!");
         nixpkgs.overlays = [
           flakes.nix.overlays.default
@@ -96,7 +98,7 @@ in {
         guest = {
           zvolName = lib.mkForce "rpool/catalina";
           guestConfigDir = lib.mkForce ../macs/guest-catalina;
-          cloverImage = (pkgs.callPackage ../macs/dist/clover-catalina {}).clover-image;
+          cloverImage = (pkgs.callPackage ../macs/dist/clover-catalina { }).clover-image;
         };
       };
     };

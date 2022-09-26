@@ -2,9 +2,10 @@
 let
   inherit (lib) filterAttrs flip mapAttrsToList;
 
-  macs = filterAttrs (_: v: (v.macosGuest or {}).enable or false) resources.machines;
-in {
-  imports =  [
+  macs = filterAttrs (_: v: (v.macosGuest or { }).enable or false) resources.machines;
+in
+{
+  imports = [
     ../modules/rfc39.nix
     ../modules/prometheus
     ./eris/packet-spot-market-prices.nix
@@ -24,12 +25,13 @@ in {
 
     10.254.3.1 webserver
 
-    '' + (toString (flip mapAttrsToList macs (machine: v: ''
+  '' + (toString (flip mapAttrsToList macs (machine: v: ''
     ${v.deployment.targetHost} ${machine}
-    '')));
+  '')));
 
   networking.firewall.allowedTCPPorts = [
-    443 80 # nginx
+    443
+    80 # nginx
     9090 # prometheus's web UI
     9200 # hydra-queue-runner rexporter
   ];
@@ -84,7 +86,7 @@ in {
       enable = true;
       webExternalUrl = "http://10.254.1.4:9093/";
       configuration = {
-        global = {};
+        global = { };
         route = {
           receiver = "ignore";
           group_wait = "30s";
@@ -118,97 +120,100 @@ in {
       };
     };
 
-    rules = [ (builtins.toJSON {
-      groups = [
-        {
-          name = "hydra";
-          rules = [
-            {
-              alert = "BuildsStuckOverTwoDays";
-              expr = ''hydra_machine_build_duration_bucket{le="+Inf"} - ignoring(le) hydra_machine_build_duration_bucket{le="172800"} > 0'';
-              for = "30m";
-              labels.severity = "warning";
-              annotations.summary = "{{ $labels.machine }} has {{ $value }} over-age jobs.";
-              annotations.grafana = "https://monitoring.nixos.org/grafana/d/j0hJAY1Wk/in-progress-build-duration-heatmap";
-            }
-            {
-              alert = "HydraQueueRunnerUp";
-              expr = ''up{job="hydra_queue_runner"} == 0'';
-              for = "30m";
-              labels.severity = "warning";
-              annotations.summary = "hydra-queue-runner's prometheus exporter is not up";
-            }
-          ];
-        }
+    rules = [
+      (builtins.toJSON {
+        groups = [
+          {
+            name = "hydra";
+            rules = [
+              {
+                alert = "BuildsStuckOverTwoDays";
+                expr = ''hydra_machine_build_duration_bucket{le="+Inf"} - ignoring(le) hydra_machine_build_duration_bucket{le="172800"} > 0'';
+                for = "30m";
+                labels.severity = "warning";
+                annotations.summary = "{{ $labels.machine }} has {{ $value }} over-age jobs.";
+                annotations.grafana = "https://monitoring.nixos.org/grafana/d/j0hJAY1Wk/in-progress-build-duration-heatmap";
+              }
+              {
+                alert = "HydraQueueRunnerUp";
+                expr = ''up{job="hydra_queue_runner"} == 0'';
+                for = "30m";
+                labels.severity = "warning";
+                annotations.summary = "hydra-queue-runner's prometheus exporter is not up";
+              }
+            ];
+          }
 
-        {
-          name = "system";
-          rules = let
-            diskSelector = ''mountpoint=~"(/|/scratch)"'';
-            relevantLabels = "device,fstype,instance,mountpoint";
-          in
-          [
-            {
-              alert = "PartitionLowInodes";
-              expr = ''
-                avg (node_filesystem_files_free{${diskSelector}} <= 10000) by (${relevantLabels})
-              '';
-              for = "30m";
-              labels.severity = "warning";
-              annotations.summary = "{{ $labels.device }} mounted to {{ $labels.mountpoint }} ({{ $labels.fstype }}) on {{ $labels.instance }} has {{ $value }} inodes free.";
-              annotations.grafana = "https://monitoring.nixos.org/grafana/d/5LANB9pZk/per-instance-metrics?orgId=1&refresh=30s&var-instance={{ $labels.instance }}";
-            }
+          {
+            name = "system";
+            rules =
+              let
+                diskSelector = ''mountpoint=~"(/|/scratch)"'';
+                relevantLabels = "device,fstype,instance,mountpoint";
+              in
+              [
+                {
+                  alert = "PartitionLowInodes";
+                  expr = ''
+                    avg (node_filesystem_files_free{${diskSelector}} <= 10000) by (${relevantLabels})
+                  '';
+                  for = "30m";
+                  labels.severity = "warning";
+                  annotations.summary = "{{ $labels.device }} mounted to {{ $labels.mountpoint }} ({{ $labels.fstype }}) on {{ $labels.instance }} has {{ $value }} inodes free.";
+                  annotations.grafana = "https://monitoring.nixos.org/grafana/d/5LANB9pZk/per-instance-metrics?orgId=1&refresh=30s&var-instance={{ $labels.instance }}";
+                }
 
-            {
-              alert = "PartitionLowDiskSpace";
-              expr = ''
-                (avg (round(node_filesystem_avail_bytes{${diskSelector}} * 10^(-9) <= 10)) by (${relevantLabels}))
-                or
-                (avg (((node_filesystem_avail_bytes{${diskSelector}} / node_filesystem_size_bytes) * 100) <= 10) by (${relevantLabels}))
-              '';
-              for = "30m";
-              labels.severity = "warning";
-              annotations.summary = "{{ $labels.device }} mounted to {{ $labels.mountpoint }} ({{ $labels.fstype }}) on {{ $labels.instance }} has {{ $value }} GB free.";
-              annotations.grafana = "https://monitoring.nixos.org/grafana/d/5LANB9pZk/per-instance-metrics?orgId=1&refresh=30s&var-instance={{ $labels.instance }}";
-            }
-          ];
-        }
+                {
+                  alert = "PartitionLowDiskSpace";
+                  expr = ''
+                    (avg (round(node_filesystem_avail_bytes{${diskSelector}} * 10^(-9) <= 10)) by (${relevantLabels}))
+                    or
+                    (avg (((node_filesystem_avail_bytes{${diskSelector}} / node_filesystem_size_bytes) * 100) <= 10) by (${relevantLabels}))
+                  '';
+                  for = "30m";
+                  labels.severity = "warning";
+                  annotations.summary = "{{ $labels.device }} mounted to {{ $labels.mountpoint }} ({{ $labels.fstype }}) on {{ $labels.instance }} has {{ $value }} GB free.";
+                  annotations.grafana = "https://monitoring.nixos.org/grafana/d/5LANB9pZk/per-instance-metrics?orgId=1&refresh=30s&var-instance={{ $labels.instance }}";
+                }
+              ];
+          }
 
-        {
-          name = "scheduled-jobs";
-          rules = [
-            {
-              alert = "RFC39MaintainerSync";
-              expr = ''node_systemd_unit_state{name=~"^rfc39-sync.service$", state="failed"} == 1'';
-              for = "30m";
-              labels.severity = "warning";
-              annotations.grafana = "https://monitoring.nixos.org/grafana/d/fBW4tL1Wz/scheduled-task-state-channels-website?orgId=1&refresh=10s";
-            }
-            {
-              alert = "ChannelUpdateStuck";
-              expr = ''max_over_time(node_systemd_unit_state{name=~"^update-nix.*.service$",state=~"failed"}[5m]) == 1'';
-              for = "30m";
-              labels.severity = "warning";
-              annotations.summary = "{{ $labels.name }} on {{ $labels.instance }}";
-              annotations.grafana = "https://monitoring.nixos.org/grafana/d/fBW4tL1Wz/scheduled-task-state-channels-website?orgId=1&refresh=10s";
-            }
-          ];
-        }
+          {
+            name = "scheduled-jobs";
+            rules = [
+              {
+                alert = "RFC39MaintainerSync";
+                expr = ''node_systemd_unit_state{name=~"^rfc39-sync.service$", state="failed"} == 1'';
+                for = "30m";
+                labels.severity = "warning";
+                annotations.grafana = "https://monitoring.nixos.org/grafana/d/fBW4tL1Wz/scheduled-task-state-channels-website?orgId=1&refresh=10s";
+              }
+              {
+                alert = "ChannelUpdateStuck";
+                expr = ''max_over_time(node_systemd_unit_state{name=~"^update-nix.*.service$",state=~"failed"}[5m]) == 1'';
+                for = "30m";
+                labels.severity = "warning";
+                annotations.summary = "{{ $labels.name }} on {{ $labels.instance }}";
+                annotations.grafana = "https://monitoring.nixos.org/grafana/d/fBW4tL1Wz/scheduled-task-state-channels-website?orgId=1&refresh=10s";
+              }
+            ];
+          }
 
-        {
-          name = "blackbox";
-          rules = [
-            {
-              alert = "CertificateExpiry";
-              expr = "probe_ssl_earliest_cert_expiry - time() < 86400 * 14";
-              for = "10m";
-              labels.severity = "warning";
-              annotations.summary = "Certificate for {{ $labels.instance }} is expiring soon.";
-            }
-          ];
-        }
-      ];
-    }) ];
+          {
+            name = "blackbox";
+            rules = [
+              {
+                alert = "CertificateExpiry";
+                expr = "probe_ssl_earliest_cert_expiry - time() < 86400 * 14";
+                for = "10m";
+                labels.severity = "warning";
+                annotations.summary = "Certificate for {{ $labels.instance }} is expiring soon.";
+              }
+            ];
+          }
+        ];
+      })
+    ];
 
     globalConfig.scrape_interval = "15s";
     scrapeConfigs = [
@@ -300,7 +305,8 @@ in {
             source_labels = [ "__meta_packet_plan" ];
             target_label = "packet_plan";
           }
-          { # todo: change from _id to _uuid
+          {
+            # todo: change from _id to _uuid
             source_labels = [ "__meta_packet_switch_id" ];
             target_label = "packet_switch_id";
           }
@@ -488,25 +494,30 @@ in {
         ];
       }
     ]
-    ++ (let
-      mkProbe = module: targets: {
-        job_name = "blackbox-${module}";
-        metrics_path = "/probe";
-        params = {
-          module = [ module ];
+    ++ (
+      let
+        mkProbe = module: targets: {
+          job_name = "blackbox-${module}";
+          metrics_path = "/probe";
+          params = {
+            module = [ module ];
+          };
+          static_configs = [{ inherit targets; }];
+          relabel_configs = [{
+            source_labels = [ "__address__" ];
+            target_label = "__param_target";
+          }
+            {
+              source_labels = [ "__param_target" ];
+              target_label = "instance";
+            }
+            {
+              target_label = "__address__";
+              replacement = "localhost:9115";
+            }];
         };
-        static_configs = [{ inherit targets; }];
-        relabel_configs = [ {
-          source_labels = [ "__address__" ];
-          target_label = "__param_target";
-        } {
-          source_labels = [ "__param_target" ];
-          target_label = "instance";
-        } {
-          target_label = "__address__";
-          replacement = "localhost:9115";
-        } ];
-      }; in [
+      in
+      [
         (mkProbe "https_success" [
           "https://cache.nixos.org"
           "https://channels.nixos.org"
@@ -527,19 +538,21 @@ in {
         ])
       ]
     )
-    ++ lib.mapAttrsToList (name: value: {
+    ++ lib.mapAttrsToList
+      (name: value: {
         job_name = "channel-job-${name}";
         scheme = "https";
         scrape_interval = "5m";
         metrics_path = "/job/${value.job}/prometheus";
-        static_configs = [ {
+        static_configs = [{
           labels = {
             current = if value.status != "unmaintained" then "1" else "0";
             channel = name;
           };
           targets = [ "hydra.nixos.org:443" ];
-        } ];
-      }) (import ../channels.nix).channels;
+        }];
+      })
+      (import ../channels.nix).channels;
   };
 
   services.grafana = {
@@ -557,15 +570,18 @@ in {
     serviceConfig = {
       Restart = "always";
       RestartSec = "60s";
-      PrivateTmp =  true;
+      PrivateTmp = true;
       WorkingDirectory = "/tmp";
-      ExecStart = let
+      ExecStart =
+        let
           python = pkgs.python3.withPackages (p: [
-             p.requests p.prometheus_client
+            p.requests
+            p.prometheus_client
           ]);
-        in ''
+        in
+        ''
           ${python}/bin/python ${./prometheus/hydra-queue-runner-reexporter.py}
-      '';
+        '';
     };
   };
 
@@ -579,49 +595,53 @@ in {
     isSystemUser = true;
     group = "packet-sd";
   };
-  users.groups.packet-sd = {};
+  users.groups.packet-sd = { };
 
   systemd.tmpfiles.rules = [
     "d /var/lib/packet-sd 0755 packet-sd - -"
     "f /var/lib/packet-sd/packet-sd.json 0644 packet-sd - -"
   ];
 
-  systemd.services.prometheus-packet-sd = let
-    sd = pkgs.callPackage ./prometheus/packet-sd.nix {};
-  in {
-    wantedBy = [ "multi-user.target" "prometheus.service" ];
-    after = [ "network.target" ];
+  systemd.services.prometheus-packet-sd =
+    let
+      sd = pkgs.callPackage ./prometheus/packet-sd.nix { };
+    in
+    {
+      wantedBy = [ "multi-user.target" "prometheus.service" ];
+      after = [ "network.target" ];
 
-    serviceConfig = {
-      User = "packet-sd";
-      Group = "keys";
-      ExecStart = "${sd}/bin/prometheus-packet-sd --output.file=/var/lib/packet-sd/packet-sd.json";
-      EnvironmentFile = "/run/keys/packet-sd-env";
-      Restart = "always";
-      RestartSec = "60s";
+      serviceConfig = {
+        User = "packet-sd";
+        Group = "keys";
+        ExecStart = "${sd}/bin/prometheus-packet-sd --output.file=/var/lib/packet-sd/packet-sd.json";
+        EnvironmentFile = "/run/keys/packet-sd-env";
+        Restart = "always";
+        RestartSec = "60s";
+      };
     };
-  };
 
   deployment.keys."fastly-read-only-api-token" = {
     keyFile = /home/deploy/src/nixos-org-configurations/fastly-read-only-api-token;
   };
 
-  systemd.services.prometheus-fastly-exporter = let
-    fastly = pkgs.callPackage ./prometheus/fastly.nix {};
-  in {
-    wantedBy = [ "multi-user.target" "prometheus.service" ];
-    after = [ "network.target" ];
+  systemd.services.prometheus-fastly-exporter =
+    let
+      fastly = pkgs.callPackage ./prometheus/fastly.nix { };
+    in
+    {
+      wantedBy = [ "multi-user.target" "prometheus.service" ];
+      after = [ "network.target" ];
 
-    script = ''
-      export FASTLY_API_TOKEN=$(cat /run/keys/fastly-read-only-api-token)
-      ${fastly}/bin/fastly-exporter \
-        -endpoint http://127.0.0.1:9118/metrics
-    '';
+      script = ''
+        export FASTLY_API_TOKEN=$(cat /run/keys/fastly-read-only-api-token)
+        ${fastly}/bin/fastly-exporter \
+          -endpoint http://127.0.0.1:9118/metrics
+      '';
 
-    serviceConfig = {
-      Group = "keys";
-      Restart = "always";
-      RestartSec = "60s";
+      serviceConfig = {
+        Group = "keys";
+        Restart = "always";
+        RestartSec = "60s";
+      };
     };
-  };
 }
