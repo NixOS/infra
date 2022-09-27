@@ -108,4 +108,27 @@ run_query narinfo-queries-per-release \
     order by total_requests desc
   "
 
+run_query nix-installer-downloads \
+  "
+    select day, sum(nr)
+    from urls
+    where
+      host = 'releases.nixos.org'
+      and regexp_like(url, '^/nix/nix-[^/]+/install$')
+    group by day
+    order by day
+  "
+
+run_query nix-installer-architectures \
+  "
+    select arch, sum(nr) as count from
+      (select url, nr, regexp_replace(regexp_replace(url, '/nix/nix-[^/]+/nix-[^-]+-(rc[^-]*-)?', ''), '.tar.xz', '') as arch
+       from urls
+       where
+         host = 'releases.nixos.org'
+         and regexp_like(url, '^/nix/nix-[^/]+/nix-[^-]+-.*tar.xz$'))
+    group by arch
+    order by count desc
+  "
+
 fi
