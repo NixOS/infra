@@ -11,7 +11,15 @@ to_date_incl=$(date +%F --date="@$(($prev_week * 86400 * 7 + 5 * 86400))")
 
 echo "Ingesting [$from_date_incl, $to_date_incl)."
 
-#exit 0
+marker="$HOME/weeks-done/$prev_week"
+
+if [[ -e $marker ]]; then
+    echo "Already done!"
+    exit 0
+fi
+
+mkdir -p "$(dirname "$marker")"
+touch $marker
 
 ./ingest-raw-logs.sh "$from_date_incl" "$to_date_incl"
 
