@@ -35,6 +35,11 @@ in
     9093 # alertmanager
   ];
 
+  services.nix-netboot-serve = {
+    enable = true;
+    listen = "127.0.0.1:3000";
+  };
+
   services.nginx = {
     enable = true;
     recommendedProxySettings = true;
