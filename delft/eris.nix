@@ -1,4 +1,4 @@
-{ resources, config, lib, pkgs, ... }:
+{ resources, options, config, lib, pkgs, ... }:
 let
   inherit (lib) filterAttrs flip mapAttrsToList;
 in
@@ -38,6 +38,16 @@ in
   services.nginx = {
     enable = true;
     recommendedProxySettings = true;
+
+    sslProtocols = "TLSv1.2 TLSv1.3"; # iPXE only supports TLSv1.2
+    sslCiphers = options.services.nginx.sslCiphers.default + ":AES256-SHA256"; # iPXE needs AES256-SHA256
+
+    virtualHosts."netboot.nixos.org" = {
+      enableACME = false;
+      forceSSL = false;
+      locations."/".proxyPass = "http://127.0.0.1:3000/";
+    };
+
     virtualHosts."monitoring.nixos.org" = {
       enableACME = true;
       forceSSL = true;
@@ -530,6 +540,7 @@ in
           "https://tarballs.nixos.org"
           "https://weekly.nixos.org"
           "https://www.nixos.org"
+          "https://netboot.nixos.org"
         ])
       ]
     )
