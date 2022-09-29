@@ -29,7 +29,12 @@ in
     ];
   };
 
-  eris = import ./eris.nix;
+  eris = {
+    imports = [
+      ./eris.nix
+      flakes.nix-netboot-serve.nixosModules.nix-netboot-serve
+    ];
+  };
 
   haumea = {
     imports = [ ./haumea.nix ];
