@@ -42,6 +42,11 @@ locals {
       value    = "rhea.nixos.org"
     },
     {
+      hostname = "netboot.nixos.org"
+      type     = "CNAME"
+      value    = "monitoring.nixos.org"
+    },
+    {
       hostname = "monitoring.nixos.org"
       type     = "A"
       value    = "138.201.32.77"
