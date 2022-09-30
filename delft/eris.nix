@@ -37,7 +37,7 @@ in
 
   services.nix-netboot-serve = {
     enable = true;
-    listen = "127.0.0.1:3000";
+    listen = "127.0.0.1:3001";
   };
 
   security.acme = {
@@ -73,7 +73,7 @@ in
     virtualHosts."netboot.nixos.org" = {
       enableACME = true;
       forceSSL = true;
-      locations."/".proxyPass = "http://127.0.0.1:3000/";
+      locations."/".proxyPass = "http://127.0.0.1:3001/";
     };
 
     virtualHosts."monitoring.nixos.org" = {
