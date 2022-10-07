@@ -17,7 +17,7 @@ let
 in
 
 {
-  environment.darwinConfig = "/nix/home/config.nix";
+  environment.darwinConfig = "/nix/home/darwin-config/macs/nix-darwin.nix";
   environment.systemPackages =
     [
       config.nix.package
