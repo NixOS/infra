@@ -202,6 +202,10 @@
         hostNames = [ "[83.162.34.61]:6666" ];
         publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKKUSblYu3vgZOY4hsezAx8pwwsgVyDsnZLT9M0zZsgZ";
       };
+      ma27-backup-server = {
+        hostNames = [ "mbosch.me" "135.181.78.102" ];
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG6rlyYpWzzt1Fn4c9XdrgzuVqlnhzXz6BRReDVz9I/n";
+      };
     };
   };
 
@@ -300,7 +304,7 @@
           connect = {
             identity_file = "/root/.ssh/id_ed25519";
             type = "ssh+stdinserver";
-            host = "mbosch.me";
+            host = "135.181.78.102"; # "mbosch.me" has broken IPv6, tsk tsk.
             user = "hno";
             port = 22;
           };
