@@ -254,6 +254,7 @@
             prefix = "zrepl_snap_";
           };
           connect = {
+            identity_file = "/root/.ssh/id_ed25519";
             type = "ssh+stdinserver";
             host = "lord-nibbler.gsc.io";
             user = "hydraexport";
@@ -297,10 +298,25 @@
           send.encrypted = true;
           snapshotting.type = "manual";
           connect = {
+            identity_file = "/root/.ssh/id_ed25519";
             type = "ssh+stdinserver";
             host = "mbosch.me";
             user = "hno";
             port = 22;
+          };
+          pruning = {
+            keep_sender = [
+              {
+                type = "regex";
+                regex = ".*";
+              }
+            ];
+            keep_receiver = [
+              {
+                type = "regex";
+                regex = ".*";
+              }
+            ];
           };
         }
       ];
