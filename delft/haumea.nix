@@ -251,7 +251,6 @@
           name = "safe";
           type = "push";
           filesystems."rpool/safe<" = true;
-          send.encrypted = true;
           snapshotting = {
             type = "periodic";
             interval = "5m";
