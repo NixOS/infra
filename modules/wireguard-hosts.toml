@@ -83,13 +83,11 @@ ip = "10.254.3.1"
 port = 51820
 publicKey = "/N5//y0elGZdeekUv+IzKZiZ9wcKSOHc2bHmPU8FaCM="
 
-
 [hosts.hyperchicken]
 # Graham's machine, for administrative access
 ip = "10.254.4.1"
 port = 51820
 publicKey = "sXj7LhGQBczgMhEvLewWgyHsmYMMg88vUsz1rrn7fWM="
-
 
 [hosts.scruffy]
 # Graham's machine, for administrative access
@@ -97,3 +95,8 @@ ip = "10.254.4.2"
 port = 51820
 publicKey = "kamC5o3H6UhrfNZjxU6vqdHi3I1+KDOj9tMeuFjiIyk="
 
+[hosts.hermes-conrad]
+# Graham's machine, for administrative access
+ip = "10.254.4.3"
+port = 51820
+publicKey = "CDrCOjn7SH7fSn+xg3R/zkZVvVDORMK8uJJbvQrRaiY="
