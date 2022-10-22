@@ -299,7 +299,6 @@
           name = "safe_ma27";
           type = "push";
           filesystems."rpool/safe/postgres" = true;
-          send.encrypted = true;
           snapshotting.type = "manual";
           connect = {
             identity_file = "/root/.ssh/id_ed25519";
