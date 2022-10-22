@@ -43,7 +43,7 @@ in
     description = "NixOps deployments";
     isNormalUser = true;
     openssh.authorizedKeys.keys =
-      [ sshKeys.eelco sshKeys.rob sshKeys.graham sshKeys.zimbatm sshKeys.amine ];
+      [ sshKeys.eelco sshKeys.rob sshKeys.graham sshKeys.graham-hermes-conrad sshKeys.zimbatm sshKeys.amine ];
     extraGroups = [ "wheel" ];
   };
 
