@@ -261,7 +261,7 @@
             identity_file = "/root/.ssh/id_ed25519";
             type = "ssh+stdinserver";
             host = "lord-nibbler.gsc.io";
-            user = "hydraexport";
+            user = "root";
             port = 22;
           };
           pruning = {
