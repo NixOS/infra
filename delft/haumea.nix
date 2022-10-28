@@ -194,10 +194,6 @@
     '';
 
     knownHosts = {
-      graham-backup-server = {
-        hostNames = [ "lord-nibbler.gsc.io" "67.246.1.194" ];
-        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEjBFLoalf56exb7GptkI151ee+05CwvXzoyBuvzzUbK";
-      };
       rsync-net = {
         hostNames = [ "zh2543b.rsync.net" "2001:1620:2019::324" ];
         publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKlIcNwmx7id/XdYKZzVX2KtZQ4PAsEa9KVQ9N43L3PX";
@@ -225,73 +221,6 @@
       };
 
       jobs = [
-        #{ name = "local";
-        #  type = "snap";
-        #  filesystems."rpool/local<" = true;
-        #  snapshotting = {
-        #    type = "periodic";
-        #    interval = "5m";
-        #    prefix = "zrepl_snap_";
-        #  };
-        #  pruning.keep = [
-        #    {
-        #      type = "grid";
-        #      regex = "^zrepl_snap_.*";
-        #      grid = lib.concatStringsSep " | " [
-        #        "3x5m"
-        #        "4x15m"
-        #        "24x1h"
-        #        "4x1d"
-        #        "3x1w"
-        #      ];
-        #    }
-        #  ];
-        #}
-        {
-          name = "safe";
-          type = "push";
-          filesystems."rpool/safe<" = true;
-          snapshotting = {
-            type = "periodic";
-            interval = "5m";
-            prefix = "zrepl_snap_";
-          };
-          connect = {
-            identity_file = "/root/.ssh/id_ed25519";
-            type = "ssh+stdinserver";
-            host = "lord-nibbler.gsc.io";
-            user = "root";
-            port = 22;
-          };
-          pruning = {
-            keep_sender = [
-              {
-                type = "grid";
-                regex = "^zrepl_snap_.*";
-                grid = lib.concatStringsSep " | " [
-                  "3x5m"
-                  "4x15m"
-                  "24x1h"
-                  "4x1d"
-                  "3x1w"
-                ];
-              }
-            ];
-            keep_receiver = [
-              { type = "grid";
-                regex = "^zrepl_snap_.*";
-                grid = lib.concatStringsSep " | " [
-                  "20x5m"
-                  "96x1h"
-                  "12x4h"
-                  "7x1d"
-                  "52x1w"
-                  "120x3w"
-                ];
-              }
-            ];
-          };
-        }
         {
           name = "rsyncnet";
           type = "push";
