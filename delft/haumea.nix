@@ -198,10 +198,6 @@
         hostNames = [ "lord-nibbler.gsc.io" "67.246.1.194" ];
         publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEjBFLoalf56exb7GptkI151ee+05CwvXzoyBuvzzUbK";
       };
-      rob-backup-server = {
-        hostNames = [ "[83.162.34.61]:6666" ];
-        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKKUSblYu3vgZOY4hsezAx8pwwsgVyDsnZLT9M0zZsgZ";
-      };
       ma27-backup-server = {
         hostNames = [ "mbosch.me" "135.181.78.102" ];
         publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG6rlyYpWzzt1Fn4c9XdrgzuVqlnhzXz6BRReDVz9I/n";
@@ -322,41 +318,6 @@
           };
         }
       ];
-    };
-  };
-
-  services.znapzend = {
-    enable = true;
-    autoCreation = true;
-    pure = true;
-    zetup = {
-      "rpool/local" = {
-        enable = true;
-        recursive = true;
-        plan = "15min=>5min,1hour=>15min,1day=>1hour,4day=>1day,3week=>1week";
-        timestampFormat = "%Y-%m-%dT%H:%M:%SZ";
-      };
-
-      "rpool/safe" = {
-        enable = true;
-        plan = "15min=>5min,1hour=>15min,1day=>1hour,4day=>1day,3week=>1week";
-        recursive = true;
-        timestampFormat = "%Y-%m-%dT%H:%M:%SZ";
-        destinations = {
-          ogden = {
-            plan = "1hour=>5min,4day=>1hour,1week=>1day,1year=>1week,10year=>1month";
-            host = "hydraexport@lord-nibbler.gsc.io";
-            dataset = "rpool/backups/nixos.org/haumea/safe";
-          };
-/*
-          rob = {
-            plan = "1hour=>5min,4day=>1hour,1week=>1day,1year=>1week,10year=>1month";
-            host = "rob-backup-server";
-            dataset = "tank/nixos-org/haumea/safe";
-          };
-*/
-        };
-      };
     };
   };
 }
