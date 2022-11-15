@@ -192,21 +192,6 @@ locals {
       value    = "v=spf1 include:spf.improvmx.com ~all"
     },
     {
-      hostname = "live.nixos.org"
-      type     = "TXT"
-      value    = "machine-owner=@bryanhonof provider=hetzner-cloud service=owncast"
-    },
-    {
-      hostname = "live.nixos.org"
-      type     = "A"
-      value    = "167.235.51.204"
-    },
-    {
-      hostname = "live.nixos.org"
-      type     = "AAAA"
-      value    = "2a01:4f8:c0c:96cc::42"
-    },
-    {
       # hetzner m1 1638981
       hostname = "intense-heron.mac.nixos.org"
       type     = "A"
