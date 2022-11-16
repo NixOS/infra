@@ -28,15 +28,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1662631728,
-        "narHash": "sha256-S/orCoV/VVSk57ezY4TCJLr231dGZkGguXQbVbT57gM=",
+        "lastModified": 1668614700,
+        "narHash": "sha256-z47nXPk+z784GJWSzXogK8KuhTiYAzXPgbmFzRMVmhQ=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "4c67562c0a56010e17657123f5594694e30acd1f",
+        "rev": "c8b69bd12c53a62b4956c83714becce1520b089a",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
+        "ref": "lazy-trees",
         "repo": "hydra",
         "type": "github"
       }
@@ -64,16 +65,16 @@
         "nixpkgs-regression": "nixpkgs-regression"
       },
       "locked": {
-        "lastModified": 1662728070,
-        "narHash": "sha256-PZE+ALZoBrNKaTzbRmOlQizIQNLvJaiEhAdNO0xpz88=",
+        "lastModified": 1668607642,
+        "narHash": "sha256-lNnk5thRq43XPcA+5KwoHgdsKf3urmE4B2xzHokVMbc=",
         "owner": "edolstra",
         "repo": "nix",
-        "rev": "1bcfd7b166c7d512cd506cca98a62695ad825d13",
+        "rev": "561440bd6ddebd53d7b42bced22cb78fd607a6de",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "2.11.0",
+        "owner": "edolstra",
+        "ref": "lazy-trees",
         "repo": "nix",
         "type": "github"
       }
@@ -163,11 +164,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1662576620,
-        "narHash": "sha256-yw0dBGrnbMQ73U+AIm8vA2vvoWWqMr0D6LegWuq4J6k=",
+        "lastModified": 1668543224,
+        "narHash": "sha256-wKeb21iBIV7ggdWGcs0y0kXWCJrNfQjpl5k6Q3rikXA=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "c7bad05cd7be62d8e59131b351e1e99e6215e886",
+        "rev": "814f8f3363cecee7cce314286846e4da5e92d689",
         "type": "github"
       },
       "original": {
