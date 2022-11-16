@@ -38,12 +38,6 @@ in
     cores = 2;
   };
 
-  nix.nixPath = [
-    "nixpkgs=channel:nixpkgs-unstable"
-    "darwin=https://github.com/LnL7/nix-darwin/archive/master.tar.gz"
-    "darwin-config=/nix/home/config.nix"
-  ];
-
   nix.gc.automatic = true;
   nix.gc.user = "";
   nix.gc.interval = { Minute = 15; };
