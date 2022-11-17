@@ -590,6 +590,28 @@ in
       (import ../channels.nix).channels;
   };
 
+  # pull nixos metrics from github:NixOS/nixos-metrics to local VictoriaMetrics
+  # every day at 09.00
+  services.cron = {
+    enable = true;
+    systemCronJobs = let
+      inherit (config.services.victoriametrics) listenAddress;
+      importURL = "http://localhost:${listenAddress}/api/v1/import";
+      resetURL = "http://localhost:${listenAddress}/internal/resetRollupResultCache";
+      dataURL = "https://raw.githubusercontent.com/NixOS/nixos-metrics/data/victoriametrics.jsonl";
+      pull-mterics = pkgs.writeShellScript "pull-metrics.sh" ''
+        curl -X POST ${importURL} -T <(curl ${dataURL})
+        curl -G ${resetURL}
+      '';
+    in
+      [ "0 9 * * * root ${pull-metrics}" ];
+  };
+
+  services.victoriametrics = {
+    enable = true;
+    retentionPeriod = 1200; # 100 years
+  };
+
   services.grafana = {
     enable = true;
     auth.anonymous.enable = true;
