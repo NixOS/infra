@@ -58,83 +58,20 @@ rec {
     "nixos-22.05" = {
       job = "nixos/release-22.05/tested";
       variant = "primary";
-      status = "deprecated";
+      status = "unmaintained";
     };
     "nixos-22.05-small" = {
       job = "nixos/release-22.05-small/tested";
       variant = "small";
-      status = "deprecated";
+      status = "unmaintained";
     };
     "nixpkgs-22.05-darwin" = {
       job = "nixpkgs/nixpkgs-22.05-darwin/darwin-tested";
       variant = "darwin";
-      status = "deprecated";
+      status = "unmaintained";
     };
     "nixos-22.05-aarch64" = {
       job = "nixos/release-22.05-aarch64/tested";
-      variant = "aarch64";
-      status = "deprecated";
-    };
-
-    "nixos-21.11" = {
-      job = "nixos/release-21.11/tested";
-      variant = "primary";
-      status = "unmaintained";
-    };
-    "nixos-21.11-small" = {
-      job = "nixos/release-21.11-small/tested";
-      variant = "small";
-      status = "unmaintained";
-    };
-    "nixpkgs-21.11-darwin" = {
-      job = "nixpkgs/nixpkgs-21.11-darwin/darwin-tested";
-      variant = "darwin";
-      status = "unmaintained";
-    };
-    "nixos-21.11-aarch64" = {
-      job = "nixos/release-21.11-aarch64/tested";
-      variant = "aarch64";
-      status = "unmaintained";
-    };
-
-    "nixos-21.05" = {
-      job = "nixos/release-21.05/tested";
-      variant = "primary";
-      status = "unmaintained";
-    };
-    "nixos-21.05-small" = {
-      job = "nixos/release-21.05-small/tested";
-      variant = "small";
-      status = "unmaintained";
-    };
-    "nixpkgs-21.05-darwin" = {
-      job = "nixpkgs/nixpkgs-21.05-darwin/darwin-tested";
-      variant = "darwin";
-      status = "unmaintained";
-    };
-    "nixos-21.05-aarch64" = {
-      job = "nixos/release-21.05-aarch64/tested";
-      variant = "aarch64";
-      status = "unmaintained";
-    };
-
-    "nixos-20.09" = {
-      job = "nixos/release-20.09/tested";
-      variant = "primary";
-      status = "unmaintained";
-    };
-    "nixos-20.09-small" = {
-      job = "nixos/release-20.09-small/tested";
-      variant = "small";
-      status = "unmaintained";
-    };
-    "nixpkgs-20.09-darwin" = {
-      job = "nixpkgs/nixpkgs-20.09-darwin/darwin-tested";
-      variant = "darwin";
-      status = "unmaintained";
-    };
-    "nixos-20.09-aarch64" = {
-      job = "nixos/release-20.09-aarch64/tested";
       variant = "aarch64";
       status = "unmaintained";
     };
