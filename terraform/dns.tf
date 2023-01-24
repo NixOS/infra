@@ -72,6 +72,11 @@ locals {
       value    = "2a01:4f8:c0c:6e2c::1"
     },
     {
+      hostname = "reproducible.nixos.org"
+      type     = "CNAME"
+      value    = "nixos.github.io"
+    },
+    {
       hostname = "_293364b7f7ebb076ac287cd132f8b316.cache.ngi0.nixos.org"
       type     = "CNAME"
       value    = "_6a75cfb0c20f4eaac96b72afaffb489b.auiqqraehs.acm-validations.aws"
