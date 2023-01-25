@@ -1,5 +1,5 @@
 {
-  inputs.nixpkgs.url = "nixpkgs/nixos-22.05";
+  inputs.nixpkgs.url = "nixpkgs/nixos-22.11";
   inputs.nixops.url = "github:NixOS/nixops/flake-support";
   inputs.nixos-channel-scripts.url = "github:NixOS/nixos-channel-scripts";
   inputs.nixos-channel-scripts.inputs.nix.follows = "nix";
