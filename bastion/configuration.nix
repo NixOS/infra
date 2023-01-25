@@ -52,7 +52,7 @@ in
   environment.systemPackages = [
     pkgs.awscli
     nixops.defaultPackage.x86_64-linux
-    pkgs.terraform-full
+    pkgs.terraform.full
     pkgs.tmux
   ];
 
