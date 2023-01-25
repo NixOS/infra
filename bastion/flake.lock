@@ -94,23 +94,21 @@
     },
     "nixos-channel-scripts": {
       "inputs": {
-        "nix": [
-          "nix"
-        ],
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1669836769,
-        "narHash": "sha256-wA9kRQW5txxGQeszqsuspq50EebvgHvn9dJK9EzCU1k=",
-        "owner": "NixOS",
+        "lastModified": 1673546449,
+        "narHash": "sha256-+6L8uTmfYbHiLmugs2ORsKNzBy8LLcNCNSuuMRT5/IY=",
+        "owner": "K900",
         "repo": "nixos-channel-scripts",
-        "rev": "d5c5417116e6395a7a8b52280483d01cb73c8c50",
+        "rev": "1b0aa5e0d17844146d7bb8b911c5bc89148fad0d",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
+        "owner": "K900",
+        "ref": "the-nix-index-thing",
         "repo": "nixos-channel-scripts",
         "type": "github"
       }
