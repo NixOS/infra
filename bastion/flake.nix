@@ -2,7 +2,6 @@
   inputs.nixpkgs.url = "nixpkgs/nixos-22.11";
   inputs.nixops.url = "github:NixOS/nixops/flake-support";
   inputs.nixos-channel-scripts.url = "github:K900/nixos-channel-scripts/the-nix-index-thing";
-  inputs.nixos-channel-scripts.inputs.nix.follows = "nix";
   inputs.nixos-channel-scripts.inputs.nixpkgs.follows = "nixpkgs";
   inputs.nix.inputs.nixpkgs.follows = "nixpkgs";
 
