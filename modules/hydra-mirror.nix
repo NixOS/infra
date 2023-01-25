@@ -64,6 +64,7 @@ in
   };
 
   systemd.timers."update-all-channels" = {
+    enable = false;
     description = "Start all channel updates.";
     wantedBy = [ "timers.target" ];
     timerConfig = {
