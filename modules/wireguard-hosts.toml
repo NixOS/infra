@@ -100,3 +100,9 @@ publicKey = "kamC5o3H6UhrfNZjxU6vqdHi3I1+KDOj9tMeuFjiIyk="
 ip = "10.254.4.3"
 port = 51820
 publicKey = "CDrCOjn7SH7fSn+xg3R/zkZVvVDORMK8uJJbvQrRaiY="
+
+[hosts.nics22]
+# Vladimir's machine (@vcunat), for administrative access
+ip = "10.254.4.4"
+port = 51820
+publicKey = "pH2DCtTti9gbyYZ4jFHnhjwDGlWTGKlJ7HFl9ykYjz8="
