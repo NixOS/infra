@@ -32,6 +32,7 @@ in
 
   services.nix-daemon.enable = true;
 
+  nix.package = pkgs.nixVersions.nix_2_11;
   nix.settings = {
     "extra-experimental-features" = [ "nix-command" "flakes" ];
     max-jobs = 4;
