@@ -204,7 +204,7 @@ locals {
     {
       hostname = "live.nixos.org"
       type     = "AAAA"
-      value    = "2a01:4f9:c011:bca2::/64"
+      value    = "2a01:4f9:c011:bca2::"
     },
     {
       # hetzner m1 1638981
