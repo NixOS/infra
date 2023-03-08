@@ -34,7 +34,7 @@ in
         ''
           dir=/home/tarball-mirror/nixpkgs
           if ! [[ -e $dir ]]; then
-            git clone git://github.com/NixOS/nixpkgs.git $dir
+            git clone https://github.com/NixOS/nixpkgs.git $dir
           fi
           cd $dir
           git remote update origin
