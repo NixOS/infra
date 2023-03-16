@@ -235,7 +235,12 @@ locals {
       hostname = "enormous-catfish.mac.nixos.org"
       type     = "A"
       value    = "142.132.140.199"
-    }
+    },
+    {
+      hostname = "20th.nixos.org"
+      type     = "CNAME"
+      value    = "20th-nix.pages.dev"
+    },
   ]
 }
 
