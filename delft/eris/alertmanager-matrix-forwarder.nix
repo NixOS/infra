@@ -2,8 +2,16 @@
 {
   deployment.keys."alertmanager-matrix-forwarder" = {
     keyFile = /home/deploy/src/nixos-org-configurations/keys/alertmanager-matrix-forwarder;
-    # user = config.systemd.services.go-neb.serviceConfig.User;
+    user = config.systemd.services.go-neb.serviceConfig.User;
   };
+
+  # Create user so that we can set the ownership of the key to
+  # it. DynamicUser will not take full effect as a result of this.
+  users.users.go-neb = {
+    isSystemUser = true;
+    group = "go-neb";
+  };
+  users.groups.go-neb = {};
 
   systemd.services.go-neb.serviceConfig.SupplementaryGroups = [ "keys" ];
 
