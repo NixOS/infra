@@ -4,8 +4,11 @@
   inputs.nix.follows = "hydra/nix";
   inputs.hydra.url = "github:NixOS/hydra/lazy-trees";
   inputs.nix-netboot-serve.url = "github:DeterminateSystems/nix-netboot-serve";
+  inputs.hydra-scale-equinix-metal.url = "github:DeterminateSystems/hydra-scale-equinix-metal";
   #inputs.hydra.url = "github:DeterminateSystems/hydra/queue-runner-exporter";
-  outputs = flakes @ { self, nixpkgs, nix, hydra, nix-netboot-serve /*, dwarffs */ }: {
+  outputs = flakes @ { self, nixpkgs, nix, hydra, nix-netboot-serve, hydra-scale-equinix-metal /*, dwarffs */ }:
+    let inherit (nixpkgs) lib;
+  in {
     nixopsConfigurations.default =
       { inherit nixpkgs; }
       // import ./network.nix flakes;

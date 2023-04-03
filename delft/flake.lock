@@ -2,7 +2,7 @@
   "nodes": {
     "cpiotools": {
       "inputs": {
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_3"
       },
       "locked": {
         "lastModified": 1655642194,
@@ -39,6 +39,22 @@
         "owner": "NixOS",
         "ref": "lazy-trees",
         "repo": "hydra",
+        "type": "github"
+      }
+    },
+    "hydra-scale-equinix-metal": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1680520422,
+        "narHash": "sha256-p4A153+jfa76AbNsrs2I0hNeb0PDUIs3rE78/126ROo=",
+        "type": "git",
+        "url": "file:///home/linus/ds/hydra-scale-equinix-metal"
+      },
+      "original": {
+        "owner": "DeterminateSystems",
+        "repo": "hydra-scale-equinix-metal",
         "type": "github"
       }
     },
@@ -82,7 +98,7 @@
     "nix-netboot-serve": {
       "inputs": {
         "cpiotools": "cpiotools",
-        "nixpkgs": "nixpkgs_3"
+        "nixpkgs": "nixpkgs_4"
       },
       "locked": {
         "lastModified": 1664484325,
@@ -132,6 +148,22 @@
     },
     "nixpkgs_2": {
       "locked": {
+        "lastModified": 1680213900,
+        "narHash": "sha256-cIDr5WZIj3EkKyCgj/6j3HBH4Jj1W296z7HTcWj1aMA=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "e3652e0735fbec227f342712f180f4f21f0594f2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
         "lastModified": 1655567057,
         "narHash": "sha256-Cc5hQSMsTzOHmZnYm8OSJ5RNUp22bd5NADWLHorULWQ=",
         "owner": "nixos",
@@ -146,7 +178,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_3": {
+    "nixpkgs_4": {
       "locked": {
         "lastModified": 1655306633,
         "narHash": "sha256-nv4FfWWV/dEelByjXJtJkoDPOHIsKfLq50RN3Hqq5Yk=",
@@ -162,7 +194,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_4": {
+    "nixpkgs_5": {
       "locked": {
         "lastModified": 1669249876,
         "narHash": "sha256-IWuH9FJgwmKyXpea+g1zpn6NImBMSjA1j5HioHQjReY=",
@@ -180,12 +212,13 @@
     "root": {
       "inputs": {
         "hydra": "hydra",
+        "hydra-scale-equinix-metal": "hydra-scale-equinix-metal",
         "nix": [
           "hydra",
           "nix"
         ],
         "nix-netboot-serve": "nix-netboot-serve",
-        "nixpkgs": "nixpkgs_4"
+        "nixpkgs": "nixpkgs_5"
       }
     }
   },
