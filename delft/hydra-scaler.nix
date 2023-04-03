@@ -15,7 +15,7 @@
         aarch64-linux = rec {
           bigparallel = {
             divisor = 2000;
-            minimum = 1;
+            minimum = 3;
             maximum = 5;
             plans = [
               {
