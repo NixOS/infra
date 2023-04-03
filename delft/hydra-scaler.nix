@@ -10,6 +10,7 @@
     in {
       facilities = ["any"];
       tags = ["hydra"];
+      interval = "5m";
       categories = {
         aarch64-linux = rec {
           bigparallel = {
