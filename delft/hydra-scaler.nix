@@ -8,8 +8,8 @@
     config = let
       netboot_base = https://netboot.nixos.org/dispatch/hydra/hydra.nixos.org/equinix-metal-builders/main;
     in {
-      facilities = ["???"];
-      tags = ["???"];
+      facilities = ["any"];
+      tags = ["hydra"];
       categories = {
         aarch64-linux = rec {
           bigparallel = {
