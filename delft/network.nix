@@ -44,6 +44,7 @@ in
     imports = [
       ./rhea
       flakes.hydra.nixosModules.hydra
+      flakes.hydra-scale-equinix-metal.nixosModules.default
     ];
   };
 }
