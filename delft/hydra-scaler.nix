@@ -5,14 +5,14 @@
     hydraRoot = "https://hydra.nixos.org/";
     prometheusRoot = "https://status.nixos.org/prometheus";
     secretFile = "/run/keys/hydra-scale-equinix-metal-env";
-    interval = ["5m"];
+    interval = ["*:0/5"];
     config = let
       netboot_base = https://netboot.nixos.org/dispatch/hydra/hydra.nixos.org/equinix-metal-builders/main;
     in {
       facilities = ["any"];
       tags = ["hydra"];
       categories = {
-        aarch64-linux = rec {
+        aarch64-linux = {
           bigparallel = {
             divisor = 2000;
             minimum = 1;
@@ -25,7 +25,10 @@
               }
             ];
           };
-          small = bigparallel // {
+          small = {
+            divisor = 2000;
+            minimum = 1;
+            maximum = 5;
             plans = [
               {
                 bid = 2.0;
