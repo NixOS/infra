@@ -12,7 +12,7 @@
       facilities = ["any"];
       tags = ["hydra"];
       categories = {
-        aarch64-linux = rec {
+        aarch64-linux = {
           bigparallel = {
             divisor = 2000;
             minimum = 1;
@@ -25,7 +25,10 @@
               }
             ];
           };
-          small = bigparallel // {
+          small = {
+            divisor = 2000;
+            minimum = 1;
+            maximum = 5;
             plans = [
               {
                 bid = 2.0;
