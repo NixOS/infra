@@ -5,7 +5,7 @@
     hydraRoot = "https://hydra.nixos.org/";
     prometheusRoot = "https://status.nixos.org/prometheus";
     secretFile = "/run/keys/hydra-scale-equinix-metal-env";
-    interval = ["5m"];
+    interval = ["*:0/5"];
     config = let
       netboot_base = https://netboot.nixos.org/dispatch/hydra/hydra.nixos.org/equinix-metal-builders/main;
     in {
