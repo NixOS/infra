@@ -106,6 +106,11 @@ in
       "--web.external-url=https://monitoring.nixos.org/prometheus/"
     ];
 
+    exporters.domain = {
+      enable = true;
+      listenAddress = "localhost";
+    };
+
     exporters.blackbox = {
       enable = true;
       listenAddress = "127.0.0.1";
@@ -416,6 +421,31 @@ in
           {
             targets = [
               "haumea:9187"
+            ];
+          }
+        ];
+      }
+      {
+        # https://github.com/caarlos0/domain_exporter#configuration
+        job_name = "domain";
+        metrics_path = "/probe";
+        relabel_configs = [
+          {
+            source_labels = [ "__address__" ];
+            target_label = "__param_target";
+          }
+          {
+            target_label = "__address__";
+            replacement = "localhost:9222";
+          }
+        ];
+        static_configs = [
+          {
+            targets = [
+              "nix.ci"
+              "nix.dev"
+              "nixos.org"
+              "ofborg.org"
             ];
           }
         ];
