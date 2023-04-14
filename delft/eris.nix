@@ -276,6 +276,19 @@ in
               }
             ];
           }
+
+          {
+            name = "domain";
+            rules = [
+              {
+                alert = "DomainExpiry";
+                expr = "domain_expiry_days < 30";
+                for = "1h";
+                labels.severity = "warning";
+                annotations.summary = "Domain {{ $labels.domain }} will expire in less than 30 days";
+              }
+            ];
+          }
         ];
       })
     ];
