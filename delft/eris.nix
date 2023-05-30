@@ -10,6 +10,7 @@ in
     ./eris/github-project-monitor.nix
     ./eris/alertmanager-matrix-forwarder.nix
     ./eris/channel-monitor.nix
+    ./eris/mjolnir.nix
   ];
   deployment.targetEnv = "hetzner";
   deployment.hetzner.mainIPv4 = "138.201.32.77";
