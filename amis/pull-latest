@@ -1,0 +1,23 @@
+#! /usr/bin/env bash
+#
+
+version="$1"
+arch="$2"
+hydraJob="nixos.amazonImage"
+baseUrl="https://hydra.nixos.org/job/nixos"
+
+build=$(curl -sL \
+  -H 'Content-type: application/json' \
+  "${baseUrl}/release-${version}-small/${hydraJob}.${arch}-linux/latest")
+
+storePath=$(echo "$build" | jq '.buildoutputs|.out|.path' -r)
+buildId=$(echo "$build" | jq .id -r)
+
+nix-store -r "${storePath}"
+
+tfvarsFile="${version}.${arch}.${buildId}.tfvars"
+
+echo "image_store_path = \"${storePath}\"" > "$tfvarsFile"
+ln -s "$tfvarsFile" "${version}.${arch}.current.tfvars"
+
+echo "${version}.${arch}.${buildId}" > .current-workspace

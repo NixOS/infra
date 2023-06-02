@@ -2,3 +2,10 @@
 
 # Terraform
 .terraform*
+!.terraform.lock.hcl
+*tfstate
+*tfstate.backup
+*.aarch64.*.tfvars
+*.x86_64.*.tfvars
+.current-workspace
+copy.tf.json
