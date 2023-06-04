@@ -18,3 +18,7 @@ plan: copy.tf.json $(tfvarsFile) .current-workspace
 apply: copy.tf.json $(tfvarsFile)
 	@terraform workspace select -or-create $(shell cat .current-workspace)
 	@terraform apply -var-file=$(tfvarsFile)
+
+destroy: copy.tf.json $(tfvarsFile)
+	@terraform workspace select $(shell cat .current-workspace)
+	@terraform destroy -var-file=$(tfvarsFile)
