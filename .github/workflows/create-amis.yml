@@ -1,0 +1,56 @@
+name: Create NixOS AMIs
+
+on:
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      release:
+        required: true
+        type: string
+      architecture:
+        required: true
+        type: string
+        default: x86_64
+      build_nr:
+        required: true
+        type: number
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AWS_REGION: "eu-west-1"
+
+jobs:
+  create-nixos-amis:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::080433136561:role/nixos-image-creator
+          role-session-name: gha-terraform-deploy-amis
+          aws-region: ${{ env.AWS_REGION }}
+      - working-directory: amis
+        id: get-build
+        run: |
+          echo "build_json=$(curl -H 'Content-type: application/json' \
+            https://hydra.nixos.org/build/${{inputs.build_nr}})" > "$GITHUB_OUTPUT"
+      - working-directory: amis
+        id: get-store-path
+        run: |
+            echo ${{steps.get-build.outputs.build_json}} \
+              | nix develop --command jq '.buildoutputs|.out|"store_path=\(.path)"' -r > "$GITHUB_OUTPUT"
+      - run: nix-store -r ${{steps.get-store-path.outputs.store_path}}
+      - run: nix develop --command jq -f regions.jq regions.json > copy.tf.json
+        working-directory: amis
+      - run: |
+          nix develop --command \
+            terraform workspace select -or-create \
+              ${{inputs.release}}.${{inputs.architecture}}.${{inputs.build_nr}}
+        working-directory: amis
+      - run: |
+          nix develop --command \
+            terraform plan -var image_store_path=${{steps.get-store-path.outputs.store_path}}
