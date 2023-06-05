@@ -2,9 +2,6 @@ name: Push current NixOS release AMIs
 
 on:
   workflow_dispatch:
-  # TODO: just for testing, switch to workflow_dispatch only
-  push:
-    branches: ["terraform-create-amis"]
 
 permissions:
     id-token: write

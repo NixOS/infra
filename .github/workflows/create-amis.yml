@@ -55,5 +55,6 @@ jobs:
         working-directory: amis
       - run: |
           nix develop --command \
-            terraform apply -auto-approve -var image_store_path=${{steps.get-store-path.outputs.store_path}}
+            terraform apply -auto-approve \
+              -var image_store_path=${{steps.get-store-path.outputs.store_path}}
         working-directory: amis
