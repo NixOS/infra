@@ -1,7 +1,6 @@
 locals {
   image_tags = {
-    # TODO remove the testing prefix
-    Name        = "${local.image_name} - terraform testing"
+    Name        = local.image_name
     Description = local.image_description
     System      = local.image_system
     Release     = terraform.workspace
