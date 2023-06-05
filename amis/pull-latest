@@ -1,14 +1,22 @@
 #! /usr/bin/env bash
 #
 
-version="$1"
-arch="$2"
 hydraJob="nixos.amazonImage"
 baseUrl="https://hydra.nixos.org/job/nixos"
 
-build=$(curl -sL \
-  -H 'Content-type: application/json' \
-  "${baseUrl}/release-${version}-small/${hydraJob}.${arch}-linux/latest")
+version="$1"
+arch="$2"
+buildNr="$3"
+
+if [[ -z "$buildNr" ]]
+then
+  buildUrl="${baseUrl}/release-${version}-small/${hydraJob}.${arch}-linux/latest"
+else
+  buildUrl="${baseUrl}/build/${buildNr}"
+fi
+
+
+build=$(curl -sL -H 'Content-type: application/json' "$buildUrl")
 
 storePath=$(echo "$build" | jq '.buildoutputs|.out|.path' -r)
 buildId=$(echo "$build" | jq .id -r)

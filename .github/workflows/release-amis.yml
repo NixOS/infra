@@ -1,0 +1,25 @@
+name: Push current NixOS release AMIs
+
+on:
+  workflow_dispatch:
+  # TODO: just for testing, switch to workflow_dispatch only
+  push:
+    branches: ["terraform-create-amis"]
+
+permissions:
+    id-token: write
+    contents: read
+
+jobs:
+  x86_64-amis:
+    uses: ./.github/workflows/create-amis.yml
+    with:
+      build_nr: 222822268
+      architecture: x86_64
+      release: "23.05"
+  aarch64-amis:
+    uses: ./.github/workflows/create-amis.yml
+    with:
+      build_nr: 222822272 
+      architecture: aarch64
+      release: "23.05"

@@ -14,10 +14,7 @@ on:
       build_nr:
         required: true
         type: number
-
-permissions:
-  id-token: write
-  contents: read
+        description: hydra.nixos.org image build number
 
 env:
   AWS_REGION: "eu-west-1"
@@ -43,10 +40,13 @@ jobs:
       - working-directory: amis
         id: get-store-path
         run: |
-            echo ${{steps.get-build.outputs.build_json}} \
+            echo '${{steps.get-build.outputs.build_json}}' \
               | nix develop --command jq '.buildoutputs|.out|"store_path=\(.path)"' -r > "$GITHUB_OUTPUT"
       - run: nix-store -r ${{steps.get-store-path.outputs.store_path}}
       - run: nix develop --command jq -f regions.jq regions.json > copy.tf.json
+        working-directory: amis
+      - run: |
+          nix develop --command terraform init
         working-directory: amis
       - run: |
           nix develop --command \
@@ -56,3 +56,4 @@ jobs:
       - run: |
           nix develop --command \
             terraform plan -var image_store_path=${{steps.get-store-path.outputs.store_path}}
+        working-directory: amis

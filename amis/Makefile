@@ -2,11 +2,12 @@
 
 arch=x86_64
 version=23.05
+build-nr=
 
 tfvarsFile=$(version).$(arch).current.tfvars
 
 $(tfvarsFile) .current-workspace:
-	./pull-latest $(version) $(arch)
+	./pull-latest $(version) $(arch) $(build-nr)
 
 copy.tf.json: regions.jq regions.json
 	@jq -f regions.jq regions.json > copy.tf.json
