@@ -13,16 +13,17 @@ manually.
 
 ## Team
 
-This is currently the list of people part of the @NixOS/nixos-infra team:
+There are two teams managing this repository. The responsibility of both teams
+is to provide infrastructure for the Nix and NixOS community.
 
-* @AmineChikhaoui
-* @edolstra
-* @grahamc
-* @rbvermaa
-* @zimbatm
+### [@NixOS/infra-build](https://github.com/orgs/NixOS/teams/infra-build)
 
-The responsibility of the team is to provide infrastructure for the Nix and
-NixOS community.
+This team has access to all the infrastructure, including the build
+infrastructure. The members are a subset of the next team.
+
+### [@NixOS/infra](https://github.com/orgs/NixOS/teams/infra)
+
+First level responders. This team helps with the high-level infrastructure.
 
 All the members should be watching this repository for changes.
 
