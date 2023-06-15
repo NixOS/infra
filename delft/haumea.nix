@@ -267,6 +267,33 @@
           };
         }
         {
+          name = "safe_raito";
+          type = "push";
+          filesystems."rpool/safe/postgres" = true;
+          snapshotting.type = "manual";
+          connect = {
+            identity_file = "/root/.ssh/id_ed25519";
+            type = "ssh+stdinserver";
+            host = "public-infra.v6.lahfa.xyz"; # IPv6-only
+            user = "backup";
+            port = 22;
+          };
+          pruning = {
+            keep_sender = [
+              {
+                type = "regex";
+                regex = ".*";
+              }
+            ];
+            keep_receiver = [
+              {
+                type = "regex";
+                regex = ".*";
+              }
+            ];
+          };
+        }
+        {
           # run with `zrepl signal wakeup safe_ma27` after
           # snapshots were done from safe.
           name = "safe_ma27";
