@@ -4,7 +4,7 @@ The entry-point to our infra. Welcome.
 
 ## Deploy
 
-To deploy new changes, use `terraform apply` from a trusted machine.
+To deploy new changes, use `AWS_PROFILE=lb-nixos terraform apply` from a trusted machine.
 
 ## Fallback
 
