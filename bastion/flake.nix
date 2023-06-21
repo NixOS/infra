@@ -16,7 +16,7 @@
       mkShell {
         nativeBuildInputs = [
           awscli
-          (terraform_0_15.withPlugins (p: with p; [ aws p.null external ]))
+          (terraform.withPlugins (p: with p; [ aws p.null external ]))
         ];
 
         shellHook = ''
