@@ -34,10 +34,14 @@
 
     managementRoom = "#moderators:nixos.org";
 
+    # https://github.com/matrix-org/mjolnir/blob/master/config/default.yaml
     settings = {
       noop = false;
       protectAllJoinedRooms = true;
       fasterMembershipChecks = true;
+
+      # too noisy
+      verboseLogging = false;
     };
   };
 }
