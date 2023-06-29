@@ -22,4 +22,6 @@ with lib;
       pkgs.git
       pkgs.gdb
     ];
+
+  services.sshd.enable = true;
 }
