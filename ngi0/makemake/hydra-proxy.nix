@@ -64,5 +64,5 @@ in
   };
 
   security.acme.acceptTerms = true;
-  security.acme.email = "ngi@nixos.org";
+  security.acme.defaults.email = "webmaster@nixos.org";
 }
