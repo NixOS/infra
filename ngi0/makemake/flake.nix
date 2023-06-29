@@ -17,8 +17,10 @@
 
         ({ config, lib, pkgs, ... }: {
 
+          networking.hostName = "makemake";
+
           nixpkgs.overlays =
-            [ nix.overlay
+            [ nix.overlays.default
             ];
 
           system.configurationRevision = self.rev

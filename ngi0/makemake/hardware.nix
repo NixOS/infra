@@ -1,7 +1,7 @@
 { lib, ... }:
 
 {
-  system.stateVersion = lib.mkDefault "19.09";
+  system.stateVersion = lib.mkDefault "23.05";
 
   networking = {
     defaultGateway = {
