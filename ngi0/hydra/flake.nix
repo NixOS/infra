@@ -5,18 +5,17 @@
 
   outputs = { self, nixpkgs, nix, hydra }: {
 
-    nixopsConfigurations.default = {
-      inherit nixpkgs;
+    nixosConfigurations.makemake = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
 
-      makemake =
-        { config, lib, pkgs, ... }:
+      modules = [
+        ../../modules/common.nix
+        hydra.nixosModules.hydra
+        ./hydra.nix
+        ./hydra-proxy.nix
+        ./hardware.nix
 
-        { imports =
-            [ ../../modules/common.nix
-              hydra.nixosModules.hydra
-              ./hydra.nix
-              ./hydra-proxy.nix
-            ];
+        ({ config, lib, pkgs, ... }: {
 
           nixpkgs.overlays =
             [ nix.overlay
@@ -28,6 +27,7 @@
           nix.registry.nixpkgs.flake = nixpkgs;
           nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
 
+          /*
           deployment.targetEnv = "hetzner";
           deployment.hetzner.mainIPv4 = "116.202.113.248"; # 2a01:4f8:231:4187::2
           deployment.hetzner.createSubAccount = false;
@@ -71,6 +71,7 @@
               mkdir -p /mnt/boot
               mount /dev/disk/by-label/boot0 /mnt/boot
             '';
+          */
 
           fileSystems."/" =
             { device = "rpool/root";
@@ -99,7 +100,8 @@
 
           users.extraUsers.root.openssh.authorizedKeys.keys =
             with import ../../ssh-keys.nix; [ zimbatm regnat ];
-        };
+        })
+      ];
     };
 
   };
