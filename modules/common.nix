@@ -8,7 +8,7 @@ with lib;
   users.mutableUsers = false;
 
   users.extraUsers.root.openssh.authorizedKeys.keys =
-     with import ../ssh-keys.nix; [ eelco rob ];
+     with import ../ssh-keys.nix; [ eelco ];
 
   nix.useSandbox = true;
   nix.buildCores = 0;
