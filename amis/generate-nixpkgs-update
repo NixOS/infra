@@ -1,0 +1,12 @@
+#! /usr/bin/env bash
+
+version="$1"
+
+echo "append the following to nixpkgs: nixos/modules/virtualisation/amazon-ec2-amis.nix" 
+echo "make sure to update latest attribute to point to $version !"
+echo
+
+terraform output -json \
+  | jq \
+      --arg version "$version" \
+      '.[]|.value|"\"\($version)\".\(.region).\(.arch).hvm-ebs = \(.id);"' -r
