@@ -7,9 +7,17 @@
     flake-utils.url = "github:numtide/flake-utils";
     disko.url = "github:nix-community/disko";
     srvos.url = "github:numtide/srvos";
+
+    first-time-contribution-tagger = {
+      url = "github:Janik-Haag/first-time-contribution-tagger";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
   };
 
-  outputs = { self, nixpkgs, flake-utils, colmena, disko, srvos, ... }@inputs:
+  outputs = { self, nixpkgs, flake-utils, colmena, disko, srvos, first-time-contribution-tagger, ... }@inputs:
     let
       importConfig = path: (lib.mapAttrs (name: value: import (path + "/${name}/default.nix")) (lib.filterAttrs (_: v: v == "directory") (builtins.readDir path)));
       lib = nixpkgs.lib;
@@ -23,7 +31,7 @@
           specialArgs = {
             inherit inputs;
           };
-          modules = [ value disko.nixosModules.disko ];
+          modules = [ value disko.nixosModules.disko first-time-contribution-tagger.nixosModule ];
           extraModules = [ inputs.colmena.nixosModules.deploymentOptions ];
 
         })
