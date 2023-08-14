@@ -15,12 +15,6 @@ with lib;
 
   nixpkgs.config.allowUnfree = true;
 
-  nixpkgs.overlays = [
-    (self: super: {
-      prometheus-postgres-exporter = self.callPackage ./prometheus/postgres-exporter.nix { };
-    })
-  ];
-
   services.openssh.authorizedKeysFiles = mkForce [ "/etc/ssh/authorized_keys.d/%u" ];
 
   services.openssh.extraConfig =

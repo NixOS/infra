@@ -182,7 +182,11 @@
     dataSourceName = "user=root database=hydra host=/run/postgresql sslmode=disable";
     firewallFilter = "-i wg0 -p tcp -m tcp --dport 9187";
     openFirewall = true;
-    extraFlags = [ "--extend.query-path" "${pkgs.prometheus-postgres-exporter.src}/queries.yaml" ];
+    extraFlags = [
+      # This will break in 0.13.0, which will appear in NixOS 23.11
+      # https://github.com/prometheus-community/postgres_exporter/pull/801
+      "--extend.query-path" "${pkgs.prometheus-postgres-exporter.src}/queries.yaml"
+    ];
   };
 
   programs.ssh = {
