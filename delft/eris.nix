@@ -669,23 +669,19 @@ in
     "f /var/lib/packet-sd/packet-sd.json 0644 packet-sd - -"
   ];
 
-  systemd.services.prometheus-packet-sd =
-    let
-      sd = pkgs.callPackage ./prometheus/packet-sd.nix { };
-    in
-    {
-      wantedBy = [ "multi-user.target" "prometheus.service" ];
-      after = [ "network.target" ];
+  systemd.services.prometheus-packet-sd = {
+    wantedBy = [ "multi-user.target" "prometheus.service" ];
+    after = [ "network.target" ];
 
-      serviceConfig = {
-        User = "packet-sd";
-        Group = "keys";
-        ExecStart = "${sd}/bin/prometheus-packet-sd --output.file=/var/lib/packet-sd/packet-sd.json";
-        EnvironmentFile = "/run/keys/packet-sd-env";
-        Restart = "always";
-        RestartSec = "60s";
-      };
+    serviceConfig = {
+      User = "packet-sd";
+      Group = "keys";
+      ExecStart = "${pkgs.packet-sd}/bin/prometheus-packet-sd --output.file=/var/lib/packet-sd/packet-sd.json";
+      EnvironmentFile = "/run/keys/packet-sd-env";
+      Restart = "always";
+      RestartSec = "60s";
     };
+  };
 
   deployment.keys."fastly-read-only-api-token" = {
     keyFile = /home/deploy/src/nixos-org-configurations/fastly-read-only-api-token;
