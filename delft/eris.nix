@@ -691,24 +691,15 @@ in
     keyFile = /home/deploy/src/nixos-org-configurations/fastly-read-only-api-token;
   };
 
-  systemd.services.prometheus-fastly-exporter =
-    let
-      fastly = pkgs.callPackage ./prometheus/fastly.nix { };
-    in
-    {
-      wantedBy = [ "multi-user.target" "prometheus.service" ];
-      after = [ "network.target" ];
+  services.prometheus.exporters.fastly = {
+    enable = true;
+    listenAddress = "127.0.0.1";
+    tokenPath = "/run/keys/fastly-read-only-api-token";
+  };
 
-      script = ''
-        export FASTLY_API_TOKEN=$(cat /run/keys/fastly-read-only-api-token)
-        ${fastly}/bin/fastly-exporter \
-          -endpoint http://127.0.0.1:9118/metrics
-      '';
-
-      serviceConfig = {
-        Group = "keys";
-        Restart = "always";
-        RestartSec = "60s";
-      };
-    };
+  systemd.services.prometheus-fastly-exporter.serviceConfig = {
+    SupplementaryGroups = [ "keys" ];
+    Restart = "always";
+    RestartSec = "60s";
+  };
 }
