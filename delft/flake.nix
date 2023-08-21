@@ -6,6 +6,7 @@
   inputs.nix-netboot-serve.url = "github:DeterminateSystems/nix-netboot-serve";
   inputs.hydra-scale-equinix-metal.url = "github:DeterminateSystems/hydra-scale-equinix-metal";
   #inputs.hydra.url = "github:DeterminateSystems/hydra/queue-runner-exporter";
+
   outputs = flakes @ { self, nixpkgs, nix, hydra, nix-netboot-serve, hydra-scale-equinix-metal /*, dwarffs */ }:
     let inherit (nixpkgs) lib;
   in {
@@ -13,6 +14,7 @@
       { inherit nixpkgs; }
       // import ./network.nix flakes;
 
+    /*
     nixosConfigurations = builtins.removeAttrs (lib.mapAttrs (name: value: nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
@@ -28,5 +30,29 @@
         }
       ];
     }) self.nixopsConfigurations.default) ["defaults"];
+    */
+
+    nixosConfigurations.rhea = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+
+      modules = [
+        self.nixosModules.common
+        ./rhea
+        hydra.nixosModules.hydra
+        hydra-scale-equinix-metal.nixosModules.default
+      ];
+    };
+
+    nixosModules.common =
+      { config, pkgs, lib, ... }:
+      {
+        system.configurationRevision = self.rev
+          or (throw "Cannot deploy from an unclean source tree!");
+        nix.registry.nixpkgs.flake = nixpkgs;
+        nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
+        nixpkgs.overlays = [
+          nix.overlays.default
+        ];
+      };
   };
 }
