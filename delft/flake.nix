@@ -48,8 +48,8 @@
       {
         system.configurationRevision = self.rev
           or (throw "Cannot deploy from an unclean source tree!");
-        nix.registry.nixpkgs.flake = nixpkgs;
-        nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
+        #nix.registry.nixpkgs.flake = nixpkgs;
+        #nix.nixPath = [ "nixpkgs=${nixpkgs}" ];
         nixpkgs.overlays = [
           nix.overlays.default
         ];
