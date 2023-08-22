@@ -15,6 +15,11 @@ resource "secret_resource" "netlify_token" {
   lifecycle { prevent_destroy = true }
 }
 
+# Ask @Raito_Bezarius an extra token if needed.
+resource "secret_resource" "raito_fastlylogs_s3_secret_key" {
+  lifecycle { prevent_destroy = true }
+}
+
 provider "netlify" {
   token = secret_resource.netlify_token.value
 }

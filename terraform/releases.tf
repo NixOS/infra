@@ -204,16 +204,31 @@ resource "fastly_service_v1" "releases" {
 
   s3logging {
     name              = "${local.releases_domain}-to-s3"
-    bucket_name       = module.fastlylogs.bucket_name
+    bucket_name       = module.fastlylogs.foundation.bucket_name
     compression_codec = "zstd"
-    domain            = module.fastlylogs.s3_domain
-    format            = module.fastlylogs.format
+    domain            = module.fastlylogs.foundation.s3_domain
+    format            = module.fastlylogs.foundation.format
     format_version    = 2
     path              = "${local.releases_domain}/"
-    period            = module.fastlylogs.period
+    period            = module.fastlylogs.foundation.period
     message_type      = "blank"
-    s3_iam_role       = module.fastlylogs.iam_role_arn
+    s3_iam_role       = module.fastlylogs.foundation.iam_role_arn
   }
+
+  s3logging {
+    name              = "${local.releases_domain}-to-s3"
+    bucket_name       = module.fastlylogs.raito.bucket_name
+    compression_codec = "zstd"
+    domain            = module.fastlylogs.raito.s3_domain
+    format            = module.fastlylogs.raito.format
+    format_version    = 2
+    path              = "${local.releases_domain}/"
+    period            = module.fastlylogs.raito.period
+    message_type      = "blank"
+    s3_access_key     = module.fastlylogs.raito.s3_access_key
+    s3_secret_key     = module.fastlylogs.raito.s3_secret_key
+  }
+
 }
 
 resource "fastly_tls_subscription" "releases" {
