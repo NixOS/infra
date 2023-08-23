@@ -1,8 +1,6 @@
-{
+rec {
 
   eelco = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAnI5L6oCgFyvEesL04LnbnH1TBhegq1Yery6TNlIRAA edolstra@gmail.com";
-
-  rob = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDHp3/OZP2nRS5bM9E1xN8Q2L398kC+m4guORjKsmGjwnnHvYnTml5puE2ogl8Wdenbk7hf82+vKyB+Tktrhx+IBSym4lY+czR6W+39hlPYdLbi980yxYT9KEMSyMWJEgPVJ1BZvHqsHQiad/L3eoPmAIMDmcn4mLh9rya5/oMW/ZgsA6j28ClvWkDRyaTmTLOa0Im4nLoSbdo8kJqU+JX/YcXlMKUvFfdMcj4T9YYwV98LPWHnEHFmjtBBUXRUAIESMXS6pm3Pep3czkKUL4UF0u9f17b40OWlLOF4IQWE2jM9yK09DiIQUzeU2XKRNW116DnmDL5QIRNrYnhkYeeQI3U6WnVTPdTU9kBVTDjhM+6U6/LClGJaWiglwwrzHtVELHgMi280qRefQEftb4CI/IbcPNAxetJevV68I5NAjfdnmMx8YbhfIiEqAJtBi4TvoH7HjDH+72+ZFjQ10fpz/p+DgUtiNlRKz8tXSZ+mbLuhmOJOxtGQTH3viYbSpG/4F9uKW1ekX0RMyRxVvpjMxHtCL4daJI4RTHFXy4R16OKAlYe7gs9sqv7O0IujLJPex/rnN2U4syGaSH5q3UnGxci6qgn8yLEhSP+Gj0xdv5H3fVjr/kNNZGWDOz6nDUaJT+eWlmWU7hOvm0ricrz9GEPUTQ0Rh70sWTQFq3poWQ== cardno:000606167509";
 
   provisioner = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKDSfHu0xHu2qtWjmCC92rTMZfwZNKXrsJvPCLSoWtzR eelco.dolstra@deploy";
 
@@ -26,4 +24,6 @@
 
   hexa-gaia = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAWQRR7dspgQ6kCwyFnoVlgmmPR4iWL1+nvq6a5ad2Ug hexa@gaia";
   hexa-helix = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFSpdtIxIBFtd7TLrmIPmIu5uemAFJx4sNslRsJXfFxr hexa@helix";
+
+  infra-core = [ eelco graham graham-hermes-conrad zimbatm amine vcunat ];
 }
