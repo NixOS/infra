@@ -1,0 +1,14 @@
+keys: 
+  - &hexa age1j3mkgedmeru63vwww6m44zfw09tg8yw6xdzstaq7ejfkvgcau40qwakm8x
+  - &julienmalka age1qlwzeg37fwwn2l6fm3quvkn787nn0m89xrjtrhgf9uedtfv2kqlqnec976
+  - &zimbatm age1jrh8yyq3swjru09s75s4mspu0mphh7h6z54z946raa9wx3pcdegq0x8t4h
+  - &hetzner01 age1sv307kkrxwgjah8pjpap5kzl4j2r6fqr3vg234n7m32chlchs9lsey7nlq
+creation_rules:
+  - path_regex: secrets/[^/]+.hetzner01
+    key_groups:
+    - age:
+      - *hexa
+      - *julienmalka
+      - *zimbatm
+      - *hetzner01
+
