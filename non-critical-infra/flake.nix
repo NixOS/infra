@@ -7,6 +7,10 @@
     flake-utils.url = "github:numtide/flake-utils";
     disko.url = "github:nix-community/disko";
     srvos.url = "github:numtide/srvos";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     first-time-contribution-tagger = {
       url = "github:Janik-Haag/first-time-contribution-tagger";
@@ -17,7 +21,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, colmena, disko, srvos, first-time-contribution-tagger, ... }@inputs:
+  outputs = { self, nixpkgs, flake-utils, colmena, disko, srvos, first-time-contribution-tagger, sops-nix, ... }@inputs:
     let
       importConfig = path: (lib.mapAttrs (name: value: import (path + "/${name}/default.nix")) (lib.filterAttrs (_: v: v == "directory") (builtins.readDir path)));
       lib = nixpkgs.lib;
@@ -31,7 +35,7 @@
           specialArgs = {
             inherit inputs;
           };
-          modules = [ value disko.nixosModules.disko first-time-contribution-tagger.nixosModule ];
+          modules = [ value disko.nixosModules.disko first-time-contribution-tagger.nixosModule sops-nix.nixosModules.sops ];
           extraModules = [ inputs.colmena.nixosModules.deploymentOptions ];
 
         })
@@ -56,8 +60,9 @@
       in {
         devShell =
           pkgs.mkShell {
-            buildInputs = [
+            buildInputs = with pkgs; [
               colmena.packages.${system}.colmena
+              sops
             ];
           };
       });
