@@ -21,6 +21,9 @@ with lib;
     [ pkgs.emacs
       pkgs.git
       pkgs.gdb
+
+      # jq is required by numtide/terraform-deploy-nixos-flakes.
+      pkgs.jq
     ];
 
   services.sshd.enable = true;
