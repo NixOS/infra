@@ -21,9 +21,4 @@ in
   haumea = {
     imports = [ ./haumea.nix ];
   };
-
-  rhea = {
-    imports = [
-    ];
-  };
 }
