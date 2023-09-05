@@ -13,6 +13,15 @@ locals {
 resource "aws_s3_bucket" "releases" {
   bucket = "nix-releases"
 
+  lifecycle_rule {
+    enabled = true
+
+    transition {
+      days          = 365
+      storage_class = "STANDARD_IA"
+    }
+  }
+
   cors_rule {
     allowed_headers = ["*"]
     allowed_methods = ["HEAD", "GET"]
