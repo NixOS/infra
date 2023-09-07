@@ -89,7 +89,7 @@ resource "aws_s3_bucket_policy" "channels" {
 EOF
 }
 
-resource "fastly_service_v1" "channels" {
+resource "fastly_service_vcl" "channels" {
   name        = local.channels_domain
   default_ttl = 3600
 
@@ -212,7 +212,7 @@ resource "fastly_service_v1" "channels" {
     type     = "recv"
   }
 
-  s3logging {
+  logging_s3 {
     name              = "${local.channels_domain}-to-s3"
     bucket_name       = module.fastlylogs.bucket_name
     compression_codec = "zstd"
@@ -227,7 +227,7 @@ resource "fastly_service_v1" "channels" {
 }
 
 resource "fastly_tls_subscription" "channels" {
-  domains               = [for domain in fastly_service_v1.channels.domain : domain.name]
+  domains               = [for domain in fastly_service_vcl.channels.domain : domain.name]
   configuration_id      = local.fastly_tls12_sni_configuration_id
   certificate_authority = "globalsign"
 }

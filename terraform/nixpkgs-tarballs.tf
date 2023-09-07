@@ -149,7 +149,7 @@ resource "aws_s3_bucket_object" "nixpkgs-tarballs-index" {
   source       = "${path.module}/nixpkgs-tarballs/index.html"
 }
 
-resource "fastly_service_v1" "nixpkgs-tarballs" {
+resource "fastly_service_vcl" "nixpkgs-tarballs" {
   name        = local.tarballs_domain
   default_ttl = 86400
 
@@ -257,7 +257,7 @@ resource "fastly_service_v1" "nixpkgs-tarballs" {
     type     = "fetch"
   }
 
-  s3logging {
+  logging_s3 {
     name              = "${local.tarballs_domain}-to-s3"
     bucket_name       = module.fastlylogs.bucket_name
     compression_codec = "zstd"
@@ -272,7 +272,7 @@ resource "fastly_service_v1" "nixpkgs-tarballs" {
 }
 
 resource "fastly_tls_subscription" "nixpkgs-tarballs" {
-  domains               = [for domain in fastly_service_v1.nixpkgs-tarballs.domain : domain.name]
+  domains               = [for domain in fastly_service_vcl.nixpkgs-tarballs.domain : domain.name]
   configuration_id      = local.fastly_tls12_sni_configuration_id
   certificate_authority = "globalsign"
 }
