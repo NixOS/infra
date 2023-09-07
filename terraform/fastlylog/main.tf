@@ -8,6 +8,17 @@ resource "aws_s3_bucket" "logs" {
       days = 365
     }
   }
+
+  lifecycle_rule {
+    id = "move-to-glacier"
+
+    enabled = true
+
+    transition {
+      days          = 14
+      storage_class = "DEEP_ARCHIVE"
+    }
+  }
 }
 
 resource "aws_s3_bucket_policy" "logs" {
