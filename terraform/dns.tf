@@ -246,6 +246,16 @@ locals {
       type     = "CNAME"
       value    = "20th-nix.pages.dev"
     },
+    {
+      hostname = "caliban.nixos.org"
+      type     = "AAAA"
+      value    = "2a01:4f9:5a:186c::2"
+    },
+    {
+      hostname = "caliban.nixos.org"
+      type     = "A"
+      value    = "65.109.26.213"
+    }
   ]
 }
 

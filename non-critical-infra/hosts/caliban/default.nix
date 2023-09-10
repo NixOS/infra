@@ -24,9 +24,11 @@
   ];
   boot.loader.grub.useOSProber = true;
 
-
-  networking.hostName = "hetzner-01"; # Define your hostname.
-  networking.hostId = "745b334a";
+  networking = {
+    hostName = "caliban";
+    domain = "nixos.org";
+    hostId = "745b334a";
+  };
 
   disko.devices = import ./disko.nix;
 
