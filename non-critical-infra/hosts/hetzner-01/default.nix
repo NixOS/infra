@@ -44,20 +44,15 @@
 
   systemd.network.networks."10-uplink".networkConfig.Address = "2a01:4f9:5a:186c::2";
 
-  users.users.root.openssh.authorizedKeys.keyFiles = [
-    (pkgs.fetchurl {
-      url = "https://github.com/JulienMalka.keys";
-      sha256 = "sha256-yH84N5aPt9MJDuvaDf9BvnM+z9yaUKYxU7W2Bf89174=";
-    })
-    (pkgs.fetchurl {
-      url = "https://github.com/zimbatm.keys";
-      sha256 = "sha256-QEOYK1aoF626VTTjlcFtY020NSCfiCnBRQfrNfl0j5s=";
-    })
-    (pkgs.fetchurl {
-      url = "https://github.com/mweinelt.keys";
-      sha256 = "sha256-gAD2jUc5SBWuuiRGgJEmb0I7rR/jti1FMxVuA0BtILk=";
-    })
-  ];
+  users.users.root.openssh.authorizedKeys = {
+    keyFiles = [
+      (pkgs.fetchurl {
+        url = "https://github.com/JulienMalka.keys";
+        hash = "sha256-glt0tL13aqC00/Bu+13xZbOGqeNlYx5oElLwfYs7knY=";
+      })
+    ];
+    keys = (import ../../../ssh-keys.nix).infra;
+  };
 
   system.stateVersion = "23.05";
 

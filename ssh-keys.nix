@@ -26,4 +26,8 @@ rec {
   hexa-helix = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFSpdtIxIBFtd7TLrmIPmIu5uemAFJx4sNslRsJXfFxr hexa@helix";
 
   infra-core = [ eelco graham graham-hermes-conrad zimbatm amine vcunat ];
+  infra = infra-core ++ [
+    hexa-gaia
+    hexa-helix
+  ];
 }
