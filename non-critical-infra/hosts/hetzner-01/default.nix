@@ -44,15 +44,7 @@
 
   systemd.network.networks."10-uplink".networkConfig.Address = "2a01:4f9:5a:186c::2";
 
-  users.users.root.openssh.authorizedKeys = {
-    keyFiles = [
-      (pkgs.fetchurl {
-        url = "https://github.com/JulienMalka.keys";
-        hash = "sha256-glt0tL13aqC00/Bu+13xZbOGqeNlYx5oElLwfYs7knY=";
-      })
-    ];
-    keys = (import ../../../ssh-keys.nix).infra;
-  };
+  users.users.root.openssh.authorizedKeys.keys = (import ../../../ssh-keys.nix).infra;
 
   system.stateVersion = "23.05";
 
