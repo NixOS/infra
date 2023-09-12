@@ -9,12 +9,6 @@
       ../../modules/first-time-contribution-tagger.nix
     ];
 
-
-  deployment = {
-    targetHost = "65.109.26.213";
-    targetUser = "root";
-  };
-
   # Bootloader.
   boot.loader.grub.enable = true;
   boot.supportedFilesystems = [ "zfs" ];
