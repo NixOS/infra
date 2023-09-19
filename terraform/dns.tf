@@ -250,6 +250,11 @@ locals {
       hostname = "caliban.nixos.org"
       type     = "A"
       value    = "65.109.26.213"
+    },
+    {
+      hostname = "vault.nixos.org"
+      type     = "CNAME"
+      value    = "caliban.nixos.org"
     }
   ]
 }
