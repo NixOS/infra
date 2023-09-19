@@ -4,7 +4,7 @@ keys:
   - &zimbatm age1jrh8yyq3swjru09s75s4mspu0mphh7h6z54z946raa9wx3pcdegq0x8t4h
   - &hetzner01 age1sv307kkrxwgjah8pjpap5kzl4j2r6fqr3vg234n7m32chlchs9lsey7nlq
 creation_rules:
-  - path_regex: secrets/[^/]+.hetzner01
+  - path_regex: secrets/[^/]+.caliban
     key_groups:
     - age:
       - *hexa
