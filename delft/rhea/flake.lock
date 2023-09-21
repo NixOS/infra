@@ -40,11 +40,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1695315093,
-        "narHash": "sha256-aJd06UpP/6azwu+jwx80GBpuoPmp6igXYvOzhGjGkDM=",
+        "lastModified": 1695316414,
+        "narHash": "sha256-KJjHJ3oxZGbyp5SxhuK4q2zp8jmCFLdbhKbdewumAhM=",
         "owner": "DeterminateSystems",
         "repo": "hydra-scale-equinix-metal",
-        "rev": "91617ad00c455b64f20f9cb79a6272d58c44e533",
+        "rev": "dbc5fc3ad928dde24f309d0f268f4d0f66cc0f64",
         "type": "github"
       },
       "original": {
