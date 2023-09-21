@@ -13,8 +13,9 @@
       facilities = ["any"];
       tags = ["hydra"];
       categories = {
-        aarch64-linux = {
-          bigparallel = {
+        aarch64-linux = [
+          {
+            size = "bigparallel";
             divisor = 5;
             minimum = 1;
             maximum = 5;
@@ -25,8 +26,9 @@
                 netboot_url = "${netboot_base}/c3-large-arm--big-parallel";
               }
             ];
-          };
-          small = {
+          }
+          {
+            size = "small";
             divisor = 2000;
             minimum = 1;
             maximum = 5;
@@ -37,7 +39,7 @@
                 netboot_url = "${netboot_base}/c3-large-arm";
               }
             ];
-          };
+          }
           # Try to ensure we have at least 1 aarch64-linux builder by bidding slightly higher than
           # usual (the minimum is *intentionally* 0 so that we don't hold onto this "backup" machine
           # once we go below 5000 runnable builds). The goal is that this bid will only go through
@@ -47,7 +49,8 @@
           # https://monitoring.nixos.org/grafana/d/ItOJVUoWk/packet-spot-prices?var-plan=c3.large.arm64&from=now-7d&to=now&orgId=1&refresh=10s
           # Spot market capacity for c3.large.arm64 over the last 5 minutes:
           # https://monitoring.nixos.org/grafana/d/I1WQEbbWz/packet-capacity-by-plan-table?orgId=1&var-plan=c3.large.arm64&var-facility=All
-          backup = {
+          {
+            size = "small";
             divisor = 5000;
             minimum = 0; # *intentionally* 0 so we don't hold onto this machine forever and skew the spot market prices too high
             maximum = 1;
@@ -58,10 +61,11 @@
                 netboot_url = "${netboot_base}/c3-large-arm";
               }
             ];
-          };
-        };
-        x86_64-linux = rec {
-          bigparallel = {
+          }
+        ];
+        x86_64-linux = [
+          {
+            size = "bigparallel";
             divisor = 5;
             minimum = 1;
             maximum = 5;
@@ -77,8 +81,9 @@
                 plan = "m3.large.x86";
               }
             ];
-          };
-          small = {
+          }
+          {
+            size = "small";
             divisor = 2000;
             minimum = 1;
             maximum = 5;
@@ -94,8 +99,8 @@
                 plan = "m3.large.x86";
               }
             ];
-          };
-        };
+          }
+        ];
       };
     };
   };
