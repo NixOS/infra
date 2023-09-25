@@ -8,11 +8,11 @@ in
 
 {
   users.extraUsers.hydra.openssh.authorizedKeys.keys =
-    with import ../ssh-keys.nix; [ eelco rob ];
+    (import ../ssh-keys.nix).infra-core;
   users.extraUsers.hydra-www.openssh.authorizedKeys.keys =
-    with import ../ssh-keys.nix; [ eelco rob ];
+    (import ../ssh-keys.nix).infra-core;
   users.extraUsers.hydra-queue-runner.openssh.authorizedKeys.keys =
-    with import ../ssh-keys.nix; [ eelco rob ];
+    (import ../ssh-keys.nix).infra-core;
 
   services.hydra-dev.enable = true;
   services.hydra-dev.logo = ./hydra-logo.png;

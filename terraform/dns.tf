@@ -122,11 +122,6 @@ locals {
       value    = "nixconberlin.github.io"
     },
     {
-      hostname = "olddiscourse.nixos.org"
-      type     = "CNAME"
-      value    = "nixos1.hosted-by-discourse.com"
-    },
-    {
       hostname = "discourse.nixos.org"
       type     = "A"
       value    = "195.62.126.31"
@@ -246,6 +241,21 @@ locals {
       type     = "CNAME"
       value    = "20th-nix.pages.dev"
     },
+    {
+      hostname = "caliban.nixos.org"
+      type     = "AAAA"
+      value    = "2a01:4f9:5a:186c::2"
+    },
+    {
+      hostname = "caliban.nixos.org"
+      type     = "A"
+      value    = "65.109.26.213"
+    },
+    {
+      hostname = "vault.nixos.org"
+      type     = "CNAME"
+      value    = "caliban.nixos.org"
+    }
   ]
 }
 

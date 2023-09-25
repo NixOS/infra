@@ -7,11 +7,19 @@ with lib;
     [ ./diffoscope.nix
       ../modules/common.nix
       ../modules/prometheus
+      ../modules/wireguard.nix
+      ../modules/prometheus
     ];
 
   system.stateVersion = "14.12";
 
   nixpkgs.config.allowUnfree = true;
+
+  nixpkgs.overlays = [
+    (self: super: {
+      prometheus-postgres-exporter = self.callPackage ./prometheus/postgres-exporter.nix { };
+    })
+  ];
 
   services.openssh.authorizedKeysFiles = mkForce [ "/etc/ssh/authorized_keys.d/%u" ];
 
@@ -89,4 +97,7 @@ with lib;
   services.cron.mailto = "";
 
   documentation.nixos.enable = false;
+
+  security.acme.acceptTerms = true;
+  security.acme.defaults.email = "webmaster@nixos.org";
 }

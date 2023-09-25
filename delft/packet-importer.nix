@@ -3,11 +3,6 @@ let
   importer = pkgs.callPackage ../hydra-packet-importer { };
 in
 {
-  deployment.keys."hydra-packet-import.json" = {
-    keyFile = /home/deploy/src/nixos-org-configurations/hydra-packet-import.json;
-    user = "hydra-packet";
-  };
-
   users.users.hydra-packet = {
     description = "Hydra Packet Machine Importer";
     group = "hydra";
@@ -25,7 +20,7 @@ in
 
   systemd.services.hydra-packet-import = {
     path = with pkgs; [ openssh moreutils ];
-    script = "${importer}/bin/hydra-packet-importer /run/keys/hydra-packet-import.json | sort | sponge /var/lib/hydra-packet-import/machines";
+    script = "${importer}/bin/hydra-packet-importer /var/lib/hydra-packet-import/hydra-packet-import.json | sort | sponge /var/lib/hydra-packet-import/machines";
     serviceConfig = {
       User = "hydra-packet";
       Group = "keys";

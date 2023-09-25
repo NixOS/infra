@@ -17,7 +17,7 @@ terraform {
       source = "AegirHealth/netlify"
     }
     secret = {
-      source = "nixpkgs/secret"
+      source = "numtide/secret"
     }
   }
 }

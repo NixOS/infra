@@ -10,18 +10,8 @@
       ../packet-importer.nix
     ];
 
-  # This is a Hetzner machine, but when trying to set this machine up
-  # I found the Hetzner NixOps plugin isn't able to create robot
-  # sub-accounts, and even if I can get past that with
-  # `createSubAccount = false`, the bootstrap tarball doesn't work.
-  #
-  # See: ./rhea/install.md for documentation about how I set it up by
-  # hand.
-  #deployment.targetEnv = "hetzner";
-  #deployment.hetzner.mainIPv4 = "5.9.122.43";
-  deployment.targetHost = "5.9.122.43";
-
   networking = {
+    hostName = "rhea";
     firewall.allowedTCPPorts = [
       80 443
       9198 # hydra-queue-runner's prometheus

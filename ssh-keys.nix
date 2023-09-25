@@ -1,8 +1,6 @@
-{
+rec {
 
   eelco = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAnI5L6oCgFyvEesL04LnbnH1TBhegq1Yery6TNlIRAA edolstra@gmail.com";
-
-  rob = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDHp3/OZP2nRS5bM9E1xN8Q2L398kC+m4guORjKsmGjwnnHvYnTml5puE2ogl8Wdenbk7hf82+vKyB+Tktrhx+IBSym4lY+czR6W+39hlPYdLbi980yxYT9KEMSyMWJEgPVJ1BZvHqsHQiad/L3eoPmAIMDmcn4mLh9rya5/oMW/ZgsA6j28ClvWkDRyaTmTLOa0Im4nLoSbdo8kJqU+JX/YcXlMKUvFfdMcj4T9YYwV98LPWHnEHFmjtBBUXRUAIESMXS6pm3Pep3czkKUL4UF0u9f17b40OWlLOF4IQWE2jM9yK09DiIQUzeU2XKRNW116DnmDL5QIRNrYnhkYeeQI3U6WnVTPdTU9kBVTDjhM+6U6/LClGJaWiglwwrzHtVELHgMi280qRefQEftb4CI/IbcPNAxetJevV68I5NAjfdnmMx8YbhfIiEqAJtBi4TvoH7HjDH+72+ZFjQ10fpz/p+DgUtiNlRKz8tXSZ+mbLuhmOJOxtGQTH3viYbSpG/4F9uKW1ekX0RMyRxVvpjMxHtCL4daJI4RTHFXy4R16OKAlYe7gs9sqv7O0IujLJPex/rnN2U4syGaSH5q3UnGxci6qgn8yLEhSP+Gj0xdv5H3fVjr/kNNZGWDOz6nDUaJT+eWlmWU7hOvm0ricrz9GEPUTQ0Rh70sWTQFq3poWQ== cardno:000606167509";
 
   provisioner = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKDSfHu0xHu2qtWjmCC92rTMZfwZNKXrsJvPCLSoWtzR eelco.dolstra@deploy";
 
@@ -14,9 +12,14 @@
 
   zimbatm = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOuiDoBOxgyer8vGcfAIbE6TC4n4jo8lhG9l01iJ0bZz zimbatm";
 
+  _999eagle-tower = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPEhO1CIlnmYsVQPoRZaQRtNNtEcGSKfXiQTesB47wac sophie@sophie-tower";
+  _999eagle-laptop = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHBcu5TUWKn8Q1E1Ey7UgvWRtVFePFDKA88z8lyvHEUP sophie@sophie-laptop";
+
   amine = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCz502n9qbozdd3gkZp+bEDQLq8wHN4EoL2iPfyOm5etGYpHR2XMkhpLlSJDJ5KOl+qMUKo6v2qzO8kxlGg1mhtM/oUiVuGE3X+oxIwwj957vSUHn+wZAMKL2URSpM4ux19k0wy0kDyEx5koOjK+ZaZ5o/0MnnAOW+LROwn3SATLnoI+GHTVH5CQSCwmq6rXAM0W0XUU6oe7Ezel/ek4z5b0ZVeT89Lgh7Xn8gDs7TI2O72pH2nh811/02OFVmmjGhve8VQ6XQX36xXHTVjQ01nU+tDKVtFAf4P3WPfZMtoQrl5rzN8GvjLKExlpz7DdjskhvXp2S+O/ZazlCU60TQn amine.chikhaoui";
 
   garbas = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDWvkx8C7PelPzOE+s3PXZ20YYQJbT1qqwHzKF8iRnfH6tNPfxISOek3g1bDpR4v8h2seTzxfiFFx+EXrpDZkiMXNrOm4JNWnN1ayOy0KR4mqTs0Wyve3xKv840o6oVRdP+yunSyl6KpIUm3+T6r1xRfWSBVy7v0xOp97WYni9RaDLyZ5yQpCjSTzoYGro7V85avk/81Wp94/nGvw+4Cdg5Lwk2+OFLD46wOPG/DHsZjkDZeNQmi0n/7lFULPki604P3yeSgsV7K0lp08YBGfvFleX9z1/1WoAMqoOyXDhGBmTT+V3Ul6Yvu54hQ9lqFi63RhyEpW4LANHZXk7k8M8vjXneAZMd+5dZ4BqqyACLgr8zFJQX/weJAlHjnZhmUcBzC8CFFoZ6ZadM/Iuj7AijoF5ZnpIM5wP4nfzsM6JbgH1DGLsWmPW4EQro3BpuPQL+76UZOk5t+YRTNVuyzupsn9Xl05vadKE/N1FQ2NkwLgc+mSP9udbfxBbR1bTPGw8Vv5AXDdH1scx+2min8r3RfHdnl9TzZLEzwroGIK8zidabnrkULrDodAQjvlIeu4OPHfN5kslYgc/B+T2RPWeHytVn6lb0Nb7JYDI0jmaLcNRL7W72N7s/2ihecklj3HAUdWruUUcBS1oUcFcIr3chLJIGXz0vO+ShAmWxRRWLzQ== rok@grayworm";
+
+  linus = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN3EmXYSXsimS+vlGYtfTkOGuwvkXU0uHd2yYKLOxD2F linus@geruest";
 
   regnat = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINOPHs47r7r7W55vVlH9Dm9JEud+HOh80YbtrlVSuBm4";
 
@@ -28,4 +31,13 @@
   hexa-helix = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFSpdtIxIBFtd7TLrmIPmIu5uemAFJx4sNslRsJXfFxr hexa@helix";
 
   cleeyv = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO4p4CqilI3n1GOyGcDgUh1UpwxeHSTIiV4oeHYjF431 cleeyv";
+
+  julienmalka = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGa+7n7kNzb86pTqaMn554KiPrkHRGeTJ0asY1NjSbpr julien@tower";
+
+  infra-core = [ eelco graham graham-hermes-conrad zimbatm amine vcunat ];
+  infra = infra-core ++ [
+    hexa-gaia
+    hexa-helix
+    julienmalka
+  ];
 }

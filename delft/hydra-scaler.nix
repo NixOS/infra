@@ -1,10 +1,11 @@
-{ config, pkgs, lib, ... }: {
-  deployment.keys."hydra-scale-equinix-metal-env".keyFile = /home/deploy/src/nixos-org-configurations/keys/hydra-scale-equinix-metal-env;
+{ config, pkgs, lib, ... }:
+
+{
   services.hydra-scale-equinix-metal = {
     enable = true;
     hydraRoot = "https://hydra.nixos.org/";
     prometheusRoot = "https://status.nixos.org/prometheus";
-    secretFile = "/run/keys/hydra-scale-equinix-metal-env";
+    secretFile = "/root/keys/hydra-scale-equinix-metal-env";
     interval = ["*:0/5"];
     config = let
       netboot_base = https://netboot.nixos.org/dispatch/hydra/hydra.nixos.org/equinix-metal-builders/main;
