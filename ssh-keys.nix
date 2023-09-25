@@ -34,10 +34,14 @@ rec {
 
   julienmalka = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGa+7n7kNzb86pTqaMn554KiPrkHRGeTJ0asY1NjSbpr julien@tower";
 
+  lorenz-leutgeb = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFhK7CqgIIbSthoNn8ea32krOnMzC807Z+PpBkR2YOVj";
+
   infra-core = [ eelco graham graham-hermes-conrad zimbatm amine vcunat ];
   infra = infra-core ++ [
     hexa-gaia
     hexa-helix
     julienmalka
   ];
+
+  ngi-admins = infra-core ++ [ regnat cleeyv lorenz-leutgeb ];
 }
