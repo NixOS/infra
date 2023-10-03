@@ -12,8 +12,8 @@ In order to use this, make sure to install direnv and Nix with flakes enabled.
 Then copy the `.envrc.local.template` to `.envrc.local`, and fill in the
 related keys.
 
-> FIXME: Remove the AWS_ACCESS_KEY_DI and AWS_SECRET_ACCESS_KEY env vars if
->        they exits. Those have been replaced by AWS SSO.
+> FIXME: Unset the AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY env vars if
+>        they are already set. Those have been replaced by AWS SSO.
 
 Then run `direnv allow` to load the environment with the runtime dependencies.
 
