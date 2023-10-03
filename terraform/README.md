@@ -21,6 +21,7 @@ Run `aws configure sso` to acquire a temporary token.
 
 When asked, pick the following account:
 * `LBNixOS_Dev_PDX (080433136561)`
+Select role `AWSAdministratorAccess`.
 Leave all the rest with the default options.
 
 ## Usage
