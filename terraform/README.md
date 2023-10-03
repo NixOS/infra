@@ -1,24 +1,27 @@
 # For the bits that are not nixops-able
 
-For now this manages only resources in the main AWS account.
+This terraform root module manages:
+* the resource in the AWS main account (S3 buckets)
+* Fastly
+* Netlify DNS
 
 ## Setup
 
-Set the following environment variables:
+In order to use this, make sure to install direnv and Nix with flakes enabled.
 
-AWS access key pair:
+Then copy the `.envrc.local.template` to `.envrc.local`, and fill in the
+related keys.
 
-```sh
-export AWS_ACCESS_KEY_ID=...
-export AWS_SECRET_ACCESS_KEY=...
-```
+> FIXME: Remove the AWS_ACCESS_KEY_DI and AWS_SECRET_ACCESS_KEY env vars if
+>        they exits. Those have been replaced by AWS SSO.
 
-Fastly token from https://manage.fastly.com/account/personal/tokens with
-global scope.
+Then run `direnv allow` to load the environment with the runtime dependencies.
 
-```sh
-export FASTLY_API_KEY=...
-```
+Run `aws configure sso` to acquire a temporary token.
+
+When asked, pick the following account:
+* `LBNixOS_Dev_PDX (080433136561)`
+Leave all the rest with the default options.
 
 ## Usage
 
@@ -26,13 +29,13 @@ The first time the following command has to be run to initialize the state
 file and plugins:
 
 ```sh
-nix-shell --run "terraform init"
+terraform init
 ```
 
 Then run the following command to diff the changes and then apply if approved:
 
 ```sh
-nix-shell --run "terraform apply"
+terraform apply
 ```
 
 ## Terraform workflow

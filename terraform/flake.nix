@@ -6,7 +6,8 @@
     devShell.x86_64-linux =
       with import nixpkgs { system = "x86_64-linux"; };
       mkShell {
-        buildInputs = [
+        packages = [
+          awscli2
           (terraform.withPlugins (p: with p; [
             aws
             fastly

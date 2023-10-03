@@ -4,6 +4,7 @@ terraform {
     encrypt = true
     key     = "targets/terraform"
     region  = "eu-west-1"
+    profile = "nixos-prod"
   }
 
   required_providers {
