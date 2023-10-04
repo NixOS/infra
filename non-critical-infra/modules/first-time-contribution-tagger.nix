@@ -12,7 +12,7 @@
   };
 
   sops.secrets.first-time-contribution-tagger-env = {
-    sopsFile = ../secrets/first-time-contribution-tagger-env.hetzner01;
+    sopsFile = ../secrets/first-time-contribution-tagger-env.caliban;
     format = "binary";
     path = "/root/first-time-contribution-tagger.env";
   };
