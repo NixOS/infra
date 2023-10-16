@@ -8,6 +8,7 @@
       inputs.srvos.nixosModules.hardware-hetzner-online-amd
       ../../modules/first-time-contribution-tagger.nix
       ../../modules/backup.nix
+      ../../modules/vaultwarden.nix
     ];
 
   # Bootloader.
@@ -36,7 +37,10 @@
 
   services.openssh.enable = true;
 
-  networking.firewall.allowedTCPPorts = [ ];
+  security.acme.acceptTerms = true;
+  security.acme.defaults.email = "webmaster@nixos.org";
+
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
   networking.firewall.allowedUDPPorts = [ ];
 
   systemd.network.networks."10-uplink".networkConfig.Address = "2a01:4f9:5a:186c::2";
