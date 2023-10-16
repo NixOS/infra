@@ -189,7 +189,7 @@ locals {
     {
       hostname = "nixos.org"
       type     = "TXT"
-      value    = "v=spf1 include:spf.improvmx.com ~all"
+      value    = "v=spf1 include:spf.improvmx.com include:_mailcust.gandi.net ~all"
     },
     {
       hostname = "live.nixos.org"
