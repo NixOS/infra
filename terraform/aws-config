@@ -3,9 +3,3 @@ sso_start_url = https://nixos.awsapps.com/start
 sso_region = eu-north-1
 sso_account_id = 080433136561
 sso_role_name = AWSAdministratorAccess
-region = eu-north-1
-sso_session = terraform
-[sso-session terraform]
-sso_start_url = https://nixos.awsapps.com/start
-sso_region = eu-north-1
-sso_registration_scopes = sso:account:access
