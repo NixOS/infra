@@ -10,13 +10,13 @@ resource "aws_s3_bucket" "logs" {
   }
 
   lifecycle_rule {
-    id = "move-to-glacier"
+    id = "move-to-infrequent-access"
 
     enabled = true
 
     transition {
-      days          = 14
-      storage_class = "DEEP_ARCHIVE"
+      days          = 30
+      storage_class = "ONEZONE_IA"
     }
   }
 }
