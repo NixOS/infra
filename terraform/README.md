@@ -17,12 +17,12 @@ related keys.
 
 Then run `direnv allow` to load the environment with the runtime dependencies.
 
-Run `aws configure sso` to acquire a temporary token.
+Run `aws configure sso` to acquire a temporary token:
 
-When asked, pick the following account:
-* `LBNixOS_Dev_PDX (080433136561)`
-Select role `AWSAdministratorAccess`.
-Leave all the rest with the default options.
+* Leave `SSO session name` **empty** (this is needed for legacy SSO).
+* Select account `LBNixOS_Dev_PDX (080433136561)`.
+* Select role `AWSAdministratorAccess`.
+* Leave all the rest with the default options.
 
 ## Usage
 
