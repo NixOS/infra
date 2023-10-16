@@ -21,6 +21,12 @@ resource "aws_s3_bucket" "logs" {
   }
 }
 
+# Allow third-parties to access the logs, but pay for the access.
+resource "aws_s3_bucket_request_payment_configuration" "logs" {
+  bucket = aws_s3_bucket.logs.id
+  payer  = "Requester"
+}
+
 resource "aws_s3_bucket_policy" "logs" {
   bucket = aws_s3_bucket.logs.id
   policy = <<EOF
@@ -44,6 +50,19 @@ resource "aws_s3_bucket_policy" "logs" {
       },
       "Action": "s3:ListBucket",
       "Resource": "arn:aws:s3:::${aws_s3_bucket.logs.id}"
+    },
+    {
+      "Sid": "AllowRequesterPayReadOnly",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": [
+        "s3:GetObject",
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        "arn:aws:s3:::${aws_s3_bucket.logs.id}",
+        "arn:aws:s3:::${aws_s3_bucket.logs.id}/*"
+      ]
     }
   ]
 }
