@@ -255,6 +255,11 @@ locals {
       hostname = "vault.nixos.org"
       type     = "CNAME"
       value    = "caliban.nixos.org"
+    },
+    {
+      hostname = "nixpkgs-merge-bot.nixos.org"
+      type     = "A"
+      value    = "37.27.11.42"
     }
   ]
 }
