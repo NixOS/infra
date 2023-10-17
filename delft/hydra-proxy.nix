@@ -58,6 +58,7 @@ in
           RewriteCond %{QUERY_STRING} ^query=pkgs.chromium$
           RewriteRule ^/search$ - [L,R=429,NC]
         '';
+        listenAddresses = [ "[::]" ];
         servedDirs =
           [ { urlPath = "/apache-errors";
               dir = ./apache-errors;
