@@ -214,15 +214,15 @@ resource "fastly_service_vcl" "channels" {
 
   logging_s3 {
     name              = "${local.channels_domain}-to-s3"
-    bucket_name       = module.fastlylogs.bucket_name
+    bucket_name       = local.fastlylogs["bucket_name"]
     compression_codec = "zstd"
-    domain            = module.fastlylogs.s3_domain
-    format            = module.fastlylogs.format
+    domain            = local.fastlylogs["s3_domain"]
+    format            = local.fastlylogs["format"]
     format_version    = 2
     path              = "${local.channels_domain}/"
-    period            = module.fastlylogs.period
+    period            = local.fastlylogs["period"]
     message_type      = "blank"
-    s3_iam_role       = module.fastlylogs.iam_role_arn
+    s3_iam_role       = local.fastlylogs["iam_role_arn"]
   }
 }
 
