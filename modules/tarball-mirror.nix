@@ -10,9 +10,16 @@
 with lib;
 
 let
-
-  nixosRelease = "21.05";
-
+  # Determine the NixPkgs branch to mirror from.
+  # We take the current pirmary stable release.
+  inherit (import ../channels.nix) channels;
+  branches = lib.filter (p: p != null) (
+    lib.mapAttrsToList
+      (name: v: if v.variant or null == "primary" && v.status or null == "stable"
+        then name else null)
+      (import ../channels.nix).channels
+  );
+  branch = assert lib.length branches == 1; head branches;
 in
 
 {
@@ -34,11 +41,11 @@ in
         ''
           dir=/home/tarball-mirror/nixpkgs
           if ! [[ -e $dir ]]; then
-            git clone git://github.com/NixOS/nixpkgs.git $dir
+            git clone https://github.com/NixOS/nixpkgs.git $dir
           fi
           cd $dir
           git remote update origin
-          git checkout origin/nixos-${nixosRelease}
+          git checkout origin/${branch}
           # FIXME: use IAM role.
           export AWS_ACCESS_KEY_ID=$(sed 's/aws_access_key_id=\(.*\)/\1/ ; t; d' ~/.aws/credentials)
           export AWS_SECRET_ACCESS_KEY=$(sed 's/aws_secret_access_key=\(.*\)/\1/ ; t; d' ~/.aws/credentials)
