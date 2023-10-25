@@ -107,6 +107,11 @@ locals {
       value    = "dualstack.v2.shared.global.fastly.net"
     },
     {
+      hostname = "cache-staging.nixos.org"
+      type     = "CNAME"
+      value    = "dualstack.v2.shared.global.fastly.net"
+    },
+    {
       hostname = "channels.nixos.org"
       type     = "CNAME"
       value    = "dualstack.v2.shared.global.fastly.net"
