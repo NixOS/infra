@@ -6,7 +6,7 @@ locals {
 
   fastly_shield = "iad-va-us"
 
-  cache-iam = data.terraform_remote_state.terraform-iam.outputs.cache
+  cache-iam  = data.terraform_remote_state.terraform-iam.outputs.cache
   fastlylogs = data.terraform_remote_state.terraform-iam.outputs.fastlylogs
 
   # fastlylogs = {
