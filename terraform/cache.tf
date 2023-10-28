@@ -202,6 +202,20 @@ resource "fastly_service_vcl" "cache" {
     status          = 404
   }
 
+  # Authenticate Fastly<->S3 requests. See Fastly documentation:
+  # https://docs.fastly.com/en/guides/amazon-s3#using-an-amazon-s3-private-bucket
+  snippet {
+    name = "Authenticate S3 requests"
+    type = "miss"
+    priority = 100
+    content = templatefile("${path.module}/cache/s3-authn.vcl", {
+      aws_region = aws_s3_bucket.cache.region
+      backend_domain = aws_s3_bucket.cache.bucket_domain_name
+      access_key = local.cache-iam.key
+      secret_key = local.cache-iam.secret
+    })
+  }
+
   snippet {
     content  = "set req.url = querystring.remove(req.url);"
     name     = "Remove all query strings"
