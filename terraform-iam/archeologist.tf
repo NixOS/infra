@@ -25,7 +25,9 @@ resource "aws_iam_policy" "archologist" {
             ],
             "Resource": [
                 "arn:aws:s3:::nix-cache-inventory",
-                "arn:aws:s3:::nix-cache-inventory/*"
+                "arn:aws:s3:::nix-cache-inventory/*",
+                "arn:aws:s3:::nix-releases-inventory220231029182031496800000001",
+                "arn:aws:s3:::nix-releases-inventory220231029182031496800000001/*"
             ]
         },
         {
