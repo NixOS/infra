@@ -101,6 +101,12 @@ resource "aws_s3_bucket_policy" "cache" {
 EOF
 }
 
+resource "aws_s3_bucket_request_payment_configuration" "cache" {
+  provider = aws.us
+  bucket   = aws_s3_bucket.cache.id
+  payer    = "Requester"
+}
+
 resource "fastly_service_vcl" "cache" {
   name        = local.cache_domain
   default_ttl = 86400
