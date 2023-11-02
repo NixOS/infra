@@ -2,6 +2,19 @@
 
 resource "netlify_deploy_key" "key" {}
 
+resource "netlify_site" "nix-dev" {
+  name = "nix-dev"
+
+  # TODO: this will later be nix.dev
+  custom_domain = "nix-dev-staging.nixos.org"
+
+  repo {
+    provider    = "github"
+    repo_path   = "NixOS/nix.dev"
+    repo_branch = "master"
+  }
+}
+
 resource "netlify_site" "nixos-summer" {
   name          = "nixos-summer"
   custom_domain = "summer.nixos.org"
