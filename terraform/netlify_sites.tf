@@ -3,10 +3,8 @@
 resource "netlify_deploy_key" "key" {}
 
 resource "netlify_site" "nix-dev" {
-  name = "nix-dev"
-
-  # TODO: this will later be nix.dev
-  custom_domain = "nix-dev-staging.nixos.org"
+  name          = "nix-dev"
+  custom_domain = "nix.dev"
 
   repo {
     provider    = "github"
