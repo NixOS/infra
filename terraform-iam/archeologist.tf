@@ -33,11 +33,7 @@ resource "aws_iam_policy" "archologist" {
         {
             "Sid": "NixArcheologistReadWrite",
             "Effect": "Allow",
-            "Action": [
-                "s3:Get*",
-                "s3:List*",
-                "s3:Put*"
-            ],
+            "Action": [ "s3:*" ],
             "Resource": [
                 "${aws_s3_bucket.archeologist.arn}",
                 "${aws_s3_bucket.archeologist.arn}/*"
