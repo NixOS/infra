@@ -273,10 +273,3 @@ resource "fastly_tls_subscription" "cache" {
   configuration_id      = local.fastly_tls12_sni_configuration_id
   certificate_authority = "globalsign"
 }
-
-# TODO: destroy and remove
-resource "fastly_tls_subscription" "cache-staging" {
-  domains               = ["cache-staging.nixos.org"]
-  configuration_id      = local.fastly_tls12_sni_configuration_id
-  certificate_authority = "globalsign"
-}
