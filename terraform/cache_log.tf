@@ -76,7 +76,22 @@ data "aws_iam_policy_document" "cache_log" {
     resources = [
       aws_s3_bucket.cache_log.arn,
     ]
+  }
 
+  statement {
+    sid    = "S3PolicyStmt-DO-NOT-MODIFY-1699369618664"
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["logging.s3.amazonaws.com"]
+    }
+
+    actions = ["s3:PutObject"]
+
+    resources = [
+      "${aws_s3_bucket.cache_log.arn}/*",
+    ]
   }
 }
 
