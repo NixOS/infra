@@ -31,6 +31,17 @@ resource "aws_iam_policy" "archologist" {
             ]
         },
         {
+            "Sid": "NixCacheLogsReadOnly",
+            "Effect": "Allow",
+            "Action": [
+                "s3:Get*"
+            ],
+            "Resource": [
+                "arn:aws:s3:::nix-cache-log",
+                "arn:aws:s3:::nix-cache-log/*"
+            ]
+        },
+        {
             "Sid": "NixArcheologistReadWrite",
             "Effect": "Allow",
             "Action": [ "s3:*" ],
