@@ -8,9 +8,13 @@ resource "aws_s3_bucket" "archeologist" {
 
 data "aws_iam_policy_document" "archaeologist" {
   statement {
-    sid = "NixCacheInventoryReadOnly"
+    # Read-only access and listing permissions
+    # To the cache and releases inventories,
+    # as well as the bucket where cache bucket logs end up in.
+    sid = "NixCacheLogsInventoryReadOnly"
 
     actions = [
+      "s3:List*",
       "s3:Get*"
     ]
 
@@ -33,12 +37,15 @@ data "aws_iam_policy_document" "archaeologist" {
 
     resources = [
       "arn:aws:s3:::nix-cache-log",
-      "arn:aws:s3:::nix-cache-log/*"
+      "arn:aws:s3:::nix-cache-log/*",
+      "arn:aws:s3:::nix-releases-inventory220231029182031496800000001",
+      "arn:aws:s3:::nix-releases-inventory220231029182031496800000001/*",
     ]
   }
 
   statement {
-    sid = "NixArcheologistReadWrite"
+    # Full access to the Archaeologist bucket
+    sid = "NixArchaeologistReadWrite"
 
     actions = [
       "s3:*"
