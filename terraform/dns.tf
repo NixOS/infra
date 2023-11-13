@@ -260,6 +260,16 @@ locals {
       hostname = "nixpkgs-merge-bot.nixos.org"
       type     = "A"
       value    = "37.27.11.42"
+    },
+    {
+      hostname = "umbriel.nixos.org"
+      type     = "A"
+      value    = "37.27.20.162"
+    },
+    {
+      hostname = "umbriel.nixos.org"
+      type     = "AAAA"
+      value    = "2a01:4f9:c011:8fb5::1"
     }
   ]
 }
