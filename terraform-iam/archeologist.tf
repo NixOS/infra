@@ -128,7 +128,7 @@ resource "aws_instance" "archeologist" {
   subnet_id                   = "subnet-1eb22868" # default subnet us-east-1c
 
   root_block_device {
-    volume_size = "256" # GB
+    volume_size = "1024" # GB
   }
 
   vpc_security_group_ids = [
