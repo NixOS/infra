@@ -6,6 +6,7 @@
       ./hardware.nix
       inputs.srvos.nixosModules.server
       inputs.srvos.nixosModules.hardware-hetzner-cloud-arm
+      ../../modules/mjolnir.nix
     ];
 
   # Bootloader.
