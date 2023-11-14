@@ -22,13 +22,8 @@ resource "aws_s3_bucket_lifecycle_configuration" "cache_log" {
     id     = "rule-1"
     status = "Enabled"
 
-    transition {
-      days          = 30
-      storage_class = "ONEZONE_IA"
-    }
-
     expiration {
-      days = "120"
+      days = "30"
     }
   }
 }
