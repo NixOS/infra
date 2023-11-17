@@ -41,6 +41,7 @@ in
   };
 
   security.acme = {
+    acceptTerms = true;
     # these cert parameters are very specifically & carefully chosen for iPXE compatibility.
     certs."netboot.nixos.org" = {
       keyType = "rsa4096";
