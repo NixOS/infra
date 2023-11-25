@@ -86,27 +86,6 @@ rec {
       variant = "darwin";
       status = "unmaintained";
     };
-
-    "nixos-22.05" = {
-      job = "nixos/release-22.05/tested";
-      variant = "primary";
-      status = "unmaintained";
-    };
-    "nixos-22.05-small" = {
-      job = "nixos/release-22.05-small/tested";
-      variant = "small";
-      status = "unmaintained";
-    };
-    "nixpkgs-22.05-darwin" = {
-      job = "nixpkgs/nixpkgs-22.05-darwin/darwin-tested";
-      variant = "darwin";
-      status = "unmaintained";
-    };
-    "nixos-22.05-aarch64" = {
-      job = "nixos/release-22.05-aarch64/tested";
-      variant = "aarch64";
-      status = "unmaintained";
-    };
   };
 
   channels-with-urls = (builtins.mapAttrs (name: about: about.job) channels);
