@@ -38,6 +38,8 @@ rec {
 
   tomberek = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILH+asenrsMV2B4mewzG/ezY7kU+iONALVlbMnZEIjXe";
 
+  john-ericson = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCdof+fSLyz3FV5t/yE9LBk/hgR8iNfdz/DRigvh4pP6+E4VPpPKSeA0a8r4CLMWvy9ZZ3Gqa04NdJnMmo8gBSIlo87JPq66GnC5QmeDJX2NLlliSeNQqUQKJ2VVcsVerz8O/RvVfvU2MIdW8VExx/DxeZbMnwRcWfUC0nby0NotWGNeS3NOcWWQq9z4E0sDSJ+QXSIMXWSeMda5sBadUK+YERTLYE/+ZVUPiXkXCmnwuRFHpZsqlRVad+kgXsZIwNEPUEqmEablg2C0NjvEbs75Yu9WUXXPJNhwaFbVXaWUM8UWO/n39jMM8aepalZbMhdFh129cAH35SjzIYjHxTP jcericson@john-obsidian-2018";
+
   infra-core = [ eelco graham graham-hermes-conrad zimbatm amine vcunat ];
   infra = infra-core ++ [
     hexa-gaia

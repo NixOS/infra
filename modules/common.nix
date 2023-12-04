@@ -8,7 +8,7 @@ with lib;
   users.mutableUsers = false;
 
   users.extraUsers.root.openssh.authorizedKeys.keys =
-    (import ../ssh-keys.nix).infra-core;
+    with import ../ssh-keys.nix; infra-core ++ [ john-ericson ];
 
   nix.useSandbox = true;
   nix.buildCores = 0;
