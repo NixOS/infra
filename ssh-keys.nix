@@ -36,6 +36,8 @@ rec {
 
   lorenz-leutgeb = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFhK7CqgIIbSthoNn8ea32krOnMzC807Z+PpBkR2YOVj";
 
+  tomberek = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILH+asenrsMV2B4mewzG/ezY7kU+iONALVlbMnZEIjXe";
+
   infra-core = [ eelco graham graham-hermes-conrad zimbatm amine vcunat ];
   infra = infra-core ++ [
     hexa-gaia
@@ -43,5 +45,5 @@ rec {
     julienmalka
   ];
 
-  ngi-admins = infra-core ++ [ regnat cleeyv lorenz-leutgeb ];
+  ngi-admins = infra-core ++ [ regnat cleeyv lorenz-leutgeb tomberek ];
 }
