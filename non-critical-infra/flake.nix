@@ -63,6 +63,7 @@
             buildInputs = with pkgs; [
               colmena.packages.${system}.colmena
               sops
+              ssh-to-age
             ];
           };
       });

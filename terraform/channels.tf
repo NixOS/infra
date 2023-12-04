@@ -94,25 +94,25 @@ resource "fastly_service_vcl" "channels" {
   default_ttl = 3600
 
   backend {
-    address               = local.channels_backend
-    auto_loadbalance      = false
-    connect_timeout       = 5000
-    name                  = local.channels_backend
-    override_host         = local.channels_backend
-    request_condition     = "not-flake-registry"
-    shield                = local.fastly_shield
+    address           = local.channels_backend
+    auto_loadbalance  = false
+    connect_timeout   = 5000
+    name              = local.channels_backend
+    override_host     = local.channels_backend
+    request_condition = "not-flake-registry"
+    shield            = local.fastly_shield
   }
 
   backend {
     # https://github.com/NixOS/flake-registry/raw/master/flake-registry.json
-    name                  = "flake-registry"
-    address               = "raw.githubusercontent.com"
-    auto_loadbalance      = false
-    override_host         = "raw.githubusercontent.com"
-    port                  = 443
-    use_ssl               = true
-    ssl_check_cert        = false
-    request_condition     = "flake-registry"
+    name              = "flake-registry"
+    address           = "raw.githubusercontent.com"
+    auto_loadbalance  = false
+    override_host     = "raw.githubusercontent.com"
+    port              = 443
+    use_ssl           = true
+    ssl_check_cert    = false
+    request_condition = "flake-registry"
   }
 
   condition {
@@ -203,26 +203,26 @@ resource "fastly_service_vcl" "channels" {
   }
 
   snippet {
-    name     = "flake-registry"
-    content  = <<-EOT
+    name    = "flake-registry"
+    content = <<-EOT
       if (req.url == "/flake-registry.json") {
         set req.url = "/NixOS/flake-registry/master/flake-registry.json";
       }
     EOT
-    type     = "recv"
+    type    = "recv"
   }
 
   logging_s3 {
     name              = "${local.channels_domain}-to-s3"
-    bucket_name       = module.fastlylogs.bucket_name
+    bucket_name       = local.fastlylogs["bucket_name"]
     compression_codec = "zstd"
-    domain            = module.fastlylogs.s3_domain
-    format            = module.fastlylogs.format
+    domain            = local.fastlylogs["s3_domain"]
+    format            = local.fastlylogs["format"]
     format_version    = 2
     path              = "${local.channels_domain}/"
-    period            = module.fastlylogs.period
+    period            = local.fastlylogs["period"]
     message_type      = "blank"
-    s3_iam_role       = module.fastlylogs.iam_role_arn
+    s3_iam_role       = local.fastlylogs["iam_role_arn"]
   }
 }
 

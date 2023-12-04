@@ -2,7 +2,7 @@ terraform {
   backend "s3" {
     bucket  = "nixos-terraform-state"
     encrypt = true
-    key     = "targets/terraform"
+    key     = "targets/terraform-iam"
     region  = "eu-west-1"
     profile = "nixos-prod"
   }
@@ -20,16 +20,5 @@ terraform {
     secret = {
       source = "numtide/secret"
     }
-  }
-}
-
-data "terraform_remote_state" "terraform-iam" {
-  backend = "s3"
-  config = {
-    bucket  = "nixos-terraform-state"
-    encrypt = true
-    key     = "targets/terraform-iam"
-    region  = "eu-west-1"
-    profile = "nixos-prod"
   }
 }

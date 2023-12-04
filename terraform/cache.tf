@@ -101,6 +101,12 @@ resource "aws_s3_bucket_policy" "cache" {
 EOF
 }
 
+resource "aws_s3_bucket_request_payment_configuration" "cache" {
+  provider = aws.us
+  bucket   = aws_s3_bucket.cache.id
+  payer    = "Requester"
+}
+
 resource "fastly_service_vcl" "cache" {
   name        = local.cache_domain
   default_ttl = 86400
@@ -202,6 +208,20 @@ resource "fastly_service_vcl" "cache" {
     status          = 404
   }
 
+  # Authenticate Fastly<->S3 requests. See Fastly documentation:
+  # https://docs.fastly.com/en/guides/amazon-s3#using-an-amazon-s3-private-bucket
+  snippet {
+    name     = "Authenticate S3 requests"
+    type     = "miss"
+    priority = 100
+    content = templatefile("${path.module}/cache/s3-authn.vcl", {
+      aws_region     = aws_s3_bucket.cache.region
+      backend_domain = aws_s3_bucket.cache.bucket_domain_name
+      access_key     = local.cache-iam.key
+      secret_key     = local.cache-iam.secret
+    })
+  }
+
   snippet {
     content  = "set req.url = querystring.remove(req.url);"
     name     = "Remove all query strings"
@@ -236,15 +256,15 @@ resource "fastly_service_vcl" "cache" {
 
   logging_s3 {
     name              = "${local.cache_domain}-to-s3"
-    bucket_name       = module.fastlylogs.bucket_name
+    bucket_name       = local.fastlylogs["bucket_name"]
     compression_codec = "zstd"
-    domain            = module.fastlylogs.s3_domain
-    format            = module.fastlylogs.format
+    domain            = local.fastlylogs["s3_domain"]
+    format            = local.fastlylogs["format"]
     format_version    = 2
     path              = "${local.cache_domain}/"
-    period            = module.fastlylogs.period
+    period            = local.fastlylogs["period"]
     message_type      = "blank"
-    s3_iam_role       = module.fastlylogs.iam_role_arn
+    s3_iam_role       = local.fastlylogs["iam_role_arn"]
   }
 }
 

@@ -1,19 +1,13 @@
 # For the bits that are not nixops-able
 
+This module is for superadmins in the team.
+
 This terraform root module manages:
-* the resource in the AWS main account (S3 buckets)
-* Fastly
-* Netlify DNS
+* IAM roles
 
 ## Setup
 
 In order to use this, make sure to install direnv and Nix with flakes enabled.
-
-Then copy the `.envrc.local.template` to `.envrc.local`, and fill in the
-related keys.
-
-> FIXME: Unset the AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY env vars if
->        they are already set. Those have been replaced by AWS SSO.
 
 Then run `direnv allow` to load the environment with the runtime dependencies.
 

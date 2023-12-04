@@ -43,10 +43,7 @@ in
 
       upload_logs_to_binary_cache = true
 
-      # FIXME: Cloudfront messes up CORS
-      #log_prefix = https://cache.nixos.org/
-
-      log_prefix = https://nix-cache.s3.amazonaws.com/
+      log_prefix = https://cache.nixos.org/
 
       evaluator_workers = 8
       evaluator_max_memory_size = 4096

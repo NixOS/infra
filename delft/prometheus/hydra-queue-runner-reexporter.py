@@ -328,9 +328,10 @@ class HydraScrapeImporter:
         store.unused_read("narCompressionSpeed")
 
         try:
-            s3 = store.destructive_read("s3")
+            s3 = self.destructive_read("s3")
         except KeyError:
             # no key, no metrics
+            s3 = None
             pass
         if s3:
             # Not in the above try to avoid the try catching mistakes
@@ -602,4 +603,3 @@ if __name__ == '__main__':
     # Generate some requests.
     while True:
         time.sleep(30)
-

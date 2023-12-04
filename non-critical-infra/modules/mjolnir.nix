@@ -1,15 +1,16 @@
-{ config, lib, ... }:
+{ lib
+, ...
+}:
 {
-  deployment.keys = {
-    "mjolnir.password" = {
-      keyFile = /home/deploy/src/nixos-org-configurations/keys/mjolnir-password;
-      user = config.systemd.services.mjolnir.serviceConfig.User;
-      group = "keys";
-      permissions = "0600";
-    };
+  sops.secrets.first-time-contribution-tagger-env = {
+    sopsFile = ../secrets/mjolnir-password.umbriel;
+    format = "binary";
+    path = "/var/keys/mjolnir.password";
+    mode = "0640";
+    owner = "root";
+    group = "mjolnir";
   };
 
-  systemd.services.mjolnir.serviceConfig.SupplementaryGroups = [ "keys" ];
   # pantalaimon takes ages to start up, so mjolnir could hit the systemd burst
   # limit and then just be down forever. We don't want mjolnir to ever go down,
   # so disable rate-limiting and allow it to flap until pantalaimon is alive.
@@ -26,7 +27,7 @@
     pantalaimon = {
       enable = true;
       username = "mjolnir";
-      passwordFile = "/run/keys/mjolnir.password";
+      passwordFile = "/var/keys/mjolnir.password";
       options = {
         listenAddress = "[::1]";
       };

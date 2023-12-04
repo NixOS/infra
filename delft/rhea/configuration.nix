@@ -34,6 +34,9 @@
   };
   services.hydra-dev.buildMachinesFiles = [ "/etc/nix/machines" ];
 
+  # hydra-evaluator causes very sharp spikes in RAM usage on trunk-combined
+  zramSwap.enable = true;
+
   nix.gc.automatic = true;
   nix.gc.options = ''--max-freed "$((400 * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | ${pkgs.gawk}/bin/awk '{ print $4 }')))"'';
   nix.gc.dates = "03,09,15,21:15";

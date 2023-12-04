@@ -10,7 +10,6 @@ in
     ./eris/github-project-monitor.nix
     ./eris/alertmanager-matrix-forwarder.nix
     ./eris/channel-monitor.nix
-    ./eris/mjolnir.nix
   ];
   deployment.targetEnv = "hetzner";
   deployment.hetzner.mainIPv4 = "138.201.32.77";
@@ -42,6 +41,9 @@ in
   };
 
   security.acme = {
+    acceptTerms = true;
+    defaults.email = "infra@nixos.org";
+
     # these cert parameters are very specifically & carefully chosen for iPXE compatibility.
     certs."netboot.nixos.org" = {
       keyType = "rsa4096";
