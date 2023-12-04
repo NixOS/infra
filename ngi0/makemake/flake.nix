@@ -1,7 +1,7 @@
 {
-  inputs.nixpkgs.url = "nixpkgs/nixos-23.05";
+  inputs.nixpkgs.follows = "hydra/nixpkgs";
   inputs.nix.follows = "hydra/nix";
-  #inputs.hydra.url = github:regnat/hydra/nix-ca;
+  inputs.hydra.url = "github:NixOS/hydra";
 
   outputs = { self, nixpkgs, nix, hydra }: {
 
@@ -23,8 +23,8 @@
             [ nix.overlays.default
             ];
 
-          system.configurationRevision = self.rev
-            or (throw "Cannot deploy from an unclean source tree!");
+          #system.configurationRevision = self.rev
+          #  or (throw "Cannot deploy from an unclean source tree!");
 
           nix.registry.nixpkgs.flake = nixpkgs;
           nix.nixPath = [ "nixpkgs=${nixpkgs}" ];

@@ -22,16 +22,17 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1687719230,
-        "narHash": "sha256-VRNI3H/WUTi7VTNLwO/I0gMnJ6ZMYRbBfgdsAj+TmP4=",
+        "lastModified": 1701446871,
+        "narHash": "sha256-ILB2BOaNY+UBs8iSMZYJI2LfV+R/+I6zU9kV1/Sz6oU=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "526e8bd7441d1beb271ff89bbca3604077ecffdb",
+        "rev": "f216bce0e62654ab4809003ec0756ee3e40d5172",
         "type": "github"
       },
       "original": {
-        "id": "hydra",
-        "type": "indirect"
+        "owner": "NixOS",
+        "repo": "hydra",
+        "type": "github"
       }
     },
     "lowdown-src": {
@@ -61,16 +62,16 @@
         "nixpkgs-regression": "nixpkgs-regression"
       },
       "locked": {
-        "lastModified": 1686048923,
-        "narHash": "sha256-/XCWa2osNFIpPC5MkxlX6qTZf/DaTLwS3LWN0SRFiuU=",
+        "lastModified": 1701122567,
+        "narHash": "sha256-iA8DqS+W2fWTfR+nNJSvMHqQ+4NpYMRT3b+2zS6JTvE=",
         "owner": "NixOS",
         "repo": "nix",
-        "rev": "84050709ea18f3285a85d729f40c8f8eddf5008e",
+        "rev": "50f8f1c8bc019a4c0fd098b9ac674b94cfc6af0d",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "2.16.1",
+        "ref": "2.19.2",
         "repo": "nix",
         "type": "github"
       }
@@ -107,21 +108,6 @@
         "type": "github"
       }
     },
-    "nixpkgs_2": {
-      "locked": {
-        "lastModified": 1687829761,
-        "narHash": "sha256-QRe1Y8SS3M4GeC58F/6ajz6V0ZLUVWX3ZAMgov2N3/g=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "9790f3242da2152d5aa1976e3e4b8b414f4dd206",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "ref": "nixos-23.05",
-        "type": "indirect"
-      }
-    },
     "root": {
       "inputs": {
         "hydra": "hydra",
@@ -129,7 +115,10 @@
           "hydra",
           "nix"
         ],
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": [
+          "hydra",
+          "nixpkgs"
+        ]
       }
     }
   },
