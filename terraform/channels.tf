@@ -212,6 +212,32 @@ resource "fastly_service_vcl" "channels" {
     type    = "recv"
   }
 
+  snippet {
+    content = <<-EOT
+      # S3 object-level redirects can only be 301s. We use them to point
+      # "latest" versions of various channel/release artifacts to the correct
+      # location. First, mark these redirects as temporary. Second, disable
+      # caching, since some of the artifacts need to have matching versions
+      # (e.g. a .iso and its checksum), which is near-impossible to guarantee
+      # with caching unless we explicitly perform invalidations.
+      #
+      # Note: we need to match on 301s and 302s here, since Fastly has multiple
+      # layers, and otherwise a redirect might still get cached at the second
+      # layer after the first layer turned a 301 into a 302.
+      if (beresp.status == 301 || beresp.status == 302) {
+        set beresp.status = 302;
+        set beresp.ttl = 0s;
+        set beresp.grace = 0s;
+        set beresp.cacheable = false;
+        return (pass);
+      }
+    EOT
+    name    = "Change 301 from S3 to 302"
+    # Keep close to last, since it conditionally returns.
+    priority = 999
+    type     = "fetch"
+  }
+
   logging_s3 {
     name              = "${local.channels_domain}-to-s3"
     bucket_name       = local.fastlylogs["bucket_name"]
