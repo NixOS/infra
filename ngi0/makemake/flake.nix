@@ -1,7 +1,7 @@
 {
   inputs.nixpkgs.follows = "hydra/nixpkgs";
   inputs.nix.follows = "hydra/nix";
-  inputs.hydra.url = "github:NixOS/hydra";
+  inputs.hydra.url = "github:NixOS/hydra/ca-derivations-prep";
 
   outputs = { self, nixpkgs, nix, hydra }: {
 

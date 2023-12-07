@@ -22,15 +22,16 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1701446871,
-        "narHash": "sha256-ILB2BOaNY+UBs8iSMZYJI2LfV+R/+I6zU9kV1/Sz6oU=",
+        "lastModified": 1701903565,
+        "narHash": "sha256-CBiJjoReHRMPvDFHxTnrfgte/i6D2s1dmAOeAKKA7Uc=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "f216bce0e62654ab4809003ec0756ee3e40d5172",
+        "rev": "11f8030b0f4c75ed7640563d68200cf3ec59edec",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
+        "ref": "ca-derivations-prep",
         "repo": "hydra",
         "type": "github"
       }
