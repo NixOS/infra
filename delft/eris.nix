@@ -73,6 +73,10 @@ in
     sslProtocols = "TLSv1.2 TLSv1.3"; # iPXE only supports TLSv1.2
     sslCiphers = options.services.nginx.sslCiphers.default + ":AES256-SHA256"; # iPXE needs AES256-SHA256
 
+    eventsConfig = ''
+      worker_connections 4096;
+    '';
+
     virtualHosts."netboot.nixos.org" = {
       enableACME = true;
       forceSSL = true;
