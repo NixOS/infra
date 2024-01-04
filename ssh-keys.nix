@@ -50,5 +50,5 @@ rec {
     julienmalka
   ];
 
-  ngi-admins = infra-core ++ [ regnat cleeyv lorenz-leutgeb tomberek ];
+  ngi-admins = infra-core ++ [ regnat cleeyv lorenz-leutgeb tomberek john-ericson ];
 }
