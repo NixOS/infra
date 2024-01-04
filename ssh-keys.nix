@@ -42,9 +42,8 @@ rec {
 
   delroth = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII3tjB4KYDok3KlWxdBp/yEmqhhmybd+w0VO4xUwLKKV";
 
-  infra-core = [ eelco graham graham-hermes-conrad zimbatm amine vcunat ];
+  infra-core = [ eelco graham graham-hermes-conrad zimbatm amine vcunat delroth ];
   infra = infra-core ++ [
-    delroth
     hexa-gaia
     hexa-helix
     julienmalka
