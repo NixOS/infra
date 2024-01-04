@@ -101,7 +101,7 @@
           boot.loader.grub.copyKernels = true;
 
           users.extraUsers.root.openssh.authorizedKeys.keys =
-            with import ../../ssh-keys.nix; ngi-admins ++ [ john-ericson ];
+            (import ../../ssh-keys.nix).ngi-admins;
         })
       ];
     };
