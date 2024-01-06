@@ -126,6 +126,11 @@ in
 
     alertmanager = {
       enable = true;
+
+      # Allow alertmanager to start even if it doesn't find an RFC1918 IP on
+      # the machine's network interfaces.
+      extraFlags = [ "--cluster.listen-address=''" ];
+
       webExternalUrl = "http://10.254.1.4:9093/";
       configuration = {
         global = { };
