@@ -6,6 +6,7 @@ in
   imports = [
     ../modules/rfc39.nix
     ../modules/prometheus
+    ../modules/wireguard.nix
     ./eris/packet-spot-market-prices.nix
     ./eris/github-project-monitor.nix
     ./eris/alertmanager-matrix-forwarder.nix
