@@ -1,4 +1,4 @@
-{ resources, options, config, lib, pkgs, ... }:
+{ options, config, lib, pkgs, ... }:
 let
   inherit (lib) filterAttrs flip mapAttrsToList;
 in
@@ -268,8 +268,16 @@ in
         job_name = "node";
         static_configs = [
           {
-            targets = flip mapAttrsToList resources.machines (machine: v: "${v.networking.hostName}:9100");
-            labels.role = "unknown";
+            targets = [
+              "rhea:9100"
+            ];
+            labels.role = "hydra";
+          }
+          {
+            targets = [
+              "eris:9100"
+            ];
+            labels.role = "monitoring";
           }
           {
             targets = [
