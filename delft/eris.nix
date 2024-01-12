@@ -307,13 +307,22 @@ in
         job_name = "nixos";
         static_configs = [
           {
-            targets = flip mapAttrsToList resources.machines (machine: v: "${v.networking.hostName}:9300");
+            targets = [
+              "rhea:9300"
+            ];
+            labels.role = "hydra";
           }
           {
             targets = [
-              "webserver:9300"
+              "eris:9300"
             ];
-            labels.role = "webserver";
+            labels.role = "monitoring";
+          }
+          {
+            targets = [
+              "haumea:9300"
+            ];
+            labels.role = "database";
           }
           {
             targets = [
