@@ -42,6 +42,7 @@ in
       xxx-jobset-repeats = nixos:reproducibility:1
 
       upload_logs_to_binary_cache = true
+      compress_build_logs = false  # conflicts with upload_logs_to_binary_cache
 
       log_prefix = https://cache.nixos.org/
 
