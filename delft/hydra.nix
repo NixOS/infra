@@ -67,6 +67,15 @@ in
       </hydra_notify>
     '';
 
+  # Work around https://github.com/NixOS/hydra/issues/1337
+  services.hydra-dev.package = pkgs.hydra.overrideAttrs(final: prev: {
+    postPatch = ''
+      ${prev.postPatch or ""}
+      rm src/lib/Hydra/Plugin/DeclarativeJobsets.pm
+      rm t/Hydra/Plugin/DeclarativeJobsets/basic.t
+    '';
+  });
+
   systemd.tmpfiles.rules =
     [
       "d /var/cache/hydra 0755 hydra hydra -  -"
