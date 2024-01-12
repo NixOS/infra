@@ -287,12 +287,6 @@ in
           }
           {
             targets = [
-              "webserver:9100"
-            ];
-            labels.role = "webserver";
-          }
-          {
-            targets = [
               "bastion:9100"
             ];
             labels.role = "bastion";
