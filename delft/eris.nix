@@ -15,6 +15,8 @@ in
   deployment.targetEnv = "hetzner";
   deployment.hetzner.mainIPv4 = "138.201.32.77";
 
+  users.users.root.openssh.authorizedKeys.keys =
+    with import ../ssh-keys.nix; infra-core;
 
   networking.extraHosts = ''
     10.254.1.1 bastion
