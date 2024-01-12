@@ -12,6 +12,9 @@
   deployment.targetEnv = "hetzner";
   deployment.hetzner.mainIPv4 = "46.4.89.205";
 
+  users.users.root.openssh.authorizedKeys.keys =
+    with import ../ssh-keys.nix; infra-core;
+
   deployment.hetzner.partitionCommand =
     ''
       if ! [ -e /usr/local/sbin/zfs ]; then
