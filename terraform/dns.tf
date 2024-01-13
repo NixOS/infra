@@ -29,7 +29,7 @@ locals {
     {
       hostname = "haumea.nixos.org"
       type     = "AAAA"
-      value    = "2a01:4f8:140:72cf::"
+      value    = "2a01:4f8:212:41c9::1"
     },
     {
       hostname = "hydra.ngi0.nixos.org"
