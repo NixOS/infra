@@ -197,7 +197,7 @@ in
             name = "system";
             rules =
               let
-                diskSelector = ''mountpoint=~"(/|/scratch)"'';
+                diskSelector = ''mountpoint=~"(/|/scratch)",instance!~=".*packethost.net"'';
                 relevantLabels = "device,fstype,instance,mountpoint";
               in
               [
