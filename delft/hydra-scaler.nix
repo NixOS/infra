@@ -15,9 +15,9 @@
       categories = {
         aarch64-linux = {
           bigparallel = {
-            divisor = 5;
+            divisor = 20;
             minimum = 1;
-            maximum = 5;
+            maximum = 4;
             plans = [
               {
                 bid = 2.0;
@@ -27,9 +27,9 @@
             ];
           };
           small = {
-            divisor = 2000;
-            minimum = 1;
-            maximum = 5;
+            divisor = 4000;
+            minimum = 0; # we have one static 80-core in addition
+            maximum = 3;
             plans = [
               {
                 bid = 2.0;
@@ -41,7 +41,7 @@
         };
         x86_64-linux = rec {
           bigparallel = {
-            divisor = 5;
+            divisor = 10;
             minimum = 1;
             maximum = 5;
             plans = [
@@ -60,7 +60,7 @@
           small = {
             divisor = 2000;
             minimum = 1;
-            maximum = 5;
+            maximum = 4;
             plans = [
               {
                 bid = 2.0;
