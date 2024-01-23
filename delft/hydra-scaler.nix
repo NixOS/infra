@@ -15,9 +15,9 @@
       categories = {
         aarch64-linux = {
           bigparallel = {
-            divisor = 20;
+            divisor = 24;
             minimum = 1;
-            maximum = 4;
+            maximum = 3;
             plans = [
               {
                 bid = 2.0;
@@ -41,9 +41,9 @@
         };
         x86_64-linux = rec {
           bigparallel = {
-            divisor = 10;
+            divisor = 16;
             minimum = 1;
-            maximum = 5;
+            maximum = 4;
             plans = [
               {
                 bid = 2.0;
@@ -60,7 +60,7 @@
           small = {
             divisor = 2000;
             minimum = 1;
-            maximum = 4;
+            maximum = 3;
             plans = [
               {
                 bid = 2.0;
