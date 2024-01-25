@@ -27,5 +27,9 @@ in lib.mkMerge [
         })
       ) (peerable config.networking.hostName);
     };
+
+    # networkd-wait-online sometimes fails to notice that the interface is up,
+    # since it's not managing it.
+    systemd.network.wait-online.ignoredInterfaces = [ "wg0" ];
   }
 ]
