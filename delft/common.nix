@@ -56,7 +56,7 @@ with lib;
   nix.extraOptions =
     ''
       allowed-impure-host-deps = /etc/protocols /etc/services /etc/nsswitch.conf
-      allowed-uris = https://github.com/ https://git.savannah.gnu.org/
+      allowed-uris = https://github.com/ https://git.savannah.gnu.org/ github:
     '';
 
   networking.firewall.enable = true;
