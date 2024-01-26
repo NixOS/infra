@@ -33,6 +33,10 @@
       locations."/static/" = {
         alias = "${config.services.hydra-dev.package}/libexec/hydra/root/static/";
       };
+
+      locations."=/favicon.ico" = {
+        alias = ./hydra-favicon.png;
+      };
     };
   };
 
