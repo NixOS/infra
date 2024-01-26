@@ -29,6 +29,10 @@
       locations."/" = {
         proxyPass = "http://127.0.0.1:3000";
       };
+
+      locations."/static/" = {
+        alias = "${config.services.hydra-dev.package}/libexec/hydra/root/static/";
+      };
     };
   };
 
