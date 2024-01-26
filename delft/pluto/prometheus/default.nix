@@ -12,6 +12,7 @@
     ./exporters/github.nix
     ./exporters/hydra.nix
     ./exporters/json.nix
+    ./exporters/matrix-synapse.nix
     ./exporters/nixos.nix
     ./exporters/node.nix
     ./exporters/packet-sd.nix
