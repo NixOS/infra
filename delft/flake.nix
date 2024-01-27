@@ -10,6 +10,7 @@
 
       modules = [
         ./eris.nix
+        ./eris-physical.nix
         flakes.nix-netboot-serve.nixosModules.nix-netboot-serve
       ];
     };
@@ -19,6 +20,7 @@
 
       modules = [
         ./haumea.nix
+        ./haumea-physical.nix
       ];
     };
 
