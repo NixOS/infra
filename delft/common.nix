@@ -71,17 +71,7 @@ with lib;
     ];
 
   # Enable Kernel Samepage Merging (reduces memory footprint of VMs).
-  systemd.services."enable-ksm" =
-    { description = "Enable Kernel Same-Page Merging";
-      wantedBy = [ "multi-user.target" ];
-      after = [ "systemd-udev-settle.service" ];
-      script =
-        ''
-          if [ -e /sys/kernel/mm/ksm ]; then
-            echo 1 > /sys/kernel/mm/ksm/run
-          fi
-        '';
-    };
+  hardware.ksm.enable = true;
 
   # Disable the systemd-journald watchdog. The default timeout (1min)
   # can easily be triggered on our slow, heavily-loaded disks. And
