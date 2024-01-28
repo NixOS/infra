@@ -677,9 +677,9 @@ in
     };
   };
 
-  deployment.keys."packet-sd-env" = {
-    keyFile = /home/deploy/src/nixos-org-configurations/prometheus-packet-service-discovery;
-    user = "packet-sd";
+  age.secrets.packet-sd-env = {
+    file = ./secrets/packet-sd-env.age;
+    owner = "packet-sd";
   };
 
   users.users.packet-sd = {
@@ -706,15 +706,13 @@ in
         User = "packet-sd";
         Group = "keys";
         ExecStart = "${sd}/bin/prometheus-packet-sd --output.file=/var/lib/packet-sd/packet-sd.json";
-        EnvironmentFile = "/run/keys/packet-sd-env";
+        EnvironmentFile = config.age.secrets.packet-sd-env.path;
         Restart = "always";
         RestartSec = "60s";
       };
     };
 
-  deployment.keys."fastly-read-only-api-token" = {
-    keyFile = /home/deploy/src/nixos-org-configurations/fastly-read-only-api-token;
-  };
+  age.secrets.fastly-read-only-api-token.file = ./secrets/fastly-read-only-api-token.age;
 
   systemd.services.prometheus-fastly-exporter =
     let
@@ -725,7 +723,7 @@ in
       after = [ "network.target" ];
 
       script = ''
-        export FASTLY_API_TOKEN=$(cat /run/keys/fastly-read-only-api-token)
+        export FASTLY_API_TOKEN=$(cat ${config.age.secrets.fastly-read-only-api-token.path})
         ${fastly}/bin/fastly-exporter \
           -endpoint http://127.0.0.1:9118/metrics
       '';

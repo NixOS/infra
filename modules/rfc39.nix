@@ -2,21 +2,12 @@
 { config, pkgs, ... }:
 let
   rfc39 = import /home/deploy/src/rfc39 { inherit pkgs; };
+
+  rfc39Secret = f: { file = f; owner = "rfc39"; };
 in {
-  deployment.keys."rfc39-credentials.nix" = {
-    keyFile = /home/deploy/src/nixos-org-configurations/keys/rfc39-credentials.nix;
-    user = "rfc39";
-  };
-
-  deployment.keys."rfc39-github.der" = {
-    keyFile = /home/deploy/src/nixos-org-configurations/keys/rfc39-github.der;
-    user = "rfc39";
-  };
-
-  deployment.keys."rfc39-record-push.key" = {
-    keyFile = /home/deploy/src/nixos-org-configurations/keys/rfc39-record-push.key;
-    user = "rfc39";
-  };
+  age.secrets.rfc39-credentials = rfc39Secret ../delft/secrets/rfc39-credentials.age;
+  age.secrets.rfc39-github = rfc39Secret ../delft/secrets/rfc39-github.age;
+  age.secrets.rfc39-record-push = rfc39Secret ../delft/secrets/rfc39-record-push.age;
 
   users.users.rfc39 = {
     description = "RFC39 Maintainer Team Sync";
@@ -43,7 +34,7 @@ in {
         ''
           set -eux
 
-          export GIT_SSH_COMMAND='ssh -i /run/keys/rfc39-record-push.key'
+          export GIT_SSH_COMMAND='ssh -i ${config.age.secrets.rfc39-record-push.path}'
           export GIT_AUTHOR_NAME="rfc39"
           export GIT_AUTHOR_EMAIL="rfc39@eris"
           export GIT_COMMITTER_NAME="rfc39"
@@ -70,7 +61,7 @@ in {
 
           rfc39 \
               --dump-metrics --metrics-delay=240 --metrics-addr=0.0.0.0:9190 \
-              --credentials /run/keys/rfc39-credentials.nix \
+              --credentials ${config.age.secrets.rfc39-credentials.path} \
               --maintainers ./maintainers/maintainer-list.nix \
               sync-team NixOS 3345117 --limit 50 \
               --invited-list "$recordsdir/invitations"

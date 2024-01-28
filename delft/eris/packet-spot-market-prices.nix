@@ -7,9 +7,9 @@ let
     sha256 = "sha256-I2WolAAM+siE8JfZbEZ3Mmk7/XqVio/PzUKqZUYCBfE=";
   };
 in {
-  deployment.keys.prometheus-packet-spot-market-price-exporter = {
-    keyFile = /home/deploy/src/nixos-org-configurations/keys/prometheus-packet-spot-market-price-exporter-config.json;
-    user = "spot-price-exporter";
+  age.secrets.prometheus-packet-spot-market-price-exporter = {
+    file = ../secrets/prometheus-packet-spot-market-price-exporter.age;
+    owner = "spot-price-exporter";
   };
 
   users.users.spot-price-exporter = {
@@ -34,6 +34,6 @@ in {
       (pkgs.python3.withPackages (p: [ p.prometheus_client p.requests ]))
     ];
 
-    script = "exec python3 ${exporter}/scrape.py /run/keys/prometheus-packet-spot-market-price-exporter";
+    script = "exec python3 ${exporter}/scrape.py ${config.age.secrets.prometheus-packet-spot-market-price-exporter.path}";
   };
 }

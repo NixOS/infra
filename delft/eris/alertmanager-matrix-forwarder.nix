@@ -1,8 +1,8 @@
 { config, pkgs, ... }:
 {
-  deployment.keys."alertmanager-matrix-forwarder" = {
-    keyFile = /home/deploy/src/nixos-org-configurations/keys/alertmanager-matrix-forwarder;
-    user = config.systemd.services.go-neb.serviceConfig.User;
+  age.secrets.alertmanager-matrix-forwarder = {
+    file = ../secrets/alertmanager-matrix-forwarder.age;
+    owner = config.systemd.services.go-neb.serviceConfig.User;
   };
 
   # Create user so that we can set the ownership of the key to
@@ -18,7 +18,7 @@
   services.go-neb = {
     enable = true;
     baseUrl = "http://localhost";
-    secretFile = "/run/keys/alertmanager-matrix-forwarder";
+    secretFile = config.age.secrets.alertmanager-matrix-forwarder.path;
     config = {
       clients = [
         {
