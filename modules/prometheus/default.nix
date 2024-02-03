@@ -28,8 +28,9 @@
       Restart = "always";
       RestartSec = "60s";
       ExecStart = let
-          python = pkgs.python3.withPackages (p: [
-            p.prometheus_client
+          python = pkgs.python3.withPackages (ps: with ps; [
+            packaging
+            prometheus-client
           ]);
         in ''
           ${python}/bin/python ${./nixos-exporter.py}

@@ -1,15 +1,33 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i python3 -p python3 -p python3Packages.prometheus_client
+#!nix-shell -i python3 -p "python3.withPackages (ps: with ps; [ prometheus-client packaging ])"
 
 
 import subprocess
 import json
-from prometheus_client.core import GaugeMetricFamily, CounterMetricFamily
-from prometheus_client import CollectorRegistry, generate_latest, start_http_server
-from pprint import pprint
+import sys
 import time
+from packaging.version import Version
+from prometheus_client.core import GaugeMetricFamily
+from prometheus_client import CollectorRegistry, start_http_server
+
 
 class NixosSystemCollector:
+    def __init__(self):
+        nix_version = self.get_nix_version()
+
+        # https://github.com/NixOS/nix/pull/9242
+        self.nix_path_info_returns_object = nix_version >= Version("2.19.0")
+
+    def get_nix_version(self):
+        result = subprocess.run(["nix", "--version"], stdout=subprocess.PIPE)
+
+        if result.returncode == 0:
+            response = result.stdout.decode().strip()
+            return Version(response.split()[-1])
+        else:
+            print("Failed to determine nix version", file=sys.stderr)
+            sys.exit(1)
+
     def collect(self):
         # note: Gauges because of rollbacks.
         current_system = GaugeMetricFamily(
@@ -40,14 +58,19 @@ class NixosSystemCollector:
         return None
 
     def get_time(self, path):
-        # nix path-info --json /run/booted-system | jq .[0].registrationTime
         result = subprocess.run(
-            [ "nix", "path-info", "--json", path ],
-            stdout=subprocess.PIPE
+            ["nix", "path-info", "--json", path], stdout=subprocess.PIPE
         )
         if result.returncode == 0:
             parsed = json.loads(result.stdout)
-            return parsed[0]['registrationTime']
+
+            if self.nix_path_info_returns_object:
+                # nix path-info --json /run/booted-system | jq .[].registrationTime
+                for path_info in parsed.values():
+                    return path_info["registrationTime"]
+            else:
+                # nix path-info --json /run/booted-system | jq .[0].registrationTime
+                return parsed[0]["registrationTime"]
 
         return 0
 
