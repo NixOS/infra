@@ -80,12 +80,16 @@ class NixosSystemCollector:
         return 0
 
 
-registry = CollectorRegistry()
-registry.register(NixosSystemCollector())
+def main():
+    registry = CollectorRegistry()
+    registry.register(NixosSystemCollector())
 
-if __name__ == "__main__":
     # Start up the server to expose the metrics.
     start_http_server(9300, registry=registry)
 
     while True:
         time.sleep(100000)
+
+
+if __name__ == "__main__":
+    main()
