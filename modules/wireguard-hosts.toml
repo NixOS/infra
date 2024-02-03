@@ -117,3 +117,8 @@ publicKey = "1PLQcx+eVLgRwN6e7fim53rHQXB7pjIg6okOe2nFoi8="
 # hexa's machine (@mweinelt), for administrative access
 ip = "10.254.4.6"
 publicKey = "Aco4hlJFNYtSzZDT6O0TtopnBl76e7aoubI6QygNrGM="
+
+[hosts.hexa-io]
+# hexa's machine (@mweinelt), for administrative access
+ip = "10.254.4.7"
+publicKey = "s2UCtX+NEIkfEcLpgQZImQShABoMX6Xtog7cYtI2x2s="
