@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "prometheus-nixos-exporter"
+version = "0.0.0"
+description = "Export informations about booted aund current NixOS generation"
+dependencies = [
+  "packaging",
+  "prometheus-client",
+]
+
+[project.scripts]
+prometheus-nixos-exporter = "prometheus_nixos_exporter.__main__:main"

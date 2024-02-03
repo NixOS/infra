@@ -1,4 +1,8 @@
 { pkgs, ... }:
+
+let
+  prometheus-nixos-exporter = pkgs.callPackage ./nixos-exporter {};
+in
 {
   networking.firewall.allowedTCPPorts = [
     9100 # node-exporter
@@ -19,7 +23,6 @@
     ${./system-version-exporter.sh} | ${pkgs.moreutils}/bin/sponge system-version.prom
   '';
 
-
   systemd.services.prometheus-nixos-exporter = {
     wantedBy = [ "multi-user.target" ];
     after = [ "network.target" ];
@@ -27,13 +30,7 @@
     serviceConfig = {
       Restart = "always";
       RestartSec = "60s";
-      ExecStart = let
-          python = pkgs.python3.withPackages (p: [
-            p.prometheus_client
-          ]);
-        in ''
-          ${python}/bin/python ${./nixos-exporter.py}
-      '';
+      ExecStart = "${prometheus-nixos-exporter}/bin/prometheus-nixos-exporter";
     };
   };
 }
