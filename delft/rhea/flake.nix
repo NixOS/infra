@@ -1,7 +1,7 @@
 {
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11-small";
   inputs.nix.follows = "hydra/nix";
-  inputs.hydra.url = "github:NixOS/hydra";
+  inputs.hydra.url = "github:NixOS/hydra/nix-2.19";
   inputs.hydra-scale-equinix-metal.url = "github:DeterminateSystems/hydra-scale-equinix-metal";
 
   outputs = flakes @ { self, nixpkgs, nix, hydra, hydra-scale-equinix-metal }: {
