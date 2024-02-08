@@ -12,8 +12,6 @@ in
     ./eris/alertmanager-matrix-forwarder.nix
     ./eris/channel-monitor.nix
   ];
-  deployment.targetEnv = "hetzner";
-  deployment.hetzner.mainIPv4 = "138.201.32.77";
 
   users.users.root.openssh.authorizedKeys.keys =
     with import ../ssh-keys.nix; infra-core;
