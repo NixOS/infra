@@ -14,6 +14,14 @@
 
     proxyTimeout = "900s";
 
+    appendConfig = ''
+      worker_processes auto;
+    '';
+
+    eventsConfig = ''
+      worker_connections 1024;
+    '';
+
     virtualHosts."hydra.nixos.org" = {
       forceSSL = true;
       enableACME = true;
