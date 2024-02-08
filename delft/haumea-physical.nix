@@ -13,8 +13,6 @@
         127.0.0.1 haumea-encrypted
       '';
       firewall.trustedInterfaces = [];
-      publicIPv4 = "46.4.89.205";
-      vpnPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIO0sjGPc7jcr3SxIa/pR7scuumNF6G6voDXmtrSBgRN NixOps VPN key of haumea";
     };
     system.stateVersion = ( lib.mkDefault "19.09" );
   };

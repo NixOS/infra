@@ -13,8 +13,6 @@
         46.4.89.205 haumea haumea-unencrypted
       '';
       firewall.trustedInterfaces = [];
-      publicIPv4 = "138.201.32.77";
-      vpnPublicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINOF2RnBNdlBPzY9o+b9OdKm10jibJulPJnu0V6tqu+P NixOps VPN key of eris";
     };
     system.stateVersion = ( lib.mkDefault "18.03" );
   };
