@@ -4,6 +4,7 @@ let
 in
 {
   imports = [
+    ./common.nix
     ../modules/rfc39.nix
     ../modules/prometheus
     ../modules/wireguard.nix
@@ -44,9 +45,6 @@ in
   };
 
   security.acme = {
-    acceptTerms = true;
-    defaults.email = "infra@nixos.org";
-
     # these cert parameters are very specifically & carefully chosen for iPXE compatibility.
     certs."netboot.nixos.org" = {
       keyType = "rsa4096";
