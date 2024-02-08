@@ -46,7 +46,7 @@ with lib;
       pkgs.elfutils
     ];
 
-  services.sshd.enable = true;
+  services.openssh.enable = true;
 
   boot.kernel.sysctl."kernel.panic" = 60;
   boot.kernel.sysctl."kernel.panic_on_oops" = 1;
