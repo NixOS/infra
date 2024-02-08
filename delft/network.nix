@@ -7,6 +7,7 @@ in
     imports = [
       # flakes.dwarffs.nixosModules.dwarffs # broken by Nix 2.6
       {
+        nixpkgs.overlays = [ flakes.rfc39.overlays.default ];
       }
     ];
   };

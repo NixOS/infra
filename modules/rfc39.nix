@@ -1,8 +1,6 @@
 # This module fetches nixpkgs master and syncs the GitHub maintainer team.
 { config, pkgs, ... }:
 let
-  rfc39 = import /home/deploy/src/rfc39 { inherit pkgs; };
-
   rfc39Secret = f: { file = f; owner = "rfc39"; };
 in {
   age.secrets.rfc39-credentials = rfc39Secret ../delft/secrets/rfc39-credentials.age;
@@ -24,7 +22,7 @@ in {
 
   systemd.services.rfc39-sync = {
     description = "Sync the Maintainer Team ";
-    path  = [ config.nix.package pkgs.git pkgs.openssh rfc39 ];
+    path  = [ config.nix.package pkgs.git pkgs.openssh pkgs.rfc39 ];
     startAt = "*:0/30";
     serviceConfig.User = "rfc39";
     serviceConfig.Group = "keys";
