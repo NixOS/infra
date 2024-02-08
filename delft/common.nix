@@ -11,8 +11,6 @@ with lib;
       ../modules/prometheus
     ];
 
-  system.stateVersion = "14.12";
-
   nixpkgs.config.allowUnfree = true;
 
   nixpkgs.overlays = [

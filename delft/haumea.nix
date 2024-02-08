@@ -7,6 +7,7 @@
       ./fstrim.nix
     ];
 
+  system.stateVersion = "14.12";
   environment.systemPackages = [ pkgs.lz4 ];
 
   users.users.root.openssh.authorizedKeys.keys =

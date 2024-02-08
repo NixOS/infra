@@ -13,6 +13,8 @@ in
     ./eris/channel-monitor.nix
   ];
 
+  system.stateVersion = "18.03";
+
   users.users.root.openssh.authorizedKeys.keys =
     with import ../ssh-keys.nix; infra-core;
 

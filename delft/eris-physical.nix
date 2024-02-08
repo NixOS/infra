@@ -14,7 +14,6 @@
       '';
       firewall.trustedInterfaces = [];
     };
-    system.stateVersion = ( lib.mkDefault "18.03" );
   };
   imports = [
     {
