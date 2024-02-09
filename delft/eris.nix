@@ -712,24 +712,20 @@ in
 
   age.secrets.fastly-read-only-api-token.file = ./secrets/fastly-read-only-api-token.age;
 
-  systemd.services.prometheus-fastly-exporter =
-    let
-      fastly = pkgs.callPackage ./prometheus/fastly.nix { };
-    in
-    {
-      wantedBy = [ "multi-user.target" "prometheus.service" ];
-      after = [ "network.target" ];
+  systemd.services.prometheus-fastly-exporter = {
+    # module script is outdated; https://github.com/NixOS/nixpkgs/pull/287348
+    script = with config.services.prometheus.exporters.fastly; lib.mkForce ''
+      export FASTLY_API_TOKEN=$(cat ${tokenPath})
+      ${pkgs.prometheus-fastly-exporter}/bin/fastly-exporter \
+        -listen ${listenAddress}:${toString port}
+    '';
+    serviceConfig.LoadCredential = "fastyl-api-token:${config.age.secrets.fastly-read-only-api-token.path}";
+  };
 
-      script = ''
-        export FASTLY_API_TOKEN=$(cat ${config.age.secrets.fastly-read-only-api-token.path})
-        ${fastly}/bin/fastly-exporter \
-          -endpoint http://127.0.0.1:9118/metrics
-      '';
+  services.prometheus.exporters.fastly = {
+    enable = true;
+    listenAddress = "127.0.0.1";
+    tokenPath = "/run/credentials/prometheus-fastly-exporter.service/fastyl-api-token";
+  };
 
-      serviceConfig = {
-        Group = "keys";
-        Restart = "always";
-        RestartSec = "60s";
-      };
-    };
 }
