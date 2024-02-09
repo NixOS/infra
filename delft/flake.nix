@@ -1,5 +1,5 @@
 {
-  inputs.nixpkgs.url = "nixpkgs/nixos-23.05-small";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11-small";
   inputs.nix-netboot-serve.url = "github:DeterminateSystems/nix-netboot-serve";
 
   inputs.rfc39.url = "github:NixOS/rfc39";
