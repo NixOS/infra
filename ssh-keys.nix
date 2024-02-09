@@ -47,4 +47,10 @@ rec {
   infra = infra-core ++ [
     julienmalka
   ];
+
+  machines = {
+    eris = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPUcsHFfrLHmXDXbrEeAnfrH16VyZSGnIXVTbsh54Oeo";
+    haumea = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBamzRwZmoLjBFoNruGSVJEahk02Ku7NrBOmqcRWxcPm";
+    rhea = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHpWGtAp/AUzKPsCgcoxupr7vnganHKwxe6MVXd0Abs6";
+  };
 }

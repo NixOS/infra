@@ -26,5 +26,5 @@ with lib;
       pkgs.jq
     ];
 
-  services.sshd.enable = true;
+  services.openssh.enable = true;
 }

@@ -5,7 +5,7 @@ with python3Packages;
 buildPythonApplication {
   pname = "prometheus-nixos-exporter";
   version = "0.0";
-  pyproject = true;
+  format = "pyproject";
 
   src = ./.;
 
