@@ -22,6 +22,11 @@ locals {
       value    = "138.201.32.77"
     },
     {
+      hostname = "eris.nixos.org"
+      type     = "AAAA"
+      value    = "2a01:4f8:171:33cc::1"
+    },
+    {
       hostname = "haumea.nixos.org"
       type     = "A"
       value    = "46.4.89.205"
