@@ -12,6 +12,7 @@ in
     ./eris/github-project-monitor.nix
     ./eris/alertmanager-matrix-forwarder.nix
     ./eris/channel-monitor.nix
+    ./eris/network.nix
   ];
 
   system.stateVersion = "18.03";
