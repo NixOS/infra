@@ -27,6 +27,16 @@ First level responders. This team helps with the high-level infrastructure.
 
 All the members should be watching this repository for changes.
 
+## Regular catch up
+
+We meet regularly over Jitsi to hash some issues out. Sometimes it helps to have dedicated focus and higher communication bandwidth.
+
+It started Thursday 11 at 6 pm CET (UTC+1), and then every two weeks.
+
+<a target="_blank" href="https://calendar.google.com/calendar/event?action=TEMPLATE&amp;tmeid=MDVjdjNpOG5qazhscjlna3Mxcmw0aHVzODIgam9uYXNAbnVtdGlkZS5jb20&amp;tmsrc=jonas%40numtide.com"><img border="0" src="https://www.google.com/calendar/images/ext/gc_button1_en.gif"></a>
+
+Location: <https://jitsi.lassul.us/nixos-infra>
+
 ## Reporting issues
 
 If you experience any issues with the infrastructure, please [post a new issue
