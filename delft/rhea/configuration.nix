@@ -3,6 +3,7 @@
   imports =
     [ ./hardware-configuration.nix
       ./hetzner.nix
+      ./network.nix
       ../common.nix
       ../hydra.nix
       ../hydra-proxy.nix
