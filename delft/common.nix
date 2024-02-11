@@ -57,6 +57,8 @@ with lib;
       allowed-uris = https://github.com/ https://git.savannah.gnu.org/ github:
     '';
 
+  networking.useDHCP = false;
+
   networking.firewall.enable = true;
   networking.firewall.rejectPackets = true;
   networking.firewall.allowPing = true;

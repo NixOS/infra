@@ -4,7 +4,6 @@
 
   networking.hostId = "9cd372da";
   networking.useNetworkd = true;
-  networking.useDHCP = false;
   systemd.network.networks."40-enp7s0" = {
     matchConfig = {
       MACAddress = "50:eb:f6:22:f0:3a";
