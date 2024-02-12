@@ -265,6 +265,16 @@ locals {
       hostname = "umbriel.nixos.org"
       type     = "AAAA"
       value    = "2a01:4f9:c011:8fb5::1"
+    },
+    {
+      hostname = "wiki.nixos.org"
+      type     = "A"
+      value    = "65.21.240.250"
+    },
+    {
+      hostname = "wiki.nixos.org"
+      type     = "AAAA"
+      value    = "2a01:4f9:c012:8178::"
     }
   ]
 }
