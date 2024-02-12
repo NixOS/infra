@@ -143,13 +143,6 @@
   };
 
   programs.ssh = {
-    extraConfig = ''
-      Host rob-backup-server
-      Hostname 83.162.34.61
-      User nixosfoundationbackups
-      Port 6666
-    '';
-
     knownHosts = {
       rsync-net = {
         hostNames = [ "zh2543b.rsync.net" "2001:1620:2019::324" ];
@@ -158,6 +151,10 @@
       ma27-backup-server = {
         hostNames = [ "mbosch.me" "135.181.78.102" ];
         publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG6rlyYpWzzt1Fn4c9XdrgzuVqlnhzXz6BRReDVz9I/n";
+      };
+      delroth-backup-server = {
+        hostName = [ "smol.delroth.net" ];
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID9Ta4DYE3YxXzV57s6TX6KEbIa3O4re+J4NzATCOiXb";
       };
     };
   };
