@@ -39,6 +39,8 @@ in
     9093 # alertmanager
   ];
 
+  systemd.units."mdmonitor.service".enable = false;
+
   services.nix-netboot-serve = {
     enable = true;
     listen = "127.0.0.1:3001";
