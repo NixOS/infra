@@ -48,4 +48,6 @@
 
   # Don't rate-limit the journal.
   services.journald.rateLimitBurst = 0;
+
+  services.zfs.autoScrub.enable = true;
 }
