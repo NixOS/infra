@@ -43,12 +43,8 @@
   };
   services.postgresql = {
     enable = true;
-    package = if true then pkgs.postgresql_14 else pkgs.postgresql_14.overrideAttrs({ nativeBuildInputs, configureFlags, ...}: {
-      # Enable JIT compilation of queries, remove after https://github.com/NixOS/nixpkgs/pull/124804
-      nativeBuildInputs = nativeBuildInputs ++ [ pkgs.llvm pkgs.clang ];
-      configureFlags = configureFlags ++ [ "--with-llvm" ];
-    });
-    dataDir = "/var/db/postgresql";
+    package = pkgs.postgresql_16;
+    dataDir = "/var/db/postgresql/16";
     # https://pgtune.leopard.in.ua/#/
     logLinePrefix = "user=%u,db=%d,app=%a,client=%h ";
     settings = {
