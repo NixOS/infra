@@ -64,6 +64,17 @@ with lib;
   networking.firewall.allowPing = true;
   networking.firewall.allowedTCPPorts = [ 10050 ];
 
+  services.resolved = {
+    enable = true;
+    fallbackDns = [
+      # https://docs.hetzner.com/de/dns-console/dns/general/recursive-name-servers/
+      "185.12.64.1"
+      "185.12.64.2"
+      "2a01:4ff:ff00::add:1"
+      "2a01:4ff:ff00::add:2"
+    ];
+  };
+
   # Bump the open files limit so that non-root users can run NixOS VM
   # tests (Samba opens lot of files).
   security.pam.loginLimits =
