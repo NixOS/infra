@@ -42,6 +42,8 @@ in
 
   systemd.units."mdmonitor.service".enable = false;
 
+  services.fstrim.enable = true;
+
   services.nix-netboot-serve = {
     enable = true;
     listen = "127.0.0.1:3001";
