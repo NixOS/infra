@@ -4,7 +4,6 @@
   imports =
     [ ./common.nix
       # ./datadog.nix # error: psycopg2-2.9.1 not supported for interpreter python2.7
-      ./fstrim.nix
       ./haumea/network.nix
     ];
 
