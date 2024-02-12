@@ -153,7 +153,7 @@
         publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG6rlyYpWzzt1Fn4c9XdrgzuVqlnhzXz6BRReDVz9I/n";
       };
       delroth-backup-server = {
-        hostName = [ "smol.delroth.net" ];
+        hostNames = [ "smol.delroth.net" ];
         publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID9Ta4DYE3YxXzV57s6TX6KEbIa3O4re+J4NzATCOiXb";
       };
     };
