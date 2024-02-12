@@ -150,6 +150,10 @@
         hostNames = [ "smol.delroth.net" ];
         publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID9Ta4DYE3YxXzV57s6TX6KEbIa3O4re+J4NzATCOiXb";
       };
+      hexa-backup-server = {
+        hostNames = [ "meduna.hexa-home.v6.army" ];
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDUe5BqMDt562KOIcUm4RqZC5ejmd62elkYKkqExUYsl";
+      };
     };
   };
 
@@ -225,6 +229,17 @@
             identity_file = "/root/.ssh/id_ed25519";
             type = "ssh+stdinserver";
             host = "smol.delroth.net";
+            user = "zrepl";
+            port = 22;
+          };
+        })
+
+        (defaultBackupJob // {
+          name = "hexa";
+          connect = {
+            identity_file = "/root/.ssh/id_ed25519";
+            type = "ssh+stdinserver";
+            host = "meduna.hexa-home.v6.army";
             user = "zrepl";
             port = 22;
           };
