@@ -164,7 +164,45 @@
 
   services.zfs.autoScrub.enable = true;
 
-  services.zrepl = {
+  services.zrepl = let
+    defaultBackupJob = {
+      type = "push";
+      filesystems."rpool/safe<" = true;
+      snapshotting = {
+        type = "periodic";
+        interval = "5m";
+        prefix = "zrepl_snap_";
+      };
+      pruning = {
+        keep_sender = [
+          {
+            type = "grid";
+            regex = "^zrepl_snap_.*";
+            grid = lib.concatStringsSep " | " [
+              "3x5m"
+              "4x15m"
+              "24x1h"
+              "4x1d"
+              "3x1w"
+            ];
+          }
+        ];
+        keep_receiver = [
+          { type = "grid";
+            regex = "^zrepl_snap_.*";
+            grid = lib.concatStringsSep " | " [
+              "20x5m"
+              "96x1h"
+              "12x4h"
+              "7x1d"
+              "52x1w"
+              "120x3w"
+            ];
+          }
+        ];
+      };
+    };
+  in {
     enable = true;
     settings = {
       global = {
@@ -178,51 +216,30 @@
       };
 
       jobs = [
-        {
-          name = "rsyncnet";
-          type = "push";
-          filesystems."rpool/safe<" = true;
-          snapshotting = {
-            type = "periodic";
-            interval = "5m";
-            prefix = "zrepl_snap_";
-          };
+        # XXX: Broken since 2024-01-10?
+        # (defaultBackupJob // {
+        #   name = "rsyncnet";
+        #   connect = {
+        #     identity_file = "/root/.ssh/id_ed25519";
+        #     type = "ssh+stdinserver";
+        #     host = "zh2543b.rsync.net";
+        #     user = "root";
+        #     port = 22;
+        #   };
+        # })
+
+        (defaultBackupJob // {
+          name = "delroth";
           connect = {
             identity_file = "/root/.ssh/id_ed25519";
             type = "ssh+stdinserver";
-            host = "zh2543b.rsync.net";
-            user = "root";
+            host = "smol.delroth.net";
+            user = "zrepl";
             port = 22;
           };
-          pruning = {
-            keep_sender = [
-              {
-                type = "grid";
-                regex = "^zrepl_snap_.*";
-                grid = lib.concatStringsSep " | " [
-                  "3x5m"
-                  "4x15m"
-                  "24x1h"
-                  "4x1d"
-                  "3x1w"
-                ];
-              }
-            ];
-            keep_receiver = [
-              { type = "grid";
-                regex = "^zrepl_snap_.*";
-                grid = lib.concatStringsSep " | " [
-                  "20x5m"
-                  "96x1h"
-                  "12x4h"
-                  "7x1d"
-                  "52x1w"
-                  "120x3w"
-                ];
-              }
-            ];
-          };
-        }
+        })
+
+        # XXX: Seems to be broken as of 2024-02-12 (permission denied).
         {
           # run with `zrepl signal wakeup safe_ma27` after
           # snapshots were done from safe.
