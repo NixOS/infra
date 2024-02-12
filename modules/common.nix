@@ -3,7 +3,7 @@
 with lib;
 
 {
-  time.timeZone = "Europe/Amsterdam";
+  time.timeZone = "UTC";
 
   users.mutableUsers = false;
 
