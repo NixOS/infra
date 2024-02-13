@@ -142,10 +142,6 @@
         hostNames = [ "zh2543b.rsync.net" "2001:1620:2019::324" ];
         publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKlIcNwmx7id/XdYKZzVX2KtZQ4PAsEa9KVQ9N43L3PX";
       };
-      ma27-backup-server = {
-        hostNames = [ "mbosch.me" "135.181.78.102" ];
-        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG6rlyYpWzzt1Fn4c9XdrgzuVqlnhzXz6BRReDVz9I/n";
-      };
       delroth-backup-server = {
         hostNames = [ "smol.delroth.net" ];
         publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID9Ta4DYE3YxXzV57s6TX6KEbIa3O4re+J4NzATCOiXb";
@@ -244,37 +240,6 @@
             port = 22;
           };
         })
-
-        # XXX: Seems to be broken as of 2024-02-12 (permission denied).
-        {
-          # run with `zrepl signal wakeup safe_ma27` after
-          # snapshots were done from safe.
-          name = "safe_ma27";
-          type = "push";
-          filesystems."rpool/safe/postgres" = true;
-          snapshotting.type = "manual";
-          connect = {
-            identity_file = "/root/.ssh/id_ed25519";
-            type = "ssh+stdinserver";
-            host = "135.181.78.102"; # "mbosch.me" has broken IPv6, tsk tsk.
-            user = "hno";
-            port = 22;
-          };
-          pruning = {
-            keep_sender = [
-              {
-                type = "regex";
-                regex = ".*";
-              }
-            ];
-            keep_receiver = [
-              {
-                type = "regex";
-                regex = ".*";
-              }
-            ];
-          };
-        }
       ];
     };
   };
