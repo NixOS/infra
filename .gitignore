@@ -8,3 +8,6 @@
 
 # Nix build outputs
 result
+
+# pre-commit
+.pre-commit-config.yaml
