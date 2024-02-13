@@ -36,7 +36,7 @@
           boot.kernelModules = [ "kvm-amd" ];
           boot.extraModulePackages = [ ];
 
-          nix.maxJobs = lib.mkDefault 16;
+          nix.settings.max-jobs = lib.mkDefault 16;
           powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
         })
       ];

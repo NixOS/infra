@@ -10,12 +10,15 @@ with lib;
   users.extraUsers.root.openssh.authorizedKeys.keys =
     with import ../ssh-keys.nix; infra-core;
 
-  nix.useSandbox = true;
-  nix.buildCores = 0;
-  nix.extraOptions =
-    ''
-      experimental-features = nix-command flakes
-    '';
+  nix = {
+    settings = {
+      cores = 0;
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+    };
+  };
 
   environment.systemPackages =
     [ pkgs.emacs
