@@ -4,6 +4,7 @@
 
 import subprocess
 import json
+import os
 import sys
 import time
 from packaging.version import Version
@@ -52,6 +53,19 @@ class NixosSystemCollector:
         )
         yield booted_system
 
+        current_system_kernel_booted = GaugeMetricFamily(
+            "nixos_current_system_kernel_booted",
+            "Whether the currently booted kernel matches the one in the current generation.",
+            labels=["booted", "current"],
+        )
+        booted_kernel = self.get_kernel_out("/run/booted-system")
+        current_kernel = self.get_kernel_out("/run/current-system")
+
+        current_system_kernel_booted.add_metric(
+            [booted_kernel, current_kernel], booted_kernel == current_kernel
+        )
+        yield current_system_kernel_booted
+
     def get_version_id(self, path):
         result = subprocess.run(
             ["bash", "-c", f"source {path}/etc/os-release; echo $VERSION_ID"],
@@ -61,6 +75,9 @@ class NixosSystemCollector:
             return result.stdout.decode("utf-8").strip()
 
         return None
+
+    def get_kernel_out(self, path):
+        return os.path.dirname(os.readlink(os.path.join(path, "kernel")))
 
     def get_time(self, path):
         result = subprocess.run(
