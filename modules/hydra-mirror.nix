@@ -28,7 +28,7 @@ let
         unitConfig = {
           After = [ "networking.target" ];
         };
-        environment.TMPDIR = "/scratch/hydra-mirror";
+        environment.TMPDIR = "/home/hydra-mirror/scratch";
         environment.GC_INITIAL_HEAP_SIZE = "4g";
       };
     };
@@ -56,9 +56,9 @@ in
 
   systemd.tmpfiles.rules = [
     ''
-      d /scratch/hydra-mirror                    0755 hydra-mirror users 10d
-      F /scratch/hydra-mirror/nixos-files.sqlite - - - 8d
-      e /scratch/hydra-mirror/release-*/*        - - - 1d -
+      d /home/hydra-mirror/scratch                    0755 hydra-mirror users 10d
+      F /home/hydra-mirror/scratch/nixos-files.sqlite - - - 8d
+      e /home/hydra-mirror/scratch/release-*/*        - - - 1d -
     ''
   ];
 
