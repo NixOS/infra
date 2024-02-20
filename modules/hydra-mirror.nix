@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   channels = (import ../channels.nix).channels-with-urls;
@@ -14,8 +14,8 @@ let
         script =
           ''
             # FIXME: use IAM role.
-            export AWS_ACCESS_KEY_ID=$(sed 's/aws_access_key_id=\(.*\)/\1/ ; t; d' ~/.aws/credentials)
-            export AWS_SECRET_ACCESS_KEY=$(sed 's/aws_secret_access_key=\(.*\)/\1/ ; t; d' ~/.aws/credentials)
+            export AWS_ACCESS_KEY_ID=$(sed 's/aws_access_key_id=\(.*\)/\1/ ; t; d' ${config.age.secrets.hydra-mirror-aws-credentials.path})
+            export AWS_SECRET_ACCESS_KEY=$(sed 's/aws_secret_access_key=\(.*\)/\1/ ; t; d' ${config.age.secrets.hydra-mirror-aws-credentials.path})
             exec mirror-nixos-branch ${channelName} https://hydra.nixos.org/job/${mainJob}/latest-finished
           '';
         serviceConfig = {
@@ -39,6 +39,11 @@ let
 in
 
 {
+  age.secrets.hydra-mirror-aws-credentials = {
+    file = ../delft/secrets/hydra-mirror-aws-credentials.age;
+    owner = "hydra-mirror";
+  };
+
   users.users.hydra-mirror =
     { description = "Channel mirroring user";
       home = "/home/hydra-mirror";
