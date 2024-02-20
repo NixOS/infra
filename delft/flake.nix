@@ -11,10 +11,13 @@
 
   inputs.nix-netboot-serve.url = "github:DeterminateSystems/nix-netboot-serve";
 
+  inputs.nixos-channel-scripts.url = "github:NixOS/nixos-channel-scripts";
+  inputs.nixos-channel-scripts.inputs.nixpkgs.follows = "nixpkgs";
+
   inputs.rfc39.url = "github:NixOS/rfc39";
   inputs.rfc39.inputs.nixpkgs.follows = "nixpkgs";
 
-  outputs = flakes @ { self, agenix, hydra, hydra-scale-equinix-metal, nix, nixpkgs, nix-netboot-serve, rfc39 }:
+  outputs = flakes @ { self, agenix, hydra, hydra-scale-equinix-metal, nix, nixpkgs, nixos-channel-scripts, nix-netboot-serve, rfc39 }:
     let
       inherit (nixpkgs) lib;
 
@@ -28,6 +31,7 @@
 
         nixpkgs.overlays = [
           nix.overlays.default
+          nixos-channel-scripts.overlays.default
           rfc39.overlays.default
         ];
       };

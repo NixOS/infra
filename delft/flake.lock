@@ -217,6 +217,26 @@
         "type": "github"
       }
     },
+    "nixos-channel-scripts": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1708471570,
+        "narHash": "sha256-OqjXLn1AVw1dyxzZPcwsa47KXn6GMfd6oSRtmi3T7II=",
+        "owner": "NixOS",
+        "repo": "nixos-channel-scripts",
+        "rev": "50daba62af2b7bb90281757570be1c8cf9ded0c6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixos-channel-scripts",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1701615100,
@@ -360,6 +380,7 @@
           "nix"
         ],
         "nix-netboot-serve": "nix-netboot-serve",
+        "nixos-channel-scripts": "nixos-channel-scripts",
         "nixpkgs": "nixpkgs_5",
         "rfc39": "rfc39"
       }
