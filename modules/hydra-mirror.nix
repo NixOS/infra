@@ -51,6 +51,7 @@ in
 
   systemd.tmpfiles.rules = [
     ''
+      d /scratch/hydra-mirror                    0755 hydra-mirror users 10d
       F /scratch/hydra-mirror/nixos-files.sqlite - - - 8d
       e /scratch/hydra-mirror/release-*/*        - - - 1d -
     ''
