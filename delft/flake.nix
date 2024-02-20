@@ -61,10 +61,6 @@
         ];
       };
 
-      nixopsConfigurations.default =
-        { inherit nixpkgs; }
-        // import ./network.nix flakes;
-
       # TODO: flake-utils.lib.eachDefaultSystem
       devShell.x86_64-linux = let
         pkgs = import nixpkgs { system = "x86_64-linux"; };
