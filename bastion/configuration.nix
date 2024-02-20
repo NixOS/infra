@@ -35,8 +35,6 @@ in
     "python2.7-urllib3-1.26.2"
   ];
 
-  users.extraUsers.tarball-mirror.openssh.authorizedKeys.keys = [ sshKeys.eelco ];
-
   users.extraUsers.deploy = {
     description = "NixOps deployments";
     isNormalUser = true;
