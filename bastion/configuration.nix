@@ -7,9 +7,7 @@ in
 {
   imports = [
     ../modules/common.nix
-    ../modules/hydra-mirror.nix
     ../modules/prometheus
-    ../modules/tarball-mirror.nix
     ../modules/wireguard.nix
     "${modulesPath}/virtualisation/amazon-image.nix"
   ];
