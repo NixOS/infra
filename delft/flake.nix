@@ -4,6 +4,9 @@
   inputs.agenix.url = "github:ryantm/agenix";
   inputs.agenix.inputs.nixpkgs.follows = "nixpkgs";
 
+  inputs.disko.url = "github:nix-community/disko";
+  inputs.disko.inputs.nixpkgs.follows = "nixpkgs";
+
   inputs.hydra.url = "github:NixOS/hydra/nix-2.19";
   inputs.nix.follows = "hydra/nix";
 
@@ -17,13 +20,14 @@
   inputs.rfc39.url = "github:NixOS/rfc39";
   inputs.rfc39.inputs.nixpkgs.follows = "nixpkgs";
 
-  outputs = flakes @ { self, agenix, hydra, hydra-scale-equinix-metal, nix, nixpkgs, nixos-channel-scripts, nix-netboot-serve, rfc39 }:
+  outputs = flakes @ { self, agenix, disko, hydra, hydra-scale-equinix-metal, nix, nixpkgs, nixos-channel-scripts, nix-netboot-serve, rfc39 }:
     let
       inherit (nixpkgs) lib;
 
       flakesModule = {
         imports = [
           agenix.nixosModules.age
+          disko.nixosModules.disko
           hydra.nixosModules.hydra
           hydra-scale-equinix-metal.nixosModules.default
           nix-netboot-serve.nixosModules.nix-netboot-serve
@@ -53,6 +57,15 @@
           flakesModule
           ./haumea.nix
           ./haumea-physical.nix
+        ];
+      };
+
+      nixosConfigurations.pluto = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+
+        modules = [
+          flakesModule
+          ./pluto
         ];
       };
 

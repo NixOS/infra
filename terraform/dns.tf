@@ -62,6 +62,16 @@ locals {
       value    = "138.201.32.77"
     },
     {
+      hostname = "pluto.nixos.org"
+      type     = "A"
+      value    = "37.27.99.100"
+    },
+    {
+      hostname = "pluto.nixos.org"
+      type     = "AAAA"
+      value    = "2a01:4f9:3070:15e0::1"
+    },
+    {
       hostname = "rhea.nixos.org"
       type     = "A"
       value    = "5.9.122.43"
