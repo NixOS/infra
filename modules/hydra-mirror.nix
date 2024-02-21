@@ -10,9 +10,16 @@ let
       name = "update-${channelName}";
       value = {
         description = "Update Channel ${channelName}";
-        path = [ pkgs.nixos-channel-scripts ];
+        path = with pkgs; [ git nixos-channel-scripts ];
         script =
           ''
+            # Hardcoded in channel scripts.
+            dir=/home/hydra-mirror/nixpkgs-channels
+            if ! [[ -e $dir ]]; then
+              git clone --bare https://github.com/NixOS/nixpkgs.git $dir
+            fi
+            GIT_DIR=$dir git config credential.helper 'store --file=${config.age.secrets.hydra-mirror-git-credentials.path}'
+
             # FIXME: use IAM role.
             export AWS_ACCESS_KEY_ID=$(sed 's/aws_access_key_id=\(.*\)/\1/ ; t; d' ${config.age.secrets.hydra-mirror-aws-credentials.path})
             export AWS_SECRET_ACCESS_KEY=$(sed 's/aws_secret_access_key=\(.*\)/\1/ ; t; d' ${config.age.secrets.hydra-mirror-aws-credentials.path})
@@ -41,6 +48,11 @@ in
 {
   age.secrets.hydra-mirror-aws-credentials = {
     file = ../delft/secrets/hydra-mirror-aws-credentials.age;
+    owner = "hydra-mirror";
+  };
+
+  age.secrets.hydra-mirror-git-credentials = {
+    file = ../delft/secrets/hydra-mirror-git-credentials.age;
     owner = "hydra-mirror";
   };
 
