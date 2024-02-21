@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   channels = (import ../channels.nix).channels-with-urls;
@@ -10,12 +10,19 @@ let
       name = "update-${channelName}";
       value = {
         description = "Update Channel ${channelName}";
-        path = [ pkgs.nixos-channel-scripts ];
+        path = with pkgs; [ git nixos-channel-scripts ];
         script =
           ''
+            # Hardcoded in channel scripts.
+            dir=/home/hydra-mirror/nixpkgs-channels
+            if ! [[ -e $dir ]]; then
+              git clone --bare https://github.com/NixOS/nixpkgs.git $dir
+            fi
+            GIT_DIR=$dir git config credential.helper 'store --file=${config.age.secrets.hydra-mirror-git-credentials.path}'
+
             # FIXME: use IAM role.
-            export AWS_ACCESS_KEY_ID=$(sed 's/aws_access_key_id=\(.*\)/\1/ ; t; d' ~/.aws/credentials)
-            export AWS_SECRET_ACCESS_KEY=$(sed 's/aws_secret_access_key=\(.*\)/\1/ ; t; d' ~/.aws/credentials)
+            export AWS_ACCESS_KEY_ID=$(sed 's/aws_access_key_id=\(.*\)/\1/ ; t; d' ${config.age.secrets.hydra-mirror-aws-credentials.path})
+            export AWS_SECRET_ACCESS_KEY=$(sed 's/aws_secret_access_key=\(.*\)/\1/ ; t; d' ${config.age.secrets.hydra-mirror-aws-credentials.path})
             exec mirror-nixos-branch ${channelName} https://hydra.nixos.org/job/${mainJob}/latest-finished
           '';
         serviceConfig = {
@@ -28,7 +35,7 @@ let
         unitConfig = {
           After = [ "networking.target" ];
         };
-        environment.TMPDIR = "/scratch/hydra-mirror";
+        environment.TMPDIR = "/home/hydra-mirror/scratch";
         environment.GC_INITIAL_HEAP_SIZE = "4g";
       };
     };
@@ -39,12 +46,31 @@ let
 in
 
 {
-  imports = [ ./hydra-mirror-user.nix ];
+  age.secrets.hydra-mirror-aws-credentials = {
+    file = ../delft/secrets/hydra-mirror-aws-credentials.age;
+    owner = "hydra-mirror";
+  };
+
+  age.secrets.hydra-mirror-git-credentials = {
+    file = ../delft/secrets/hydra-mirror-git-credentials.age;
+    owner = "hydra-mirror";
+  };
+
+  users.users.hydra-mirror =
+    { description = "Channel mirroring user";
+      home = "/home/hydra-mirror";
+      createHome = true;
+      uid = 497;
+      group = "hydra-mirror";
+    };
+
+  users.groups.hydra-mirror = {};
 
   systemd.tmpfiles.rules = [
     ''
-      F /scratch/hydra-mirror/nixos-files.sqlite - - - 8d
-      e /scratch/hydra-mirror/release-*/*        - - - 1d -
+      d /home/hydra-mirror/scratch                    0755 hydra-mirror users 10d
+      F /home/hydra-mirror/scratch/nixos-files.sqlite - - - 8d
+      e /home/hydra-mirror/scratch/release-*/*        - - - 1d -
     ''
   ];
 

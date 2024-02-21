@@ -1,9 +1,6 @@
 # This module mirrors most tarballs reachable from Nixpkgs's
 # release.nix to the content-addressed tarball cache at
 # tarballs.nixos.org.
-#
-# Note: this service expects AWS credentials for uploading to
-# s3://nixpkgs-tarballs in /home/tarball-mirror/.aws/credentials.
 
 { config, lib, pkgs, ... }:
 
@@ -23,6 +20,10 @@ let
 in
 
 {
+  age.secrets.tarball-mirror-aws-credentials = {
+    file = ../delft/secrets/tarball-mirror-aws-credentials.age;
+    owner = "tarball-mirror";
+  };
 
   users.extraUsers.tarball-mirror =
     { description = "Nixpkgs tarball mirroring user";
@@ -47,8 +48,8 @@ in
           git remote update origin
           git checkout origin/${branch}
           # FIXME: use IAM role.
-          export AWS_ACCESS_KEY_ID=$(sed 's/aws_access_key_id=\(.*\)/\1/ ; t; d' ~/.aws/credentials)
-          export AWS_SECRET_ACCESS_KEY=$(sed 's/aws_secret_access_key=\(.*\)/\1/ ; t; d' ~/.aws/credentials)
+          export AWS_ACCESS_KEY_ID=$(sed 's/aws_access_key_id=\(.*\)/\1/ ; t; d' ${config.age.secrets.tarball-mirror-aws-credentials.path})
+          export AWS_SECRET_ACCESS_KEY=$(sed 's/aws_secret_access_key=\(.*\)/\1/ ; t; d' ${config.age.secrets.tarball-mirror-aws-credentials.path})
           NIX_PATH=nixpkgs=. ./maintainers/scripts/copy-tarballs.pl \
             --expr 'import <nixpkgs/maintainers/scripts/all-tarballs.nix>' \
             --exclude 'registry.npmjs.org|mirror://kde|mirror://xorg|mirror://kernel|mirror://hackage|mirror://gnome|mirror://apache|mirror://mozilla|pypi.python.org'

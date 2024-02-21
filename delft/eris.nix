@@ -5,8 +5,10 @@ in
 {
   imports = [
     ./common.nix
+    ../modules/hydra-mirror.nix
     ../modules/rfc39.nix
     ../modules/prometheus
+    ../modules/tarball-mirror.nix
     ../modules/wireguard.nix
     ./eris/packet-spot-market-prices.nix
     ./eris/github-project-monitor.nix
@@ -43,6 +45,8 @@ in
   systemd.units."mdmonitor.service".enable = false;
 
   services.fstrim.enable = true;
+
+  zramSwap.enable = true;  # Channel scripts can be memory hungry.
 
   services.nix-netboot-serve = {
     enable = true;

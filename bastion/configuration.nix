@@ -7,9 +7,7 @@ in
 {
   imports = [
     ../modules/common.nix
-    ../modules/hydra-mirror.nix
     ../modules/prometheus
-    ../modules/tarball-mirror.nix
     ../modules/wireguard.nix
     "${modulesPath}/virtualisation/amazon-image.nix"
   ];
@@ -36,8 +34,6 @@ in
   nixpkgs.config.permittedInsecurePackages = [
     "python2.7-urllib3-1.26.2"
   ];
-
-  users.extraUsers.tarball-mirror.openssh.authorizedKeys.keys = [ sshKeys.eelco ];
 
   users.extraUsers.deploy = {
     description = "NixOps deployments";
@@ -80,6 +76,4 @@ in
   boot.kernel.sysctl."vm.swappiness" = lib.mkDefault 60;
 
   boot.loader.grub.device = lib.mkForce "/dev/disk/by-id/nvme-Amazon_Elastic_Block_Store_vol0631f5232321abda4";
-
-  systemd.tmpfiles.rules = [ "d /scratch/hydra-mirror 0755 hydra-mirror users 10d" ];
 }
