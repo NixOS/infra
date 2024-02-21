@@ -47,6 +47,7 @@ in
   users.users.hydra-mirror =
     { description = "Channel mirroring user";
       home = "/home/hydra-mirror";
+      createHome = true;
       uid = 497;
       group = "hydra-mirror";
     };
