@@ -1,6 +1,6 @@
 #! /bin/sh -e
 
-export AWS_PROFILE=nixos-org
+export AWS_PROFILE=fastly-log-processor
 
 now=$(date +%s)
 #now=$((now - 86400))
