@@ -6,8 +6,9 @@ in
   imports = [
     ./common.nix
     ../modules/hydra-mirror.nix
-    ../modules/rfc39.nix
+    ../modules/netboot-serve.nix
     ../modules/prometheus
+    ../modules/rfc39.nix
     ../modules/tarball-mirror.nix
     ../modules/wireguard.nix
     ./eris/packet-spot-market-prices.nix
@@ -48,50 +49,13 @@ in
 
   zramSwap.enable = true;  # Channel scripts can be memory hungry.
 
-  services.nix-netboot-serve = {
-    enable = true;
-    listen = "127.0.0.1:3001";
-  };
-
-  security.acme = {
-    # these cert parameters are very specifically & carefully chosen for iPXE compatibility.
-    certs."netboot.nixos.org" = {
-      keyType = "rsa4096";
-      extraLegoRunFlags = [
-        # re: https://community.letsencrypt.org/t/production-chain-changes/150739/1
-        # re: https://github.com/ipxe/ipxe/pull/116
-        # re: https://github.com/ipxe/ipxe/pull/112
-        # re: https://lists.ipxe.org/pipermail/ipxe-devel/2020-May/007042.html
-        "--preferred-chain"
-        "ISRG Root X1"
-      ];
-      extraLegoRenewFlags = [
-        # re: https://community.letsencrypt.org/t/production-chain-changes/150739/1
-        # re: https://github.com/ipxe/ipxe/pull/116
-        # re: https://github.com/ipxe/ipxe/pull/112
-        # re: https://lists.ipxe.org/pipermail/ipxe-devel/2020-May/007042.html
-        "--preferred-chain"
-        "ISRG Root X1"
-      ];
-    };
-  };
-
   services.nginx = {
     enable = true;
     recommendedProxySettings = true;
 
-    sslProtocols = "TLSv1.2 TLSv1.3"; # iPXE only supports TLSv1.2
-    sslCiphers = options.services.nginx.sslCiphers.default + ":AES256-SHA256"; # iPXE needs AES256-SHA256
-
     eventsConfig = ''
       worker_connections 4096;
     '';
-
-    virtualHosts."netboot.nixos.org" = {
-      enableACME = true;
-      forceSSL = true;
-      locations."/".proxyPass = "http://127.0.0.1:3001/";
-    };
 
     virtualHosts."monitoring.nixos.org" = {
       enableACME = true;
