@@ -7,7 +7,6 @@ in
     ./common.nix
     ../modules/hydra-mirror.nix
     ../modules/netboot-serve.nix
-    ../modules/prometheus
     ../modules/rfc39.nix
     ../modules/tarball-mirror.nix
     ../modules/wireguard.nix

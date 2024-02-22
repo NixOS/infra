@@ -8,7 +8,6 @@ with lib;
       ../modules/common.nix
       ../modules/prometheus
       ../modules/wireguard.nix
-      ../modules/prometheus
     ];
 
   nixpkgs.config.allowUnfree = true;
