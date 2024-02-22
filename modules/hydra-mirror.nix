@@ -61,7 +61,7 @@ in
     { description = "Channel mirroring user";
       home = "/home/hydra-mirror";
       createHome = true;
-      uid = 497;
+      isSystemUser = true;
       group = "hydra-mirror";
     };
 
