@@ -25,6 +25,7 @@ in
   networking.extraHosts = ''
     10.254.1.1 bastion
     10.254.1.5 rhea
+    10.254.1.6 pluto
 
     10.254.1.9 haumea
 
@@ -274,6 +275,7 @@ in
           {
             targets = [
               "eris:9100"
+              "pluto:9100"
             ];
             labels.role = "monitoring";
           }
@@ -313,6 +315,7 @@ in
           {
             targets = [
               "eris:9300"
+              "pluto:9300"
             ];
             labels.role = "monitoring";
           }
