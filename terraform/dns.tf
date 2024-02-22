@@ -58,8 +58,8 @@ locals {
     },
     {
       hostname = "monitoring.nixos.org"
-      type     = "A"
-      value    = "138.201.32.77"
+      type     = "CNAME"
+      value    = "eris.nixos.org"
     },
     {
       hostname = "pluto.nixos.org"
