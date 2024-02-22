@@ -25,11 +25,15 @@ in
     owner = "tarball-mirror";
   };
 
-  users.extraUsers.tarball-mirror =
+  users.users.tarball-mirror =
     { description = "Nixpkgs tarball mirroring user";
       home = "/home/tarball-mirror";
-      isNormalUser = true;
+      createHome = true;
+      isSystemUser = true;
+      group = "tarball-mirror";
     };
+
+  users.groups.tarball-mirror = {};
 
   systemd.services.mirror-tarballs =
     { description = "Mirror Nixpkgs Tarballs";
