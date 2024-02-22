@@ -5,7 +5,9 @@
     ./disko.nix
     ./network.nix
 
+    ../../modules/hydra-mirror.nix
     ../../modules/netboot-serve.nix
+    ../../modules/tarball-mirror.nix
   ];
 
   networking = {

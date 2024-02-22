@@ -5,10 +5,8 @@ in
 {
   imports = [
     ./common.nix
-    ../modules/hydra-mirror.nix
     ../modules/netboot-serve.nix
     ../modules/rfc39.nix
-    ../modules/tarball-mirror.nix
     ../modules/wireguard.nix
     ./eris/packet-spot-market-prices.nix
     ./eris/github-project-monitor.nix
