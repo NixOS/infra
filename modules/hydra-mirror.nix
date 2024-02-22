@@ -19,6 +19,7 @@ let
               git clone --bare https://github.com/NixOS/nixpkgs.git $dir
             fi
             GIT_DIR=$dir git config credential.helper 'store --file=${config.age.secrets.hydra-mirror-git-credentials.path}'
+            GIT_DIR=$dir git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
 
             # FIXME: use IAM role.
             export AWS_ACCESS_KEY_ID=$(sed 's/aws_access_key_id=\(.*\)/\1/ ; t; d' ${config.age.secrets.hydra-mirror-aws-credentials.path})
