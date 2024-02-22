@@ -5,7 +5,6 @@ in
 {
   imports = [
     ./common.nix
-    ../modules/rfc39.nix
     ../modules/wireguard.nix
     ./eris/packet-spot-market-prices.nix
     ./eris/github-project-monitor.nix

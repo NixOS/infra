@@ -8,9 +8,9 @@ let
     hydra-mirror-git-credentials = [ machines.pluto ];
     packet-sd-env = [ machines.eris ];
     prometheus-packet-spot-market-price-exporter = [ machines.eris ];
-    rfc39-credentials = [ machines.eris ];
-    rfc39-github = [ machines.eris ];
-    rfc39-record-push = [ machines.eris ];
+    rfc39-credentials = [ machines.pluto ];
+    rfc39-github = [ machines.pluto ];
+    rfc39-record-push = [ machines.pluto ];
     tarball-mirror-aws-credentials = [ machines.pluto ];
   };
 in
