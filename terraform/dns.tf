@@ -54,7 +54,7 @@ locals {
     {
       hostname = "netboot.nixos.org"
       type     = "CNAME"
-      value    = "monitoring.nixos.org"
+      value    = "pluto.nixos.org"
     },
     {
       hostname = "monitoring.nixos.org"
