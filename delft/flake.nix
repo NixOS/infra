@@ -55,8 +55,7 @@
 
         modules = [
           flakesModule
-          ./haumea.nix
-          ./haumea-physical.nix
+          ./haumea
         ];
       };
 
