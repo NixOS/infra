@@ -14,9 +14,6 @@
     dataSourceName = "user=root database=hydra host=/run/postgresql sslmode=disable";
     firewallFilter = "-i wg0 -p tcp -m tcp --dport 9187";
     openFirewall = true;
-    extraFlags = [
-      "--extend.query-path" "${pkgs.prometheus-postgres-exporter.src}/queries.yaml"
-    ];
   };
 
   networking.firewall.interfaces.wg0.allowedTCPPorts = [ 5432 ];
