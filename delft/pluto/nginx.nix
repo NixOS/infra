@@ -21,5 +21,17 @@
       locations."/prometheus/".proxyPass = "http://${config.services.prometheus.listenAddress}:${toString config.services.prometheus.port}";
       locations."/grafana/".proxyPass = "http://${config.services.grafana.addr}:${toString config.services.grafana.port}/";
     };
+
+    virtualHosts."prometheus.nixos.org" = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/".proxyPass = "http://${config.services.prometheus.listenAddress}:${toString config.services.prometheus.port}";
+    };
+
+    virtualHosts."grafana.nixos.org" = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/".proxyPass = "http://${config.services.grafana.addr}:${toString config.services.grafana.port}/";
+    };
   };
 }
