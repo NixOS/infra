@@ -72,6 +72,16 @@ locals {
       value    = "2a01:4f9:3070:15e0::1"
     },
     {
+      hostname = "prometheus.nixos.org"
+      type     = "CNAME"
+      value    = "pluto.nixos.org"
+    },
+    {
+      hostname = "grafana.nixos.org"
+      type     = "CNAME"
+      value    = "pluto.nixos.org"
+    },
+    {
       hostname = "rhea.nixos.org"
       type     = "A"
       value    = "5.9.122.43"
