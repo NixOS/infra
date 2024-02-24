@@ -573,6 +573,18 @@ in
           }
         ];
       }
+
+      {
+        job_name = "synapse";
+        scheme = "https";
+        static_configs = [
+          {
+            targets = [
+              "matrix.nixos.org:443"
+            ];
+          }
+        ];
+      }
     ]
     ++ (
       let
