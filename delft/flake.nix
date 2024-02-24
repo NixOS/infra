@@ -45,8 +45,7 @@
 
         modules = [
           flakesModule
-          ./eris.nix
-          ./eris-physical.nix
+          ./eris
         ];
       };
 

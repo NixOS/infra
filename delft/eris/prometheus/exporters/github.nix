@@ -1,4 +1,7 @@
-{ config, pkgs, ... }:
+{ pkgs
+, ...
+}:
+
 let
   exporter = pkgs.fetchFromGitHub {
     owner = "grahamc";
@@ -23,8 +26,12 @@ in {
   users.groups.github-exporter = {};
 
   systemd.services.prometheus-github-exporter = {
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network.target" ];
+    wantedBy = [
+      "multi-user.target"
+    ];
+    after = [
+      "network.target"
+    ];
     serviceConfig = {
       User = "github-exporter";
       Restart = "always";
@@ -33,9 +40,22 @@ in {
     };
 
     path = [
-      (pkgs.python3.withPackages (p: [ p.prometheus_client p.requests ]))
+      (pkgs.python3.withPackages (ps: with ps; [
+        prometheus_client
+        requests
+      ]))
     ];
 
     script = "exec python3 ${exporter}/scrape.py ${config}";
   };
+
+  services.prometheus.scrapeConfigs = [ {
+    job_name = "prometheus-github-exporter";
+    metrics_path = "/";
+    static_configs = [ {
+      targets = [
+        "127.0.0.1:9401"
+      ];
+    } ];
+  } ];
 }
