@@ -14,11 +14,6 @@ with lib;
 
   services.openssh.authorizedKeysFiles = mkForce [ "/etc/ssh/authorized_keys.d/%u" ];
 
-  services.openssh.extraConfig =
-    ''
-      PubkeyAcceptedKeyTypes +ssh-dss
-    '';
-
   boot.kernelModules = [ "coretemp" ];
 
   # Prevent "out of sync" errors on the KVM switch.
