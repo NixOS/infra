@@ -1,3 +1,7 @@
+{ pkgs
+, ...
+}:
+
 {
   services.prometheus = {
     scrapeConfigs = [ {
@@ -11,8 +15,8 @@
       } ];
     } ];
 
-    rules = [
-      (builtins.toJSON {
+    ruleFiles = [
+      (pkgs.writeText "rfc39-exporter.rules" (builtins.toJSON {
         groups = [ {
           name = "rfc39";
           rules = [ {
@@ -23,7 +27,7 @@
             annotations.grafana = "https://monitoring.nixos.org/grafana/d/fBW4tL1Wz/scheduled-task-state-channels-website?orgId=1&refresh=10s";
           } ];
         } ];
-      })
+      }))
     ];
   };
 }

@@ -79,8 +79,8 @@
       } ];
     } ];
 
-    rules = [
-      (builtins.toJSON {
+    ruleFiles = [
+      (pkgs.writeText "hydra-exporter.rules" (builtins.toJSON {
         groups = [ {
           name = "hydra";
           rules = [ {
@@ -98,7 +98,7 @@
             annotations.summary = "hydra-queue-runner's prometheus exporter is not up";
           } ];
         } ];
-      })
+      }))
     ];
   };
 }

@@ -1,3 +1,7 @@
+{ pkgs
+, ...
+}:
+
 {
   services.prometheus = {
     scrapeConfigs = [ {
@@ -35,11 +39,11 @@
       } ];
     } ];
 
-    rules = let
+    ruleFiles = let
       diskSelector = ''mountpoint=~"(/|/scratch)",instance!~".*packethost.net"'';
       relevantLabels = "device,fstype,instance,mountpoint";
     in [
-      (builtins.toJSON {
+      (pkgs.writeText "node-exporter.rules" (builtins.toJSON {
         groups = [ {
           name = "node";
           rules = [ {
@@ -80,7 +84,7 @@
             annotations.grafana = "https://monitoring.nixos.org/grafana/d/fBW4tL1Wz/scheduled-task-state-channels-website?orgId=1&refresh=10s";
           } ];
         } ];
-      })
+      }))
     ];
   };
 }

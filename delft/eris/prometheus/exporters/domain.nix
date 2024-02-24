@@ -1,3 +1,7 @@
+{ pkgs
+, ...
+}:
+
 {
   services.prometheus = {
     exporters.domain = {
@@ -26,8 +30,8 @@
       } ];
     } ];
 
-    rules = [
-      (builtins.toJSON {
+    ruleFiles = [
+      (pkgs.writeText "domain-exporter.rules" (builtins.toJSON {
         groups = [ {    
           name = "domain";
           rules = [ {
@@ -38,7 +42,7 @@
             annotations.summary = "Domain {{ $labels.domain }} will expire in less than 30 days";
           } ];
         } ];
-      })
+      }))
     ];
   };
 }

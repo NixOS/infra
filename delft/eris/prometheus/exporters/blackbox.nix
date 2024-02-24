@@ -61,17 +61,19 @@ in
       ])
     ];
 
-    rules = [
-      (builtins.toJSON {
-        name = "blackbox";
-        rules = [ {
-          alert = "CertificateExpiry";
-          expr = "probe_ssl_earliest_cert_expiry - time() < 86400 * 14";
-          for = "10m";
-          labels.severity = "warning";
-          annotations.summary = "Certificate for {{ $labels.instance }} is expiring soon.";
+    ruleFiles = [
+      (pkgs.writeText "blackbox-exporter.rules" (builtins.toJSON {
+        groups = [ {
+          name = "blackbox";
+          rules = [ {
+            alert = "CertificateExpiry";
+            expr = "probe_ssl_earliest_cert_expiry - time() < 86400 * 14";
+            for = "10m";
+            labels.severity = "warning";
+            annotations.summary = "Certificate for {{ $labels.instance }} is expiring soon.";
+          } ];
         } ];
-      })
+      }))
     ];
   };
 }
