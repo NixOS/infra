@@ -5,6 +5,11 @@
     ./disko.nix
     ./network.nix
 
+    ./grafana.nix
+    ./nginx.nix
+    ./nixos-metrics.nix
+    ./prometheus
+
     ../../modules/hydra-mirror.nix
     ../../modules/netboot-serve.nix
     ../../modules/rfc39.nix

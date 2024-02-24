@@ -8,11 +8,7 @@
     "${modulesPath}/installer/scan/not-detected.nix"
     ../common.nix
     ./boot.nix
-    ./grafana.nix
     ./network.nix
-    ./nginx.nix
-    ./nixos-metrics.nix
-    ./prometheus
   ];
   
   networking = {

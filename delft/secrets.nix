@@ -2,12 +2,12 @@ let
   keys = import ../ssh-keys.nix;
 
   secrets = with keys; {
-    alertmanager-matrix-forwarder = [ machines.eris ];
-    fastly-read-only-api-token = [ machines.eris ];
+    alertmanager-matrix-forwarder = [ machines.pluto ];
+    fastly-read-only-api-token = [ machines.pluto ];
     hydra-mirror-aws-credentials = [ machines.pluto ];
     hydra-mirror-git-credentials = [ machines.pluto ];
-    packet-sd-env = [ machines.eris ];
-    prometheus-packet-spot-market-price-exporter = [ machines.eris ];
+    packet-sd-env = [ machines.pluto ];
+    prometheus-packet-spot-market-price-exporter = [ machines.pluto ];
     rfc39-credentials = [ machines.pluto ];
     rfc39-github = [ machines.pluto ];
     rfc39-record-push = [ machines.pluto ];
