@@ -59,7 +59,7 @@ locals {
     {
       hostname = "monitoring.nixos.org"
       type     = "CNAME"
-      value    = "eris.nixos.org"
+      value    = "pluto.nixos.org"
     },
     {
       hostname = "pluto.nixos.org"
