@@ -8,7 +8,7 @@ let
   };
 in {
   age.secrets.prometheus-packet-spot-market-price-exporter = {
-    file = ../secrets/prometheus-packet-spot-market-price-exporter.age;
+    file = ../../../secrets/prometheus-packet-spot-market-price-exporter.age;
     owner = "spot-price-exporter";
   };
 
@@ -20,8 +20,12 @@ in {
   users.groups.spot-price-exporter = {};
 
   systemd.services.prometheus-packet-spot-market-price-exporter = {
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network.target" ];
+    wantedBy = [
+      "multi-user.target"
+    ];
+    after = [
+      "network.target"
+    ];
     serviceConfig = {
       User = "spot-price-exporter";
       Group = "keys";
@@ -31,7 +35,10 @@ in {
     };
 
     path = [
-      (pkgs.python3.withPackages (p: [ p.prometheus_client p.requests ]))
+      (pkgs.python3.withPackages (ps: with ps; [
+        prometheus_client
+        requests
+      ]))
     ];
 
     script = "exec python3 ${exporter}/scrape.py ${config.age.secrets.prometheus-packet-spot-market-price-exporter.path}";
