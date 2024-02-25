@@ -1,10 +1,24 @@
 { lib
 , config
+, pkgs
 , ...
 }:
 
 let
   cfg = config.services.backup;
+
+  mkZfsPreHook = mountpoint: ''
+    DATASET="$(findmnt -nr -o source "${mountpoint}")"
+    zfs snapshot -r "$DATASET@borg"
+
+    # https://github.com/borgbackup/borg/issues/6652
+    ls ${mountpoint}/.zfs/snapshot/backup/ > /dev/null
+  '';
+
+  mkZfsPostHook = mountpoint: ''
+    DATASET="$(findmnt -nr -o source "${mountpoint}")"
+    zfs destroy -r "$DATASET@borg"
+  '';
 in
 {
   options.services.backup = with lib; with types; {
@@ -71,6 +85,13 @@ in
         Paths to include in the backup.
       '';
     };
+    includesZfsDatasets = mkOption {
+      type = listOf str;
+      default = [];
+      description = ''
+        ZFS datasets referenced by mountpoint to snapshot and include
+      '';
+    };
 
     excludes = mkOption {
       type = listOf path;
@@ -105,7 +126,7 @@ in
     };
   };
 
-  config = lib.mkIf (cfg.includes != []) {
+  config = lib.mkIf (cfg.includes != [] || cfg.includesZfsDatasets != []) {
     programs.ssh.knownHosts."${if cfg.port != 22 then "[${cfg.host}]:${cfg.port}" else cfg.host}" = {
       publicKey = "${cfg.hostPublicKey}";
     };
@@ -113,6 +134,11 @@ in
     systemd.services.borgbackup-job-state = {
       wants = cfg.wantedUnits;
       after = cfg.wantedUnits;
+
+      path = lib.optionals (cfg.includesZfsDatasets != []) [
+        config.boot.zfs.package
+        pkgs.util-linux
+      ];
     };
 
     systemd.timers.borgbackup-job-state.timerConfig = {
@@ -122,7 +148,8 @@ in
     };
 
     services.borgbackup.jobs.state = {
-      inherit (cfg) preHook postHook;
+      preHook = lib.concatMapStringsSep "\n" mkZfsPreHook cfg.includesZfsDatasets;
+      postHook = lib.concatMapStringsSep "\n" mkZfsPostHook cfg.includesZfsDatasets;
 
       # Create the repo
       doInit = true;
@@ -136,7 +163,8 @@ in
       };
 
       # What to backup
-      paths = cfg.includes;
+      paths = cfg.includes ++
+        (map (mp: "${mp}/.zfs/snapshot/borg") cfg.includesZfsDatasets);
       exclude = cfg.excludes;
 
       # Where to backup it to
