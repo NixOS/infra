@@ -9,7 +9,6 @@
     } {
       labels.role = "monitoring";
       targets = [
-        "eris:9300"
         "pluto:9300"
       ];
     } {

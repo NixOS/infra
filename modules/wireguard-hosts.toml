@@ -31,12 +31,6 @@ publicKey = "nG7I9gegJIynKOZ6tzpvmLdCZ/xScTgRZeFvYLFyil4="
 # tombstone: 10.254.2.8 mac8 (host/guest)
 # tombstone: 10.254.2.9 mac9 (host/guest)
 
-[hosts.eris]
-endpoint = "138.201.32.77"
-ip = "10.254.1.4"
-port = 51820
-publicKey = "H/Y+sbNETKZugxGFbOS0m5BSr28jRDL19U37wEw07D8="
-
 [hosts.rhea]
 endpoint = "5.9.122.43"
 ip = "10.254.1.5"
