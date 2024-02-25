@@ -30,6 +30,10 @@
     timerConfig.OnCalendar = "12:00:00";
   };
 
+  services.backup.includesZfsDatasets = [
+    "/var/lib/victoriametrics"
+  ];
+
   services.victoriametrics = {
     enable = true;
     retentionPeriod = 1200; # 100 years

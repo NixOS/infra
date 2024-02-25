@@ -1,4 +1,8 @@
 {
+  services.backup.includes = [
+    "/var/lib/grafana"
+  ];
+
   services.grafana = {
     enable = true;
     auth.anonymous.enable = true;
