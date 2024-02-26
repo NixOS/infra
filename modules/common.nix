@@ -3,6 +3,10 @@
 with lib;
 
 {
+  imports = [
+    ./backup.nix
+  ];
+
   time.timeZone = "UTC";
 
   users.mutableUsers = false;

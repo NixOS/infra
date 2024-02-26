@@ -83,6 +83,14 @@
             type = "zfs_fs";
             mountpoint = "/";
           };
+          "root/prometheus" = {
+            type = "zfs_fs";
+            mountpoint = "/var/lib/prometheus2";
+          };
+          "root/victoriametrics" = {
+            type = "zfs_fs";
+            mountpoint = "/var/lib/victoriametrics";
+          };
         };
       };
     };

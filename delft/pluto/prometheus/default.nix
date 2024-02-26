@@ -1,3 +1,7 @@
+{ config
+, ...
+}:
+
 {
   imports = [
     ./alertmanager.nix
@@ -28,6 +32,10 @@
 
   networking.firewall.allowedTCPPorts = [
     9090
+  ];
+
+  services.backup.includesZfsDatasets = [
+    "/var/lib/prometheus2"
   ];
 
   services.prometheus = {
