@@ -42,7 +42,7 @@
     enable = true;
     extraFlags = [
       "--storage.tsdb.retention=${toString (150 * 24)}h"
-      "--web.external-url=https://monitoring.nixos.org/prometheus/"
+      "--web.external-url=https://prometheus.nixos.org/"
     ];
     globalConfig.scrape_interval = "15s";
   };
