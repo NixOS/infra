@@ -37,4 +37,14 @@ in {
 
     script = "exec python3 ${exporter}/scrape.py $CREDENTIALS_DIRECTORY/config";
   };
+
+  services.prometheus.scrapeConfigs = [ {
+    job_name = "prometheus-packet-spot-price-exporter";
+    metrics_path = "/metrics";
+    static_configs = [ {
+      targets = [
+        "127.0.0.1:9400"
+      ];
+    } ] ;
+  } ];
 }
