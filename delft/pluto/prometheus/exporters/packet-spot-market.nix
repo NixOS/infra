@@ -7,17 +7,7 @@ let
     sha256 = "sha256-I2WolAAM+siE8JfZbEZ3Mmk7/XqVio/PzUKqZUYCBfE=";
   };
 in {
-  age.secrets.prometheus-packet-spot-market-price-exporter = {
-    file = ../../../secrets/prometheus-packet-spot-market-price-exporter.age;
-    owner = "spot-price-exporter";
-  };
-
-  users.users.spot-price-exporter = {
-    description = "Prometheus Packet Spot Market Price Exporter";
-    isSystemUser = true;
-    group = "spot-price-exporter";
-  };
-  users.groups.spot-price-exporter = {};
+  age.secrets.prometheus-packet-spot-market-price-exporter.file = ../../../secrets/prometheus-packet-spot-market-price-exporter.age;
 
   systemd.services.prometheus-packet-spot-market-price-exporter = {
     wantedBy = [
@@ -27,11 +17,15 @@ in {
       "network.target"
     ];
     serviceConfig = {
+      DynamicUser = true;
       User = "spot-price-exporter";
       Group = "keys";
       Restart = "always";
       RestartSec = "60s";
       PrivateTmp =  true;
+      LoadCredential = [
+        "config:${config.age.secrets.prometheus-packet-spot-market-price-exporter.path}"
+      ];
     };
 
     path = [
@@ -41,6 +35,6 @@ in {
       ]))
     ];
 
-    script = "exec python3 ${exporter}/scrape.py ${config.age.secrets.prometheus-packet-spot-market-price-exporter.path}";
+    script = "exec python3 ${exporter}/scrape.py $CREDENTIALS_DIRECTORY/config";
   };
 }
