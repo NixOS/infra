@@ -16,6 +16,7 @@
       "network.target"
     ];
     serviceConfig = {
+      DynamicUser = true;
       Restart = "always";
       RestartSec = "60s";
       PrivateTmp = true;
