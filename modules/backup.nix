@@ -12,7 +12,7 @@ let
     zfs snapshot -r "$DATASET@borg"
 
     # https://github.com/borgbackup/borg/issues/6652
-    ls ${mountpoint}/.zfs/snapshot/backup/ > /dev/null
+    ls ${mountpoint}/.zfs/snapshot/borg/ > /dev/null
   '';
 
   mkZfsPostHook = mountpoint: ''
