@@ -56,14 +56,12 @@ class NixosSystemCollector:
         current_system_kernel_booted = GaugeMetricFamily(
             "nixos_current_system_kernel_booted",
             "Whether the currently booted kernel matches the one in the current generation.",
-            labels=["booted", "current"],
+            labels=[],
         )
         booted_kernel = self.get_kernel_out("/run/booted-system")
         current_kernel = self.get_kernel_out("/run/current-system")
 
-        current_system_kernel_booted.add_metric(
-            [booted_kernel, current_kernel], booted_kernel == current_kernel
-        )
+        current_system_kernel_booted.add_metric([], booted_kernel == current_kernel)
         yield current_system_kernel_booted
 
     def get_version_id(self, path):
