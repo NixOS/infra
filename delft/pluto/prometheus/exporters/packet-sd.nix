@@ -3,10 +3,6 @@
 , ...
 }:
 
-let
-  packet-sd = pkgs.callPackage ./packages/packet-sd.nix { };
-in
-
 {
   age.secrets.packet-sd-env = {
     file = ../../../secrets/packet-sd-env.age;
@@ -37,7 +33,7 @@ in
     serviceConfig = {
       User = "packet-sd";
       Group = "keys";
-      ExecStart = "${packet-sd}/bin/prometheus-packet-sd --output.file=/var/lib/packet-sd/packet-sd.json";
+      ExecStart = "${pkgs.packet-sd}/bin/prometheus-packet-sd --output.file=/var/lib/packet-sd/packet-sd.json";
       EnvironmentFile = config.age.secrets.packet-sd-env.path;
       Restart = "always";
       RestartSec = "60s";
