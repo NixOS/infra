@@ -41,7 +41,7 @@
   services.prometheus = {
     enable = true;
     extraFlags = [
-      "--storage.tsdb.retention=${toString (150 * 24)}h"
+      "--storage.tsdb.retention=${toString (720 * 24)}h"
       "--web.external-url=https://prometheus.nixos.org/"
     ];
     globalConfig.scrape_interval = "15s";
