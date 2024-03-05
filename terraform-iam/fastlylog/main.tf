@@ -31,19 +31,17 @@ resource "aws_s3_bucket_policy" "logs" {
       "Sid": "AllowNixOSOrgRead",
       "Effect": "Allow",
       "Principal": {
-        "AWS": "arn:aws:iam::008826681144:user/eelco.dolstra"
+        "AWS": "arn:aws:iam::008826681144:user/eelco.dolstra",
+        "AWS": "arn:aws:iam::008826681144:user/fastly-log-processor"
       },
-      "Action": "s3:GetObject",
-      "Resource": "arn:aws:s3:::${aws_s3_bucket.logs.id}/*"
-    },
-    {
-      "Sid": "AllowNixOSOrgList",
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": "arn:aws:iam::008826681144:user/eelco.dolstra"
-      },
-      "Action": "s3:ListBucket",
-      "Resource": "arn:aws:s3:::${aws_s3_bucket.logs.id}"
+      "Action": [
+        "s3:GetObject",
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        "arn:aws:s3:::${aws_s3_bucket.logs.id}/*",
+        "arn:aws:s3:::${aws_s3_bucket.logs.id}"
+      ]
     }
   ]
 }
