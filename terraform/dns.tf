@@ -59,7 +59,7 @@ locals {
     {
       hostname = "monitoring.nixos.org"
       type     = "CNAME"
-      value    = "eris.nixos.org"
+      value    = "pluto.nixos.org"
     },
     {
       hostname = "pluto.nixos.org"
@@ -70,6 +70,16 @@ locals {
       hostname = "pluto.nixos.org"
       type     = "AAAA"
       value    = "2a01:4f9:3070:15e0::1"
+    },
+    {
+      hostname = "prometheus.nixos.org"
+      type     = "CNAME"
+      value    = "pluto.nixos.org"
+    },
+    {
+      hostname = "grafana.nixos.org"
+      type     = "CNAME"
+      value    = "pluto.nixos.org"
     },
     {
       hostname = "rhea.nixos.org"

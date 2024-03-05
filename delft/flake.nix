@@ -40,23 +40,12 @@
         ];
       };
     in {
-      nixosConfigurations.eris = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-
-        modules = [
-          flakesModule
-          ./eris.nix
-          ./eris-physical.nix
-        ];
-      };
-
       nixosConfigurations.haumea = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
 
         modules = [
           flakesModule
-          ./haumea.nix
-          ./haumea-physical.nix
+          ./haumea
         ];
       };
 
