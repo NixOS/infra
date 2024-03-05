@@ -31,7 +31,6 @@ resource "aws_s3_bucket_policy" "logs" {
       "Sid": "AllowNixOSOrgRead",
       "Effect": "Allow",
       "Principal": {
-        "AWS": "arn:aws:iam::008826681144:user/eelco.dolstra",
         "AWS": "arn:aws:iam::008826681144:user/fastly-log-processor"
       },
       "Action": [
