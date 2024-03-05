@@ -1,6 +1,7 @@
 from datetime import datetime
 import os
 import re
+import sys
 
 release_dirs = ["nixos", "nixpkgs"]
 
@@ -10,11 +11,14 @@ is_prerelease = re.compile('alpha|beta|pre')
 
 minimum_release_to_keep = "23.05"
 
+def log(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
+
 class FileEntry:
-    def __init__(self, date, size, name):
+    def __init__(self, date, size, key):
         self.date = date
         self.size = size
-        self.name = name
+        self.key = key
 
 def parse_file(filename):
     entries = []
@@ -23,8 +27,8 @@ def parse_file(filename):
             #date = datetime.strptime(line[0:19], "%Y-%m-%d %H:%M:%S")
             date = None # don't need it
             size = int(line[19:31])
-            name = line[31:].rstrip('\n')
-            entry = FileEntry(date, size, name)
+            key = line[31:].rstrip('\n')
+            entry = FileEntry(date, size, key)
             entries.append(entry)
     return entries
 
@@ -56,19 +60,19 @@ file_entries = parse_file(filename)
 # Gather all releases. These are identified by having a "src-url" file
 # in them.
 for entry in file_entries:
-    if entry.name.endswith("src-url"):
-        #print("Date:", entry.date, "Size:", entry.size, "Name:", entry.name)
-        name = os.path.dirname(entry.name)
+    if entry.key.endswith("src-url"):
+        #log("Date:", entry.date, "Size:", entry.size, "Name:", entry.key)
+        name = os.path.dirname(entry.key)
         releases[name] = Release(name, entry.date)
 
 # Get the files for each release.
 for entry in file_entries:
-    rel_name = os.path.dirname(entry.name)
+    rel_name = os.path.dirname(entry.key)
     rel = releases.get(rel_name)
     if rel is not None:
         rel.files.append(entry)
 
-print("Found {} releases.".format(len(releases)))
+log("Found {} releases.".format(len(releases)))
 
 # Group the releases by parent directory (like nixpkgs/23.11-darwin/).
 release_parents = dict()
@@ -88,19 +92,19 @@ for release_parent_name, rels in release_parents.items():
     for rel in rels:
         major_release = rel.major_release()
         if major_release is None:
-            print("Skipping release '{}'.".format(rel.name))
+            log("Skipping release '{}'.".format(rel.name))
         else:
             major_releases.setdefault(major_release, []).append(rel)
 
     for major_release_name, rels in major_releases.items():
         if major_release_name >= minimum_release_to_keep:
-            print("Keeping all {} releases in major release group '{}/{}'.".format(len(rels), release_parent_name, major_release_name))
+            log("Keeping all {} releases in major release group '{}/{}'.".format(len(rels), release_parent_name, major_release_name))
         else:
             # Sort the releases by release name (lexicographically after splitting into version components), keep the newest one.
             sorted_rels = sorted(rels, key=lambda rel: rel.sort_key())
-            print("Major release group '{}/{}' ({} releases).".format(release_parent_name, major_release_name, len(rels)))
+            log("Major release group '{}/{}' ({} releases).".format(release_parent_name, major_release_name, len(rels)))
             #for rel in sorted_rels:
-            #    print("  ", rel.date, rel.name, rel.sort_key())
+            #    log("  ", rel.date, rel.name, rel.sort_key())
 
             # Keep the most recent release in the group.
             most_recent_rel = sorted_rels.pop()
@@ -108,14 +112,13 @@ for release_parent_name, rels in release_parents.items():
             # Expunge the other releases.
             for rel in sorted_rels:
                 rel_size = sum([f.size for f in rel.files])
-                print("  Expunging release '{}' ({} files, {:.2f} MiB).".format(rel.name, len(rel.files), rel_size / 1024**2))
-                #for f in rel.files:
-                #    print("    {}".format(f.name))
-                #    # TODO: delete or move to glacier.
+                log("  Expunging release '{}' ({} files, {:.2f} MiB).".format(rel.name, len(rel.files), rel_size / 1024**2))
+                for f in rel.files:
+                    print(f.key)
                 expunged_releases += 1
                 expunged_files += len(rel.files)
                 expunged_size += rel_size
 
-            print("  Keeping release '{}'.".format(most_recent_rel.name))
+            log("  Keeping release '{}'.".format(most_recent_rel.name))
 
-print("Expunged {} releases, {} files, {:.2f} GiB.".format(expunged_releases, expunged_files, expunged_size / 1024**3))
+log("Expunged {} releases, {} files, {:.2f} GiB.".format(expunged_releases, expunged_files, expunged_size / 1024**3))
