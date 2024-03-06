@@ -293,6 +293,21 @@ locals {
     },
     {
       hostname = "wiki.nixos.org"
+      type     = "TXT"
+      value    = "v=spf1 ip4:65.21.240.250 ip6:2a01:4f9:c012:8178:: ~all"
+    },
+    {
+      hostname = "mail._domainkey.wiki.nixos.org"
+      type     = "TXT"
+      value    = "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDa+KjIljYr3q5MWWK7sEYzjR8OcA32zBh9BCPo6/HlY1q2ODTYsmE/FDZWpYMzM5z+ddnuGYdXia322XnZaNpZNoq1TbGYuQ5DsgAEK09CGoLuzONg3PSXTrkG7E2Sd6wstwHGJ5FHxSLKtNoWkknt9F5XAFZgXapO0w54p+BWvwIDAQAB"
+    },
+    {
+      hostname = "_dmarc.wiki.nixos.org"
+      type     = "TXT"
+      value    = "v=DMARC1; p=none"
+    },
+    {
+      hostname = "wiki.nixos.org"
       type     = "AAAA"
       value    = "2a01:4f9:c012:8178::"
     }
