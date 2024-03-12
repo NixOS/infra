@@ -29,7 +29,7 @@
           receiver = "ignore";
           group_wait = "30s";
           group_interval = "5m";
-          repeat_interval = "4h";
+          repeat_interval = "24h";
           group_by = [ "alertname" ];
 
           routes = [ {
