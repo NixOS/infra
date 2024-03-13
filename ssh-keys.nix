@@ -37,7 +37,6 @@ rec {
     zimbatm
     amine
     vcunat
-    delroth
     hexa-gaia
     hexa-helix
   ];
