@@ -199,16 +199,16 @@
         "nixpkgs-for-fileset": "nixpkgs-for-fileset"
       },
       "locked": {
-        "lastModified": 1706309642,
-        "narHash": "sha256-Lk1ErBYJR08sJKdFhYvMgf6ILUirTXAiYUobjWkO5Uk=",
+        "lastModified": 1710559001,
+        "narHash": "sha256-evQv27UZhk9tW95QBhrXeEowakvv7ijlXP1YYIevc4Y=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "838648c0cebc12e0527ede3ac5f71b64670b5f83",
+        "rev": "dd68e3ffefe822b28554ea65ace8590dbfe02c0e",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nix-2.19",
+        "ref": "hydra.nixos.org",
         "repo": "hydra",
         "type": "github"
       }
