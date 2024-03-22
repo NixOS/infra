@@ -9,6 +9,7 @@
       ../../modules/first-time-contribution-tagger.nix
       ../../modules/backup.nix
       ../../modules/vaultwarden.nix
+      ../../modules/jitsi.nix
     ];
 
   # Bootloader.
