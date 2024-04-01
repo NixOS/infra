@@ -1,14 +1,14 @@
 # Every directory containing configurations impacting the core infra needs a
 # review from a member of core infra.
-.github/                  @NixOS/infra-build
-bastion/                  @NixOS/infra-build
-delft/                    @NixOS/infra-build
-hydra-packet-importer/    @NixOS/infra-build
-lib/                      @NixOS/infra-build
-macs/                     @NixOS/infra-build
-metrics/                  @NixOS/infra-build
-modules/                  @NixOS/infra-build
-terraform-iam/            @NixOS/infra-build
-terraform/                @NixOS/infra-build
-channels.nix              @NixOS/infra-build
-ssh-keys.nix              @NixOS/infra-build
+/.github/                  @NixOS/infra-build
+/bastion/                  @NixOS/infra-build
+/delft/                    @NixOS/infra-build
+/hydra-packet-importer/    @NixOS/infra-build
+/lib/                      @NixOS/infra-build
+/macs/                     @NixOS/infra-build
+/metrics/                  @NixOS/infra-build
+/modules/                  @NixOS/infra-build
+/terraform-iam/            @NixOS/infra-build
+/terraform/                @NixOS/infra-build
+/channels.nix              @NixOS/infra-build
+/ssh-keys.nix              @NixOS/infra-build
