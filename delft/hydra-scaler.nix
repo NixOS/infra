@@ -10,7 +10,7 @@
     config = let
       netboot_base = https://netboot.nixos.org/dispatch/hydra/hydra.nixos.org/equinix-metal-builders/main;
     in {
-      facilities = ["any"];
+      metro = "any";
       tags = ["hydra"];
       categories = {
         # NOTE(cole-h): We don't autoscale arm64 anymore because EM asked us not to: the arm64 spot

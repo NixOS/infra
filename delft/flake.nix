@@ -13,7 +13,7 @@
   inputs.hydra.url = "github:NixOS/hydra/hydra.nixos.org";
   inputs.nix.follows = "hydra/nix";
 
-  inputs.hydra-scale-equinix-metal.url = "github:DeterminateSystems/hydra-scale-equinix-metal";
+  inputs.hydra-scale-equinix-metal.url = "github:NixOS/hydra-scale-equinix-metal";
 
   inputs.nix-netboot-serve.url = "github:DeterminateSystems/nix-netboot-serve";
 

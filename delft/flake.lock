@@ -218,15 +218,15 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1706717366,
-        "narHash": "sha256-ZbN3sU4N2Zq4jgbUg5PeEC/8GwN9wdhGduzgudzPObQ=",
-        "owner": "DeterminateSystems",
+        "lastModified": 1712132663,
+        "narHash": "sha256-XTLeRhGmUkkouy9PtP2/xkgHgxIQEWikzu29MNR9SX4=",
+        "owner": "NixOS",
         "repo": "hydra-scale-equinix-metal",
-        "rev": "e78390eba106a24393341aa3c7030cfa15a7ac23",
+        "rev": "2a3877fc59dc5d8a40e520e9075693fe5c057fba",
         "type": "github"
       },
       "original": {
-        "owner": "DeterminateSystems",
+        "owner": "NixOS",
         "repo": "hydra-scale-equinix-metal",
         "type": "github"
       }
