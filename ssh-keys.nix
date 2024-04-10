@@ -31,10 +31,11 @@ rec {
   delroth = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII3tjB4KYDok3KlWxdBp/yEmqhhmybd+w0VO4xUwLKKV";
 
   infra-core = [
-    zimbatm
-    vcunat
+    delroth
     hexa-gaia
     hexa-helix
+    vcunat
+    zimbatm
   ];
 
   infra = infra-core ++ [
