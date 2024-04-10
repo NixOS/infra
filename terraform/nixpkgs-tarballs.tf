@@ -164,7 +164,7 @@ resource "fastly_service_vcl" "nixpkgs-tarballs" {
     name                  = local.tarballs_backend
     override_host         = local.tarballs_backend
     port                  = 80
-    shield                = local.fastly_shield
+    shield                = "dub-dublin-ie"
     use_ssl               = false
     weight                = 100
   }
