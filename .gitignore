@@ -8,3 +8,6 @@
 
 # Nix build outputs
 result
+
+# Colmena --keep-result roots directory
+.gcroots
