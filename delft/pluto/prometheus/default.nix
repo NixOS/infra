@@ -11,6 +11,7 @@
     ./exporters/fastly.nix
     ./exporters/github.nix
     ./exporters/hydra.nix
+    ./exporters/json.nix
     ./exporters/nixos.nix
     ./exporters/node.nix
     ./exporters/packet-sd.nix
