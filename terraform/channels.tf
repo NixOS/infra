@@ -115,6 +115,11 @@ resource "fastly_service_vcl" "channels" {
     request_condition = "flake-registry"
   }
 
+  request_setting {
+    name      = "Redirect HTTP to HTTPS"
+    force_ssl = true
+  }
+
   condition {
     name      = "Match /"
     priority  = 10

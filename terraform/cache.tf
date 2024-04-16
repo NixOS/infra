@@ -129,6 +129,11 @@ resource "fastly_service_vcl" "cache" {
     weight                = 100
   }
 
+  request_setting {
+    name      = "Redirect HTTP to HTTPS"
+    force_ssl = true
+  }
+
   condition {
     name      = "is-404"
     priority  = 0
