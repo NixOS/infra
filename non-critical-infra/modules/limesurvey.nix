@@ -264,8 +264,8 @@ in
           "~ \.php$".extraConfig = ''
             fastcgi_pass unix:${config.services.phpfpm.pools."limesurvey".socket};
           '';
-          "/tmp/".alias = "/var/lib/limesurvey";
-          "/upload/".alias = "/var/lib/limesurvey/upload";
+          "/tmp".root = "/var/lib/limesurvey";
+          "/upload/".root = "/var/lib/limesurvey";
 
         };
       };
