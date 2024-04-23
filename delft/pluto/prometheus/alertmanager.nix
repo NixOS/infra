@@ -110,7 +110,9 @@
                   {{ end }}
                   {{ index .Labels "alertname"}}: {{ index .Annotations "summary"}}
                   (
-                    <a href="{{ index .Annotations "grafana" }}">📈 Grafana</a>,
+                    {{ if .Annotations.grafana }}
+                      <a href="{{ index .Annotations "grafana" }}">📈 Grafana</a>,
+                    {{ end }}
                     <a href="{{ .GeneratorURL }}">🔥 Prometheus</a>,
                     <a href="{{ .SilenceURL }}">🔕 Silence</a>
                   )<br/>
