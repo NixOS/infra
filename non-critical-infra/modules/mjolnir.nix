@@ -33,7 +33,7 @@
       };
     };
 
-    managementRoom = "#moderators:nixos.org";
+    managementRoom = "#mjolnir:nixos.org";
 
     # https://github.com/matrix-org/mjolnir/blob/master/config/default.yaml
     settings = {
