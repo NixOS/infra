@@ -37,14 +37,24 @@ locals {
       value    = "2a01:4f8:212:41c9::1"
     },
     {
-      hostname = "hydra.ngi0.nixos.org"
+      hostname = "makemake.ngi.nixos.org"
       type     = "A"
       value    = "116.202.113.248"
     },
     {
-      hostname = "hydra.ngi0.nixos.org"
+      hostname = "makemake.ngi.nixos.org"
       type     = "AAAA"
       value    = "2a01:4f8:231:4187::"
+    },
+    {
+      hostname = "buildbot.ngi.nixos.org"
+      type     = "CNAME"
+      value    = "makemake.nixos.org"
+    },
+    {
+      hostname = "hydra.ngi0.nixos.org"
+      type     = "CNAME"
+      value    = "makemake.nixos.org"
     },
     {
       hostname = "hydra.nixos.org"
