@@ -7,13 +7,6 @@ let
 in
 
 {
-  users.extraUsers.hydra.openssh.authorizedKeys.keys =
-    (import ../ssh-keys.nix).infra-core;
-  users.extraUsers.hydra-www.openssh.authorizedKeys.keys =
-    (import ../ssh-keys.nix).infra-core;
-  users.extraUsers.hydra-queue-runner.openssh.authorizedKeys.keys =
-    (import ../ssh-keys.nix).infra-core;
-
   services.hydra-dev.enable = true;
   services.hydra-dev.logo = ./hydra-logo.png;
   services.hydra-dev.hydraURL = "https://hydra.nixos.org";
