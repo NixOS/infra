@@ -49,12 +49,12 @@ locals {
     {
       hostname = "buildbot.ngi.nixos.org"
       type     = "CNAME"
-      value    = "makemake.nixos.org"
+      value    = "makemake.ngi.nixos.org"
     },
     {
       hostname = "hydra.ngi0.nixos.org"
       type     = "CNAME"
-      value    = "makemake.nixos.org"
+      value    = "makemake.ngi.nixos.org"
     },
     {
       hostname = "hydra.nixos.org"
