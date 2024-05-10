@@ -56,6 +56,7 @@ in
         "https://survey.nixos.org"
         "https://tarballs.nixos.org"
         "https://weekly.nixos.org"
+        "https://wiki.nixos.org"
         "https://www.nixos.org"
         "https://netboot.nixos.org"
       ])
