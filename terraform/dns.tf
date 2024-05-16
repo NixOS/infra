@@ -152,11 +152,6 @@ locals {
       value    = "dualstack.v2.shared.global.fastly.net"
     },
     {
-      hostname = "chat.nixos.org"
-      type     = "CNAME"
-      value    = "nixos.element.io."
-    },
-    {
       hostname = "conf.nixos.org"
       type     = "CNAME"
       value    = "nixconberlin.github.io"
@@ -275,6 +270,16 @@ locals {
       hostname = "caliban.nixos.org"
       type     = "A"
       value    = "65.109.26.213"
+    },
+    {
+      hostname = "chat.nixos.org"
+      type     = "CNAME"
+      value    = "caliban.nixos.org."
+    },
+    {
+      hostname = "matrix.nixos.org"
+      type     = "CNAME"
+      value    = "caliban.nixos.org."
     },
     {
       hostname = "vault.nixos.org"
