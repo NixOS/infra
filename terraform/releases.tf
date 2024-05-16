@@ -189,7 +189,7 @@ resource "fastly_service_vcl" "releases" {
     priority = 100
     content = templatefile("${path.module}/s3-authn.vcl", {
       aws_region     = aws_s3_bucket.releases.region
-      backend_domain = aws_s3_bucket.releases.bucket_domain_name
+      backend_domain = aws_s3_bucket.releases.bucket_regional_domain_name
       access_key     = local.fastly-iam.key
       secret_key     = local.fastly-iam.secret
     })
