@@ -22,7 +22,7 @@
 
   services.mjolnir = {
     enable = true;
-    homeserverUrl = "https://nixos.ems.host:443";
+    homeserverUrl = "https://matrix.nixos.org:443";
 
     pantalaimon = {
       enable = true;
