@@ -5,10 +5,18 @@
 
   services.grafana = {
     enable = true;
-    auth.anonymous.enable = true;
-    users.allowSignUp = true;
-    addr = "0.0.0.0";
-    domain = "grafana.nixos.org";
-    rootUrl = "https://grafana.nixos.org";
+    settings = {
+      "auth.anonymous".enabled = true;
+      users.allow_sign_up = true;
+      server = {
+        domain = "grafana.nixos.org";
+        root_url = "https://grafana.nixos.org";
+        protocol = "socket";
+      };
+    };
   };
+
+  systemd.services.nginx.serviceConfig.SupplementaryGroups = [
+    "grafana"
+  ];
 }
