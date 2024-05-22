@@ -42,6 +42,7 @@ rec {
   ];
 
   infra = infra-core ++ [
+    linus
     julienmalka
   ];
 
