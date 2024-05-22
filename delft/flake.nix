@@ -11,11 +11,14 @@
   inputs.disko.inputs.nixpkgs.follows = "nixpkgs";
 
   inputs.hydra.url = "github:NixOS/hydra/hydra.nixos.org";
+  inputs.hydra.inputs.nixpkgs.follows = "nixpkgs";
   inputs.nix.follows = "hydra/nix";
 
   inputs.hydra-scale-equinix-metal.url = "github:NixOS/hydra-scale-equinix-metal";
+  inputs.hydra-scale-equinix-metal.inputs.nixpkgs.follows = "nixpkgs";
 
   inputs.nix-netboot-serve.url = "github:DeterminateSystems/nix-netboot-serve";
+  inputs.nix-netboot-serve.inputs.nixpkgs.follows = "nixpkgs";
 
   inputs.nixos-channel-scripts.url = "github:NixOS/nixos-channel-scripts";
   inputs.nixos-channel-scripts.inputs.nixpkgs.follows = "nixpkgs";
