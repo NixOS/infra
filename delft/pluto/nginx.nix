@@ -39,7 +39,10 @@
     virtualHosts."grafana.nixos.org" = {
       enableACME = true;
       forceSSL = true;
-      locations."/".proxyPass = "http://${config.services.grafana.addr}:${toString config.services.grafana.port}";
+      locations."/" = {
+        proxyPass = "http://unix:${config.services.grafana.settings.server.socket}";
+        proxyWebsockets = true;
+      };
     };
   };
 }
