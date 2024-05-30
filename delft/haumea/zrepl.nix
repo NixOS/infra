@@ -9,10 +9,6 @@
         hostNames = [ "zh2543b.rsync.net" "2001:1620:2019::324" ];
         publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKlIcNwmx7id/XdYKZzVX2KtZQ4PAsEa9KVQ9N43L3PX";
       };
-      delroth-backup-server = {
-        hostNames = [ "smol.delroth.net" ];
-        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID9Ta4DYE3YxXzV57s6TX6KEbIa3O4re+J4NzATCOiXb";
-      };
       hexa-backup-server = {
         hostNames = [ "meduna.hexa-home.v6.army" ];
         publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDUe5BqMDt562KOIcUm4RqZC5ejmd62elkYKkqExUYsl";
@@ -83,17 +79,6 @@
         #     port = 22;
         #   };
         # })
-
-        (defaultBackupJob // {
-          name = "delroth";
-          connect = {
-            identity_file = "/root/.ssh/id_ed25519";
-            type = "ssh+stdinserver";
-            host = "smol.delroth.net";
-            user = "zrepl";
-            port = 22;
-          };
-        })
 
         (defaultBackupJob // {
           name = "hexa";

@@ -98,12 +98,6 @@ ip = "10.254.4.4"
 port = 51820
 publicKey = "pH2DCtTti9gbyYZ4jFHnhjwDGlWTGKlJ7HFl9ykYjz8="
 
-[hosts.delroth]
-# delroth's machine (@delroth), for administrative access
-ip = "10.254.4.5"
-port = 51820
-publicKey = "1PLQcx+eVLgRwN6e7fim53rHQXB7pjIg6okOe2nFoi8="
-
 [hosts.hexa-helix]
 # hexa's machine (@mweinelt), for administrative access
 ip = "10.254.4.6"
