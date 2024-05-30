@@ -12,11 +12,6 @@ locals {
 
   dns_records = [
     {
-      hostname = "bastion.nixos.org"
-      type     = "A"
-      value    = "34.254.208.229"
-    },
-    {
       hostname = "eris.nixos.org"
       type     = "A"
       value    = "138.201.32.77"

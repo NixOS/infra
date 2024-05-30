@@ -144,7 +144,7 @@ owner: Graham
 
 owner: Eelco and Rob, owned by the NixOS Foundation
 
-“chef”: runs hydra.nixos.org, postgresql database, queue runner, hydra provisioner (might move to the bastion). binary cache signing keys.
+“chef”: runs hydra.nixos.org, postgresql database, queue runner, hydra provisioner. binary cache signing keys.
 
 monitoring:
 **DataDog, accessible by Eelco (and Rob?) (Amine?) on the Infor account**
@@ -178,12 +178,3 @@ runs the website
 runs the channel mirror script, systemd services with timers, updates /releases buckets and the nixpkgs-channels repository (repo: nixos-channel-scripts)
 
 The tarball mirror script is running from that machine.
-
-## bastion server
-
-owner: LogicBlox EC2 instance
-
-running in the lb-nixos AWS account
-
-going to be used to apply NixOps
-

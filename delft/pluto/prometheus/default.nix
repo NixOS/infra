@@ -23,7 +23,6 @@
   ];
 
   networking.extraHosts = ''
-    10.254.1.1 bastion
     10.254.1.5 rhea
     10.254.1.6 pluto
 

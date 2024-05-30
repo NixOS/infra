@@ -16,11 +16,6 @@
       targets = [
         "haumea:9300"
       ];
-    } {
-      labels.role = "bastion";
-      targets = [
-        "bastion:9300"
-      ];
     } ];
   } ];
 }
