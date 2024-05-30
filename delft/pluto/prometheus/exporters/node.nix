@@ -22,11 +22,6 @@
           "pluto:9100"
         ];
       } {
-        labels.role = "bastion";
-        targets = [
-          "bastion:9100"
-        ];
-      } {
         labels.role = "mac";
         targets = [
           "intense-heron.mac.nixos.org:9100"
