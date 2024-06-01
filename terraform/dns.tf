@@ -282,6 +282,21 @@ locals {
       value    = "caliban.nixos.org"
     },
     {
+      hostname = "caliban.nixos.org"
+      type     = "TXT"
+      value    = "v=spf1 ip4:65.109.26.213 ip6:2a01:4f9:5a:186c::2 ~all"
+    },
+    {
+      hostname = "mail._domainkey.caliban.nixos.org"
+      type     = "TXT"
+      value    = "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDCLtvNH4Ly+9COXf7InptMvoA7I5O347D7+j+saECt7RRe8yNz4TmhJTyJik+bg7e3+l7EJM0vE6k7xtpGBXACY6CCmg/8EgUi6YnDd126ttJHWpoqO96w4SWX93G+ZnoSC8O5rTPqdaTTkntYDTrw5u5n+7RA8GarZadgmaEzwIDAQAB"
+    },
+    {
+      hostname = "_dmarc.caliban.nixos.org"
+      type     = "TXT"
+      value    = "v=DMARC1; p=none"
+    },
+    {
       hostname = "survey.staging.nixos.org"
       type     = "CNAME"
       value    = "caliban.nixos.org"
