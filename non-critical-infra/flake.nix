@@ -2,7 +2,7 @@
   description = "Non critical nixos org infra";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     colmena = {
       url = "github:zhaofengli/colmena";
       inputs = {
@@ -22,7 +22,10 @@
     };
     sops-nix = {
       url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        nixpkgs-stable.follows = "nixpkgs";
+      };
     };
 
     first-time-contribution-tagger = {
