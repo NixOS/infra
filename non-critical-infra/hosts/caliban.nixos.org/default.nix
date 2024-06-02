@@ -6,6 +6,7 @@
       ./hardware.nix
       inputs.srvos.nixosModules.server
       inputs.srvos.nixosModules.hardware-hetzner-online-amd
+      ../../modules/common.nix
       ../../modules/first-time-contribution-tagger.nix
       ../../modules/backup.nix
       ../../modules/element-web.nix
