@@ -31,24 +31,10 @@
 
   disko.devices = import ./disko.nix;
 
-  # Set your time zone.
-  time.timeZone = "UTC";
-
-  environment.systemPackages = with pkgs; [
-    neovim
-  ];
-
-  services.openssh.enable = true;
-
-  security.acme.acceptTerms = true;
-  security.acme.defaults.email = "webmaster@nixos.org";
-
   networking.firewall.allowedTCPPorts = [ 80 443 ];
   networking.firewall.allowedUDPPorts = [ ];
 
   systemd.network.networks."10-uplink".networkConfig.Address = "2a01:4f9:5a:186c::2";
-
-  users.users.root.openssh.authorizedKeys.keys = (import ../../../ssh-keys.nix).infra;
 
   sops.secrets.storagebox-ssh-key = {
     sopsFile = ../../secrets/storagebox-ssh-key.caliban;

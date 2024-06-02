@@ -45,9 +45,6 @@
     linkConfig.RequiredForOnline = "routable";
   };
 
-  services.openssh.enable = true;
-  users.users.root.openssh.authorizedKeys.keys = (import ../../../ssh-keys.nix).infra;
-
   system.stateVersion = "23.05";
 }
 
