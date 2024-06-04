@@ -12,7 +12,9 @@ provider "aws" {
 provider "fastly" {}
 
 # Create a token at https://app.netlify.com/user/applications/personal
-# And then import using `tf import secret_resource.netlify_token <TOKEN>`
+# And then import using
+# - terraform state rm secret_resource.netlify_token
+# - terraform import secret_resource.netlify_token <TOKEN>
 resource "secret_resource" "netlify_token" {
   lifecycle { prevent_destroy = true }
 }
