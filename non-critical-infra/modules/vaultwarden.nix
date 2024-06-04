@@ -1,7 +1,8 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 {
   imports = [
     ./backup.nix
+    ./postfix.nix
   ];
 
   services.vaultwarden = {
@@ -15,10 +16,10 @@
       ROCKET_ADDRESS = "127.0.0.1";
       ROCKET_PORT = 8222;
       ROCKET_LOG = "critical";
-      SMTP_HOST = "mail.gandi.net";
-      SMTP_PORT = 587;
-      SMTP_SSL = true;
-      SMTP_FROM = "vaultwarden@nixos.org";
+      SMTP_HOST = "localhost";
+      SMTP_PORT = 25;
+      SMTP_SSL = false;
+      SMTP_FROM = "vaultwarden@caliban.nixos.org";
       SMTP_FROM_NAME = "NixOS Vaultwarden";
     };
   };
@@ -90,8 +91,8 @@
       };
     };
 
-
   };
+
 }
 
 
