@@ -10,7 +10,7 @@
   inputs.disko.url = "github:nix-community/disko";
   inputs.disko.inputs.nixpkgs.follows = "nixpkgs";
 
-  inputs.hydra.url = "github:NixOS/hydra/hydra.nixos.org";
+  inputs.hydra.url = "github:NixOS/hydra?rev=b8d03adaf45105452bf1040deeaaccc8b8b22efb";
   inputs.hydra.inputs.nixpkgs.follows = "nixpkgs";
   inputs.nix.follows = "hydra/nix";
 

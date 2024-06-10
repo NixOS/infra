@@ -201,17 +201,17 @@
         "nixpkgs-for-fileset": "nixpkgs-for-fileset"
       },
       "locked": {
-        "lastModified": 1716329338,
-        "narHash": "sha256-odcR5zSHkmgxK0Pxh6izzCU/p9koDqiHzyJyXCuKUr0=",
+        "lastModified": 1713713776,
+        "narHash": "sha256-83CZZ5ef/Jvzz2/kKS9vo3d2iDV5BMgGLOeJ4OqM1qw=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "08c9225a7644c82a911991f31f28e749e26894ed",
+        "rev": "b8d03adaf45105452bf1040deeaaccc8b8b22efb",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "hydra.nixos.org",
         "repo": "hydra",
+        "rev": "b8d03adaf45105452bf1040deeaaccc8b8b22efb",
         "type": "github"
       }
     },
@@ -235,26 +235,26 @@
         "type": "github"
       }
     },
-    "libgit2": {
+    "lowdown-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1697646580,
-        "narHash": "sha256-oX4Z3S9WtJlwvj0uH9HlYcWv+x1hqp8mhXl7HsLu2f0=",
-        "owner": "libgit2",
-        "repo": "libgit2",
-        "rev": "45fd9ed7ae1a9b74b957ef4f337bc3c8b3df01b5",
+        "lastModified": 1633514407,
+        "narHash": "sha256-Dw32tiMjdK9t3ETl5fzGrutQTzh2rufgZV4A/BbxuD4=",
+        "owner": "kristapsdz",
+        "repo": "lowdown",
+        "rev": "d2c2b44ff6c27b936ec27358a2653caaef8f73b8",
         "type": "github"
       },
       "original": {
-        "owner": "libgit2",
-        "repo": "libgit2",
+        "owner": "kristapsdz",
+        "repo": "lowdown",
         "type": "github"
       }
     },
     "nix": {
       "inputs": {
         "flake-compat": "flake-compat_2",
-        "libgit2": "libgit2",
+        "lowdown-src": "lowdown-src",
         "nixpkgs": [
           "hydra",
           "nixpkgs"
@@ -262,16 +262,16 @@
         "nixpkgs-regression": "nixpkgs-regression"
       },
       "locked": {
-        "lastModified": 1715805674,
-        "narHash": "sha256-0CIBMECsA3ISJZrJcOTzi6wa3QENTKGLtOpYIOoxwxo=",
+        "lastModified": 1706208340,
+        "narHash": "sha256-wNyHUEIiKKVs6UXrUzhP7RSJQv0A8jckgcuylzftl8k=",
         "owner": "NixOS",
         "repo": "nix",
-        "rev": "ab48ea416a203e9ccefb70aa634e27477e4c1ac4",
+        "rev": "2c4bb93ba5a97e7078896ebc36385ce172960e4e",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "2.20-maintenance",
+        "ref": "2.19-maintenance",
         "repo": "nix",
         "type": "github"
       }
