@@ -272,6 +272,11 @@ locals {
       value    = "caliban.nixos.org."
     },
     {
+      hostname = "live.nixos.org"
+      type     = "CNAME"
+      value    = "caliban.nixos.org."
+    },
+    {
       hostname = "matrix.nixos.org"
       type     = "CNAME"
       value    = "caliban.nixos.org."
