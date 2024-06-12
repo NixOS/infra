@@ -14,7 +14,7 @@
     options = [ "zfsutil" ];
   };
 
-  services.backups.includeZfsDatasets = [
+  services.backup.includesZfsDatasets = [
     "/var/lib/owncast"
   ];
 
