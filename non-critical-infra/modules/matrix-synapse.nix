@@ -67,10 +67,9 @@
     "redis-matrix-synapse"
   ];
 
-  #systemd.services.matrix-synapse.enable = false;
-
   services.matrix-synapse = {
     enable = true;
+    enableRegistrationScript = false; # not compatible with unix sockets
     withJemalloc = true;
 
     extraConfigFiles = [
@@ -111,11 +110,8 @@
 
       listeners = [ {
         type = "http";
-        # TODO: migrate to UNIX domain socket
-        #path = "/run/matrix-synapse/matrix-synapse.sock";
-        #mode = "0660";
-        port = 8008;
-        tls = false;
+        path = "/run/matrix-synapse/matrix-synapse.sock";
+        mode = "0660";
         resources = [ {
           compress = true;
           names = [
@@ -149,9 +145,7 @@
   services.nginx = {
     clientMaxBodySize = config.services.matrix-synapse.settings.max_upload_size;
     upstreams."matrix-synapse".servers = {
-      # TODO: migrate to UNIX domain socket
-      #"unix:/run/matrix-synapse/matrix-synapse.sock" = {};
-      "localhost:8008" = {};
+      "unix:/run/matrix-synapse/matrix-synapse.sock" = {};
     }; 
     virtualHosts."matrix.nixos.org" = {
       forceSSL = true;
