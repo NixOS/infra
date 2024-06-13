@@ -75,7 +75,7 @@
       clients = [ {
         UserId = "@bot:nixos.org";
         AccessToken = "$CHANGEME";
-        HomeServerUrl = "https://nixos.ems.host";
+        HomeServerUrl = "https://matrix.nixos.org";
         Sync = true;
         AutoJoinRooms = true;
         DisplayName = "Bot";
