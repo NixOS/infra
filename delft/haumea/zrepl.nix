@@ -31,7 +31,6 @@
             type = "grid";
             regex = "^zrepl_snap_.*";
             grid = lib.concatStringsSep " | " [
-              "3x5m"
               "4x15m"
               "24x1h"
               "4x1d"
@@ -43,12 +42,10 @@
           { type = "grid";
             regex = "^zrepl_snap_.*";
             grid = lib.concatStringsSep " | " [
-              "20x5m"
               "96x1h"
               "12x4h"
               "7x1d"
               "52x1w"
-              "120x3w"
             ];
           }
         ];
