@@ -19,11 +19,17 @@
   services.zrepl = let
     defaultBackupJob = {
       type = "push";
-      filesystems."rpool/safe<" = true;
+      filesystems."rpool/safe/postgres<" = true;
       snapshotting = {
         type = "periodic";
         interval = "5m";
         prefix = "zrepl_snap_";
+        hooks = [ {
+          # https://zrepl.github.io/master/configuration/snapshotting.html#postgres-checkpoint-hook
+          type = "postgresq-checkpoint";
+          dsn = "host=/run/postgresql user=root sslmode=disable";
+          filesystems."rpool/safe/postgres" = true;
+        } ];
       };
       pruning = {
         keep_sender = [
