@@ -20,6 +20,7 @@
     ./exporters/postgresql.nix
     ./exporters/r13y.nix
     ./exporters/rfc39.nix
+    ./exporters/zfs.nix
   ];
 
   networking.extraHosts = ''

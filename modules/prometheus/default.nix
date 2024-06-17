@@ -33,4 +33,10 @@ in
       ExecStart = "${prometheus-nixos-exporter}/bin/prometheus-nixos-exporter";
     };
   };
+
+  services.prometheus.exporters.zfs = {
+    enable = true;
+    listenAddress = "[::]";
+    openFirewall = true;
+  };
 }
