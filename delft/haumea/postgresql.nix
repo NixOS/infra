@@ -20,6 +20,7 @@
 
   services.postgresql = {
     enable = true;
+    enableJIT = true;
     package = pkgs.postgresql_16;
     dataDir = "/var/db/postgresql/16";
     # https://pgtune.leopard.in.ua/#/
