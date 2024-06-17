@@ -28,6 +28,9 @@
     settings = {
       listen_addresses = lib.mkForce "10.254.1.9";
 
+      # https://vadosware.io/post/everything-ive-seen-on-optimizing-postgres-on-zfs-on-linux/#zfs-related-tunables-on-the-postgres-side
+      full_page_writes = "off";
+
       checkpoint_completion_target = "0.9";
       default_statistics_target = 100;
 
