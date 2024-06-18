@@ -22,7 +22,7 @@
       filesystems."rpool/safe<" = true;
       snapshotting = {
         type = "periodic";
-        interval = "5m";
+        interval = "15m";
         prefix = "zrepl_snap_";
       };
       pruning = {
