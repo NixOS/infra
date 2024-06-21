@@ -48,12 +48,12 @@ in
 
 {
   age.secrets.hydra-mirror-aws-credentials = {
-    file = ../delft/secrets/hydra-mirror-aws-credentials.age;
+    file = ../build/secrets/hydra-mirror-aws-credentials.age;
     owner = "hydra-mirror";
   };
 
   age.secrets.hydra-mirror-git-credentials = {
-    file = ../delft/secrets/hydra-mirror-git-credentials.age;
+    file = ../build/secrets/hydra-mirror-git-credentials.age;
     owner = "hydra-mirror";
   };
 

@@ -1,7 +1,7 @@
 # Every directory containing configurations impacting the core infra needs a
 # review from a member of core infra.
 /.github/                  @NixOS/infra-build
-/delft/                    @NixOS/infra-build
+/build/                    @NixOS/infra-build
 /hydra-packet-importer/    @NixOS/infra-build
 /lib/                      @NixOS/infra-build
 /macs/                     @NixOS/infra-build

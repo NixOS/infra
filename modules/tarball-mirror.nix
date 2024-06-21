@@ -21,7 +21,7 @@ in
 
 {
   age.secrets.tarball-mirror-aws-credentials = {
-    file = ../delft/secrets/tarball-mirror-aws-credentials.age;
+    file = ../build/secrets/tarball-mirror-aws-credentials.age;
     owner = "tarball-mirror";
   };
 

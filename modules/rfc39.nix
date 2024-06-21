@@ -3,9 +3,9 @@
 let
   rfc39Secret = f: { file = f; owner = "rfc39"; };
 in {
-  age.secrets.rfc39-credentials = rfc39Secret ../delft/secrets/rfc39-credentials.age;
-  age.secrets.rfc39-github = rfc39Secret ../delft/secrets/rfc39-github.age;
-  age.secrets.rfc39-record-push = rfc39Secret ../delft/secrets/rfc39-record-push.age;
+  age.secrets.rfc39-credentials = rfc39Secret ../build/secrets/rfc39-credentials.age;
+  age.secrets.rfc39-github = rfc39Secret ../build/secrets/rfc39-github.age;
+  age.secrets.rfc39-record-push = rfc39Secret ../build/secrets/rfc39-record-push.age;
 
   users.users.rfc39 = {
     description = "RFC39 Maintainer Team Sync";
