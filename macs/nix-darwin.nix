@@ -55,9 +55,9 @@ in
   '';
 
   environment.etc."per-user/root/ssh/authorized_keys".text = concatStringsSep "\n"
-    ([
+    [
       (authorizedNixStoreKey sshKeys.hydra-queue-runner)
-    ]);
+    ];
 
 
   system.activationScripts.postActivation.text = ''
