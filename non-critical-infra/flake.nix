@@ -40,13 +40,13 @@
   outputs = { self, nixpkgs, flake-utils, colmena, disko, srvos, first-time-contribution-tagger, sops-nix, ... }@inputs:
     let
       importConfig = path: (lib.mapAttrs (name: value: import (path + "/${name}/default.nix")) (lib.filterAttrs (_: v: v == "directory") (builtins.readDir path)));
-      lib = nixpkgs.lib;
+      inherit (nixpkgs) lib;
     in
     {
 
       nixosConfigurations = builtins.mapAttrs
         (name: value: nixpkgs.lib.nixosSystem {
-          lib = lib;
+          inherit lib;
           system = "x86_64-linux";
           specialArgs = {
             inherit inputs;

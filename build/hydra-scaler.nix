@@ -8,7 +8,7 @@
     secretFile = "/root/keys/hydra-scale-equinix-metal-env";
     interval = ["*:0/5"];
     config = let
-      netboot_base = https://netboot.nixos.org/dispatch/hydra/hydra.nixos.org/equinix-metal-builders/main;
+      netboot_base = "https://netboot.nixos.org/dispatch/hydra/hydra.nixos.org/equinix-metal-builders/main";
     in {
       metro = "any";
       tags = ["hydra"];

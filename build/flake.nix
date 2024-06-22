@@ -87,7 +87,7 @@
           deployment = {
             targetHost = "${name}.nixos.org";
           };
-        }) (self.nixosConfigurations);
+        }) self.nixosConfigurations;
 
       # TODO: flake-utils.lib.eachDefaultSystem
       devShell.x86_64-linux = let
