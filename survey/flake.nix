@@ -10,9 +10,9 @@
   #       https://github.com/NixOS/nixpkgs/pull/157832
   inputs.nixpkgs.url = "github:garbas/nixpkgs/update-limesurvey";
 
-  outputs = flakes @ { self, nixpkgs }: 
+  outputs = { self, nixpkgs }:
     let
-      customOverlay = final: prev: {
+      customOverlay = _: prev: {
         limesurvey = prev.limesurvey.overrideAttrs (old: {
           installPhase = old.installPhase + ''
             mkdir -p $out/share/limesurvey/upload/themes/survey/generalfiles/
@@ -27,7 +27,7 @@
         [
           "${nixpkgs}/nixos/modules/virtualisation/amazon-image.nix"
           ../modules/common.nix
-          ({ config, pkgs, lib, ... }:
+          ({ pkgs, lib, ... }:
           {
             ec2.hvm = true;
 

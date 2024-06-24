@@ -26,10 +26,8 @@
   inputs.rfc39.url = "github:NixOS/rfc39";
   inputs.rfc39.inputs.nixpkgs.follows = "nixpkgs";
 
-  outputs = flakes @ { self, agenix, colmena, disko, hydra, hydra-scale-equinix-metal, nix, nixpkgs, nixos-channel-scripts, nix-netboot-serve, rfc39 }:
+  outputs = { self, agenix, colmena, disko, hydra, hydra-scale-equinix-metal, nix, nixpkgs, nixos-channel-scripts, nix-netboot-serve, rfc39 }:
     let
-      inherit (nixpkgs) lib;
-
       flakesModule = {
         imports = [
           agenix.nixosModules.age
@@ -93,7 +91,7 @@
       devShell.x86_64-linux = let
         pkgs = import nixpkgs { system = "x86_64-linux"; };
       in pkgs.mkShell {
-        buildInputs = with pkgs; [
+        buildInputs = [
           agenix.packages.x86_64-linux.agenix
           colmena.packages.x86_64-linux.colmena
         ];

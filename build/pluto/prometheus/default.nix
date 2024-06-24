@@ -1,7 +1,3 @@
-{ config
-, ...
-}:
-
 {
   imports = [
     ./alertmanager.nix

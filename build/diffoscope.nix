@@ -1,6 +1,4 @@
-{ config, pkgs, ... }:
-
-with pkgs.lib;
+{ pkgs, ... }:
 
 let
 

@@ -1,4 +1,4 @@
-{ nodes, config, lib, pkgs, ... }:
+{ pkgs, ... }:
 {
   imports =
     [ ./hardware-configuration.nix
@@ -43,9 +43,6 @@
   nix.gc.dates = "03,09,15,21:15";
 
   nix.extraOptions = "gc-keep-outputs = false";
-
-  #services.postfix.enable = true;
-  #services.postfix.hostname = "hydra.nixos.org";
 
   # Don't rate-limit the journal.
   services.journald.rateLimitBurst = 0;

@@ -1,5 +1,3 @@
-{ config, pkgs, lib, ... }:
-
 {
   services.hydra-scale-equinix-metal = {
     enable = true;
@@ -24,7 +22,7 @@
         # The netboot URL for arm64 big-parallel is: https://netboot.nixos.org/dispatch/hydra/hydra.nixos.org/equinix-metal-builders/main/c3-large-arm--big-parallel ("Always PXE" enabled, "hydra" tag)
         # The netboot URL for arm64 small is: https://netboot.nixos.org/dispatch/hydra/hydra.nixos.org/equinix-metal-builders/main/c3-large-arm ("Always PXE" enabled, "hydra" tag)
 
-        x86_64-linux = rec {
+        x86_64-linux = {
           bigparallel = {
             divisor = 16;
             minimum = 1;
