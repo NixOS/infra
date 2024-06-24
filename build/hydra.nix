@@ -62,7 +62,7 @@ in
     '';
 
   # Work around https://github.com/NixOS/hydra/issues/1337
-  services.hydra-dev.package = pkgs.hydra.overrideAttrs(final: prev: {
+  services.hydra-dev.package = pkgs.hydra.overrideAttrs(_: prev: {
     postPatch = ''
       ${prev.postPatch or ""}
       rm src/lib/Hydra/Plugin/DeclarativeJobsets.pm

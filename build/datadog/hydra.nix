@@ -1,4 +1,4 @@
-{config, pkgs, ...}:
+{ pkgs, ...}:
 {
   systemd.services.dd-agent.environment.PYTHONPATH = "${pkgs.pythonPackages.requests}/lib/python2.7/site-packages";
   environment.etc =

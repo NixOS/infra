@@ -10,18 +10,18 @@
     enable = true;
     domains = config.networking.fqdn;
     selector = "mail";
-    user = config.services.postfix.user;
-    group = config.services.postfix.group;
+    inherit (config.services.postfix)
+      user
+      group
+    ;
     keyPath = "/run/opendkim-keys";
   };
 
   systemd.services.opendkim.serviceConfig = {
     ExecStartPre = [
-      (
-        "+${pkgs.writeShellScript "opendkim-keys" ''
-          install -o ${config.services.postfix.user} -g ${config.services.postfix.group} -D -m0700 ${config.sops.secrets.opendkim-private-key.path} /run/opendkim-keys/${config.services.opendkim.selector}.private
-        ''}"
-      )
+      "+${pkgs.writeShellScript "opendkim-keys" ''
+        install -o ${config.services.postfix.user} -g ${config.services.postfix.group} -D -m0700 ${config.sops.secrets.opendkim-private-key.path} /run/opendkim-keys/${config.services.opendkim.selector}.private
+      ''}"
     ];
   };
 

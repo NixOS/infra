@@ -2,7 +2,6 @@
 #
 # Given a set of services, make them run one at a time in a specific
 # order, on a timer.
-{ lib }:
 {
   # Given a list of systemd service, give each one an After
   # attribute, so they start in a specific order. The returned
