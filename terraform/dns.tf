@@ -107,6 +107,11 @@ locals {
       value    = "2a01:4f8:c0c:6e2c::1"
     },
     {
+      hostname = "survey-test.nixos.org"
+      type     = "CNAME"
+      value    = "caliban.nixos.org"
+    },
+    {
       hostname = "reproducible.nixos.org"
       type     = "CNAME"
       value    = "nixos.github.io"

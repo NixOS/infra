@@ -10,6 +10,7 @@
       ../../modules/first-time-contribution-tagger.nix
       ../../modules/backup.nix
       ../../modules/element-web.nix
+      ../../modules/limesurvey
       ../../modules/matrix-synapse.nix
       ../../modules/owncast.nix
       ../../modules/vaultwarden.nix
