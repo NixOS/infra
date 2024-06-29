@@ -37,6 +37,11 @@ in
     "extra-experimental-features" = [ "nix-command" "flakes" ];
     max-jobs = 4;
     cores = 2;
+    "system-features" = [
+      "apple-virt"
+      "nixos-test"
+      "big-parallel"
+    ];
   };
 
   nix.gc.automatic = true;
