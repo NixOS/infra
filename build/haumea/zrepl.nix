@@ -82,18 +82,26 @@
       };
 
       jobs = [
-        # XXX: Broken since 2024-01-10?
-        # (defaultBackupJob // {
-        #   name = "rsyncnet";
-        #   connect = {
-        #     identity_file = "/root/.ssh/id_ed25519";
-        #     type = "ssh+stdinserver";
-        #     host = "zh2543b.rsync.net";
-        #     user = "root";
-        #     port = 22;
-        #   };
-        # })
+        # Covers 20240629+
+        (defaultBackupJob // {
+          name = "rsyncnet";
+          connect = {
+            identity_file = "/root/.ssh/id_ed25519";
+            type = "ssh+stdinserver";
+            host = "zh4461b.rsync.net";
+            user = "root";
+            port = 22;
+          };
+        })
+        /* rsync.net provides a VM with FreeBSD
+           - almost nothing is preserved on upgrades except this "data1" zpool
+            $ scp ./zrepl.yml root@zh4461b.rsync.net:/usr/local/etc/zrepl/zrepl.yml
+            # pkg install zrepl
+            # service zrepl enable
+            # service zrepl start
+        */
 
+        /* Covered 2024: 0212 -- 0629
         (defaultBackupJob // {
           name = "hexa";
           connect = {
@@ -104,6 +112,7 @@
             port = 22;
           };
         })
+        */
       ];
     };
   };
