@@ -22,7 +22,7 @@
       filesystems."rpool/safe<" = true;
       snapshotting = {
         type = "periodic";
-        interval = "15m";
+        interval = "30m";
         prefix = "zrepl_snap_";
         hooks = [ {
           # https://zrepl.github.io/master/configuration/snapshotting.html#postgres-checkpoint-hook
@@ -33,14 +33,24 @@
       };
       pruning = {
         keep_sender = [
+          { type = "not_replicated"; }
           {
             type = "grid";
             regex = "^zrepl_snap_.*";
             grid = lib.concatStringsSep " | " [
-              "4x15m"
-              "24x1h"
-              "4x1d"
-              "3x1w"
+              "1x1h(keep=all)"
+              "1x1h"
+              "1x2h"
+              "1x4h"
+              # "grid" acts weird if an interval isn't a whole-number multiple
+              # of the previous one, so we jump from 8h to 24h
+              "2x8h"
+              "1x1d"
+              "1x2d"
+              "1x4d"
+              "1x8d"
+              # At this point we keep ~10 snapshots spanning 8--16 days (depends on moment),
+              # with exponentially increasing spacing (almost).
             ];
           }
         ];
@@ -48,8 +58,10 @@
           { type = "grid";
             regex = "^zrepl_snap_.*";
             grid = lib.concatStringsSep " | " [
-              "96x1h"
-              "12x4h"
+              "1x1h"
+              "1x2h"
+              "1x4h"
+              "2x8h"
               "7x1d"
               "52x1w"
             ];
@@ -71,18 +83,18 @@
       };
 
       jobs = [
-        # XXX: Broken since 2024-01-10?
-        # (defaultBackupJob // {
-        #   name = "rsyncnet";
-        #   connect = {
-        #     identity_file = "/root/.ssh/id_ed25519";
-        #     type = "ssh+stdinserver";
-        #     host = "zh2543b.rsync.net";
-        #     user = "root";
-        #     port = 22;
-        #   };
-        # })
-
+        # Covers 20240629+
+        (defaultBackupJob // {
+          name = "rsyncnet";
+          connect = {
+            identity_file = "/root/.ssh/id_ed25519";
+            type = "ssh+stdinserver";
+            host = "zh4461b.rsync.net";
+            user = "root";
+            port = 22;
+          };
+        })
+        /* Covered 2024: 0212 -- 0629
         (defaultBackupJob // {
           name = "hexa";
           connect = {
@@ -93,6 +105,7 @@
             port = 22;
           };
         })
+        */
       ];
     };
   };

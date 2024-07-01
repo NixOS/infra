@@ -83,8 +83,8 @@
       # benefit from frequent vacuums, so this should
       # help. In particular, I'm thinking the jobsets
       # pages.
-      autovacuum_vacuum_scale_factor = 0.002;
-      autovacuum_analyze_scale_factor = 0.001;
+      autovacuum_vacuum_scale_factor = 0.02;
+      autovacuum_analyze_scale_factor = 0.01;
 
       shared_preload_libraries = "pg_stat_statements";
       compute_query_id = "on";
