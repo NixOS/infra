@@ -22,7 +22,7 @@
       filesystems."rpool/safe<" = true;
       snapshotting = {
         type = "periodic";
-        interval = "1h";
+        interval = "30m";
         prefix = "zrepl_snap_";
         hooks = [ {
           # https://zrepl.github.io/master/configuration/snapshotting.html#postgres-checkpoint-hook
@@ -31,6 +31,8 @@
           filesystems."rpool/safe/postgres" = true;
         } ];
       };
+
+      # The current pruning setup is an exponentially growing scheme, at both sides.
       pruning = {
         keep_sender = [
           { type = "not_replicated"; }
@@ -38,6 +40,7 @@
             type = "grid";
             regex = "^zrepl_snap_.*";
             grid = lib.concatStringsSep " | " [
+              "1x1h(keep=all)"
               "1x1h"
               "1x2h"
               "1x4h"
@@ -48,7 +51,7 @@
               "1x2d"
               "1x4d"
               "1x8d"
-              # At this point we keep 9 snapshots spanning 8--16 days (depends on moment),
+              # At this point we keep ~10 snapshots spanning 8--16 days (depends on moment),
               # with exponentially increasing spacing (almost).
             ];
           }
@@ -57,12 +60,23 @@
           { type = "grid";
             regex = "^zrepl_snap_.*";
             grid = lib.concatStringsSep " | " [
-              "1x1h"
-              "1x2h"
-              "1x4h"
-              "2x8h"
-              "7x1d"
-              "52x1w"
+              "2x1h(keep=all)"
+              "2x1h"
+              "2x2h"
+              "2x4h"
+              "4x8h"
+              # At this point the grid spans 2 days by ~13 snapshots.
+              # (See note above about 8h -> 24h.)
+              "2x1d"
+              "2x2d"
+              "2x4d"
+              "2x8d"
+              "2x16d"
+              "2x32d"
+              "2x64d"
+              "2x128d"
+              # At this point we keep ~29 snapshots spanning 384--512 days (depends on moment),
+              # with exponentially increasing spacing (almost).
             ];
           }
         ];
