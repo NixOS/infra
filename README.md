@@ -31,7 +31,7 @@ All the members should be watching this repository for changes.
 
 We meet regularly over Jitsi to hash some issues out. Sometimes it helps to have dedicated focus and higher communication bandwidth.
 
-It started Thursday 11 at 6 pm CET (UTC+1), and then every two weeks.
+It started Thursday, January 11, 2024, at 6 pm CET (UTC+1), and then repeats every two weeks, on Thursdays at 6 pm CET.
 
 <a target="_blank" href="https://calendar.google.com/calendar/event?action=TEMPLATE&amp;tmeid=MDVjdjNpOG5qazhscjlna3Mxcmw0aHVzODIgam9uYXNAbnVtdGlkZS5jb20&amp;tmsrc=jonas%40numtide.com"><img border="0" src="https://www.google.com/calendar/images/ext/gc_button1_en.gif"></a>
 
