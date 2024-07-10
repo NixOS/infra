@@ -72,7 +72,7 @@ owner: @zimbatm
 ## NixOS community wiki + bot
 
 owner: @fadenb
-access: see https://nixos.wiki/wiki/NixOS_Wiki:About
+access: see https://wiki.nixos.org/wiki/NixOS_Wiki:About
 
 ## Twitter accounts
 
