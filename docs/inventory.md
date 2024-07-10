@@ -69,7 +69,7 @@ owner: Christine?
 
 owner: @zimbatm
 
-## NixOS community wiki + bot
+## NixOS Wiki
 
 access: see https://wiki.nixos.org/wiki/NixOS_Wiki:About
 
