@@ -11,3 +11,6 @@ result
 
 # Colmena --keep-result roots directory
 .gcroots
+
+# pre-commit
+.pre-commit-config.yaml

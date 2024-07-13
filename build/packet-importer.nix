@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ pkgs, ... }:
 let
   importer = pkgs.callPackage ../hydra-packet-importer { };
 in
