@@ -13,6 +13,7 @@
       ../../modules/matrix-synapse.nix
       ../../modules/owncast.nix
       ../../modules/vaultwarden.nix
+      ./limesurvey-tmp.nix
     ];
 
   # Bootloader.
