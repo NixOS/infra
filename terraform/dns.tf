@@ -97,16 +97,6 @@ locals {
       value    = "2a01:4f8:162:71eb::"
     },
     {
-      hostname = "survey.nixos.org"
-      type     = "A"
-      value    = "54.72.253.2"
-    },
-    {
-      hostname = "survey.nixos.org"
-      type     = "AAAA"
-      value    = "2a01:4f8:c0c:6e2c::1"
-    },
-    {
       hostname = "reproducible.nixos.org"
       type     = "CNAME"
       value    = "nixos.github.io"
@@ -302,7 +292,7 @@ locals {
       value    = "v=DMARC1; p=none"
     },
     {
-      hostname = "survey.staging.nixos.org"
+      hostname = "survey.nixos.org"
       type     = "CNAME"
       value    = "caliban.nixos.org"
     },
