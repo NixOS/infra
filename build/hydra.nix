@@ -93,6 +93,9 @@ in
 
     max_concurrent_evals = 1
 
+    # increase the number of active compress slots (CPU is 48*2 on mimas)
+    max_local_worker_threads = 144
+
     max_unsupported_time = 86400
 
     allow_import_from_derivation = false
