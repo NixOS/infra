@@ -44,6 +44,9 @@ in
 
       max_concurrent_evals = 1
 
+      # increase the number of active compress slots
+      max_local_worker_threads = 48
+
       max_unsupported_time = 86400
 
       allow_import_from_derivation = false
