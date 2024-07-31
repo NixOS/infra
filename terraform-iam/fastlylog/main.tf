@@ -15,7 +15,7 @@ resource "aws_s3_bucket" "logs" {
     enabled = true
 
     transition {
-      days          = 14
+      days          = 120
       storage_class = "DEEP_ARCHIVE"
     }
   }
