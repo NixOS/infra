@@ -8,7 +8,7 @@
       mkShell {
         packages = [
           awscli2
-          (terraform.withPlugins (p: with p; [
+          (opentofu.withPlugins (p: with p; [
             aws
             fastly
             netlify
@@ -17,7 +17,7 @@
         ];
 
         shellHook = ''
-          alias tf=terraform
+          alias tf=tofu
         '';
       };
 
