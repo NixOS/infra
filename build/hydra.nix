@@ -70,6 +70,9 @@ in
     '';
   });
 
+  # eats memory as if it was free
+  systemd.services.hydra-notify.enable = false;
+
   systemd.tmpfiles.rules =
     [
       "d /var/cache/hydra 0755 hydra hydra -  -"
