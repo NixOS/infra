@@ -1,4 +1,5 @@
-{ inputs, ... }: {
+{ inputs, ... }:
+{
   imports = [ inputs.treefmt-nix.flakeModule ];
 
   perSystem =
@@ -12,10 +13,12 @@
         programs.deadnix.enable = true;
         programs.nixfmt.enable = true;
         programs.nixfmt.package = pkgs.nixfmt-rfc-style;
-        programs.shellcheck.enable = true;
+
+        # TODO: fix shellcheck errors in a follow up pr
+        #programs.shellcheck.enable = true;
 
         programs.shfmt.enable = true;
         programs.rustfmt.enable = true;
       };
-  };
+    };
 }

@@ -1,14 +1,19 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 
 {
-  imports =
-    [ ./diffoscope.nix
-      ../modules/common.nix
-      ../modules/prometheus
-      ../modules/wireguard.nix
-    ];
+  imports = [
+    ./diffoscope.nix
+    ../modules/common.nix
+    ../modules/prometheus
+    ../modules/wireguard.nix
+  ];
 
   nixpkgs.config.allowUnfree = true;
 
@@ -18,19 +23,35 @@ with lib;
 
   # Prevent "out of sync" errors on the KVM switch.
   boot.vesa = false;
-  boot.blacklistedKernelModules = [ "radeonfb" "radeon" "i915" ];
+  boot.blacklistedKernelModules = [
+    "radeonfb"
+    "radeon"
+    "i915"
+  ];
   boot.kernelParams = [ "nomodeset" ];
 
   hardware.enableAllFirmware = true;
   hardware.cpu.amd.updateMicrocode = true;
   hardware.cpu.intel.updateMicrocode = true;
 
-  environment.systemPackages =
-    [ pkgs.emacs pkgs.sysstat pkgs.hdparm pkgs.sdparm # pkgs.lsiutil
-      pkgs.htop pkgs.sqlite pkgs.iotop pkgs.lm_sensors pkgs.hwloc
-      pkgs.lsof pkgs.numactl pkgs.gcc pkgs.smartmontools pkgs.tcpdump pkgs.gdb
-      pkgs.elfutils
-    ];
+  environment.systemPackages = [
+    pkgs.emacs
+    pkgs.sysstat
+    pkgs.hdparm
+    pkgs.sdparm # pkgs.lsiutil
+    pkgs.htop
+    pkgs.sqlite
+    pkgs.iotop
+    pkgs.lm_sensors
+    pkgs.hwloc
+    pkgs.lsof
+    pkgs.numactl
+    pkgs.gcc
+    pkgs.smartmontools
+    pkgs.tcpdump
+    pkgs.gdb
+    pkgs.elfutils
+  ];
 
   services.openssh.enable = true;
 
@@ -39,11 +60,10 @@ with lib;
 
   nix.nrBuildUsers = 100;
 
-  nix.extraOptions =
-    ''
-      allowed-impure-host-deps = /etc/protocols /etc/services /etc/nsswitch.conf
-      allowed-uris = https://github.com/ https://git.savannah.gnu.org/ github:
-    '';
+  nix.extraOptions = ''
+    allowed-impure-host-deps = /etc/protocols /etc/services /etc/nsswitch.conf
+    allowed-uris = https://github.com/ https://git.savannah.gnu.org/ github:
+  '';
 
   networking.useDHCP = false;
 
@@ -65,9 +85,14 @@ with lib;
 
   # Bump the open files limit so that non-root users can run NixOS VM
   # tests (Samba opens lot of files).
-  security.pam.loginLimits =
-    [ { domain = "*"; item = "nofile"; type = "-"; value = "16384"; }
-    ];
+  security.pam.loginLimits = [
+    {
+      domain = "*";
+      item = "nofile";
+      type = "-";
+      value = "16384";
+    }
+  ];
 
   # Enable Kernel Samepage Merging (reduces memory footprint of VMs).
   hardware.ksm.enable = true;

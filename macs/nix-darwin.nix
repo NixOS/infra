@@ -1,5 +1,10 @@
 # used with https://github.com/DeterminateSystems/macos-ephemeral
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
@@ -7,21 +12,17 @@ let
   sshKeys = rec {
     hydra-queue-runner = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOdxl6gDS7h3oeBBja2RSBxeS51Kp44av8OAJPPJwuU/ hydra-queue-runner@rhea";
   };
-  environment = concatStringsSep " "
-    [
-      "NIX_SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
-    ];
+  environment = concatStringsSep " " [
+    "NIX_SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
+  ];
 
-  authorizedNixStoreKey = key:
-    "command=\"${environment} ${config.nix.package}/bin/nix-store --serve --write\" ${key}";
+  authorizedNixStoreKey =
+    key: "command=\"${environment} ${config.nix.package}/bin/nix-store --serve --write\" ${key}";
 in
 
 {
   environment.darwinConfig = "/nix/home/darwin-config/macs/nix-darwin.nix";
-  environment.systemPackages =
-    [
-      config.nix.package
-    ];
+  environment.systemPackages = [ config.nix.package ];
 
   programs.zsh.enable = true;
   programs.zsh.enableCompletion = false;
@@ -33,14 +34,19 @@ in
   services.nix-daemon.enable = true;
 
   nix.settings = {
-    "extra-experimental-features" = [ "nix-command" "flakes" ];
+    "extra-experimental-features" = [
+      "nix-command"
+      "flakes"
+    ];
     max-jobs = 4;
     cores = 2;
   };
 
   nix.gc.automatic = true;
   nix.gc.user = "";
-  nix.gc.interval = { Minute = 15; };
+  nix.gc.interval = {
+    Minute = 15;
+  };
   nix.gc.options =
     let
       gbFree = 50;
@@ -49,15 +55,13 @@ in
 
   # If we drop below 20GiB during builds, free 20GiB
   nix.extraOptions = ''
-    min-free = ${toString (30*1024*1024*1024)}
-    max-free = ${toString (50*1024*1024*1024)}
+    min-free = ${toString (30 * 1024 * 1024 * 1024)}
+    max-free = ${toString (50 * 1024 * 1024 * 1024)}
   '';
 
-  environment.etc."per-user/root/ssh/authorized_keys".text = concatStringsSep "\n"
-    [
-      (authorizedNixStoreKey sshKeys.hydra-queue-runner)
-    ];
-
+  environment.etc."per-user/root/ssh/authorized_keys".text = concatStringsSep "\n" [
+    (authorizedNixStoreKey sshKeys.hydra-queue-runner)
+  ];
 
   system.activationScripts.postActivation.text = ''
     printf "configuring ssh keys for hydra on the root account... "

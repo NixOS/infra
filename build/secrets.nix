@@ -16,9 +16,9 @@ let
     tarball-mirror-aws-credentials = [ machines.pluto ];
   };
 in
-  builtins.listToAttrs (
-    map (secretName: {
-      name = "secrets/${secretName}.age";
-      value.publicKeys = secrets."${secretName}" ++ keys.infra-core;
-    }) (builtins.attrNames secrets)
-  )
+builtins.listToAttrs (
+  map (secretName: {
+    name = "secrets/${secretName}.age";
+    value.publicKeys = secrets."${secretName}" ++ keys.infra-core;
+  }) (builtins.attrNames secrets)
+)

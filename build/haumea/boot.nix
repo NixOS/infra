@@ -7,6 +7,10 @@
     copyKernels = true;
     configurationLimit = 10; # 230 MB /boot capacity
   };
-  boot.initrd.availableKernelModules = [ "ahci" "nvme" "usbhid" ];
+  boot.initrd.availableKernelModules = [
+    "ahci"
+    "nvme"
+    "usbhid"
+  ];
   boot.kernelModules = [ "kvm-amd" ];
 }

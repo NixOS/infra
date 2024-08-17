@@ -1,9 +1,30 @@
-{ config, lib, pkgs, inputs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 
 let
 
-  inherit (lib) mkDefault mkEnableOption mkForce mkIf mkMerge mkOption mkPackageOption;
-  inherit (lib) literalExpression mapAttrs optional optionalString types recursiveUpdate;
+  inherit (lib)
+    mkDefault
+    mkEnableOption
+    mkForce
+    mkIf
+    mkMerge
+    mkOption
+    mkPackageOption
+    ;
+  inherit (lib)
+    literalExpression
+    mapAttrs
+    optional
+    optionalString
+    types
+    recursiveUpdate
+    ;
 
   cfg = config.services.limesurvey;
 
@@ -11,9 +32,17 @@ let
   group = config.services.nginx.group;
   stateDir = "/var/lib/limesurvey";
 
-  configType = with types; oneOf [ (attrsOf configType) str int bool ] // {
-    description = "limesurvey config type (str, int, bool or attribute set thereof)";
-  };
+  configType =
+    with types;
+    oneOf [
+      (attrsOf configType)
+      str
+      int
+      bool
+    ]
+    // {
+      description = "limesurvey config type (str, int, bool or attribute set thereof)";
+    };
 
   limesurveyConfig = pkgs.writeText "config.php" ''
     <?php
@@ -83,14 +112,22 @@ in
 
     database = {
       type = mkOption {
-        type = types.enum [ "mysql" "pgsql" "odbc" "mssql" ];
+        type = types.enum [
+          "mysql"
+          "pgsql"
+          "odbc"
+          "mssql"
+        ];
         example = "pgsql";
         default = "mysql";
         description = "Database engine to use.";
       };
 
       dbEngine = mkOption {
-        type = types.enum [ "MyISAM" "InnoDB" ];
+        type = types.enum [
+          "MyISAM"
+          "InnoDB"
+        ];
         default = "InnoDB";
         description = "Database storage engine to use.";
       };
@@ -133,10 +170,12 @@ in
       socket = mkOption {
         type = types.nullOr types.path;
         default =
-          if mysqlLocal then "/run/mysqld/mysqld.sock"
-          else if pgsqlLocal then "/run/postgresql"
-          else null
-        ;
+          if mysqlLocal then
+            "/run/mysqld/mysqld.sock"
+          else if pgsqlLocal then
+            "/run/postgresql"
+          else
+            null;
         defaultText = literalExpression "/run/mysqld/mysqld.sock";
         description = "Path to the unix socket file to use for authentication.";
       };
@@ -154,9 +193,10 @@ in
 
     virtualHost = mkOption {
       type = types.submodule (
-        recursiveUpdate
-          (import "${inputs.nixpkgs}/nixos/modules/services/web-servers/nginx/vhost-options.nix" { inherit config lib; })
-          { }
+        recursiveUpdate (import
+          "${inputs.nixpkgs}/nixos/modules/services/web-servers/nginx/vhost-options.nix"
+          { inherit config lib; }
+        ) { }
       );
       example = literalExpression ''
         {
@@ -172,7 +212,13 @@ in
     };
 
     poolConfig = mkOption {
-      type = with types; attrsOf (oneOf [ str int bool ]);
+      type =
+        with types;
+        attrsOf (oneOf [
+          str
+          int
+          bool
+        ]);
       default = {
         "pm" = "dynamic";
         "pm.max_children" = 32;
@@ -243,10 +289,15 @@ in
       runtimePath = "${stateDir}/tmp/runtime";
       components = {
         db = {
-          connectionString = "${cfg.database.type}:dbname=${cfg.database.name};host=${if pgsqlLocal then cfg.database.socket else cfg.database.host};port=${toString cfg.database.port}" +
-            optionalString mysqlLocal ";socket=${cfg.database.socket}";
+          connectionString =
+            "${cfg.database.type}:dbname=${cfg.database.name};host=${
+              if pgsqlLocal then cfg.database.socket else cfg.database.host
+            };port=${toString cfg.database.port}"
+            + optionalString mysqlLocal ";socket=${cfg.database.socket}";
           username = cfg.database.user;
-          password = mkIf (cfg.database.passwordFile != null) "file_get_contents(\"${toString cfg.database.passwordFile}\");";
+          password = mkIf (
+            cfg.database.passwordFile != null
+          ) "file_get_contents(\"${toString cfg.database.passwordFile}\");";
           tablePrefix = "limesurvey_";
         };
         assetManager.basePath = "${stateDir}/tmp/assets";
@@ -259,7 +310,9 @@ in
         tempdir = "${stateDir}/tmp";
         uploaddir = "${stateDir}/upload";
         userquestionthemerootdir = "${stateDir}/upload/themes/question";
-        force_ssl = mkIf (cfg.virtualHost.addSSL || cfg.virtualHost.forceSSL || cfg.virtualHost.onlySSL) "on";
+        force_ssl = mkIf (
+          cfg.virtualHost.addSSL || cfg.virtualHost.forceSSL || cfg.virtualHost.onlySSL
+        ) "on";
         config.defaultlang = "en";
       };
     };
@@ -299,11 +352,20 @@ in
         chown ${user}:${group} "${stateDir}/credentials/encryption_nonce"
       '';
       LoadCredential = [
-        "encryption_key:${if cfg.encryptionKeyFile != null then cfg.encryptionKeyFile else pkgs.writeText "key" cfg.encryptionKey}"
-        "encryption_nonce:${if cfg.encryptionNonceFile != null then cfg.encryptionNonceFile else pkgs.writeText "nonce" cfg.encryptionKey}"
+        "encryption_key:${
+          if cfg.encryptionKeyFile != null then
+            cfg.encryptionKeyFile
+          else
+            pkgs.writeText "key" cfg.encryptionKey
+        }"
+        "encryption_nonce:${
+          if cfg.encryptionNonceFile != null then
+            cfg.encryptionNonceFile
+          else
+            pkgs.writeText "nonce" cfg.encryptionKey
+        }"
       ];
     };
-
 
     services.nginx = {
       enable = true;
@@ -354,13 +416,25 @@ in
         Group = group;
         Type = "oneshot";
         LoadCredential = [
-          "encryption_key:${if cfg.encryptionKeyFile != null then cfg.encryptionKeyFile else pkgs.writeText "key" cfg.encryptionKey}"
-          "encryption_nonce:${if cfg.encryptionNonceFile != null then cfg.encryptionNonceFile else pkgs.writeText "nonce" cfg.encryptionKey}"
+          "encryption_key:${
+            if cfg.encryptionKeyFile != null then
+              cfg.encryptionKeyFile
+            else
+              pkgs.writeText "key" cfg.encryptionKey
+          }"
+          "encryption_nonce:${
+            if cfg.encryptionNonceFile != null then
+              cfg.encryptionNonceFile
+            else
+              pkgs.writeText "nonce" cfg.encryptionKey
+          }"
         ];
       };
     };
 
-    systemd.services.nginx.after = optional mysqlLocal "mysql.service" ++ optional pgsqlLocal "postgresql.service";
+    systemd.services.nginx.after =
+      optional mysqlLocal "mysql.service"
+      ++ optional pgsqlLocal "postgresql.service";
 
     users.users.${user} = {
       group = group;
@@ -369,4 +443,3 @@ in
 
   };
 }
-

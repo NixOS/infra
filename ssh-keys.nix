@@ -29,9 +29,7 @@ rec {
     zimbatm
   ];
 
-  infra = infra-core ++ [
-    julienmalka
-  ];
+  infra = infra-core ++ [ julienmalka ];
 
   machines = {
     haumea = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBamzRwZmoLjBFoNruGSVJEahk02Ku7NrBOmqcRWxcPm";

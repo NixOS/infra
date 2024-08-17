@@ -1,19 +1,17 @@
-{ config
-, ...
-}:
+{ config, ... }:
 
 {
-  networking.firewall.interfaces.wg0.allowedTCPPorts = [
-    9093
-  ];
+  networking.firewall.interfaces.wg0.allowedTCPPorts = [ 9093 ];
 
   services.prometheus = {
-    alertmanagers = [ {
-      scheme = "http";
-      static_configs = [ {
-          targets = [ "localhost:${toString config.services.prometheus.alertmanager.port}" ];
-      } ];
-    } ];
+    alertmanagers = [
+      {
+        scheme = "http";
+        static_configs = [
+          { targets = [ "localhost:${toString config.services.prometheus.alertmanager.port}" ]; }
+        ];
+      }
+    ];
 
     alertmanager = {
       enable = true;
@@ -32,22 +30,29 @@
           repeat_interval = "24h";
           group_by = [ "alertname" ];
 
-          routes = [ {
-            receiver = "go-neb";
-            group_wait = "30s";
-            match.severity = "warning";
-          } ];
+          routes = [
+            {
+              receiver = "go-neb";
+              group_wait = "30s";
+              match.severity = "warning";
+            }
+          ];
         };
-        receivers = [ {
-          # with no *_config, this will drop all alerts directed to it
-          name = "ignore";
-        } {
-          name = "go-neb";
-          webhook_configs = [ {
-            url = "${config.services.go-neb.baseUrl}:4050/services/hooks/YWxlcnRtYW5hZ2VyX3NlcnZpY2U";
-            send_resolved = true;
-          } ];
-        } ];
+        receivers = [
+          {
+            # with no *_config, this will drop all alerts directed to it
+            name = "ignore";
+          }
+          {
+            name = "go-neb";
+            webhook_configs = [
+              {
+                url = "${config.services.go-neb.baseUrl}:4050/services/hooks/YWxlcnRtYW5hZ2VyX3NlcnZpY2U";
+                send_resolved = true;
+              }
+            ];
+          }
+        ];
       };
     };
   };
@@ -63,7 +68,7 @@
     isSystemUser = true;
     group = "go-neb";
   };
-  users.groups.go-neb = {};
+  users.groups.go-neb = { };
 
   systemd.services.go-neb.serviceConfig.SupplementaryGroups = [ "keys" ];
 
@@ -72,56 +77,60 @@
     baseUrl = "http://localhost";
     secretFile = config.age.secrets.alertmanager-matrix-forwarder.path;
     config = {
-      clients = [ {
-        UserId = "@bot:nixos.org";
-        AccessToken = "$CHANGEME";
-        HomeServerUrl = "https://matrix.nixos.org";
-        Sync = true;
-        AutoJoinRooms = true;
-        DisplayName = "Bot";
-      } ];
-      services = [ {
-        ID = "alertmanager_service";
-        Type = "alertmanager";
-        UserId = "@bot:nixos.org";
-        Config = {
-          webhook_url = "http://localhost:4050/services/hooks/YWxlcnRtYW5hZ2VyX3NlcnZpY2U";
-          rooms = {
-            # infra-alerts:nixos.org
-            "!QLQqibtFaVtDgurUAE:nixos.org" = {
-              text_template = ''
-                {{range .Alerts -}} [{{ .Status }}] {{index .Labels "alertname" }}: {{index .Annotations "description"}} {{ end -}}
-              '';
+      clients = [
+        {
+          UserId = "@bot:nixos.org";
+          AccessToken = "$CHANGEME";
+          HomeServerUrl = "https://matrix.nixos.org";
+          Sync = true;
+          AutoJoinRooms = true;
+          DisplayName = "Bot";
+        }
+      ];
+      services = [
+        {
+          ID = "alertmanager_service";
+          Type = "alertmanager";
+          UserId = "@bot:nixos.org";
+          Config = {
+            webhook_url = "http://localhost:4050/services/hooks/YWxlcnRtYW5hZ2VyX3NlcnZpY2U";
+            rooms = {
+              # infra-alerts:nixos.org
+              "!QLQqibtFaVtDgurUAE:nixos.org" = {
+                text_template = ''
+                  {{range .Alerts -}} [{{ .Status }}] {{index .Labels "alertname" }}: {{index .Annotations "description"}} {{ end -}}
+                '';
 
-              # $$severity otherwise envsubst replaces $severity with an empty string
-              html_template = ''
-                {{range .Alerts -}}
-                  {{ $$severity := index .Labels "severity" }}
-                  {{ if eq .Status "firing" }}
-                    {{ if eq $$severity "critical"}}
-                      <font color='red'><b>[FIRING - CRITICAL]</b></font>
-                    {{ else if eq $$severity "warning"}}
-                      <font color='orange'><b>[FIRING - WARNING]</b></font>
+                # $$severity otherwise envsubst replaces $severity with an empty string
+                html_template = ''
+                  {{range .Alerts -}}
+                    {{ $$severity := index .Labels "severity" }}
+                    {{ if eq .Status "firing" }}
+                      {{ if eq $$severity "critical"}}
+                        <font color='red'><b>[FIRING - CRITICAL]</b></font>
+                      {{ else if eq $$severity "warning"}}
+                        <font color='orange'><b>[FIRING - WARNING]</b></font>
+                      {{ else }}
+                        <b>[FIRING - {{ $$severity }}]</b>
+                      {{ end }}
                     {{ else }}
-                      <b>[FIRING - {{ $$severity }}]</b>
+                      <font color='green'><b>[RESOLVED]</b></font>
                     {{ end }}
-                  {{ else }}
-                    <font color='green'><b>[RESOLVED]</b></font>
-                  {{ end }}
-                  {{ index .Labels "alertname"}}: {{ index .Annotations "summary"}}
-                  (
-                    {{ if .Annotations.grafana }}
-                      <a href="{{ index .Annotations "grafana" }}">📈 Grafana</a>,
-                    {{ end }}
-                    <a href="{{ .GeneratorURL }}">🔥 Prometheus</a>,
-                    <a href="{{ .SilenceURL }}">🔕 Silence</a>
-                  )<br/>
-                {{end -}}'';
-              msg_type = "m.text"; # Must be either `m.text` or `m.notice`
+                    {{ index .Labels "alertname"}}: {{ index .Annotations "summary"}}
+                    (
+                      {{ if .Annotations.grafana }}
+                        <a href="{{ index .Annotations "grafana" }}">📈 Grafana</a>,
+                      {{ end }}
+                      <a href="{{ .GeneratorURL }}">🔥 Prometheus</a>,
+                      <a href="{{ .SilenceURL }}">🔕 Silence</a>
+                    )<br/>
+                  {{end -}}'';
+                msg_type = "m.text"; # Must be either `m.text` or `m.notice`
+              };
             };
           };
-        };
-      } ];
+        }
+      ];
     };
   };
 }

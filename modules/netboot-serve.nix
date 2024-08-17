@@ -7,8 +7,12 @@ let
   # re: https://github.com/ipxe/ipxe/pull/116
   # re: https://github.com/ipxe/ipxe/pull/112
   # re: https://lists.ipxe.org/pipermail/ipxe-devel/2020-May/007042.html
-  legoFlags = [ "--preferred-chain" "ISRG Root X1" ];
-in {
+  legoFlags = [
+    "--preferred-chain"
+    "ISRG Root X1"
+  ];
+in
+{
   services.nix-netboot-serve = {
     enable = true;
     listen = "127.0.0.1:${toString port}";
@@ -36,5 +40,8 @@ in {
     };
   };
 
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
 }

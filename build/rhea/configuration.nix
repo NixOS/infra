@@ -1,20 +1,21 @@
 { pkgs, ... }:
 {
-  imports =
-    [ ./hardware-configuration.nix
-      ./hetzner.nix
-      ./network.nix
-      ../common.nix
-      ../hydra.nix
-      ../hydra-proxy.nix
-      ../hydra-scaler.nix
-      ../packet-importer.nix
-    ];
+  imports = [
+    ./hardware-configuration.nix
+    ./hetzner.nix
+    ./network.nix
+    ../common.nix
+    ../hydra.nix
+    ../hydra-proxy.nix
+    ../hydra-scaler.nix
+    ../packet-importer.nix
+  ];
 
   networking = {
     hostName = "rhea";
     firewall.allowedTCPPorts = [
-      80 443
+      80
+      443
       9198 # hydra-queue-runner's prometheus
       9199 # hydra-notify's prometheus
     ];

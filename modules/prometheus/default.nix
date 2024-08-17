@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 let
-  prometheus-nixos-exporter = pkgs.callPackage ./nixos-exporter {};
+  prometheus-nixos-exporter = pkgs.callPackage ./nixos-exporter { };
 in
 {
   networking.firewall.allowedTCPPorts = [
@@ -11,9 +11,7 @@ in
   services.prometheus.exporters.node = {
     enable = true;
     enabledCollectors = [ "systemd" ];
-    extraFlags = [
-      "--collector.textfile.directory=/var/lib/prometheus-node-exporter-text-files"
-    ];
+    extraFlags = [ "--collector.textfile.directory=/var/lib/prometheus-node-exporter-text-files" ];
   };
 
   system.activationScripts.node-exporter-system-version = ''
@@ -26,7 +24,10 @@ in
   systemd.services.prometheus-nixos-exporter = {
     wantedBy = [ "multi-user.target" ];
     after = [ "network.target" ];
-    path= [ pkgs.nix pkgs.bash ];
+    path = [
+      pkgs.nix
+      pkgs.bash
+    ];
     serviceConfig = {
       Restart = "always";
       RestartSec = "60s";

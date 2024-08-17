@@ -1,26 +1,31 @@
 { config, inputs, ... }:
 
 {
-  imports =
-    [
-      ./hardware.nix
-      inputs.srvos.nixosModules.server
-      inputs.srvos.nixosModules.hardware-hetzner-online-amd
-      ../../modules/common.nix
-      ../../modules/first-time-contribution-tagger.nix
-      ../../modules/backup.nix
-      ../../modules/element-web.nix
-      ../../modules/matrix-synapse.nix
-      ../../modules/owncast.nix
-      ../../modules/vaultwarden.nix
-      ./limesurvey-tmp.nix
-    ];
+  imports = [
+    ./hardware.nix
+    inputs.srvos.nixosModules.server
+    inputs.srvos.nixosModules.hardware-hetzner-online-amd
+    ../../modules/common.nix
+    ../../modules/first-time-contribution-tagger.nix
+    ../../modules/backup.nix
+    ../../modules/element-web.nix
+    ../../modules/matrix-synapse.nix
+    ../../modules/owncast.nix
+    ../../modules/vaultwarden.nix
+    ./limesurvey-tmp.nix
+  ];
 
   # Bootloader.
   boot.loader.grub.enable = true;
   boot.loader.grub.mirroredBoots = [
-    { path = "/boot-1"; devices = [ "/dev/disk/by-id/nvme-SAMSUNG_MZQL23T8HCLS-00A07_S64HNJ0T508051" ]; }
-    { path = "/boot-2"; devices = [ "/dev/disk/by-id/nvme-SAMSUNG_MZQL23T8HCLS-00A07_S64HNJ0T508053" ]; }
+    {
+      path = "/boot-1";
+      devices = [ "/dev/disk/by-id/nvme-SAMSUNG_MZQL23T8HCLS-00A07_S64HNJ0T508051" ];
+    }
+    {
+      path = "/boot-2";
+      devices = [ "/dev/disk/by-id/nvme-SAMSUNG_MZQL23T8HCLS-00A07_S64HNJ0T508053" ];
+    }
   ];
   boot.loader.grub.useOSProber = true;
 
@@ -32,7 +37,10 @@
 
   disko.devices = import ./disko.nix;
 
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
   networking.firewall.allowedUDPPorts = [ ];
 
   systemd.network.networks."10-uplink".networkConfig.Address = "2a01:4f9:5a:186c::2";
@@ -68,4 +76,3 @@
   system.stateVersion = "23.05";
 
 }
-

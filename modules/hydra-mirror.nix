@@ -1,48 +1,53 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   channels = (import ../channels.nix).channels-with-urls;
 
   orderLib = import ../lib/service-order.nix { inherit lib; };
 
-  makeUpdateChannel = channelName: mainJob:
-    {
-      name = "update-${channelName}";
-      value = {
-        description = "Update Channel ${channelName}";
-        path = with pkgs; [ git nixos-channel-scripts ];
-        script =
-          ''
-            # Hardcoded in channel scripts.
-            dir=/home/hydra-mirror/nixpkgs-channels
-            if ! [[ -e $dir ]]; then
-              git clone --bare https://github.com/NixOS/nixpkgs.git $dir
-            fi
-            GIT_DIR=$dir git config credential.helper 'store --file=${config.age.secrets.hydra-mirror-git-credentials.path}'
-            GIT_DIR=$dir git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
+  makeUpdateChannel = channelName: mainJob: {
+    name = "update-${channelName}";
+    value = {
+      description = "Update Channel ${channelName}";
+      path = with pkgs; [
+        git
+        nixos-channel-scripts
+      ];
+      script = ''
+        # Hardcoded in channel scripts.
+        dir=/home/hydra-mirror/nixpkgs-channels
+        if ! [[ -e $dir ]]; then
+          git clone --bare https://github.com/NixOS/nixpkgs.git $dir
+        fi
+        GIT_DIR=$dir git config credential.helper 'store --file=${config.age.secrets.hydra-mirror-git-credentials.path}'
+        GIT_DIR=$dir git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
 
-            # FIXME: use IAM role.
-            export AWS_ACCESS_KEY_ID=$(sed 's/aws_access_key_id=\(.*\)/\1/ ; t; d' ${config.age.secrets.hydra-mirror-aws-credentials.path})
-            export AWS_SECRET_ACCESS_KEY=$(sed 's/aws_secret_access_key=\(.*\)/\1/ ; t; d' ${config.age.secrets.hydra-mirror-aws-credentials.path})
-            exec mirror-nixos-branch ${channelName} https://hydra.nixos.org/job/${mainJob}/latest-finished
-          '';
-        serviceConfig = {
-          Type = "oneshot";
-          RemainAfterExit = false;
-          User = "hydra-mirror";
-          # Allow the unit to use 80% of the system's RAM and 100% of the system's swap
-          MemoryHigh = "80%";
-        };
-        unitConfig = {
-          After = [ "networking.target" ];
-        };
-        environment.TMPDIR = "/home/hydra-mirror/scratch";
-        environment.GC_INITIAL_HEAP_SIZE = "4g";
+        # FIXME: use IAM role.
+        export AWS_ACCESS_KEY_ID=$(sed 's/aws_access_key_id=\(.*\)/\1/ ; t; d' ${config.age.secrets.hydra-mirror-aws-credentials.path})
+        export AWS_SECRET_ACCESS_KEY=$(sed 's/aws_secret_access_key=\(.*\)/\1/ ; t; d' ${config.age.secrets.hydra-mirror-aws-credentials.path})
+        exec mirror-nixos-branch ${channelName} https://hydra.nixos.org/job/${mainJob}/latest-finished
+      '';
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = false;
+        User = "hydra-mirror";
+        # Allow the unit to use 80% of the system's RAM and 100% of the system's swap
+        MemoryHigh = "80%";
       };
+      unitConfig = {
+        After = [ "networking.target" ];
+      };
+      environment.TMPDIR = "/home/hydra-mirror/scratch";
+      environment.GC_INITIAL_HEAP_SIZE = "4g";
     };
+  };
 
-    updateJobs = orderLib.mkOrderedChain
-      (lib.mapAttrsToList makeUpdateChannel channels);
+  updateJobs = orderLib.mkOrderedChain (lib.mapAttrsToList makeUpdateChannel channels);
 
 in
 
@@ -57,15 +62,15 @@ in
     owner = "hydra-mirror";
   };
 
-  users.users.hydra-mirror =
-    { description = "Channel mirroring user";
-      home = "/home/hydra-mirror";
-      createHome = true;
-      isSystemUser = true;
-      group = "hydra-mirror";
-    };
+  users.users.hydra-mirror = {
+    description = "Channel mirroring user";
+    home = "/home/hydra-mirror";
+    createHome = true;
+    isSystemUser = true;
+    group = "hydra-mirror";
+  };
 
-  users.groups.hydra-mirror = {};
+  users.groups.hydra-mirror = { };
 
   systemd.tmpfiles.rules = [
     ''
@@ -79,12 +84,8 @@ in
     "update-all-channels" = {
       description = "Start all channel updates.";
       unitConfig = {
-        After = builtins.map
-          (service: "${service.name}.service")
-          updateJobs;
-        Wants = builtins.map
-          (service: "${service.name}.service")
-          updateJobs;
+        After = builtins.map (service: "${service.name}.service") updateJobs;
+        Wants = builtins.map (service: "${service.name}.service") updateJobs;
       };
       script = "true";
     };

@@ -1,6 +1,4 @@
-{ lib
-, ...
-}:
+{ lib, ... }:
 {
   sops.secrets.first-time-contribution-tagger-env = {
     sopsFile = ../secrets/mjolnir-password.umbriel;

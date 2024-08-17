@@ -27,5 +27,4 @@
     sopsFile = ../../secrets/limesurvey-encryption-nonce.caliban;
   };
 
-
 }

@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}:
+{ pkgs, ... }:
 
 {
   boot.initrd.systemd.enable = true;
@@ -11,9 +8,7 @@
   systemd.services.openssh.enable = true;
   users.users.root.openssh.authorizedKeys.keys = (import ../../ssh-keys.nix).infra;
 
-  environment.systemPackages = with pkgs; [
-    neovim
-  ];
+  environment.systemPackages = with pkgs; [ neovim ];
 
   security.acme.acceptTerms = true;
   security.acme.defaults.email = "webmaster@nixos.org";

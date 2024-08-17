@@ -1,7 +1,8 @@
-{ lib
-, modulesPath
-, pkgs
-, ...
+{
+  lib,
+  modulesPath,
+  pkgs,
+  ...
 }:
 
 {
@@ -13,7 +14,7 @@
     ./postgresql.nix
     ./zrepl.nix
   ];
-  
+
   networking = {
     hostId = "83c81a23";
     hostName = "haumea";
@@ -22,25 +23,25 @@
 
   environment.systemPackages = [ pkgs.lz4 ];
 
-  fileSystems."/" =
-    { device = "rpool/safe/root";
-      fsType = "zfs";
-    };
+  fileSystems."/" = {
+    device = "rpool/safe/root";
+    fsType = "zfs";
+  };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-label/boot0";
-      fsType = "ext4";
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-label/boot0";
+    fsType = "ext4";
+  };
 
-  fileSystems."/nix" =
-    { device = "rpool/local/nix";
-      fsType = "zfs";
-    };
+  fileSystems."/nix" = {
+    device = "rpool/local/nix";
+    fsType = "zfs";
+  };
 
-  fileSystems."/var/db/postgresql" =
-    { device = "rpool/safe/postgres";
-      fsType = "zfs";
-    };
+  fileSystems."/var/db/postgresql" = {
+    device = "rpool/safe/postgres";
+    fsType = "zfs";
+  };
 
   services.zfs.autoScrub.enable = true;
 

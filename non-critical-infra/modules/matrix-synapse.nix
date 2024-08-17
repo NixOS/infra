@@ -1,7 +1,4 @@
-{ config
-, pkgs
-, ...
-}:
+{ config, pkgs, ... }:
 
 {
   imports = [
@@ -12,38 +9,30 @@
   fileSystems."/var/lib/matrix-synapse" = {
     device = "zroot/root/matrix-synapse";
     fsType = "zfs";
-    options = [
-      "zfsutil"
-    ];
+    options = [ "zfsutil" ];
   };
 
   services.postgresql = {
-    ensureUsers = [ {
-      name = "matrix-synapse";
-      ensureDBOwnership = true;
-    } ];
+    ensureUsers = [
+      {
+        name = "matrix-synapse";
+        ensureDBOwnership = true;
+      }
+    ];
     # Insufficient to create the database with the correct collation
     # https://github.com/element-hq/synapse/blob/develop/docs/postgres.md#set-up-database
-    ensureDatabases = [
-      "matrix-synapse"
-    ];
+    ensureDatabases = [ "matrix-synapse" ];
   };
 
-  services.postgresqlBackup.databases = [
-    "matrix-synapse"
-  ];
+  services.postgresqlBackup.databases = [ "matrix-synapse" ];
 
   services.redis.servers.matrix-synapse = {
     enable = true;
   };
 
-  environment.systemPackages = with pkgs; [
-    matrix-synapse-tools.synadm
-  ];
+  environment.systemPackages = with pkgs; [ matrix-synapse-tools.synadm ];
 
-  services.backup.includesZfsDatasets = [
-    "/var/lib/matrix-synapse"
-  ];
+  services.backup.includesZfsDatasets = [ "/var/lib/matrix-synapse" ];
 
   sops.secrets.matrix-synapse-signing-key = {
     sopsFile = ../secrets/matrix-synapse-signing-key.caliban;
@@ -63,18 +52,14 @@
     group = "matrix-synapse";
   };
 
-  systemd.services.matrix-synapse.serviceConfig.SupplementaryGroups = [
-    "redis-matrix-synapse"
-  ];
+  systemd.services.matrix-synapse.serviceConfig.SupplementaryGroups = [ "redis-matrix-synapse" ];
 
   services.matrix-synapse = {
     enable = true;
     enableRegistrationScript = false; # not compatible with unix sockets
     withJemalloc = true;
 
-    extraConfigFiles = [
-      config.sops.secrets.matrix-synapse-secrets.path
-    ];
+    extraConfigFiles = [ config.sops.secrets.matrix-synapse-secrets.path ];
 
     # https://github.com/element-hq/synapse/blob/master/docs/usage/configuration/config_documentation.md
     settings = {
@@ -108,35 +93,33 @@
         path = config.services.redis.servers.matrix-synapse.unixSocket;
       };
 
-      listeners = [ {
-        type = "http";
-        path = "/run/matrix-synapse/matrix-synapse.sock";
-        mode = "0660";
-        resources = [ {
-          compress = true;
-          names = [
-            "client"
+      listeners = [
+        {
+          type = "http";
+          path = "/run/matrix-synapse/matrix-synapse.sock";
+          mode = "0660";
+          resources = [
+            {
+              compress = true;
+              names = [ "client" ];
+            }
+            {
+              compress = false;
+              names = [ "federation" ];
+            }
           ];
-        } {
-          compress = false;
-          names = [
-            "federation"
+        }
+        {
+          type = "http";
+          bind_addresses = [
+            "127.0.0.1"
+            "::1"
           ];
-        } ];
-      } {
-        type = "http";
-        bind_addresses = [
-          "127.0.0.1"
-          "::1"
-        ];
-        port = 8090;
-        tls = false;
-        resources = [ {
-          names = [
-            "metrics"
-          ];
-        } ];
-      } ];
+          port = 8090;
+          tls = false;
+          resources = [ { names = [ "metrics" ]; } ];
+        }
+      ];
     };
   };
 
@@ -145,8 +128,8 @@
   services.nginx = {
     clientMaxBodySize = config.services.matrix-synapse.settings.max_upload_size;
     upstreams."matrix-synapse".servers = {
-      "unix:/run/matrix-synapse/matrix-synapse.sock" = {};
-    }; 
+      "unix:/run/matrix-synapse/matrix-synapse.sock" = { };
+    };
     virtualHosts."matrix.nixos.org" = {
       forceSSL = true;
       enableACME = true;

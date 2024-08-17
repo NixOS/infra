@@ -1,15 +1,10 @@
-{ config
-, pkgs
-, ...
-}:
+{ config, pkgs, ... }:
 
 {
   fileSystems."/var/lib/postgresql" = {
     device = "zroot/root/postgresql";
     fsType = "zfs";
-    options = [
-      "zfsutil"
-    ];
+    options = [ "zfsutil" ];
   };
 
   services.postgresql = {
@@ -23,17 +18,16 @@
     enable = true;
     compression = "zstd";
     # pulled in through the backup job
-    startAt = [];
+    startAt = [ ];
   };
 
   # include postgres dumps in the backup
   services.backup = {
-    includes = [
-      "/var/backup/postgresql"
-    ];
-    wantedUnits = if config.services.postgresqlBackup.databases == [] then
-      [ "postgresqlBackup.service" ]
-    else
-      map (db: "postgresqlBackup-${db}.service") config.services.postgresqlBackup.databases;
+    includes = [ "/var/backup/postgresql" ];
+    wantedUnits =
+      if config.services.postgresqlBackup.databases == [ ] then
+        [ "postgresqlBackup.service" ]
+      else
+        map (db: "postgresqlBackup-${db}.service") config.services.postgresqlBackup.databases;
   };
 }
