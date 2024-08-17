@@ -9,35 +9,35 @@ to_date_excl="$2"
 [[ -n $to_date_excl ]]
 
 run_query() {
-    local name="$1"
-    local query="$2"
+  local name="$1"
+  local query="$2"
 
-    res=$(aws athena start-query-execution \
-        --region $region \
-        --result-configuration OutputLocation=s3://nixos-athena/ingestion/$name/ \
-        --query-string "$query")
+  res=$(aws athena start-query-execution \
+    --region $region \
+    --result-configuration OutputLocation=s3://nixos-athena/ingestion/$name/ \
+    --query-string "$query")
 
-    execution_id="$(printf "%s" "$res" | jq -r -e .QueryExecutionId)"
-    [[ -n $execution_id ]]
+  execution_id="$(printf "%s" "$res" | jq -r -e .QueryExecutionId)"
+  [[ -n $execution_id ]]
 
-    echo "Started query $name as $execution_id."
+  echo "Started query $name as $execution_id."
 
-    printf "Waiting..."
-    while true; do
-        res="$(aws athena get-query-execution --region $region --query-execution-id $execution_id)"
-        status="$(printf %s "$res" | jq -r -e .QueryExecution.Status.State)"
-        if [[ $status = RUNNING || $status = QUEUED ]]; then
-            printf "."
-            sleep 1
-            continue
-        fi
-        if [[ $status = SUCCEEDED ]]; then
-            printf " done.\n"
-            break
-        fi
-        printf "\nFailed: %s (%s)\n" "$status" "$res"
-        exit 1
-    done
+  printf "Waiting..."
+  while true; do
+    res="$(aws athena get-query-execution --region $region --query-execution-id $execution_id)"
+    status="$(printf %s "$res" | jq -r -e .QueryExecution.Status.State)"
+    if [[ $status = RUNNING || $status = QUEUED ]]; then
+      printf "."
+      sleep 1
+      continue
+    fi
+    if [[ $status = SUCCEEDED ]]; then
+      printf " done.\n"
+      break
+    fi
+    printf "\nFailed: %s (%s)\n" "$status" "$res"
+    exit 1
+  done
 }
 
 run_query fill-urls \

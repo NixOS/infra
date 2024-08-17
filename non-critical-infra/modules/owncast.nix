@@ -1,12 +1,7 @@
-{
-  config,
-  ...
-}:
+{ config, ... }:
 
 {
-  imports = [
-    ./nginx.nix
-  ];
+  imports = [ ./nginx.nix ];
 
   fileSystems."/var/lib/owncast" = {
     device = "zroot/root/owncast";
@@ -14,9 +9,7 @@
     options = [ "zfsutil" ];
   };
 
-  services.backup.includesZfsDatasets = [
-    "/var/lib/owncast"
-  ];
+  services.backup.includesZfsDatasets = [ "/var/lib/owncast" ];
 
   services.owncast = {
     enable = true;

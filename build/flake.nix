@@ -26,7 +26,20 @@
   inputs.rfc39.url = "github:NixOS/rfc39";
   inputs.rfc39.inputs.nixpkgs.follows = "nixpkgs";
 
-  outputs = { self, agenix, colmena, disko, hydra, hydra-scale-equinix-metal, nix, nixpkgs, nixos-channel-scripts, nix-netboot-serve, rfc39 }:
+  outputs =
+    {
+      self,
+      agenix,
+      colmena,
+      disko,
+      hydra,
+      hydra-scale-equinix-metal,
+      nix,
+      nixpkgs,
+      nixos-channel-scripts,
+      nix-netboot-serve,
+      rfc39,
+    }:
     let
       inherit (nixpkgs) lib;
 
@@ -45,7 +58,8 @@
           rfc39.overlays.default
         ];
       };
-    in {
+    in
+    {
       nixosConfigurations.haumea = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
 
@@ -73,15 +87,14 @@
         ];
       };
 
-      colmena = {
-        meta = {
-          description = "NixOS.org infrastructure";
-          nixpkgs = import nixpkgs {
-            system = "x86_64-linux";
+      colmena =
+        {
+          meta = {
+            description = "NixOS.org infrastructure";
+            nixpkgs = import nixpkgs { system = "x86_64-linux"; };
           };
-        };
-      } // builtins.mapAttrs
-        (name: value: {
+        }
+        // builtins.mapAttrs (name: value: {
           nixpkgs.system = value.config.nixpkgs.system;
           imports = value._module.args.modules;
           deployment = {
@@ -90,13 +103,15 @@
         }) self.nixosConfigurations;
 
       # TODO: flake-utils.lib.eachDefaultSystem
-      devShell.x86_64-linux = let
-        pkgs = import nixpkgs { system = "x86_64-linux"; };
-      in pkgs.mkShell {
-        buildInputs = with pkgs; [
-          agenix.packages.x86_64-linux.agenix
-          colmena.packages.x86_64-linux.colmena
-        ];
-      };
+      devShell.x86_64-linux =
+        let
+          pkgs = import nixpkgs { system = "x86_64-linux"; };
+        in
+        pkgs.mkShell {
+          buildInputs = with pkgs; [
+            agenix.packages.x86_64-linux.agenix
+            colmena.packages.x86_64-linux.colmena
+          ];
+        };
     };
 }

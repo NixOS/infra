@@ -8,7 +8,7 @@ launchctl unload $service_plist
 dscl . -delete /Groups/nixbld
 
 for i in $(seq 1 20); do
-    dscl . -delete /Users/nixbld$i
+  dscl . -delete /Users/nixbld$i
 done
 
 sudo rm -f $service_plist

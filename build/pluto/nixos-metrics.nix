@@ -1,7 +1,4 @@
-{ config
-, pkgs
-, ...
-}:
+{ config, pkgs, ... }:
 
 {
   systemd.services.pull-nixos-metrics = {
@@ -30,9 +27,7 @@
     timerConfig.OnCalendar = "12:00:00";
   };
 
-  services.backup.includesZfsDatasets = [
-    "/var/lib/victoriametrics"
-  ];
+  services.backup.includesZfsDatasets = [ "/var/lib/victoriametrics" ];
 
   services.victoriametrics = {
     enable = true;

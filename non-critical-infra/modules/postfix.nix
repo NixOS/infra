@@ -10,10 +10,7 @@
     enable = true;
     domains = config.networking.fqdn;
     selector = "mail";
-    inherit (config.services.postfix)
-      user
-      group
-    ;
+    inherit (config.services.postfix) user group;
     keyPath = "/run/opendkim-keys";
   };
 

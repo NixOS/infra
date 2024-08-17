@@ -32,30 +32,26 @@
   #    };
   #  }
   #
-  mkOrderedChain = jobs: let
-    unitConfigFrom = job: job.unitConfig or {};
-    afterFrom = job: (unitConfigFrom job).After or [];
-    previousFrom = collector:
-      if collector ? previous
-      then [collector.previous]
-      else [];
+  mkOrderedChain =
+    jobs:
+    let
+      unitConfigFrom = job: job.unitConfig or { };
+      afterFrom = job: (unitConfigFrom job).After or [ ];
+      previousFrom = collector: if collector ? previous then [ collector.previous ] else [ ];
 
-      ordered = builtins.foldl'
-        (collector: item: {
-          services = collector.services
-          ++ [{
+      ordered = builtins.foldl' (collector: item: {
+        services = collector.services ++ [
+          {
             inherit (item) name;
             value = item.value // {
-              unitConfig = (unitConfigFrom item.value) //
-              {
-                After = (afterFrom item.value) ++
-                  (previousFrom collector);
+              unitConfig = (unitConfigFrom item.value) // {
+                After = (afterFrom item.value) ++ (previousFrom collector);
               };
             };
-          }];
-          previous = "${item.name}.service";
-        })
-        { services = []; }
-        jobs;
-  in ordered.services;
+          }
+        ];
+        previous = "${item.name}.service";
+      }) { services = [ ]; } jobs;
+    in
+    ordered.services;
 }

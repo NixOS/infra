@@ -9,9 +9,7 @@ buildPythonApplication {
 
   src = ./.;
 
-  nativeBuildInputs = [
-    setuptools
-  ];
+  nativeBuildInputs = [ setuptools ];
 
   propagatedBuildInputs = [
     packaging

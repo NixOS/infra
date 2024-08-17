@@ -30,7 +30,7 @@ curl_test() {
 }
 
 ix() {
-  url=$(cat | curl -F 'f:1=<-' ix.io 2> /dev/null)
+  url=$(cat | curl -F 'f:1=<-' ix.io 2>/dev/null)
   echo "Pasted at: $url"
 }
 

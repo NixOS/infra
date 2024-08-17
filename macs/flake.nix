@@ -3,23 +3,24 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    darwin = { url = "github:LnL7/nix-darwin"; inputs.nixpkgs.follows = "nixpkgs"; };
+    darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
-    { darwin
-    , ...
-    }:
+    { darwin, ... }:
     {
       darwinConfigurations =
         let
-          mac = system: darwin.lib.darwinSystem {
-            inherit system;
+          mac =
+            system:
+            darwin.lib.darwinSystem {
+              inherit system;
 
-            modules = [
-              ./nix-darwin.nix
-            ];
-          };
+              modules = [ ./nix-darwin.nix ];
+            };
         in
         {
           arm64 = mac "aarch64-darwin";

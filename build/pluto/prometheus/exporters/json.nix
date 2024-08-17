@@ -6,7 +6,7 @@
       enable = true;
       listenAddress = "localhost";
 
-      configFile = (pkgs.formats.yaml {}).generate "json-exporter-config.yml" {
+      configFile = (pkgs.formats.yaml { }).generate "json-exporter-config.yml" {
         modules.matrix-federation-checker = {
           metrics = [
             {
@@ -25,7 +25,9 @@
       {
         job_name = "matrix-federation-checker";
         metrics_path = "/probe";
-        params = { module = [ "matrix-federation-checker" ]; };
+        params = {
+          module = [ "matrix-federation-checker" ];
+        };
         relabel_configs = [
           {
             source_labels = [ "__address__" ];
@@ -51,22 +53,24 @@
     ];
 
     ruleFiles = [
-      (pkgs.writeText "matrix-federation.rules" (builtins.toJSON {
-        groups = [
-          {
-            name = "matrix-federation";
-            rules = [
-              {
-                alert = "MatrixFederationFailure";
-                expr = "matrix_homeserver_federation_ok < 1";
-                for = "30m";
-                labels.severity = "warning";
-                annotations.summary = "Matrix federation for {{ $labels.matrix_instance }} appears to be failing.";
-              }
-            ];
-          }
-        ];
-      }))
+      (pkgs.writeText "matrix-federation.rules" (
+        builtins.toJSON {
+          groups = [
+            {
+              name = "matrix-federation";
+              rules = [
+                {
+                  alert = "MatrixFederationFailure";
+                  expr = "matrix_homeserver_federation_ok < 1";
+                  for = "30m";
+                  labels.severity = "warning";
+                  annotations.summary = "Matrix federation for {{ $labels.matrix_instance }} appears to be failing.";
+                }
+              ];
+            }
+          ];
+        }
+      ))
     ];
   };
 }

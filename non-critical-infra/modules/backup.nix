@@ -1,7 +1,8 @@
-{ lib
-, config
-, pkgs
-, ...
+{
+  lib,
+  config,
+  pkgs,
+  ...
 }:
 
 let
@@ -21,112 +22,115 @@ let
   '';
 in
 {
-  options.services.backup = with lib; with types; {
-    user = mkOption {
-      type = str;
-      description = ''
-        Username for the SSH remote host.
-      '';
+  options.services.backup =
+    with lib;
+    with types;
+    {
+      user = mkOption {
+        type = str;
+        description = ''
+          Username for the SSH remote host.
+        '';
+      };
+
+      host = mkOption {
+        type = str;
+        description = ''
+          Hostname of the SSH remote host.
+        '';
+      };
+
+      hostPublicKey = mkOption {
+        type = str;
+        example = "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA5EB5p/5Hp3hGW1oHok+PIOH9Pbn7cnUiGmUEBrCVjnAw+HrKyN8bYVV0dIGllswYXwkG/+bgiBlE6IVIBAq+JwVWu1Sss3KarHY3OvFJUXZoZyRRg/Gc/+LRCE7lyKpwWQ70dbelGRyyJFH36eNv6ySXoUYtGkwlU5IVaHPApOxe4LHPZa/qhSRbPo2hwoh0orCtgejRebNtW5nlx00DNFgsvn8Svz2cIYLxsPVzKgUxs8Zxsxgn+Q/UvR7uq4AbAhyBMLxv7DjJ1pc7PJocuTno2Rw9uMZi1gkjbnmiOh6TTXIEWbnroyIhwc8555uto9melEUmWNQ+C+PwAK+MPw==";
+        description = ''
+          Public SSH host key of the remote host. Discoverable using e.g. `ssh-keyscan`.
+        '';
+      };
+
+      port = mkOption {
+        type = port;
+        default = 22;
+        description = ''
+          Port of the SSH remote host.
+        '';
+        apply = toString;
+      };
+
+      sshKey = mkOption {
+        type = path;
+        example = "/var/keys/ssh-key";
+        description = ''
+          Path to the SSH key required to access the remote host.
+        '';
+      };
+
+      secretPath = mkOption {
+        type = path;
+        example = "/var/keys/borg-secret";
+        description = ''
+          Path to the secret used to encrypt backups in the repository.
+        '';
+      };
+
+      quota = mkOption {
+        type = nullOr str;
+        default = null;
+        example = "90G";
+        description = ''
+          Quota for the borg repository. Useful to prevent the target disk from running full and ensuring borg keeps some space to work with.
+        '';
+      };
+
+      includes = mkOption {
+        type = listOf path;
+        default = [ ];
+        description = ''
+          Paths to include in the backup.
+        '';
+      };
+      includesZfsDatasets = mkOption {
+        type = listOf str;
+        default = [ ];
+        description = ''
+          ZFS datasets referenced by mountpoint to snapshot and include
+        '';
+      };
+
+      excludes = mkOption {
+        type = listOf path;
+        default = [ ];
+        description = ''
+          Paths to exclude in the backup.
+        '';
+      };
+
+      preHook = mkOption {
+        type = lines;
+        default = "";
+        description = ''
+          Shell commands to run before the backup.
+        '';
+      };
+
+      postHook = mkOption {
+        type = lines;
+        default = "";
+        description = ''
+          Shell commands to run after the backup.
+        '';
+      };
+
+      wantedUnits = mkOption {
+        type = listOf str;
+        default = [ ];
+        description = ''
+          List of units to require before starting the backup.
+        '';
+      };
     };
 
-    host = mkOption {
-      type = str;
-      description = ''
-        Hostname of the SSH remote host.
-      '';
-    };
-
-    hostPublicKey = mkOption {
-      type = str;
-      example = "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA5EB5p/5Hp3hGW1oHok+PIOH9Pbn7cnUiGmUEBrCVjnAw+HrKyN8bYVV0dIGllswYXwkG/+bgiBlE6IVIBAq+JwVWu1Sss3KarHY3OvFJUXZoZyRRg/Gc/+LRCE7lyKpwWQ70dbelGRyyJFH36eNv6ySXoUYtGkwlU5IVaHPApOxe4LHPZa/qhSRbPo2hwoh0orCtgejRebNtW5nlx00DNFgsvn8Svz2cIYLxsPVzKgUxs8Zxsxgn+Q/UvR7uq4AbAhyBMLxv7DjJ1pc7PJocuTno2Rw9uMZi1gkjbnmiOh6TTXIEWbnroyIhwc8555uto9melEUmWNQ+C+PwAK+MPw==";
-      description = ''
-        Public SSH host key of the remote host. Discoverable using e.g. `ssh-keyscan`.
-      '';
-    };
-
-    port = mkOption {
-      type = port;
-      default = 22;
-      description = ''
-        Port of the SSH remote host.
-      '';
-      apply = toString;
-    };
-
-    sshKey = mkOption {
-      type = path;
-      example = "/var/keys/ssh-key";
-      description = ''
-        Path to the SSH key required to access the remote host.
-      '';
-    };
-
-    secretPath = mkOption {
-      type = path;
-      example = "/var/keys/borg-secret";
-      description = ''
-        Path to the secret used to encrypt backups in the repository.
-      '';
-    };
-
-    quota = mkOption {
-      type = nullOr str;
-      default = null;
-      example = "90G";
-      description = ''
-        Quota for the borg repository. Useful to prevent the target disk from running full and ensuring borg keeps some space to work with.
-      '';
-    };
-
-    includes = mkOption {
-      type = listOf path;
-      default = [];
-      description = ''
-        Paths to include in the backup.
-      '';
-    };
-    includesZfsDatasets = mkOption {
-      type = listOf str;
-      default = [];
-      description = ''
-        ZFS datasets referenced by mountpoint to snapshot and include
-      '';
-    };
-
-    excludes = mkOption {
-      type = listOf path;
-      default = [];
-      description = ''
-        Paths to exclude in the backup.
-      '';
-    };
-
-    preHook = mkOption {
-      type = lines;
-      default = "";
-      description = ''
-        Shell commands to run before the backup.
-      '';
-    };
-
-    postHook = mkOption {
-      type = lines;
-      default = "";
-      description = ''
-        Shell commands to run after the backup.
-      '';
-    };
-
-    wantedUnits = mkOption {
-      type = listOf str;
-      default = [];
-      description = ''
-        List of units to require before starting the backup.
-      '';
-    };
-  };
-
-  config = lib.mkIf (cfg.includes != [] || cfg.includesZfsDatasets != []) {
+  config = lib.mkIf (cfg.includes != [ ] || cfg.includesZfsDatasets != [ ]) {
     programs.ssh.knownHosts."${if cfg.port != 22 then "[${cfg.host}]:${cfg.port}" else cfg.host}" = {
       publicKey = "${cfg.hostPublicKey}";
     };
@@ -135,7 +139,7 @@ in
       wants = cfg.wantedUnits;
       after = cfg.wantedUnits;
 
-      path = lib.optionals (cfg.includesZfsDatasets != []) [
+      path = lib.optionals (cfg.includesZfsDatasets != [ ]) [
         config.boot.zfs.package
         pkgs.util-linux
       ];
@@ -163,8 +167,7 @@ in
       };
 
       # What to backup
-      paths = cfg.includes ++
-        (map (mp: "${mp}/.zfs/snapshot/borg") cfg.includesZfsDatasets);
+      paths = cfg.includes ++ (map (mp: "${mp}/.zfs/snapshot/borg") cfg.includesZfsDatasets);
       exclude = cfg.excludes;
 
       # Where to backup it to

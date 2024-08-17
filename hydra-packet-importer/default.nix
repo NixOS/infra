@@ -10,9 +10,7 @@ python3.pkgs.buildPythonApplication {
     python3.pkgs.black
   ];
 
-  propagatedBuildInputs = [
-    python3.pkgs.packet-python
-  ];
+  propagatedBuildInputs = [ python3.pkgs.packet-python ];
 
   installPhase = ''
     mypy ./import.py

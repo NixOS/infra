@@ -11,11 +11,10 @@
           "46.4.89.205/27"
           "2a01:4f8:212:41c9::1/64"
         ];
-        routes = [ {
-          routeConfig.Gateway = "46.4.89.193";
-        } {
-          routeConfig.Gateway = "fe80::1";
-        } ];
+        routes = [
+          { routeConfig.Gateway = "46.4.89.193"; }
+          { routeConfig.Gateway = "fe80::1"; }
+        ];
         networkConfig.Description = "WAN";
         linkConfig.RequiredForOnline = true;
       };

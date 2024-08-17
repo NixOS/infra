@@ -1,7 +1,5 @@
 {
-  services.backup.includes = [
-    "/var/lib/grafana"
-  ];
+  services.backup.includes = [ "/var/lib/grafana" ];
 
   services.grafana = {
     enable = true;
@@ -16,7 +14,5 @@
     };
   };
 
-  systemd.services.nginx.serviceConfig.SupplementaryGroups = [
-    "grafana"
-  ];
+  systemd.services.nginx.serviceConfig.SupplementaryGroups = [ "grafana" ];
 }

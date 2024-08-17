@@ -13,11 +13,10 @@
           "37.27.99.100/26"
           "2a01:4f9:3070:15e0::1/64"
         ];
-        routes = [ {
-          routeConfig.Gateway = "37.27.99.65";
-        } {
-          routeConfig.Gateway = "fe80::1";
-        } ];
+        routes = [
+          { routeConfig.Gateway = "37.27.99.65"; }
+          { routeConfig.Gateway = "fe80::1"; }
+        ];
       };
     };
   };

@@ -1,14 +1,13 @@
 { inputs, lib, ... }:
 
 {
-  imports =
-    [
-      ./hardware.nix
-      inputs.srvos.nixosModules.server
-      inputs.srvos.nixosModules.hardware-hetzner-cloud-arm
-      ../../modules/common.nix
-      ../../modules/mjolnir.nix
-    ];
+  imports = [
+    ./hardware.nix
+    inputs.srvos.nixosModules.server
+    inputs.srvos.nixosModules.hardware-hetzner-cloud-arm
+    ../../modules/common.nix
+    ../../modules/mjolnir.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -36,14 +35,15 @@
     ];
     routes = [
       { routeConfig.Gateway = "fe80::1"; }
-      { routeConfig = {
-        Gateway = "172.31.1.1";
-        GatewayOnLink = true;
-      }; }
+      {
+        routeConfig = {
+          Gateway = "172.31.1.1";
+          GatewayOnLink = true;
+        };
+      }
     ];
     linkConfig.RequiredForOnline = "routable";
   };
 
   system.stateVersion = "23.05";
 }
-

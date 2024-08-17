@@ -1,6 +1,4 @@
-{ pkgs
-, ...
-}:
+{ pkgs, ... }:
 
 let
   exporter = pkgs.fetchFromGitHub {
@@ -10,46 +8,45 @@ let
     sha256 = "sha256-Sk/ynhPeXQVIgyZJ3Gj1VynJhPWmBHjrRnGYLjnJvio=";
   };
 
-  config = pkgs.writeText "config.json" (builtins.toJSON {
-    port = 9401;
-    repos = [
-      "NixOS/nixpkgs"
-      "NixOS/nix"
-    ];
-  });
-in {
+  config = pkgs.writeText "config.json" (
+    builtins.toJSON {
+      port = 9401;
+      repos = [
+        "NixOS/nixpkgs"
+        "NixOS/nix"
+      ];
+    }
+  );
+in
+{
   systemd.services.prometheus-github-exporter = {
-    wantedBy = [
-      "multi-user.target"
-    ];
-    after = [
-      "network.target"
-    ];
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network.target" ];
     serviceConfig = {
       DynamicUser = true;
       User = "github-exporter";
       Restart = "always";
       RestartSec = "60s";
-      PrivateTmp =  true;
+      PrivateTmp = true;
     };
 
     path = [
-      (pkgs.python3.withPackages (ps: with ps; [
-        prometheus_client
-        requests
-      ]))
+      (pkgs.python3.withPackages (
+        ps: with ps; [
+          prometheus_client
+          requests
+        ]
+      ))
     ];
 
     script = "exec python3 ${exporter}/scrape.py ${config}";
   };
 
-  services.prometheus.scrapeConfigs = [ {
-    job_name = "prometheus-github-exporter";
-    metrics_path = "/";
-    static_configs = [ {
-      targets = [
-        "127.0.0.1:9401"
-      ];
-    } ];
-  } ];
+  services.prometheus.scrapeConfigs = [
+    {
+      job_name = "prometheus-github-exporter";
+      metrics_path = "/";
+      static_configs = [ { targets = [ "127.0.0.1:9401" ]; } ];
+    }
+  ];
 }

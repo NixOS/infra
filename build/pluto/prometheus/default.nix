@@ -1,5 +1,4 @@
-{ ...
-}:
+{ ... }:
 
 {
   imports = [
@@ -31,13 +30,9 @@
     10.254.3.1 webserver
   '';
 
-  networking.firewall.allowedTCPPorts = [
-    9090
-  ];
+  networking.firewall.allowedTCPPorts = [ 9090 ];
 
-  services.backup.includesZfsDatasets = [
-    "/var/lib/prometheus2"
-  ];
+  services.backup.includesZfsDatasets = [ "/var/lib/prometheus2" ];
 
   services.prometheus = {
     enable = true;

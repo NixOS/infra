@@ -9,4 +9,3 @@ readonly DEPLOY_TIMESTAMP="$(stat -c '%y' "${CURRENT_SYSTEM_PROFILE}" | cut -c '
 readonly DEPLOY_SECONDS="$(stat -c '%Y' "${CURRENT_SYSTEM_PROFILE}")"
 
 echo "node_deployed{version=\"${VERSION}\",date=\"${DEPLOY_TIMESTAMP}\"} ${DEPLOY_SECONDS}"
-

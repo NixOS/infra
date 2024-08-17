@@ -14,11 +14,10 @@
         "5.9.122.43/27"
         "2a01:4f8:162:71eb::/64"
       ];
-      routes = [ {
-        routeConfig.Gateway = "5.9.122.33";
-      } {
-        routeConfig.Gateway = "fe80::1";
-      } ];
+      routes = [
+        { routeConfig.Gateway = "5.9.122.33"; }
+        { routeConfig.Gateway = "fe80::1"; }
+      ];
     };
   };
 }

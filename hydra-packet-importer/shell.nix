@@ -1,1 +1,1 @@
-(import <nixpkgs> {}).callPackage ./default.nix {}
+(import <nixpkgs> { }).callPackage ./default.nix { }

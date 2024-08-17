@@ -14,17 +14,21 @@ in
     "f /var/lib/hydra-packet-import/machines 0644 hydra-packet hydra -"
   ];
 
-  services.hydra-dev.buildMachinesFiles = [
-    "/var/lib/hydra-packet-import/machines"
-  ];
+  services.hydra-dev.buildMachinesFiles = [ "/var/lib/hydra-packet-import/machines" ];
 
   systemd.services.hydra-packet-import = {
-    path = with pkgs; [ openssh moreutils ];
+    path = with pkgs; [
+      openssh
+      moreutils
+    ];
     script = "${importer}/bin/hydra-packet-importer /var/lib/hydra-packet-import/hydra-packet-import.json | sort | sponge /var/lib/hydra-packet-import/machines";
     serviceConfig = {
       User = "hydra-packet";
       Group = "keys";
-      SupplementaryGroups = [ "hydra" "keys" ];
+      SupplementaryGroups = [
+        "hydra"
+        "keys"
+      ];
       Type = "oneshot";
       RuntimeMaxSec = 1800;
     };

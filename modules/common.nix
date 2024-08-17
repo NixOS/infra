@@ -3,16 +3,13 @@
 with lib;
 
 {
-  imports = [
-    ./backup.nix
-  ];
+  imports = [ ./backup.nix ];
 
   time.timeZone = "UTC";
 
   users.mutableUsers = false;
 
-  users.extraUsers.root.openssh.authorizedKeys.keys =
-    with import ../ssh-keys.nix; infra-core;
+  users.extraUsers.root.openssh.authorizedKeys.keys = with import ../ssh-keys.nix; infra-core;
 
   nix = {
     settings = {
@@ -24,14 +21,14 @@ with lib;
     };
   };
 
-  environment.systemPackages =
-    [ pkgs.emacs
-      pkgs.git
-      pkgs.gdb
+  environment.systemPackages = [
+    pkgs.emacs
+    pkgs.git
+    pkgs.gdb
 
-      # jq is required by numtide/terraform-deploy-nixos-flakes.
-      pkgs.jq
-    ];
+    # jq is required by numtide/terraform-deploy-nixos-flakes.
+    pkgs.jq
+  ];
 
   services.openssh.enable = true;
 }

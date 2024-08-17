@@ -1,7 +1,4 @@
-{ lib
-, pkgs
-, ...
-}:
+{ lib, pkgs, ... }:
 
 {
   systemd.services.postgresql = {
@@ -38,7 +35,7 @@
       log_statement = "none";
 
       # pgbadger-compatible logging
-      log_transaction_sample_rate = 0.01;
+      log_transaction_sample_rate = 1.0e-2;
       log_min_duration_statement = 5000;
       log_checkpoints = "on";
       log_connections = "on";
@@ -83,8 +80,8 @@
       # benefit from frequent vacuums, so this should
       # help. In particular, I'm thinking the jobsets
       # pages.
-      autovacuum_vacuum_scale_factor = 0.02;
-      autovacuum_analyze_scale_factor = 0.01;
+      autovacuum_vacuum_scale_factor = 2.0e-2;
+      autovacuum_analyze_scale_factor = 1.0e-2;
 
       shared_preload_libraries = "pg_stat_statements";
       compute_query_id = "on";
@@ -101,4 +98,5 @@
       prometheus root root
       prometheus postgres-exporter root
     '';
-  };}
+  };
+}
