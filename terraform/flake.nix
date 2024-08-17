@@ -1,7 +1,7 @@
 {
   inputs.nixpkgs.url = "nixpkgs/master";
 
-  outputs = flakes @ { self, nixpkgs }: {
+  outputs = { nixpkgs }: {
 
     devShell.x86_64-linux =
       with import nixpkgs { system = "x86_64-linux"; };

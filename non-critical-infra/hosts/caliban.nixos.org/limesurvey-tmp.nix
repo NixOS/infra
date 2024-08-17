@@ -1,6 +1,6 @@
 # the content of this file should be put in the modules folder once the actual module has been upstreamed
 # PR: https://github.com/NixOS/nixpkgs/pull/325665/
-{ config, pkgs, ... }:
+{ config, ... }:
 {
   disabledModules = [ "services/web-apps/limesurvey.nix" ];
 

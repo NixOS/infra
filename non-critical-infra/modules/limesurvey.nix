@@ -6,7 +6,6 @@ let
   inherit (lib) literalExpression mapAttrs optional optionalString types recursiveUpdate;
 
   cfg = config.services.limesurvey;
-  fpm = config.services.phpfpm.pools.limesurvey;
 
   user = "limesurvey";
   group = config.services.nginx.group;
@@ -240,7 +239,7 @@ in
       }
     ];
 
-    services.limesurvey.config = mapAttrs (name: mkDefault) {
+    services.limesurvey.config = mapAttrs (_name: mkDefault) {
       runtimePath = "${stateDir}/tmp/runtime";
       components = {
         db = {
