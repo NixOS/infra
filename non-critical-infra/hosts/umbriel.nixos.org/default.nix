@@ -14,7 +14,6 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.timeout = lib.mkForce 5;
   boot.loader.efi.efiSysMountPoint = "/efi";
-  boot.supportedFilesystems = [ "zfs" ];
 
   # workaround because the console defaults to serial
   boot.kernelParams = [ "console=tty" ];

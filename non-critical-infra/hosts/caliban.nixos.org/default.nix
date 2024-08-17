@@ -18,7 +18,6 @@
 
   # Bootloader.
   boot.loader.grub.enable = true;
-  boot.supportedFilesystems = [ "zfs" ];
   boot.loader.grub.mirroredBoots = [
     { path = "/boot-1"; devices = [ "/dev/disk/by-id/nvme-SAMSUNG_MZQL23T8HCLS-00A07_S64HNJ0T508051" ]; }
     { path = "/boot-2"; devices = [ "/dev/disk/by-id/nvme-SAMSUNG_MZQL23T8HCLS-00A07_S64HNJ0T508053" ]; }
