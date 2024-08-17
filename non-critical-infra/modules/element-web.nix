@@ -58,7 +58,7 @@ in
     enableACME = true;
     forceSSL = true;
 
-    root = pkgs.element-web.override (old: {
+    root = pkgs.element-web.override (_old: {
       conf = elementWebConfig;
     });
   };

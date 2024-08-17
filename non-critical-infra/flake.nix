@@ -37,15 +37,15 @@
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, colmena, disko, srvos, first-time-contribution-tagger, sops-nix, ... }@inputs:
+  outputs = { self, nixpkgs, flake-utils, colmena, disko, first-time-contribution-tagger, sops-nix, ... }@inputs:
     let
-      importConfig = path: (lib.mapAttrs (name: value: import (path + "/${name}/default.nix")) (lib.filterAttrs (_: v: v == "directory") (builtins.readDir path)));
+      importConfig = path: (lib.mapAttrs (name: _value: import (path + "/${name}/default.nix")) (lib.filterAttrs (_: v: v == "directory") (builtins.readDir path)));
       inherit (nixpkgs) lib;
     in
     {
 
       nixosConfigurations = builtins.mapAttrs
-        (name: value: nixpkgs.lib.nixosSystem {
+        (_name: value: nixpkgs.lib.nixosSystem {
           inherit lib;
           system = "x86_64-linux";
           specialArgs = {

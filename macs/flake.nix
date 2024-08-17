@@ -7,10 +7,9 @@
   };
 
   outputs =
-    { nixpkgs
-    , darwin
+    { darwin
     , ...
-    }@inputs:
+    }:
     {
       darwinConfigurations =
         let

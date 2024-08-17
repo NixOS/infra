@@ -26,7 +26,7 @@
   inputs.rfc39.url = "github:NixOS/rfc39";
   inputs.rfc39.inputs.nixpkgs.follows = "nixpkgs";
 
-  outputs = flakes @ { self, agenix, colmena, disko, hydra, hydra-scale-equinix-metal, nix, nixpkgs, nixos-channel-scripts, nix-netboot-serve, rfc39 }:
+  outputs = { self, agenix, colmena, disko, hydra, hydra-scale-equinix-metal, nix, nixpkgs, nixos-channel-scripts, nix-netboot-serve, rfc39 }:
     let
       inherit (nixpkgs) lib;
 

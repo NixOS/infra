@@ -17,7 +17,7 @@ in lib.mkMerge [
       generatePrivateKeyFile = true;
       listenPort = hosts."${config.networking.hostName}".port or null;
 
-      peers = lib.mapAttrsToList (hostname: hostcfg:
+      peers = lib.mapAttrsToList (_hostname: hostcfg:
         {
           inherit (hostcfg) publicKey;
           allowedIPs = [ "${hostcfg.ip}/32" ];

@@ -1,6 +1,6 @@
 {
-  outputs = { self, nixpkgs }: {
-    nixosModules.nix-metrics = { config, pkgs, ... }: {
+  outputs = { nixpkgs }: {
+    nixosModules.nix-metrics = { pkgs, ... }: {
 
       users.users.nix-metrics =
         { isNormalUser = true;
