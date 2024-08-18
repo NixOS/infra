@@ -15,7 +15,9 @@
         "x86_64-darwin"
         "aarch64-darwin"
       ];
-      imports = [ ./formatter/default.nix ];
+      imports = [
+        ./formatter/flake-module.nix
+      ];
     };
 
 }
