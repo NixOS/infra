@@ -1,9 +1,11 @@
-# For the bits that are not nixops-able
+# User & permission management
 
 This module is for superadmins in the team.
 
 This terraform root module manages:
 * IAM roles
+* fastly log module
+* infrastructure for archeologist team
 
 ## Setup
 
@@ -15,26 +17,21 @@ Run `aws sso login` to acquire a temporary token.
 
 ## Usage
 
-The first time the following command has to be run to initialize the state
-file and plugins:
-
-```sh
-terraform init
-```
+We use opentofu, which is a fork of https://www.terraform.io/ maintained by the Linux foundation.
 
 Then run the following command to diff the changes and then apply if approved:
 
 ```sh
-terraform apply
+./tf.sh apply
 ```
 
 ## Terraform workflow
 
-Write the Terraform code and test the changes using `terraform validate`.
+Write the Tofu code and test the changes using `./tf.sh validate`.
 
-Before committing run `terraform fmt`. 
+Before committing run `nix fmt`.
 
 Once the code is ready to be deployed, create a new PR with the attached
-output of `terraform plan`.
+output of `./tf.sh plan`.
 
-Once the PR is merged, run `terraform apply` to apply the changes.
+Once the PR is merged, run `./tf.sh apply` to apply the changes.
