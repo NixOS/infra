@@ -2,7 +2,7 @@
 
 This module is for superadmins in the team.
 
-This terraform root module manages:
+This tofu root module manages:
 * IAM roles
 
 ## Setup
@@ -19,22 +19,22 @@ The first time the following command has to be run to initialize the state
 file and plugins:
 
 ```sh
-terraform init
+tofu init
 ```
 
 Then run the following command to diff the changes and then apply if approved:
 
 ```sh
-terraform apply
+tofu apply
 ```
 
-## Terraform workflow
+## Tofu workflow
 
-Write the Terraform code and test the changes using `terraform validate`.
+Write the Tofu code and test the changes using `tofu validate`.
 
-Before committing run `terraform fmt`. 
+Before committing run `tofu fmt`.
 
 Once the code is ready to be deployed, create a new PR with the attached
-output of `terraform plan`.
+output of `tofu plan`.
 
-Once the PR is merged, run `terraform apply` to apply the changes.
+Once the PR is merged, run `tofu apply` to apply the changes.
