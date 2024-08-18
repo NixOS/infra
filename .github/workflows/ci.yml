@@ -18,6 +18,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: cachix/install-nix-action@v27
+    - uses: DeterminateSystems/magic-nix-cache-action@v2
     - run: nix run github:Mic92/nix-fast-build -- --no-nom
   # all builds combined consume too much disk space... we should soon switch to something else
   nixos:
@@ -31,4 +32,5 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: cachix/install-nix-action@v27
+    - uses: DeterminateSystems/magic-nix-cache-action@v2
     - run: nix build '.#nixosConfigurations."${{ matrix.machine }}.nixos.org".config.system.build.toplevel'
