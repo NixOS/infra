@@ -51,6 +51,7 @@
       ];
       imports = [
         ./formatter/flake-module.nix
+        ./checks/flake-module.nix
         ./terraform/flake-module.nix
         ./non-critical-infra/flake-module.nix
       ];
