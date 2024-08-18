@@ -2,7 +2,7 @@
 
 This module is for superadmins in the team.
 
-This tofu root module manages:
+This terraform root module manages:
 * IAM roles
 
 ## Setup
@@ -15,26 +15,21 @@ Run `aws sso login` to acquire a temporary token.
 
 ## Usage
 
-The first time the following command has to be run to initialize the state
-file and plugins:
-
-```sh
-tofu init
-```
+We use opentofu, which is a fork of https://www.terraform.io/ maintained by the Linux foundation.
 
 Then run the following command to diff the changes and then apply if approved:
 
 ```sh
-tofu apply
+./tf.sh apply
 ```
 
-## Tofu workflow
+## Terraform workflow
 
-Write the Tofu code and test the changes using `tofu validate`.
+Write the Tofu code and test the changes using `./tf.sh validate`.
 
-Before committing run `tofu fmt`.
+Before committing run `nix fmt`.
 
 Once the code is ready to be deployed, create a new PR with the attached
-output of `tofu plan`.
+output of `./tf.sh plan`.
 
-Once the PR is merged, run `tofu apply` to apply the changes.
+Once the PR is merged, run `./tf.sh apply` to apply the changes.
