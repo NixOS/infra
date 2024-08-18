@@ -17,7 +17,7 @@
       ];
       imports = [
         ./formatter/flake-module.nix
-        ./terraform-iam/flake-module.nix
+        ./terraform/flake-module.nix
       ];
     };
 
