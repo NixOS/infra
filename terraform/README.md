@@ -39,3 +39,8 @@ Once the code is ready to be deployed, create a new PR with the attached
 output of `./tf.sh plan`.
 
 Once the PR is merged, run `./tf.sh apply` to apply the changes.
+
+## Upgrade from terraform to opentofu
+
+If you have used terraform, you may have to delete .terraform in this directory once
+to fixup provider registry addresses.

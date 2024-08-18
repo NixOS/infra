@@ -22,13 +22,6 @@ in
               p.netlify
               p.secret
             ]
-            ++ [
-              # FIXME: for our `terraform` target our state file still uses the old registry prefix
-              p.aws
-              p.fastly
-              p.netlify
-              p.secret
-            ]
           ))
         ];
       };
