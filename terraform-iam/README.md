@@ -1,9 +1,11 @@
-# For the bits that are not nixops-able
+# User & permission management
 
 This module is for superadmins in the team.
 
 This terraform root module manages:
 * IAM roles
+* fastly log module
+* infrastructure for archeologist team
 
 ## Setup
 
