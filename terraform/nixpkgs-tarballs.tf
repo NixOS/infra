@@ -299,13 +299,69 @@ resource "aws_s3_bucket" "nixpkgs-tarballs-cloudtrail-logs" {
   }
 }
 
+# Attach a policy to the CloudTrail logs S3 bucket
+data "aws_iam_policy_document" "nixpkgs-tarballs-cloudtrail-logs-policy" {
+  statement {
+    sid    = "AWSCloudTrailAclCheck"
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["cloudtrail.amazonaws.com"]
+    }
+
+    actions   = ["s3:GetBucketAcl"]
+    resources = [aws_s3_bucket.nixpkgs-tarballs-cloudtrail-logs.arn]
+    condition {
+      test     = "StringEquals"
+      variable = "aws:SourceArn"
+      values   = ["arn:${data.aws_partition.current.partition}:cloudtrail:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:trail/nixpkgs-tarballs"]
+    }
+  }
+
+  statement {
+    sid    = "AWSCloudTrailWrite"
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["cloudtrail.amazonaws.com"]
+    }
+
+    actions   = ["s3:PutObject"]
+    resources = ["${aws_s3_bucket.nixpkgs-tarballs-cloudtrail-logs.arn}/*"]
+
+    condition {
+      test     = "StringEquals"
+      variable = "s3:x-amz-acl"
+      values   = ["bucket-owner-full-control"]
+    }
+    condition {
+      test     = "StringEquals"
+      variable = "aws:SourceArn"
+      values   = ["arn:${data.aws_partition.current.partition}:cloudtrail:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:trail/nixpkgs-tarballs"]
+    }
+  }
+}
+
+data "aws_caller_identity" "current" {}
+data "aws_partition" "current" {}
+data "aws_region" "current" {}
+
+resource "aws_s3_bucket_policy" "nixpkgs-tarballs-cloudtrail-logs-policy" {
+  bucket = aws_s3_bucket.nixpkgs-tarballs-cloudtrail-logs.id
+  policy = data.aws_iam_policy_document.nixpkgs-tarballs-cloudtrail-logs-policy.json
+}
+
 # Create a CloudTrail
 resource "aws_cloudtrail" "nixpkgs-tarballs" {
   name                       = "nixpkgs-tarballs"
   s3_bucket_name             = aws_s3_bucket.nixpkgs-tarballs-cloudtrail-logs.bucket
   enable_log_file_validation = true
-  cloud_watch_logs_role_arn  = aws_iam_role.nixpkgs-tarballs-cloudtrail.arn
-  depends_on                 = [aws_s3_bucket.nixpkgs-tarballs-cloudtrail-logs]
+  depends_on = [
+    aws_s3_bucket_policy.nixpkgs-tarballs-cloudtrail-logs-policy
+  ]
+  # You must specify a log group and a role ARN.
 
   event_selector {
     read_write_type           = "WriteOnly"
@@ -316,43 +372,4 @@ resource "aws_cloudtrail" "nixpkgs-tarballs" {
       values = ["arn:aws:s3:::${aws_s3_bucket.nixpkgs-tarballs.bucket}/"]
     }
   }
-}
-
-# Create an IAM role for CloudTrail to write logs to CloudWatch
-resource "aws_iam_role" "nixpkgs-tarballs-cloudtrail" {
-  name = "nixpkgs-tarballs-cloudtrail"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = "sts:AssumeRole"
-        Effect = "Allow"
-        Principal = {
-          Service = "cloudtrail.amazonaws.com"
-        }
-      },
-    ]
-  })
-}
-
-# Attach the policy to allow CloudTrail to publish to CloudWatch Logs
-resource "aws_iam_role_policy" "nixpkgs-tarballs-cloudtrail" {
-  name = "cloudtrail-nixpkgs-policy"
-  role = aws_iam_role.nixpkgs-tarballs-cloudtrail.id
-
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = [
-          "logs:CreateLogGroup",
-          "logs:CreateLogStream",
-          "logs:PutLogEvents",
-        ]
-        Effect   = "Allow"
-        Resource = "*"
-      },
-    ]
-  })
 }
