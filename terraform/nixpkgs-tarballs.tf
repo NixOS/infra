@@ -286,3 +286,73 @@ resource "fastly_tls_subscription" "nixpkgs-tarballs" {
 output "nixpkgs-tarballs-managed_dns_challenge" {
   value = fastly_tls_subscription.nixpkgs-tarballs.managed_dns_challenge
 }
+
+# Create an S3 bucket for CloudTrail logs
+resource "aws_s3_bucket" "nixpkgs-tarballs-cloudtrail-logs" {
+  bucket = "nixpkgs-tarballs-cloudtrail-logs"
+  # We can potentially make this public for transparency?
+  # But first I want to see what the logs look like.
+  acl = "private"
+
+  versioning {
+    enabled = true
+  }
+}
+
+# Create a CloudTrail
+resource "aws_cloudtrail" "nixpkgs-tarballs" {
+  name                       = "nixpkgs-tarballs"
+  s3_bucket_name             = aws_s3_bucket.nixpkgs-tarballs-cloudtrail-logs.bucket
+  enable_log_file_validation = true
+  cloud_watch_logs_role_arn  = aws_iam_role.nixpkgs-tarballs-cloudtrail.arn
+  depends_on                 = [aws_s3_bucket.nixpkgs-tarballs-cloudtrail-logs]
+
+  event_selector {
+    read_write_type           = "WriteOnly"
+    include_management_events = false
+
+    data_resource {
+      type   = "AWS::S3::Object"
+      values = ["arn:aws:s3:::${aws_s3_bucket.nixpkgs-tarballs.bucket}/"]
+    }
+  }
+}
+
+# Create an IAM role for CloudTrail to write logs to CloudWatch
+resource "aws_iam_role" "nixpkgs-tarballs-cloudtrail" {
+  name = "nixpkgs-tarballs-cloudtrail"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "cloudtrail.amazonaws.com"
+        }
+      },
+    ]
+  })
+}
+
+# Attach the policy to allow CloudTrail to publish to CloudWatch Logs
+resource "aws_iam_role_policy" "nixpkgs-tarballs-cloudtrail" {
+  name = "cloudtrail-nixpkgs-policy"
+  role = aws_iam_role.nixpkgs-tarballs-cloudtrail.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents",
+        ]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+    ]
+  })
+}
