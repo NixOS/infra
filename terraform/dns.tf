@@ -369,6 +369,29 @@ resource "netlify_dns_record" "nixos_MX2" {
   value    = "mx2.improvmx.com"
 }
 
+# additional records for improvmx for dkim & dmarc
+
+resource "netlify_dns_record" "nixos_DKIM1" {
+  zone_id  = local.zone_id
+  hostname = "dkimprovmx1._domainkey.nixos.org"
+  type     = "CNAME"
+  value    = "dkimprovmx1.improvmx.com"
+}
+
+resource "netlify_dns_record" "nixos_DKIM2" {
+  zone_id  = local.zone_id
+  hostname = "dkimprovmx2._domainkey.nixos.org"
+  type     = "CNAME"
+  value    = "dkimprovmx2.improvmx.com"
+}
+
+resource "netlify_dns_record" "nixos_DMARC" {
+  zone_id  = local.zone_id
+  hostname = "_dmarc.nixos.org"
+  type     = "TXT"
+  value    = "v=DMARC1; p=none;"
+}
+
 resource "netlify_dns_record" "nixos_google_verification" {
   zone_id  = local.zone_id
   hostname = "nixos.org"
