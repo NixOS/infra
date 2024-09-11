@@ -1,5 +1,5 @@
 {
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11-small";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05-small";
 
   inputs.agenix.url = "github:ryantm/agenix";
   inputs.agenix.inputs.nixpkgs.follows = "nixpkgs";
