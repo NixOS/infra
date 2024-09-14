@@ -148,13 +148,33 @@ owner: Eelco and Rob, owned by the NixOS Foundation
 monitoring:
 **DataDog, accessible by Eelco (and Rob?) (Amine?) on the Infor account**
 
-## Mac Minis
+## Mac Minis at Hetzner Cloud
 
 owner: the NixOS Foundation
-access: Dan, Eelco, Rob, Graham
+access: Cole-h & Hexa
 role: build machines
 
-Running at the Utrechs Infor office on a shelf somewhere
+Current machine names:
+
+- intense-heron.mac.nixos.org
+- sweeping-filly.mac.nixos.org
+- maximum-snail.mac.nixos.org
+- growing-jennet.mac.nixos.org
+- enormous-catfish.mac.nixos.org
+
+## Mac Minis at Graham's house
+
+owner: the NixOS Foundation
+access: Cole-h
+role: build machines
+
+- arm64:
+  - cosmic-stud
+  - tight-bug
+  - quality-ram
+  - becoming-hyena
+
+There are also x86_64 mac minis, but they are offline because they produce too much heat.
 
 ## Mac Stadium
 
