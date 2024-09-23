@@ -24,6 +24,8 @@ in
   environment.darwinConfig = "/nix/home/darwin-config/macs/nix-darwin.nix";
   environment.systemPackages = [ config.nix.package ];
 
+  system.stateVersion = 5;
+
   programs.zsh.enable = true;
   programs.zsh.enableCompletion = false;
   programs.bash.enable = true;
