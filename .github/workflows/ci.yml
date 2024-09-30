@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: cachix/install-nix-action@V28
+    - uses: cachix/install-nix-action@v29
     - uses: DeterminateSystems/magic-nix-cache-action@v8
     - run: nix run github:Mic92/nix-fast-build -- --no-nom
   # all builds combined consume too much disk space... we should soon switch to something else
@@ -31,7 +31,7 @@ jobs:
         machine: [caliban]
     steps:
     - uses: actions/checkout@v4
-    - uses: cachix/install-nix-action@V28
+    - uses: cachix/install-nix-action@v29
     - uses: DeterminateSystems/magic-nix-cache-action@v8
     - run: nix build '.#nixosConfigurations."${{ matrix.machine }}.nixos.org".config.system.build.toplevel'
   nix-darwin:
@@ -42,6 +42,6 @@ jobs:
         machine: [arm64]
     steps:
     - uses: actions/checkout@v4
-    - uses: cachix/install-nix-action@V28
+    - uses: cachix/install-nix-action@v29
     - uses: DeterminateSystems/magic-nix-cache-action@v8
     - run: nix build '.#darwinConfigurations."${{ matrix.machine }}".config.system.build.toplevel'
