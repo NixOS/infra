@@ -9,6 +9,8 @@
     group = "mjolnir";
   };
 
+  nixpkgs.config.permittedInsecurePackages = [ "olm-3.2.16" ];
+
   # pantalaimon takes ages to start up, so mjolnir could hit the systemd burst
   # limit and then just be down forever. We don't want mjolnir to ever go down,
   # so disable rate-limiting and allow it to flap until pantalaimon is alive.
