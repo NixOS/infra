@@ -16,4 +16,4 @@ Come and talk to us on matrix: #infra:nixos.org
 ## For the contributors
 
 ### Secret access 
-Secret access is on a "need to have" basis. If you think you need access to the secrets, please add you key to the `.sops.yaml` file on a PR and ping people that already have access for them to run the `updatekeys` command.
+Secret access is on a "need to have" basis. If you think you need access to the secrets, please add your key to the `.sops.yaml` file on a PR and ping people that already have access for them to run the `updatekeys` command.
