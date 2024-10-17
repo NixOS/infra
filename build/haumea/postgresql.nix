@@ -21,7 +21,6 @@
     package = pkgs.postgresql_16;
     dataDir = "/var/db/postgresql/16";
     # https://pgtune.leopard.in.ua/#/
-    logLinePrefix = "user=%u,db=%d,app=%a,client=%h ";
     settings = {
       listen_addresses = lib.mkForce "10.254.1.9";
 
@@ -43,6 +42,7 @@
       log_lock_waits = "on";
       log_temp_files = 0;
       log_autovacuum_min_duration = 0;
+      log_line_prefix = "user=%u,db=%d,app=%a,client=%h ";
 
       max_connections = 500;
       work_mem = "20MB";
