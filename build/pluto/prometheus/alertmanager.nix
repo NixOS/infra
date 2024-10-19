@@ -72,6 +72,10 @@
 
   systemd.services.go-neb.serviceConfig.SupplementaryGroups = [ "keys" ];
 
+  nixpkgs.config.permittedInsecurePackages = [
+    "olm-3.2.16"
+  ];
+
   services.go-neb = {
     enable = true;
     baseUrl = "http://localhost";
