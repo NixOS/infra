@@ -8,6 +8,7 @@ in
 
 {
   services.hydra-dev.enable = true;
+  services.hydra-dev.package = pkgs.hydra;
   services.hydra-dev.logo = ./hydra-logo.png;
   services.hydra-dev.hydraURL = "https://hydra.nixos.org";
   services.hydra-dev.notificationSender = "edolstra@gmail.com";
@@ -59,17 +60,6 @@ in
       </prometheus>
     </hydra_notify>
   '';
-
-  # Work around https://github.com/NixOS/hydra/issues/1337
-  services.hydra-dev.package = pkgs.hydra.overrideAttrs (
-    _final: prev: {
-      postPatch = ''
-        ${prev.postPatch or ""}
-        rm src/lib/Hydra/Plugin/DeclarativeJobsets.pm
-        rm t/Hydra/Plugin/DeclarativeJobsets/basic.t
-      '';
-    }
-  );
 
   # eats memory as if it was free
   systemd.services.hydra-notify.enable = false;

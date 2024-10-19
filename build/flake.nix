@@ -1,5 +1,5 @@
 {
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11-small";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05-small";
 
   inputs.agenix.url = "github:ryantm/agenix";
   inputs.agenix.inputs.nixpkgs.follows = "nixpkgs";
@@ -10,7 +10,7 @@
   inputs.disko.url = "github:nix-community/disko";
   inputs.disko.inputs.nixpkgs.follows = "nixpkgs";
 
-  inputs.hydra.url = "github:NixOS/hydra/h.n.o-2.19";
+  inputs.hydra.url = "github:NixOS/hydra";
   inputs.hydra.inputs.nixpkgs.follows = "nixpkgs";
   inputs.nix.follows = "hydra/nix";
 
@@ -54,6 +54,7 @@
 
         nixpkgs.overlays = [
           nix.overlays.default
+          hydra.overlays.default
           nixos-channel-scripts.overlays.default
           rfc39.overlays.default
         ];
