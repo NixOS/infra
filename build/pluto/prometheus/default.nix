@@ -13,6 +13,7 @@
     ./exporters/matrix-synapse.nix
     ./exporters/nixos.nix
     ./exporters/node.nix
+    ./exporters/owncast.nix
     ./exporters/packet-sd.nix
     ./exporters/packet-spot-market.nix
     ./exporters/postgresql.nix

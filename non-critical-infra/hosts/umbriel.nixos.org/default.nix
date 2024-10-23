@@ -7,6 +7,7 @@
     inputs.srvos.nixosModules.hardware-hetzner-cloud-arm
     ../../modules/common.nix
     ../../modules/mjolnir.nix
+    ../../modules/prometheus/node-exporter.nix
   ];
 
   # Bootloader.

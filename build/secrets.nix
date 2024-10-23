@@ -6,6 +6,7 @@ let
     fastly-read-only-api-token = [ machines.pluto ];
     hydra-mirror-aws-credentials = [ machines.pluto ];
     hydra-mirror-git-credentials = [ machines.pluto ];
+    owncast-admin-password = [ machines.pluto ];
     packet-sd-env = [ machines.pluto ];
     pluto-backup-secret = [ machines.pluto ];
     pluto-backup-ssh-key = [ machines.pluto ];
