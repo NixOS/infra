@@ -11,6 +11,7 @@
     ../../modules/element-web.nix
     ../../modules/matrix-synapse.nix
     ../../modules/owncast.nix
+    ../../modules/prometheus/node-exporter.nix
     ../../modules/vaultwarden.nix
     ./limesurvey-tmp.nix
   ];

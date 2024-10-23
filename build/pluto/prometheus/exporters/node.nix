@@ -19,6 +19,13 @@
             targets = [ "pluto:9100" ];
           }
           {
+            labels.role = "services";
+            targets = [
+              "caliban.nixos.org:9100"
+              "umbriel.nixos.org:9100"
+            ];
+          }
+          {
             labels.role = "mac";
             targets = [
               "intense-heron.mac.nixos.org:9100"
