@@ -8,7 +8,10 @@
         static_configs = [
           {
             labels.role = "hydra";
-            targets = [ "rhea:9100" ];
+            targets = [
+              "rhea:9100"
+              "mimas.nixos.org:9100"
+            ];
           }
           {
             labels.role = "database";

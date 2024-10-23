@@ -9,6 +9,7 @@
               "rhea:9134"
               "haumea:9134"
               "pluto:9134"
+              "mimas.nixos.org:9134"
             ];
           }
         ];

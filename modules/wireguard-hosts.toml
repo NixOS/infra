@@ -22,6 +22,12 @@ network = 16
 # tombstone: 10.254.2.8 mac8 (host/guest)
 # tombstone: 10.254.2.9 mac9 (host/guest)
 
+[hosts.mimas]
+endpoint = "157.90.104.34"
+ip = "10.254.1.1"
+port = 51820
+publicKey = "h54X0ACbziEspzsYV2/5nSdg5ptdCrIRgpe9KJxNlyY="
+
 [hosts.rhea]
 endpoint = "5.9.122.43"
 ip = "10.254.1.5"
