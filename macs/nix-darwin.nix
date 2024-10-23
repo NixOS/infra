@@ -29,7 +29,7 @@ in
   programs.zsh.enable = true;
   programs.zsh.enableCompletion = false;
   programs.bash.enable = true;
-  programs.bash.enableCompletion = false;
+  programs.bash.completion.enable = true;
 
   #services.activate-system.enable = true;
 
