@@ -13,6 +13,7 @@
         programs.deadnix.enable = true;
         programs.nixfmt.enable = true;
         programs.nixfmt.package = pkgs.nixfmt-rfc-style;
+        programs.ruff-format.enable = true;
 
         # TODO: fix shellcheck errors in a follow up pr
         #programs.shellcheck.enable = true;

@@ -5,16 +5,12 @@ python3.pkgs.buildPythonApplication {
 
   format = "other";
 
-  nativeBuildInputs = [
-    python3.pkgs.mypy
-    python3.pkgs.black
-  ];
+  nativeBuildInputs = [ python3.pkgs.mypy ];
 
   propagatedBuildInputs = [ python3.pkgs.packet-python ];
 
   installPhase = ''
     mypy ./import.py
-    black --check ./import.py
     mkdir -p $out/bin
     mv import.py $out/bin/hydra-packet-importer
   '';
