@@ -17,7 +17,8 @@ let
   ];
 
   authorizedNixStoreKey =
-    key: "command=\"${environment} ${config.nix.package}/bin/nix-store --serve --store daemon --write\" ${key}";
+    key:
+    "command=\"${environment} ${config.nix.package}/bin/nix-store --serve --store daemon --write\" ${key}";
 in
 
 {
