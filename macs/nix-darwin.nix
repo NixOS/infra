@@ -45,6 +45,7 @@ in
     cores = 2;
   };
 
+  nix.package = pkgs.nixVersions.nix_2_24;
   nix.gc.automatic = true;
   nix.gc.user = "";
   nix.gc.interval = {
