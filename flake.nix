@@ -31,6 +31,7 @@
       url = "github:numtide/srvos";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    simple-nixos-mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs = {

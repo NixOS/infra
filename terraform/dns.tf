@@ -330,7 +330,28 @@ locals {
       hostname = "wiki.nixos.org"
       type     = "AAAA"
       value    = "2a01:4f9:c012:8178::"
-    }
+    },
+
+    # Mailserver configuration for `mail-test.nixos.org`
+    {
+      hostname = "mail-test.nixos.org"
+      type     = "MX"
+      value    = "umbriel.nixos.org"
+    },
+    {
+      hostname = "mail-test.nixos.org"
+      type     = "TXT"
+      value    = "v=spf1 mx -all"
+    },
+    # TODO: create `DKIM` TXT record: <https://nixos-mailserver.readthedocs.io/en/latest/setup-guide.html#set-dkim-signature>.
+    #       (can't do this until after SNM is deployed: https://github.com/NixOS/infra/pull/495/)
+    {
+      hostname = "_dmarc.mail-test.nixos.org"
+      type     = "TXT"
+      # TODO: consider making this strict (`v=DMARC1; p=reject; adkim=s; aspf=s;`),
+      #       but make sure this doesn't break mailing lists: https://dmarcian.com/mailing-lists-dmarc/
+      value = "v=DMARC1; p=none"
+    },
   ]
 }
 

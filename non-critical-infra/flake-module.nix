@@ -26,6 +26,7 @@
             value
             inputs.disko.nixosModules.disko
             inputs.first-time-contribution-tagger.nixosModule
+            inputs.simple-nixos-mailserver.nixosModule
             inputs.sops-nix.nixosModules.sops
           ];
           extraModules = [ inputs.colmena.nixosModules.deploymentOptions ];
@@ -49,8 +50,14 @@
     };
 
   perSystem =
-    { pkgs, inputs', ... }:
+    { inputs', ... }:
+    # Use the latest packages from `nixpkgs-unstable` for dev tools.
+    let
+      pkgs = inputs'.nixpkgs-unstable.legacyPackages;
+    in
     {
+      packages.encrypt-email-address = pkgs.callPackage ./packages/encrypt-email-address { };
+
       devShells.non-critical-infra = pkgs.mkShellNoCC {
         packages = [
           inputs'.colmena.packages.colmena
