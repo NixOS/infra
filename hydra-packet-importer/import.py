@@ -3,10 +3,8 @@
 import json
 import packet  # type: ignore
 import base64
-from pprint import pprint
-import subprocess
 import sys
-from typing import Union, Dict, Any, List, Optional
+from typing import Dict, Any, List, Optional
 from typing import TypedDict
 
 DeviceKeys = List[Dict[str, Any]]
@@ -103,7 +101,7 @@ def get_remote_builder_info(manager, device_id: str) -> Optional[RemoteBuilder]:
         events_url = "devices/{}/events?per_page=50".format(device_id)
         debug(events_url)
         data = manager.call_api(events_url)
-    except:
+    except Exception:
         # 404 probably
         return None
 
@@ -122,9 +120,9 @@ def get_remote_builder_info(manager, device_id: str) -> Optional[RemoteBuilder]:
             # If we receive a LOT of spam (> 50 spams!) like that, we
             # will return None because we never reach this message.
             if host_key is not None:
-                key = strip_ssh_key_comment(host_key["key"])
-                if key is not None and metadata is not None:
-                    return {"metadata": metadata, "ssh_key": key}
+                ssh_key = strip_ssh_key_comment(host_key["key"])
+                if ssh_key is not None and metadata is not None:
+                    return {"metadata": metadata, "ssh_key": ssh_key}
             return None
         if event["type"] == "user.1001":
             try:
@@ -132,7 +130,7 @@ def get_remote_builder_info(manager, device_id: str) -> Optional[RemoteBuilder]:
                     key for key in json.loads(event["body"]) if key["port"] == 22
                 ]
                 host_key = host_keys[0]
-            except:
+            except Exception:
                 pass
         if event["type"] == "user.1002":
             metadata = json.loads(event["body"])
