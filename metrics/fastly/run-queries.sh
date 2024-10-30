@@ -1,4 +1,6 @@
-#! /bin/sh -e
+#!/usr/bin/env bash
+
+set -e
 
 region=eu-west-1
 
@@ -10,7 +12,7 @@ run_query() {
 
   res=$(aws athena start-query-execution \
     --region $region \
-    --result-configuration OutputLocation=s3://nixos-metrics/$report_date/$name/ \
+    --result-configuration "OutputLocation=s3://nixos-metrics/$report_date/$name/" \
     --query-string "$query")
 
   execution_id="$(printf "%s" "$res" | jq -r -e .QueryExecutionId)"
@@ -21,8 +23,8 @@ run_query() {
   redirect=latest/$name.csv
   aws s3api put-object \
     --bucket nixos-metrics \
-    --key $redirect \
-    --website-redirect-location /$report_date/$name/$execution_id.csv >/dev/null
+    --key "$redirect" \
+    --website-redirect-location "/$report_date/$name/$execution_id.csv" >/dev/null
 
   echo "Created redirect http://nixos-metrics.s3-website-eu-west-1.amazonaws.com/$redirect."
 }

@@ -1,4 +1,6 @@
-#! /bin/sh -e
+#!/usr/bin/env bash
+
+set -e
 
 export AWS_PROFILE=nixos-org
 
@@ -19,7 +21,7 @@ if [[ -e $marker ]]; then
 fi
 
 mkdir -p "$(dirname "$marker")"
-touch $marker
+touch "$marker"
 
 ./ingest-raw-logs.sh "$from_date_incl" "$to_date_incl"
 
