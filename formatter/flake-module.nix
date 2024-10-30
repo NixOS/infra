@@ -15,8 +15,7 @@
         programs.nixfmt.package = pkgs.nixfmt-rfc-style;
         programs.ruff-format.enable = true;
 
-        # TODO: fix shellcheck errors in a follow up pr
-        #programs.shellcheck.enable = true;
+        programs.shellcheck.enable = true;
 
         programs.shfmt.enable = true;
         programs.rustfmt.enable = true;

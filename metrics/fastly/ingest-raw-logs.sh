@@ -1,4 +1,6 @@
-#! /bin/sh -e
+#!/usr/bin/env bash
+
+set -e
 
 region=eu-west-1
 
@@ -14,7 +16,7 @@ run_query() {
 
   res=$(aws athena start-query-execution \
     --region $region \
-    --result-configuration OutputLocation=s3://nixos-athena/ingestion/$name/ \
+    --result-configuration "OutputLocation=s3://nixos-athena/ingestion/$name/" \
     --query-string "$query")
 
   execution_id="$(printf "%s" "$res" | jq -r -e .QueryExecutionId)"
@@ -24,14 +26,14 @@ run_query() {
 
   printf "Waiting..."
   while true; do
-    res="$(aws athena get-query-execution --region $region --query-execution-id $execution_id)"
+    res="$(aws athena get-query-execution --region $region --query-execution-id "$execution_id")"
     status="$(printf %s "$res" | jq -r -e .QueryExecution.Status.State)"
-    if [[ $status = RUNNING || $status = QUEUED ]]; then
+    if [[ $status == RUNNING || $status == QUEUED ]]; then
       printf "."
       sleep 1
       continue
     fi
-    if [[ $status = SUCCEEDED ]]; then
+    if [[ $status == SUCCEEDED ]]; then
       printf " done.\n"
       break
     fi
