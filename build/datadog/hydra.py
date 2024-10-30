@@ -1,12 +1,10 @@
 #! /usr/bin/env python
-from checks import *
-import os
-import subprocess
+import checks
 import requests
 import json
 
 
-class HydraCheck(AgentCheck):
+class HydraCheck(checks.AgentCheck):
     def check(self, instance):
         r = requests.get(
             "http://localhost:3000/status", headers={"Content-Type": "application/json"}

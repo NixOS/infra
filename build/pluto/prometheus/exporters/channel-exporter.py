@@ -2,7 +2,7 @@
 
 import requests
 from dateutil.parser import parse
-from prometheus_client import Counter, Histogram, Gauge, start_http_server, REGISTRY
+from prometheus_client import Counter, Histogram, Gauge, start_http_server
 import time
 import sys
 import logging

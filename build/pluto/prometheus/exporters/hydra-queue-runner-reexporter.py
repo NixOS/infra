@@ -4,8 +4,7 @@
 import requests
 import json
 from prometheus_client.core import GaugeMetricFamily, CounterMetricFamily
-from prometheus_client import CollectorRegistry, generate_latest, start_http_server
-from pprint import pprint
+from prometheus_client import CollectorRegistry, start_http_server
 import time
 
 
@@ -21,7 +20,7 @@ class EvaporatingDict:
     def preserving_read(self, key):
         val = self._state[key]
 
-        if type(val) is dict:
+        if isinstance(val, dict):
             return EvaporatingDict(val)
         else:
             return val

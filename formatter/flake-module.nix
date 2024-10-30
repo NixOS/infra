@@ -14,6 +14,7 @@
         programs.nixfmt.enable = true;
         programs.nixfmt.package = pkgs.nixfmt-rfc-style;
         programs.ruff-format.enable = true;
+        programs.ruff-check.enable = true;
 
         programs.shellcheck.enable = true;
 
