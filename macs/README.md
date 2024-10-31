@@ -5,7 +5,12 @@ See [inventory](../docs/inventory.md).
 ## At Graham's place
 
 We have mac-mini's are in [Grahams](https://github.com/grahamc) house,
-that only [@cole-h](https://github.com/cole-h) can deploy.
+that only [@cole-h](https://github.com/cole-h) can deploy:
+
+- becoming-hyena.foundation.detsys.dev
+- cosmic-stud.foundation.detsys.dev
+- quality-ram.foundation.detsys.dev
+- tight-bug.foundation.detsys.dev
 
 - These are getting erased and automatically redeployed from the configuration in this directory.
 
@@ -20,6 +25,25 @@ Additional we have five M1 builders at Hetzner online:
 - sweeping-filly.mac.nixos.org
 
 These are maintained by the build infra team.
+
+### Install
+
+- Login to user hetzner with the given password
+- Set up SSH keys in the hetzner user
+- Elevate with `sudo su`
+- Install latest system updates
+  - softwareupdate --install --all --restart
+- Install rosetta2
+  - softwareupdate --install-rosetta2 --agree-to-license
+- Set up passwordless sudo
+  ```
+  # visudo /etc/sudoers.d/passwordless
+  %admin ALL = NOPASSWD: ALL
+  ````
+- Install nix
+- Install nix-darwin
+  - nix run nix-darwin -- switch --flake github:nixos/infra#arm64
+  - `darwin-rebuild` becomes available after restarting the shell
 
 ### Update
 
