@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 
+import json
+import logging
+import sys
+import time
+from pprint import pprint
+
 import requests
 from dateutil.parser import parse
-from prometheus_client import Counter, Histogram, Gauge, start_http_server
-import time
-import sys
-import logging
-from pprint import pprint
-import json
-
+from prometheus_client import Counter, Gauge, Histogram, start_http_server
 
 CHANNEL_REVISION = Gauge(
     "channel_revision",
@@ -87,7 +87,7 @@ if __name__ == "__main__":
                     current=current,
                 ).set(1)
                 CHANNEL_CURRENT.labels(channel=channel).set(current)
-                print("updated {}".format(channel))
+                print(f"updated {channel}")
                 previous_revision = revisions.pop(channel, None)
                 revisions[channel] = revision
                 if previous_revision and previous_revision != revision:
