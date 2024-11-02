@@ -157,12 +157,12 @@ def main(config: Dict[str, Any]) -> None:
 
         builder_info = builder["remote_builder_info"]
 
-        # root@address system,list /var/lib/ssh.key maxJobs speedFactor feature,list mandatory,features public-host-key
+        # build@address system,list /var/lib/ssh.key maxJobs speedFactor feature,list mandatory,features public-host-key
         rows.append(
             " ".join(
                 [
                     "{user}@{host}".format(
-                        user=builder_info["metadata"].get("user", "root"),
+                        user="build",
                         host=builder["address"],
                     ),
                     ",".join(builder_info["metadata"]["system_types"]),
