@@ -168,7 +168,7 @@ in
         "intense-heron.mac.nixos.org"
         "23.88.75.215"
       ];
-      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDS5ggtTt39O89hfxfaRsp37xm704z6Dm9RMk5ZEbER/";
+      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICeSgOe/cr1yVAJOl30t3AZOLtvzeQa5rnrHGceKeBue";
     };
     "sweeping-filly.mac.nixos.org" = {
       hostNames = [
