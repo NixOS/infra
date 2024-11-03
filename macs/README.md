@@ -31,8 +31,11 @@ These are maintained by the build infra team.
 - Login to user hetzner with the given password
 - Set up SSH keys in the hetzner user
 - Elevate with `sudo su`
-- Install latest system updates
-  - softwareupdate --install --all --restart
+- ~~Install latest system updates~~
+  - ~~softwareupdate --install --all --restart~~
+- Disable auto-updates:
+  - We are currently seeing performance regression in macOS Sequoia.
+  - So to not have the machines auto-upgrade, we use: `sudo softwareupdate --schedule off`
 - Install rosetta2
   - softwareupdate --install-rosetta2 --agree-to-license
 - Set up passwordless sudo
@@ -41,13 +44,14 @@ These are maintained by the build infra team.
   %admin ALL = NOPASSWD: ALL
   ````
 - Install nix
+  - `sh <(curl -L https://nixos.org/nix/install) --daemon`
 - Install nix-darwin
-  - nix run nix-darwin -- switch --flake github:nixos/infra#arm64
+  - `nix --extra-experimental-features 'flakes nix-command' run nix-darwin -- switch --flake github:nixos/infra#arm64`
   - `darwin-rebuild` becomes available after restarting the shell
 
 ### Update
 
 ```
-darwin-rebuild switch --flake github::nixos/infra#arm64
+darwin-rebuild switch --flake github:nixos/infra#arm64
 ```
 
