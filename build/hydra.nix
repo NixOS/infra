@@ -175,28 +175,28 @@ in
         "sweeping-filly.mac.nixos.org"
         "142.132.141.35"
       ];
-      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF+kukRUsxSBsW5xITI65pAixwoWx4b6LtASRzFqM2xX";
+      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE6b/coXQEcFZW1eG4zFyCMCF0mZFahqmadz6Gk9DWMF";
     };
     "maximum-snail.mac.nixos.org" = {
       hostNames = [
         "maximum-snail.mac.nixos.org"
         "23.88.76.161"
       ];
-      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH6Y9cfoJ+6TNS1EbE3OUocnyUtnTtJ0fJybK2+gyVmN";
+      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEs+fK4hH8UKo+Pa7u1VYltkMufBHHH5uC93RQ2S6Xy9";
     };
     "growing-jennet.mac.nixos.org" = {
       hostNames = [
         "growing-jennet.mac.nixos.org"
         "23.88.76.75"
       ];
-      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEIUYnFY0tnASbzZOHruwj3n4nX5gT0Zco2Xjv7frINn";
+      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAQGthkSSOnhxrIUCMlRQz8FOo5Y5Nk9f9WnVLNeRJpm";
     };
     "enormous-catfish.mac.nixos.org" = {
       hostNames = [
         "enormous-catfish.mac.nixos.org"
         "142.132.140.199"
       ];
-      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINEevWFDXtUmbaZYiOmPL4uZVXVdHfQ2fMAMGunfDAAT";
+      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMlg7NXxeG5L3s0YqSQIsqVG0MTyvyWDHUyYEfFPazLe";
     };
 
     t2m = {
