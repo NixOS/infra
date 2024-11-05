@@ -132,7 +132,7 @@ in
 
   config = lib.mkIf (cfg.includes != [ ] || cfg.includesZfsDatasets != [ ]) {
     programs.ssh.knownHosts."${if cfg.port != 22 then "[${cfg.host}]:${cfg.port}" else cfg.host}" = {
-      publicKey = "${cfg.hostPublicKey}";
+      publicKey = cfg.hostPublicKey;
     };
 
     systemd.services.borgbackup-job-state = {
