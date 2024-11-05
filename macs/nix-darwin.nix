@@ -75,13 +75,7 @@ in
     echo "ok"
   '';
 
-  #launchd.daemons.prometheus-node-exporter = {
-  #  command = "${pkgs.prometheus-node-exporter}/bin/node_exporter";
-
-  #  serviceConfig.KeepAlive = true;
-  #  serviceConfig.StandardErrorPath = "/var/log/prometheus-node-exporter.log";
-  #  serviceConfig.StandardOutPath = "/var/log/prometheus-node-exporter.log";
-  #};
+  services.prometheus.exporters.node.enable = true;
 
   launchd.daemons.rosetta2-gc = {
     script = ''
