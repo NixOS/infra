@@ -1,20 +1,22 @@
 #!/usr/bin/env nix-shell
 #!nix-shell -i python3 -p python3 -p python3Packages.requests -p python3Packages.prometheus_client
 
-import requests
+import contextlib
 import json
-from prometheus_client.core import GaugeMetricFamily, CounterMetricFamily
-from prometheus_client import CollectorRegistry, start_http_server
 import time
 
+import requests
+from prometheus_client import CollectorRegistry, start_http_server
+from prometheus_client.core import CounterMetricFamily, GaugeMetricFamily
 
-def debug_remaining_state(edict):
+
+def debug_remaining_state(edict) -> None:
     # pprint(edict.remaining_state())
     pass
 
 
 class EvaporatingDict:
-    def __init__(self, state):
+    def __init__(self, state) -> None:
         self._state = state
 
     def preserving_read(self, key):
@@ -22,13 +24,11 @@ class EvaporatingDict:
 
         if isinstance(val, dict):
             return EvaporatingDict(val)
-        else:
-            return val
+        return val
 
     def preserving_read_default(self, key, default):
         try:
-            val = self.preserving_read(key)
-            return val
+            return self.preserving_read(key)
         except KeyError:
             return default
 
@@ -47,7 +47,7 @@ class EvaporatingDict:
             # todo: log bad reads?
             return default
 
-    def unused_read(self, key):
+    def unused_read(self, key) -> None:
         self.destructive_read_default(key, default=None)
 
     def remaining_state(self):
@@ -60,7 +60,7 @@ class EvaporatingDict:
 
 
 class HydraScrapeImporter:
-    def __init__(self, status):
+    def __init__(self, status) -> None:
         self._status = EvaporatingDict(status)
 
     def collect(self):
@@ -328,7 +328,6 @@ class HydraScrapeImporter:
         except KeyError:
             # no key, no metrics
             s3 = None
-            pass
         if s3:
             # Not in the above try to avoid the try catching mistakes
             # in the following code
@@ -382,7 +381,7 @@ class HydraScrapeImporter:
         c.add_metric([], value)
         return c
 
-    def unused_metric(self, key):
+    def unused_metric(self, key) -> None:
         self._status.unused_read(key)
 
     def preserving_read(self, key):
@@ -401,12 +400,12 @@ class HydraScrapeImporter:
         return self._status.remaining_state()
 
 
-def blackhole(*args, **kwargs):
+def blackhole(*args, **kwargs) -> None:
     return None
 
 
 class MachineScrapeImporter:
-    def __init__(self):
+    def __init__(self) -> None:
         labels = ["host"]
         self.consective_failures = GaugeMetricFamily(
             "hydra_machine_consecutive_failures",
@@ -450,7 +449,7 @@ class MachineScrapeImporter:
             labels=labels,
         )
 
-    def load_machine(self, name, report):
+    def load_machine(self, name, report) -> None:
         report.unused_read("mandatoryFeatures")
         report.unused_read("supportedFeatures")
         report.unused_read("systemTypes")
@@ -461,10 +460,8 @@ class MachineScrapeImporter:
             labels, report.destructive_read("consecutiveFailures")
         )
         self.current_jobs.add_metric(labels, report.destructive_read("currentJobs"))
-        try:
+        with contextlib.suppress(KeyError):
             self.idle_since.add_metric(labels, report.destructive_read("idleSince"))
-        except KeyError:
-            pass
         self.disabled_until.add_metric(labels, report.destructive_read("disabledUntil"))
         self.enabled.add_metric(labels, 1 if report.destructive_read("enabled") else 0)
         self.last_failure.add_metric(labels, report.destructive_read("lastFailure"))
@@ -492,7 +489,7 @@ class MachineScrapeImporter:
 
 
 class JobsetScrapeImporter:
-    def __init__(self):
+    def __init__(self) -> None:
         self.seconds = CounterMetricFamily(
             "hydra_jobset_seconds_total",
             "Total number of seconds the jobset has been building",
@@ -504,7 +501,7 @@ class JobsetScrapeImporter:
             labels=["name"],
         )
 
-    def load_jobset(self, name, report):
+    def load_jobset(self, name, report) -> None:
         self.seconds.add_metric([name], report.destructive_read("seconds"))
         self.shares_used.add_metric([name], report.destructive_read("shareUsed"))
         debug_remaining_state(report)
@@ -515,7 +512,7 @@ class JobsetScrapeImporter:
 
 
 class MachineTypeScrapeImporter:
-    def __init__(self):
+    def __init__(self) -> None:
         self.runnable = GaugeMetricFamily(
             "hydra_machine_type_runnable",
             "Number of currently runnable builds",
@@ -537,17 +534,13 @@ class MachineTypeScrapeImporter:
             labels=["machineType"],
         )
 
-    def load_machine_type(self, name, report):
+    def load_machine_type(self, name, report) -> None:
         self.runnable.add_metric([name], report.destructive_read("runnable"))
         self.running.add_metric([name], report.destructive_read("running"))
-        try:
+        with contextlib.suppress(KeyError):
             self.wait_time.add_metric([name], report.destructive_read("waitTime"))
-        except KeyError:
-            pass
-        try:
+        with contextlib.suppress(KeyError):
             self.last_active.add_metric([name], report.destructive_read("lastActive"))
-        except KeyError:
-            pass
 
         debug_remaining_state(report)
 
@@ -559,7 +552,7 @@ class MachineTypeScrapeImporter:
 
 
 class ScrapeCollector:
-    def __init__(self):
+    def __init__(self) -> None:
         pass
 
     def collect(self):

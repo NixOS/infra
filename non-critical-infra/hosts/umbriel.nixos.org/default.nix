@@ -8,6 +8,7 @@
     ../../modules/common.nix
     ../../modules/mjolnir.nix
     ../../modules/prometheus/node-exporter.nix
+    ../../modules/mailserver
   ];
 
   # Bootloader.

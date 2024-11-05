@@ -330,7 +330,31 @@ locals {
       hostname = "wiki.nixos.org"
       type     = "AAAA"
       value    = "2a01:4f9:c012:8178::"
-    }
+    },
+
+    # Mailserver configuration for `mail-test.nixos.org`
+    {
+      hostname = "mail-test.nixos.org"
+      type     = "MX"
+      value    = "umbriel.nixos.org"
+    },
+    {
+      hostname = "mail-test.nixos.org"
+      type     = "TXT"
+      value    = "v=spf1 mx -all"
+    },
+    {
+      hostname = "mail._domainkey.mail-test.nixos.org"
+      type     = "TXT"
+      value    = "v=DKIM1; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDTLW88xioTw4YUMSBw2+RO1+ASTbWNsqDwrpCmA+ikru4cWLEkx2JVEcms4Uxqrk2A8Qhfjvc8Oe026HdTXiTNEb9e+Sh0d/IR/eH5MFhiSUGrahZBx1FGVvMf5zfjYWZXn+7oXW8zNpxWd042hLMcY14G8v+/OBQ9IJL+ja3wFwIDAQAB"
+    },
+    {
+      hostname = "_dmarc.mail-test.nixos.org"
+      type     = "TXT"
+      # TODO: consider making this strict (`v=DMARC1; p=reject; adkim=s; aspf=s;`),
+      #       but make sure this doesn't break mailing lists: https://dmarcian.com/mailing-lists-dmarc/
+      value = "v=DMARC1; p=none"
+    },
   ]
 }
 

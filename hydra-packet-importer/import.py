@@ -1,22 +1,22 @@
 #!/usr/bin/env python3
 
-import json
-import packet  # type: ignore
 import base64
+import json
 import sys
-from typing import Dict, Any, List, Optional
-from typing import TypedDict
+from typing import Any, TypedDict
 
-DeviceKeys = List[Dict[str, Any]]
+import packet
+
+DeviceKeys = list[dict[str, Any]]
 
 
 class Metadata(TypedDict):
-    user: Optional[str]
-    features: List[str]
-    mandatory_features: List[str]
+    user: str | None
+    features: list[str]
+    mandatory_features: list[str]
     max_jobs: int
-    system_types: List[str]
-    speed_factor: Optional[int]
+    system_types: list[str]
+    speed_factor: int | None
 
 
 class RemoteBuilder(TypedDict):
@@ -50,25 +50,22 @@ class Device(TypedDict):
 
 
 class ProjectDeviceList(TypedDict):
-    meta: Dict[str, Any]
-    devices: List[Device]
+    meta: dict[str, Any]
+    devices: list[Device]
 
 
 def debug(*args: Any, **kwargs: Any) -> None:
     print(*args, file=sys.stderr, **kwargs)
 
 
-def get_builders(manager: Any) -> List[Builder]:
-    builders: List[Builder] = []
+def get_builders(manager: Any) -> list[Builder]:
+    builders: list[Builder] = []
 
-    page: Optional[str] = "projects/{}/devices?page={}".format(config["project_id"], 1)
+    page: str | None = "projects/{}/devices?page={}".format(config["project_id"], 1)
     while page is not None:
         debug(page)
         data: ProjectDeviceList = manager.call_api(page)
-        if data["meta"]["next"] is None:
-            page = None
-        else:
-            page = data["meta"]["next"]["href"]
+        page = None if data["meta"]["next"] is None else data["meta"]["next"]["href"]
 
         for device in data["devices"]:
             if device["state"] != "active":
@@ -95,19 +92,19 @@ def get_builders(manager: Any) -> List[Builder]:
     return builders
 
 
-def get_remote_builder_info(manager, device_id: str) -> Optional[RemoteBuilder]:
+def get_remote_builder_info(manager, device_id: str) -> RemoteBuilder | None:
     # ... 50 is probably enough.
     try:
-        events_url = "devices/{}/events?per_page=50".format(device_id)
+        events_url = f"devices/{device_id}/events?per_page=50"
         debug(events_url)
         data = manager.call_api(events_url)
     except Exception:
         # 404 probably
         return None
 
-    host_key: Optional[HostKey] = None
-    ssh_key: Optional[str] = None
-    metadata: Optional[Metadata] = None
+    host_key: HostKey | None = None
+    ssh_key: str | None = None
+    metadata: Metadata | None = None
     for event in data["events"]:
         if event["type"] == "provisioning.104.01":
             # we reached a "Device connected to DHCP system" event,
@@ -126,7 +123,7 @@ def get_remote_builder_info(manager, device_id: str) -> Optional[RemoteBuilder]:
             return None
         if event["type"] == "user.1001":
             try:
-                host_keys: List[HostKey] = [
+                host_keys: list[HostKey] = [
                     key for key in json.loads(event["body"]) if key["port"] == 22
                 ]
                 host_key = host_keys[0]
@@ -138,16 +135,15 @@ def get_remote_builder_info(manager, device_id: str) -> Optional[RemoteBuilder]:
     return None
 
 
-def strip_ssh_key_comment(key: str) -> Optional[str]:
+def strip_ssh_key_comment(key: str) -> str | None:
     ssh_key_parts = key.rsplit(" ", 1)
     if len(ssh_key_parts) == 2:
         return ssh_key_parts[0]
-    else:
-        debug("# Skipped due keyscan failed to split on ' '")
-        return None
+    debug("# Skipped due keyscan failed to split on ' '")
+    return None
 
 
-def main(config: Dict[str, Any]) -> None:
+def main(config: dict[str, Any]) -> None:
     rows = []
     manager = packet.Manager(auth_token=config["token"])
     found = 0
@@ -176,7 +172,7 @@ def main(config: Dict[str, Any]) -> None:
             )
         )
 
-    debug("# {} / {}".format(len(rows), found))
+    debug(f"# {len(rows)} / {found}")
     print("\n".join(rows))
 
 

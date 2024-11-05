@@ -2,34 +2,37 @@
 #!nix-shell -i python3 -p "python3.withPackages (ps: with ps; [ prometheus-client packaging ])"
 
 
-import subprocess
 import json
 import os
+import subprocess
 import sys
 import time
+from collections.abc import Iterator
+
 from packaging.version import Version
-from prometheus_client.core import GaugeMetricFamily
 from prometheus_client import CollectorRegistry, start_http_server
+from prometheus_client.core import GaugeMetricFamily
 
 
 class NixosSystemCollector:
-    def __init__(self):
+    def __init__(self) -> None:
         nix_version = self.get_nix_version()
 
         # https://github.com/NixOS/nix/pull/9242
         self.nix_path_info_returns_object = nix_version >= Version("2.19.0")
 
-    def get_nix_version(self):
-        result = subprocess.run(["nix", "--version"], stdout=subprocess.PIPE)
+    def get_nix_version(self) -> Version:
+        result = subprocess.run(
+            ["nix", "--version"], stdout=subprocess.PIPE, check=False
+        )
 
         if result.returncode == 0:
             response = result.stdout.decode().strip()
             return Version(response.split()[-1])
-        else:
-            print("Failed to determine nix version", file=sys.stderr)
-            sys.exit(1)
+        print("Failed to determine nix version", file=sys.stderr)
+        sys.exit(1)
 
-    def collect(self):
+    def collect(self) -> Iterator[GaugeMetricFamily]:
         # note: Gauges because of rollbacks.
         current_system = GaugeMetricFamily(
             "nixos_current_system_time_seconds",
@@ -64,22 +67,23 @@ class NixosSystemCollector:
         current_system_kernel_booted.add_metric([], booted_kernel == current_kernel)
         yield current_system_kernel_booted
 
-    def get_version_id(self, path):
+    def get_version_id(self, path: str) -> str:
         result = subprocess.run(
             ["bash", "-c", f"source {path}/etc/os-release; echo $VERSION_ID"],
             stdout=subprocess.PIPE,
+            check=False,
         )
         if result.returncode == 0:
             return result.stdout.decode("utf-8").strip()
 
         return None
 
-    def get_kernel_out(self, path):
+    def get_kernel_out(self, path: str) -> str:
         return os.path.dirname(os.readlink(os.path.join(path, "kernel")))
 
-    def get_time(self, path):
+    def get_time(self, path: str) -> int:
         result = subprocess.run(
-            ["nix", "path-info", "--json", path], stdout=subprocess.PIPE
+            ["nix", "path-info", "--json", path], stdout=subprocess.PIPE, check=False
         )
         if result.returncode == 0:
             parsed = json.loads(result.stdout)
@@ -95,7 +99,7 @@ class NixosSystemCollector:
         return 0
 
 
-def main():
+def main() -> None:
     registry = CollectorRegistry()
     registry.register(NixosSystemCollector())
 
