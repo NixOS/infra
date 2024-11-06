@@ -1,0 +1,20 @@
+diff --git a/src/libstore/unix/build/local-derivation-goal.cc b/src/libstore/unix/build/local-derivation-goal.cc
+index 2a09e3dd4..baeae54f8 100644
+--- a/src/libstore/unix/build/local-derivation-goal.cc
++++ b/src/libstore/unix/build/local-derivation-goal.cc
+@@ -509,11 +509,11 @@ void LocalDerivationGoal::startBuilder()
+     /* Create a temporary directory where the build will take
+        place. */
+     topTmpDir = createTempDir(settings.buildDir.get().value_or(""), "nix-build-" + std::string(drvPath.name()), false, false, 0700);
+-#if __APPLE__
++//#if __APPLE__
+     if (false) {
+-#else
+-    if (useChroot) {
+-#endif
++//#else
++//    if (useChroot) {
++//#endif
+         /* If sandboxing is enabled, put the actual TMPDIR underneath
+            an inaccessible root-owned directory, to prevent outside
+            access.
