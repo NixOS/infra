@@ -48,14 +48,19 @@ in
     }) secretFiles
   );
 
-  # Whenever this changes, we need to manually restart the `postfix-setup`
-  # service for postfix to notice the change.
-  # TODO: <https://github.com/NixOS/infra/issues/505> tracks fixing this
-  sops.templates."postfix-virtual-mailing-lists".content = lib.concatStringsSep "\n" (
-    lib.mapAttrsToList (
-      name: members: "${name} ${lib.concatStringsSep ", " members}"
-    ) listsWithSecretPlaceholders
-  );
+  sops.templates."postfix-virtual-mailing-lists" = {
+    content = lib.concatStringsSep "\n" (
+      lib.mapAttrsToList (
+        name: members: "${name} ${lib.concatStringsSep ", " members}"
+      ) listsWithSecretPlaceholders
+    );
+
+    # Need to restart postfix-setup to rerun `postmap` and generate updated `.db`
+    # files whenever mailing list membership changes.
+    # This could go away if sops-nix gets support for "input addressed secret
+    # paths": https://github.com/Mic92/sops-nix/issues/648
+    restartUnits = [ "postfix-setup.service" ];
+  };
 
   services.postfix.mapFiles.virtual-mailing-lists =
     config.sops.templates."postfix-virtual-mailing-lists".path;
