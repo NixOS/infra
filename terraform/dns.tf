@@ -341,7 +341,7 @@ locals {
     {
       hostname = "mail-test.nixos.org"
       type     = "TXT"
-      value    = "v=spf1 mx -all"
+      value    = "v=spf1 mx ~all"
     },
     {
       hostname = "mail._domainkey.mail-test.nixos.org"
