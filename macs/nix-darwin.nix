@@ -46,9 +46,7 @@ in
   };
 
   nix.package = pkgs.nixVersions.nix_2_24.overrideAttrs (oldAttrs: {
-    patches = oldAttrs.patches or [ ] ++ [
-      ./disable-chroot.patch
-    ];
+    patches = oldAttrs.patches or [ ] ++ [ ./disable-chroot.patch ];
   });
   nix.gc.automatic = true;
   nix.gc.user = "";
