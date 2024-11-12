@@ -6,13 +6,11 @@
   ...
 }:
 
-with lib;
-
 let
-  sshKeys = rec {
+  sshKeys = {
     hydra-queue-runner = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOdxl6gDS7h3oeBBja2RSBxeS51Kp44av8OAJPPJwuU/ hydra-queue-runner@rhea";
   };
-  environment = concatStringsSep " " [
+  environment = lib.concatStringsSep " " [
     "NIX_SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
   ];
 
@@ -23,49 +21,61 @@ in
 
 {
   environment.darwinConfig = "/nix/home/darwin-config/macs/nix-darwin.nix";
-  environment.systemPackages = [ config.nix.package ];
+  environment.systemPackages = [
+    config.nix.package
+    pkgs.nix-top
+  ];
 
   system.stateVersion = 5;
 
-  programs.zsh.enable = true;
-  programs.zsh.enableCompletion = false;
-  programs.bash.enable = true;
-  programs.bash.completion.enable = true;
+  programs = {
+    zsh = {
+      enable = true;
+      enableCompletion = false;
+    };
+    bash = {
+      enable = true;
+      completion.enable = true;
+    };
+  };
 
   #services.activate-system.enable = true;
 
   services.nix-daemon.enable = true;
 
-  nix.settings = {
-    "extra-experimental-features" = [
-      "nix-command"
-      "flakes"
-    ];
-    max-jobs = 4;
-    cores = 2;
+  nix = {
+    package = pkgs.nixVersions.nix_2_24.overrideAttrs (oldAttrs: {
+      patches = oldAttrs.patches or [ ] ++ [ ./disable-chroot.patch ];
+    });
+    settings = {
+      # 8C/16G machines means 2C/4G per job on average
+      cores = 2;
+      max-jobs = 4;
+
+      extra-experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+
+      # If we drop below 30 GiB during builds, free 20 GiB
+      min-free = toString (30 * 1024 * 1024 * 1024);
+      max-free = toString (50 * 1024 * 1024 * 1024);
+    };
+    gc = {
+      automatic = true;
+      user = "";
+      interval = {
+        Minute = 15;
+      };
+      options =
+        let
+          gbFree = 50;
+        in
+        "--max-freed $((${toString gbFree} * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | awk '{ print $4 }')))";
+    };
   };
 
-  nix.package = pkgs.nixVersions.nix_2_24.overrideAttrs (oldAttrs: {
-    patches = oldAttrs.patches or [ ] ++ [ ./disable-chroot.patch ];
-  });
-  nix.gc.automatic = true;
-  nix.gc.user = "";
-  nix.gc.interval = {
-    Minute = 15;
-  };
-  nix.gc.options =
-    let
-      gbFree = 50;
-    in
-    "--max-freed $((${toString gbFree} * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | awk '{ print $4 }')))";
-
-  # If we drop below 20GiB during builds, free 20GiB
-  nix.extraOptions = ''
-    min-free = ${toString (30 * 1024 * 1024 * 1024)}
-    max-free = ${toString (50 * 1024 * 1024 * 1024)}
-  '';
-
-  environment.etc."per-user/root/ssh/authorized_keys".text = concatStringsSep "\n" [
+  environment.etc."per-user/root/ssh/authorized_keys".text = lib.concatStringsSep "\n" [
     (authorizedNixStoreKey sshKeys.hydra-queue-runner)
   ];
 
