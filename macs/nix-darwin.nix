@@ -56,10 +56,6 @@ in
         "nix-command"
         "flakes"
       ];
-
-      # If we drop below 30 GiB during builds, free 20 GiB
-      min-free = toString (30 * 1024 * 1024 * 1024);
-      max-free = toString (50 * 1024 * 1024 * 1024);
     };
     gc = {
       automatic = true;
