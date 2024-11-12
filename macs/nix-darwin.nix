@@ -61,7 +61,7 @@ in
     };
     gc = {
       automatic = true;
-      user = "";
+      user = "root";
       interval = {
         Minute = 15;
       };
