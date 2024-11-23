@@ -2,7 +2,9 @@
 
 See [inventory](../docs/inventory.md).
 
-## At Graham's place
+## Inventory
+
+### At Graham's place
 
 We have mac-mini's are in [Grahams](https://github.com/grahamc) house,
 that only [@cole-h](https://github.com/cole-h) can deploy:
@@ -14,7 +16,7 @@ that only [@cole-h](https://github.com/cole-h) can deploy:
 
 - These are getting erased and automatically redeployed from the configuration in this directory.
 
-## Hetzner
+### Hetzner
 
 Additional we have five M1 builders at Hetzner online:
 
@@ -26,7 +28,12 @@ Additional we have five M1 builders at Hetzner online:
 
 These are maintained by the build infra team.
 
-### Install
+### Oakhost
+
+- eager-heisenberg.mac.nixos.org
+- kind-lumiere.mac.nixos.org
+
+## Install
 
 - Login to user hetzner with the given password
 - Set up SSH keys in the hetzner user
@@ -49,7 +56,7 @@ These are maintained by the build infra team.
   - `nix --extra-experimental-features 'flakes nix-command' run nix-darwin -- switch --flake github:nixos/infra#arm64`
   - `darwin-rebuild` becomes available after restarting the shell
 
-### Update
+## Update
 
 ```
 darwin-rebuild switch --flake github:nixos/infra#arm64
