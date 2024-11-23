@@ -28,11 +28,15 @@
           {
             labels.role = "mac";
             targets = [
+              # hetzner
               "intense-heron.mac.nixos.org:9100"
               "sweeping-filly.mac.nixos.org:9100"
               "maximum-snail.mac.nixos.org:9100"
               "growing-jennet.mac.nixos.org:9100"
               "enormous-catfish.mac.nixos.org:9100"
+              # oakhost
+              "kind-lumiere.mac.nixos.org:9100"
+              "eager-heisenberg.mac.nixos.org:9100"
             ];
           }
         ];
