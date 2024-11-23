@@ -236,6 +236,21 @@ locals {
       type     = "A"
       value    = "142.132.140.199"
     },
+
+    # oakhost m2
+    {
+      hostname = "eager-heisenberg.mac.nixos.org"
+      type     = "AAAA"
+      value    = "2a01:4f8:d1:a027::2"
+    },
+
+    # oakhost m2
+    {
+      hostname = "kind-lumiere.mac.nixos.org"
+      type     = "AAAA"
+      value    = "2a09:9340:808:60a::1"
+    },
+
     {
       hostname = "20th.nixos.org"
       type     = "CNAME"
