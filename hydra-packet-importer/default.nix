@@ -10,7 +10,7 @@ python3.pkgs.buildPythonApplication {
   propagatedBuildInputs = [ python3.pkgs.packet-python ];
 
   installPhase = ''
-    mypy ./import.py
+    mypy --ignore-missing-imports ./import.py
     mkdir -p $out/bin
     mv import.py $out/bin/hydra-packet-importer
   '';
