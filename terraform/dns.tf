@@ -240,8 +240,8 @@ locals {
     # oakhost m2
     {
       hostname = "eager-heisenberg.mac.nixos.org"
-      type     = "A"
-      value    = "23.88.91.233"
+      type     = "AAAA"
+      value    = "2a01:4f8:d1:a027::2"
     },
 
     # oakhost m2
