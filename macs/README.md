@@ -6,15 +6,16 @@ See [inventory](../docs/inventory.md).
 
 ### At Graham's place
 
-We have mac-mini's are in [Grahams](https://github.com/grahamc) house,
-that only [@cole-h](https://github.com/cole-h) can deploy:
+We have mac-mini's are in [Grahams](https://github.com/grahamc) house, that only
+[@cole-h](https://github.com/cole-h) can deploy:
 
 - becoming-hyena.foundation.detsys.dev
 - cosmic-stud.foundation.detsys.dev
 - quality-ram.foundation.detsys.dev
 - tight-bug.foundation.detsys.dev
 
-- These are getting erased and automatically redeployed from the configuration in this directory.
+- These are getting erased and automatically redeployed from the configuration
+  in this directory.
 
 ### Hetzner
 
@@ -42,14 +43,15 @@ These are maintained by the build infra team.
   - ~~softwareupdate --install --all --restart~~
 - Disable auto-updates:
   - We are currently seeing performance regression in macOS Sequoia.
-  - So to not have the machines auto-upgrade, we use: `sudo softwareupdate --schedule off`
+  - So to not have the machines auto-upgrade, we use:
+    `sudo softwareupdate --schedule off`
 - Install rosetta2
   - softwareupdate --install-rosetta2 --agree-to-license
 - Set up passwordless sudo
   ```
   # visudo /etc/sudoers.d/passwordless
   %admin ALL = NOPASSWD: ALL
-  ````
+  ```
 - Install nix
   - `sh <(curl -L https://nixos.org/nix/install) --daemon`
 - Install nix-darwin
@@ -61,4 +63,3 @@ These are maintained by the build infra team.
 ```
 darwin-rebuild switch --flake github:nixos/infra#arm64
 ```
-

@@ -1,5 +1,5 @@
-Imports builders' and their SSH keys from the Packet API. Requires the
-builder run this script at startup:
+Imports builders' and their SSH keys from the Packet API. Requires the builder
+run this script at startup:
 
 ```bash
 #!/usr/bin/env nix-shell

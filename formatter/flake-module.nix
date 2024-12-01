@@ -15,6 +15,7 @@
         ];
 
         programs.actionlint.enable = true;
+        programs.deno.enable = true;
         programs.terraform.enable = true;
         programs.deadnix.enable = true;
         programs.nixfmt.enable = true;
