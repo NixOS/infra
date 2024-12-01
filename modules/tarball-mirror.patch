@@ -1,0 +1,11 @@
+diff --git a/maintainers/scripts/copy-tarballs.pl b/maintainers/scripts/copy-tarballs.pl
+index 30fbac6f002d..71569966d51b 100755
+--- a/maintainers/scripts/copy-tarballs.pl
++++ b/maintainers/scripts/copy-tarballs.pl
+@@ -1,5 +1,5 @@
+ #! /usr/bin/env nix-shell
+-#! nix-shell -i perl -p perl perlPackages.NetAmazonS3 perlPackages.FileSlurp perlPackages.JSON perlPackages.LWPProtocolHttps nix nix.perl-bindings
++#! nix-shell -i perl -p perl perlPackages.NetAmazonS3 perlPackages.FileSlurp perlPackages.JSON perlPackages.LWPProtocolHttps nixVersions.nix_2_18 nixVersions.nix_2_18.perl-bindings
+ 
+ # This command uploads tarballs to tarballs.nixos.org, the
+ # content-addressed cache used by fetchurl as a fallback for when
