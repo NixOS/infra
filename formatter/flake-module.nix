@@ -3,7 +3,7 @@
   imports = [ inputs.treefmt-nix.flakeModule ];
 
   perSystem =
-    { pkgs, ... }:
+    { ... }:
     {
       treefmt = {
         # Used to find the project root
@@ -19,7 +19,6 @@
         programs.terraform.enable = true;
         programs.deadnix.enable = true;
         programs.nixfmt.enable = true;
-        programs.nixfmt.package = pkgs.nixfmt-rfc-style;
         programs.ruff-format.enable = true;
         programs.ruff-check.enable = true;
 
