@@ -13,6 +13,8 @@
           "*.age"
           "non-critical-infra/secrets/*"
         ];
+
+        programs.actionlint.enable = true;
         programs.terraform.enable = true;
         programs.deadnix.enable = true;
         programs.nixfmt.enable = true;
