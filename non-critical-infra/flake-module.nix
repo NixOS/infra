@@ -56,7 +56,7 @@
       pkgs = inputs'.nixpkgs-unstable.legacyPackages;
     in
     {
-      packages.encrypt-email-address = pkgs.callPackage ./packages/encrypt-email-address { };
+      packages.encrypt-email = pkgs.callPackage ./packages/encrypt-email { };
 
       devShells.non-critical-infra = pkgs.mkShellNoCC {
         packages = [
