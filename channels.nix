@@ -3,7 +3,7 @@ rec {
     # "Channel name" = {
     #   # This should be the <value> part of
     #   # https://hydra.nixos.org/job/<value>/latest-finished
-    #   job = "project/jobset/jobname"; 
+    #   job = "project/jobset/jobname";
     #
     #   # When adding a new version, determine if it needs to be tagged as a
     #   # variant -- for example:
