@@ -16,10 +16,10 @@ jobs:
   nix-build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: cachix/install-nix-action@v30
-    - uses: DeterminateSystems/magic-nix-cache-action@v8
-    - run: nix run github:Mic92/nix-fast-build -- --no-nom
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v30
+      - uses: DeterminateSystems/magic-nix-cache-action@v8
+      - run: nix run github:Mic92/nix-fast-build -- --no-nom
   # all builds combined consume too much disk space... we should soon switch to something else
   nixos:
     runs-on: ubuntu-latest
@@ -30,10 +30,10 @@ jobs:
         #machine: [caliban, umbriel]
         machine: [caliban]
     steps:
-    - uses: actions/checkout@v4
-    - uses: cachix/install-nix-action@v30
-    - uses: DeterminateSystems/magic-nix-cache-action@v8
-    - run: nix build '.#nixosConfigurations."${{ matrix.machine }}.nixos.org".config.system.build.toplevel'
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v30
+      - uses: DeterminateSystems/magic-nix-cache-action@v8
+      - run: nix build '.#nixosConfigurations."${{ matrix.machine }}.nixos.org".config.system.build.toplevel'
   nix-darwin:
     runs-on: macos-latest
     strategy:
@@ -41,7 +41,7 @@ jobs:
         # Doesn't seem that x86_64 is still in use?
         machine: [arm64]
     steps:
-    - uses: actions/checkout@v4
-    - uses: cachix/install-nix-action@v30
-    - uses: DeterminateSystems/magic-nix-cache-action@v8
-    - run: nix build '.#darwinConfigurations."${{ matrix.machine }}".config.system.build.toplevel'
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v30
+      - uses: DeterminateSystems/magic-nix-cache-action@v8
+      - run: nix build '.#darwinConfigurations."${{ matrix.machine }}".config.system.build.toplevel'

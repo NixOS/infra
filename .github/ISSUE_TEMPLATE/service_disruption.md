@@ -4,7 +4,6 @@ about: Use this to report service instabilities
 title: '<service-name>: '
 labels: bug
 assignees: ''
-
 ---
 
 **Affected service**
@@ -18,4 +17,3 @@ assignees: ''
 **System information**
 
 <!-- Relevant system versions. If it's a connectivity issue, `mtr` reports. -->
-

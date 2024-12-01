@@ -1,4 +1,4 @@
-keys: 
+keys:
   - &hexa age1j3mkgedmeru63vwww6m44zfw09tg8yw6xdzstaq7ejfkvgcau40qwakm8x
   - &zimbatm age1jrh8yyq3swjru09s75s4mspu0mphh7h6z54z946raa9wx3pcdegq0x8t4h
   - &caliban age1sv307kkrxwgjah8pjpap5kzl4j2r6fqr3vg234n7m32chlchs9lsey7nlq
@@ -7,14 +7,14 @@ keys:
 creation_rules:
   - path_regex: secrets/[^/]+.caliban
     key_groups:
-    - age:
-      - *caliban
-      - *hexa
-      - *zimbatm
+      - age:
+          - *caliban
+          - *hexa
+          - *zimbatm
 
   - path_regex: secrets/[^/]+.umbriel
     key_groups:
-    - age:
-      - *umbriel
-      - *hexa
-      - *zimbatm
+      - age:
+          - *umbriel
+          - *hexa
+          - *zimbatm

@@ -5,10 +5,10 @@
 global:
   logging:
     - type: "stdout"
-      level:  "error"
+      level: "error"
       format: "human"
     - type: "syslog"
-      level:  "info"
+      level: "info"
       format: "logfmt"
 
 # mostly from https://blog.lenny.ninja/zrepl-on-rsync-net.html
@@ -17,7 +17,7 @@ jobs:
     type: sink
     serve:
       type: stdinserver
-      client_identities: [ haumea ]
+      client_identities: [haumea]
     recv:
       placeholder:
         encryption: off

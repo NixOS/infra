@@ -1,13 +1,14 @@
 # Setup
 
 ## Switch to UEFI
-First submit a support ticket asking them to enable UEFI.
-See: https://docs.hetzner.com/robot/dedicated-server/operating-systems/uefi/
+
+First submit a support ticket asking them to enable UEFI. See:
+https://docs.hetzner.com/robot/dedicated-server/operating-systems/uefi/
 
 # Correct the NVMe namespace's block size
 
-Verify the NVMe disks are formatted at the namespace level with 4096 blocks.
-See https://openzfs.github.io/openzfs-docs/Performance%20and%20Tuning/Hardware.html#nvme-low-level-formatting
+Verify the NVMe disks are formatted at the namespace level with 4096 blocks. See
+https://openzfs.github.io/openzfs-docs/Performance%20and%20Tuning/Hardware.html#nvme-low-level-formatting
 
 This disk's LBA is 512:
 
@@ -236,7 +237,8 @@ nixos-generate-config --root /mnt
 In the `configuration.nix`:
 
 1. Add `hetzner.nix` to the list of `imports` at the top.
-2. Add an authorized key and enable SSH. This will be removed later when it is imported into NixOps, so it is just for bootstrapping:
+2. Add an authorized key and enable SSH. This will be removed later when it is
+   imported into NixOps, so it is just for bootstrapping:
 
 ```
 services.openssh.enable = true;
@@ -245,24 +247,28 @@ users.users.root.openssh.authorizedKeys.keys = [ "ssh-..." ];
 
 ### Hardware Configuration Changes
 
-Edit `hardware-configuration.nix` and change the fileSystems value for `/nix/var/nix` to make it required for boot:
+Edit `hardware-configuration.nix` and change the fileSystems value for
+`/nix/var/nix` to make it required for boot:
 
 ```nix
-  fileSystems."/nix/var/nix/db" =
-    { device = "rpool/local/nix/db";
-      fsType = "zfs";
-      neededForBoot = true;
-    };
+fileSystems."/nix/var/nix/db" =
+  { device = "rpool/local/nix/db";
+    fsType = "zfs";
+    neededForBoot = true;
+  };
 ```
 
 ### Hetzner.nix
 
 Then create a file, `hetzner.nix`.
 
-* The all-zeros hostId is fine, though I generated one with `head -c4 /dev/urandom | od -A none -t x4`
-* The `enp7s0` and `MACAddress` value I got from `ip addr`
-* The IP addresses and gateways I got from the Robot webpage under the IPs tab, hovering over the IPv4 and IPv6 addresses.
-* Thee DNS resolvers I got from https://docs.hetzner.com/dns-console/dns/general/recursive-name-servers/
+- The all-zeros hostId is fine, though I generated one with
+  `head -c4 /dev/urandom | od -A none -t x4`
+- The `enp7s0` and `MACAddress` value I got from `ip addr`
+- The IP addresses and gateways I got from the Robot webpage under the IPs tab,
+  hovering over the IPv4 and IPv6 addresses.
+- Thee DNS resolvers I got from
+  https://docs.hetzner.com/dns-console/dns/general/recursive-name-servers/
 
 ```nix
 {
