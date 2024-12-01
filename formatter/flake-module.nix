@@ -9,6 +9,10 @@
         # Used to find the project root
         projectRootFile = ".git/config";
 
+        settings.global.excludes = [
+          "*.age"
+          "non-critical-infra/secrets/*"
+        ];
         programs.terraform.enable = true;
         programs.deadnix.enable = true;
         programs.nixfmt.enable = true;
