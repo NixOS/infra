@@ -7,7 +7,7 @@
 
   services.vaultwarden = {
     enable = true;
-    backupDir = "/var/lib/bitwarden_rs/backups/";
+    backupDir = "/var/backup/vaultwarden/";
     environmentFile = "/var/lib/bitwarden_rs/vaultwarden.env";
     config = {
       DOMAIN = "https://vault.nixos.org";
