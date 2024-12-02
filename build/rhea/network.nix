@@ -15,8 +15,8 @@
         "2a01:4f8:162:71eb::/64"
       ];
       routes = [
-        { routeConfig.Gateway = "5.9.122.33"; }
-        { routeConfig.Gateway = "fe80::1"; }
+        { Gateway = "5.9.122.33"; }
+        { Gateway = "fe80::1"; }
       ];
     };
   };

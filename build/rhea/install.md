@@ -287,10 +287,10 @@ Then create a file, `hetzner.nix`.
     ];
     routes = [
       {
-        routeConfig.Gateway = "5.9.122.33";
+        Gateway = "5.9.122.33";
       }
       {
-        routeConfig.Gateway = "fe80::1";
+        Gateway = "fe80::1";
       }
     ];
 
