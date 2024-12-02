@@ -31,6 +31,6 @@
 
   services.victoriametrics = {
     enable = true;
-    retentionPeriod = 1200; # 100 years
+    retentionPeriod = "1200w"; # 100 years
   };
 }
