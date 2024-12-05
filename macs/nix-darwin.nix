@@ -67,7 +67,7 @@ in
       };
       options =
         let
-          gbFree = 50;
+          gbFree = 100;
         in
         "--max-freed $((${toString gbFree} * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | awk '{ print $4 }')))";
     };
