@@ -22,6 +22,24 @@ in
   # gc outputs as well, since they are served from the cache
   nix.settings.gc-keep-outputs = false;
 
+  systemd.services.hydra-prune-build-logs = {
+    description = "Clean up old build logs";
+    startAt = "weekly";
+    serviceConfig = {
+      User = "hydra-queue-runner";
+      Group = "hydra";
+      ExecStart = lib.concatStringsSep " " [
+        (lib.getExe pkgs.findutils)
+        "/var/lib/hydra/build-logs/"
+        "-type"
+        "f"
+        "-mtime"
+        "+${toString (3 * 365)}"
+        "-delete"
+      ];
+    };
+  };
+
   # Don't rate-limit the journal.
   services.journald.rateLimitBurst = 0;
 
