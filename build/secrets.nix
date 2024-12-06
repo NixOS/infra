@@ -4,6 +4,7 @@ let
   secrets = with keys; {
     alertmanager-matrix-forwarder = [ machines.pluto ];
     fastly-read-only-api-token = [ machines.pluto ];
+    hydra-aws-credentials = [ machines.mimas ];
     hydra-mirror-aws-credentials = [ machines.pluto ];
     hydra-mirror-git-credentials = [ machines.pluto ];
     owncast-admin-password = [ machines.pluto ];

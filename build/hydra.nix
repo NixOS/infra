@@ -47,6 +47,13 @@ in
     serviceConfig.ManagedOOMPreference = "avoid";
   };
 
+  age.secrets.hydra-aws-credentials = {
+    file = ./secrets/hydra-aws-credentials.age;
+    path = "/var/lib/hydra/queue-runner/.aws/credentials";
+    owner = "hydra-queue-runner";
+    group = "hydra";
+  };
+
   services.hydra-dev.enable = true;
   services.hydra-dev.package = pkgs.hydra;
   services.hydra-dev.buildMachinesFiles = [ "/etc/nix/machines" ];
