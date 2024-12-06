@@ -71,6 +71,7 @@ with lib;
   networking.firewall.rejectPackets = true;
   networking.firewall.allowPing = true;
   networking.firewall.allowedTCPPorts = [ 10050 ];
+  networking.firewall.logRefusedConnections = false;
 
   services.resolved = {
     enable = true;
@@ -114,4 +115,6 @@ with lib;
 
   security.acme.acceptTerms = true;
   security.acme.defaults.email = "infra@nixos.org";
+
+  services.zfs.autoScrub.enable = true;
 }

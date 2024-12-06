@@ -44,7 +44,7 @@ locals {
     {
       hostname = "hydra.nixos.org"
       type     = "CNAME"
-      value    = "rhea.nixos.org"
+      value    = "mimas.nixos.org"
     },
     {
       hostname = "netboot.nixos.org"
@@ -85,6 +85,16 @@ locals {
       hostname = "rhea.nixos.org"
       type     = "AAAA"
       value    = "2a01:4f8:162:71eb::"
+    },
+    {
+      hostname = "mimas.nixos.org"
+      type     = "AAAA"
+      value    = "2a01:4f8:2220:11c8::1"
+    },
+    {
+      hostname = "mimas.nixos.org"
+      type     = "A"
+      value    = "157.90.104.34"
     },
     {
       hostname = "reproducible.nixos.org"

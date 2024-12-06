@@ -33,5 +33,6 @@ rec {
     haumea = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBamzRwZmoLjBFoNruGSVJEahk02Ku7NrBOmqcRWxcPm";
     pluto = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPzc6B1S4mp3T3oWZnqQDkDVWFBIzLtkgkdgstfYZ5d/";
     rhea = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHpWGtAp/AUzKPsCgcoxupr7vnganHKwxe6MVXd0Abs6";
+    mimas = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICzfTNppOS5b5IvZl1wqjGTUZE0D/o/MY8d7uKPWDvIp";
   };
 }

@@ -7,8 +7,57 @@ let
 in
 
 {
+  networking.firewall.allowedTCPPorts = [
+    9198 # queue-runnner metrics
+    9199 # hydra-notify metrics
+  ];
+
+  # garbage collection
+  nix.gc = {
+    automatic = true;
+    options = ''--max-freed "$((400 * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | ${pkgs.gawk}/bin/awk '{ print $4 }')))"'';
+    dates = "03,09,15,21:15";
+  };
+
+  # gc outputs as well, since they are served from the cache
+  nix.settings.gc-keep-outputs = false;
+
+  systemd.services.hydra-prune-build-logs = {
+    description = "Clean up old build logs";
+    startAt = "weekly";
+    serviceConfig = {
+      User = "hydra-queue-runner";
+      Group = "hydra";
+      ExecStart = lib.concatStringsSep " " [
+        (lib.getExe pkgs.findutils)
+        "/var/lib/hydra/build-logs/"
+        "-type"
+        "f"
+        "-mtime"
+        "+${toString (3 * 365)}"
+        "-delete"
+      ];
+    };
+  };
+
+  # Don't rate-limit the journal.
+  services.journald.rateLimitBurst = 0;
+
+  systemd.services.hydra-queue-runner = {
+    serviceConfig.ManagedOOMPreference = "avoid";
+  };
+
+  age.secrets.hydra-aws-credentials = {
+    file = ./secrets/hydra-aws-credentials.age;
+    path = "/var/lib/hydra/queue-runner/.aws/credentials";
+    owner = "hydra-queue-runner";
+    group = "hydra";
+  };
+
   services.hydra-dev.enable = true;
   services.hydra-dev.package = pkgs.hydra;
+  services.hydra-dev.buildMachinesFiles = [ "/etc/nix/machines" ];
+  services.hydra-dev.dbi = "dbi:Pg:dbname=hydra;host=10.254.1.9;user=hydra;";
   services.hydra-dev.logo = ./hydra-logo.png;
   services.hydra-dev.hydraURL = "https://hydra.nixos.org";
   services.hydra-dev.notificationSender = "edolstra@gmail.com";
@@ -43,6 +92,9 @@ in
     evaluator_max_memory_size = 4096
 
     max_concurrent_evals = 1
+
+    # increase the number of active compress slots (CPU is 48*2 on mimas)
+    max_local_worker_threads = 144
 
     max_unsupported_time = 86400
 
