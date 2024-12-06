@@ -22,6 +22,11 @@
     hostId = "aba92093";
   };
 
+  zramSwap = {
+    enable = true;
+    memoryPercent = 50;
+  };
+
   # garbage collection
   nix.gc = {
     automatic = true;
