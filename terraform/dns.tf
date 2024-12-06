@@ -44,7 +44,7 @@ locals {
     {
       hostname = "hydra.nixos.org"
       type     = "CNAME"
-      value    = "rhea.nixos.org"
+      value    = "mimas.nixos.org"
     },
     {
       hostname = "netboot.nixos.org"
