@@ -297,6 +297,11 @@ locals {
       value    = "caliban.nixos.org"
     },
     {
+      hostname = "tracker.security.nixos.org"
+      type     = "A"
+      value    = "188.245.41.195"
+    },
+    {
       hostname = "caliban.nixos.org"
       type     = "TXT"
       value    = "v=spf1 ip4:65.109.26.213 ip6:2a01:4f9:5a:186c::2 ~all"
