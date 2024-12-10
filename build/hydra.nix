@@ -20,7 +20,7 @@ in
   };
 
   # gc outputs as well, since they are served from the cache
-  nix.settings.gc-keep-outputs = false;
+  nix.settings.gc-keep-outputs = lib.mkForce false;
 
   systemd.services.hydra-prune-build-logs = {
     description = "Clean up old build logs";
