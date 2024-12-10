@@ -26,6 +26,7 @@
             targets = [
               "caliban.nixos.org:9100"
               "umbriel.nixos.org:9100"
+              "tracker.security.nixos.org:9100"
             ];
           }
           {
