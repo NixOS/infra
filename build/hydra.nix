@@ -1,6 +1,8 @@
-{ lib, pkgs, ... }:
-
-with lib;
+{
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   narCache = "/var/cache/hydra/nar-cache";
@@ -121,11 +123,9 @@ in
     "d ${narCache}      0775 hydra hydra 1d -"
   ];
 
-  # users.extraUsers.hydra.home = mkForce "/home/hydra";
-
   systemd.services.hydra-queue-runner.restartIfChanged = false;
-  systemd.services.hydra-queue-runner.wantedBy = mkForce [ ];
-  systemd.services.hydra-queue-runner.requires = mkForce [ ];
+  systemd.services.hydra-queue-runner.wantedBy = lib.mkForce [ ];
+  systemd.services.hydra-queue-runner.requires = lib.mkForce [ ];
   systemd.services.hydra-queue-runner.serviceConfig.LimitNOFILE = 65535;
 
   programs.ssh.hostKeyAlgorithms = [
@@ -134,7 +134,7 @@ in
     "ssh-rsa"
     "ecdsa-sha2-nistp256"
   ];
-  programs.ssh.extraConfig = mkAfter ''
+  programs.ssh.extraConfig = lib.mkAfter ''
     ServerAliveInterval 120
     TCPKeepAlive yes
 
