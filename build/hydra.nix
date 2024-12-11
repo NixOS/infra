@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   ...
@@ -56,6 +57,12 @@ in
     group = "hydra";
   };
 
+  age.secrets.hydra-github-client-secret = {
+    file = ./secrets/hydra-github-client-secret.age;
+    owner = "hydra-www";
+    group = "hydra";
+  };
+
   services.hydra-dev.enable = true;
   services.hydra-dev.package = pkgs.hydra;
   services.hydra-dev.buildMachinesFiles = [ "/etc/nix/machines" ];
@@ -72,7 +79,7 @@ in
     google_client_id = 816926039128-ia4s4rsqrq998rsevce7i09mo6a4nffg.apps.googleusercontent.com
 
     github_client_id = b022c64ce4531ffc1031
-    github_client_secret_file = /var/lib/hydra/www/keys/hydra-github-client-secret
+    github_client_secret_file = ${config.age.secrets.hydra-github-client-secret.path}
 
     store_uri = s3://nix-cache?secret-key=/var/lib/hydra/queue-runner/keys/cache.nixos.org-1/secret&write-nar-listing=1&ls-compression=br&log-compression=br
     server_store_uri = https://cache.nixos.org?local-nar-cache=${narCache}
