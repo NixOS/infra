@@ -79,15 +79,6 @@
         ];
       };
 
-      nixosConfigurations.rhea = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-
-        modules = [
-          flakesModule
-          ./rhea/configuration.nix
-        ];
-      };
-
       nixosConfigurations.mimas = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
 
