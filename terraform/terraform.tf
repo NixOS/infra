@@ -9,16 +9,16 @@ terraform {
 
   required_providers {
     aws = {
-      source = "registry.terraform.io/hashicorp/aws"
+      source = "registry.opentofu.org/hashicorp/aws"
     }
     fastly = {
-      source = "registry.terraform.io/fastly/fastly"
+      source = "registry.opentofu.org/fastly/fastly"
     }
     netlify = {
-      source = "registry.terraform.io/AegirHealth/netlify"
+      source = "registry.opentofu.org/AegirHealth/netlify"
     }
     secret = {
-      source = "registry.terraform.io/numtide/secret"
+      source = "registry.opentofu.org/numtide/secret"
     }
   }
 }
