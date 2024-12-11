@@ -19,12 +19,15 @@ in
         packages = [
           pkgs.awscli2
           # TODO: migrate registry for opentofu as well.
-          (pkgs.opentofu.withPlugins (p: [
-            p.aws
-            p.fastly
-            p.netlify
-            p.secret
-          ]))
+          (pkgs.opentofu.withPlugins (
+            p:
+            builtins.map convert2Tofu [
+              p.aws
+              p.fastly
+              p.netlify
+              p.secret
+            ]
+          ))
         ];
       };
 
