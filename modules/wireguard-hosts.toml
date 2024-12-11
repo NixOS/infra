@@ -28,12 +28,6 @@ ip = "10.254.1.1"
 port = 51820
 publicKey = "h54X0ACbziEspzsYV2/5nSdg5ptdCrIRgpe9KJxNlyY="
 
-[hosts.rhea]
-endpoint = "5.9.122.43"
-ip = "10.254.1.5"
-port = 51820
-publicKey = "eIsaf/JYsxL/G5pCzKo10GeiqgdEwp8v9G4BSUBo3h0="
-
 [hosts.pluto]
 endpoint = "37.27.99.100"
 ip = "10.254.1.6"

@@ -5,6 +5,7 @@ let
     alertmanager-matrix-forwarder = [ machines.pluto ];
     fastly-read-only-api-token = [ machines.pluto ];
     hydra-aws-credentials = [ machines.mimas ];
+    hydra-github-client-secret = [ machines.mimas ];
     hydra-mirror-aws-credentials = [ machines.pluto ];
     hydra-mirror-git-credentials = [ machines.pluto ];
     owncast-admin-password = [ machines.pluto ];

@@ -6,7 +6,6 @@
         {
           labels.role = "hydra";
           targets = [
-            "rhea:9300"
             "mimas.nixos.org:9300"
           ];
         }
