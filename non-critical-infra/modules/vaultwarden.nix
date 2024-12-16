@@ -21,6 +21,7 @@
       SMTP_SSL = false;
       SMTP_FROM = "vaultwarden@caliban.nixos.org";
       SMTP_FROM_NAME = "NixOS Vaultwarden";
+      ORG_EVENTS_ENABLED = true;
     };
   };
 
