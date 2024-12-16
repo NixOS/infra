@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+HOSTS=(
+	"hetzner@enormous-catfish.mac.nixos.org"
+	"hetzner@growing-jennet.mac.nixos.org"
+	"hetzner@intense-heron.mac.nixos.org"
+	"hetzner@maximum-snail.mac.nixos.org"
+	"hetzner@sweeping-filly.mac.nixos.org"
+	"customer@eager-heisenberg.mac.nixos.org"
+	"customer@kind-lumiere.mac.nixos.org"
+)
+
+for host in "${HOSTS[@]}"; do
+	# shellcheck disable=SC2068
+	(ssh "${host}" -- $@ 2>&1| sed -e "s/^/${host} | /") &
+done
