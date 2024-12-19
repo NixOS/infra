@@ -220,11 +220,11 @@ resource "fastly_service_vcl" "cache" {
     name     = "Authenticate S3 requests"
     type     = "miss"
     priority = 100
-    content = templatefile("${path.module}/cache/s3-authn.vcl", {
+    content = templatefile("${path.module}/s3-authn.vcl", {
       aws_region     = aws_s3_bucket.cache.region
       backend_domain = aws_s3_bucket.cache.bucket_domain_name
-      access_key     = local.cache-iam.key
-      secret_key     = local.cache-iam.secret
+      access_key     = local.fastly-iam.key
+      secret_key     = local.fastly-iam.secret
     })
   }
 
