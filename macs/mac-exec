@@ -9,8 +9,12 @@ HOSTS=(
 	"customer@eager-heisenberg.mac.nixos.org"
 	"customer@kind-lumiere.mac.nixos.org"
 )
+PIDS=()
 
 for host in "${HOSTS[@]}"; do
 	# shellcheck disable=SC2068
 	(ssh "${host}" -- $@ 2>&1| sed -e "s/^/${host} | /") &
+	PIDS+=($!)
 done
+
+wait "${PIDS[@]}"
