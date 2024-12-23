@@ -9,6 +9,7 @@
     ./diffoscope.nix
     ../modules/common.nix
     ../modules/prometheus
+    ../modules/rasdaemon.nix
     ../modules/wireguard.nix
   ];
 
