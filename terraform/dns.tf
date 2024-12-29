@@ -322,6 +322,22 @@ locals {
       value    = "37.27.11.42"
     },
     {
+      hostname = "nixpkgs-merge-bot.nixos.org"
+      type     = "AAAA"
+      value    = "2a01:4f9:c012:7615::1"
+    },
+    # nixpkgs-merge-bot-staging.nixos.org is currently hosted by helsinki systems
+    {
+      hostname = "nixpkgs-merge-bot-staging.nixos.org"
+      type     = "A"
+      value    = "37.27.197.11"
+    },
+    {
+      hostname = "nixpkgs-merge-bot-staging.nixos.org"
+      type     = "AAAA"
+      value    = "2a01:4f9:c010:dd30::1"
+    },
+    {
       hostname = "umbriel.nixos.org"
       type     = "A"
       value    = "37.27.20.162"
