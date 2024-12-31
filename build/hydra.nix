@@ -148,6 +148,9 @@ in
 
   # These IPs and SSH public keys are specifically provisioned for Hydra
   services.openssh.knownHosts = {
+    # x86_64-linux at Hetzner
+    "elated-minsky.builder.nixos.org".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIvrJpd3aynfPVGGG/s7MtRFz/S6M4dtqvqKI3Da7O7+";
+
     # M1 Macs in North America
     "*.foundation.detsys.dev" = {
       certAuthority = true;

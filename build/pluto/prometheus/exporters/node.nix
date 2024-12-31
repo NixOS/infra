@@ -42,6 +42,12 @@
               "eager-heisenberg.mac.nixos.org:9100"
             ];
           }
+          {
+            labels.role = "builders";
+            targets = [
+              "elated-minsky.builder.nixos.org:9100"
+            ];
+          }
         ];
       }
     ];
