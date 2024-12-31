@@ -46,6 +46,7 @@
             labels.role = "builders";
             targets = [
               "elated-minsky.builder.nixos.org:9100"
+              "sleepy-brown.builder.nixos.org:9100"
             ];
           }
         ];

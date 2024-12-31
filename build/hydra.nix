@@ -150,6 +150,7 @@ in
   services.openssh.knownHosts = {
     # x86_64-linux at Hetzner
     "elated-minsky.builder.nixos.org".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIvrJpd3aynfPVGGG/s7MtRFz/S6M4dtqvqKI3Da7O7+";
+    "sleepy-brown.builder.nixos.org".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOh4/3m7o6H3J5QG711aJdlSUVvlC8yW6KoqAES3Fy6I";
 
     # M1 Macs in North America
     "*.foundation.detsys.dev" = {

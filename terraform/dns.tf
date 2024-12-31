@@ -218,6 +218,17 @@ locals {
       value    = "2a01:4f8:2220:1b03::1"
     },
     {
+      # hetzner ax162-r 2566166
+      hostname = "sleepy-brown.builder.nixos.org"
+      type     = "A"
+      value    = "162.55.130.51"
+    },
+    {
+      hostname = "sleepy-brown.builder.nixos.org"
+      type     = "AAAA"
+      value    = "2a01:4f8:271:5c14::1"
+    },
+    {
       # hetzner m1 1638981
       hostname = "intense-heron.mac.nixos.org"
       type     = "A"

@@ -29,5 +29,6 @@
     {
       # Epyc 9454P (48C/96T), 256 GB DDR4 RAM, 2x 1.92TB PCIe4 NVME
       elated-minsky = mkNixOS "x86_64-linux" ./instances/elated-minsky.nix;
+      sleepy-brown = mkNixOS "x86_64-linux" ./instances/sleepy-brown.nix;
     };
 }
