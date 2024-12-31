@@ -30,5 +30,8 @@
       # Epyc 9454P (48C/96T), 256 GB DDR4 RAM, 2x 1.92TB PCIe4 NVME
       elated-minsky = mkNixOS "x86_64-linux" ./instances/elated-minsky.nix;
       sleepy-brown = mkNixOS "x86_64-linux" ./instances/sleepy-brown.nix;
+
+      # Ampere Q80-30 (80C), 256 GB DDR4 RAM, 2x3.84TB PCIe4 NVME
+      goofy-hopcroft = mkNixOS "aarch64-linux" ./instances/goofy-hopcroft.nix;
     };
 }

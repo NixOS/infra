@@ -229,6 +229,16 @@ locals {
       value    = "2a01:4f8:271:5c14::1"
     },
     {
+      hostname = "goofy-hopcroft.builder.nixos.org"
+      type     = "A"
+      value    = "135.181.225.104"
+    },
+    {
+      hostname = "goofy-hopcroft.builder.nixos.org"
+      type     = "AAAA"
+      value    = "2a01:4f9:3071:2d8b::1"
+    },
+    {
       # hetzner m1 1638981
       hostname = "intense-heron.mac.nixos.org"
       type     = "A"
