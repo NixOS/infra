@@ -54,6 +54,7 @@
         "aarch64-darwin"
       ];
       imports = [
+        ./builders/flake-module.nix
         ./formatter/flake-module.nix
         ./checks/flake-module.nix
         ./terraform/flake-module.nix
