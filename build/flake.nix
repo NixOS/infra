@@ -14,9 +14,6 @@
   inputs.hydra.inputs.nixpkgs.follows = "nixpkgs";
   inputs.nix.follows = "hydra/nix";
 
-  inputs.hydra-scale-equinix-metal.url = "github:NixOS/hydra-scale-equinix-metal";
-  inputs.hydra-scale-equinix-metal.inputs.nixpkgs.follows = "nixpkgs";
-
   inputs.nix-netboot-serve.url = "github:DeterminateSystems/nix-netboot-serve";
   inputs.nix-netboot-serve.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -33,7 +30,6 @@
       colmena,
       disko,
       hydra,
-      hydra-scale-equinix-metal,
       nix,
       nixpkgs,
       nixos-channel-scripts,
@@ -48,7 +44,6 @@
           agenix.nixosModules.age
           disko.nixosModules.disko
           hydra.nixosModules.hydra
-          hydra-scale-equinix-metal.nixosModules.default
           nix-netboot-serve.nixosModules.nix-netboot-serve
         ];
 

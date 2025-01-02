@@ -9,10 +9,8 @@ let
     hydra-mirror-aws-credentials = [ machines.pluto ];
     hydra-mirror-git-credentials = [ machines.pluto ];
     owncast-admin-password = [ machines.pluto ];
-    packet-sd-env = [ machines.pluto ];
     pluto-backup-secret = [ machines.pluto ];
     pluto-backup-ssh-key = [ machines.pluto ];
-    prometheus-packet-spot-market-price-exporter = [ machines.pluto ];
     rfc39-credentials = [ machines.pluto ];
     rfc39-github = [ machines.pluto ];
     rfc39-record-push = [ machines.pluto ];
