@@ -42,6 +42,14 @@
               "eager-heisenberg.mac.nixos.org:9100"
             ];
           }
+          {
+            labels.role = "builders";
+            targets = [
+              "elated-minsky.builder.nixos.org:9100"
+              "sleepy-brown.builder.nixos.org:9100"
+              "goofy-hopcroft.builder.nixos.org:9100"
+            ];
+          }
         ];
       }
     ];

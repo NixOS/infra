@@ -207,6 +207,38 @@ locals {
       value    = "v=spf1 include:spf.improvmx.com include:_mailcust.gandi.net ~all"
     },
     {
+      # hetzner ax162-r 2548595
+      hostname = "elated-minsky.builder.nixos.org"
+      type     = "A"
+      value    = "167.235.95.99"
+    },
+    {
+      hostname = "elated-minsky.builder.nixos.org"
+      type     = "AAAA"
+      value    = "2a01:4f8:2220:1b03::1"
+    },
+    {
+      # hetzner ax162-r 2566166
+      hostname = "sleepy-brown.builder.nixos.org"
+      type     = "A"
+      value    = "162.55.130.51"
+    },
+    {
+      hostname = "sleepy-brown.builder.nixos.org"
+      type     = "AAAA"
+      value    = "2a01:4f8:271:5c14::1"
+    },
+    {
+      hostname = "goofy-hopcroft.builder.nixos.org"
+      type     = "A"
+      value    = "135.181.225.104"
+    },
+    {
+      hostname = "goofy-hopcroft.builder.nixos.org"
+      type     = "AAAA"
+      value    = "2a01:4f9:3071:2d8b::1"
+    },
+    {
       # hetzner m1 1638981
       hostname = "intense-heron.mac.nixos.org"
       type     = "A"
