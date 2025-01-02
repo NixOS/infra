@@ -272,26 +272,6 @@
         "type": "github"
       }
     },
-    "hydra-scale-equinix-metal": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1733176494,
-        "narHash": "sha256-s/jVBWzr9nO/H5FJMSp1/DWZEw7zuGg0itOP8pWDLdg=",
-        "owner": "NixOS",
-        "repo": "hydra-scale-equinix-metal",
-        "rev": "3d0db527c799ddb83aee9173062bbe4e41610a5b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "hydra-scale-equinix-metal",
-        "type": "github"
-      }
-    },
     "libgit2": {
       "flake": false,
       "locked": {
@@ -490,7 +470,6 @@
         "colmena": "colmena",
         "disko": "disko",
         "hydra": "hydra",
-        "hydra-scale-equinix-metal": "hydra-scale-equinix-metal",
         "nix": [
           "hydra",
           "nix"

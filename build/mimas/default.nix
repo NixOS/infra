@@ -3,8 +3,6 @@
     ../common.nix
     ../hydra.nix
     ../hydra-proxy.nix
-    ../hydra-scaler.nix
-    ../packet-importer.nix
     ./boot.nix
     ./network.nix
   ];

@@ -48,7 +48,7 @@
 
     ruleFiles =
       let
-        diskSelector = ''mountpoint=~"(/|/scratch)",instance!~".*packethost.net"'';
+        diskSelector = ''mountpoint=~"(/|/tmp)"'';
         relevantLabels = "device,fstype,instance,mountpoint";
       in
       [
