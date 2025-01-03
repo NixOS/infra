@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>debuginfod.nixos.org</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://nixos.org/bootstrap/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://nixos.org/bootstrap/css/bootstrap-responsive.min.css"
+    />
+    <style>
+      body {
+        padding-top: 0;
+        margin-top: 4em;
+        margin-bottom: 4em;
+      }
+      body > div {
+        max-width: 800px;
+      }
+      p {
+        text-align: center;
+      }
+      pre {
+        max-width: 450px;
+        margin: auto;
+      }
+      .cache {
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container jumbotron">
+      <div class="jumbotron">
+        <p class="lead">
+          <a href="https://nixos.org/nixos">
+            <img
+              src="https://nixos.org/logo/nixos-hires.png"
+              width="500px"
+              alt="logo"
+            />
+          </a>
+        </p>
+
+        <p class="lead">
+          <code>https://debuginfod.nixos.org/</code> provides access to debug
+          symbols and derivation source code for debuggers supporting the
+          debuginfod protocol. Debug symbols are provided for all derivations
+          that enable the `separateDebugInfo` flag.
+        </p>
+        <p>
+          <pre>export DEBUGINFOD_URLS=http://debuginfod.nixos.org</pre>
+        </p>
+      </div>
+      <hr />
+      <div class="help">
+        <p>
+          If you are having trouble, please reach out to the
+          <a href="https://nixos.org/community/teams/infrastructure"
+          >infrastructure team</a>
+        </p>
+        <p>
+          For questions, or support, <a
+            href="https://nixos.org/nixos/support.html"
+          >
+            the support page</a> from the NixOS website describes how to get in
+          touch.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
