@@ -7,7 +7,7 @@
   };
 
   # Grant nginx access to certificates
-  systemd.services.nginx.serviceConfig.SupplementaryGroup = [ "acme" ];
+  systemd.services.nginx.serviceConfig.SupplementaryGroups = [ "acme" ];
 
   # Reload nginx after certificate renewal
   security.acme.defaults.reloadServices = [ "nginx.service" ];
