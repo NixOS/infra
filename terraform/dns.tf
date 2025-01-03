@@ -304,6 +304,11 @@ locals {
       value    = "caliban.nixos.org."
     },
     {
+      hostname = "debuginfod.nixos.org"
+      type     = "CNAME"
+      value    = "caliban.nixos.org"
+    },
+    {
       hostname = "live.nixos.org"
       type     = "CNAME"
       value    = "caliban.nixos.org."
