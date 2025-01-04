@@ -11,11 +11,11 @@
 
     gc =
       let
-        maxFreed = 100; # GB
+        maxFreed = 500; # GB
       in
       {
         automatic = true;
-        dates = "*:0/30"; # every 30 minutes
+        dates = "hourly";
         options = "--max-freed \"$((${toString maxFreed} * 1024**3 - 1024 * $(df --output=avail /nix/store | tail -n 1)))\"";
       };
 
