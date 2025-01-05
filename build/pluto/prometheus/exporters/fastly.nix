@@ -1,13 +1,13 @@
 { config, ... }:
 
 {
-  age.secrets.fastly-read-only-api-token.file = ../../../secrets/fastly-read-only-api-token.age;
+  age.secrets.fastly-exporter-env.file = ../../../secrets/fastly-exporter-env.age;
 
   services.prometheus = {
     exporters.fastly = {
       enable = true;
       listenAddress = "127.0.0.1";
-      tokenPath = config.age.secrets.fastly-read-only-api-token.path;
+      environmentFile = config.age.secrets.fastly-exporter-env.path;
     };
 
     scrapeConfigs = [
