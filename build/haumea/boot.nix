@@ -5,7 +5,7 @@
       "/dev/nvme1n1"
     ];
     copyKernels = true;
-    configurationLimit = 10; # 230 MB /boot capacity
+    configurationLimit = 5; # 230 MB /boot capacity
   };
   boot.initrd.availableKernelModules = [
     "ahci"
