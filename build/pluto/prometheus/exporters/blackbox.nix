@@ -60,7 +60,6 @@ in
         "https://weekly.nixos.org"
         "https://wiki.nixos.org"
         "https://www.nixos.org"
-        "https://netboot.nixos.org"
         "https://tracker.security.nixos.org"
       ])
     ];

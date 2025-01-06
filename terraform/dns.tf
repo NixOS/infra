@@ -47,11 +47,6 @@ locals {
       value    = "mimas.nixos.org"
     },
     {
-      hostname = "netboot.nixos.org"
-      type     = "CNAME"
-      value    = "pluto.nixos.org"
-    },
-    {
       hostname = "monitoring.nixos.org"
       type     = "CNAME"
       value    = "pluto.nixos.org"

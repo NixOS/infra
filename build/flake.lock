@@ -47,24 +47,6 @@
         "type": "github"
       }
     },
-    "cpiotools": {
-      "inputs": {
-        "nixpkgs": "nixpkgs"
-      },
-      "locked": {
-        "lastModified": 1702755016,
-        "narHash": "sha256-avRrxBjC+z3XcKjosv6vzRlyDRNIKt/Dw7/pEzcTvYY=",
-        "owner": "DeterminateSystems",
-        "repo": "cpiotools",
-        "rev": "189f7f5f672eb496bbba441aca1cdb208cb592ec",
-        "type": "github"
-      },
-      "original": {
-        "owner": "DeterminateSystems",
-        "repo": "cpiotools",
-        "type": "github"
-      }
-    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -279,27 +261,6 @@
         "type": "github"
       }
     },
-    "nix-netboot-serve": {
-      "inputs": {
-        "cpiotools": "cpiotools",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1721830768,
-        "narHash": "sha256-VCEmUyS4amTlQsDH79gDks3Zx1cw8B0+HL7/MkPpSbQ=",
-        "owner": "DeterminateSystems",
-        "repo": "nix-netboot-serve",
-        "rev": "bab81b39988394061c4ef487a14846f1097804c4",
-        "type": "github"
-      },
-      "original": {
-        "owner": "DeterminateSystems",
-        "repo": "nix-netboot-serve",
-        "type": "github"
-      }
-    },
     "nixos-channel-scripts": {
       "inputs": {
         "nixpkgs": [
@@ -321,22 +282,6 @@
       }
     },
     "nixpkgs": {
-      "locked": {
-        "lastModified": 1655567057,
-        "narHash": "sha256-Cc5hQSMsTzOHmZnYm8OSJ5RNUp22bd5NADWLHorULWQ=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "e0a42267f73ea52adc061a64650fddc59906fc99",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs_2": {
       "locked": {
         "lastModified": 1736080869,
         "narHash": "sha256-M4+plf7HjYOAvmZ3rpMHz5rZF+ExNyTnm/7F1iBK2Jg=",
@@ -383,9 +328,8 @@
           "hydra",
           "nix"
         ],
-        "nix-netboot-serve": "nix-netboot-serve",
         "nixos-channel-scripts": "nixos-channel-scripts",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs",
         "rfc39": "rfc39"
       }
     },

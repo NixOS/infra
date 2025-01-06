@@ -13,7 +13,6 @@
     ./prometheus
 
     ../../modules/hydra-mirror.nix
-    ../../modules/netboot-serve.nix
     ../../modules/rfc39.nix
     ../../modules/tarball-mirror.nix
   ];

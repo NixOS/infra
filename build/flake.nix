@@ -14,9 +14,6 @@
   inputs.hydra.inputs.nixpkgs.follows = "nixpkgs";
   inputs.nix.follows = "hydra/nix";
 
-  inputs.nix-netboot-serve.url = "github:DeterminateSystems/nix-netboot-serve";
-  inputs.nix-netboot-serve.inputs.nixpkgs.follows = "nixpkgs";
-
   inputs.nixos-channel-scripts.url = "github:NixOS/nixos-channel-scripts";
   inputs.nixos-channel-scripts.inputs.nixpkgs.follows = "nixpkgs";
 
@@ -33,7 +30,6 @@
       nix,
       nixpkgs,
       nixos-channel-scripts,
-      nix-netboot-serve,
       rfc39,
     }:
     let
@@ -44,7 +40,6 @@
           agenix.nixosModules.age
           disko.nixosModules.disko
           hydra.nixosModules.hydra
-          nix-netboot-serve.nixosModules.nix-netboot-serve
         ];
 
         nixpkgs.overlays = [
