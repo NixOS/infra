@@ -15,6 +15,7 @@
     ./exporters/node.nix
     ./exporters/owncast.nix
     ./exporters/postgresql.nix
+    ./exporters/rasdaemon.nix
     ./exporters/r13y.nix
     ./exporters/rfc39.nix
     ./exporters/zfs.nix
