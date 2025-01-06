@@ -34,10 +34,11 @@ in
       ExecStart = lib.concatStringsSep " " [
         (lib.getExe pkgs.findutils)
         "/var/lib/hydra/build-logs/"
+        "-ignore_readdir_race"
         "-type"
         "f"
         "-mtime"
-        "+${toString (3 * 365)}"
+        "+${toString (3 * 365)}" # days
         "-delete"
       ];
     };
