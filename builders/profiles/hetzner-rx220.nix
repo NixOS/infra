@@ -1,4 +1,10 @@
 {
+  config,
+  lib,
+  ...
+}:
+
+{
   imports = [
     ../boot/efi-grub.nix
   ];
@@ -10,7 +16,9 @@
   # 96G for build roots, 160G for working memory
   boot.tmp = {
     useTmpfs = true;
-    tmpfsSize = "96G";
+    #  96G tmpfs, 160G RAM for standard builders
+    # 128G tmpfs, 128G RAM for big parallel builders
+    tmpfsSize = if lib.elem "big-parallel" config.nix.settings.system-features then "128G" else "96G";
   };
 
   boot.initrd.availableKernelModules = [
