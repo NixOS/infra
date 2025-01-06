@@ -17,6 +17,16 @@
     ./limesurvey-tmp.nix
   ];
 
+  fileSystems."/boot-1" = {
+    device = "/dev/disk/by-uuid/9299-8E8E";
+    fsType = "vfat";
+  };
+
+  fileSystems."/boot-2" = {
+    device = "/dev/disk/by-uuid/9297-573C";
+    fsType = "vfat";
+  };
+
   # Bootloader.
   boot.loader.grub.enable = true;
   boot.loader.grub.mirroredBoots = [
