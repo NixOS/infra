@@ -72,10 +72,21 @@ in
               rules = [
                 {
                   alert = "CertificateExpiry";
-                  expr = "probe_ssl_earliest_cert_expiry - time() < 86400 * 14";
-                  for = "10m";
+                  expr = ''
+                    probe_ssl_earliest_cert_expiry - time() < 86400 * 14
+                  '';
+                  for = "15m";
                   labels.severity = "warning";
                   annotations.summary = "Certificate for {{ $labels.instance }} is expiring soon.";
+                }
+                {
+                  alert = "HttpUnreachable";
+                  expr = ''
+                    probe_success{job="blackbox-https_success"} == 0
+                  '';
+                  for = "15m";
+                  labels.severity = "warning";
+                  annotations.summary = "Endpoint {{ $labels.instance }} is unreachable";
                 }
               ];
             }
