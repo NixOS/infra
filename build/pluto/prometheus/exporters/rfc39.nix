@@ -29,7 +29,7 @@
                   expr = ''node_systemd_unit_state{name=~"^rfc39-sync.service$", state="failed"} == 1'';
                   for = "30m";
                   labels.severity = "warning";
-                  annotations.grafana = "https://monitoring.nixos.org/grafana/d/fBW4tL1Wz/scheduled-task-state-channels-website?orgId=1&refresh=10s";
+                  annotations.grafana = "https://grafana.nixos.org/d/fBW4tL1Wz/scheduled-task-state-channels-website?orgId=1&refresh=10s";
                 }
               ];
             }

@@ -74,7 +74,7 @@
                   for = "30m";
                   labels.severity = "warning";
                   annotations.summary = "{{ $labels.machine }} has {{ $value }} over-age jobs.";
-                  annotations.grafana = "https://monitoring.nixos.org/grafana/d/j0hJAY1Wk/in-progress-build-duration-heatmap";
+                  annotations.grafana = "https://grafana.nixos.org/d/j0hJAY1Wk/in-progress-build-duration-heatmap";
                 }
                 {
                   alert = "HydraQueueRunnerUp";

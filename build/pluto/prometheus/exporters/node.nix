@@ -74,7 +74,7 @@
                     for = "30m";
                     labels.severity = "warning";
                     annotations.summary = "{{ $labels.device }} mounted to {{ $labels.mountpoint }} ({{ $labels.fstype }}) on {{ $labels.instance }} has {{ $value }} inodes free.";
-                    annotations.grafana = "https://monitoring.nixos.org/grafana/d/5LANB9pZk/per-instance-metrics?orgId=1&refresh=30s&var-instance={{ $labels.instance }}";
+                    annotations.grafana = "https://grafana.nixos.org/d/rYdddlPWk/node-exporter-full?orgId=1&var-job=node&var-node={{ $labels.instance }}";
                   }
                   {
                     alert = "PartitionLowDiskSpace";
@@ -86,11 +86,13 @@
                     for = "30m";
                     labels.severity = "warning";
                     annotations.summary = "{{ $labels.device }} mounted to {{ $labels.mountpoint }} ({{ $labels.fstype }}) on {{ $labels.instance }} has {{ $value }} GB free.";
-                    annotations.grafana = "https://monitoring.nixos.org/grafana/d/5LANB9pZk/per-instance-metrics?orgId=1&refresh=30s&var-instance={{ $labels.instance }}";
+                    annotations.grafana = "https://grafana.nixos.org/d/rYdddlPWk/node-exporter-full?orgId=1&var-job=node&var-node=caliban.nixos.org:9100{{ $labels.instance }}";
                   }
                   {
                     alert = "SystemdUnitFailed";
-                    expr = ''node_systemd_unit_state{state="failed"} == 1'';
+                    expr = ''
+                      node_systemd_unit_state{state="failed"} == 1
+                    '';
                     for = "15m";
                     labels.severity = "warning";
                     annotations.summary = "systemd unit {{ $labels.name }} on {{ $labels.instance }} has been down for more than 15 minutes.";
@@ -106,7 +108,7 @@
                     for = "30m";
                     labels.severity = "warning";
                     annotations.summary = "{{ $labels.name }} on {{ $labels.instance }}";
-                    annotations.grafana = "https://monitoring.nixos.org/grafana/d/fBW4tL1Wz/scheduled-task-state-channels-website?orgId=1&refresh=10s";
+                    annotations.grafana = "https://grafana.nixos.org/d/fBW4tL1Wz/scheduled-task-state-channels-website?orgId=1&refresh=10s";
                   }
                 ];
               }
