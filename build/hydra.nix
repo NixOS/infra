@@ -149,10 +149,13 @@ in
   # These IPs and SSH public keys are specifically provisioned for Hydra
   services.openssh.knownHosts = {
     # x86_64-linux at Hetzner
-    "elated-minsky.builder.nixos.org".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIvrJpd3aynfPVGGG/s7MtRFz/S6M4dtqvqKI3Da7O7+";
-    "sleepy-brown.builder.nixos.org".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOh4/3m7o6H3J5QG711aJdlSUVvlC8yW6KoqAES3Fy6I";
+    "elated-minsky.builder.nixos.org".publicKey =
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIvrJpd3aynfPVGGG/s7MtRFz/S6M4dtqvqKI3Da7O7+";
+    "sleepy-brown.builder.nixos.org".publicKey =
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOh4/3m7o6H3J5QG711aJdlSUVvlC8yW6KoqAES3Fy6I";
     # aarch64-linux at Hetzner
-    "goofy-hopcroft.builder.nixos.org".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICTJEi+nQNd7hzNYN3cLBK/0JCkmwmyC1I+b5nMI7+dd";
+    "goofy-hopcroft.builder.nixos.org".publicKey =
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICTJEi+nQNd7hzNYN3cLBK/0JCkmwmyC1I+b5nMI7+dd";
 
     # M1 Macs in North America
     "*.foundation.detsys.dev" = {
@@ -161,19 +164,28 @@ in
     };
 
     # M1 Macs at Hetzner
-    "intense-heron.mac.nixos.org".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICeSgOe/cr1yVAJOl30t3AZOLtvzeQa5rnrHGceKeBue";
-    "sweeping-filly.mac.nixos.org".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE6b/coXQEcFZW1eG4zFyCMCF0mZFahqmadz6Gk9DWMF";
-    "maximum-snail.mac.nixos.org".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEs+fK4hH8UKo+Pa7u1VYltkMufBHHH5uC93RQ2S6Xy9";
-    "growing-jennet.mac.nixos.org".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAQGthkSSOnhxrIUCMlRQz8FOo5Y5Nk9f9WnVLNeRJpm";
-    "enormous-catfish.mac.nixos.org".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMlg7NXxeG5L3s0YqSQIsqVG0MTyvyWDHUyYEfFPazLe";
+    "intense-heron.mac.nixos.org".publicKey =
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICeSgOe/cr1yVAJOl30t3AZOLtvzeQa5rnrHGceKeBue";
+    "sweeping-filly.mac.nixos.org".publicKey =
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE6b/coXQEcFZW1eG4zFyCMCF0mZFahqmadz6Gk9DWMF";
+    "maximum-snail.mac.nixos.org".publicKey =
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEs+fK4hH8UKo+Pa7u1VYltkMufBHHH5uC93RQ2S6Xy9";
+    "growing-jennet.mac.nixos.org".publicKey =
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAQGthkSSOnhxrIUCMlRQz8FOo5Y5Nk9f9WnVLNeRJpm";
+    "enormous-catfish.mac.nixos.org".publicKey =
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMlg7NXxeG5L3s0YqSQIsqVG0MTyvyWDHUyYEfFPazLe";
 
     # M2 Macs at Oakhost
-    "kind-lumiere.mac.nixos.org".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFoqn1AAcOqtG65milpBtWVXP5VcBmTUSMGNfJzPwW8Q";
-    "eager-heisenberg.mac.nixos.org".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBp9NStfEPu7HdeK8f2KEnynyirjG9BUk+6w2SgJtQyS";
+    "kind-lumiere.mac.nixos.org".publicKey =
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFoqn1AAcOqtG65milpBtWVXP5VcBmTUSMGNfJzPwW8Q";
+    "eager-heisenberg.mac.nixos.org".publicKey =
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBp9NStfEPu7HdeK8f2KEnynyirjG9BUk+6w2SgJtQyS";
 
     # vcunat
-    "t2a.cunat.cz".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIu3itg4hn5e4KrnyoreAUN3RIbAcvqc7yWx5i6EWqAu";
-    "t4b.cunat.cz".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC/jE8c0lkc/DlK3R7A+zBr6j/lfEQrhqSD/YOEVs8za";
+    "t2a.cunat.cz".publicKey =
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIu3itg4hn5e4KrnyoreAUN3RIbAcvqc7yWx5i6EWqAu";
+    "t4b.cunat.cz".publicKey =
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC/jE8c0lkc/DlK3R7A+zBr6j/lfEQrhqSD/YOEVs8za";
   };
 
 }

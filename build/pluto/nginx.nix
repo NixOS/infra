@@ -26,7 +26,8 @@
           add_header Access-Control-Allow-Origin "*" always;
         '';
       };
-      locations."~ ^/grafana/?(?<action>[^\\s]+)".return = "301 https://grafana.nixos.org/$action$is_args$args";
+      locations."~ ^/grafana/?(?<action>[^\\s]+)".return =
+        "301 https://grafana.nixos.org/$action$is_args$args";
     };
 
     virtualHosts."prometheus.nixos.org" = {
