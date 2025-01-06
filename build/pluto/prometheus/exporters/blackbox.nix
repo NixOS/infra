@@ -46,7 +46,6 @@ in
         "https://cache.nixos.org"
         "https://channels.nixos.org"
         "https://common-styles.nixos.org"
-        "https://conf.nixos.org"
         "https://discourse.nixos.org"
         "https://hydra.nixos.org"
         "https://mobile.nixos.org"

@@ -127,11 +127,6 @@ locals {
       value    = "dualstack.v2.shared.global.fastly.net"
     },
     {
-      hostname = "conf.nixos.org"
-      type     = "CNAME"
-      value    = "nixconberlin.github.io"
-    },
-    {
       hostname = "discourse.nixos.org"
       type     = "A"
       value    = "195.62.126.31"
