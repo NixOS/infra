@@ -63,13 +63,11 @@ in
       automatic = true;
       user = "root";
       interval = {
+        # hourly at the 15th minute
         Minute = 15;
       };
-      options =
-        let
-          gbFree = 100;
-        in
-        "--max-freed $((${toString gbFree} * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | awk '{ print $4 }')))";
+      # free up to 15% of total capacity
+      options = "--max-freed $(df -P -k /nix/store | awk 'NR==2 {total=$2; available=$4; required=total*0.15; to_free=required-available; printf \"%.0d\", to_free*1024}')";
     };
   };
 
