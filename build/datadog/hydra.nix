@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
-  systemd.services.dd-agent.environment.PYTHONPATH = "${pkgs.pythonPackages.requests}/lib/python2.7/site-packages";
+  systemd.services.dd-agent.environment.PYTHONPATH =
+    "${pkgs.pythonPackages.requests}/lib/python2.7/site-packages";
   environment.etc =
     let
       hydra-config = pkgs.writeText "hydra.yaml" ''
