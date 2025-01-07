@@ -10,10 +10,6 @@
         ];
         publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKlIcNwmx7id/XdYKZzVX2KtZQ4PAsEa9KVQ9N43L3PX";
       };
-      hexa-backup-server = {
-        hostNames = [ "meduna.hexa-home.v6.army" ];
-        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDUe5BqMDt562KOIcUm4RqZC5ejmd62elkYKkqExUYsl";
-      };
     };
   };
 
@@ -123,20 +119,6 @@
              # pkg install zrepl
              # service zrepl enable
              # service zrepl start
-          */
-
-          /*
-            Covered 2024: 0212 -- 0629
-            (defaultBackupJob // {
-              name = "hexa";
-              connect = {
-                identity_file = "/root/.ssh/id_ed25519";
-                type = "ssh+stdinserver";
-                host = "meduna.hexa-home.v6.army";
-                user = "zrepl";
-                port = 22;
-              };
-            })
           */
         ];
       };
