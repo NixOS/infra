@@ -56,7 +56,7 @@
 
     ruleFiles =
       let
-        diskSelector = ''mountpoint=~"(/|/tmp)"'';
+        diskSelector = ''mountpoint="/"'';
         relevantLabels = "device,fstype,instance,mountpoint";
       in
       [
@@ -69,24 +69,22 @@
                   {
                     alert = "PartitionLowInodes";
                     expr = ''
-                      avg (node_filesystem_files_free{${diskSelector}} <= 10000) by (${relevantLabels})
+                      node_filesystem_files_free / node_filesystem_files{${diskSelector}} * 100 < 10
                     '';
                     for = "30m";
                     labels.severity = "warning";
-                    annotations.summary = "{{ $labels.device }} mounted to {{ $labels.mountpoint }} ({{ $labels.fstype }}) on {{ $labels.instance }} has {{ $value }} inodes free.";
+                    annotations.summary = "{{ $labels.device }} mounted to {{ $labels.mountpoint }} ({{ $labels.fstype }}) on {{ $labels.instance }} has only {{ $value }}% free inodes.";
                     annotations.grafana = "https://grafana.nixos.org/d/rYdddlPWk/node-exporter-full?orgId=1&var-job=node&var-node={{ $labels.instance }}";
                   }
                   {
                     alert = "PartitionLowDiskSpace";
                     expr = ''
-                      (avg (round(node_filesystem_avail_bytes{${diskSelector}} * 10^(-9) <= 10)) by (${relevantLabels}))
-                      or
-                      (avg (((node_filesystem_avail_bytes{${diskSelector}} / node_filesystem_size_bytes) * 100) <= 10) by (${relevantLabels}))
+                      round((node_filesystem_free_bytes{${diskSelector}} * 100) / node_filesystem_size_bytes{mountpoint="/"}) < 10
                     '';
                     for = "30m";
                     labels.severity = "warning";
-                    annotations.summary = "{{ $labels.device }} mounted to {{ $labels.mountpoint }} ({{ $labels.fstype }}) on {{ $labels.instance }} has {{ $value }} GB free.";
-                    annotations.grafana = "https://grafana.nixos.org/d/rYdddlPWk/node-exporter-full?orgId=1&var-job=node&var-node=caliban.nixos.org:9100{{ $labels.instance }}";
+                    annotations.summary = "{{ $labels.device }} mounted to {{ $labels.mountpoint }} ({{ $labels.fstype }}) on {{ $labels.instance }} has {{ $value }}% free.";
+                    annotations.grafana = "https://grafana.nixos.org/d/rYdddlPWk/node-exporter-full?orgId=1&var-job=node&var-node={{ $labels.instance }}";
                   }
                   {
                     alert = "SystemdUnitFailed";
