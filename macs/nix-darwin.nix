@@ -66,8 +66,8 @@ in
         # hourly at the 15th minute
         Minute = 15;
       };
-      # free up to 15% of total capacity
-      options = "--max-freed $(df -P -k /nix/store | awk 'NR==2 {total=$2; available=$4; required=total*0.15; to_free=required-available; printf \"%.0d\", to_free*1024}')";
+      # free up to 20% of total capacity
+      options = "--max-freed $(df -k /nix/store | awk 'NR==2 {total=$2; available=$4; required=total*0.2; to_free=required-available; printf \"%.0d\", to_free*1024}')";
     };
   };
 
