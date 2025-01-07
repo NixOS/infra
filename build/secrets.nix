@@ -15,6 +15,7 @@ let
     rfc39-github = [ machines.pluto ];
     rfc39-record-push = [ machines.pluto ];
     tarball-mirror-aws-credentials = [ machines.pluto ];
+    zrepl-ssh-key = [ machines.haumea ];
   };
 in
 builtins.listToAttrs (

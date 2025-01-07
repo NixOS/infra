@@ -1,6 +1,15 @@
-{ lib, ... }:
+{
+  config,
+  lib,
+  ...
+}:
 
 {
+  age.secrets."zrepl-ssh-key" = {
+    file = ../secrets/zrepl-ssh-key.age;
+    mode = "0400";
+  };
+
   programs.ssh = {
     knownHosts = {
       rsync-net = {
@@ -104,7 +113,7 @@
             // {
               name = "rsyncnet";
               connect = {
-                identity_file = "/root/.ssh/id_ed25519";
+                identity_file = config.age.secrets."zrepl-ssh-key".path;
                 type = "ssh+stdinserver";
                 host = "zh4461b.rsync.net";
                 user = "root";
