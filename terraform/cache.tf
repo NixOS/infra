@@ -129,11 +129,10 @@ resource "fastly_service_vcl" "cache" {
     weight                = 100
   }
 
-  # Temporarily disabled due to nix-index bugs: see https://github.com/nix-community/nix-index/issues/249
-  #request_setting {
-  #  name      = "Redirect HTTP to HTTPS"
-  #  force_ssl = true
-  #}
+  request_setting {
+    name      = "Redirect HTTP to HTTPS"
+    force_ssl = true
+  }
 
   condition {
     name      = "is-404"
