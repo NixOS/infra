@@ -57,7 +57,6 @@
     ruleFiles =
       let
         diskSelector = ''mountpoint="/"'';
-        relevantLabels = "device,fstype,instance,mountpoint";
       in
       [
         (pkgs.writeText "node-exporter.rules" (

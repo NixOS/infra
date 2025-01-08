@@ -62,6 +62,11 @@ locals {
       value    = "2a01:4f9:3070:15e0::1"
     },
     {
+      hostname = "alerts.nixos.org"
+      type     = "CNAME"
+      value    = "pluto.nixos.org"
+    },
+    {
       hostname = "prometheus.nixos.org"
       type     = "CNAME"
       value    = "pluto.nixos.org"
