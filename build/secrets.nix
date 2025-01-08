@@ -3,6 +3,7 @@ let
 
   secrets = with keys; {
     alertmanager-matrix-forwarder = [ machines.pluto ];
+    alertmanager-oauth2-proxy-env = [ machines.pluto ];
     fastly-exporter-env = [ machines.pluto ];
     hydra-aws-credentials = [ machines.mimas ];
     hydra-github-client-secret = [ machines.mimas ];

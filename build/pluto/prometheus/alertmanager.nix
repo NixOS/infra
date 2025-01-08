@@ -20,7 +20,7 @@
       # the machine's network interfaces.
       extraFlags = [ "--cluster.listen-address=''" ];
 
-      webExternalUrl = "http://10.254.1.4:9093/";
+      webExternalUrl = "http://alerts.nixos.org";
       configuration = {
         global = { };
         route = {
@@ -54,6 +54,39 @@
           }
         ];
       };
+    };
+  };
+
+  services.nginx.virtualHosts."alerts.nixos.org" = {
+    enableACME = true;
+    forceSSL = true;
+
+    locations."/" = {
+      proxyPass = "http://localhost:9093";
+    };
+  };
+
+  age.secrets."alertmanager-oauth2-proxy-env".file = ../../secrets/alertmanager-oauth2-proxy-env.age;
+
+  services.oauth2-proxy = {
+    enable = true;
+
+    # oidc provider
+    provider = "github";
+    clientID = "Ov23liDt1q76okEJpVVE";
+    keyFile = config.age.secrets."alertmanager-oauth2-proxy-env".path;
+
+    # filter criteria
+    email.domains = [ "*" ];
+    github = {
+      org = "NixOS";
+      team = "infra";
+    };
+
+    # protected domains
+    nginx = {
+      domain = "alerts.nixos.org";
+      virtualHosts."alerts.nixos.org" = { };
     };
   };
 
