@@ -42,6 +42,11 @@ locals {
       value    = "makemake.ngi.nixos.org"
     },
     {
+      hostname = "summer.nixos.org"
+      type     = "CNAME"
+      value    = "makemake.ngi.nixos.org"
+    },
+    {
       hostname = "hydra.nixos.org"
       type     = "CNAME"
       value    = "mimas.nixos.org"
