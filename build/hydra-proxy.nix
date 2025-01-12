@@ -32,8 +32,9 @@
       enableACME = true;
 
       extraConfig = ''
+        error_page 502 /502.html;
         error_page 503 /503.html;
-        location = /503.html {
+        location ~ /(502|503).html {
           root ${./nginx-error-pages};
           internal;
         }
