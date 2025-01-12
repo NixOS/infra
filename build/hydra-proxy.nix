@@ -1,9 +1,27 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }:
 
+let
+  bannedUserAgentPatterns = [
+    "Trident/"
+    "Android\\s[123456789]\\."
+    "iPod"
+    "iPad\\sOS\\s"
+    "iPhone\\sOS\\s[23456789]"
+    "Opera/[89]"
+    "(Chrome|CriOS)/(\\d\\d?\\.|1[01]|12[4])"
+    "(Firefox|FxiOS)/(\\d\\d?\\.|1[01]|12[012345679]\\.)"
+    "PPC\\sMac\\sOS"
+    "Windows\\sCE"
+    "Windows\\s95"
+    "Windows\\s98"
+    "Windows\\sNT\\s[12345]\\."
+  ];
+in
 {
   networking.firewall.allowedTCPPorts = [
     80
@@ -31,6 +49,15 @@
       worker_connections 1024;
     '';
 
+    appendHttpConfig = ''
+      map $http_user_agent $badagent {
+        default 0;
+        ${lib.concatMapStringsSep "\n" (pattern: ''
+          ~${pattern} 1;
+        '') bannedUserAgentPatterns}
+      }
+    '';
+
     virtualHosts."hydra.nixos.org" = {
       forceSSL = true;
       enableACME = true;
@@ -53,6 +80,12 @@
 
       locations."/" = {
         proxyPass = "http://127.0.0.1:3000";
+        extraConfig = ''
+          if ($badagent) {
+            access_log /var/log/nginx/abuse.log;
+            return 403;
+          }
+        '';
       };
 
       locations."/static/" = {
