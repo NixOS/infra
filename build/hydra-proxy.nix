@@ -1,4 +1,8 @@
-{ config, ... }:
+{
+  config,
+  pkgs,
+  ...
+}:
 
 {
   networking.firewall.allowedTCPPorts = [
@@ -38,6 +42,13 @@
           root ${./nginx-error-pages};
           internal;
         }
+      '';
+
+      # Ask robots not to scrape hydra, it has various expensive endpoints
+      locations."=/robots.txt".alias = pkgs.writeText "hydra.nixos.org-robots.txt" ''
+        User-agent: *
+        Disallow: /
+        Allow: /$
       '';
 
       locations."/" = {
