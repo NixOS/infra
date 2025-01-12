@@ -67,12 +67,6 @@ lint.ignore = [
   "PTH118",
   "PTH120"
 ]
-"hydra-packet-importer/import.py" = [
-  "ANN001",
-  "PTH123",
-  "BLE001",
-  "S110"
-]
 "build/pluto/prometheus/exporters/**.py" = [
   "ANN"
 ]
@@ -95,6 +89,5 @@ lint.ignore = [
 ]
 
 [[tool.mypy.overrides]]
-module = "packet.*"
 ignore_missing_imports = true
 

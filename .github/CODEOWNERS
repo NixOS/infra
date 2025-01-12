@@ -3,7 +3,6 @@
 /.github/                  @NixOS/infra-build
 /build/                    @NixOS/infra-build
 /builders/                 @NixOS/infra-build
-/hydra-packet-importer/    @NixOS/infra-build
 /lib/                      @NixOS/infra-build
 /macs/                     @NixOS/infra-build
 /metrics/                  @NixOS/infra-build
