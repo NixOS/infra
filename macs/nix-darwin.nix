@@ -67,7 +67,7 @@ in
         Minute = 15;
       };
       # ensure up to 100G free space every hour
-      options = "--max-freed $(df -k /nix/store | awk 'NR==2 {available=$4; required=100*1024*1024; to_free=required-available; printf \"%.0d\", to_free*1024}')";
+      options = "--max-freed $(df -k /nix/store | awk 'NR==2 {available=$4; required=1250*1024*1024; to_free=required-available; printf \"%.0d\", to_free*1024}')";
     };
   };
 
