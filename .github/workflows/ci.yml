@@ -38,8 +38,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        # Doesn't seem that x86_64 is still in use?
-        machine: [arm64]
+        machine: [m1, m2-large]
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v30
