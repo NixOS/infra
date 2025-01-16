@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+PIDS=()
+
+update() {
+	local HOST=${1}
+	local PROFILE=${2}
+	(ssh "$HOST" -- darwin-rebuild switch --flake "github:nixos/infra#$PROFILE" 2>&1| sed -e "s/^/${HOST} | /") &
+	PIDS+=($!)
+}
+
+update hetzner@enormous-catfish.mac.nixos.org m1
+update hetzner@growing-jennet.mac.nixos.org m1
+update hetzner@intense-heron.mac.nixos.org m1
+update hetzner@maximum-snail.mac.nixos.org m1
+update hetzner@sweeping-filly.mac.nixos.org m1
+update customer@eager-heisenberg.mac.nixos.org m2-large
+update customer@kind-lumiere.mac.nixos.org m2-large
+
+wait "${PIDS[@]}"
