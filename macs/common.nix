@@ -48,10 +48,6 @@ in
       patches = oldAttrs.patches or [ ] ++ [ ./disable-chroot.patch ];
     });
     settings = {
-      # 8C/16G machines means 2C/4G per job on average
-      cores = 2;
-      max-jobs = 4;
-
       extra-experimental-features = [
         "nix-command"
         "flakes"
