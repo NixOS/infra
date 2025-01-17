@@ -3,15 +3,18 @@
   flake.darwinConfigurations =
     let
       mac =
-        system:
+        system: entrypoint:
         inputs.darwin.lib.darwinSystem {
           inherit system;
 
-          modules = [ ./nix-darwin.nix ];
+          modules = [
+            ./common.nix
+            entrypoint
+          ];
         };
     in
     {
-      arm64 = mac "aarch64-darwin";
-      x86_64 = mac "x86_64-darwin";
+      m1 = mac "aarch64-darwin" ./profiles/m1.nix;
+      m2-large = mac "aarch64-darwin" ./profiles/m2.large.nix;
     };
 }
