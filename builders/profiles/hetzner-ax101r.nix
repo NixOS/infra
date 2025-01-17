@@ -16,8 +16,8 @@
   boot.tmp = {
     useTmpfs = true;
     #  96G tmpfs, 160G RAM for standard builders
-    # 128G tmpfs, 128G RAM for big parallel builders
-    tmpfsSize = if lib.elem "big-parallel" config.nix.settings.system-features then "128G" else "96G";
+    # 160G tmpfs, 96G RAM for big parallel builders
+    tmpfsSize = if lib.elem "big-parallel" config.nix.settings.system-features then "160G" else "96G";
   };
 
   boot.initrd.availableKernelModules = [
