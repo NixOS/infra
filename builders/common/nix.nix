@@ -30,6 +30,7 @@
       system-features = [
         "kvm"
         "nixos-test"
+        "benchmark" # we may restrict this in the central /etc/nix/machines anyway
       ];
       trusted-users = [
         "build"
