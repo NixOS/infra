@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#!nix-shell -i bash -p bind.dnsutils -p mtr -p curl
+#!nix-shell -i bash -p bind.dnsutils -p mtr -p curl -p netcat
 # shellcheck shell=bash
 # impure: needs ping
 #
@@ -29,8 +29,8 @@ curl_test() {
   curl -w "$curl_w" -v -o /dev/null "$@"
 }
 
-ix() {
-  url=$(cat | curl -F 'f:1=<-' ix.io 2>/dev/null)
+termbin() {
+  url=$(cat | nc termbin.com 9999)
   echo "Pasted at: $url"
 }
 
@@ -51,4 +51,4 @@ ix() {
   run curl -I -6 "https://$domain/"
   run curl -I -6 "https://$domain/"
   run curl -I -6 "https://$domain/"
-) | tee /dev/stderr | ix
+) | tee /dev/stderr | termbin
