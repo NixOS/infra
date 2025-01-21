@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v30
-      - uses: DeterminateSystems/magic-nix-cache-action@v8
+      - uses: DeterminateSystems/magic-nix-cache-action@v9
       - run: nix run github:Mic92/nix-fast-build -- --no-nom
   # all builds combined consume too much disk space... we should soon switch to something else
   nixos:
@@ -32,7 +32,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v30
-      - uses: DeterminateSystems/magic-nix-cache-action@v8
+      - uses: DeterminateSystems/magic-nix-cache-action@v9
       - run: nix build '.#nixosConfigurations."${{ matrix.machine }}.nixos.org".config.system.build.toplevel'
   nix-darwin:
     runs-on: macos-latest
@@ -42,5 +42,5 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v30
-      - uses: DeterminateSystems/magic-nix-cache-action@v8
+      - uses: DeterminateSystems/magic-nix-cache-action@v9
       - run: nix build '.#darwinConfigurations."${{ matrix.machine }}".config.system.build.toplevel'
