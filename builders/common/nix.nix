@@ -37,6 +37,7 @@
         "root"
       ];
       use-cgroups = true;
+      max-silent-time = 7200; # 2h
     };
   };
 }
