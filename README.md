@@ -1,5 +1,7 @@
 # The NixOS infrastructure configurations
 
+Test third-party PR
+
 This repository contains all the hardware configuration for the nixos project
 infrastructure.
 
