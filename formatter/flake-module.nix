@@ -3,7 +3,7 @@
   imports = [ inputs.treefmt-nix.flakeModule ];
 
   perSystem =
-    { ... }:
+    { lib, pkgs, ... }:
     {
       treefmt = {
         # Used to find the project root
@@ -14,7 +14,8 @@
           "non-critical-infra/secrets/*"
         ];
 
-        programs.actionlint.enable = true;
+        # older actionlint version don't recognize aarch64 builder
+        programs.actionlint.enable = lib.versionAtLeast pkgs.actionlint.version "1.7.7";
         programs.deno.enable = true;
         programs.terraform.enable = true;
         programs.deadnix.enable = true;

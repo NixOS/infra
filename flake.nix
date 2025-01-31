@@ -1,6 +1,11 @@
 {
   description = "Nixos org infra";
 
+  nixConfig.extra-substituters = [ "https://nixos-infra-dev.cachix.org" ];
+  nixConfig.extra-trusted-public-keys = [
+    "nixos-infra-dev.cachix.org-1:OvwhqPPs81cInrtRAX0K7dG6lw8wXcQEX4xyp4AnSXw="
+  ];
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
