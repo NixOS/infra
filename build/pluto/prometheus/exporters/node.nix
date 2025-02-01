@@ -68,7 +68,7 @@
                   {
                     alert = "PartitionLowInodes";
                     expr = ''
-                      node_filesystem_files_free / node_filesystem_files{${diskSelector}} * 100 < 10
+                      node_filesystem_files_free{${diskSelector}} / node_filesystem_files{${diskSelector}} * 100 < 10
                     '';
                     for = "30m";
                     labels.severity = "warning";
