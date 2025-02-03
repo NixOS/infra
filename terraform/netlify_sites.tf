@@ -13,17 +13,6 @@ resource "netlify_site" "nix-dev" {
   }
 }
 
-resource "netlify_site" "nixos-summer" {
-  name          = "nixos-summer"
-  custom_domain = "summer.nixos.org"
-
-  repo {
-    provider    = "github"
-    repo_path   = "NixOS/nixos-summer"
-    repo_branch = "main"
-  }
-}
-
 resource "netlify_site" "nixos-common-styles" {
   name          = "nixos-common-styles"
   custom_domain = "common-styles.nixos.org"
