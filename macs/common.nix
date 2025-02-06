@@ -77,6 +77,11 @@ in
     cp -f /etc/per-user/root/ssh/authorized_keys ~root/.ssh/authorized_keys
     chown root:wheel ~root ~root/.ssh ~root/.ssh/authorized_keys
     echo "ok"
+
+    printf "disabling spotlight indexing... "
+    mdutil -i off -d / &> /dev/null
+    mdutil -E / &> /dev/null
+    echo "ok"
   '';
 
   services.prometheus.exporters.node.enable = true;
