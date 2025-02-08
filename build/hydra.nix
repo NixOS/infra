@@ -94,8 +94,8 @@ in
 
     log_prefix = https://cache.nixos.org/
 
-    evaluator_workers = 8
-    evaluator_max_memory_size = 4096
+    evaluator_workers = 16
+    evaluator_max_memory_size = 8192
 
     max_concurrent_evals = 1
 
