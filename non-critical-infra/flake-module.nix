@@ -1,7 +1,7 @@
 {
-  inputs
-, lib
-, ...
+  inputs,
+  lib,
+  ...
 }:
 {
   colmena.hosts = {
@@ -17,25 +17,23 @@
         ));
     in
     {
-      nixosConfigurations = builtins.mapAttrs
-        (
-          _name: value:
-            inputs.nixpkgs.lib.nixosSystem {
-              inherit lib;
-              system = "x86_64-linux";
-              specialArgs = {
-                inherit inputs;
-              };
-              modules = [
-                value
-                inputs.disko.nixosModules.disko
-                inputs.sops-nix.nixosModules.sops
-              ];
-              extraModules = [ inputs.colmena.nixosModules.deploymentOptions ];
+      nixosConfigurations = builtins.mapAttrs (
+        _name: value:
+        inputs.nixpkgs.lib.nixosSystem {
+          inherit lib;
+          system = "x86_64-linux";
+          specialArgs = {
+            inherit inputs;
+          };
+          modules = [
+            value
+            inputs.disko.nixosModules.disko
+            inputs.sops-nix.nixosModules.sops
+          ];
+          extraModules = [ inputs.colmena.nixosModules.deploymentOptions ];
 
-            }
-        )
-        (importConfig ./hosts);
+        }
+      ) (importConfig ./hosts);
 
     };
 
