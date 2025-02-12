@@ -48,6 +48,10 @@
         flake-utils.follows = "flake-utils";
       };
     };
+
+    hydra.url = "github:NixOS/hydra/hydra.nixos.org";
+    hydra.inputs.nixpkgs.follows = "nixpkgs";
+    nix.follows = "hydra/nix";
   };
   outputs =
     inputs@{ flake-parts, ... }:

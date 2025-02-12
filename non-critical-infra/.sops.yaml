@@ -3,6 +3,9 @@ keys:
   - &zimbatm age1jrh8yyq3swjru09s75s4mspu0mphh7h6z54z946raa9wx3pcdegq0x8t4h
   - &caliban age1sv307kkrxwgjah8pjpap5kzl4j2r6fqr3vg234n7m32chlchs9lsey7nlq
   - &umbriel age15vcp7875xwtf64j4yshyld0a3hpgzv6n2kxky493s3q0swr9hdaqxugpv6
+  - &staging-hydra age13emk4xkrde0qhgnuu24jl7vt6mdq99w56c4ngse9mxh4j0pxvuvq3zsppt
+  - &m1-s age1j3spleg4m7rtjww4zqsws6qaj69v5j0rc3asaxxlpwnu7fmx8p9qvmvjn8
+  - &mic92 age17n64ahe3wesh8l8lj0zylf4nljdmqn28hvqns2g7hgm9mdkhlsvsjuvkxz
 
 creation_rules:
   - path_regex: secrets/[^/]+.caliban
@@ -18,3 +21,17 @@ creation_rules:
           - *umbriel
           - *hexa
           - *zimbatm
+
+  # ssh keys used to bootstrap new machines
+  - path_regex: secrets/[^/]+.hostkeys
+    key_groups:
+      - age:
+          - *m1-s
+          - *mic92
+
+  - path_regex: secrets/[^/]+.staging-hydra
+    key_groups:
+      - age:
+          - *staging-hydra
+          - *m1-s
+          - *mic92

@@ -1,8 +1,7 @@
-{
-  self,
-  inputs,
-  lib,
-  ...
+{ self
+, inputs
+, lib
+, ...
 }:
 {
   flake =
@@ -14,25 +13,27 @@
         ));
     in
     {
-      nixosConfigurations = builtins.mapAttrs (
-        _name: value:
-        inputs.nixpkgs.lib.nixosSystem {
-          inherit lib;
-          system = "x86_64-linux";
-          specialArgs = {
-            inherit inputs;
-          };
-          modules = [
-            value
-            inputs.disko.nixosModules.disko
-            inputs.first-time-contribution-tagger.nixosModule
-            inputs.simple-nixos-mailserver.nixosModule
-            inputs.sops-nix.nixosModules.sops
-          ];
-          extraModules = [ inputs.colmena.nixosModules.deploymentOptions ];
+      nixosConfigurations = builtins.mapAttrs
+        (
+          _name: value:
+            inputs.nixpkgs.lib.nixosSystem {
+              inherit lib;
+              system = "x86_64-linux";
+              specialArgs = {
+                inherit inputs;
+              };
+              modules = [
+                value
+                inputs.disko.nixosModules.disko
+                inputs.first-time-contribution-tagger.nixosModule
+                inputs.simple-nixos-mailserver.nixosModule
+                inputs.sops-nix.nixosModules.sops
+              ];
+              extraModules = [ inputs.colmena.nixosModules.deploymentOptions ];
 
-        }
-      ) (importConfig ./hosts);
+            }
+        )
+        (importConfig ./hosts);
 
       colmena =
         {
@@ -43,10 +44,12 @@
             specialArgs.lib = lib;
           };
         }
-        // builtins.mapAttrs (_: v: {
-          deployment.tags = [ "non-critical-infra" ];
-          imports = v._module.args.modules;
-        }) self.nixosConfigurations;
+        // builtins.mapAttrs
+          (_: v: {
+            deployment.tags = [ "non-critical-infra" ];
+            imports = v._module.args.modules;
+          })
+          self.nixosConfigurations;
     };
 
   perSystem =
