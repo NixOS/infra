@@ -29,16 +29,15 @@ in
   # Don't rate-limit the journal.
   services.journald.rateLimitBurst = 0;
 
-  # age.secrets.hydra-aws-credentials = {
-  #   file = ./secrets/hydra-aws-credentials.age;
-  #   path = "/var/lib/hydra/queue-runner/.aws/credentials";
-  #   owner = "hydra-queue-runner";
-  #   group = "hydra";
-  # };
-
-  sops.secrets.signing-key = {
-    sopsFile = ../../secrets/signing-key.staging-hydra;
-    format = "binary";
+  sops.secrets = {
+    signing-key = {
+      sopsFile = ../../secrets/signing-key.staging-hydra;
+      format = "binary";
+    };
+    hydra-aws-credentials = {
+      sopsFile = ../../secrets/hydra-aws-credentials.staging-hydra;
+      format = "binary";
+    };
   };
 
   services.hydra-dev = {
