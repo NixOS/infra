@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Use this script to deploy the initial keys when bootstrapping a new machines.
+# Use this script to deploy the initial keys when bootstrapping a new machine.
 
 set -euo pipefail
 tmpDir=$(mktemp -d)
