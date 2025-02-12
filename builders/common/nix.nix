@@ -6,6 +6,8 @@
 
 {
   nix = {
+    # Used because Nix had a weird random segfault and using Lix was the easiest solution to get the builds going
+    # TODO: Try to reproduce the crashes to generate a proper issue or fix in Nix.
     package = pkgs.lix;
     nrBuildUsers = config.nix.settings.max-jobs + 32;
 
