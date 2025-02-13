@@ -10,8 +10,12 @@
   inputs.disko.url = "github:nix-community/disko";
   inputs.disko.inputs.nixpkgs.follows = "nixpkgs";
 
+  inputs.nix-eval-jobs.url = "github:nix-community/nix-eval-jobs";
+  inputs.nix-eval-jobs.inputs.nixpkgs.follows = "nixpkgs";
+
   inputs.hydra.url = "github:NixOS/hydra/hydra.nixos.org";
   inputs.hydra.inputs.nixpkgs.follows = "nixpkgs";
+  inputs.hydra.inputs.nix-eval-jobs.follows = "nix-eval-jobs";
   inputs.nix.follows = "hydra/nix";
 
   inputs.nixos-channel-scripts.url = "github:NixOS/nixos-channel-scripts";
@@ -29,6 +33,7 @@
       hydra,
       nix,
       nixpkgs,
+      nix-eval-jobs,
       nixos-channel-scripts,
       rfc39,
     }:
