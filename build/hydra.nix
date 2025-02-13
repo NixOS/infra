@@ -124,6 +124,19 @@ in
     "d ${narCache}      0775 hydra hydra 1d -"
   ];
 
+  # wait for the network before starting hydra, since we require a network
+  # connection to the remote postgresql database
+  systemd.services.hydra-init = {
+    wants = [
+      "network-online.target"
+      "wireguard-wg0.target"
+    ];
+    after = [
+      "network-online.target"
+      "wireguard-wg0.target"
+    ];
+  };
+
   # eats memory as if it was free
   systemd.services.hydra-notify.enable = false;
 
