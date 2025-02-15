@@ -34,5 +34,5 @@
   networking.firewall.allowedUDPPorts = [ ];
 
   system.stateVersion = "24.11";
-  users.users.root.openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFq+rXslVKnGlJKlSmuenBaZtVUZCL2rtFgmDmcbLQyT" ];
+  users.users.root.openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINaGspw6myJ5GKHHxN+7jaJWyU1SlVo4nCzDajyJdtvg" ];
 }
