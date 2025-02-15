@@ -99,6 +99,11 @@ in
     '';
   };
 
+  sops.secrets.hydra-users = {
+    sopsFile = ../../secrets/hydra-users.staging-hydra;
+    format = "binary";
+  };
+
   systemd = {
     tmpfiles.rules = [
       "d /var/cache/hydra 0755 hydra hydra -  -"
