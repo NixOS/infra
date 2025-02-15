@@ -52,7 +52,7 @@ in
     hydraURL = "https://hydra.nixos.org";
     notificationSender = "edolstra@gmail.com";
     smtpHost = "localhost";
-    useSubstitutes = false;
+    useSubstitutes = true;
     extraConfig = ''
       max_servers 30
 
