@@ -36,6 +36,11 @@ resource "aws_iam_policy" "s3-upload-cache-staging" {
   policy = data.aws_iam_policy_document.s3-upload-cache-staging.json
 }
 
+resource "aws_iam_user_policy_attachment" "s3-upload-cache-staging-attachment" {
+  user       = aws_iam_user.s3-upload-cache-staging.name
+  policy_arn = aws_iam_policy.s3-upload-cache-staging.arn
+}
+
 output "s3-upload-key-staging" {
   value = {
     key    = aws_iam_access_key.s3-upload-cache-staging.id
