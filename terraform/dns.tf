@@ -62,6 +62,16 @@ locals {
       value    = "pluto.nixos.org"
     },
     {
+      hostname = "staging-hydra.nixos.org"
+      type     = "A"
+      value    = "157.180.25.203"
+    },
+    {
+      hostname = "staging-hydra.nixos.org"
+      type     = "AAAA"
+      value    = "2a01:4f9:c012:d5d3::1"
+    },
+    {
       hostname = "monitoring.nixos.org"
       type     = "CNAME"
       value    = "pluto.nixos.org"
