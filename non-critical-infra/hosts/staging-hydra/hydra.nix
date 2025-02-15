@@ -57,7 +57,7 @@ in
     extraConfig = ''
       max_servers 30
 
-      store_uri = s3://nixos-cache-staging?secret-key=${config.sops.secrets.signing-key.path}=1&ls-compression=br&log-compression=br
+      store_uri = s3://nixos-cache-staging?secret-key=${config.sops.secrets.signing-key.path}&ls-compression=br&log-compression=br
       server_store_uri = https://cache-staging.nixos.org?local-nar-cache=${narCache}
       binary_cache_public_uri = https://cache-staging.nixos.org
 
