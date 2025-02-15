@@ -134,6 +134,35 @@ in
           ];
         };
       };
+      hydra-post-init = {
+        serviceConfig = {
+          Type = "oneshot";
+          TimeoutStartSec = "60";
+        };
+        wantedBy = [ config.systemd.targets.multi-user.name ];
+        after = [ config.systemd.services.hydra-server.name ];
+        requires = [ config.systemd.services.hydra-server.name ];
+        environment = {
+          inherit (config.systemd.services.hydra-init.environment) HYDRA_DBI;
+        };
+        path = [
+          config.services.hydra.package
+          pkgs.netcat
+        ];
+        script = ''
+          set -e
+          while IFS=';' read -r user role passwordhash email fullname; do
+            opts=("$user" "--role" "$role" "--password-hash" "$passwordhash")
+            if [[ -n "$email" ]]; then
+              opts+=("--email-address" "$email")
+            fi
+            if [[ -n "$fullname" ]]; then
+              opts+=("--full-name" "$fullname")
+            fi
+            hydra-create-user "''${opts[@]}"
+          done < ${config.sops.secrets.hydra-users.path}
+        '';
+      };
     };
   };
 
