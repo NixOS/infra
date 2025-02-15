@@ -33,6 +33,7 @@ in
     signing-key = {
       sopsFile = ../../secrets/signing-key.staging-hydra;
       format = "binary";
+      owner = config.systemd.services.hydra-queue-runner.serviceConfig.User;
     };
     hydra-aws-credentials = {
       sopsFile = ../../secrets/hydra-aws-credentials.staging-hydra;
