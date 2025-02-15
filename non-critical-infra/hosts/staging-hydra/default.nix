@@ -10,6 +10,12 @@
     inputs.hydra.nixosModules.hydra
   ];
 
+  nixpkgs.overlays = [
+    inputs.nix.overlays.default
+    inputs.hydra.overlays.default
+  ];
+
+
   boot = {
     loader = {
       systemd-boot.enable = true;
