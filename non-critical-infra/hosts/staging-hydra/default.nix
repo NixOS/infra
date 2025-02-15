@@ -5,6 +5,7 @@
     inputs.srvos.nixosModules.server
     inputs.srvos.nixosModules.hardware-hetzner-cloud-arm
     ../../modules/common.nix
+    ./hydra-proxy.nix
     ./hydra.nix
     inputs.hydra.nixosModules.hydra
   ];
