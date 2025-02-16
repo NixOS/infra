@@ -33,9 +33,9 @@
       hydra,
       nix,
       nixpkgs,
-      nix-eval-jobs,
       nixos-channel-scripts,
       rfc39,
+      ...
     }:
     let
       inherit (nixpkgs) lib;
