@@ -33,7 +33,6 @@
       hydra,
       nix,
       nixpkgs,
-      nix-eval-jobs,
       nixos-channel-scripts,
       rfc39,
     }:
