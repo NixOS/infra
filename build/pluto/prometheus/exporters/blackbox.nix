@@ -1,7 +1,7 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
-  mkProbe = module: targets: {
+  mkStaticProbe = module: targets: {
     job_name = "blackbox-${module}";
     metrics_path = "/probe";
     params = {
@@ -19,12 +19,36 @@ let
       }
       {
         target_label = "__address__";
-        replacement = "localhost:9115";
+        replacement = "localhost:${toString config.services.prometheus.exporters.blackbox.port}";
+      }
+    ];
+  };
+
+  mkDnsSdProbe = module: dns_sd_config: {
+    job_name = "blackbox-${module}";
+    metrics_path = "/probe";
+    params = {
+      module = [ module ];
+    };
+    dns_sd_configs = [
+      dns_sd_config
+    ];
+    relabel_configs = [
+      {
+        source_labels = [ "__address__" ];
+        target_label = "__param_target";
+      }
+      {
+        source_labels = [ "__meta_dns_name" ];
+        target_label = "instance";
+      }
+      {
+        target_label = "__address__";
+        replacement = "localhost:${toString config.services.prometheus.exporters.blackbox.port}";
       }
     ];
   };
 in
-
 {
   services.prometheus = {
     exporters.blackbox = {
@@ -37,12 +61,31 @@ in
             tcp.tls = true;
             http.headers.User-Agent = "blackbox-exporter";
           };
+
+          # From https://github.com/prometheus/blackbox_exporter/blob/53e78c2b3535ecedfd072327885eeba2e9e51ea2/example.yml#L120-L133
+          modules.smtp_starttls = {
+            prober = "tcp";
+            timeout = "5s";
+            tcp = {
+              query_response = [
+                { expect = "^220 ([^ ]+) ESMTP (.+)$"; }
+                { send = "EHLO prober\r"; }
+                { expect = "^250-STARTTLS"; }
+                { send = "STARTTLS\r"; }
+                { expect = "^220"; }
+                { starttls = true; }
+                { send = "EHLO prober\r"; }
+                { expect = "^250-AUTH"; }
+                { send = "QUIT\r"; }
+              ];
+            };
+          };
         }
       );
     };
 
     scrapeConfigs = [
-      (mkProbe "https_success" [
+      (mkStaticProbe "https_success" [
         "https://cache.nixos.org"
         "https://channels.nixos.org"
         "https://common-styles.nixos.org"
@@ -61,6 +104,13 @@ in
         "https://www.nixos.org"
         "https://tracker.security.nixos.org"
       ])
+      (mkDnsSdProbe "smtp_starttls" {
+        names = [
+          "mail-test.nixos.org"
+        ];
+        type = "MX";
+        port = 25;
+      })
     ];
 
     ruleFiles = [
