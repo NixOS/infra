@@ -6,6 +6,7 @@ keys:
   - &staging-hydra age1vawam63mv097z4ae94tm2xlzkc66u3s87n7neu5jzm6687482u4sx8us3v
   - &m1-s age1v5qpkvs3zpz65gvfr2gv3ln7x6yfexvpregdr02hyvxnunu63ujqgwevf8
   - &mic92 age17n64ahe3wesh8l8lj0zylf4nljdmqn28hvqns2g7hgm9mdkhlsvsjuvkxz
+  - &shivaraj-bh age1rskg564672la06lqyla73je6e00hx92j9uhyycn3m3vtpw54avwqcn6wx9
 
 creation_rules:
   - path_regex: secrets/[^/]+.caliban
@@ -27,11 +28,13 @@ creation_rules:
     key_groups:
       - age:
           - *m1-s
+          - *shivaraj-bh
           - *mic92
 
   - path_regex: secrets/[^/]+.staging-hydra
     key_groups:
       - age:
           - *staging-hydra
+          - *shivaraj-bh
           - *m1-s
           - *mic92
