@@ -45,11 +45,13 @@
       fd
 
       # system introspection
+      dmidecode
       hdparm
       htop
       iotop
       lm_sensors
       nvme-cli
+      powerstat
       smartmontools
       sysstat
       tcpdump
