@@ -39,6 +39,10 @@ let
         target_label = "__param_target";
       }
       {
+        source_labels = [ "__address__" ];
+        target_label = "host";
+      }
+      {
         source_labels = [ "__meta_dns_name" ];
         target_label = "instance";
       }
