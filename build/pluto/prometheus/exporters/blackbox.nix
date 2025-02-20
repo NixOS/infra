@@ -138,6 +138,15 @@ in
                   labels.severity = "warning";
                   annotations.summary = "Endpoint {{ $labels.instance }} is unreachable";
                 }
+                {
+                  alert = "MxUnreachable";
+                  expr = ''
+                    probe_success{job="blackbox-smtp_starttls"} == 0
+                  '';
+                  for = "15m";
+                  labels.severity = "warning";
+                  annotations.summary = "Mail server {{ $labels.instance }} is unreachable";
+                }
               ];
             }
           ];
