@@ -229,11 +229,24 @@ resource "fastly_service_vcl" "channels" {
       # Note: we need to match on 301s and 302s here, since Fastly has multiple
       # layers, and otherwise a redirect might still get cached at the second
       # layer after the first layer turned a 301 into a 302.
+      #
+      # Additionally, this also implements the "Lockable HTTP Tarball Protocol"
+      # to use nixexprs.tar.xz with Flakes and have it locked properly.
       if (beresp.status == 301 || beresp.status == 302) {
         set beresp.status = 302;
         set beresp.ttl = 0s;
         set beresp.grace = 0s;
         set beresp.cacheable = false;
+        if (req.backend.is_origin && std.suffixof(bereq.url, "/nixexprs.tar.xz")) {
+          # rename prepared link header if available
+          if (beresp.http.x-amz-meta-link) {
+            set beresp.http.link = beresp.http.x-amz-meta-link;
+            unset beresp.http.x-amz-meta-link;
+          # otherwise, use fallback that contains no flake attributes (e.g. rev)
+          } else {
+            set beresp.http.link = "<" + beresp.http.location + {">; rel="immutable""};
+          }
+        }
         return (pass);
       }
     EOT
