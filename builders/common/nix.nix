@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }:
@@ -40,6 +41,23 @@
       ];
       use-cgroups = true;
       max-silent-time = 7200; # 2h
+    };
+  };
+
+  systemd.services.prune-stale-nix-builds = {
+    description = "Prune stale nix build roots";
+    startAt = "hourly";
+    unitConfig.Documentation = "https://github.com/NixOS/nix/issues/5207";
+    serviceConfig = {
+      ExecStart = lib.concatStringsSep " " [
+        (lib.getExe pkgs.findutils)
+        "/tmp"
+        "-maxdepth 1"
+        "-type d"
+        "-iname \"nix-build-*\""
+        "-mtime +1" # days
+        "-exec rm -rf {} +"
+      ];
     };
   };
 }
