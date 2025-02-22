@@ -67,7 +67,7 @@ in
   perSystem =
     { pkgs, inputs', ... }:
     {
-      devShells.default = pkgs.mkShell {
+      devShells.build = pkgs.mkShell {
         buildInputs = [
           inputs'.agenix.packages.agenix
           inputs'.colmena.packages.colmena
