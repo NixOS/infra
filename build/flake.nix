@@ -98,16 +98,25 @@
           };
         }) self.nixosConfigurations;
 
-      # TODO: flake-utils.lib.eachDefaultSystem
-      devShell.x86_64-linux =
-        let
-          pkgs = import nixpkgs { system = "x86_64-linux"; };
-        in
-        pkgs.mkShell {
-          buildInputs = with pkgs; [
-            agenix.packages.x86_64-linux.agenix
-            colmena.packages.x86_64-linux.colmena
-          ];
-        };
+      devShells =
+        nixpkgs.lib.genAttrs
+          [
+            "aarch64-linux"
+            "aarch64-darwin"
+            "x86_64-linux"
+            "x86_64-darwin"
+          ]
+          (system: {
+            default =
+              let
+                pkgs = nixpkgs.legacyPackages.${system};
+              in
+              pkgs.mkShell {
+                buildInputs = [
+                  agenix.packages.${system}.agenix
+                  colmena.packages.${system}.colmena
+                ];
+              };
+          });
     };
 }
