@@ -9,8 +9,7 @@
 
     fqdn = config.networking.fqdn;
 
-    # TODO: change to `nixos.org` when ready
-    domains = [ "mail-test.nixos.org" ];
+    domains = [ "nixos.org" ];
   };
 
   ### Mailing lists go here ###
@@ -22,14 +21,14 @@
   # follow the instructions.
   mailing-lists = {
     # TODO: replace with the real `nixos.org` mailing lists.
-    "test-list@mail-test.nixos.org" = {
+    "test-list@nixos.org" = {
       forwardTo = [
         "jfly@playground.jflei.com"
         ../../secrets/jfly-email-address.umbriel
         "jeremyfleischman+subscriber@gmail.com"
       ];
     };
-    "test-sender@mail-test.nixos.org" = {
+    "test-sender@nixos.org" = {
       forwardTo = [ "jeremy@playground.jflei.com" ];
       loginAccount.encryptedHashedPassword = ../../secrets/test-sender-email-login.umbriel;
     };
