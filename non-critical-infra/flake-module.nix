@@ -50,11 +50,7 @@
     };
 
   perSystem =
-    { inputs', ... }:
-    # Use the latest packages from `nixpkgs-unstable` for dev tools.
-    let
-      pkgs = inputs'.nixpkgs-unstable.legacyPackages;
-    in
+    { inputs', pkgs, ... }:
     {
       packages.encrypt-email = pkgs.callPackage ./packages/encrypt-email { };
 
