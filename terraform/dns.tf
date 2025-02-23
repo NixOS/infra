@@ -207,11 +207,6 @@ locals {
       value    = "9e10a04a4b"
     },
     {
-      hostname = "nixos.org"
-      type     = "TXT"
-      value    = "v=spf1 include:spf.improvmx.com ~all"
-    },
-    {
       # hetzner ax162-r 2548595
       hostname = "elated-minsky.builder.nixos.org"
       type     = "A"
@@ -410,29 +405,34 @@ locals {
       value    = "2a01:4f9:c012:8178::"
     },
 
-    # Mailserver configuration for `mail-test.nixos.org`
+    # Mailserver configuration for `nixos.org`
+    # TODO: remove the 2 MX records for improvmx below in favor of this once
+    # we're ready to switch to the new mailserver:
+    # https://github.com/NixOS/infra/issues/485
+    # {
+    #   hostname = "nixos.org"
+    #   type     = "MX"
+    #   value    = "umbriel.nixos.org"
+    # },
     {
-      hostname = "mail-test.nixos.org"
-      type     = "MX"
-      value    = "umbriel.nixos.org"
+      hostname = "nixos.org"
+      type     = "TXT"
+      # TODO: simplify to just a `mx` rule once umbriel is our one and only
+      # mailserver:
+      # https://github.com/NixOS/infra/issues/485
+      # value = "v=spf1 mx ~all"
+      value = "v=spf1 include:spf.improvmx.com a:umbriel.nixos.org ~all"
     },
     {
-      hostname = "mail-test.nixos.org"
+      hostname = "mail._domainkey.nixos.org"
       type     = "TXT"
-      value    = "v=spf1 mx ~all"
+      # See `nixos.org.mail.key` in `non-critical-infra/modules/mailserver/default.nix`.
+      value = "v=DKIM1; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDcgNq4+Y23GxN8Mdza437tL5DuJJZU1y6VzTCwSi6cBNLyBDci2cmqXx/gm1sA3yv7+h+8/OyJpEgcbCIW/Ygs1XLuECqvXVX8MU6Djn4KY+d2sU1tlUdqvNM86puoneQtjEv9rDsjf3HGqaeOcjetFnQW7H+qcNcaEShxyKztzQIDAQAB"
     },
     {
-      hostname = "mail._domainkey.mail-test.nixos.org"
+      hostname = "_dmarc.nixos.org"
       type     = "TXT"
-      # From `/var/dkim/mail-test.nixos.org.mail.txt` on `umbriel`.
-      value = "v=DKIM1; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDG4Tx788TCAW/sv1h6JefVJChqbaot1yhycwEq0Uo5x9ZIyq43Dkxxl7LdsHIW75HMI7aTKQRru+5xQ26vQmwiIRFJlJlRSYzlZZ2xnFZPXQ27dXnFh7MxLGC7YEyQFksiA2xxgqtQSyIvwu1whm2WK0fXkoJf87SgTtVjjKjnkQIDAQAB"
-    },
-    {
-      hostname = "_dmarc.mail-test.nixos.org"
-      type     = "TXT"
-      # TODO: consider making this strict (`v=DMARC1; p=reject; adkim=s; aspf=s;`),
-      #       but make sure this doesn't break mailing lists: https://dmarcian.com/mailing-lists-dmarc/
-      value = "v=DMARC1; p=none"
+      value    = "v=DMARC1; p=none"
     },
   ]
 }
@@ -450,9 +450,9 @@ resource "netlify_dns_record" "nixos" {
   value    = each.value.value
 }
 
+### TODO: remove, see https://github.com/NixOS/infra/issues/485 ###
 # MX records both have the same hostname and type and would clash on the above
 # mapping.
-
 resource "netlify_dns_record" "nixos_MX1" {
   zone_id  = local.zone_id
   hostname = "nixos.org"
@@ -467,8 +467,6 @@ resource "netlify_dns_record" "nixos_MX2" {
   value    = "mx2.improvmx.com"
 }
 
-# additional records for improvmx for dkim & dmarc
-
 resource "netlify_dns_record" "nixos_DKIM1" {
   zone_id  = local.zone_id
   hostname = "dkimprovmx1._domainkey.nixos.org"
@@ -482,13 +480,7 @@ resource "netlify_dns_record" "nixos_DKIM2" {
   type     = "CNAME"
   value    = "dkimprovmx2.improvmx.com"
 }
-
-resource "netlify_dns_record" "nixos_DMARC" {
-  zone_id  = local.zone_id
-  hostname = "_dmarc.nixos.org"
-  type     = "TXT"
-  value    = "v=DMARC1; p=none;"
-}
+### END TODO: remove ###
 
 resource "netlify_dns_record" "nixos_google_verification" {
   zone_id  = local.zone_id
