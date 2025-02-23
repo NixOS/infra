@@ -7,25 +7,7 @@
   ];
 
   inputs = {
-    agenix.url = "github:ryantm/agenix";
-    agenix.inputs.nixpkgs.follows = "nixpkgs";
-
-    nix-eval-jobs.url = "github:nix-community/nix-eval-jobs";
-    nix-eval-jobs.inputs.nixpkgs.follows = "nixpkgs";
-
-    hydra.url = "github:NixOS/hydra/hydra.nixos.org";
-    hydra.inputs.nixpkgs.follows = "nixpkgs";
-    hydra.inputs.nix-eval-jobs.follows = "nix-eval-jobs";
-    nix.follows = "hydra/nix";
-
-    nixos-channel-scripts.url = "github:NixOS/nixos-channel-scripts";
-    nixos-channel-scripts.inputs.nixpkgs.follows = "nixpkgs";
-
-    rfc39.url = "github:NixOS/rfc39";
-    rfc39.inputs.nixpkgs.follows = "nixpkgs";
-
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11-small";
-
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     flake-parts.url = "github:hercules-ci/flake-parts";
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
 
@@ -76,7 +58,6 @@
         "aarch64-darwin"
       ];
       imports = [
-        ./build/flake-module.nix
         ./builders/flake-module.nix
         ./formatter/flake-module.nix
         ./checks/flake-module.nix
