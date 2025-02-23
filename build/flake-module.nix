@@ -20,6 +20,15 @@ let
   };
 in
 {
+  imports = [
+    ./colmena.nix
+  ];
+  colmena.hosts = {
+    haumea = { };
+    pluto = { };
+    mimas = { };
+  };
+
   flake = {
     nixosConfigurations.haumea = lib.nixosSystem {
       system = "x86_64-linux";
@@ -47,20 +56,6 @@ in
         ./mimas
       ];
     };
-    colmena =
-      {
-        meta = {
-          description = "NixOS.org infrastructure";
-          nixpkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
-        };
-      }
-      // builtins.mapAttrs (name: value: {
-        nixpkgs.system = value.config.nixpkgs.system;
-        imports = value._module.args.modules;
-        deployment = {
-          targetHost = "${name}.nixos.org";
-        };
-      }) self.nixosConfigurations;
   };
 
   perSystem =
