@@ -204,7 +204,7 @@ locals {
     {
       hostname = "nixos.org"
       type     = "TXT"
-      value    = "v=spf1 include:spf.improvmx.com include:_mailcust.gandi.net ~all"
+      value    = "v=spf1 include:spf.improvmx.com ~all"
     },
     {
       # hetzner ax162-r 2548595
