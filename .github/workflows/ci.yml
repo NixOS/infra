@@ -48,7 +48,7 @@ jobs:
     strategy:
       matrix:
         machine:
-          - umbriel.nixos.org
+          - umbriel
           - goofy-hopcroft
     steps:
       - uses: actions/checkout@v4
