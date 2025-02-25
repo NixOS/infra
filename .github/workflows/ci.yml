@@ -29,9 +29,12 @@ jobs:
     strategy:
       matrix:
         machine:
-          - caliban.nixos.org
+          - caliban
           - elated-minsky
           - sleepy-brown
+          - haumea
+          - pluto
+          - mimas
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v30
@@ -45,7 +48,7 @@ jobs:
     strategy:
       matrix:
         machine:
-          - umbriel.nixos.org
+          - umbriel
           - goofy-hopcroft
     steps:
       - uses: actions/checkout@v4
