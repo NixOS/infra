@@ -25,7 +25,6 @@
     settings = {
       builders-use-substitutes = true;
       extra-experimental-features = [
-        "cgroups"
         "nix-command"
         "no-url-literals"
         "flakes"
@@ -39,7 +38,6 @@
         "build"
         "root"
       ];
-      use-cgroups = true;
       max-silent-time = 7200; # 2h
     };
   };
