@@ -23,6 +23,7 @@
       };
 
     settings = {
+      accept-flake-config = false;
       builders-use-substitutes = true;
       extra-experimental-features = [
         "nix-command"
