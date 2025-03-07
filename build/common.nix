@@ -36,7 +36,6 @@
       sqlite-interactive
 
       # editors
-      emacs
       helix
       neovim
 

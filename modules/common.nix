@@ -22,7 +22,6 @@ with lib;
   };
 
   environment.systemPackages = [
-    pkgs.emacs
     pkgs.git
     pkgs.gdb
 
