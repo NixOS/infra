@@ -76,13 +76,6 @@
                   annotations.summary = "{{ $labels.machine }} has {{ $value }} over-age jobs.";
                   annotations.grafana = "https://grafana.nixos.org/d/j0hJAY1Wk/in-progress-build-duration-heatmap";
                 }
-                {
-                  alert = "HydraQueueRunnerUp";
-                  expr = ''up{job="hydra_queue_runner"} == 0'';
-                  for = "30m";
-                  labels.severity = "warning";
-                  annotations.summary = "hydra-queue-runner's prometheus exporter is not up";
-                }
               ];
             }
           ];
