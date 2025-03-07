@@ -4,7 +4,9 @@ locals {
   # TLS v1.2, protocols HTTP/1.1 and HTTP/2
   fastly_tls12_sni_configuration_id = "5PXBTa6c01Xoh54ylNwmVA"
 
-  cache-iam  = data.terraform_remote_state.terraform-iam.outputs.cache
+  # Used for authenticating fastly against S3 buckets
+  fastly-iam = data.terraform_remote_state.terraform-iam.outputs.cache
+
   fastlylogs = data.terraform_remote_state.terraform-iam.outputs.fastlylogs
 
   # fastlylogs = {
