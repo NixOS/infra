@@ -1,28 +1,34 @@
 { config, pkgs, ... }:
 
 let
-  mkStaticProbe = module: targets: {
-    job_name = "blackbox-${module}";
-    metrics_path = "/probe";
-    params = {
-      module = [ module ];
+  mkStaticProbe =
+    {
+      module,
+      targets,
+      job_name ? "blackbox-${module}",
+    }:
+    {
+      inherit job_name;
+      metrics_path = "/probe";
+      params = {
+        module = [ module ];
+      };
+      static_configs = [ { inherit targets; } ];
+      relabel_configs = [
+        {
+          source_labels = [ "__address__" ];
+          target_label = "__param_target";
+        }
+        {
+          source_labels = [ "__param_target" ];
+          target_label = "instance";
+        }
+        {
+          target_label = "__address__";
+          replacement = "localhost:${toString config.services.prometheus.exporters.blackbox.port}";
+        }
+      ];
     };
-    static_configs = [ { inherit targets; } ];
-    relabel_configs = [
-      {
-        source_labels = [ "__address__" ];
-        target_label = "__param_target";
-      }
-      {
-        source_labels = [ "__param_target" ];
-        target_label = "instance";
-      }
-      {
-        target_label = "__address__";
-        replacement = "localhost:${toString config.services.prometheus.exporters.blackbox.port}";
-      }
-    ];
-  };
 
   mkDnsSdProbe = module: dns_sd_config: {
     job_name = "blackbox-${module}";
@@ -89,29 +95,36 @@ in
     };
 
     scrapeConfigs = [
-      (mkStaticProbe "https_success" [
-        "https://cache.nixos.org"
-        "https://channels.nixos.org"
-        "https://common-styles.nixos.org"
-        "https://discourse.nixos.org"
-        "https://hydra.nixos.org"
-        "https://mobile.nixos.org"
-        "https://monitoring.nixos.org"
-        "https://nixos.org"
-        "https://planet.nixos.org"
-        "https://releases.nixos.org"
-        "https://status.nixos.org"
-        "https://survey.nixos.org"
-        "https://tarballs.nixos.org"
-        "https://weekly.nixos.org"
-        "https://wiki.nixos.org"
-        "https://www.nixos.org"
-        "https://tracker.security.nixos.org"
-      ])
+      (mkStaticProbe {
+        module = "https_success";
+        targets = [
+          "https://cache.nixos.org"
+          "https://channels.nixos.org"
+          "https://common-styles.nixos.org"
+          "https://discourse.nixos.org"
+          "https://hydra.nixos.org"
+          "https://mobile.nixos.org"
+          "https://monitoring.nixos.org"
+          "https://nixos.org"
+          "https://planet.nixos.org"
+          "https://releases.nixos.org"
+          "https://status.nixos.org"
+          "https://survey.nixos.org"
+          "https://tarballs.nixos.org"
+          "https://weekly.nixos.org"
+          "https://wiki.nixos.org"
+          "https://www.nixos.org"
+          "https://tracker.security.nixos.org"
+        ];
+      })
       # TODO: remove this static probe once `umbriel` is our MX record, and
       # ImprovMX is out of the picture.
       # https://github.com/NixOS/infra/issues/485
-      (mkStaticProbe "smtp_starttls_umbriel" [ "umbriel.nixos.org" ])
+      (mkStaticProbe {
+        module = "smtp_starttls";
+        job_name = "smtp_starttls_umbriel";
+        targets = [ "umbriel.nixos.org" ];
+      })
       (mkDnsSdProbe "smtp_starttls" {
         names = [
           "nixos.org"
