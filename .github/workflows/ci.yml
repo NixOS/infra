@@ -27,6 +27,7 @@ jobs:
   nixos-x86_64:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         machine:
           - caliban
@@ -46,6 +47,7 @@ jobs:
   nixos-aarch64:
     runs-on: ubuntu-22.04-arm
     strategy:
+      fail-fast: false
       matrix:
         machine:
           - umbriel
@@ -61,6 +63,7 @@ jobs:
   nix-darwin:
     runs-on: macos-latest
     strategy:
+      fail-fast: false
       matrix:
         machine:
           - m1
