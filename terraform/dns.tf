@@ -47,6 +47,11 @@ locals {
       value    = "makemake.ngi.nixos.org"
     },
     {
+      hostname = "ngi.nixos.org"
+      type     = "CNAME"
+      value    = "ngi-nix.github.io"
+    },
+    {
       hostname = "hydra.nixos.org"
       type     = "CNAME"
       value    = "mimas.nixos.org"
