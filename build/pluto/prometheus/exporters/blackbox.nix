@@ -78,7 +78,7 @@ in
             timeout = "5s";
             tcp = {
               query_response = [
-                { expect = "^220 ([^ ]+) ESMTP (.+)$"; }
+                { expect = "^220"; }
                 { send = "EHLO prober\r"; }
                 { expect = "^250-STARTTLS"; }
                 { send = "STARTTLS\r"; }
