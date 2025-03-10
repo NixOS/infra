@@ -5,10 +5,10 @@ let
     {
       module,
       targets,
-      job_name ? "blackbox-${module}",
+      job_suffix ? "",
     }:
     {
-      inherit job_name;
+      job_name = "blackbox-${module}${job_suffix}";
       metrics_path = "/probe";
       params = {
         module = [ module ];
@@ -75,7 +75,7 @@ in
           # From https://github.com/prometheus/blackbox_exporter/blob/53e78c2b3535ecedfd072327885eeba2e9e51ea2/example.yml#L120-L133
           modules.smtp_starttls = {
             prober = "tcp";
-            timeout = "5s";
+            timeout = "10s";
             tcp = {
               query_response = [
                 { expect = "^220"; }
@@ -122,8 +122,8 @@ in
       # https://github.com/NixOS/infra/issues/485
       (mkStaticProbe {
         module = "smtp_starttls";
-        job_name = "smtp_starttls_umbriel";
-        targets = [ "umbriel.nixos.org" ];
+        job_suffix = "_umbriel";
+        targets = [ "umbriel.nixos.org:25" ];
       })
       (mkDnsSdProbe "smtp_starttls" {
         names = [
@@ -162,7 +162,7 @@ in
                 {
                   alert = "MxUnreachable";
                   expr = ''
-                    probe_success{job="blackbox-smtp_starttls"} == 0
+                    probe_success{job=~"blackbox-smtp_starttls.*"} == 0
                   '';
                   for = "15m";
                   labels.severity = "warning";
