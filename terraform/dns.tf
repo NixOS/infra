@@ -52,6 +52,11 @@ locals {
       value    = "ngi-nix.github.io"
     },
     {
+      hostname = "_github-pages-challenge-ngi-nix.ngi.nixos.org"
+      type     = "TXT"
+      value    = "4e8bffbb7ced2aec7be1f8cf3561d6"
+    },
+    {
       hostname = "hydra.nixos.org"
       type     = "CNAME"
       value    = "mimas.nixos.org"
