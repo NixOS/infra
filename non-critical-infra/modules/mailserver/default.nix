@@ -9,8 +9,33 @@
 
     fqdn = config.networking.fqdn;
 
-    # TODO: change to `nixos.org` when ready
-    domains = [ "mail-test.nixos.org" ];
+    domains = [ "nixos.org" ];
+  };
+
+  sops.secrets."nixos.org.mail.key" = {
+    format = "binary";
+    owner = "opendkim";
+    group = "opendkim";
+    mode = "0600";
+
+    # How to generate:
+    #
+    # ```console
+    # cd non-critical-infra
+    # DOMAIN=nixos.org
+    # SELECTOR=mail
+    # PRIVATE_KEY_PATH=secrets/$DOMAIN.$SELECTOR.key.umbriel
+    # nix shell nixpkgs#opendkim --command opendkim-genkey --selector="$SELECTOR" --domain="$DOMAIN" --bits=1024
+    # mv mail.private "$PRIVATE_KEY_PATH"
+    # sops encrypt --in-place "$PRIVATE_KEY_PATH"
+    # ```
+    #
+    # Next, look at `mail.txt` and update DNS accordingly.
+    sopsFile = ../../secrets/nixos.org.mail.key.umbriel;
+
+    # Ensure the file gets symlinked to where Simple NixOS Mailserver expects
+    # to find it.
+    path = "${config.mailserver.dkimKeyDirectory}/nixos.org.mail.key";
   };
 
   ### Mailing lists go here ###
@@ -22,14 +47,14 @@
   # follow the instructions.
   mailing-lists = {
     # TODO: replace with the real `nixos.org` mailing lists.
-    "test-list@mail-test.nixos.org" = {
+    "test-list@nixos.org" = {
       forwardTo = [
         "jfly@playground.jflei.com"
         ../../secrets/jfly-email-address.umbriel
         "jeremyfleischman+subscriber@gmail.com"
       ];
     };
-    "test-sender@mail-test.nixos.org" = {
+    "test-sender@nixos.org" = {
       forwardTo = [ "jeremy@playground.jflei.com" ];
       loginAccount.encryptedHashedPassword = ../../secrets/test-sender-email-login.umbriel;
     };

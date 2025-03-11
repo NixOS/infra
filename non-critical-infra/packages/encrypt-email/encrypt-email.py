@@ -149,7 +149,7 @@ def login(address_id: str, force: bool) -> None:
 
     nix_code = dedent(
         f"""\
-        "{address_id}@mail-test.nixos.org" = {{
+        "{address_id}@nixos.org" = {{
           forwardTo = [
             # Add emails here
           ];
