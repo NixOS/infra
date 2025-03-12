@@ -238,14 +238,11 @@ resource "fastly_service_vcl" "channels" {
         set beresp.grace = 0s;
         set beresp.cacheable = false;
         if (req.backend.is_origin && std.suffixof(bereq.url, "/nixexprs.tar.xz")) {
-          # rename prepared link header if available
-          if (beresp.http.x-amz-meta-link) {
-            set beresp.http.link = beresp.http.x-amz-meta-link;
-            unset beresp.http.x-amz-meta-link;
-          # otherwise, use fallback that contains no flake attributes (e.g. rev)
-          } else {
-            set beresp.http.link = "<" + beresp.http.location + {">; rel="immutable""};
-          }
+          # pass redirect location into special flake "immutable tarball" header
+          set beresp.http.link = "<" + beresp.http.location + {">; rel="immutable""};
+          # clear query string from redirect destination as precaution in case
+          # legacy consumers can't handle flake attributes like "?rev=" in it
+          set beresp.http.location = querystring.remove(beresp.http.location);
         }
         return (pass);
       }
