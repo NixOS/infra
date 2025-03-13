@@ -1,6 +1,6 @@
 # NixOS mailserver
 
-This module will [eventually][issue 485] provide mail services for `nixos.org`.
+This module will provides mail services for `nixos.org`.
 
 ## Mailing lists
 
