@@ -35,12 +35,10 @@
       "2a01:4f9:c011:8fb5::1/64"
     ];
     routes = [
-      { routeConfig.Gateway = "fe80::1"; }
+      { Gateway = "fe80::1"; }
       {
-        routeConfig = {
-          Gateway = "172.31.1.1";
-          GatewayOnLink = true;
-        };
+        Gateway = "172.31.1.1";
+        GatewayOnLink = true;
       }
     ];
     linkConfig.RequiredForOnline = "routable";
