@@ -1,7 +1,7 @@
 { lib, ... }:
 {
-  sops.secrets.first-time-contribution-tagger-env = {
-    sopsFile = ../secrets/mjolnir-password.umbriel;
+  sops.secrets.mjolnir-password = {
+    sopsFile = ../secrets/mjolnir-password.caliban;
     format = "binary";
     path = "/var/keys/mjolnir.password";
     mode = "0640";

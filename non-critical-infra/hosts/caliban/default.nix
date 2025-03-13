@@ -11,6 +11,7 @@
     ../../modules/backup.nix
     ../../modules/element-web.nix
     ../../modules/matrix-synapse.nix
+    ../../modules/mjolnir.nix
     ../../modules/owncast.nix
     ../../modules/prometheus/node-exporter.nix
     ../../modules/vaultwarden.nix
