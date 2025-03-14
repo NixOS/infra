@@ -44,10 +44,17 @@
               rules = [
                 {
                   alert = "DomainExpiry";
-                  expr = "domain_expiry_days < 30";
+                  expr = "domain_expiry_days != -1 and domain_expiry_days < 30";
                   for = "1h";
                   labels.severity = "warning";
                   annotations.summary = "Domain {{ $labels.domain }} will expire in less than 30 days";
+                }
+                {
+                  alert = "DomainProbeFailure";
+                  expr = "domain_probe_success == 0";
+                  for = "3h";
+                  labels.severity = "warning";
+                  annotations.summary = "Domain {{ $labels.domain }} probe failing for more than 3 hours.";
                 }
               ];
             }
