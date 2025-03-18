@@ -106,7 +106,7 @@ in
 
     allow_import_from_derivation = false
 
-    max_output_size = 3821225472 # 3 << 30 + 600000000 = 3 GiB + 0.6 GB
+    max_output_size = 4121225472 # 3 << 30 + 900000000 = 3 GiB + 0.9 GB
     max_db_connections = 350
 
     queue_runner_metrics_address = [::]:9198
