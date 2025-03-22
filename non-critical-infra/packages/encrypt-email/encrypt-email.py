@@ -100,20 +100,18 @@ def address(address_id: str, email: str, force: bool) -> None:
     secret_path = non_critical_infra_dir / f"secrets/{address_id}-email-address.umbriel"
     encrypt_to_file(email, secret_path, force)
 
-    default_nix = non_critical_infra_dir / "modules/mailserver/default.nix"
-    assert default_nix.exists()
+    mailing_lists_nix = non_critical_infra_dir / "modules/mailserver/mailing-lists.nix"
+    assert mailing_lists_nix.exists()
 
     click.secho()
     click.secho("Now add `", nl=False)
     click.secho(
-        secret_path.relative_to(default_nix.parent, walk_up=True),
+        secret_path.relative_to(mailing_lists_nix.parent, walk_up=True),
         fg="blue",
         nl=False,
     )
-    click.secho("` to the relevant mailing list under '", nl=False)
-    click.secho("### Mailing lists go here ###", fg="blue", nl=False)
-    click.secho("' in ", nl=False)
-    click.secho(default_nix, fg="blue")
+    click.secho("` to the relevant mailing list in '", nl=False)
+    click.secho(mailing_lists_nix, fg="blue")
 
 
 @main.command()
