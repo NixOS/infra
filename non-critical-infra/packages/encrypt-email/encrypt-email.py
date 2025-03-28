@@ -22,6 +22,12 @@ def find_relative_project_root() -> Path:
     return find_project_root(Path.cwd()).relative_to(Path.cwd(), walk_up=True)
 
 
+PROJECT_ROOT = find_relative_project_root()
+NON_CRITICAL_INFRA_DIR = PROJECT_ROOT / "non-critical-infra"
+MAILING_LISTS_NIX = NON_CRITICAL_INFRA_DIR / "modules/mailserver/mailing-lists.nix"
+assert MAILING_LISTS_NIX.exists()
+
+
 def encrypt_to_file(plaintext: str, secret_path: Path, force: bool) -> None:
     if secret_path.exists():
         if not force:
@@ -94,24 +100,18 @@ def address(address_id: str, email: str, force: bool) -> None:
         click.secho("Removed whitespace surrounding given email address", fg="yellow")
     email = clean_email
 
-    project_root = find_relative_project_root()
-    non_critical_infra_dir = project_root / "non-critical-infra"
-
-    secret_path = non_critical_infra_dir / f"secrets/{address_id}-email-address.umbriel"
+    secret_path = NON_CRITICAL_INFRA_DIR / f"secrets/{address_id}-email-address.umbriel"
     encrypt_to_file(email, secret_path, force)
-
-    mailing_lists_nix = non_critical_infra_dir / "modules/mailserver/mailing-lists.nix"
-    assert mailing_lists_nix.exists()
 
     click.secho()
     click.secho("Now add `", nl=False)
     click.secho(
-        secret_path.relative_to(mailing_lists_nix.parent, walk_up=True),
+        secret_path.relative_to(MAILING_LISTS_NIX.parent, walk_up=True),
         fg="blue",
         nl=False,
     )
     click.secho("` to the relevant mailing list in '", nl=False)
-    click.secho(mailing_lists_nix, fg="blue")
+    click.secho(MAILING_LISTS_NIX, fg="blue")
 
 
 @main.command()
@@ -136,14 +136,8 @@ def login(address_id: str, force: bool) -> None:
 
     hashed_password = hash_password(password)
 
-    project_root = find_relative_project_root()
-    non_critical_infra_dir = project_root / "non-critical-infra"
-
-    secret_path = non_critical_infra_dir / f"secrets/{address_id}-email-login.umbriel"
+    secret_path = NON_CRITICAL_INFRA_DIR / f"secrets/{address_id}-email-login.umbriel"
     encrypt_to_file(hashed_password, secret_path, force)
-
-    default_nix = non_critical_infra_dir / "modules/mailserver/default.nix"
-    assert default_nix.exists()
 
     nix_code = dedent(
         f"""\
@@ -151,15 +145,13 @@ def login(address_id: str, force: bool) -> None:
           forwardTo = [
             # Add emails here
           ];
-          loginAccount.encryptedHashedPassword = ../../secrets/test-sender-email-login.umbriel;
+          loginAccount.encryptedHashedPassword = ../../secrets/{address_id}-email-login.umbriel;
         }};
         """
     )
     click.secho()
     click.secho("Now add this login account to ", nl=False)
-    click.secho(default_nix, fg="blue", nl=False)
-    click.secho(". Search for '", nl=False)
-    click.secho("### Mailing lists go here ###", fg="blue", nl=False)
+    click.secho(MAILING_LISTS_NIX, fg="blue", nl=False)
     click.secho("'. Add or edit an entry that looks like this:")
     click.secho()
     click.secho(indent(nix_code, prefix=" " * 4), fg="blue")
