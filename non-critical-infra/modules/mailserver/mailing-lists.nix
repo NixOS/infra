@@ -101,6 +101,7 @@
         ../../secrets/erethon-email-address.umbriel # https://github.com/erethon
         ../../secrets/imincik-email-address.umbriel # https://github.com/imincik
       ];
+      loginAccount.encryptedHashedPassword = ../../secrets/ngi-nixos-org-email-login.umbriel;
     };
 
     "nixcon@nixos.org" = {
