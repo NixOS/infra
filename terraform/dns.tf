@@ -222,6 +222,11 @@ locals {
       value    = "9e10a04a4b"
     },
     {
+      hostname = "nixos.org"
+      type     = "TXT"
+      value    = "apple-domain-verification=OvacO4lGB9A6dBFg"
+    },
+    {
       # hetzner ax162-r 2548595
       hostname = "elated-minsky.builder.nixos.org"
       type     = "A"
