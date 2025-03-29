@@ -426,22 +426,15 @@ locals {
     },
 
     # Mailserver configuration for `nixos.org`
-    # TODO: remove the 2 MX records for improvmx below in favor of this once
-    # we're ready to switch to the new mailserver:
-    # https://github.com/NixOS/infra/issues/485
-    # {
-    #   hostname = "nixos.org"
-    #   type     = "MX"
-    #   value    = "umbriel.nixos.org"
-    # },
+    {
+      hostname = "nixos.org"
+      type     = "MX"
+      value    = "umbriel.nixos.org"
+    },
     {
       hostname = "nixos.org"
       type     = "TXT"
-      # TODO: simplify to just a `mx` rule once umbriel is our one and only
-      # mailserver:
-      # https://github.com/NixOS/infra/issues/485
-      # value = "v=spf1 mx ~all"
-      value = "v=spf1 include:spf.improvmx.com a:umbriel.nixos.org ~all"
+      value    = "v=spf1 mx ~all"
     },
     {
       hostname = "mail._domainkey.nixos.org"
@@ -469,38 +462,6 @@ resource "netlify_dns_record" "nixos" {
   type     = each.value.type
   value    = each.value.value
 }
-
-### TODO: remove, see https://github.com/NixOS/infra/issues/485 ###
-# MX records both have the same hostname and type and would clash on the above
-# mapping.
-resource "netlify_dns_record" "nixos_MX1" {
-  zone_id  = local.zone_id
-  hostname = "nixos.org"
-  type     = "MX"
-  value    = "mx1.improvmx.com"
-}
-
-resource "netlify_dns_record" "nixos_MX2" {
-  zone_id  = local.zone_id
-  hostname = "nixos.org"
-  type     = "MX"
-  value    = "mx2.improvmx.com"
-}
-
-resource "netlify_dns_record" "nixos_DKIM1" {
-  zone_id  = local.zone_id
-  hostname = "dkimprovmx1._domainkey.nixos.org"
-  type     = "CNAME"
-  value    = "dkimprovmx1.improvmx.com"
-}
-
-resource "netlify_dns_record" "nixos_DKIM2" {
-  zone_id  = local.zone_id
-  hostname = "dkimprovmx2._domainkey.nixos.org"
-  type     = "CNAME"
-  value    = "dkimprovmx2.improvmx.com"
-}
-### END TODO: remove ###
 
 resource "netlify_dns_record" "nixos_google_verification" {
   zone_id  = local.zone_id
