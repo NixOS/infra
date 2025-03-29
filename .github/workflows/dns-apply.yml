@@ -1,0 +1,31 @@
+---
+name: Apply DNS changes
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - dns/
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  dnscontrol:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v4.2.2
+      - uses: cachix/install-nix-action@v31
+      - name: dnscontrol check
+        working-directory: ./dns/
+        run: |
+          nix run --inputs-from . nixpkgs#dnscontrol -- check
+      - name: dnscontrol push
+        env:
+          NETLIFY_TOKEN: "${{ secrets.NETLIFY_TOKEN }}"
+        working-directory: ./dns/
+        run: |
+          nix run --inputs-from . nixpkgs#dnscontrol -- push
