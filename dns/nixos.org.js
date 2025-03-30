@@ -181,5 +181,5 @@ D("nixos.org",
 	// netlify pages
 	CNAME("planet", "nixos-planet.netlify.app."),
 	CNAME("status", "nixos-status.netlify.app."),
-	CNAME("weekly", "nixos-weekly.netlify.com."),
+	CNAME("weekly", "nixos-weekly.netlify.com.")
 );
