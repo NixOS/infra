@@ -78,6 +78,7 @@
       imports = [
         ./build/flake-module.nix
         ./builders/flake-module.nix
+        ./dns/flake-module.nix
         ./formatter/flake-module.nix
         ./checks/flake-module.nix
         ./terraform/flake-module.nix

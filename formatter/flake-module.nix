@@ -16,7 +16,13 @@
 
         # older actionlint version don't recognize aarch64 builder
         programs.actionlint.enable = lib.versionAtLeast pkgs.actionlint.version "1.7.7";
-        programs.deno.enable = true;
+        programs.deno = {
+          enable = true;
+          excludes = [
+            # makes these files *less* readable
+            "dns/*.js"
+          ];
+        };
         programs.terraform.enable = true;
         programs.deadnix.enable = true;
         programs.nixfmt.enable = true;

@@ -1,0 +1,29 @@
+---
+name: Test/Preview DNS changes
+
+on:
+  pull_request:
+    paths:
+      - dns/
+
+permissions: {}
+
+jobs:
+  dnscontrol:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4.2.2
+      - uses: cachix/install-nix-action@v31
+      - name: dnscontrol check
+        working-directory: ./dns/
+        run: |
+          nix run --inputs-from . nixpkgs#dnscontrol -- check
+      - name: dnscontrol preview
+        if: github.repository == 'nixos/infra'
+        env:
+          NETLIFY_TOKEN: "${{ secrets.NETLIFY_TOKEN }}"
+        working-directory: ./dns/
+        run: |
+          nix run --inputs-from . nixpkgs#dnscontrol -- preview
