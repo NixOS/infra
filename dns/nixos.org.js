@@ -135,7 +135,6 @@ D("nixos.org",
 	A("makemake.ngi", "116.202.113.248"),
 	AAAA("makemake.ngi", "2a01:4f8:231:4187::"),
 	CNAME("buildbot.ngi", "makemake.ngi.nixos.org."),
-	CNAME("hydra.ngi0", "makemake.ngi.nixos.org."),
 	CNAME("summer", "makemake.ngi.nixos.org."),
 
 	A("tracker.security", "188.245.41.195"),
