@@ -78,7 +78,7 @@
                   {
                     alert = "PartitionLowDiskSpace";
                     expr = ''
-                      round((node_filesystem_free_bytes{${diskSelector}} * 100) / node_filesystem_size_bytes{mountpoint="/"}) < 10 and ON (instance, device, mountpoint) node_filesystem_free_bytes < 100 * 1024^3
+                      round((node_filesystem_free_bytes{${diskSelector}} * 100) / node_filesystem_size_bytes{${diskSelector}}) < 10 and ON (instance, device, mountpoint) node_filesystem_free_bytes < 100 * 1024^3
                     '';
                     for = "30m";
                     labels.severity = "warning";
