@@ -3,6 +3,7 @@
 {
   imports = [
     ./alertmanager.nix
+    ./exporters/up.nix
     ./exporters/blackbox.nix
     ./exporters/channel.nix
     ./exporters/domain.nix
