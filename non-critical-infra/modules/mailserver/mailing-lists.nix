@@ -150,6 +150,13 @@
       ];
     };
 
+    "sponsor@nixos.org" = {
+      forwardTo = [
+        "steering@nixos.org"
+        "foundation@nixos.org"
+      ];
+    };
+
     "steering@nixos.org" = {
       forwardTo = [
         ../../secrets/Ericson2314-email-address.umbriel # https://github.com/Ericson2314
