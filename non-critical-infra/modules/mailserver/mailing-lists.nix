@@ -8,22 +8,6 @@
   # an encrypted password. Run `nix run .#encrypt-email login -- --help` and
   # follow the instructions.
   mailing-lists = {
-    # BEGIN TEST ADDRESSES
-    # TODO: remove these testing email addresses after rollout is complete:
-    #       https://github.com/NixOS/infra/issues/587
-    "test-list@nixos.org" = {
-      forwardTo = [
-        "jfly@playground.jflei.com"
-        ../../secrets/jfly-email-address.umbriel
-        "jeremyfleischman+subscriber@gmail.com"
-      ];
-    };
-    "test-sender@nixos.org" = {
-      forwardTo = [ "jeremy@playground.jflei.com" ];
-      loginAccount.encryptedHashedPassword = ../../secrets/test-sender-email-login.umbriel;
-    };
-    # END TEST ADDRESS
-
     "community@nixos.org" = {
       forwardTo = [
         "moderation@nixos.org"
