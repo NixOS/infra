@@ -74,9 +74,9 @@
     "marketing@nixos.org" = {
       forwardTo = [
         ../../secrets/idabzo-email-address.umbriel # https://github.com/idabzo
-        ../../secrets/therealpxc-email-address.umbriel # https://github.com/therealpxc
-        ../../secrets/Kranzes-email-address.umbriel # https://github.com/Kranzes
-        ../../secrets/tomberek-email-address.umbriel # https://github.com/tomberek
+        ../../secrets/avocadoom-email-address.umbriel # https://discourse.nixos.org/u/avocadoom
+        ../../secrets/djacu-email-address.umbriel # https://discourse.nixos.org/u/djacu
+        ../../secrets/flyfloh-email-address.umbriel # https://discourse.nixos.org/u/flyfloh
       ];
     };
 
@@ -185,13 +185,6 @@
       forwardTo = [
         ../../secrets/edolstra-admin-email-address.umbriel # https://github.com/edolstra
         ../../secrets/zimbatm-admin-email-address.umbriel # https://github.com/zimbatm
-      ];
-    };
-
-    "webmaster@nixos.org" = {
-      forwardTo = [
-        ../../secrets/edolstra-nixos-email-address.umbriel # https://github.com/edolstra
-        ../../secrets/garbas-email-address.umbriel # https://github.com/garbas
       ];
     };
   };

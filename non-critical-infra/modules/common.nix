@@ -11,5 +11,5 @@
   environment.systemPackages = with pkgs; [ neovim ];
 
   security.acme.acceptTerms = true;
-  security.acme.defaults.email = "webmaster@nixos.org";
+  security.acme.defaults.email = "infra@nixos.org";
 }
