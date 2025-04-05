@@ -171,5 +171,26 @@
         ../../secrets/zimbatm-admin-email-address.umbriel # https://github.com/zimbatm
       ];
     };
+
+    "wiki@nixos.org" = {
+      forwardTo = [
+        ../../secrets/lassulus-wiki-email-address.umbriel # https://github.com/lassulus
+        ../../secrets/Mic92-wiki-email-address.umbriel # https://github.com/Mic92
+      ];
+    };
+
+    "winter@nixos.org" = {
+      forwardTo = [
+        ../../secrets/winterqt-email-address.umbriel # https://github.com/winterqt
+      ];
+    };
+
+    "xsa@nixos.org" = {
+      forwardTo = [
+        ../../secrets/lach-xsa-email-address.umbriel # https://github.com/CertainLach
+        ../../secrets/hehongbo-xsa-email-address.umbriel # https://github.com/hehongbo
+        ../../secrets/sigmasquadron-xsa-email-address.umbriel # https://github.com/SigmaSquadron
+      ];
+    };
   };
 }
