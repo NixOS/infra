@@ -8,6 +8,12 @@
   # an encrypted password. Run `nix run .#encrypt-email login -- --help` and
   # follow the instructions.
   mailing-lists = {
+    "abuse@nixos.org" = {
+      forwardTo = [
+        "infra@nixos.org"
+      ];
+    };
+
     "community@nixos.org" = {
       forwardTo = [
         "moderation@nixos.org"
@@ -114,6 +120,12 @@
       ];
     };
 
+    "postmaster@nixos.org" = {
+      forwardTo = [
+        "infra@nixos.org"
+      ];
+    };
+
     "rob@nixos.org" = {
       forwardTo = [
         ../../secrets/rbvermaa-email-address.umbriel # https://github.com/rbvermaa
@@ -169,6 +181,33 @@
       forwardTo = [
         ../../secrets/edolstra-admin-email-address.umbriel # https://github.com/edolstra
         ../../secrets/zimbatm-admin-email-address.umbriel # https://github.com/zimbatm
+      ];
+    };
+
+    "webmaster@nixos.org" = {
+      forwardTo = [
+        "infra@nixos.org"
+      ];
+    };
+
+    "wiki@nixos.org" = {
+      forwardTo = [
+        ../../secrets/lassulus-wiki-email-address.umbriel # https://github.com/lassulus
+        ../../secrets/Mic92-wiki-email-address.umbriel # https://github.com/Mic92
+      ];
+    };
+
+    "winter@nixos.org" = {
+      forwardTo = [
+        ../../secrets/winterqt-email-address.umbriel # https://github.com/winterqt
+      ];
+    };
+
+    "xsa@nixos.org" = {
+      forwardTo = [
+        ../../secrets/lach-xsa-email-address.umbriel # https://github.com/CertainLach
+        ../../secrets/hehongbo-xsa-email-address.umbriel # https://github.com/hehongbo
+        ../../secrets/sigmasquadron-xsa-email-address.umbriel # https://github.com/SigmaSquadron
       ];
     };
   };
