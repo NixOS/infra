@@ -22,6 +22,7 @@ jobs:
       - uses: cachix/install-nix-action@d1ca217b388ee87b2507a9a93bf01368bde7cec2 # v31
       - name: dnscontrol preview
         env:
+          GANDI_TOKEN: "${{ secrets.GANDI_TOKEN }}" # Expires 2026-04-07
           NETLIFY_TOKEN: "${{ secrets.NETLIFY_TOKEN }}"
         working-directory: ./dns/
         run: |
