@@ -21,6 +21,7 @@ jobs:
       - name: dnscontrol preview
         if: github.repository == 'nixos/infra'
         env:
+          GANDI_TOKEN: "${{ secrets.GANDI_TOKEN }}" # Expires 2026-04-07
           NETLIFY_TOKEN: "${{ secrets.NETLIFY_TOKEN }}"
         working-directory: ./dns/
         run: |

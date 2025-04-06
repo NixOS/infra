@@ -1,5 +1,6 @@
 D("nixos.org",
 	REG_NONE,
+	DnsProvider(DSP_GANDI),
 	DnsProvider(DSP_NETLIFY),
 
 	TXT("@", "apple-domain-verification=OvacO4lGB9A6dBFg"),
