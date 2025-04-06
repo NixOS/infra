@@ -1,0 +1,43 @@
+name: GitHub Actions Security Analysis with zizmor 🌈
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/**"
+      - flake.lock
+  pull_request:
+    paths:
+      - ".github/**"
+      - flake.lock
+
+permissions: {}
+
+jobs:
+  zizmor:
+    name: Run zizmor against GitHub Action workflows
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          persist-credentials: false
+
+      - name: Install nix
+        uses: cachix/install-nix-action@d1ca217b388ee87b2507a9a93bf01368bde7cec2 # v31
+
+      - name: Run zizmor 🌈
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          nix run --inputs-from . nixpkgs-unstable#zizmor -- \
+            --format sarif --pedantic . > results.sarif
+
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@1b549b9259bda1cb5ddde3b41741a82a2d15a841 # v3
+        with:
+          sarif_file: results.sarif
+          category: zizmor
