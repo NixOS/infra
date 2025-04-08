@@ -117,6 +117,14 @@ in
           "https://tracker.security.nixos.org"
         ];
       })
+      # TODO: remove this static probe once `umbriel` is our MX record, and
+      # ImprovMX is out of the picture.
+      # https://github.com/NixOS/infra/issues/485
+      (mkStaticProbe {
+        module = "smtp_starttls";
+        job_suffix = "_umbriel";
+        targets = [ "umbriel.nixos.org:25" ];
+      })
       (mkDnsSdProbe "smtp_starttls" {
         names = [
           "nixos.org"
