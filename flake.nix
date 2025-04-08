@@ -10,12 +10,8 @@
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
 
-    nix-eval-jobs.url = "github:nix-community/nix-eval-jobs?rev=ca94443b9621c610af09ff1806434bd84cd817e6";
-    nix-eval-jobs.inputs.nixpkgs.follows = "nixpkgs";
-
-    hydra.url = "github:NixOS/hydra/hydra.nixos.org";
+    hydra.url = "github:NixOS/hydra";
     hydra.inputs.nixpkgs.follows = "nixpkgs";
-    hydra.inputs.nix-eval-jobs.follows = "nix-eval-jobs";
     nix.follows = "hydra/nix";
 
     nixos-channel-scripts.url = "github:NixOS/nixos-channel-scripts";

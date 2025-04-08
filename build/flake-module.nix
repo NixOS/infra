@@ -14,7 +14,17 @@ let
     nixpkgs.overlays = [
       inputs.nix.overlays.default
       inputs.hydra.overlays.default
-      inputs.nixos-channel-scripts.overlays.default
+      (
+        final: prev:
+        inputs.nixos-channel-scripts.overlays.default (
+          final
+          // {
+            # Doesn't yet work with Nix 2.28
+            # https://github.com/NixOS/nixos-channel-scripts/issues/79
+            nix = final.nixVersions.nix_2_24;
+          }
+        ) prev
+      )
       inputs.rfc39.overlays.default
     ];
   };
