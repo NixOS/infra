@@ -404,15 +404,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1742385144,
-        "narHash": "sha256-9GwA/NISFyjAM7/ATK0Txy35K6YZphAfmK0iImK+ZM0=",
-        "owner": "NixOS",
+        "lastModified": 1744174698,
+        "narHash": "sha256-UgvZ+mNe5pNmOotTme03nS5Yzt7UK+fjHHUBrQsJfus=",
+        "owner": "obsidiansystems",
         "repo": "nixos-channel-scripts",
-        "rev": "01a30270cf4a47bd1d9b721124d97e1318fdc871",
+        "rev": "f373184bedef93f7b3d29b2122d2de103090fcca",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
+        "owner": "obsidiansystems",
+        "ref": "nix-2.28",
         "repo": "nixos-channel-scripts",
         "type": "github"
       }
