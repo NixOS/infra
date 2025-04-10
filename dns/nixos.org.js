@@ -7,16 +7,11 @@ D("nixos.org",
 	TXT("@", "google-site-verification=Pm5opvmNjJOwdb7JnuVJ_eFBPaZYWNcAavY-08AJoGc"),
 
 	// nixos.org mailing
-	MX("@", 10, "mx1.improvmx.com."),
-	MX("@", 10, "mx2.improvmx.com."),
-	// TODO: Replace with the following MX records once we migrate away from ImprovMX
-	//MX("@", "umbriel")
+	MX("@", 10, "umbriel"),
 	SPF_BUILDER({
 		label: "@",
 		parts: [
 			"v=spf1",
-			// TODO: Remove once we migrate away from ImprovMX
-			"include:spf.improvmx.com",
 			"a:umbriel.nixos.org",
 			"~all"
 		]
@@ -24,9 +19,6 @@ D("nixos.org",
 	DMARC_BUILDER({
 		policy: "none",
 	}),
-	// TODO: Remove once we migrate away from ImprovMX
-	CNAME("dkimprovmx1._domainkey", "dkimprovmx1.improvmx.com."),
-	CNAME("dkimprovmx2._domainkey", "dkimprovmx2.improvmx.com."),
 
 	// discourse
 	A("discourse", "195.62.126.31"),
