@@ -10,6 +10,8 @@ permissions: {}
 
 jobs:
   dnscontrol:
+    # only run for local branches
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -19,7 +21,6 @@ jobs:
           persist-credentials: false
       - uses: cachix/install-nix-action@d1ca217b388ee87b2507a9a93bf01368bde7cec2 # v31
       - name: dnscontrol preview
-        if: github.repository == 'nixos/infra'
         env:
           NETLIFY_TOKEN: "${{ secrets.NETLIFY_TOKEN }}"
         working-directory: ./dns/
