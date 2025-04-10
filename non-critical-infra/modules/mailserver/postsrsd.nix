@@ -35,6 +35,9 @@
   # ```
   sops.secrets.postsrsd-secret = {
     format = "binary";
+    owner = config.services.postsrsd.user;
+    group = config.services.postsrsd.group;
     sopsFile = ../../secrets/postsrsd-secret.umbriel;
+    restartUnits = [ "postsrsd.service" ];
   };
 }
