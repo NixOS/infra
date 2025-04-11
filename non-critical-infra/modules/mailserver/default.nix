@@ -1,5 +1,11 @@
 { config, pkgs, ... }:
 
+let
+  arc = {
+    selector = "arc-2025";
+  };
+in
+
 {
   imports = [
     ./mailing-lists.nix
@@ -39,6 +45,27 @@
     # Ensure the file gets symlinked to where Simple NixOS Mailserver expects
     # to find it.
     path = "${config.mailserver.dkimKeyDirectory}/nixos.org.mail.key";
+  };
+
+  sops.secrets."nixos.org.${arc.selector}.key" = {
+    format = "binary";
+    owner = "rspamd";
+    group = "rpsamd";
+    mode = "0400";
+    # rspamadm dkim_keygen --selector arc-2025 --domain nixos.org --type rsa --bits 2048
+    sopsFile = ../../secrets/nixos.org-${arc.selector}-private-key.umbriel;
+    path = "/var/lib/rspamd/arc/nixos.org.${arc.selector}.key";
+  };
+
+  services.rspamd = {
+    overrides."arc.conf".text = ''
+      domain {
+        nixos.org {
+          selector = "${arc.selector}";
+          allow_username_mismatch = true;
+        }
+      }
+    '';
   };
 
   services.postfix.config.bounce_template_file = "${pkgs.writeText "bounce-template.cf" ''
