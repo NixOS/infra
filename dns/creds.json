@@ -1,4 +1,8 @@
 {
+  "gandi": {
+    "TYPE": "GANDI_V5",
+    "token": "$GANDI_TOKEN"
+  },
   "netlify": {
     "TYPE": "NETLIFY",
     "token": "$NETLIFY_TOKEN",
