@@ -13,6 +13,13 @@
     fqdn = config.networking.fqdn;
 
     domains = [ "nixos.org" ];
+
+    dmarcReporting = {
+      enable = true;
+      domain = "nixos.org";
+      fromName = "NixOS.org DMARC Report";
+      organizationName = "NixOS";
+    };
   };
 
   sops.secrets."nixos.org.mail.key" = {
