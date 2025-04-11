@@ -19,6 +19,7 @@ D("nixos.org",
 	DMARC_BUILDER({
 		policy: "none",
 	}),
+	TXT("arc-2025._domainkey", "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwFK4Z4C0D3ea7Avv+oI25PS6WjcOh3A/2URanFtY6+oLpbtFdZi/Z/ou2VPTNcS1QUxw5pSmV4L1fcaVqM+elPHq1GN/38TkpwcZEnSHK5tX0PS5Jae2Q+e68yEZAwNDi5abjXswehuxX/F9R4GXpC/tOEyeHP8xfvRmDUq3mgIgWpfCcvdwQvxp25/umufjqGHdQXuq9/9yfpAL72hUXbOrvQ5hd56U7tv0/llIs5CyaGU76hA4kRXkd+iYUxcITzLjbc3ZRhIDs9b0zv0z2YPYgVgj2GiKL+TdcQ9z5Y5M0H4EGq6/Gn5fUILGRkCaBGvE3s3mY/aYUCvv4v0W9wIDAQAB"),
 
 	// discourse
 	A("discourse", "195.62.126.31"),
