@@ -1,7 +1,6 @@
 {
-  "netlify": {
-    "TYPE": "NETLIFY",
-    "token": "$NETLIFY_TOKEN",
-    "slug": "nixos"
+  "gandi": {
+    "TYPE": "GANDI_V5",
+    "token": "$GANDI_TOKEN"
   }
 }
