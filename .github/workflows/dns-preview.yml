@@ -23,7 +23,6 @@ jobs:
       - name: dnscontrol preview
         env:
           GANDI_TOKEN: "${{ secrets.GANDI_TOKEN }}" # Expires 2026-04-07
-          NETLIFY_TOKEN: "${{ secrets.NETLIFY_TOKEN }}"
         working-directory: ./dns/
         run: |
           nix run --inputs-from . nixpkgs#dnscontrol -- preview
