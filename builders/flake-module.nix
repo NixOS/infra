@@ -33,5 +33,8 @@
 
       # Ampere Q80-30 (80C), 256 GB DDR4 RAM, 2x3.84TB PCIe4 NVME
       goofy-hopcroft = mkNixOS "aarch64-linux" ./instances/goofy-hopcroft.nix;
+
+      # Ampere Q80-30 (80C), 128 GB DDR4 RAM, 2x960GB PCIe4 NVME
+      hopeful-rivest = mkNixOS "aarch64-linux" ./instances/hopeful-rivest.nix;
     };
 }

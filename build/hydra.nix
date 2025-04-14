@@ -170,6 +170,8 @@ in
     # aarch64-linux at Hetzner
     "goofy-hopcroft.builder.nixos.org".publicKey =
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICTJEi+nQNd7hzNYN3cLBK/0JCkmwmyC1I+b5nMI7+dd";
+    "hopeful-rivest.builder.nixos.org".publicKey =
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBgjwpQaNAWdEdnk1YG7JWThM4xQdKNJ3h3arhF7+iFm";
 
     # M1 Macs in North America
     "*.foundation.detsys.dev" = {
