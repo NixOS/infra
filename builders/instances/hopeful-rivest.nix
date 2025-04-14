@@ -6,6 +6,7 @@
   nix.settings = {
     cores = 20;
     max-jobs = 10;
+    system-features = [ "big-parallel" ];
   };
 
   networking = {
