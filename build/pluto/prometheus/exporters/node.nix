@@ -48,6 +48,7 @@
               "elated-minsky.builder.nixos.org:9100"
               "sleepy-brown.builder.nixos.org:9100"
               "goofy-hopcroft.builder.nixos.org:9100"
+              "hopeful-rivest.builder.nixos.org:9100"
             ];
           }
         ];

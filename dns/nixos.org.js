@@ -77,6 +77,9 @@ D("nixos.org",
 
 	A("growing-jennet.mac", "23.88.76.75"),
 
+	A("hopeful-rivest.builder", "135.181.230.86"),
+	AAAA("hopeful-rivest.builder", "2a01:4f9:3080:388f::1"),
+
 	A("intense-heron.mac", "23.88.75.215"),
 
 	AAAA("kind-lumiere.mac", "2a09:9340:808:60a::1"),

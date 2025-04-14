@@ -17,6 +17,7 @@
               "elated-minsky.builder.nixos.org:10029"
               "sleepy-brown.builder.nixos.org:10029"
               "goofy-hopcroft.builder.nixos.org:10029"
+              "hopeful-rivest.builder.nixos.org:10029"
 
               # non-critical
               "caliban.nixos.org:10029"
