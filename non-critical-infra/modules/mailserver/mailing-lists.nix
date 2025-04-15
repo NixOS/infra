@@ -116,6 +116,15 @@
       ];
     };
 
+    "cfp@nixos.org" = {
+      forwardTo = [
+        ../../secrets/ners-email-address.umbriel
+        ../../secrets/ra33it0-email-address.umbriel
+        ../../secrets/lassulus-nixcon-email-address.umbriel
+        ../../secrets/a-kenji-email-address.umbriel
+      ];
+    };
+
     "partnerships@nixos.org" = {
       forwardTo = [
         ../../secrets/refroni-email-address.umbriel # https://github.com/refroni
