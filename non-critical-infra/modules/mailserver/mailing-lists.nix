@@ -8,6 +8,14 @@
   # an encrypted password. Run `nix run .#encrypt-email login -- --help` and
   # follow the instructions.
   mailing-lists = {
+    # nixcon.org
+    "orgateam@nixcon.org" = {
+      forwardTo = [
+        "nixcon@nixos.org"
+      ];
+    };
+
+    # nixos.org
     "abuse@nixos.org" = {
       forwardTo = [
         "infra@nixos.org"
