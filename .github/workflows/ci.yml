@@ -13,7 +13,7 @@ permissions:
 jobs:
   # We probably should replace with a different faster CI soon,
   # but atleast this gives us confidence for now
-  nix-build:
+  checks:
     runs-on: "${{ matrix.os }}"
     strategy:
       fail-fast: false
