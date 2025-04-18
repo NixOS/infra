@@ -12,7 +12,10 @@
 
     fqdn = config.networking.fqdn;
 
-    domains = [ "nixos.org" ];
+    domains = [
+      "nixcon.org"
+      "nixos.org"
+    ];
   };
 
   sops.secrets."nixos.org.mail.key" = {
@@ -39,6 +42,15 @@
     # Ensure the file gets symlinked to where Simple NixOS Mailserver expects
     # to find it.
     path = "${config.mailserver.dkimKeyDirectory}/nixos.org.mail.key";
+  };
+
+  sops.secrets."nixcon.org.mail.key" = {
+    format = "binary";
+    owner = "opendkim";
+    group = "opendkim";
+    mode = "0600";
+    sopsFile = ../../secrets/nixcon.org.mail.key.umbriel;
+    path = "${config.mailserver.dkimKeyDirectory}/nixcon.org.mail.key";
   };
 
   services.postfix.config.bounce_template_file = "${pkgs.writeText "bounce-template.cf" ''
