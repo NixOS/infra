@@ -11,8 +11,6 @@ permissions:
   contents: read
 
 jobs:
-  # We probably should replace with a different faster CI soon,
-  # but atleast this gives us confidence for now
   checks:
     runs-on: "${{ matrix.os }}"
     strategy:
@@ -32,7 +30,6 @@ jobs:
           name: nixos-infra-dev
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - run: nix run --inputs-from . nixpkgs#nix-fast-build -- --skip-cached --no-nom
-  # all builds combined consume too much disk space... we should soon switch to something else
   nixos-x86_64:
     runs-on: ubuntu-latest
     strategy:
