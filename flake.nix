@@ -14,7 +14,8 @@
     hydra.inputs.nixpkgs.follows = "nixpkgs";
     nix.follows = "hydra/nix";
 
-    nixos-channel-scripts.url = "github:NixOS/nixos-channel-scripts";
+    #nixos-channel-scripts.url = "github:NixOS/nixos-channel-scripts";
+    nixos-channel-scripts.url = "github:obsidiansystems/nixos-channel-scripts/nix-2.28";
     nixos-channel-scripts.inputs.nixpkgs.follows = "nixpkgs";
 
     rfc39.url = "github:NixOS/rfc39";
