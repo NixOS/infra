@@ -78,7 +78,7 @@ in
     github_client_id = b022c64ce4531ffc1031
     github_client_secret_file = ${config.age.secrets.hydra-github-client-secret.path}
 
-    store_uri = s3://nix-cache?secret-key=/var/lib/hydra/queue-runner/keys/cache.nixos.org-1/secret&write-nar-listing=1&ls-compression=br&log-compression=br
+    store_uri = s3://nix-cache?secret-key=/var/lib/hydra/queue-runner/keys/cache.nixos.org-1/secret&write-nar-listing=1&ls-compression=br&log-compression=br&index-debug-info=true
     server_store_uri = https://cache.nixos.org?local-nar-cache=${narCache}
     binary_cache_public_uri = https://cache.nixos.org
 
