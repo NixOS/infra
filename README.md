@@ -24,7 +24,7 @@ work on.
 In general we try to reach overall consensus on decisions, and the team lead is
 here to listen and make judgement calls when no clear direction is available.
 
-The current team lead is @hexa.
+The current team lead is @mweinelt (hexa on Matrix).
 
 Because the team size and budget is limited, we try to only take on new projects
 we feel we can manage.
