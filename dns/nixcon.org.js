@@ -2,7 +2,7 @@ D("nixcon.org",
 	REG_NONE,
 	DnsProvider(DSP_GANDI),
 
-	MX("@", 10, "umbriel"),
+	MX("@", 10, "umbriel.nixos.org."),
 	SPF_BUILDER({
 		label: "@",
 		parts: [
