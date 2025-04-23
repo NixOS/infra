@@ -30,7 +30,7 @@
     enable = true;
   };
 
-  environment.systemPackages = with pkgs; [ matrix-synapse-tools.synadm ];
+  environment.systemPackages = with pkgs; [ synadm ];
 
   services.backup.includesZfsDatasets = [ "/var/lib/matrix-synapse" ];
 
