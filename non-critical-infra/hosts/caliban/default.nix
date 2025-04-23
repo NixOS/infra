@@ -1,4 +1,9 @@
-{ config, inputs, ... }:
+{
+  config,
+  inputs,
+  lib,
+  ...
+}:
 
 {
   imports = [
@@ -30,7 +35,7 @@
 
   # Bootloader.
   boot.loader.grub.enable = true;
-  boot.loader.grub.mirroredBoots = [
+  boot.loader.grub.mirroredBoots = lib.mkForce [
     {
       path = "/boot-1";
       devices = [ "/dev/disk/by-id/nvme-SAMSUNG_MZQL23T8HCLS-00A07_S64HNJ0T508051" ];
