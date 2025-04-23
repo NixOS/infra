@@ -33,6 +33,7 @@ D("nixcon.org",
 	CNAME("2023", "nixcon.github.io."),
 	CNAME("2024-na", "nixcon.github.io."),
 	CNAME("2024", "nixcon.github.io."),
+	CNAME("2025", "nixcon.github.io."),
 
 	// Scheduling
 	CNAME("cfp", "pretalx.com."),
