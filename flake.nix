@@ -20,7 +20,7 @@
     rfc39.url = "github:NixOS/rfc39";
     rfc39.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixpkgs.url = "https://nixos.org/channels/nixos-24.11-small/nixexprs.tar.xz";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11-small";
 
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
