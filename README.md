@@ -1,3 +1,4 @@
+
 # The NixOS infrastructure configurations
 
 This repository contains all the hardware configuration for the nixos project
