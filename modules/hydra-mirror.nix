@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }:
 
@@ -16,7 +17,7 @@ let
       description = "Update Channel ${channelName}";
       path = with pkgs; [
         git
-        nixos-channel-scripts
+        inputs.nixos-channel-scripts.packages.${pkgs.hostPlatform.system}.default
       ];
       script = ''
         # Hardcoded in channel scripts.
