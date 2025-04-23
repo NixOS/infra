@@ -40,7 +40,6 @@
       devices = [ "/dev/disk/by-id/nvme-SAMSUNG_MZQL23T8HCLS-00A07_S64HNJ0T508053" ];
     }
   ];
-  boot.loader.grub.useOSProber = true;
 
   networking = {
     hostName = "caliban";
