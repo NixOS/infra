@@ -13,7 +13,7 @@ D("nixos.org",
 		parts: [
 			"v=spf1",
 			"a:umbriel.nixos.org",
-			"~all"
+			"-all"
 		]
 	}),
 	DMARC_BUILDER({
@@ -34,7 +34,7 @@ D("nixos.org",
 			"v=spf1",
 			"ip4:185.105.252.151",
 			"ip6:2a02:248:101:62::1479",
-			"~all"
+			"-all"
 		]
 	}),
 	TXT("mail._domainkey.discourse", "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDmxDhMfDl6lnueSRCjYiWIDeTAJXR9Yw0PfpBfG7GPUIkMyqy9jVGpb4ECVTt9S1zfpr4dbtCgir781oVwZiwGIWzC8y8XsD37wernQIPN4Yubnrnpw+6lill4uA/AuyU/ghbeZ5lW03pHD//2EW4YEu+Jw4aS4rF0Wtk+BlJRCwIDAQAB"),
@@ -113,7 +113,7 @@ D("nixos.org",
 			"v=spf1",
 			"ip4:65.109.26.213",
 			"ip6:2a01:4f9:5a:186c::2",
-			"~all"
+			"-all"
 		]
 	}),
 	TXT("mail._domainkey.caliban", "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDDCLtvNH4Ly+9COXf7InptMvoA7I5O347D7+j+saECt7RRe8yNz4TmhJTyJik+bg7e3+l7EJM0vE6k7xtpGBXACY6CCmg/8EgUi6YnDd126ttJHWpoqO96w4SWX93G+ZnoSC8O5rTPqdaTTkntYDTrw5u5n+7RA8GarZadgmaEzwIDAQAB"),
@@ -156,7 +156,7 @@ D("nixos.org",
 			"v=spf1",
 			"ip4:65.21.240.250",
 			"ip6:2a01:4f9:c012:8178::",
-			"~all"
+			"-all"
 		]
 	}),
 	TXT("mail._domainkey.wiki", "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDa+KjIljYr3q5MWWK7sEYzjR8OcA32zBh9BCPo6/HlY1q2ODTYsmE/FDZWpYMzM5z+ddnuGYdXia322XnZaNpZNoq1TbGYuQ5DsgAEK09CGoLuzONg3PSXTrkG7E2Sd6wstwHGJ5FHxSLKtNoWkknt9F5XAFZgXapO0w54p+BWvwIDAQAB"),
