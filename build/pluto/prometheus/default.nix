@@ -3,7 +3,7 @@
 {
   imports = [
     ./alertmanager.nix
-    ./exporters/anubis.nix
+    ./exporters/up.nix
     ./exporters/blackbox.nix
     ./exporters/channel.nix
     ./exporters/domain.nix
@@ -17,7 +17,6 @@
     ./exporters/owncast.nix
     ./exporters/postgresql.nix
     ./exporters/rasdaemon.nix
-    ./exporters/up.nix
     ./exporters/zfs.nix
   ];
 
