@@ -8,7 +8,6 @@ let
     imports = [
       inputs.agenix.nixosModules.age
       inputs.disko.nixosModules.disko
-      inputs.hydra.nixosModules.hydra
     ];
 
     nixpkgs.overlays = [

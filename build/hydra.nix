@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }:
 
@@ -10,10 +11,16 @@ let
 in
 
 {
+  imports = [
+    inputs.hydra.nixosModules.hydra
+  ];
+
   networking.firewall.allowedTCPPorts = [
     9198 # queue-runnner metrics
     9199 # hydra-notify metrics
   ];
+
+  nix.package = config.services.hydra-dev.package.nix;
 
   # garbage collection
   nix.gc = {
@@ -61,7 +68,6 @@ in
   };
 
   services.hydra-dev.enable = true;
-  services.hydra-dev.package = pkgs.hydra;
   services.hydra-dev.buildMachinesFiles = [ "/etc/nix/machines" ];
   services.hydra-dev.dbi = "dbi:Pg:dbname=hydra;host=10.254.1.9;user=hydra;";
   services.hydra-dev.logo = ./hydra-logo.png;

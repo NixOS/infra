@@ -310,11 +310,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1745445894,
-        "narHash": "sha256-rn9ZE4ERml8ZkT9ziDrqGEJfzr0rJlzYfu2PHL71oiI=",
+        "lastModified": 1745951750,
+        "narHash": "sha256-wpwSBfiavO6CjFJIBbj3d/i2p5jZIOkd04OgdCL0zqc=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "455f1a0665c6ca55df2a17679f6103402a9e9431",
+        "rev": "8d068fea3ebcf449a44fef384110d489a6e0863c",
         "type": "github"
       },
       "original": {
@@ -536,10 +536,6 @@
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
         "hydra": "hydra",
-        "nix": [
-          "hydra",
-          "nix"
-        ],
         "nixos-channel-scripts": "nixos-channel-scripts",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
