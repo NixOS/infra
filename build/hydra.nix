@@ -20,6 +20,8 @@ in
     9199 # hydra-notify metrics
   ];
 
+  nix.package = config.services.hydra-dev.package.nix;
+
   # garbage collection
   nix.gc = {
     automatic = true;
