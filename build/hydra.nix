@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   ...
 }:
 
@@ -10,6 +11,10 @@ let
 in
 
 {
+  imports = [
+    inputs.hydra.nixosModules.hydra
+  ];
+
   networking.firewall.allowedTCPPorts = [
     9198 # queue-runnner metrics
     9199 # hydra-notify metrics
