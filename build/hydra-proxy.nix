@@ -13,10 +13,11 @@ let
     "iPad\\sOS\\s"
     "iPhone\\sOS\\s[23456789]"
     "Opera/[89]"
+    # Chrome 134+
     "(Chrome|CriOS)/(\\d\\d?\\.|1[012]|13[01234])"
-    "(Firefox|FxiOS)/(\\d\\d?\\.|1[012]|13[0123456]\\.)"
+    # Firefox ESR 128 and Firefox 137+
+    "(Firefox|FxiOS)/(\\d\\d?\\.|1[01]|2[012345679]|13[0123456]\\.)"
     "PPC\\sMac\\sOS"
-    "Safari/53"
     "Windows\\sCE"
     "Windows\\s95"
     "Windows\\s98"
