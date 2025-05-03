@@ -53,6 +53,13 @@
       ];
     };
 
+    "hexa@nixos.org" = {
+      forwardTo = [
+        ../../secrets/mweinelt-email-address.umbriel # https://github.com/mweinelt
+      ];
+      loginAccount.encryptedHashedPassword = ../../secrets/hexa-email-login.umbriel;
+    };
+
     "hostmaster@nixos.org" = {
       forwardTo = [
         "infra@nixos.org"
