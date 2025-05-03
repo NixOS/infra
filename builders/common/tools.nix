@@ -9,6 +9,7 @@
     ethtool
     htop
     lm_sensors
+    nix-top
     nvme-cli
     pciutils
     smartmontools
