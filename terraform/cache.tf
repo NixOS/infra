@@ -5,15 +5,26 @@ locals {
 resource "aws_s3_bucket" "cache" {
   provider = aws.us
   bucket   = "nix-cache"
+}
 
-  lifecycle_rule {
-    enabled = true
+resource "aws_s3_bucket_lifecycle_configuration" "cache" {
+  provider = aws.us
+  bucket   = aws_s3_bucket.cache.id
+
+  rule {
+    id     = "transition-to-standard-ia"
+    status = "Enabled"
 
     transition {
       days          = 365
       storage_class = "STANDARD_IA"
     }
   }
+}
+
+resource "aws_s3_bucket_cors_configuration" "cache" {
+  provider = aws.us
+  bucket   = aws_s3_bucket.cache.id
 
   cors_rule {
     allowed_headers = ["Authorization"]
