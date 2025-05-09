@@ -128,6 +128,7 @@
         ../../secrets/picnoir-email-address.umbriel # https://github.com/picnoir
         ../../secrets/nlewo-email-address.umbriel # https://github.com/nlewo
         ../../secrets/escherlies-email-address.umbriel # https://github.com/escherlies
+        ../../secrets/fmehta-email-address.umbriel # https://github.com/fmehta
       ];
     };
 
