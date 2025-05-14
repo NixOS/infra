@@ -31,12 +31,13 @@ All the members should be watching this repository for changes.
 We meet regularly over Jitsi to hash some issues out. Sometimes it helps to have
 dedicated focus and higher communication bandwidth.
 
-It started Thursday, January 11, 2024, at 6 pm CET (UTC+1), and then repeats
-every two weeks, on Thursdays at 6 pm CET.
+There is an open team meeting **every other Thursday at
+[18:00 (Europe/Zurich)](https://dateful.com/convert/zurich?t=18)**. See the
+[google calendar](https://calendar.google.com/calendar/u/0/embed?src=b9o52fobqjak8oq8lfkhg3t0qg@group.calendar.google.com)
+(search for "NixOS Infra") to see the next date.
 
-<a target="_blank" href="https://calendar.google.com/calendar/event?action=TEMPLATE&amp;tmeid=MDVjdjNpOG5qazhscjlna3Mxcmw0aHVzODIgam9uYXNAbnVtdGlkZS5jb20&amp;tmsrc=jonas%40numtide.com"><img border="0" src="https://www.google.com/calendar/images/ext/gc_button1_en.gif"></a>
-
-Location: <https://jitsi.lassul.us/nixos-infra>
+Location: <https://jitsi.lassul.us/nixos-infra> Meeting notes:
+<https://pad.lassul.us/nixos-infra>
 
 ## Reporting issues
 
