@@ -6,21 +6,17 @@
 {
   services.postsrsd = {
     enable = true;
-    domain = "nixos.org";
+    domains = [ "nixos.org" ];
     secretsFile = config.sops.secrets.postsrsd-secret.path;
   };
 
   # Configure postfix as per
   # https://github.com/roehling/postsrsd?tab=readme-ov-file#postfix-setup
   services.postfix.config = {
-    # TODO: switch to "socketmap:unix:/run/postsrsd/socket:forward" once
-    # postsrsd 2 is available: https://github.com/NixOS/nixpkgs/pull/397316
-    sender_canonical_maps = "tcp:127.0.0.1:${builtins.toString config.services.postsrsd.forwardPort}";
+    sender_canonical_maps = "socketmap:unix:${config.services.postsrsd.socketPath}:forward";
     sender_canonical_classes = "envelope_sender";
 
-    # TODO: switch to "socketmap:unix:/run/postsrsd/socket:forward" once
-    # postsrsd 2 is available: https://github.com/NixOS/nixpkgs/pull/397316
-    recipient_canonical_maps = "tcp:127.0.0.1:${builtins.toString config.services.postsrsd.reversePort}";
+    recipient_canonical_maps = "socketmap:unix:${config.services.postsrsd.socketPath}:reverse";
     recipient_canonical_classes = "envelope_recipient, header_recipient";
   };
 
