@@ -39,10 +39,6 @@ in
     };
   };
 
-  #services.activate-system.enable = true;
-
-  services.nix-daemon.enable = true;
-
   nix = {
     package = pkgs.nixVersions.nix_2_24.overrideAttrs (oldAttrs: {
       patches = oldAttrs.patches or [ ] ++ [ ./disable-chroot.patch ];
@@ -57,7 +53,6 @@ in
     };
     gc = {
       automatic = true;
-      user = "root";
       interval = {
         # hourly at the 15th minute
         Minute = 15;
