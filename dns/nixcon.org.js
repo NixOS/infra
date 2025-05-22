@@ -43,5 +43,5 @@ D("nixcon.org",
 	CNAME("tickets", "nixcon.cname.pretix.eu."),
 
 	// 2025 ticket voucher eligibility check
-	CNAME("vouchers", "ners.ch.")
+	CNAME("vouchers", "cache.ners.ch.")
 );
