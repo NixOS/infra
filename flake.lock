@@ -414,11 +414,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1745395326,
-        "narHash": "sha256-ppe+1f5cwkUWZQnOtwYdv5k/SXFv/Ms9h65AnvjruFY=",
+        "lastModified": 1747969046,
+        "narHash": "sha256-ymyKEmhYv/LjFHwAAgmgGpsef8CP/0PbRCNTkd7ei98=",
         "owner": "NixOS",
         "repo": "nixos-channel-scripts",
-        "rev": "43c524d3c8ad4bc32e8e743974fc776ea1b07971",
+        "rev": "ec5c6072eb5ef981d4de21f2bb8ed4b835b3d355",
         "type": "github"
       },
       "original": {
