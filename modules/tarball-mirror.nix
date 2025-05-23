@@ -21,7 +21,7 @@ let
     ) (import ../channels.nix).channels
   );
   branch =
-    assert lib.length branches == 1;
+    assert (lib.assertMsg (lib.length branches == 1) "Multiple primary releases are marked as stable");
     head branches;
 in
 
