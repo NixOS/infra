@@ -9,20 +9,17 @@
   ...
 }:
 
-with lib;
-
 let
   # Determine the NixPkgs branch to mirror from.
-  # We take the current pirmary stable release.
-  inherit (import ../channels.nix) channels;
+  # We take the current primary stable release.
   branches = lib.filter (p: p != null) (
     lib.mapAttrsToList (
       name: v: if v.variant or null == "primary" && v.status or null == "stable" then name else null
     ) (import ../channels.nix).channels
   );
   branch =
-    assert lib.length branches == 1;
-    head branches;
+    assert (lib.assertMsg (lib.length branches == 1) "Multiple primary releases are marked as stable");
+    lib.head branches;
 in
 
 {
