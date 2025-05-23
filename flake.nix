@@ -27,7 +27,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11-small";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05-small";
 
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
@@ -37,7 +37,7 @@
     };
 
     darwin = {
-      url = "github:LnL7/nix-darwin/nix-darwin-24.11";
+      url = "github:LnL7/nix-darwin/nix-darwin-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -68,10 +68,10 @@
     };
 
     simple-nixos-mailserver = {
-      url = "gitlab:simple-nixos-mailserver/nixos-mailserver";
+      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-25.05";
       inputs = {
         nixpkgs.follows = "nixpkgs-unstable";
-        nixpkgs-24_11.follows = "nixpkgs";
+        nixpkgs-25_05.follows = "nixpkgs";
       };
     };
 
