@@ -20,8 +20,8 @@
 
   sops.secrets."nixos.org.mail.key" = {
     format = "binary";
-    owner = "opendkim";
-    group = "opendkim";
+    owner = "rspamd";
+    group = "rspamd";
     mode = "0600";
 
     # How to generate:
@@ -46,8 +46,8 @@
 
   sops.secrets."nixcon.org.mail.key" = {
     format = "binary";
-    owner = "opendkim";
-    group = "opendkim";
+    owner = "rspamd";
+    group = "rspamd";
     mode = "0600";
     sopsFile = ../../secrets/nixcon.org.mail.key.umbriel;
     path = "${config.mailserver.dkimKeyDirectory}/nixcon.org.mail.key";
