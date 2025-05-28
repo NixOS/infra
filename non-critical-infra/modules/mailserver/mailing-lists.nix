@@ -50,6 +50,7 @@
     "fundraising@nixos.org" = {
       forwardTo = [
         ../../secrets/fricklerhandwerk-email-address.umbriel # https://github.com/fricklerhandwerk
+        "foundation@nixos.org"
       ];
     };
 
