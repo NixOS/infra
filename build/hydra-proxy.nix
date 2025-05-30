@@ -38,9 +38,21 @@
       worker_processes auto;
     '';
 
+    appendHttpConfig = ''
+      map $http_x_from $upstream {
+        default "anubis";
+        nix.dev-Uogho3gi "hydra-server";
+      }
+    '';
+
     eventsConfig = ''
       worker_connections 1024;
     '';
+
+    upstreams = {
+      anubis.servers."127.0.0.1:3001" = { };
+      hydra-server.servers."127.0.0.1:3000" = { };
+    };
 
     virtualHosts."hydra.nixos.org" = {
       forceSSL = true;
@@ -64,7 +76,11 @@
       '';
 
       locations."/" = {
-        proxyPass = "http://127.0.0.1:3001";
+        proxyPass = "http://anubis";
+      };
+
+      locations."~ ^/build/\\d+/download/" = {
+        proxyPass = "http://hydra-server";
       };
 
       locations."/static/" = {
