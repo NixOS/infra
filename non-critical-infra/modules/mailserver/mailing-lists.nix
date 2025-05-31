@@ -22,12 +22,6 @@
       ];
     };
 
-    "community@nixos.org" = {
-      forwardTo = [
-        "moderation@nixos.org"
-      ];
-    };
-
     "finance@nixos.org" = {
       forwardTo = [
         ../../secrets/edolstra-email-address.umbriel # https://github.com/edolstra
