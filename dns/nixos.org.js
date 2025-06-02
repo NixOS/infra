@@ -122,6 +122,7 @@ D("nixos.org",
 	AAAA("umbriel", "2a01:4f9:c011:8fb5::1"),
 	// See `nixos.org.mail.key` in `non-critical-infra/modules/mailserver/default.nix`.
 	TXT("mail._domainkey", "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDcgNq4+Y23GxN8Mdza437tL5DuJJZU1y6VzTCwSi6cBNLyBDci2cmqXx/gm1sA3yv7+h+8/OyJpEgcbCIW/Ygs1XLuECqvXVX8MU6Djn4KY+d2sU1tlUdqvNM86puoneQtjEv9rDsjf3HGqaeOcjetFnQW7H+qcNcaEShxyKztzQIDAQAB"),
+	CNAME("freescout", "umbriel.nixos.org."),
 
 	// ngi
 	CNAME("cache.ngi0", "d2tu257wv37zz1.cloudfront.net."),
@@ -183,7 +184,4 @@ D("nixos.org",
 	CNAME("status", "nixos-status.netlify.app."),
 	CNAME("weekly", "nixos-weekly.netlify.com."),
 	CNAME("www", "nixos-homepage.netlify.app."),
-
-	// freescout
-	CNAME("freescout", "umbriel.nixos.org.")
 );
