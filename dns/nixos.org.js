@@ -182,5 +182,8 @@ D("nixos.org",
 	CNAME("search", "nixos-search.netlify.app."),
 	CNAME("status", "nixos-status.netlify.app."),
 	CNAME("weekly", "nixos-weekly.netlify.com."),
-	CNAME("www", "nixos-homepage.netlify.app.")
+	CNAME("www", "nixos-homepage.netlify.app."),
+
+	// freescout
+	CNAME("freescout", "umbriel.nixos.org.")
 );
