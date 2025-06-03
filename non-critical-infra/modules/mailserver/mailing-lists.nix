@@ -53,6 +53,10 @@
         ../../secrets/lassulus-email-address.umbriel # https://github.com/lassulus
         ../../secrets/ryantrinkle-email-address.umbriel # https://github.com/ryantrinkle
       ];
+      loginAccount = {
+        encryptedHashedPassword = ../../secrets/foundation-email-login.umbriel;
+        storeEmail = true;
+      };
     };
 
     "fundraising@nixos.org" = {
