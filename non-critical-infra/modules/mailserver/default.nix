@@ -4,6 +4,7 @@
   imports = [
     ./mailing-lists.nix
     ./postsrsd.nix
+    ./freescout.nix
   ];
 
   mailserver = {
