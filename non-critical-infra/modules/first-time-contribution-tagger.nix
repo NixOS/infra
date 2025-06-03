@@ -1,4 +1,9 @@
+{ inputs, ... }:
 {
+  imports = [
+    inputs.first-time-contribution-tagger.nixosModule
+  ];
+
   services.first-time-contribution-tagger = {
     enable = true;
     interval = "*:0/10";

@@ -28,8 +28,6 @@
           modules = [
             value
             inputs.disko.nixosModules.disko
-            inputs.first-time-contribution-tagger.nixosModule
-            inputs.simple-nixos-mailserver.nixosModule
             inputs.sops-nix.nixosModules.sops
           ];
           extraModules = [ inputs.colmena.nixosModules.deploymentOptions ];

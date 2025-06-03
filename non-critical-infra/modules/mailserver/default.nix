@@ -1,7 +1,13 @@
-{ config, pkgs, ... }:
+{
+  inputs,
+  config,
+  pkgs,
+  ...
+}:
 
 {
   imports = [
+    inputs.simple-nixos-mailserver.nixosModule
     ./mailing-lists.nix
     ./postsrsd.nix
   ];
