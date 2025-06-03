@@ -145,7 +145,10 @@ def login(address_id: str, force: bool) -> None:
           forwardTo = [
             # Add emails here
           ];
-          loginAccount.encryptedHashedPassword = ../../secrets/{address_id}-email-login.umbriel;
+          loginAccount = {{
+            encryptedHashedPassword = ../../secrets/{address_id}-email-login.umbriel;
+            storeEmail = false;  # Set to `true` if you want to store email in a mailbox accessible via IMAP.
+          }};
         }};
         """
     )

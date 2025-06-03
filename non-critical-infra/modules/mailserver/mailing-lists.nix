@@ -4,7 +4,7 @@
   # If you wish to hide your email address, you can encrypt it with SOPS. Just
   # run `nix run .#encrypt-email address -- --help` and follow the instructions.
   #
-  # If you wish to set up a login account for sending email, you must generate
+  # If you wish to set up a login account for sending/storing email, you must generate
   # an encrypted password. Run `nix run .#encrypt-email login -- --help` and
   # follow the instructions.
   mailing-lists = {
@@ -66,7 +66,10 @@
       forwardTo = [
         ../../secrets/mweinelt-email-address.umbriel # https://github.com/mweinelt
       ];
-      loginAccount.encryptedHashedPassword = ../../secrets/hexa-email-login.umbriel;
+      loginAccount = {
+        encryptedHashedPassword = ../../secrets/hexa-email-login.umbriel;
+        storeEmail = false;
+      };
     };
 
     "hostmaster@nixos.org" = {
@@ -116,7 +119,10 @@
         ../../secrets/erethon-email-address.umbriel # https://github.com/erethon
         ../../secrets/imincik-email-address.umbriel # https://github.com/imincik
       ];
-      loginAccount.encryptedHashedPassword = ../../secrets/ngi-nixos-org-email-login.umbriel;
+      loginAccount = {
+        encryptedHashedPassword = ../../secrets/ngi-nixos-org-email-login.umbriel;
+        storeEmail = false;
+      };
     };
 
     "nixcon@nixos.org" = {
