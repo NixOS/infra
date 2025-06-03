@@ -11,7 +11,7 @@ data "aws_iam_policy_document" "archaeologist" {
     # Read-only access and listing permissions
     # To the cache and releases inventories,
     # as well as the bucket where cache bucket logs end up in.
-    sid = "NixCacheLogsInventoryReadOnly"
+    sid = "NixCacheReadOnly"
 
     actions = [
       "s3:List*",
@@ -19,6 +19,8 @@ data "aws_iam_policy_document" "archaeologist" {
     ]
 
     resources = [
+      "arn:aws:s3:::nix-cache",
+      "arn:aws:s3:::nix-cache/*",
       "arn:aws:s3:::nix-cache-inventory",
       "arn:aws:s3:::nix-cache-inventory/*",
       "arn:aws:s3:::nix-cache-log",
@@ -29,18 +31,16 @@ data "aws_iam_policy_document" "archaeologist" {
   }
 
   statement {
-    sid = "NixCacheLogsReadOnly"
+    # Allows fetching information on the bucket
+    sid = "ListMetrics"
 
     actions = [
-      "s3:Get*"
+      "cloudwatch:ListMetrics",
+      "cloudwatch:GetMetricStatistics"
     ]
 
-    resources = [
-      "arn:aws:s3:::nix-cache-log",
-      "arn:aws:s3:::nix-cache-log/*",
-      "arn:aws:s3:::nix-releases-inventory220231029182031496800000001",
-      "arn:aws:s3:::nix-releases-inventory220231029182031496800000001/*",
-    ]
+    # We don't have any private metrics, KISS
+    resources = ["*"]
   }
 
   statement {
