@@ -1,3 +1,29 @@
+# GitHub Releases Proxy Service
+#
+# This service provides IPv6-enabled access to GitHub releases through Fastly CDN.
+# It transparently follows GitHub's S3 redirects to provide direct file access.
+#
+# Supported URL patterns:
+# - /nix/* -> /NixOS/experimental-nix-installer/releases/download/*
+# - /patchelf/* -> /NixOS/patchelf/releases/download/*
+#
+# Testing commands:
+#
+# Basic functionality tests:
+# curl -I https://gh-releases.nixos.org/nix/0.27.0/nix-installer.sh
+# curl -s https://gh-releases.nixos.org/nix/0.27.0/nix-installer.sh | head -n 5
+#
+# IPv6 connectivity test:
+# curl -6 -I https://gh-releases.nixos.org/nix/0.27.0/nix-installer.sh
+#
+# Performance comparison (should show redirect following):
+# time curl -s https://gh-releases.nixos.org/nix/0.27.0/nix-installer-x86_64-linux > /dev/null
+# time curl -s https://github.com/NixOS/experimental-nix-installer/releases/download/0.27.0/nix-installer-x86_64-linux > /dev/null
+#
+# Error cases (should return 404):
+# curl -I https://gh-releases.nixos.org/invalid/path
+# curl -I https://gh-releases.nixos.org/patchelf/999.999.999/nonexistent-file
+
 locals {
   gh_releases_domain = "gh-releases.nixos.org"
 }
@@ -21,7 +47,41 @@ resource "fastly_service_vcl" "gh_releases" {
     ssl_check_cert        = true
     use_ssl               = true
     weight                = 100
+    request_condition     = "Use GitHub backend"
   }
+
+  backend {
+    address               = "objects.githubusercontent.com"
+    auto_loadbalance      = false
+    between_bytes_timeout = 10000
+    connect_timeout       = 1000
+    error_threshold       = 0
+    first_byte_timeout    = 15000
+    max_conn              = 200
+    name                  = "objects_githubusercontent_com"
+    override_host         = "objects.githubusercontent.com"
+    port                  = 443
+    ssl_cert_hostname     = "objects.githubusercontent.com"
+    ssl_check_cert        = true
+    use_ssl               = true
+    weight                = 100
+    request_condition     = "Use Objects backend"
+  }
+
+  condition {
+    name      = "Use GitHub backend"
+    priority  = 10
+    statement = "!req.http.X-Use-Objects-Backend"
+    type      = "REQUEST"
+  }
+
+  condition {
+    name      = "Use Objects backend"
+    priority  = 10
+    statement = "req.http.X-Use-Objects-Backend"
+    type      = "REQUEST"
+  }
+
 
   request_setting {
     name      = "Redirect HTTP to HTTPS"
@@ -35,18 +95,46 @@ resource "fastly_service_vcl" "gh_releases" {
   # Main VCL snippet to handle the redirect logic
   snippet {
     content  = <<-EOT
-      if (req.url ~ "^/nix/") {
-        set req.url = regsub(req.url.path, "^/nix/", "/NixOS/experimental-nix-installer/releases/download/");
-      } else if (req.url ~ "^/patchelf/") {
-        set req.url = regsub(req.url.path, "^/patchelf/", "/NixOS/patchelf/releases/download/");
-      } else {
-        error 600;
+      # Only rewrite if this is the first request (not a restart)
+      if (!req.http.X-Rewritten) {
+        if (req.url ~ "^/nix/") {
+          set req.url = regsub(req.url.path, "^/nix/", "/NixOS/experimental-nix-installer/releases/download/");
+          set req.http.X-Rewritten = "true";
+        } else if (req.url ~ "^/patchelf/") {
+          set req.url = regsub(req.url.path, "^/patchelf/", "/NixOS/patchelf/releases/download/");
+          set req.http.X-Rewritten = "true";
+        } else {
+          error 600;
+        }
       }
     EOT
     name     = "GitHub releases redirect"
     priority = 100
     type     = "recv"
   }
+
+  # Handle redirects from GitHub to S3
+  snippet {
+    content  = <<-EOT
+      if (beresp.status == 302 && beresp.http.Location ~ "^https://objects\.githubusercontent\.com/") {
+        # Extract the full path including query parameters
+        set req.url = regsub(beresp.http.Location, "^https://objects\.githubusercontent\.com", "");
+        set req.http.X-Use-Objects-Backend = "true";
+        # Set correct host header for S3
+        set req.http.Host = "objects.githubusercontent.com";
+        # Clear GitHub-specific headers that might interfere
+        unset req.http.Authorization;
+        unset req.http.Cookie;
+        restart;
+      }
+    EOT
+    name     = "Follow GitHub redirects"
+    priority = 100
+    type     = "fetch"
+  }
+
+
+
 
   # Handle 404 errors
   snippet {
