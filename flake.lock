@@ -240,6 +240,29 @@
         "type": "github"
       }
     },
+    "freescout": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1743845578,
+        "narHash": "sha256-tS1fQfOasIbzOnCCBZHAjdOCsKD/Zt5btciC/cgcwWc=",
+        "ref": "refs/heads/main",
+        "rev": "2b5bcee06a673c13c5b5a62b4f4dd1300ce85903",
+        "revCount": 33,
+        "type": "git",
+        "url": "https://cyberchaos.dev/e1mo/freescout-nix-flake.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://cyberchaos.dev/e1mo/freescout-nix-flake.git"
+      }
+    },
     "git-hooks": {
       "inputs": {
         "flake-compat": [
@@ -518,6 +541,7 @@
         "first-time-contribution-tagger": "first-time-contribution-tagger",
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
+        "freescout": "freescout",
         "hydra": "hydra",
         "nixos-channel-scripts": "nixos-channel-scripts",
         "nixpkgs": "nixpkgs",

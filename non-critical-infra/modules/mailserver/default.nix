@@ -10,6 +10,7 @@
     inputs.simple-nixos-mailserver.nixosModule
     ./mailing-lists.nix
     ./postsrsd.nix
+    ./freescout.nix
   ];
 
   mailserver = {

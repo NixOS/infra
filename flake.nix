@@ -43,6 +43,14 @@
 
     flake-utils.url = "github:numtide/flake-utils";
 
+    freescout = {
+      url = "git+https://cyberchaos.dev/e1mo/freescout-nix-flake.git";
+      inputs = {
+        flake-utils.follows = "flake-utils";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
