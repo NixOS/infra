@@ -76,7 +76,7 @@
       '';
 
       locations."/" = {
-        proxyPass = "http://anubis";
+        proxyPass = "http://$upstream";
       };
 
       locations."~ ^/build/\\d+/download/" = {
