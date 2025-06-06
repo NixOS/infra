@@ -14,10 +14,12 @@ let
 
   listsWithSecretPlaceholders = lib.mapAttrs' (name: mailingList: {
     name = name;
-    value = map (
-      member:
-      if builtins.isString member then member else config.sops.placeholder.${fileToSecretId member}
-    ) mailingList.forwardTo;
+    value =
+      (lib.optional (mailingList.loginAccount != null && mailingList.loginAccount.storeEmail) name)
+      ++ map (
+        member:
+        if builtins.isString member then member else config.sops.placeholder.${fileToSecretId member}
+      ) mailingList.forwardTo;
   }) config.mailing-lists;
 
   secretAddressFiles = lib.pipe config.mailing-lists [
@@ -56,6 +58,13 @@ in
                         Must be a path to encrypted file generated with `nix run .#encrypt-email login`
                       '';
                     };
+                    storeEmail = lib.mkOption {
+                      type = types.bool;
+                      description = ''
+                        Whether to store emails sent to this mailing list in a
+                        mailbox accessible via IMAP.
+                      '';
+                    };
                   };
                 }
               );
@@ -72,12 +81,6 @@ in
   };
 
   config = {
-    # Disable IMAP. We don't need it, as we don't store email on this server, we
-    # only forward emails.
-    mailserver.enableImap = false;
-    mailserver.enableImapSsl = false;
-    services.dovecot2.enableImap = false;
-
     mailserver.loginAccounts = lib.pipe config.mailing-lists [
       (lib.filterAttrs (_name: mailingList: mailingList.loginAccount != null))
       (lib.mapAttrs (
