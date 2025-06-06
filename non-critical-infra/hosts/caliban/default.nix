@@ -12,11 +12,11 @@
     inputs.srvos.nixosModules.hardware-hetzner-online-amd
     ../../../modules/rasdaemon.nix
     ../../modules/common.nix
+    ../../modules/draupnir.nix
     ../../modules/first-time-contribution-tagger.nix
     ../../modules/backup.nix
     ../../modules/element-web.nix
     ../../modules/matrix-synapse.nix
-    ../../modules/mjolnir.nix
     ../../modules/owncast.nix
     ../../modules/prometheus/node-exporter.nix
     ../../modules/vaultwarden.nix
