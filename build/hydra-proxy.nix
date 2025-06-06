@@ -1,34 +1,25 @@
 {
   config,
-  lib,
   pkgs,
   ...
 }:
 
-let
-  bannedUserAgentPatterns = [
-    "Trident/"
-    "Android\\s[123456789]\\."
-    "iPod"
-    "iPad\\sOS\\s"
-    "iPhone\\sOS\\s[23456789]"
-    "Opera/[89]"
-    # Chrome 134+
-    "(Chrome|CriOS)/(\\d\\d?\\.|1[012]|13[0123])"
-    # Firefox ESR 128 and Firefox 137+
-    "(Firefox|FxiOS)/(\\d\\d?\\.|1[01]|12[012345679]|13[0123456])"
-    "PPC\\sMac\\sOS"
-    "Windows\\sCE"
-    "Windows\\s95"
-    "Windows\\s98"
-    "Windows\\sNT\\s[12345]\\."
-  ];
-in
 {
   networking.firewall.allowedTCPPorts = [
     80
     443
+    9001
   ];
+
+  services.anubis.instances."hydra-server" = {
+    settings = {
+      TARGET = "http://127.0.0.1:3000";
+      BIND = ":3001";
+      BIND_NETWORK = "tcp";
+      METRICS_BIND = ":9001";
+      METRICS_BIND_NETWORK = "tcp";
+    };
+  };
 
   services.nginx = {
     enable = true;
@@ -47,18 +38,21 @@ in
       worker_processes auto;
     '';
 
+    appendHttpConfig = ''
+      map $http_x_from $upstream {
+        default "anubis";
+        nix.dev-Uogho3gi "hydra-server";
+      }
+    '';
+
     eventsConfig = ''
       worker_connections 1024;
     '';
 
-    appendHttpConfig = ''
-      map $http_user_agent $badagent {
-        default 0;
-        ${lib.concatMapStringsSep "\n" (pattern: ''
-          ~${pattern} 1;
-        '') bannedUserAgentPatterns}
-      }
-    '';
+    upstreams = {
+      anubis.servers."127.0.0.1:3001" = { };
+      hydra-server.servers."127.0.0.1:3000" = { };
+    };
 
     virtualHosts."hydra.nixos.org" = {
       forceSSL = true;
@@ -82,13 +76,11 @@ in
       '';
 
       locations."/" = {
-        proxyPass = "http://127.0.0.1:3000";
-        extraConfig = ''
-          if ($badagent) {
-            access_log /var/log/nginx/abuse.log;
-            return 403;
-          }
-        '';
+        proxyPass = "http://anubis";
+      };
+
+      locations."~ ^/build/\\d+/download/" = {
+        proxyPass = "http://hydra-server";
       };
 
       locations."/static/" = {
@@ -96,5 +88,4 @@ in
       };
     };
   };
-
 }
