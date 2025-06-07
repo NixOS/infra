@@ -41,7 +41,7 @@ D("nixos.org",
 
 	// fastly
 	CNAME("_acme-challenge.channels", "9u55qij5w2odiwqxfi.fastly-validations.com."),
-	CNAME("_acme-challenge.gh-releases", "PLACEHOLDER.fastly-validations.com."), // TODO: Update after terraform apply
+	CNAME("_acme-challenge.gh-releases", "4pgghpw19iuvzjiz9k.fastly-validations.com."),
 	CNAME("_acme-challenge.releases", "s731ezp9ameh5f349b.fastly-validations.com."),
 	CNAME("_acme-challenge.tarballs", "vnqm62k5sjx9jogeqg.fastly-validations.com."),
 	CNAME("cache", "dualstack.v2.shared.global.fastly.net."),
