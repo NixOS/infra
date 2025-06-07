@@ -5,7 +5,7 @@ PIDS=()
 update() {
 	local HOST=${1}
 	local PROFILE=${2}
-	(ssh "$HOST" -- darwin-rebuild switch --flake "github:nixos/infra#$PROFILE" 2>&1| sed -e "s/^/${HOST} | /") &
+	(ssh "$HOST" -- sudo darwin-rebuild switch --flake "github:nixos/infra#$PROFILE" 2>&1| sed -e "s/^/${HOST} | /") &
 	PIDS+=($!)
 }
 
