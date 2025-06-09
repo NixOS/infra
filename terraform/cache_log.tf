@@ -22,10 +22,6 @@ resource "aws_s3_bucket_lifecycle_configuration" "cache_log" {
     id     = "rule-1"
     status = "Enabled"
 
-    filter {
-      prefix = ""
-    }
-
     expiration {
       days = "30"
     }

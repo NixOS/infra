@@ -12,15 +12,35 @@ locals {
 
 resource "aws_s3_bucket" "releases" {
   bucket = "nix-releases"
+}
 
-  lifecycle_rule {
-    enabled = true
+resource "aws_s3_bucket_lifecycle_configuration" "releases" {
+  bucket = aws_s3_bucket.releases.id
+
+
+  transition_default_minimum_object_size = "varies_by_storage_class"
+  rule {
+    id     = "tf-s3-lifecycle-20230907091915137900000001"
+    status = "Enabled"
+
+    filter {
+      prefix = ""
+    }
 
     transition {
       days          = 365
       storage_class = "STANDARD_IA"
     }
   }
+}
+
+import {
+  id = aws_s3_bucket.releases.id
+  to = aws_s3_bucket_lifecycle_configuration.releases
+}
+
+resource "aws_s3_bucket_cors_configuration" "releases" {
+  bucket = aws_s3_bucket.releases.id
 
   cors_rule {
     allowed_headers = ["*"]
@@ -29,6 +49,11 @@ resource "aws_s3_bucket" "releases" {
     expose_headers  = ["ETag"]
     max_age_seconds = 3600
   }
+}
+
+import {
+  to = aws_s3_bucket_cors_configuration.releases
+  id = aws_s3_bucket.releases.id
 }
 
 resource "aws_s3_bucket_object" "releases-index-html" {

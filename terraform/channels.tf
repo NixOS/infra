@@ -20,6 +20,11 @@ resource "aws_s3_bucket" "channels" {
   website {
     index_document = "index.html"
   }
+}
+
+resource "aws_s3_bucket_cors_configuration" "channels" {
+  provider = aws.us
+  bucket   = aws_s3_bucket.channels.id
 
   cors_rule {
     allowed_headers = ["*"]
@@ -28,6 +33,12 @@ resource "aws_s3_bucket" "channels" {
     expose_headers  = ["ETag"]
     max_age_seconds = 3600
   }
+}
+
+import {
+  to = aws_s3_bucket_cors_configuration.channels
+  id = aws_s3_bucket.channels.id
+
 }
 
 resource "aws_s3_bucket_object" "channels-index-html" {

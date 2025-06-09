@@ -12,6 +12,11 @@ module "cache-staging-202010" {
 }
 
 import {
+  to = module.cache-staging-202010.aws_s3_bucket_lifecycle_configuration.cache
+  id = "nix-cache-staging"
+}
+
+import {
   to = module.cache-staging-202010.aws_s3_bucket_cors_configuration.cache
   id = "nix-cache-staging"
 }
@@ -25,6 +30,11 @@ module "cache-staging-202410" {
     # move the new bucket to EU
     aws = aws
   }
+}
+
+import {
+  to = module.cache-staging-202410.aws_s3_bucket_lifecycle_configuration.cache
+  id = "nix-cache-staging-202410"
 }
 
 import {

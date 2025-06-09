@@ -5,11 +5,19 @@ variable "bucket_name" {
 resource "aws_s3_bucket" "cache" {
   provider = aws
   bucket   = var.bucket_name
+}
 
-  lifecycle_rule {
-    enabled = true
+resource "aws_s3_bucket_lifecycle_configuration" "cache" {
+  provider = aws
+  bucket   = aws_s3_bucket.cache.id
 
-    prefix = ""
+  rule {
+    id     = "Infrequent Access"
+    status = "Enabled"
+
+    filter {
+      prefix = ""
+    }
 
     transition {
       days          = 365

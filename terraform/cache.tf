@@ -5,17 +5,32 @@ locals {
 resource "aws_s3_bucket" "cache" {
   provider = aws.us
   bucket   = "nix-cache"
+}
 
-  lifecycle_rule {
-    enabled = true
+resource "aws_s3_bucket_lifecycle_configuration" "cache" {
+  provider = aws.us
+  bucket   = aws_s3_bucket.cache.id
 
-    prefix = ""
+  transition_default_minimum_object_size = "varies_by_storage_class"
+
+  rule {
+    id     = "Infrequent Access"
+    status = "Enabled"
+
+    filter {
+      prefix = ""
+    }
 
     transition {
       days          = 365
       storage_class = "STANDARD_IA"
     }
   }
+}
+
+import {
+  to = aws_s3_bucket_lifecycle_configuration.cache
+  id = aws_s3_bucket.cache.id
 }
 
 resource "aws_s3_bucket_cors_configuration" "cache" {
@@ -31,7 +46,7 @@ resource "aws_s3_bucket_cors_configuration" "cache" {
 
 import {
   to = aws_s3_bucket_cors_configuration.cache
-  id = aws_s3_bucket.cache.bucket
+  id = aws_s3_bucket.cache.id
 }
 
 resource "aws_s3_bucket_object" "cache-nix-cache-info" {
