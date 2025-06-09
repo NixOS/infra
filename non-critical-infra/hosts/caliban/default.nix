@@ -12,6 +12,7 @@
     inputs.srvos.nixosModules.hardware-hetzner-online-amd
     ../../../modules/rasdaemon.nix
     ../../modules/common.nix
+    ../../modules/debuginfod
     ../../modules/first-time-contribution-tagger.nix
     ../../modules/backup.nix
     ../../modules/element-web.nix
