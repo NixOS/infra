@@ -9,6 +9,8 @@ resource "aws_s3_bucket" "cache" {
   lifecycle_rule {
     enabled = true
 
+    prefix = ""
+
     transition {
       days          = 365
       storage_class = "STANDARD_IA"
