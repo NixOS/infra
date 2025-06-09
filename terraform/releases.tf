@@ -263,5 +263,5 @@ resource "fastly_tls_subscription" "releases" {
 
 # TODO: move the DNS config to terraform
 output "releases-managed_dns_challenge" {
-  value = fastly_tls_subscription.releases.managed_dns_challenge
+  value = fastly_tls_subscription.releases.managed_dns_challenges
 }

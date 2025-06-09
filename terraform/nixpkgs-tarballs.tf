@@ -294,7 +294,7 @@ resource "fastly_tls_subscription" "nixpkgs-tarballs" {
 
 # TODO: move the DNS config to terraform
 output "nixpkgs-tarballs-managed_dns_challenge" {
-  value = fastly_tls_subscription.nixpkgs-tarballs.managed_dns_challenge
+  value = fastly_tls_subscription.nixpkgs-tarballs.managed_dns_challenges
 }
 
 # Create an S3 bucket for CloudTrail logs

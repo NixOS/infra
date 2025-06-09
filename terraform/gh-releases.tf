@@ -181,5 +181,5 @@ resource "fastly_tls_subscription" "gh_releases" {
 }
 
 output "gh-releases-managed_dns_challenge" {
-  value = fastly_tls_subscription.gh_releases.managed_dns_challenge
+  value = fastly_tls_subscription.gh_releases.managed_dns_challenges
 }

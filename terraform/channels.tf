@@ -298,5 +298,5 @@ resource "fastly_tls_subscription" "channels" {
 
 # TODO: move the DNS config to terraform
 output "channels-managed_dns_challenge" {
-  value = fastly_tls_subscription.channels.managed_dns_challenge
+  value = fastly_tls_subscription.channels.managed_dns_challenges
 }
