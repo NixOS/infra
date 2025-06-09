@@ -12,6 +12,10 @@ resource "aws_s3_bucket_lifecycle_configuration" "releases_inventory" {
     id     = "tf-s3-lifecycle-20231029182032300100000002"
     status = "Enabled"
 
+    filter {
+      prefix = ""
+    }
+
     expiration {
       days = 30
     }
