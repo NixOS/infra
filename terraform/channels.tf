@@ -10,16 +10,30 @@ locals {
   # Use the website endpoint because the bucket is configured with website
   # enabled. This also means we can't use TLS between Fastly and AWS because
   # the website endpoint only has port 80 open.
-  channels_backend = aws_s3_bucket.channels.website_endpoint
+  channels_backend = aws_s3_bucket.nixpkgs-tarballs.website_endpoint
+  # NOTE: I'd wish to use the below line to get rid of deprecation errors but then the fastly provider panics
+  # see https://github.com/fastly/terraform-provider-fastly/issues/884 
+  # and https://gist.github.com/arianvp/263cbe52b00620bcbc388ffde8b45876
+  # channels_backend = aws_s3_bucket_website_configuration.channels.website_endpoint
 }
 
 resource "aws_s3_bucket" "channels" {
   provider = aws.us
   bucket   = "nix-channels"
+}
 
-  website {
-    index_document = "index.html"
+resource "aws_s3_bucket_website_configuration" "channels" {
+  provider = aws.us
+  bucket   = aws_s3_bucket.channels.id
+
+  index_document {
+    suffix = "index.html"
   }
+}
+
+import {
+  to = aws_s3_bucket_website_configuration.channels
+  id = aws_s3_bucket.channels.id
 }
 
 resource "aws_s3_bucket_cors_configuration" "channels" {
