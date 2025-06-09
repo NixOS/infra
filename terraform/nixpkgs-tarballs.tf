@@ -293,10 +293,19 @@ resource "aws_s3_bucket" "nixpkgs-tarballs-cloudtrail-logs" {
   # We can potentially make this public for transparency?
   # But first I want to see what the logs look like.
   acl = "private"
+}
 
-  versioning {
-    enabled = true
+resource "aws_s3_bucket_versioning" "nixpkgs-tarballs-cloudtrail-logs" {
+  bucket = aws_s3_bucket.nixpkgs-tarballs-cloudtrail-logs.id
+  versioning_configuration {
+    status = "Enabled"
   }
+}
+
+
+import {
+  to = aws_s3_bucket_versioning.nixpkgs-tarballs-cloudtrail-logs
+  id = aws_s3_bucket.nixpkgs-tarballs-cloudtrail-logs.id
 }
 
 # Attach a policy to the CloudTrail logs S3 bucket
