@@ -3,10 +3,8 @@ locals {
   # Use the website endpoint because the bucket is configured with website
   # enabled. This also means we can't use TLS between Fastly and AWS because
   # the website endpoint only has port 80 open.
-  tarballs_backend = aws_s3_bucket.nixpkgs-tarballs.website_endpoint
-  # NOTE: I'd wish to use the below line to get rid of deprecation errors but then the fastly provider panics
-  # see https://github.com/fastly/terraform-provider-fastly/issues/884 
-  # and https://gist.github.com/arianvp/263cbe52b00620bcbc388ffde8b45876
+  tarballs_backend = "nixpkgs-tarballs.s3-website-eu-west-1.amazonaws.com"
+  # TODO: Uncomment this once has been applied once. This is to work around fastly bug https://github.com/fastly/terraform-provider-fastly/issues/884
   # tarballs_backend = aws_s3_bucket_website_configuration.nixpkgs-tarballs.website_endpoint
 }
 
