@@ -16,6 +16,11 @@ resource "aws_s3_bucket" "cache" {
       storage_class = "STANDARD_IA"
     }
   }
+}
+
+resource "aws_s3_bucket_cors_configuration" "cache" {
+  provider = aws
+  bucket   = aws_s3_bucket.cache.bucket
 
   cors_rule {
     allowed_headers = ["Authorization"]
@@ -24,6 +29,7 @@ resource "aws_s3_bucket" "cache" {
     max_age_seconds = 3000
   }
 }
+
 
 resource "aws_s3_bucket_public_access_block" "cache" {
   bucket = aws_s3_bucket.cache.bucket

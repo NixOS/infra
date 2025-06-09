@@ -11,6 +11,12 @@ module "cache-staging-202010" {
   }
 }
 
+import {
+  to = module.cache-staging-202010.aws_s3_bucket_cors_configuration.cache
+  id = "nix-cache-staging"
+}
+
+
 # This is the new bucket we want to use in future.
 module "cache-staging-202410" {
   source      = "./cache-bucket"
@@ -19,6 +25,11 @@ module "cache-staging-202410" {
     # move the new bucket to EU
     aws = aws
   }
+}
+
+import {
+  to = module.cache-staging-202410.aws_s3_bucket_cors_configuration.cache
+  id = "nix-cache-staging-202410"
 }
 
 # The fastly configuration below will first try the new bucket and than the old bucket.

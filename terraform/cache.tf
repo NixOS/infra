@@ -16,13 +16,22 @@ resource "aws_s3_bucket" "cache" {
       storage_class = "STANDARD_IA"
     }
   }
+}
 
+resource "aws_s3_bucket_cors_configuration" "cache" {
+  provider = aws.us
+  bucket   = aws_s3_bucket.cache.id
   cors_rule {
     allowed_headers = ["Authorization"]
     allowed_methods = ["GET"]
     allowed_origins = ["*"]
     max_age_seconds = 3000
   }
+}
+
+import {
+  to = aws_s3_bucket_cors_configuration.cache
+  id = aws_s3_bucket.cache.bucket
 }
 
 resource "aws_s3_bucket_object" "cache-nix-cache-info" {
