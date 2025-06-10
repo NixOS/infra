@@ -22,7 +22,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "cache" {
     }
 
     transition {
-      days          = 365
+      days          = 90
       storage_class = "STANDARD_IA"
     }
   }
