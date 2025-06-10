@@ -5,15 +5,30 @@ variable "bucket_name" {
 resource "aws_s3_bucket" "cache" {
   provider = aws
   bucket   = var.bucket_name
+}
 
-  lifecycle_rule {
-    enabled = true
+resource "aws_s3_bucket_lifecycle_configuration" "cache" {
+  provider = aws
+  bucket   = aws_s3_bucket.cache.id
+
+  rule {
+    id     = "Infrequent Access"
+    status = "Enabled"
+
+    filter {
+      prefix = ""
+    }
 
     transition {
       days          = 365
       storage_class = "STANDARD_IA"
     }
   }
+}
+
+resource "aws_s3_bucket_cors_configuration" "cache" {
+  provider = aws
+  bucket   = aws_s3_bucket.cache.bucket
 
   cors_rule {
     allowed_headers = ["Authorization"]
@@ -22,6 +37,7 @@ resource "aws_s3_bucket" "cache" {
     max_age_seconds = 3000
   }
 }
+
 
 resource "aws_s3_bucket_public_access_block" "cache" {
   bucket = aws_s3_bucket.cache.bucket

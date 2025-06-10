@@ -3,15 +3,25 @@ locals {
   # Use the website endpoint because the bucket is configured with website
   # enabled. This also means we can't use TLS between Fastly and AWS because
   # the website endpoint only has port 80 open.
-  tarballs_backend = aws_s3_bucket.nixpkgs-tarballs.website_endpoint
+  tarballs_backend = "nixpkgs-tarballs.s3-website-eu-west-1.amazonaws.com"
+  # TODO: Uncomment this once has been applied once. This is to work around fastly bug https://github.com/fastly/terraform-provider-fastly/issues/884
+  # tarballs_backend = aws_s3_bucket_website_configuration.nixpkgs-tarballs.website_endpoint
 }
 
 resource "aws_s3_bucket" "nixpkgs-tarballs" {
   bucket = "nixpkgs-tarballs"
+}
 
-  website {
-    index_document = "index.html"
+resource "aws_s3_bucket_website_configuration" "nixpkgs-tarballs" {
+  bucket = aws_s3_bucket.nixpkgs-tarballs.id
+  index_document {
+    suffix = "index.html"
   }
+}
+
+import {
+  to = aws_s3_bucket_website_configuration.nixpkgs-tarballs
+  id = aws_s3_bucket.nixpkgs-tarballs.id
 }
 
 resource "aws_s3_bucket_policy" "nixpkgs-tarballs" {
@@ -284,7 +294,7 @@ resource "fastly_tls_subscription" "nixpkgs-tarballs" {
 
 # TODO: move the DNS config to terraform
 output "nixpkgs-tarballs-managed_dns_challenge" {
-  value = fastly_tls_subscription.nixpkgs-tarballs.managed_dns_challenge
+  value = fastly_tls_subscription.nixpkgs-tarballs.managed_dns_challenges
 }
 
 # Create an S3 bucket for CloudTrail logs
@@ -293,10 +303,19 @@ resource "aws_s3_bucket" "nixpkgs-tarballs-cloudtrail-logs" {
   # We can potentially make this public for transparency?
   # But first I want to see what the logs look like.
   acl = "private"
+}
 
-  versioning {
-    enabled = true
+resource "aws_s3_bucket_versioning" "nixpkgs-tarballs-cloudtrail-logs" {
+  bucket = aws_s3_bucket.nixpkgs-tarballs-cloudtrail-logs.id
+  versioning_configuration {
+    status = "Enabled"
   }
+}
+
+
+import {
+  to = aws_s3_bucket_versioning.nixpkgs-tarballs-cloudtrail-logs
+  id = aws_s3_bucket.nixpkgs-tarballs-cloudtrail-logs.id
 }
 
 # Attach a policy to the CloudTrail logs S3 bucket

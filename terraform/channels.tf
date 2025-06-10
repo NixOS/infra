@@ -10,16 +10,33 @@ locals {
   # Use the website endpoint because the bucket is configured with website
   # enabled. This also means we can't use TLS between Fastly and AWS because
   # the website endpoint only has port 80 open.
-  channels_backend = aws_s3_bucket.channels.website_endpoint
+  channels_backend = "nix-channels.s3-website-us-east-1.amazonaws.com"
+  # TODO: Uncomment this once has been applied once. This is to work around fastly bug https://github.com/fastly/terraform-provider-fastly/issues/884
+  # channels_backend = aws_s3_bucket_website_configuration.channels.website_endpoint
 }
 
 resource "aws_s3_bucket" "channels" {
   provider = aws.us
   bucket   = "nix-channels"
+}
 
-  website {
-    index_document = "index.html"
+resource "aws_s3_bucket_website_configuration" "channels" {
+  provider = aws.us
+  bucket   = aws_s3_bucket.channels.id
+
+  index_document {
+    suffix = "index.html"
   }
+}
+
+import {
+  to = aws_s3_bucket_website_configuration.channels
+  id = aws_s3_bucket.channels.id
+}
+
+resource "aws_s3_bucket_cors_configuration" "channels" {
+  provider = aws.us
+  bucket   = aws_s3_bucket.channels.id
 
   cors_rule {
     allowed_headers = ["*"]
@@ -28,6 +45,12 @@ resource "aws_s3_bucket" "channels" {
     expose_headers  = ["ETag"]
     max_age_seconds = 3600
   }
+}
+
+import {
+  to = aws_s3_bucket_cors_configuration.channels
+  id = aws_s3_bucket.channels.id
+
 }
 
 resource "aws_s3_bucket_object" "channels-index-html" {
@@ -275,5 +298,5 @@ resource "fastly_tls_subscription" "channels" {
 
 # TODO: move the DNS config to terraform
 output "channels-managed_dns_challenge" {
-  value = fastly_tls_subscription.channels.managed_dns_challenge
+  value = fastly_tls_subscription.channels.managed_dns_challenges
 }

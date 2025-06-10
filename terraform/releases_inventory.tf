@@ -1,15 +1,30 @@
 # Get the list of files from the releases
 resource "aws_s3_bucket" "releases_inventory" {
   bucket_prefix = "nix-releases-inventory2"
+}
 
-  lifecycle_rule {
-    enabled = true
+resource "aws_s3_bucket_lifecycle_configuration" "releases_inventory" {
+  bucket = aws_s3_bucket.releases_inventory.id
 
-    # Only keep the last 30 days
+  transition_default_minimum_object_size = "varies_by_storage_class"
+
+  rule {
+    id     = "tf-s3-lifecycle-20231029182032300100000002"
+    status = "Enabled"
+
+    filter {
+      prefix = ""
+    }
+
     expiration {
       days = 30
     }
   }
+}
+
+import {
+  to = aws_s3_bucket_lifecycle_configuration.releases_inventory
+  id = aws_s3_bucket.releases_inventory.id
 }
 
 resource "aws_s3_bucket_inventory" "releases_inventory" {
@@ -37,4 +52,3 @@ resource "aws_s3_bucket_inventory" "releases_inventory" {
     }
   }
 }
-
