@@ -247,6 +247,12 @@ resource "fastly_service_vcl" "cache" {
   }
 
   cache_setting {
+    name            = "cache-404"
+    cache_condition = "is-404"
+    ttl             = 86400 # 1 day
+  }
+
+  cache_setting {
     name            = "cache-nar"
     cache_condition = "is-nar"
     ttl             = 31557600 # the maximum. 1 year
