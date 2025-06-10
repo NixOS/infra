@@ -177,7 +177,7 @@ resource "fastly_service_vcl" "cache" {
   condition {
     name      = "is-nar"
     priority  = 10
-    statement = "req.url ~ \"^/nar/$\""
+    statement = "req.url ~ \"^/nar/\""
     type      = "CACHE"
   }
 
