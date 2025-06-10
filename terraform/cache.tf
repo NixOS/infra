@@ -174,6 +174,13 @@ resource "fastly_service_vcl" "cache" {
     type      = "REQUEST"
   }
 
+  condition {
+    name      = "is-nar"
+    priority  = 10
+    statement = "req.url ~ \"^/nar/$\""
+    type      = "CACHE"
+  }
+
   domain {
     name = "cache.nixos.org"
   }
@@ -237,6 +244,12 @@ resource "fastly_service_vcl" "cache" {
     content_type    = "text/plain"
     response        = "Not Found"
     status          = 404
+  }
+
+  cache_setting {
+    name            = "cache-nar"
+    cache_condition = "is-nar"
+    ttl             = 31557600 # the maximum. 1 year
   }
 
   # Authenticate Fastly<->S3 requests. See Fastly documentation:
