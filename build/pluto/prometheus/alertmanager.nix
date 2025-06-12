@@ -109,7 +109,7 @@
 
   services.go-neb = {
     enable = true;
-    bindAddress = "localhost:4500";
+    bindAddress = "localhost:4050";
     baseUrl = "http://localhost";
     secretFile = config.age.secrets.alertmanager-matrix-forwarder.path;
     config = {
