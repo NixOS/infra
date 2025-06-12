@@ -137,6 +137,12 @@ resource "fastly_service_vcl" "cache" {
   name        = local.cache_domain
   default_ttl = 86400
 
+  # https://registry.terraform.io/providers/fastly/fastly/latest/docs/resources/service_vcl#activation-and-staging
+  # activate should not be set to true when stage is also set to true. While this combination will not cause any harm to the service,
+  # there is no logical reason to both stage and activate every set of applied changes.
+  activate = false  # set to true to deploy
+  stage    = true   # set to false to remove staging environment
+
   backend {
     address               = "s3.amazonaws.com"
     auto_loadbalance      = false
