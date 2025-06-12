@@ -1,7 +1,6 @@
 {
   inputs,
   config,
-  pkgs,
   ...
 }:
 
@@ -13,8 +12,6 @@
 
   services.freescout = {
     enable = true;
-    # Workaround for https://cyberchaos.dev/e1mo/freescout-nix-flake/-/merge_requests/1
-    package = inputs.freescout.packages.${pkgs.system}.default;
     domain = "freescout.nixos.org";
 
     settings.APP_KEY._secret = config.sops.secrets.freescout-app-key.path;
