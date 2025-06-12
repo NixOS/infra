@@ -52,6 +52,21 @@
               "hopeful-rivest.builder.nixos.org:9100"
             ];
           }
+          {
+            labels.role = "ofborg";
+            targets = [
+              "build01.ofborg.org:9100"
+              "build02.ofborg.org:9100"
+              "build03.ofborg.org:9100"
+              "build04.ofborg.org:9100"
+              "build05.ofborg.org:9100"
+              "core01.ofborg.org:9100"
+              "eval01.ofborg.org:9100"
+              "eval02.ofborg.org:9100"
+              "eval03.ofborg.org:9100"
+              "eval04.ofborg.org:9100"
+            ];
+          }
         ];
       }
     ];
