@@ -51,7 +51,6 @@
         ../../secrets/infinisil-email-address.umbriel # https://github.com/infinisil
         ../../secrets/ra33it0-email-address.umbriel # https://github.com/ra33it0
         ../../secrets/lassulus-email-address.umbriel # https://github.com/lassulus
-        ../../secrets/ryantrinkle-email-address.umbriel # https://github.com/ryantrinkle
       ];
       loginAccount = {
         encryptedHashedPassword = ../../secrets/foundation-email-login.umbriel;
