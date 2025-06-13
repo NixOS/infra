@@ -19,7 +19,10 @@ echo "::endgroup::"
 echo "::group::Running git absorb"
 # Run git absorb with --force to automatically absorb changes
 git add -A
-git absorb --force --base origin/main --and-rebase
+# Create fixup commits
+git absorb --force --base origin/main
+# Then do a non-interactive autosquash rebase
+GIT_SEQUENCE_EDITOR=: git rebase -i --autosquash origin/main
 echo "::endgroup::"
 
 echo "::group::Pushing changes"
