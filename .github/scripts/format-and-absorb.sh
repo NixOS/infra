@@ -21,8 +21,10 @@ echo "::group::Running git absorb"
 git add -A
 # Create fixup commits
 git absorb --force --base origin/main
-# Then do a non-interactive autosquash rebase
-GIT_SEQUENCE_EDITOR=: git rebase -i --autosquash origin/main
+# Configure git to use non-interactive editors
+git config core.editor ':'
+# Then do an autosquash rebase
+git rebase --autosquash origin/main
 echo "::endgroup::"
 
 echo "::group::Pushing changes"
