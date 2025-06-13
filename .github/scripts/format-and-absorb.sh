@@ -19,11 +19,11 @@ echo "::endgroup::"
 echo "::group::Running git absorb"
 # Run git absorb with --force to automatically absorb changes
 git add -A
-git absorb --force --base origin/main
+git absorb --force --base origin/main --and-rebase
 echo "::endgroup::"
 
 echo "::group::Pushing changes"
-git push
+git push --force-with-lease
 echo "::endgroup::"
 
 echo "Successfully formatted code and absorbed changes!"
