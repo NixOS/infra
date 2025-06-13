@@ -20,7 +20,9 @@ echo "::group::Running git absorb"
 # Run git absorb with --force to automatically absorb changes
 git add -A
 # Create fixup commits
-git absorb --force --base origin/main
+# Find the merge base to properly identify which commits can absorb changes
+MERGE_BASE=$(git merge-base origin/main HEAD)
+git absorb --force --base "$MERGE_BASE"
 # Then do a non-interactive autosquash rebase with git identity set
 export GIT_EDITOR=:
 export GIT_SEQUENCE_EDITOR=:
