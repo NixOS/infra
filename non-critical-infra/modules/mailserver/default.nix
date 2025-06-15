@@ -13,6 +13,9 @@
     ./freescout.nix
   ];
 
+  # enabled through systemd.network.enable
+  services.resolved.enable = false;
+
   mailserver = {
     enable = true;
     certificateScheme = "acme-nginx";
