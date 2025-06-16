@@ -128,7 +128,7 @@
       ];
       loginAccount = {
         encryptedHashedPassword = ../../secrets/ngi-nixos-org-email-login.umbriel;
-        storeEmail = false;
+        storeEmail = true;
       };
     };
 
