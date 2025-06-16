@@ -33,6 +33,10 @@
         ../../secrets/edolstra-email-address.umbriel # https://github.com/edolstra
         ../../secrets/kate-email-address.umbriel # https://discourse.nixos.org/u/kate
       ];
+      loginAccount = {
+        encryptedHashedPassword = ../../secrets/finance-email-login.umbriel;
+        storeEmail = true;
+      };
     };
 
     "hardware@nixos.org" = {
