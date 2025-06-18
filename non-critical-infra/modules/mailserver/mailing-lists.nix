@@ -118,7 +118,6 @@
         ../../secrets/fricklerhandwerk-email-address.umbriel # https://github.com/fricklerhandwerk
         ../../secrets/wamirez-email-address.umbriel # https://github.com/wamirez
         ../../secrets/idabzo-email-address.umbriel # https://github.com/idabzo
-        ../../secrets/erictapen-email-address.umbriel # https://github.com/erictapen
         ../../secrets/eljamm-email-address.umbriel # https://github.com/eljamm
         ../../secrets/JulienMalka-email-address.umbriel # https://github.com/JulienMalka
         ../../secrets/OPNA2608-email-address.umbriel # https://github.com/OPNA2608
