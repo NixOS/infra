@@ -105,6 +105,10 @@
         ../../secrets/uep-email-address.umbriel # https://discourse.nixos.org/u/uep
         ../../secrets/0x4A6F-moderation-email-address.umbriel # https://github.com/0x4A6F
       ];
+      loginAccount = {
+        encryptedHashedPassword = ../../secrets/moderation-email-login.umbriel;
+        storeEmail = true;
+      };
     };
 
     "ngi@nixos.org" = {
