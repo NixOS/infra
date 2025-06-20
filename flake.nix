@@ -87,14 +87,6 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    first-time-contribution-tagger = {
-      url = "github:Janik-Haag/first-time-contribution-tagger";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
-      };
-    };
   };
   outputs =
     inputs@{ flake-parts, ... }:
