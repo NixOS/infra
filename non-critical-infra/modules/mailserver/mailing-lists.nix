@@ -25,7 +25,6 @@
     "finance@nixos.org" = {
       forwardTo = [
         ../../secrets/edolstra-email-address.umbriel # https://github.com/edolstra
-        ../../secrets/kate-email-address.umbriel # https://discourse.nixos.org/u/kate
       ];
       loginAccount = {
         encryptedHashedPassword = ../../secrets/finance-email-login.umbriel;
@@ -44,11 +43,6 @@
     "foundation@nixos.org" = {
       forwardTo = [
         ../../secrets/edolstra-foundation-email-address.umbriel # https://github.com/edolstra
-        ../../secrets/refroni-email-address.umbriel # https://github.com/refroni
-        ../../secrets/kate-email-address.umbriel # https://discourse.nixos.org/u/kate
-        ../../secrets/infinisil-email-address.umbriel # https://github.com/infinisil
-        ../../secrets/ra33it0-email-address.umbriel # https://github.com/ra33it0
-        ../../secrets/lassulus-email-address.umbriel # https://github.com/lassulus
       ];
       loginAccount = {
         encryptedHashedPassword = ../../secrets/foundation-email-login.umbriel;
