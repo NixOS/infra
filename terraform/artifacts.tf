@@ -1,4 +1,4 @@
-# GitHub Releases Proxy Service
+# Artifacts Proxy Service
 #
 # This service provides IPv6-enabled access to GitHub releases through Fastly CDN.
 # It transparently follows GitHub's S3 redirects to provide direct file access.
@@ -10,26 +10,26 @@
 # Testing commands:
 #
 # Basic functionality tests:
-# curl -I https://gh-releases.nixos.org/nix/0.27.0/nix-installer.sh
-# curl -s https://gh-releases.nixos.org/nix/0.27.0/nix-installer.sh | head -n 5
+# curl -I https://artifacts.nixos.org/nix/0.27.0/nix-installer.sh
+# curl -s https://artifacts.nixos.org/nix/0.27.0/nix-installer.sh | head -n 5
 #
 # IPv6 connectivity test:
-# curl -6 -I https://gh-releases.nixos.org/nix/0.27.0/nix-installer.sh
+# curl -6 -I https://artifacts.nixos.org/nix/0.27.0/nix-installer.sh
 #
 # Performance comparison (should show redirect following):
-# time curl -s https://gh-releases.nixos.org/nix/0.27.0/nix-installer-x86_64-linux > /dev/null
+# time curl -s https://artifacts.nixos.org/nix/0.27.0/nix-installer-x86_64-linux > /dev/null
 # time curl -s https://github.com/NixOS/experimental-nix-installer/releases/download/0.27.0/nix-installer-x86_64-linux > /dev/null
 #
 # Error cases (should return 404):
-# curl -I https://gh-releases.nixos.org/invalid/path
-# curl -I https://gh-releases.nixos.org/patchelf/999.999.999/nonexistent-file
+# curl -I https://artifacts.nixos.org/invalid/path
+# curl -I https://artifacts.nixos.org/patchelf/999.999.999/nonexistent-file
 
 locals {
-  gh_releases_domain = "gh-releases.nixos.org"
+  artifacts_domain = "artifacts.nixos.org"
 }
 
-resource "fastly_service_vcl" "gh_releases" {
-  name        = local.gh_releases_domain
+resource "fastly_service_vcl" "artifacts" {
+  name        = local.artifacts_domain
   default_ttl = 3600
 
   backend {
@@ -89,7 +89,7 @@ resource "fastly_service_vcl" "gh_releases" {
   }
 
   domain {
-    name = local.gh_releases_domain
+    name = local.artifacts_domain
   }
 
   # Main VCL snippet to handle the redirect logic
@@ -161,25 +161,25 @@ resource "fastly_service_vcl" "gh_releases" {
   }
 
   logging_s3 {
-    name              = "${local.gh_releases_domain}-to-s3"
+    name              = "${local.artifacts_domain}-to-s3"
     bucket_name       = local.fastlylogs["bucket_name"]
     compression_codec = "zstd"
     domain            = local.fastlylogs["s3_domain"]
     format            = local.fastlylogs["format"]
     format_version    = 2
-    path              = "${local.gh_releases_domain}/"
+    path              = "${local.artifacts_domain}/"
     period            = local.fastlylogs["period"]
     message_type      = "blank"
     s3_iam_role       = local.fastlylogs["iam_role_arn"]
   }
 }
 
-resource "fastly_tls_subscription" "gh_releases" {
-  domains               = [for domain in fastly_service_vcl.gh_releases.domain : domain.name]
+resource "fastly_tls_subscription" "artifacts" {
+  domains               = [for domain in fastly_service_vcl.artifacts.domain : domain.name]
   configuration_id      = local.fastly_tls12_sni_configuration_id
   certificate_authority = "lets-encrypt"
 }
 
-output "gh-releases-managed_dns_challenge" {
-  value = fastly_tls_subscription.gh_releases.managed_dns_challenges
+output "artifacts-managed_dns_challenge" {
+  value = fastly_tls_subscription.artifacts.managed_dns_challenges
 }
