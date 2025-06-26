@@ -38,6 +38,10 @@
         ../../secrets/ra33it0-email-address.umbriel # https://github.com/Ra33it0
         ../../secrets/rosscomputerguy-email-address.umbriel # https://github.com/rosscomputerguy
       ];
+      loginAccount = {
+        encryptedHashedPassword = ../../secrets/hardware-email-login.umbriel;
+        storeEmail = true;
+      };
     };
 
     "foundation@nixos.org" = {
