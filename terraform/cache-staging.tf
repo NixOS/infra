@@ -190,7 +190,7 @@ resource "fastly_service_vcl" "cache-staging" {
 
   # Enable Streaming Miss.
   # https://docs.fastly.com/en/guides/streaming-miss
-  # https://github.com/NixOS/nixos-org-configurations/issues/212#issuecomment-1187568233
+  # https://github.com/NixOS/infra/issues/212#issuecomment-1187568233
   header {
     priority    = 20
     destination = "do_stream"

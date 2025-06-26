@@ -44,4 +44,4 @@ Location: <https://jitsi.lassul.us/nixos-infra> Meeting notes:
 If you experience any issues with the infrastructure, please
 [post a new issue to this repository][1].
 
-[1]: https://github.com/NixOS/nixos-org-configurations/issues/new
+[1]: https://github.com/NixOS/infra/issues/new
