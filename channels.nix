@@ -70,22 +70,6 @@ rec {
       variant = "darwin";
       status = "unmaintained";
     };
-
-    "nixos-24.05" = {
-      job = "nixos/release-24.05/tested";
-      variant = "primary";
-      status = "unmaintained";
-    };
-    "nixos-24.05-small" = {
-      job = "nixos/release-24.05-small/tested";
-      variant = "small";
-      status = "unmaintained";
-    };
-    "nixpkgs-24.05-darwin" = {
-      job = "nixpkgs/nixpkgs-24.05-darwin/darwin-tested";
-      variant = "darwin";
-      status = "unmaintained";
-    };
   };
 
   channels-with-urls = builtins.mapAttrs (_name: about: about.job) channels;
