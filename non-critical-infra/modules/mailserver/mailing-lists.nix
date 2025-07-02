@@ -110,18 +110,6 @@
     };
 
     "ngi@nixos.org" = {
-      forwardTo = [
-        ../../secrets/fricklerhandwerk-email-address.umbriel # https://github.com/fricklerhandwerk
-        ../../secrets/wamirez-email-address.umbriel # https://github.com/wamirez
-        ../../secrets/idabzo-email-address.umbriel # https://github.com/idabzo
-        ../../secrets/erictapen-email-address.umbriel # https://github.com/erictapen
-        ../../secrets/eljamm-email-address.umbriel # https://github.com/eljamm
-        ../../secrets/JulienMalka-email-address.umbriel # https://github.com/JulienMalka
-        ../../secrets/OPNA2608-email-address.umbriel # https://github.com/OPNA2608
-        ../../secrets/wegank-email-address.umbriel # https://github.com/wegank
-        ../../secrets/erethon-email-address.umbriel # https://github.com/erethon
-        ../../secrets/imincik-email-address.umbriel # https://github.com/imincik
-      ];
       loginAccount = {
         encryptedHashedPassword = ../../secrets/ngi-nixos-org-email-login.umbriel;
         storeEmail = true;
