@@ -42,6 +42,7 @@ in
           options = {
             forwardTo = lib.mkOption {
               type = types.listOf (types.either types.str types.path);
+              default = [ ];
               description = ''
                 Either a plaintext email address, or a path to an email address
                 encrypted with `nix run .#encrypt-email address`
@@ -81,6 +82,11 @@ in
   };
 
   config = {
+    assertions = lib.mapAttrsToList (name: mailingList: {
+      assertion = mailingList.forwardTo != [ ] || mailingList.loginAccount != null;
+      message = "Mailing list '${name}' must have either forwardTo addresses or a loginAccount configured";
+    }) config.mailing-lists;
+
     mailserver.loginAccounts = lib.pipe config.mailing-lists [
       (lib.filterAttrs (_name: mailingList: mailingList.loginAccount != null))
       (lib.mapAttrs (
