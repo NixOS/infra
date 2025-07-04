@@ -17,6 +17,7 @@
     ./exporters/owncast.nix
     ./exporters/postgresql.nix
     ./exporters/rasdaemon.nix
+    ./exporters/sql.nix
     ./exporters/up.nix
     ./exporters/zfs.nix
   ];
