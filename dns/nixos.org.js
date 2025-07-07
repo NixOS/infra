@@ -96,6 +96,8 @@ D("nixos.org",
 	// hydra staging area
 	A("staging-hydra", "157.180.25.203"),
 	AAAA("staging-hydra", "2a01:4f9:c012:d5d3::1"),
+	A("queue-runner.staging-hydra", "157.180.25.203"),
+	AAAA("queue-runner.staging-hydra", "2a01:4f9:c012:d5d3::1"),
 
 	// services infra
 	A("caliban", "65.109.26.213"),
