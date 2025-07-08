@@ -41,6 +41,12 @@
               # oakhost
               "kind-lumiere.mac.nixos.org:9100"
               "eager-heisenberg.mac.nixos.org:9100"
+              # macstadium
+              "mac01.ofborg.org:9100"
+              "mac02.ofborg.org:9100"
+              "mac03.ofborg.org:9100"
+              "mac04.ofborg.org:9100"
+              "mac05.ofborg.org:9100"
             ];
           }
           {
