@@ -6,6 +6,17 @@
 }:
 
 {
+  fileSystems."/nix/var/nix/builds" = {
+    device = "none";
+    fsType = "tmpfs";
+    options = [
+      "huge=within_size"
+      "mode=0700"
+      "nosuid"
+      "nodev"
+    ];
+  };
+
   nix = {
     package = pkgs.nix;
     nrBuildUsers = config.nix.settings.max-jobs + 32;

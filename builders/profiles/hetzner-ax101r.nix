@@ -13,12 +13,13 @@
   boot.supportedFilesystems.zfs = true;
   networking.hostId = "91312b0a";
 
-  boot.tmp = {
-    useTmpfs = true;
-    # 128G tmpfs, 128G RAM for standard builders
-    # 160G tmpfs, 96G RAM for big parallel builders
-    tmpfsSize = if lib.elem "big-parallel" config.nix.settings.system-features then "160G" else "128G";
-  };
+  # 128G tmpfs, 128G RAM (+zram swap) for standard builders
+  # 160GB tmpfs, 96 GB RAM (+zram swap) for big-parallel builders
+  fileSystems."/nix/var/nix/builds".options =
+    if lib.elem "big-parallel" config.nix.settings.system-features then
+      [ "size=160G" ]
+    else
+      [ "size=128G" ];
 
   boot.initrd.availableKernelModules = [
     "nvme"
