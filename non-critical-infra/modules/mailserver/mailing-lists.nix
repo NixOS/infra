@@ -133,6 +133,7 @@
         ../../secrets/escherlies-email-address.umbriel # https://github.com/escherlies
         ../../secrets/fmehta-email-address.umbriel # https://github.com/fmehta
         ../../secrets/ral-email-address.umbriel # Matrix: @ral:fairydust.space
+        ../../secrets/gefla-email-address.umbriel # https://github.com/gefla
       ];
     };
 
