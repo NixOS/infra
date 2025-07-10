@@ -39,8 +39,13 @@
 
   system.stateVersion = "24.11";
   users.users.root.openssh.authorizedKeys.keys = [
-    # Conni2461
+    # Conni2461 for hydra-queue-runner
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPK/3rYhlIzoPCsPK38PMdK1ivqPaJgUqWwRtmxdKZrO"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEltgDXy2aiHhkNeL4aF7P9mDcpMR9+v8zo8EKUQUNHP"
+
+    # picnoir for multiple signing keys
+    "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIPml1DaHG1i8WDEsbCCJwPRPf4wJWQAYQIYAyJh2zqMpAAAABHNzaDo="
+    "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIEPPocCK4JCbFWshVHMgICOm61LC6V2JAXThzKjXv7TSAAAABHNzaDo="
+    "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIEWWZ8LjNo41679gFI4Iv4YtjFxwhSbMZVsvvYYaTXdxAAAABHNzaDo= picnoir@framework"
   ];
 }
