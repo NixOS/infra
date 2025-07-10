@@ -22,7 +22,7 @@ for keyname in "${keys[@]}"; do
   else
     umask 0177
   fi
-  sops --extract '["'$keyname'"]' --decrypt "$SCRIPT_DIR/../../secrets/staging-hydra-hostkeys.yaml" >"$sshDir/$keyname"
+  sops --extract '["'"$keyname"'"]' --decrypt "$SCRIPT_DIR/../../secrets/staging-hydra-hostkeys.yaml" >"$sshDir/$keyname"
 done
 # Mounted NixOS minimal image
 nix run nixpkgs#nixos-anywhere -- --extra-files "$tmpDir" -f .#staging-hydra nixos@157.180.25.203
