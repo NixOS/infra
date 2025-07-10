@@ -7,6 +7,7 @@
   colmena.hosts = {
     caliban = { };
     umbriel = { };
+    staging-hydra = { };
   };
   flake =
     let

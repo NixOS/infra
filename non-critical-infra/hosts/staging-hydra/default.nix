@@ -11,7 +11,6 @@
   ];
 
   nixpkgs.overlays = [
-    inputs.nix.overlays.default
     inputs.hydra.overlays.default
   ];
 
