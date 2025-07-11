@@ -1,6 +1,7 @@
 keys:
   - &hexa age1j3mkgedmeru63vwww6m44zfw09tg8yw6xdzstaq7ejfkvgcau40qwakm8x
   - &zimbatm age1jrh8yyq3swjru09s75s4mspu0mphh7h6z54z946raa9wx3pcdegq0x8t4h
+  - &simon age17ez23w2kpxl0gcdx4ehcglkcfcfnv4qz0gq2n8ylxwx4yrtjpvjqxfasua
   - &caliban age1sv307kkrxwgjah8pjpap5kzl4j2r6fqr3vg234n7m32chlchs9lsey7nlq
   - &umbriel age15vcp7875xwtf64j4yshyld0a3hpgzv6n2kxky493s3q0swr9hdaqxugpv6
   - &staging-hydra age1xj4dl6xdl5ztmetp9axa0epjj922hu6a2gut3rrs5rdc5xv85yjsq5ggpx
@@ -44,3 +45,4 @@ creation_rules:
           - *mic92-mac
           - *hexa
           - *zimbatm
+          - *simon
