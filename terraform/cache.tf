@@ -183,7 +183,7 @@ resource "fastly_service_vcl" "cache" {
   condition {
     name      = "is-nar"
     priority  = 10
-    statement = "req.url ~ \"^/nar/\""
+    statement = "beresp.status == 200 && req.url ~ \"^/nar/\" "
     type      = "CACHE"
   }
 
@@ -250,12 +250,6 @@ resource "fastly_service_vcl" "cache" {
     content_type    = "text/plain"
     response        = "Not Found"
     status          = 404
-  }
-
-  cache_setting {
-    name            = "cache-404"
-    cache_condition = "is-404"
-    ttl             = 86400 # 1 day
   }
 
   cache_setting {
