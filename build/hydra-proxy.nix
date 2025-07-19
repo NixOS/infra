@@ -43,6 +43,9 @@
         default "anubis";
         nix.dev-Uogho3gi "hydra-server";
       }
+
+      limit_req_zone $binary_remote_addr zone=hydra-server:8m rate=2r/s;
+      limit_req_status 429;
     '';
 
     eventsConfig = ''
@@ -77,6 +80,9 @@
 
       locations."/" = {
         proxyPass = "http://$upstream";
+        extraConfig = ''
+          limit_req zone=hydra-server burst=5;
+        '';
       };
 
       locations."~ ^/build/\\d+/download/" = {
