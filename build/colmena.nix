@@ -54,19 +54,18 @@
     };
   };
   config.flake.colmenaHive = inputs.colmena.lib.makeHive self.outputs.colmena;
-  config.flake.colmena =
-    {
-      meta = {
-        nixpkgs = inputs.nixpkgs.legacyPackages.${config.colmena.system};
-        # https://github.com/zhaofengli/colmena/issues/60#issuecomment-1510496861
-        nodeSpecialArgs = builtins.mapAttrs (_: value: value._module.specialArgs) self.nixosConfigurations;
-      };
-    }
-    // builtins.mapAttrs (name: _: {
-      imports = (self.nixosConfigurations.${name})._module.args.modules ++ [
-        {
-          deployment = config.colmena.hosts.${name};
-        }
-      ];
-    }) config.colmena.hosts;
+  config.flake.colmena = {
+    meta = {
+      nixpkgs = inputs.nixpkgs.legacyPackages.${config.colmena.system};
+      # https://github.com/zhaofengli/colmena/issues/60#issuecomment-1510496861
+      nodeSpecialArgs = builtins.mapAttrs (_: value: value._module.specialArgs) self.nixosConfigurations;
+    };
+  }
+  // builtins.mapAttrs (name: _: {
+    imports = (self.nixosConfigurations.${name})._module.args.modules ++ [
+      {
+        deployment = config.colmena.hosts.${name};
+      }
+    ];
+  }) config.colmena.hosts;
 }
