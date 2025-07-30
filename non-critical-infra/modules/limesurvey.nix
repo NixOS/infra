@@ -342,7 +342,8 @@ in
       settings = {
         "listen.owner" = config.services.nginx.user;
         "listen.group" = config.services.nginx.group;
-      } // cfg.poolConfig;
+      }
+      // cfg.poolConfig;
     };
     systemd.services.phpfpm-limesurvey.serviceConfig = {
       ExecStartPre = pkgs.writeShellScript "limesurvey-phpfpm-exec-pre" ''
@@ -433,8 +434,7 @@ in
     };
 
     systemd.services.nginx.after =
-      optional mysqlLocal "mysql.service"
-      ++ optional pgsqlLocal "postgresql.service";
+      optional mysqlLocal "mysql.service" ++ optional pgsqlLocal "postgresql.service";
 
     users.users.${user} = {
       group = group;

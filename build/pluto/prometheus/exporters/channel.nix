@@ -24,27 +24,26 @@ in
     };
   };
 
-  services.prometheus.scrapeConfigs =
-    [
+  services.prometheus.scrapeConfigs = [
+    {
+      job_name = "channel-updates";
+      metrics_path = "/";
+      static_configs = [ { targets = [ "127.0.0.1:9402" ]; } ];
+    }
+  ]
+  ++ lib.mapAttrsToList (name: value: {
+    job_name = "channel-job-${name}";
+    scheme = "https";
+    scrape_interval = "5m";
+    metrics_path = "/job/${value.job}/prometheus";
+    static_configs = [
       {
-        job_name = "channel-updates";
-        metrics_path = "/";
-        static_configs = [ { targets = [ "127.0.0.1:9402" ]; } ];
+        labels = {
+          current = if value.status != "unmaintained" then "1" else "0";
+          channel = name;
+        };
+        targets = [ "hydra.nixos.org:443" ];
       }
-    ]
-    ++ lib.mapAttrsToList (name: value: {
-      job_name = "channel-job-${name}";
-      scheme = "https";
-      scrape_interval = "5m";
-      metrics_path = "/job/${value.job}/prometheus";
-      static_configs = [
-        {
-          labels = {
-            current = if value.status != "unmaintained" then "1" else "0";
-            channel = name;
-          };
-          targets = [ "hydra.nixos.org:443" ];
-        }
-      ];
-    }) (import ../../../../channels.nix).channels;
+    ];
+  }) (import ../../../../channels.nix).channels;
 }
