@@ -4,7 +4,9 @@
 # It transparently follows GitHub's S3 redirects to provide direct file access.
 #
 # Supported URL patterns:
-# - /nix/* -> /NixOS/experimental-nix-installer/releases/download/*
+# - /experimental-installer/tag/* -> /NixOS/experimental-nix-installer/releases/download/*
+# - /experimental-installer -> /NixOS/experimental-nix-installer/releases/latest/download/nix-installer.sh
+# - /experimental-installer/* -> /NixOS/experimental-nix-installer/releases/latest/download/*
 # - /patchelf/* -> /NixOS/patchelf/releases/download/*
 #
 # Testing commands:
@@ -97,8 +99,14 @@ resource "fastly_service_vcl" "artifacts" {
     content  = <<-EOT
       # Only rewrite if this is the first request (not a restart)
       if (!req.http.X-Rewritten) {
-        if (req.url ~ "^/nix/") {
-          set req.url = regsub(req.url.path, "^/nix/", "/NixOS/experimental-nix-installer/releases/download/");
+        if (req.url ~ "^/experimental-installer/tag/") {
+          set req.url = regsub(req.url.path, "^/experimental-installer/tag/", "/NixOS/experimental-nix-installer/releases/download/");
+          set req.http.X-Rewritten = "true";
+        } else if (req.url ~ "^(/experimental-installer|/experimental-installer/)$") {
+          set req.url = regsub(req.url.path, "^(/experimental-installer|/experimental-installer/)$", "/NixOS/experimental-nix-installer/releases/latest/download/nix-installer.sh");
+          set req.http.X-Rewritten = "true";
+        } else if (req.url ~ "^/experimental-installer/") {
+          set req.url = regsub(req.url.path, "^/experimental-installer", "/NixOS/experimental-nix-installer/releases/latest/download/");
           set req.http.X-Rewritten = "true";
         } else if (req.url ~ "^/patchelf/") {
           set req.url = regsub(req.url.path, "^/patchelf/", "/NixOS/patchelf/releases/download/");
