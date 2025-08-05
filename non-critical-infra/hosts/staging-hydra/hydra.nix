@@ -24,8 +24,11 @@ in
     dates = "03,09,15,21:15";
   };
 
-  # gc outputs as well, since they are served from the cache
-  nix.settings.gc-keep-outputs = lib.mkForce false;
+  nix.settings = {
+    # gc outputs as well, since they are served from the cache
+    gc-keep-outputs = lib.mkForce false;
+    allowed-users = [ "hydra-www" ];
+  };
 
   # Don't rate-limit the journal.
   services.journald.rateLimitBurst = 0;
