@@ -166,12 +166,12 @@ in
     "queue-runner-server.key" = {
       sopsFile = ../../secrets/queue-runner-server.key.staging-hydra;
       format = "binary";
-      owner = config.systemd.services.hydra-queue-runner.serviceConfig.User;
+      owner = config.systemd.services.nginx.serviceConfig.User;
     };
     "queue-runner-client.key" = {
       sopsFile = ../../secrets/queue-runner-client.key.staging-hydra;
       format = "binary";
-      owner = config.systemd.services.hydra-queue-runner.serviceConfig.User;
+      owner = config.systemd.services.hydra-queue-builder-v2.serviceConfig.User;
     };
     hydra-users = {
       sopsFile = ../../secrets/hydra-users.staging-hydra;
