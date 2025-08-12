@@ -135,6 +135,10 @@
         ../../secrets/ral-email-address.umbriel # Matrix: @ral:fairydust.space
         ../../secrets/gefla-email-address.umbriel # https://github.com/gefla
       ];
+      loginAccount = {
+        encryptedHashedPassword = ../../secrets/nixcon-email-login.umbriel;
+        storeEmail = true;
+      };
     };
 
     "cfp@nixcon.org" = {
