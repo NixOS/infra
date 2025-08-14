@@ -81,7 +81,7 @@
       locations."/" = {
         proxyPass = "http://$upstream";
         extraConfig = ''
-          limit_req zone=hydra-server burst=5;
+          limit_req zone=hydra-server burst=7;
         '';
       };
 
