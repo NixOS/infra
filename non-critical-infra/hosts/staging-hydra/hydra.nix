@@ -143,6 +143,7 @@ in
           # This is necessary so that grpc connections do not get closed early
           # see https://stackoverflow.com/a/67805465
           client_body_timeout 31536000s;
+          client_max_body_size 0;
 
           grpc_pass grpc://[::1]:50051;
 
