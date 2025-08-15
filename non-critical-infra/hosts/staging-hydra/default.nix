@@ -50,4 +50,9 @@
     "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIEPPocCK4JCbFWshVHMgICOm61LC6V2JAXThzKjXv7TSAAAABHNzaDo="
     "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIEWWZ8LjNo41679gFI4Iv4YtjFxwhSbMZVsvvYYaTXdxAAAABHNzaDo= picnoir@framework"
   ];
+
+  zramSwap = {
+    enable = true;
+    memoryPercent = 150;
+  };
 }
