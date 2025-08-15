@@ -115,17 +115,6 @@ in
       ];
     };
 
-    hydra-queue-builder-v2 = {
-      enable = true;
-      queueRunnerAddr = "https://queue-runner.staging-hydra.nixos.org";
-      mtls = {
-        serverRootCaCertPath = "${./ca.crt}";
-        clientCertPath = "${./client.crt}";
-        clientKeyPath = config.sops.secrets."queue-runner-client.key".path;
-        domainName = "queue-runner.staging-hydra.nixos.org";
-      };
-    };
-
     nginx = {
       enable = true;
       virtualHosts."queue-runner.staging-hydra.nixos.org" = {
@@ -168,11 +157,6 @@ in
       sopsFile = ../../secrets/queue-runner-server.key.staging-hydra;
       format = "binary";
       owner = config.systemd.services.nginx.serviceConfig.User;
-    };
-    "queue-runner-client.key" = {
-      sopsFile = ../../secrets/queue-runner-client.key.staging-hydra;
-      format = "binary";
-      owner = config.systemd.services.hydra-queue-builder-v2.serviceConfig.User;
     };
     hydra-users = {
       sopsFile = ../../secrets/hydra-users.staging-hydra;
