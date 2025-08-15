@@ -27,7 +27,7 @@ in
   nix.settings = {
     # gc outputs as well, since they are served from the cache
     gc-keep-outputs = lib.mkForce false;
-    allowed-users = [ "hydra-www" ];
+    allowed-users = [ "hydra" "hydra-www" ];
   };
 
   # Don't rate-limit the journal.
