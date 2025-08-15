@@ -199,6 +199,10 @@
         ../../secrets/winterqt-email-address.umbriel # https://github.com/winterqt
         ../../secrets/jtojnar-email-address.umbriel # https://github.com/jtojnar
       ];
+      loginAccount = {
+        encryptedHashedPassword = ../../secrets/steering-email-login.umbriel;
+        storeEmail = true;
+      };
     };
 
     "summer@nixos.org" = {
