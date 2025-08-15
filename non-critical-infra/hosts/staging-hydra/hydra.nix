@@ -37,7 +37,10 @@ in
   nix.settings = {
     # gc outputs as well, since they are served from the cache
     gc-keep-outputs = lib.mkForce false;
-    allowed-users = [ "hydra" "hydra-www" ];
+    allowed-users = [
+      "hydra"
+      "hydra-www"
+    ];
   };
 
   # Don't rate-limit the journal.
@@ -117,9 +120,13 @@ in
 
     hydra-queue-runner-v2 = {
       enable = true;
-      settings.remoteStoreAddr = [
-        "s3://nix-cache-staging?secret-key=${config.sops.secrets.signing-key.path}&ls-compression=br&log-compression=br"
-      ];
+      settings = {
+        queueTriggerTimerInS = 300;
+        concurrentUploadLimit = 2;
+        remoteStoreAddr = [
+          "s3://nix-cache-staging?secret-key=${config.sops.secrets.signing-key.path}&ls-compression=br&log-compression=br"
+        ];
+      };
     };
 
     nginx = {
