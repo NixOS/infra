@@ -117,24 +117,6 @@
     };
 
     "nixcon@nixos.org" = {
-      forwardTo = [
-        ../../secrets/ners-email-address.umbriel # https://github.com/ners
-        ../../secrets/john-rodewald-email-address.umbriel # https://github.com/john-rodewald
-        ../../secrets/das-g-email-address.umbriel # https://github.com/das-g
-        ../../secrets/ra33it0-email-address.umbriel # https://github.com/ra33it0
-        ../../secrets/infinisil-nixcon-email-address.umbriel # https://github.com/infinisil
-        ../../secrets/Nebucatnetzer-email-address.umbriel # https://github.com/Nebucatnetzer
-        ../../secrets/andir-email-address.umbriel # https://github.com/andir
-        ../../secrets/zmberber-email-address.umbriel # https://github.com/zmberber
-        ../../secrets/a-kenji-email-address.umbriel # https://github.com/a-kenji
-        ../../secrets/lassulus-nixcon-email-address.umbriel # https://github.com/lassulus
-        ../../secrets/ForsakenHarmony-email-address.umbriel # https://github.com/ForsakenHarmony
-        ../../secrets/picnoir-email-address.umbriel # https://github.com/picnoir
-        ../../secrets/escherlies-email-address.umbriel # https://github.com/escherlies
-        ../../secrets/fmehta-email-address.umbriel # https://github.com/fmehta
-        ../../secrets/ral-email-address.umbriel # Matrix: @ral:fairydust.space
-        ../../secrets/gefla-email-address.umbriel # https://github.com/gefla
-      ];
       loginAccount = {
         encryptedHashedPassword = ../../secrets/nixcon-email-login.umbriel;
         storeEmail = true;
@@ -143,10 +125,7 @@
 
     "cfp@nixcon.org" = {
       forwardTo = [
-        ../../secrets/ners-email-address.umbriel
-        ../../secrets/ra33it0-email-address.umbriel
-        ../../secrets/lassulus-nixcon-email-address.umbriel
-        ../../secrets/a-kenji-email-address.umbriel
+        "nixcon@nixos.org"
       ];
     };
 
