@@ -198,6 +198,7 @@ in
         HOME = "/var/lib/hydra/queue-runner";
       };
 
+      restartIfChanged = false;
       serviceConfig = {
         Type = "notify";
         Restart = "always";
@@ -244,6 +245,8 @@ in
           "~@privileged"
           "~@resources"
         ];
+        ManagedOOMPreference = "avoid";
+        LimitNOFILE = 65536;
 
         ProtectSystem = "strict";
         ProtectHome = true;
