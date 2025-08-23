@@ -104,6 +104,7 @@ D("nixos.org",
 	CNAME("chat", "caliban"),
 	CNAME("live", "caliban"),
 	CNAME("matrix", "caliban"),
+	CNAME("nixpkgs-swh", "caliban"),
 	CNAME("survey", "caliban"),
 	CNAME("vault", "caliban"),
 	DMARC_BUILDER({
