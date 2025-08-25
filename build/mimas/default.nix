@@ -4,6 +4,7 @@
     ../hydra.nix
     ../hydra-proxy.nix
     ./boot.nix
+    ./firewall.nix
     ./network.nix
   ];
 
