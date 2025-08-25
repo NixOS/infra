@@ -17,7 +17,4 @@
 
   # use memory more efficiently at the cost of some compute
   zramSwap.enable = true;
-
-  # enable huge pages for tmpfs on /tmp
-  boot.tmp.tmpfsHugeMemoryPages = "within_size";
 }
