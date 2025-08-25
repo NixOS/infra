@@ -1,0 +1,19 @@
+[build-system]
+requires = ["uv-build"]
+build-backend = "uv_build"
+
+[project]
+name = "nft-asblock"
+version = "0.1.0"
+description = "Block prefixes for whole Autonomus Systems with nftable sets"
+requires-python = ">=3.12"
+dependencies = [
+    "httpx",
+    "typer",
+]
+
+[project.scripts]
+nft-asblock = "nft_asblock.__main__:cli"
+
+[tool.ruff.lint]
+select = ["I"]
