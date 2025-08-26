@@ -17,6 +17,16 @@ in
     9199 # hydra-notify metrics
   ];
 
+  services.postgresql.settings = {
+    log_min_duration_statement = 5000;
+    log_duration = "off";
+    log_statement = "none";
+
+    max_connections = 500;
+    work_mem = "20MB";
+    maintenance_work_mem = "2GB";
+  };
+
   # garbage collection
   nix.gc = {
     automatic = true;
