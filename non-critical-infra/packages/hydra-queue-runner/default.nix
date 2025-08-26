@@ -13,15 +13,15 @@
   boost,
 }:
 let
-  version = "unstable-2025-08-14";
+  version = "unstable-2025-08-26";
   src = fetchFromGitHub {
     owner = "helsinki-systems";
     repo = "hydra-queue-runner";
-    rev = "87f99a9a6a939a995c0f9f4f2d9f8e2a7f1829a3";
-    hash = "sha256-C45i2DYJqqdB6q1Ra9Hau6ywPctAn/8IOcSpW7aJ00c=";
+    rev = "eef9761a85bcf74e86ab7fe44c018cbefdcae264";
+    hash = "sha256-gxvR3e3hHXnalLjtcHdSHAhpA08s2Yg9ymEZ+KNF5Hk=";
   };
   useFetchCargoVendor = true;
-  cargoHash = "sha256-q7x3bL4JKF4jZgzx7eOr/4MX+MzHgoS0jqj60xrTlp8=";
+  cargoHash = "sha256-JuV8KQrhccRC6HqXps54/p81hy6nruFU8TAZ2EYRdX8=";
   nativeBuildInputs = [
     pkg-config
     protobuf

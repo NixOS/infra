@@ -101,6 +101,11 @@ in
               type = lib.types.int;
               default = 60;
             };
+            maxConcurrentDownloads = lib.mkOption {
+              description = "Max count of concurrent downloads per build. Increasing this will increase memory usage of the queue runner.";
+              type = lib.types.ints.positive;
+              default = 5;
+            };
           };
         };
         default = { };
