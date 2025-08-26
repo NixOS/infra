@@ -17,11 +17,11 @@ let
   src = fetchFromGitHub {
     owner = "helsinki-systems";
     repo = "hydra-queue-runner";
-    rev = "eef9761a85bcf74e86ab7fe44c018cbefdcae264";
-    hash = "sha256-gxvR3e3hHXnalLjtcHdSHAhpA08s2Yg9ymEZ+KNF5Hk=";
+    rev = "c7b947af0301a371baaf60e8dac74e547613b80a";
+    hash = "sha256-OWQk5EGxPBcnc6+S2xhvrEUQXPhRcIYjCrbQf/EaP48=";
   };
   useFetchCargoVendor = true;
-  cargoHash = "sha256-JuV8KQrhccRC6HqXps54/p81hy6nruFU8TAZ2EYRdX8=";
+  cargoHash = "sha256-0pj08Gmo+UcWO8oBJFEDaUDpjwSZuJCTVVZtORgK5rM=";
   nativeBuildInputs = [
     pkg-config
     protobuf
