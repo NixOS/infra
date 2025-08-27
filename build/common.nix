@@ -79,6 +79,7 @@
   # we use networkd
   networking.useDHCP = false;
 
+  networking.nftables.enable = true;
   networking.firewall = {
     enable = true;
 

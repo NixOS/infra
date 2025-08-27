@@ -10,6 +10,8 @@
 
   environment.systemPackages = with pkgs; [ neovim ];
 
+  networking.nftables.enable = true;
+
   security.acme.acceptTerms = true;
   security.acme.defaults.email = "infra@nixos.org";
 }
