@@ -13,15 +13,15 @@
   boost,
 }:
 let
-  version = "unstable-2025-08-26";
+  version = "unstable-2025-08-28";
   src = fetchFromGitHub {
     owner = "helsinki-systems";
     repo = "hydra-queue-runner";
-    rev = "c7b947af0301a371baaf60e8dac74e547613b80a";
-    hash = "sha256-OWQk5EGxPBcnc6+S2xhvrEUQXPhRcIYjCrbQf/EaP48=";
+    rev = "e3c3a21560c393cab397277e5ee90d84e84b4ee7";
+    hash = "sha256-COdsCoU5IYLBvRRs68VHKZlPJBAJkY7MO0ok7naegfI=";
   };
   useFetchCargoVendor = true;
-  cargoHash = "sha256-0pj08Gmo+UcWO8oBJFEDaUDpjwSZuJCTVVZtORgK5rM=";
+  cargoHash = "sha256-Ukm3Nbm+/CKNr64UtwMdVHWw386kQL+JaSFz3lnpc4Y=";
   nativeBuildInputs = [
     pkg-config
     protobuf
@@ -66,7 +66,9 @@ in
     cargoTestFlags = finalAttrs.cargoBuildFlags;
 
     postInstall = ''
-      wrapProgram $out/bin/queue-runner --prefix PATH : ${lib.makeBinPath [ nixVersions.nix_2_29 ]}
+      wrapProgram $out/bin/queue-runner \
+        --prefix PATH : ${lib.makeBinPath [ nixVersions.nix_2_29 ]} \
+        --set-default JEMALLOC_SYS_WITH_MALLOC_CONF "background_thread:true,narenas:1,tcache:false,dirty_decay_ms:0,muzzy_decay_ms:0,abort_conf:true"
     '';
 
     meta = meta // {
@@ -94,7 +96,9 @@ in
     cargoTestFlags = finalAttrs.cargoBuildFlags;
 
     postInstall = ''
-      wrapProgram $out/bin/builder --prefix PATH : ${lib.makeBinPath [ nixVersions.nix_2_29 ]}
+      wrapProgram $out/bin/builder \
+        --prefix PATH : ${lib.makeBinPath [ nixVersions.nix_2_29 ]} \
+        --set-default JEMALLOC_SYS_WITH_MALLOC_CONF "background_thread:true,narenas:1,tcache:false,dirty_decay_ms:0,muzzy_decay_ms:0,abort_conf:true"
     '';
 
     meta = meta // {
