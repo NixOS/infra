@@ -70,6 +70,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nft-prefix-import = {
+      url = "github:mweinelt/nft-prefix-import";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     srvos = {
       url = "github:numtide/srvos";
       inputs.nixpkgs.follows = "nixpkgs";
