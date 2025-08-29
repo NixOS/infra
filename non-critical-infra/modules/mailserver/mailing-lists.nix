@@ -23,9 +23,6 @@
     };
 
     "finance@nixos.org" = {
-      forwardTo = [
-        ../../secrets/edolstra-email-address.umbriel # https://github.com/edolstra
-      ];
       loginAccount = {
         encryptedHashedPassword = ../../secrets/finance-email-login.umbriel;
         storeEmail = true;
@@ -45,9 +42,6 @@
     };
 
     "foundation@nixos.org" = {
-      forwardTo = [
-        ../../secrets/edolstra-foundation-email-address.umbriel # https://github.com/edolstra
-      ];
       loginAccount = {
         encryptedHashedPassword = ../../secrets/foundation-email-login.umbriel;
         storeEmail = true;
@@ -56,7 +50,6 @@
 
     "fundraising@nixos.org" = {
       forwardTo = [
-        ../../secrets/fricklerhandwerk-email-address.umbriel # https://github.com/fricklerhandwerk
         "foundation@nixos.org"
       ];
     };
@@ -131,7 +124,7 @@
 
     "partnerships@nixos.org" = {
       forwardTo = [
-        ../../secrets/refroni-email-address.umbriel # https://github.com/refroni
+        "foundation@nixos.org"
       ];
     };
 
