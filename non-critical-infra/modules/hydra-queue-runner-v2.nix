@@ -106,6 +106,11 @@ in
               type = lib.types.ints.positive;
               default = 5;
             };
+            concurrentUploadLimit = lib.mkOption {
+              description = "Concurrent limit for uploading to s3.";
+              type = lib.types.ints.positive;
+              default = 5;
+            };
           };
         };
         default = { };
