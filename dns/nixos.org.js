@@ -181,6 +181,7 @@ D("nixos.org",
 
 	// netlify pages
 	ALIAS("@", "nixos-homepage.netlify.app."),
+	CNAME("brand", "nixos-brand.netlify.app."),
 	CNAME("common-styles", "nixos-common-styles.netlify.app."),
 	CNAME("planet", "nixos-planet.netlify.app."),
 	CNAME("search", "nixos-search.netlify.app."),
