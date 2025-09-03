@@ -35,6 +35,7 @@
     "hardware@nixos.org" = {
       forwardTo = [
         "joerg.hardware@thalheim.io"
+        ../../secrets/0x4A6F-hardware-email-address.umbriel # https://github.com/0x4A6F
         ../../secrets/ra33it0-email-address.umbriel # https://github.com/Ra33it0
         ../../secrets/rosscomputerguy-email-address.umbriel # https://github.com/rosscomputerguy
       ];
