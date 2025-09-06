@@ -166,7 +166,6 @@
       forwardTo = [
         ../../secrets/Ericson2314-email-address.umbriel # https://github.com/Ericson2314
         ../../secrets/Gabriella439-email-address.umbriel # https://github.com/Gabriella439
-        ../../secrets/fpletz-email-address.umbriel # https://github.com/fpletz
         ../../secrets/roberth-email-address.umbriel # https://github.com/roberth
         ../../secrets/tomberek-email-address.umbriel # https://github.com/tomberek
         ../../secrets/winterqt-email-address.umbriel # https://github.com/winterqt
