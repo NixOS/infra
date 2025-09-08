@@ -9,12 +9,6 @@
     system-features = [ "big-parallel" ];
   };
 
-  # 128G RAM only, but seems to be OK in practice
-  boot.tmp = {
-    useTmpfs = true;
-    tmpfsSize = "128G";
-  };
-
   networking = {
     hostName = "hopeful-rivest";
     domain = "builders.nixos.org";
