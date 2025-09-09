@@ -404,6 +404,26 @@
         "type": "github"
       }
     },
+    "nixpkgs-swh": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1757256775,
+        "narHash": "sha256-EHGEsqY8xxgeH46+5cfsydBiI57p5WurrUWoYJfo5hw=",
+        "owner": "nix-community",
+        "repo": "nixpkgs-swh",
+        "rev": "5c6540373e7c21977131951615b016ccad540e31",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nixpkgs-swh",
+        "type": "github"
+      }
+    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1755829505,
@@ -452,6 +472,7 @@
         "hydra": "hydra",
         "nixos-channel-scripts": "nixos-channel-scripts",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-swh": "nixpkgs-swh",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "rfc39": "rfc39",
         "simple-nixos-mailserver": "simple-nixos-mailserver",

@@ -20,6 +20,7 @@
     ../../modules/prometheus/node-exporter.nix
     ../../modules/vaultwarden.nix
     ./limesurvey-tmp.nix
+    ./nixpkgs-swh.nix
   ];
 
   fileSystems."/boot-1" = {
