@@ -103,6 +103,13 @@
       };
     };
 
+    "elections@nixos.org" = {
+      loginAccount = {
+        encryptedHashedPassword = ../../secrets/elections-email-login.umbriel;
+        storeEmail = true;
+      };
+    };
+
     "ngi@nixos.org" = {
       loginAccount = {
         encryptedHashedPassword = ../../secrets/ngi-nixos-org-email-login.umbriel;
