@@ -175,7 +175,7 @@
           processedPathSegments =
               processedPathSegments + encodeURIComponent(pathSegment) + '/';
           var link = document.createElement('a');
-          link.setAttribute('href', baseUrl + processedPathSegments.replace(/"/g, '&quot;'));
+          link.setAttribute('href', processedPathSegments.replace(/"/g, '&quot;'));
           link.innerText = pathSegment;
           return link.outerHTML;
         });
