@@ -78,6 +78,10 @@
         Allow: /$
       '';
 
+      locations."~ ^/job/[^/]+/[^/]+/metrics/metric/" = {
+        proxyPass = "http://hydra-server";
+      };
+
       locations."/" = {
         proxyPass = "http://$upstream";
         extraConfig = ''
