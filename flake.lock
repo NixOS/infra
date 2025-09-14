@@ -314,6 +314,26 @@
         "type": "github"
       }
     },
+    "nft-prefix-import": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1757887817,
+        "narHash": "sha256-LAwCjMvMwKTIdOaqsNhHm/2URd1cBds013lDRc8CarM=",
+        "owner": "mweinelt",
+        "repo": "nft-prefix-import",
+        "rev": "8dafafa3eb9834e414b60490eb08ed905715b3a0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mweinelt",
+        "repo": "nft-prefix-import",
+        "type": "github"
+      }
+    },
     "nix": {
       "flake": false,
       "locked": {
@@ -470,6 +490,7 @@
         "flake-utils": "flake-utils",
         "freescout": "freescout",
         "hydra": "hydra",
+        "nft-prefix-import": "nft-prefix-import",
         "nixos-channel-scripts": "nixos-channel-scripts",
         "nixpkgs": "nixpkgs",
         "nixpkgs-swh": "nixpkgs-swh",
