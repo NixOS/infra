@@ -25,6 +25,7 @@
             targets = [
               "caliban.nixos.org:9100"
               "umbriel.nixos.org:9100"
+              "wiki.nixos.org:9100"
               "tracker.security.nixos.org:9100"
               "makemake.ngi.nixos.org:9100"
             ];
