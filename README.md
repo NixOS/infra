@@ -36,7 +36,7 @@ There is an open team meeting **every other Thursday at
 [google calendar](https://calendar.google.com/calendar/u/0/embed?src=b9o52fobqjak8oq8lfkhg3t0qg@group.calendar.google.com)
 (search for "NixOS Infra") to see the next date.
 
-Location: <https://jitsi.lassul.us/nixos-infra> Meeting notes:
+Location: <https://meet.cccda.de/nix-osin-fra> Meeting notes:
 <https://pad.lassul.us/nixos-infra>
 
 ## Reporting issues
