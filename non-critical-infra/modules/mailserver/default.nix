@@ -28,6 +28,9 @@
     ];
   };
 
+  # https://nixos-mailserver.readthedocs.io/en/latest/backup-guide.html
+  services.backup.includes = [ config.mailserver.mailDirectory ];
+
   sops.secrets."nixos.org.mail.key" = {
     format = "binary";
     owner = "rspamd";
