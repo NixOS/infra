@@ -129,9 +129,6 @@ D("nixos.org",
 	CNAME("freescout", "umbriel.nixos.org."),
 
 	// ngi
-	CNAME("cache.ngi0", "d2tu257wv37zz1.cloudfront.net."),
-	CNAME("_293364b7f7ebb076ac287cd132f8b316.cache.ngi0", "_6a75cfb0c20f4eaac96b72afaffb489b.auiqqraehs.acm-validations.aws."),
-
 	A("makemake.ngi", "116.202.113.248"),
 	AAAA("makemake.ngi", "2a01:4f8:231:4187::"),
 	CNAME("buildbot.ngi", "makemake.ngi.nixos.org."),
