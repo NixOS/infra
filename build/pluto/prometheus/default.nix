@@ -22,14 +22,6 @@
     ./exporters/zfs.nix
   ];
 
-  networking.extraHosts = ''
-    10.254.1.6 pluto
-
-    10.254.1.9 haumea
-
-    10.254.3.1 webserver
-  '';
-
   networking.firewall.allowedTCPPorts = [ 9090 ];
 
   services.backup.includesZfsDatasets = [ "/var/lib/prometheus2" ];

@@ -10,9 +10,9 @@
         static_configs = [
           {
             targets = [
-              "haumea:9134"
-              "pluto:9134"
+              "haumea.nixos.org:9134"
               "mimas.nixos.org:9134"
+              "pluto.nixos.org:9134"
             ];
           }
         ];

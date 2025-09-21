@@ -6,7 +6,7 @@
       static_configs = [
         {
           targets = [
-            "haumea:9187"
+            "haumea.nixos.org:9187"
             "tracker.security.nixos.org:9187"
           ];
         }
