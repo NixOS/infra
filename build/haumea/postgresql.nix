@@ -6,11 +6,6 @@
 }:
 
 {
-  systemd.services.postgresql = {
-    after = [ "wireguard-wg0.service" ];
-    requires = [ "wireguard-wg0.service" ];
-  };
-
   services.prometheus.exporters.postgres = {
     enable = true;
     dataSourceName = "user=root database=hydra host=/run/postgresql sslmode=disable";
@@ -20,8 +15,6 @@
       ip saddr $prometheus_inet4 tcp dport ${toString config.services.prometheus.exporters.postgres.port} accept
     '';
   };
-
-  networking.firewall.interfaces.wg0.allowedTCPPorts = [ 5432 ];
 
   networking.firewall.interfaces."vlan4000".allowedTCPPorts = [ 5432 ];
 

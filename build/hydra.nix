@@ -136,11 +136,9 @@ in
   systemd.services.hydra-init = {
     wants = [
       "network-online.target"
-      "wireguard-wg0.target"
     ];
     after = [
       "network-online.target"
-      "wireguard-wg0.target"
     ];
   };
 

@@ -1,8 +1,6 @@
 { config, ... }:
 
 {
-  networking.firewall.interfaces.wg0.allowedTCPPorts = [ 9093 ];
-
   services.prometheus = {
     alertmanagers = [
       {

@@ -11,7 +11,6 @@
     ../modules/nftables.nix
     ../modules/prometheus
     ../modules/rasdaemon.nix
-    ../modules/wireguard.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
