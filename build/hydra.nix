@@ -69,7 +69,7 @@ in
 
   services.hydra-dev.enable = true;
   services.hydra-dev.buildMachinesFiles = [ "/etc/nix/machines" ];
-  services.hydra-dev.dbi = "dbi:Pg:dbname=hydra;host=10.254.1.9;user=hydra;";
+  services.hydra-dev.dbi = "dbi:Pg:dbname=hydra;host=10.0.40.1;user=hydra;";
   services.hydra-dev.logo = ./hydra-logo.png;
   services.hydra-dev.hydraURL = "https://hydra.nixos.org";
   services.hydra-dev.notificationSender = "edolstra@gmail.com";
