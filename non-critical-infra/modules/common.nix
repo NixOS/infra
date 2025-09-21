@@ -1,6 +1,10 @@
 { pkgs, ... }:
 
 {
+  imports = [
+    ../../modules/nftables.nix
+  ];
+
   boot.initrd.systemd.enable = true;
 
   time.timeZone = "UTC";
@@ -9,8 +13,6 @@
   users.users.root.openssh.authorizedKeys.keys = (import ../../ssh-keys.nix).infra;
 
   environment.systemPackages = with pkgs; [ neovim ];
-
-  networking.nftables.enable = true;
 
   security.acme.acceptTerms = true;
   security.acme.defaults.email = "infra@nixos.org";

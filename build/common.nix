@@ -8,6 +8,7 @@
   imports = [
     ./diffoscope.nix
     ../modules/common.nix
+    ../modules/nftables.nix
     ../modules/prometheus
     ../modules/rasdaemon.nix
     ../modules/wireguard.nix
@@ -78,18 +79,6 @@
 
   # we use networkd
   networking.useDHCP = false;
-
-  networking.nftables.enable = true;
-  networking.firewall = {
-    enable = true;
-
-    # be a good network citizen and allow some debugging interactions
-    rejectPackets = true;
-    allowPing = true;
-
-    # prevent firewall log spam from rotating the kernel rinbuffer
-    logRefusedConnections = false;
-  };
 
   services.resolved = {
     enable = true;
