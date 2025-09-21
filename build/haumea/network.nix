@@ -1,6 +1,15 @@
 {
   systemd.network = {
     enable = true;
+    netdevs = {
+      "20-vlan4000" = {
+        netdevConfig = {
+          Kind = "vlan";
+          Name = "vlan4000";
+        };
+        vlanConfig.Id = 4000;
+      };
+    };
     networks = {
       "30-enp35s0" = {
         matchConfig = {
@@ -15,8 +24,21 @@
           { Gateway = "46.4.89.193"; }
           { Gateway = "fe80::1"; }
         ];
+        vlan = [
+          "vlan4000"
+        ];
         networkConfig.Description = "WAN";
         linkConfig.RequiredForOnline = true;
+      };
+      "30-vlan4000" = {
+        matchConfig.Name = "vlan4000";
+        linkConfig = {
+          MTUBytes = "1400";
+          RequiredForOnline = "routable";
+        };
+        address = [
+          "10.0.40.1/31"
+        ];
       };
     };
   };

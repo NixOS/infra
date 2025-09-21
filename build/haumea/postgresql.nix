@@ -15,6 +15,8 @@
 
   networking.firewall.interfaces.wg0.allowedTCPPorts = [ 5432 ];
 
+  networking.firewall.interfaces."vlan4000".allowedTCPPorts = [ 5432 ];
+
   services.postgresql = {
     enable = true;
     enableJIT = true;
@@ -22,7 +24,7 @@
     dataDir = "/var/db/postgresql/16";
     # https://pgtune.leopard.in.ua/#/
     settings = {
-      listen_addresses = lib.mkForce "10.254.1.9";
+      listen_addresses = lib.mkForce "10.0.40.1";
 
       # https://vadosware.io/post/everything-ive-seen-on-optimizing-postgres-on-zfs-on-linux/#zfs-related-tunables-on-the-postgres-side
       full_page_writes = "off";
@@ -89,7 +91,7 @@
 
     # FIXME: don't use 'trust'.
     authentication = ''
-      host hydra all 10.254.1.1/32 trust
+      host hydra all 10.0.40.0/32 trust
       local all root peer map=prometheus
     '';
 
