@@ -1,8 +1,6 @@
 { pkgs, ... }:
 
 {
-  networking.firewall.allowedTCPPorts = [ 9200 ];
-
   systemd.services.prometheus-hydra-queue-runner-exporter = {
     wantedBy = [ "multi-user.target" ];
     after = [ "network.target" ];
@@ -51,7 +49,7 @@
       {
         job_name = "hydra-reexport";
         metrics_path = "/";
-        static_configs = [ { targets = [ "monitoring.nixos.org:9200" ]; } ];
+        static_configs = [ { targets = [ "localhost:9200" ]; } ];
       }
     ];
 

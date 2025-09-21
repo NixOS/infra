@@ -8,7 +8,6 @@
   networking.firewall.allowedTCPPorts = [
     80
     443
-    9001
   ];
 
   services.anubis.instances."hydra-server" = {
@@ -20,6 +19,11 @@
       METRICS_BIND_NETWORK = "tcp";
     };
   };
+
+  networking.firewall.extraInputRules = ''
+    ip6 saddr $prometheus_inet6 tcp dport 9001 accept
+    ip saddr $prometheus_inet4 tcp dport 9001 accept
+  '';
 
   services.nginx = {
     enable = true;

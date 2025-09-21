@@ -1,4 +1,9 @@
-{ lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   systemd.services.postgresql = {
@@ -9,8 +14,11 @@
   services.prometheus.exporters.postgres = {
     enable = true;
     dataSourceName = "user=root database=hydra host=/run/postgresql sslmode=disable";
-    firewallFilter = "-i wg0 -p tcp -m tcp --dport 9187";
     openFirewall = true;
+    firewallRules = ''
+      ip6 saddr $prometheus_inet6 tcp dport ${toString config.services.prometheus.exporters.postgres.port} accept
+      ip saddr $prometheus_inet4 tcp dport ${toString config.services.prometheus.exporters.postgres.port} accept
+    '';
   };
 
   networking.firewall.interfaces.wg0.allowedTCPPorts = [ 5432 ];

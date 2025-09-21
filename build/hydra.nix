@@ -15,10 +15,11 @@ in
     inputs.hydra.nixosModules.hydra
   ];
 
-  networking.firewall.allowedTCPPorts = [
-    9198 # queue-runnner metrics
-    9199 # hydra-notify metrics
-  ];
+  # queue-runner and hydra-notify metrics
+  networking.firewall.extraInputRules = ''
+    ip6 saddr $prometheus_inet6 tcp dport { 9198, 9199 } accept
+    ip saddr $prometheus_inet4 tcp dport { 9198, 9199 } accept
+  '';
 
   nix.package = config.services.hydra-dev.package.nix;
 
