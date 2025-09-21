@@ -14,11 +14,15 @@
           }
           {
             labels.role = "database";
-            targets = [ "haumea:9100" ];
+            targets = [
+              "haumea.nixos.org:9100"
+            ];
           }
           {
             labels.role = "monitoring";
-            targets = [ "pluto:9100" ];
+            targets = [
+              "pluto.nixos.org:9100"
+            ];
           }
           {
             labels.role = "services";
