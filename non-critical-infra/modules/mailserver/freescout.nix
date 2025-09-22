@@ -16,13 +16,26 @@
 
     settings.APP_KEY._secret = config.sops.secrets.freescout-app-key.path;
 
-    databaseSetup.enable = true;
+    databaseSetup = {
+      enable = true;
+      kind = "pgsql";
+    };
 
     nginx = {
       forceSSL = true;
       enableACME = true;
     };
   };
+
+  services.postgresqlBackup = {
+    enable = true;
+    databases = [ "freescout" ];
+  };
+
+  services.backup.includes = [
+    "/var/lib/freescout"
+    config.services.postgresqlBackup.location
+  ];
 
   # How to generate:
   #
