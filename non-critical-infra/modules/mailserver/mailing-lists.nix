@@ -117,6 +117,13 @@
       };
     };
 
+    "nixpkgs-core@nixos.org" = {
+      loginAccount = {
+        encryptedHashedPassword = ../../secrets/nixpkgs-core-email-login.umbriel;
+        storeEmail = true;
+      };
+    };
+
     "nixcon@nixos.org" = {
       loginAccount = {
         encryptedHashedPassword = ../../secrets/nixcon-email-login.umbriel;
