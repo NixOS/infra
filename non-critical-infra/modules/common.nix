@@ -3,6 +3,7 @@
 {
   imports = [
     ../../modules/nftables.nix
+    ../../modules/prometheus
   ];
 
   boot.initrd.systemd.enable = true;

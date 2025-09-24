@@ -12,7 +12,6 @@
     inputs.srvos.nixosModules.hardware-hetzner-cloud-arm
     ../../modules/common.nix
     ../../modules/backup.nix
-    ../../modules/prometheus/node-exporter.nix
     ../../modules/mailserver
   ];
 
