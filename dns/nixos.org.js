@@ -136,8 +136,11 @@ D("nixos.org",
 	CNAME("cryptpad-sandbox.ngi", "makemake.ngi.nixos.org."),
 	CNAME("summer", "makemake.ngi.nixos.org."),
 
-	A("tracker.security", "188.245.41.195"),
-	AAAA("tracker.security", "2a01:4f8:1c1b:b87b::1"),
+	A("tracker-staging.security", "188.245.41.195"),
+	AAAA("tracker-staging.security", "2a01:4f8:1c1b:b87b::1"),
+
+	A("tracker.security", "91.99.31.214"),
+	AAAA("tracker.security", "2a01:4f8:1c1b:6921::1"),
 
 	// merge-bot
 	A("nixpkgs-merge-bot", "37.27.11.42"),
