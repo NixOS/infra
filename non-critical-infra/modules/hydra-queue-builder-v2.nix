@@ -98,6 +98,12 @@ in
         default = true;
       };
 
+      authorizationFile = lib.mkOption {
+        description = "Path to token authorization file if token auth should be used.";
+        type = lib.types.nullOf lib.types.path;
+        default = null;
+      };
+
       mtls = lib.mkOption {
         description = "mtls options";
         default = null;
@@ -196,6 +202,10 @@ in
           ]) cfg.mandatoryFeatures)
           ++ lib.optionals (cfg.useSubstitutes != null) [
             "--use-substitutes"
+          ]
+          ++ lib.optionals (cfg.authorizationFile != null) [
+            "--authorization-file"
+            cfg.authorizationFile
           ]
           ++ lib.optionals (cfg.mtls != null) [
             "--server-root-ca-cert-path"
