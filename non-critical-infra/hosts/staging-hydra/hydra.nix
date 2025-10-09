@@ -90,22 +90,19 @@ in
 
         log_prefix = https://cache.nixos.org/
 
-        evaluator_workers = 1
+        evaluator_workers = 4
         evaluator_max_memory_size = 4096
 
         queue_runner_endpoint = http://localhost:8080
 
         max_concurrent_evals = 1
 
-        # increase the number of active compress slots (CPU is 48*2 on mimas)
-        max_local_worker_threads = 144
-
         max_unsupported_time = 86400
 
         allow_import_from_derivation = false
 
         max_output_size = 3821225472 # 3 << 30 + 600000000 = 3 GiB + 0.6 GB
-        max_db_connections = 350
+        max_db_connections = 50
 
         queue_runner_metrics_address = [::]:9198
 
