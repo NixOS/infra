@@ -1,5 +1,5 @@
 {
-  rustPackages,
+  rustPackages_1_88,
   fetchFromGitHub,
   pkg-config,
   openssl,
@@ -13,15 +13,15 @@
   boost,
 }:
 let
-  version = "unstable-2025-08-07";
+  version = "unstable-2025-10-09";
   src = fetchFromGitHub {
     owner = "helsinki-systems";
     repo = "hydra-queue-runner";
-    rev = "54b3c9351d2ae10be5c4d1b97cc0f86300cd70ca";
-    hash = "sha256-gR2DzWkTykM9GdW3Nf/V8eRv68fl3aO+NW0zNPFSRT0=";
+    rev = "ad26924556d7ff6b4945a8f15c04271e8210e703";
+    hash = "sha256-hKZ//s4N+GPiKqRI8AzMO32HZOcJWYu6n5+uwhjx6vA=";
   };
   useFetchCargoVendor = true;
-  cargoHash = "sha256-oNUMmFfts4rjBX0k5mzsxpYA2JqgsRu1nMRFf/2rZa8=";
+  cargoHash = "sha256-eDkU+K2XvFU9OPhlPPcjqssabWwU8EqWzj7da0MuMAI=";
   nativeBuildInputs = [
     pkg-config
     protobuf
@@ -32,7 +32,7 @@ let
     zlib
     protobuf
 
-    nixVersions.nix_2_29
+    nixVersions.nix_2_31
     nlohmann_json
     libsodium
     boost
@@ -46,7 +46,7 @@ let
   };
 in
 {
-  runner = rustPackages.rustPlatform.buildRustPackage (finalAttrs: {
+  runner = rustPackages_1_88.rustPlatform.buildRustPackage (finalAttrs: {
     pname = "hydra-queue-runner";
     inherit version src;
     __structuredAttrs = true;
@@ -66,7 +66,9 @@ in
     cargoTestFlags = finalAttrs.cargoBuildFlags;
 
     postInstall = ''
-      wrapProgram $out/bin/queue-runner --prefix PATH : ${lib.makeBinPath [ nixVersions.nix_2_29 ]}
+      wrapProgram $out/bin/queue-runner \
+        --prefix PATH : ${lib.makeBinPath [ nixVersions.nix_2_31 ]} \
+        --set-default JEMALLOC_SYS_WITH_MALLOC_CONF "background_thread:true,narenas:1,tcache:false,dirty_decay_ms:0,muzzy_decay_ms:0,abort_conf:true"
     '';
 
     meta = meta // {
@@ -74,7 +76,7 @@ in
     };
   });
 
-  builder = rustPackages.rustPlatform.buildRustPackage (finalAttrs: {
+  builder = rustPackages_1_88.rustPlatform.buildRustPackage (finalAttrs: {
     pname = "hydra-queue-builder";
     inherit src version;
     __structuredAttrs = true;
@@ -94,7 +96,9 @@ in
     cargoTestFlags = finalAttrs.cargoBuildFlags;
 
     postInstall = ''
-      wrapProgram $out/bin/builder --prefix PATH : ${lib.makeBinPath [ nixVersions.nix_2_29 ]}
+      wrapProgram $out/bin/builder \
+        --prefix PATH : ${lib.makeBinPath [ nixVersions.nix_2_31 ]} \
+        --set-default JEMALLOC_SYS_WITH_MALLOC_CONF "background_thread:true,narenas:1,tcache:false,dirty_decay_ms:0,muzzy_decay_ms:0,abort_conf:true"
     '';
 
     meta = meta // {

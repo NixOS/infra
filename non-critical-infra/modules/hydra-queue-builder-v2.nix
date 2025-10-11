@@ -2,10 +2,12 @@
   config,
   pkgs,
   lib,
+  inputs,
   ...
 }:
 let
   cfg = config.services.hydra-queue-builder-v2;
+  unstable = import inputs.nixpkgs-unstable { inherit (pkgs) system; };
 in
 {
   options = {
@@ -98,6 +100,12 @@ in
         default = true;
       };
 
+      authorizationFile = lib.mkOption {
+        description = "Path to token authorization file if token auth should be used.";
+        type = lib.types.nullOr lib.types.path;
+        default = null;
+      };
+
       mtls = lib.mkOption {
         description = "mtls options";
         default = null;
@@ -127,7 +135,12 @@ in
 
       package = lib.mkOption {
         type = lib.types.package;
-        default = (pkgs.recurseIntoAttrs (pkgs.callPackage ../packages/hydra-queue-runner { })).builder;
+        default =
+          (pkgs.recurseIntoAttrs (
+            pkgs.callPackage ../packages/hydra-queue-runner {
+              inherit (unstable) nixVersions openssl;
+            }
+          )).builder;
       };
     };
   };
@@ -196,6 +209,10 @@ in
           ]) cfg.mandatoryFeatures)
           ++ lib.optionals (cfg.useSubstitutes != null) [
             "--use-substitutes"
+          ]
+          ++ lib.optionals (cfg.authorizationFile != null) [
+            "--authorization-file"
+            cfg.authorizationFile
           ]
           ++ lib.optionals (cfg.mtls != null) [
             "--server-root-ca-cert-path"
