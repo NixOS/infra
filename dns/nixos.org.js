@@ -188,7 +188,8 @@ D("nixos.org",
 	TXT("_github-pages-challenge-nixos", "f3a423ba6916e972cfb1e74f82f601"),
 
 	// netlify pages
-	ALIAS("@", "nixos-homepage.netlify.app."),
+	A("@", "75.2.60.5"),
+	A("@", "99.83.231.61"),
 	CNAME("brand", "nixos-brand.netlify.app."),
 	CNAME("common-styles", "nixos-common-styles.netlify.app."),
 	CNAME("planet", "nixos-planet.netlify.app."),

@@ -20,7 +20,8 @@ D("nix.dev",
 
 	TXT("@", "google-site-verification=J55RGHyOPKpHAyIHVfBy1RdY_LuVIvLyuyR8deO62YE"),
 
-	ALIAS("@", "nix-dev.netlify.app."),
+	A("@", "99.83.231.61"),
+	A("@", "75.2.60.5"),
 	CNAME("www", "nix-dev.netlify.app.")
 );
 
