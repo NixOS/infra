@@ -65,7 +65,7 @@
         settings = {
           backend = "systemd";
           port = "80,443";
-          filter = "vaultwarden_web[journalmatch='_SYSTEMD_UNIT=vaultwarden.service']";
+          filter = "vaultwarden-web[journalmatch='_SYSTEMD_UNIT=vaultwarden.service']";
           banaction = "%(banaction_allports)s";
           maxretry = 3;
           bantime = 14400;
