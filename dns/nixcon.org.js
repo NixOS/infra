@@ -20,7 +20,12 @@ D("nixcon.org",
 	// Websites
 	TXT("_github-pages-challenge-nixcon", "6608e513e09036ab8cadb7ca4eb71b"),
 
-	ALIAS("@", "nixcon.github.io."),
+	// https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site#configuring-an-apex-domain
+	A("@", "185.199.109.153"),
+	A("@", "185.199.111.153"),
+	AAAA("@", "2606:50c0:8001::153"),
+	AAAA("@", "2606:50c0:8003::153"),
+
 	CNAME("www", "nixcon.github.io."),
 
 	CNAME("2015", "nixcon.github.io."),
