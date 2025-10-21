@@ -387,6 +387,9 @@ in
             "/upload/".root = "/var/lib/limesurvey";
 
           };
+          extraConfig = ''
+            access_log off;
+          '';
         }
       ];
     };
