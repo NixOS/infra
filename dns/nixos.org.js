@@ -198,6 +198,9 @@ D("nixos.org",
 	CNAME("weekly", "nixos-weekly.netlify.com."),
 	CNAME("www", "nixos-homepage.netlify.app."),
 
-    // temporary election-related services
-    CNAME("sc-election-2025", "nix-ec-2025.7c6f434c.michaelraskin.top."),
+	// temporary election-related services
+	CNAME("sc-election-2025", "nix-ec-2025.7c6f434c.michaelraskin.top."),
+
+	// test for gandi ticket
+	ALIAS("test", "nixos-homepage.netlify.app."),
 );
