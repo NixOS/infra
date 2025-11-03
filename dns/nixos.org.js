@@ -142,12 +142,6 @@ D("nixos.org",
 	A("tracker.security", "91.99.31.214"),
 	AAAA("tracker.security", "2a01:4f8:1c1b:6921::1"),
 
-	// merge-bot
-	A("nixpkgs-merge-bot", "37.27.11.42"),
-	AAAA("nixpkgs-merge-bot", "2a01:4f9:c012:7615::1"),
-	A("nixpkgs-merge-bot-staging", "37.27.197.11"),
-	AAAA("nixpkgs-merge-bot-staging", "2a01:4f9:c010:dd30::1"),
-
 	// wiki
 	A("wiki", "65.21.240.250"),
 	AAAA("wiki", "2a01:4f9:c012:8178::"),
