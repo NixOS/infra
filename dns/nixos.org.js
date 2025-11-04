@@ -170,7 +170,7 @@ D("nixos.org",
 	TXT("mail._domainkey.wiki", "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDa+KjIljYr3q5MWWK7sEYzjR8OcA32zBh9BCPo6/HlY1q2ODTYsmE/FDZWpYMzM5z+ddnuGYdXia322XnZaNpZNoq1TbGYuQ5DsgAEK09CGoLuzONg3PSXTrkG7E2Sd6wstwHGJ5FHxSLKtNoWkknt9F5XAFZgXapO0w54p+BWvwIDAQAB"),
 
 	// test.wiki subdomain with Fastly
-	CNAME("test.wiki", "dualstack.v2.shared.global.fastly.net."),
+	CNAME("test.wiki", "dualstack.n.sni.global.fastly.net."),
 	CNAME("_acme-challenge.test.wiki", "zsz0meyel8hxoy9dtb.fastly-validations.com."),
 
 	// cloudflare pages
