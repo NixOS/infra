@@ -2,6 +2,16 @@ D("ofborg.org",
 	REG_NONE,
 	DnsProvider(DSP_GANDI),
 
+	CAA_BUILDER({
+		label: "@",
+		iodef: "mailto:infra+caa@nixos.org",
+		iodef_critical: true,
+		issue: ["letsencrypt.org"],
+		issue_critical: true,
+		issuewild: "none",
+		issuewild_critical: true,
+	}),
+
 	// Domain is not used for mail
 	SPF_BUILDER({
 		label: "@",
