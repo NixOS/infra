@@ -198,6 +198,9 @@ D("nixos.org",
 	CNAME("weekly", "nixos-weekly.netlify.com."),
 	CNAME("www", "nixos-homepage.netlify.app."),
 
+	// bluesky account/domain binding
+	TXT("_atproto", "did=did:plc:bf43o4nxudgubwt4iljpayb7"),
+
 	// temporary election-related services
 	CNAME("sc-election-2025", "nix-ec-2025.7c6f434c.michaelraskin.top."),
 );
