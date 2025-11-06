@@ -17,6 +17,16 @@ in
     9199 # hydra-notify metrics
   ];
 
+  services.postgresql.settings = {
+    log_min_duration_statement = 5000;
+    log_duration = "off";
+    log_statement = "none";
+
+    max_connections = 500;
+    work_mem = "20MB";
+    maintenance_work_mem = "2GB";
+  };
+
   # garbage collection
   nix.gc = {
     automatic = true;
@@ -27,7 +37,10 @@ in
   nix.settings = {
     # gc outputs as well, since they are served from the cache
     gc-keep-outputs = lib.mkForce false;
-    allowed-users = [ "hydra-www" ];
+    allowed-users = [
+      "hydra"
+      "hydra-www"
+    ];
   };
 
   # Don't rate-limit the journal.
@@ -80,22 +93,19 @@ in
 
         log_prefix = https://cache.nixos.org/
 
-        evaluator_workers = 1
+        evaluator_workers = 4
         evaluator_max_memory_size = 4096
 
         queue_runner_endpoint = http://localhost:8080
 
         max_concurrent_evals = 1
 
-        # increase the number of active compress slots (CPU is 48*2 on mimas)
-        max_local_worker_threads = 144
-
         max_unsupported_time = 86400
 
         allow_import_from_derivation = false
 
         max_output_size = 3821225472 # 3 << 30 + 600000000 = 3 GiB + 0.6 GB
-        max_db_connections = 350
+        max_db_connections = 50
 
         queue_runner_metrics_address = [::]:9198
 
@@ -110,19 +120,12 @@ in
 
     hydra-queue-runner-v2 = {
       enable = true;
-      settings.remoteStoreAddr = [
-        "s3://nix-cache-staging?secret-key=${config.sops.secrets.signing-key.path}&ls-compression=br&log-compression=br"
-      ];
-    };
-
-    hydra-queue-builder-v2 = {
-      enable = true;
-      queueRunnerAddr = "https://queue-runner.staging-hydra.nixos.org";
-      mtls = {
-        serverRootCaCertPath = "${./ca.crt}";
-        clientCertPath = "${./client.crt}";
-        clientKeyPath = config.sops.secrets."queue-runner-client.key".path;
-        domainName = "queue-runner.staging-hydra.nixos.org";
+      settings = {
+        queueTriggerTimerInS = 300;
+        concurrentUploadLimit = 2;
+        remoteStoreAddr = [
+          "s3://nix-cache-staging?secret-key=${config.sops.secrets.signing-key.path}&ls-compression=br&log-compression=br"
+        ];
       };
     };
 
@@ -143,6 +146,7 @@ in
           # This is necessary so that grpc connections do not get closed early
           # see https://stackoverflow.com/a/67805465
           client_body_timeout 31536000s;
+          client_max_body_size 0;
 
           grpc_pass grpc://[::1]:50051;
 
@@ -167,11 +171,6 @@ in
       sopsFile = ../../secrets/queue-runner-server.key.staging-hydra;
       format = "binary";
       owner = config.systemd.services.nginx.serviceConfig.User;
-    };
-    "queue-runner-client.key" = {
-      sopsFile = ../../secrets/queue-runner-client.key.staging-hydra;
-      format = "binary";
-      owner = config.systemd.services.hydra-queue-builder-v2.serviceConfig.User;
     };
     hydra-users = {
       sopsFile = ../../secrets/hydra-users.staging-hydra;
