@@ -5,6 +5,8 @@ D("nixos.org",
 	TXT("@", "apple-domain-verification=OvacO4lGB9A6dBFg"),
 	TXT("@", "brevo-code:f580a125e215ecb440363a15cdf47a17"),	
 	TXT("@", "google-site-verification=Pm5opvmNjJOwdb7JnuVJ_eFBPaZYWNcAavY-08AJoGc"),
+	// bluesky account/domain binding
+	TXT("_atproto", "did=did:plc:bf43o4nxudgubwt4iljpayb7"),
 
 	// nixos.org mailing
 	MX("@", 10, "umbriel"),
@@ -191,7 +193,4 @@ D("nixos.org",
 	CNAME("status", "nixos-status.netlify.app."),
 	CNAME("weekly", "nixos-weekly.netlify.com."),
 	CNAME("www", "nixos-homepage.netlify.app."),
-
-	// bluesky account/domain binding
-	TXT("_atproto", "did=did:plc:bf43o4nxudgubwt4iljpayb7"),
 );
