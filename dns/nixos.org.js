@@ -181,9 +181,6 @@ D("nixos.org",
 	CNAME("test.wiki", "dualstack.n.sni.global.fastly.net."),
 	CNAME("_acme-challenge.test.wiki", "zsz0meyel8hxoy9dtb.fastly-validations.com."),
 
-	// cloudflare pages
-	CNAME("20th", "20th-nix.pages.dev."),
-
 	// github org/domain binding
 	TXT("_github-challenge-nixos", "9e10a04a4b"),
 
