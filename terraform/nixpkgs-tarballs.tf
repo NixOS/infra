@@ -292,7 +292,12 @@ resource "fastly_tls_subscription" "nixpkgs-tarballs" {
   certificate_authority = "globalsign"
 }
 
-# TODO: move the DNS config to terraform
+resource "fastly_tls_subscription" "nixpkgs-tarballs-2025-11" {
+  domains               = [for domain in fastly_service_vcl.nixpkgs-tarballs.domain : domain.name]
+  configuration_id      = local.fastly_tls13_quic_configuration_id
+  certificate_authority = "lets-encrypt"
+}
+
 output "nixpkgs-tarballs-managed_dns_challenge" {
   value = fastly_tls_subscription.nixpkgs-tarballs.managed_dns_challenges
 }

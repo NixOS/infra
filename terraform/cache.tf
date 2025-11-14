@@ -304,3 +304,13 @@ resource "fastly_tls_subscription" "cache" {
   configuration_id      = local.fastly_tls12_sni_configuration_id
   certificate_authority = "globalsign"
 }
+
+resource "fastly_tls_subscription" "cache-2025-11" {
+  domains               = [for domain in fastly_service_vcl.cache.domain : domain.name]
+  configuration_id      = local.fastly_tls13_quic_configuration_id
+  certificate_authority = "lets-encrypt"
+}
+
+output "cache-managed_dns_challenge" {
+  value = fastly_tls_subscription.cache.managed_dns_challenges
+}

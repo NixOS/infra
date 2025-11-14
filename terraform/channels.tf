@@ -296,7 +296,12 @@ resource "fastly_tls_subscription" "channels" {
   certificate_authority = "globalsign"
 }
 
-# TODO: move the DNS config to terraform
+resource "fastly_tls_subscription" "channels-2025-11" {
+  domains               = [for domain in fastly_service_vcl.channels.domain : domain.name]
+  configuration_id      = local.fastly_tls13_quic_configuration_id
+  certificate_authority = "lets-encrypt"
+}
+
 output "channels-managed_dns_challenge" {
   value = fastly_tls_subscription.channels.managed_dns_challenges
 }
