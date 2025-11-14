@@ -184,7 +184,7 @@ resource "fastly_service_vcl" "artifacts" {
 
 resource "fastly_tls_subscription" "artifacts" {
   domains               = [for domain in fastly_service_vcl.artifacts.domain : domain.name]
-  configuration_id      = local.fastly_tls12_sni_configuration_id
+  configuration_id      = local.fastly_tls13_quic_configuration_id
   certificate_authority = "lets-encrypt"
 }
 
