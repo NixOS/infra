@@ -255,12 +255,6 @@ resource "fastly_service_vcl" "releases" {
   }
 }
 
-resource "fastly_tls_subscription" "releases" {
-  domains               = [for domain in fastly_service_vcl.releases.domain : domain.name]
-  configuration_id      = local.fastly_tls12_sni_configuration_id
-  certificate_authority = "globalsign"
-}
-
 resource "fastly_tls_subscription" "releases-2025-11" {
   domains               = [for domain in fastly_service_vcl.releases.domain : domain.name]
   configuration_id      = local.fastly_tls13_quic_configuration_id
@@ -268,5 +262,5 @@ resource "fastly_tls_subscription" "releases-2025-11" {
 }
 
 output "releases-managed_dns_challenge" {
-  value = fastly_tls_subscription.releases.managed_dns_challenges
+  value = fastly_tls_subscription.releases-2025-11.managed_dns_challenges
 }

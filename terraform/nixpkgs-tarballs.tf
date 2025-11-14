@@ -286,12 +286,6 @@ resource "fastly_service_vcl" "nixpkgs-tarballs" {
   }
 }
 
-resource "fastly_tls_subscription" "nixpkgs-tarballs" {
-  domains               = [for domain in fastly_service_vcl.nixpkgs-tarballs.domain : domain.name]
-  configuration_id      = local.fastly_tls12_sni_configuration_id
-  certificate_authority = "globalsign"
-}
-
 resource "fastly_tls_subscription" "nixpkgs-tarballs-2025-11" {
   domains               = [for domain in fastly_service_vcl.nixpkgs-tarballs.domain : domain.name]
   configuration_id      = local.fastly_tls13_quic_configuration_id
@@ -299,7 +293,7 @@ resource "fastly_tls_subscription" "nixpkgs-tarballs-2025-11" {
 }
 
 output "nixpkgs-tarballs-managed_dns_challenge" {
-  value = fastly_tls_subscription.nixpkgs-tarballs.managed_dns_challenges
+  value = fastly_tls_subscription.nixpkgs-tarballs-2025-11.managed_dns_challenges
 }
 
 # Create an S3 bucket for CloudTrail logs
