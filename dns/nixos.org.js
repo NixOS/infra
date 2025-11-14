@@ -42,6 +42,7 @@ D("nixos.org",
 	TXT("mail._domainkey.discourse", "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDmxDhMfDl6lnueSRCjYiWIDeTAJXR9Yw0PfpBfG7GPUIkMyqy9jVGpb4ECVTt9S1zfpr4dbtCgir781oVwZiwGIWzC8y8XsD37wernQIPN4Yubnrnpw+6lill4uA/AuyU/ghbeZ5lW03pHD//2EW4YEu+Jw4aS4rF0Wtk+BlJRCwIDAQAB"),
 
 	// fastly
+	CNAME("_acme-challenge.cache", "k2hql6g4rigivyu6nn.fastly-validations.com."),
 	CNAME("_acme-challenge.cache-staging", "kqwx9cvuf7lvjo8u9b.fastly-validations.com."),
 	CNAME("_acme-challenge.channels", "9u55qij5w2odiwqxfi.fastly-validations.com."),
 	CNAME("_acme-challenge.artifacts", "bsk6mjvi6b1r6wekb0.fastly-validations.com."),
