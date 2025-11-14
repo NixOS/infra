@@ -8,6 +8,16 @@ D("nixos.org",
 	// bluesky account/domain binding
 	TXT("_atproto", "did=did:plc:bf43o4nxudgubwt4iljpayb7"),
 
+	CAA_BUILDER({
+		label: "@",
+		iodef: "mailto:infra+caa@nixos.org",
+		iodef_critical: true,
+		issue: ["letsencrypt.org"],
+		issue_critical: true,
+		issuewild: "none",
+		issuewild_critical: true,
+	}),
+
 	// nixos.org mailing
 	MX("@", 10, "umbriel"),
 	SPF_BUILDER({
@@ -170,9 +180,6 @@ D("nixos.org",
 	// test.wiki subdomain with Fastly
 	CNAME("test.wiki", "dualstack.n.sni.global.fastly.net."),
 	CNAME("_acme-challenge.test.wiki", "zsz0meyel8hxoy9dtb.fastly-validations.com."),
-
-	// cloudflare pages
-	CNAME("20th", "20th-nix.pages.dev."),
 
 	// github org/domain binding
 	TXT("_github-challenge-nixos", "9e10a04a4b"),
