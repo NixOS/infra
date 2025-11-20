@@ -1,9 +1,15 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }:
 
+let
+  bannedUserAgentPatterns = [
+    "Chrome/129.0.0.0"
+  ];
+in
 {
   networking.firewall.allowedTCPPorts = [
     80
@@ -43,6 +49,13 @@
     '';
 
     appendHttpConfig = ''
+      map $http_user_agent $badagent {
+        default 0;
+        ${lib.concatMapStringsSep "\n" (pattern: ''
+          ~${pattern} 1;
+        '') bannedUserAgentPatterns}
+      }
+
       map $http_x_from $upstream {
         default "anubis";
         nix.dev-Uogho3gi "hydra-server";
@@ -89,6 +102,11 @@
       locations."/" = {
         proxyPass = "http://$upstream";
         extraConfig = ''
+          if ($badagent) {
+            access_log /var/log/nginx/abuse.log;
+            return 403;
+          }
+
           limit_req zone=hydra-server burst=7;
         '';
       };
