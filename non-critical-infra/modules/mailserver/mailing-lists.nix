@@ -177,14 +177,6 @@
     };
 
     "steering@nixos.org" = {
-      forwardTo = [
-        ../../secrets/Ericson2314-email-address.umbriel # https://github.com/Ericson2314
-        ../../secrets/Gabriella439-email-address.umbriel # https://github.com/Gabriella439
-        ../../secrets/roberth-email-address.umbriel # https://github.com/roberth
-        ../../secrets/tomberek-email-address.umbriel # https://github.com/tomberek
-        ../../secrets/winterqt-email-address.umbriel # https://github.com/winterqt
-        ../../secrets/jtojnar-email-address.umbriel # https://github.com/jtojnar
-      ];
       loginAccount = {
         encryptedHashedPassword = ../../secrets/steering-email-login.umbriel;
         storeEmail = true;
