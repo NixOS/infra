@@ -43,9 +43,13 @@
     '';
 
     appendHttpConfig = ''
-      map $http_x_from $upstream {
-        default "anubis";
-        nix.dev-Uogho3gi "hydra-server";
+      map $request_uri $backend {
+        default anubis;
+
+        # downloads (e.g. distrobuilder for lxc/incus images)
+        ~^/build/\d+/download/ hydra-server;
+        ~^/build/\d+/download-by-type/ hydra-server;
+        ~^/job/[^/]+/[^/]+/[^/]+/latest/download-by-type/file/ hydra-server;
       }
 
       limit_req_zone $binary_remote_addr zone=hydra-server:8m rate=2r/s;
@@ -87,14 +91,10 @@
       };
 
       locations."/" = {
-        proxyPass = "http://$upstream";
+        proxyPass = "http://$backend";
         extraConfig = ''
           limit_req zone=hydra-server burst=7;
         '';
-      };
-
-      locations."~ ^/build/\\d+/download/" = {
-        proxyPass = "http://hydra-server";
       };
 
       locations."/static/" = {
