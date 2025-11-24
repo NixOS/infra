@@ -39,6 +39,22 @@ rec {
       status = "rolling";
     };
 
+    "nixos-25.11" = {
+      job = "nixos/release-25.11/tested";
+      variant = "primary";
+      status = "beta";
+    };
+    "nixos-25.11-small" = {
+      job = "nixos/release-25.11-small/tested";
+      variant = "small";
+      status = "beta";
+    };
+    "nixpkgs-25.11-darwin" = {
+      job = "nixpkgs/nixpkgs-25.11-darwin/darwin-tested";
+      variant = "darwin";
+      status = "beta";
+    };
+
     "nixos-25.05" = {
       job = "nixos/release-25.05/tested";
       variant = "primary";
