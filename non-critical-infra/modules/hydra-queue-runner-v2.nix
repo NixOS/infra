@@ -2,14 +2,12 @@
   config,
   pkgs,
   lib,
-  inputs,
   ...
 }:
 let
   cfg = config.services.hydra-queue-runner-v2;
 
   format = pkgs.formats.toml { };
-  unstable = import inputs.nixpkgs-unstable { inherit (pkgs) system; };
 in
 {
   options = {
@@ -187,12 +185,7 @@ in
       };
       package = lib.mkOption {
         type = lib.types.package;
-        default =
-          (lib.recurseIntoAttrs (
-            pkgs.callPackage ../packages/hydra-queue-runner {
-              inherit (unstable) nixVersions openssl;
-            }
-          )).runner;
+        default = (lib.recurseIntoAttrs (pkgs.callPackage ../packages/hydra-queue-runner { })).runner;
       };
     };
   };
