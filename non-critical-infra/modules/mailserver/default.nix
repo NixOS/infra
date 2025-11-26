@@ -18,6 +18,7 @@
   mailserver = {
     enable = true;
     enableImap = false;
+    stateVersion = 3;
     certificateScheme = "acme-nginx";
 
     fqdn = config.networking.fqdn;
