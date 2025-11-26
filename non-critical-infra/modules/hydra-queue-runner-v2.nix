@@ -188,7 +188,7 @@ in
       package = lib.mkOption {
         type = lib.types.package;
         default =
-          (pkgs.recurseIntoAttrs (
+          (lib.recurseIntoAttrs (
             pkgs.callPackage ../packages/hydra-queue-runner {
               inherit (unstable) nixVersions openssl;
             }
@@ -254,7 +254,7 @@ in
         StateDirectoryMode = "0700";
         ReadWritePaths = [
           "/nix/var/nix/gcroots/"
-          "/run/postgresql/.s.PGSQL.${toString config.services.postgresql.port}"
+          "/run/postgresql/.s.PGSQL.${toString config.services.postgresql.settings.port}"
           "/nix/var/nix/daemon-socket/socket"
           "/var/lib/hydra/build-logs/"
         ];
