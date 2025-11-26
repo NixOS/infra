@@ -9,7 +9,6 @@
   imports = [
     inputs.simple-nixos-mailserver.nixosModule
     ./mailing-lists.nix
-    ./postsrsd.nix
     ./freescout.nix
   ];
 
@@ -27,6 +26,8 @@
       "nixcon.org"
       "nixos.org"
     ];
+
+    srs.enable = true;
   };
 
   # https://nixos-mailserver.readthedocs.io/en/latest/backup-guide.html
@@ -114,4 +115,23 @@
                        The mail system
     EOF
   ''}";
+
+  services.postsrsd.secretsFile = config.sops.secrets.postsrsd-secret.path;
+
+  # ```
+  # How to generate:
+  #
+  # ```console
+  # cd non-critical-infra
+  # SECRET_PATH=secrets/postsrsd-secret.umbriel
+  # dd if=/dev/random bs=18 count=1 status=none | base64 > "$SECRET_PATH"
+  # sops encrypt --in-place "$SECRET_PATH"
+  # ```
+  sops.secrets.postsrsd-secret = {
+    format = "binary";
+    owner = config.services.postsrsd.user;
+    group = config.services.postsrsd.group;
+    sopsFile = ../../secrets/postsrsd-secret.umbriel;
+    restartUnits = [ "postsrsd.service" ];
+  };
 }
