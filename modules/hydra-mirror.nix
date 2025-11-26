@@ -9,7 +9,7 @@
 let
   channels = (import ../channels.nix).channels-with-urls;
 
-  orderLib = import ../lib/service-order.nix { inherit lib; };
+  orderLib = import ../lib/service-order.nix { };
 
   makeUpdateChannel = channelName: mainJob: {
     name = "update-${channelName}";
