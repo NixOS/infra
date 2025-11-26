@@ -80,6 +80,9 @@ D("nixos.org",
 	CNAME("monitoring", "pluto"),
 	CNAME("prometheus", "pluto"),
 
+	A("titan", "159.69.62.224"),
+	AAAA("titan", "2a01:4f8:231:e53::1"),
+
 	// hydra builfarm
 	AAAA("eager-heisenberg.mac", "2a01:4f8:d1:a027::2"),
 	A("elated-minsky.builder", "167.235.95.99"),
