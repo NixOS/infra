@@ -34,7 +34,6 @@
     recommendedOptimisation = true;
     recommendedProxySettings = true;
     recommendedTlsSettings = true;
-    recommendedZstdSettings = true;
 
     proxyTimeout = "900s";
 
