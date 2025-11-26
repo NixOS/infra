@@ -28,9 +28,6 @@ D("ofborg.org",
 		alignmentSPF: "strict"
 	}),
 
-	A("@", "136.144.57.217"),
-	AAAA("@", "2604:1380:45f1:400::3"),
-
 	A("core", "136.144.57.217"),
 	AAAA("core", "2604:1380:45f1:400::3"),
 	CNAME("events", "core"),
