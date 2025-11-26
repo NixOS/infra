@@ -136,7 +136,7 @@ in
       package = lib.mkOption {
         type = lib.types.package;
         default =
-          (pkgs.recurseIntoAttrs (
+          (lib.recurseIntoAttrs (
             pkgs.callPackage ../packages/hydra-queue-runner {
               inherit (unstable) nixVersions openssl;
             }

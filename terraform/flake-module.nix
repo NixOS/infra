@@ -22,10 +22,10 @@ in
           (pkgs.opentofu.withPlugins (
             p:
             builtins.map convert2Tofu [
-              p.aws
-              p.fastly
-              p.netlify
-              p.secret
+              p.hashicorp_aws
+              p.fastly_fastly
+              p.aegirhealth_netlify
+              p.numtide_secret
             ]
           ))
         ];
@@ -38,10 +38,10 @@ in
           (pkgs.opentofu.withPlugins (
             p:
             builtins.map convert2Tofu [
-              p.aws
-              p.fastly
-              p.netlify
-              p.secret
+              p.hashicorp_aws
+              p.fastly_fastly
+              p.aegirhealth_netlify
+              p.numtide_secret
             ]
           ))
         ];

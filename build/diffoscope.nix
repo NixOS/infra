@@ -11,7 +11,7 @@ let
     echo ""
     echo "non-determinism detected in $2; diff with previous round follows:"
     echo ""
-    time ${pkgs.utillinux}/bin/runuser -u diffoscope -- ${pkgs.diffoscope}/bin/diffoscope "$1" "$2"
+    time ${pkgs.util-linux}/bin/runuser -u diffoscope -- ${pkgs.diffoscope}/bin/diffoscope "$1" "$2"
     exit 0
   '';
 

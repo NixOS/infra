@@ -69,7 +69,7 @@
     path = "${config.mailserver.dkimKeyDirectory}/nixcon.org.mail.key";
   };
 
-  services.postfix.config.bounce_template_file = "${pkgs.writeText "bounce-template.cf" ''
+  services.postfix.settings.main.bounce_template_file = "${pkgs.writeText "bounce-template.cf" ''
     failure_template = <<EOF
     Charset: us-ascii
     From: MAILER-DAEMON (Mail Delivery System)

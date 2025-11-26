@@ -138,6 +138,6 @@ in
     services.postfix.mapFiles.virtual-mailing-lists =
       config.sops.templates."postfix-virtual-mailing-lists".path;
 
-    services.postfix.config.virtual_alias_maps = [ "hash:/etc/postfix/virtual-mailing-lists" ];
+    services.postfix.settings.main.virtual_alias_maps = [ "hash:/etc/postfix/virtual-mailing-lists" ];
   };
 }

@@ -21,7 +21,6 @@ let
     rev = "81e6209e9107a62e9fba3d29f2ead8e9cf35bea1";
     hash = "sha256-MGoC9bLa9Ih66UbHkxGuAGvj/GfPZzG9N6liiHX0Sos=";
   };
-  useFetchCargoVendor = true;
   cargoHash = "sha256-eFfrwLUnI35WhzO+enr2dTe5blwY00cGQoT5mfs9ZTw=";
   nativeBuildInputs = [
     pkg-config
@@ -54,7 +53,6 @@ in
     strictDeps = true;
 
     inherit
-      useFetchCargoVendor
       cargoHash
       nativeBuildInputs
       buildInputs
@@ -81,7 +79,6 @@ in
     strictDeps = true;
 
     inherit
-      useFetchCargoVendor
       cargoHash
       nativeBuildInputs
       buildInputs

@@ -51,7 +51,7 @@ in
       Group = "nft-asblock";
       ExecStart = toString (
         [
-          (lib.getExe inputs.nft-prefix-import.packages.${pkgs.hostPlatform.system}.default)
+          (lib.getExe inputs.nft-prefix-import.packages.${pkgs.stdenv.hostPlatform.system}.default)
           "--table"
           "abuse"
           "--ipv4set"
