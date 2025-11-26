@@ -33,7 +33,7 @@ in
     path = [
       (pkgs.python3.withPackages (
         ps: with ps; [
-          prometheus_client
+          prometheus-client
           requests
         ]
       ))
