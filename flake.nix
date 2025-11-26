@@ -28,7 +28,7 @@
     };
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11-small";
-
+    nixpkgs_25_05.url = "github:NixOS/nixpkgs/nixos-25.05-small";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     flake-parts = {
@@ -38,7 +38,7 @@
 
     darwin = {
       url = "github:LnL7/nix-darwin/nix-darwin-25.05";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs_25_05";
     };
 
     flake-utils.url = "github:numtide/flake-utils";
