@@ -1,5 +1,5 @@
 {
-  rustPackages_1_88,
+  rustPackages_1_91,
   fetchFromGitHub,
   pkg-config,
   openssl,
@@ -46,7 +46,7 @@ let
   };
 in
 {
-  runner = rustPackages_1_88.rustPlatform.buildRustPackage {
+  runner = rustPackages_1_91.rustPlatform.buildRustPackage {
     pname = "hydra-queue-runner";
     inherit version src;
     __structuredAttrs = true;
@@ -72,7 +72,7 @@ in
     };
   };
 
-  builder = rustPackages_1_88.rustPlatform.buildRustPackage {
+  builder = rustPackages_1_91.rustPlatform.buildRustPackage {
     pname = "hydra-queue-builder";
     inherit src version;
     __structuredAttrs = true;
