@@ -1,9 +1,9 @@
 ---
 name: Service disruption report
 about: Use this to report service instabilities
-title: '<service-name>: '
+title: "<service-name>: "
 labels: bug
-assignees: ''
+assignees: ""
 ---
 
 **Affected service**

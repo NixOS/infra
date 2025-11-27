@@ -1,5 +1,5 @@
 {
-  rustPackages_1_88,
+  rustPackages_1_91,
   fetchFromGitHub,
   pkg-config,
   openssl,
@@ -14,15 +14,14 @@
   withOtel ? false,
 }:
 let
-  version = "unstable-2025-11-05";
+  version = "unstable-2025-11-27";
   src = fetchFromGitHub {
     owner = "helsinki-systems";
     repo = "hydra-queue-runner";
-    rev = "81e6209e9107a62e9fba3d29f2ead8e9cf35bea1";
-    hash = "sha256-MGoC9bLa9Ih66UbHkxGuAGvj/GfPZzG9N6liiHX0Sos=";
+    rev = "8266ce9818393ee9d0fe3ffd7bcde3eb09c2221f";
+    hash = "sha256-tC4s+opt4BpN0qFx96AXhtUEJj8T7J5C68Hjj2OEetM=";
   };
-  useFetchCargoVendor = true;
-  cargoHash = "sha256-eFfrwLUnI35WhzO+enr2dTe5blwY00cGQoT5mfs9ZTw=";
+  cargoHash = "sha256-49p2mC0DmsdgWdj4mWZf7SZj4Gd9eQFqTGRDzvMYSQM=";
   nativeBuildInputs = [
     pkg-config
     protobuf
@@ -33,7 +32,7 @@ let
     zlib
     protobuf
 
-    nixVersions.nix_2_31
+    nixVersions.nix_2_32
     nlohmann_json
     libsodium
     boost
@@ -47,14 +46,13 @@ let
   };
 in
 {
-  runner = rustPackages_1_88.rustPlatform.buildRustPackage {
+  runner = rustPackages_1_91.rustPlatform.buildRustPackage {
     pname = "hydra-queue-runner";
     inherit version src;
     __structuredAttrs = true;
     strictDeps = true;
 
     inherit
-      useFetchCargoVendor
       cargoHash
       nativeBuildInputs
       buildInputs
@@ -62,10 +60,11 @@ in
 
     buildAndTestSubdir = "queue-runner";
     buildFeatures = lib.optional withOtel "otel";
+    doCheck = false;
 
     postInstall = ''
       wrapProgram $out/bin/queue-runner \
-        --prefix PATH : ${lib.makeBinPath [ nixVersions.nix_2_31 ]} \
+        --prefix PATH : ${lib.makeBinPath [ nixVersions.nix_2_32 ]} \
         --set-default JEMALLOC_SYS_WITH_MALLOC_CONF "background_thread:true,narenas:1,tcache:false,dirty_decay_ms:0,muzzy_decay_ms:0,abort_conf:true"
     '';
 
@@ -74,14 +73,13 @@ in
     };
   };
 
-  builder = rustPackages_1_88.rustPlatform.buildRustPackage {
+  builder = rustPackages_1_91.rustPlatform.buildRustPackage {
     pname = "hydra-queue-builder";
     inherit src version;
     __structuredAttrs = true;
     strictDeps = true;
 
     inherit
-      useFetchCargoVendor
       cargoHash
       nativeBuildInputs
       buildInputs
@@ -89,10 +87,11 @@ in
 
     buildAndTestSubdir = "builder";
     buildFeatures = lib.optional withOtel "otel";
+    doCheck = false;
 
     postInstall = ''
       wrapProgram $out/bin/builder \
-        --prefix PATH : ${lib.makeBinPath [ nixVersions.nix_2_31 ]} \
+        --prefix PATH : ${lib.makeBinPath [ nixVersions.nix_2_32 ]} \
         --set-default JEMALLOC_SYS_WITH_MALLOC_CONF "background_thread:true,narenas:1,tcache:false,dirty_decay_ms:0,muzzy_decay_ms:0,abort_conf:true"
     '';
 

@@ -15,14 +15,6 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  nixpkgs.overlays = [
-    (_prev: final: {
-      # fails to find nix-main against nix 2.28.x
-      # https://github.com/NixOS/infra/pull/620#issuecomment-2784979947
-      nixos-option = final.nixos-option.override { nix = pkgs.nixVersions.nix_2_24; };
-    })
-  ];
-
   hardware.enableAllFirmware = true;
   hardware.cpu.amd.updateMicrocode = true;
   hardware.cpu.intel.updateMicrocode = true;

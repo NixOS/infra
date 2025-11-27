@@ -13,6 +13,7 @@
               "haumea.nixos.org:9134"
               "mimas.nixos.org:9134"
               "pluto.nixos.org:9134"
+              "titan.nixos.org:9134"
             ];
           }
         ];

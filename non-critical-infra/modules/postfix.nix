@@ -24,9 +24,9 @@
 
   services.postfix = {
     enable = true;
-    hostname = config.networking.fqdn;
-    domain = config.networking.fqdn;
-    config = {
+    settings.main = {
+      myhostname = config.networking.fqdn;
+      mydomain = config.networking.fqdn;
       smtp_tls_note_starttls_offer = "yes";
       smtp_tls_security_level = "may";
       tls_medium_cipherlist = "AES128+EECDH:AES128+EDH";
