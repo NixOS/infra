@@ -14,14 +14,14 @@
   withOtel ? false,
 }:
 let
-  version = "unstable-2025-11-27";
+  version = "unstable-2025-11-30";
   src = fetchFromGitHub {
     owner = "helsinki-systems";
     repo = "hydra-queue-runner";
-    rev = "8266ce9818393ee9d0fe3ffd7bcde3eb09c2221f";
-    hash = "sha256-tC4s+opt4BpN0qFx96AXhtUEJj8T7J5C68Hjj2OEetM=";
+    rev = "66d8c5d094987f6f54ec81b488812b999358267b";
+    hash = "sha256-MwmnMExE2xDtZZFUXVec1xThvGx2GJUdFEVVOMtlF3Q=";
   };
-  cargoHash = "sha256-49p2mC0DmsdgWdj4mWZf7SZj4Gd9eQFqTGRDzvMYSQM=";
+  cargoHash = "sha256-jfM+1fa0LhIP0aB+sbEsRY1ps2cM2PLqlno/W+Lc1lQ=";
   nativeBuildInputs = [
     pkg-config
     protobuf
