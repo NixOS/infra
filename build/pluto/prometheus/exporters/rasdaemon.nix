@@ -12,6 +12,7 @@
               "mimas.nixos.org:10029"
               "haumea.nixos.org:10029"
               "pluto.nixos.org:10029"
+              "titan.nixos.org:10029"
 
               # builders
               "elated-minsky.builder.nixos.org:10029"

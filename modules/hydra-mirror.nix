@@ -9,7 +9,7 @@
 let
   channels = (import ../channels.nix).channels-with-urls;
 
-  orderLib = import ../lib/service-order.nix { inherit lib; };
+  orderLib = import ../lib/service-order.nix { };
 
   makeUpdateChannel = channelName: mainJob: {
     name = "update-${channelName}";
@@ -17,7 +17,7 @@ let
       description = "Update Channel ${channelName}";
       path = with pkgs; [
         git
-        inputs.nixos-channel-scripts.packages.${pkgs.hostPlatform.system}.default
+        inputs.nixos-channel-scripts.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
       script = ''
         # Hardcoded in channel scripts.

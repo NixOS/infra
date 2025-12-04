@@ -25,7 +25,7 @@ rec {
     #   status = "beta";
     # };
     "nixos-unstable" = {
-      job = "nixos/trunk-combined/tested";
+      job = "nixos/unstable/tested";
       variant = "primary";
       status = "rolling";
     };
@@ -35,7 +35,7 @@ rec {
       status = "rolling";
     };
     "nixpkgs-unstable" = {
-      job = "nixpkgs/trunk/unstable";
+      job = "nixpkgs/unstable/unstable";
       status = "rolling";
     };
 

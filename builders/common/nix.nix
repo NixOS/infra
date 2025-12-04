@@ -48,10 +48,9 @@
     serviceConfig = {
       ExecStart = lib.concatStringsSep " " [
         (lib.getExe pkgs.findutils)
-        "/tmp"
+        "/nix/var/nix/builds"
         "-maxdepth 1"
         "-type d"
-        "-iname \"nix-build-*\""
         "-mtime +1" # days
         "-exec rm -rf {} +"
       ];
