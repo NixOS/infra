@@ -68,7 +68,7 @@ in
           patches = [
             (pkgs.fetchpatch2 {
               url = "https://patch-diff.githubusercontent.com/raw/NixOS/hydra/pull/1542.patch";
-              hash = "sha256-Eju9Be9pAdM2S19jl0VAkELqQTZ7P9DVlDwH3mORPt8=";
+              hash = "sha256-FG4s3VfyDLyBP407W4Y2h8zbWYE2k/ocrIZKu5xPYuo=";
             })
           ];
         }
