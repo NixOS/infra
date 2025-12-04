@@ -92,20 +92,20 @@
     "darwin_2": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs_25_05"
+          "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1759509947,
-        "narHash": "sha256-4XifSIHfpJKcCf5bZZRhj8C4aCpjNBaE3kXr02s4rHU=",
+        "lastModified": 1764161084,
+        "narHash": "sha256-HN84sByg9FhJnojkGGDSrcjcbeioFWoNXfuyYfJ1kBE=",
         "owner": "LnL7",
         "repo": "nix-darwin",
-        "rev": "000eadb231812ad6ea6aebd7526974aaf4e79355",
+        "rev": "e95de00a471d07435e0527ff4db092c84998698e",
         "type": "github"
       },
       "original": {
         "owner": "LnL7",
-        "ref": "nix-darwin-25.05",
+        "ref": "nix-darwin-25.11",
         "repo": "nix-darwin",
         "type": "github"
       }
@@ -462,22 +462,6 @@
         "type": "github"
       }
     },
-    "nixpkgs_25_05": {
-      "locked": {
-        "lastModified": 1764115444,
-        "narHash": "sha256-AcwR4Lt4nZCOky+73iKF9iBf3RmabvNcK8HuExLCahg=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "9243f3e5dc86ed8c61c09da1fa0493a87b150621",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-25.05-small",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "rfc39": {
       "inputs": {
         "nixpkgs": [
@@ -513,7 +497,6 @@
         "nixpkgs": "nixpkgs",
         "nixpkgs-swh": "nixpkgs-swh",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "nixpkgs_25_05": "nixpkgs_25_05",
         "rfc39": "rfc39",
         "simple-nixos-mailserver": "simple-nixos-mailserver",
         "sops-nix": "sops-nix",
