@@ -23,6 +23,7 @@ in
     haumea = { };
     pluto = { };
     mimas = { };
+    titan = { };
   };
 
   flake = {
@@ -53,6 +54,16 @@ in
       modules = [
         flakesModule
         ./mimas
+      ];
+    };
+
+    nixosConfigurations.titan = lib.nixosSystem {
+      system = "x86_64-linux";
+
+      specialArgs = { inherit inputs; };
+      modules = [
+        flakesModule
+        ./titan
       ];
     };
   };

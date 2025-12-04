@@ -12,8 +12,8 @@ in
       (pkgs.python3.withPackages (
         pypkgs: with pypkgs; [
           requests
-          dateutil
-          prometheus_client
+          prometheus-client
+          python-dateutil
         ]
       ))
     ];

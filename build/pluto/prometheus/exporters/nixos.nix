@@ -19,6 +19,7 @@
           labels.role = "database";
           targets = [
             "haumea.nixos.org:9300"
+            "titan.nixos.org:9300"
           ];
         }
       ];
