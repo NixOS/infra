@@ -5,7 +5,12 @@
 #  2. We can set up a login account for mailing addresses to allow sending
 #     email via `SMTP` from those addresses.
 
-{ config, lib, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 
 let
   inherit (lib) types;
@@ -121,7 +126,21 @@ in
       }) secretPasswordFiles)
     );
 
-    sops.templates."postfix-virtual-mailing-lists" = {
+    # Create virtual_alias_maps for every mailing list. Note: these are
+    # intentionally empty entries, all members of the mailing lists actually end
+    # up in `recipient_bcc_maps`, so bounces don't get sent back to the
+    # original sender (and thereby leak email addresses in our mailing lists).
+    services.postfix.mapFiles.virtual-alias-maps = pkgs.writeTextFile {
+      name = "virtual-alias-maps";
+      text = lib.concatStringsSep "\n" (
+        lib.mapAttrsToList (name: _members: name) listsWithSecretPlaceholders
+      );
+    };
+    services.postfix.config.virtual_alias_maps = [ "hash:/etc/postfix/virtual-alias-maps" ];
+
+    # BCC the members of our mailing lists. This is to avoid leaking membership
+    # email addresses. See note above for details.
+    sops.templates."postfix-recipient-bcc-maps" = {
       content = lib.concatStringsSep "\n" (
         lib.mapAttrsToList (
           name: members: "${name} ${lib.concatStringsSep ", " members}"
@@ -134,10 +153,8 @@ in
       # paths": https://github.com/Mic92/sops-nix/issues/648
       restartUnits = [ "postfix-setup.service" ];
     };
-
-    services.postfix.mapFiles.virtual-mailing-lists =
-      config.sops.templates."postfix-virtual-mailing-lists".path;
-
-    services.postfix.config.virtual_alias_maps = [ "hash:/etc/postfix/virtual-mailing-lists" ];
+    services.postfix.mapFiles.recipient-bcc-maps =
+      config.sops.templates."postfix-recipient-bcc-maps".path;
+    services.postfix.config.recipient_bcc_maps = [ "hash:/etc/postfix/postfix-recipient-bcc-maps" ];
   };
 }
