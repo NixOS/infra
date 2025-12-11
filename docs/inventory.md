@@ -71,7 +71,7 @@ owner: @zimbatm
 
 ## NixOS Wiki
 
-access: see https://wiki.nixos.org/wiki/NixOS_Wiki:About
+access: see https://wiki.nixos.org/wiki/Official_NixOS_Wiki:About
 
 ## Twitter accounts
 
