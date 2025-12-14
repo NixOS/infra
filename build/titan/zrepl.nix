@@ -14,10 +14,10 @@
     knownHosts = {
       rsync-net = {
         hostNames = [
-          "zh2543b.rsync.net"
-          "2001:1620:2019::324"
+          "zh4461b.rsync.net"
+          "2001:1620:2019::336"
         ];
-        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKlIcNwmx7id/XdYKZzVX2KtZQ4PAsEa9KVQ9N43L3PX";
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILtF46LwRn+hC9vuw0vedXBKGNPMSIqrXdxl+EQOI/8J";
       };
     };
   };
@@ -94,7 +94,7 @@
       };
     in
     {
-      enable = false; # TODO: enable post migration
+      enable = true;
       settings = {
         global = {
           logging = [

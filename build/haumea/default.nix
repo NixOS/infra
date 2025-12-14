@@ -12,7 +12,6 @@
     ./boot.nix
     ./network.nix
     ./postgresql.nix
-    ./zrepl.nix
   ];
 
   networking = {
