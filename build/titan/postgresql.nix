@@ -21,7 +21,7 @@
   services.postgresql = {
     enable = true;
     enableJIT = true;
-    package = pkgs.postgresql_16;
+    package = pkgs.postgresql_18;
     # https://pgtune.leopard.in.ua/#/
     settings = {
       listen_addresses = lib.mkForce "10.0.40.3";
