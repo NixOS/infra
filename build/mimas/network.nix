@@ -39,7 +39,7 @@
           RequiredForOnline = "routable";
         };
         address = [
-          "10.0.40.0/31"
+          "10.0.40.2/31"
         ];
       };
     };
