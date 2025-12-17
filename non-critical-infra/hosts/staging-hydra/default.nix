@@ -5,11 +5,8 @@
     inputs.srvos.nixosModules.server
     inputs.srvos.nixosModules.hardware-hetzner-cloud-arm
     ../../modules/common.nix
-    ../../modules/hydra-queue-runner-v2.nix
-    ../../modules/hydra-queue-builder-v2.nix
     ./hydra-proxy.nix
     ./hydra.nix
-    inputs.hydra.nixosModules.hydra
   ];
 
   nixpkgs.overlays = [

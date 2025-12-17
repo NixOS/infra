@@ -17,6 +17,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    hydra-queue-runner = {
+      url = "github:helsinki-systems/hydra-queue-runner";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+    };
+
     nixos-channel-scripts = {
       url = "github:NixOS/nixos-channel-scripts";
       inputs.nixpkgs.follows = "nixpkgs";
