@@ -2,6 +2,7 @@
   lib,
   pkgs,
   config,
+  inputs,
   ...
 }:
 let
@@ -12,6 +13,11 @@ let
   ];
 in
 {
+  imports = [
+    inputs.hydra.nixosModules.hydra
+    inputs.hydra-queue-runner.nixosModules.queue-runner
+  ];
+
   networking.firewall.allowedTCPPorts = [
     9198 # queue-runnner metrics
     9199 # hydra-notify metrics
@@ -118,7 +124,7 @@ in
       '';
     };
 
-    hydra-queue-runner-v2 = {
+    queue-runner-dev = {
       enable = true;
       settings = {
         queueTriggerTimerInS = 300;

@@ -315,6 +315,35 @@
         "type": "github"
       }
     },
+    "hydra-queue-runner": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixpkgs-unstable": [
+          "nixpkgs-unstable"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1768512065,
+        "narHash": "sha256-Uv+LeUmYTUeDLDTftWAGWt1DPy+bx5jWkqHhop5JjS4=",
+        "owner": "helsinki-systems",
+        "repo": "hydra-queue-runner",
+        "rev": "dd2db7f2614633efb79ecb2b29a7c18ad6cc4377",
+        "type": "github"
+      },
+      "original": {
+        "owner": "helsinki-systems",
+        "repo": "hydra-queue-runner",
+        "type": "github"
+      }
+    },
     "nft-prefix-import": {
       "inputs": {
         "nixpkgs": [
@@ -492,6 +521,7 @@
         "flake-utils": "flake-utils",
         "freescout": "freescout",
         "hydra": "hydra",
+        "hydra-queue-runner": "hydra-queue-runner",
         "nft-prefix-import": "nft-prefix-import",
         "nixos-channel-scripts": "nixos-channel-scripts",
         "nixpkgs": "nixpkgs",
