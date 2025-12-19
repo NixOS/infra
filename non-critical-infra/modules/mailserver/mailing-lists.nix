@@ -169,6 +169,13 @@
       ];
     };
 
+    "noreply-securitytracker@nixos.org" = {
+      loginAccount = {
+        encryptedHashedPassword = ../../secrets/securitytracker-noreply-email-login.umbriel;
+        storeEmail = false;
+      };
+    };
+
     "sponsor@nixos.org" = {
       forwardTo = [
         "steering@nixos.org"
