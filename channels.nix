@@ -36,6 +36,7 @@ rec {
     };
     "nixpkgs-unstable" = {
       job = "nixpkgs/unstable/unstable";
+      variant = "primary";
       status = "rolling";
     };
 
