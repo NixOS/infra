@@ -14,7 +14,7 @@ let
 in
 {
   imports = [
-    inputs.hydra-staging.nixosModules.builder
+    inputs.hydra.nixosModules.builder
   ];
 
   services.hydra-queue-builder-dev = {
