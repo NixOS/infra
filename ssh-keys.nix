@@ -30,9 +30,16 @@ rec {
   infra = infra-core ++ [ jfly ];
 
   machines = {
+    # build/
     haumea = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBamzRwZmoLjBFoNruGSVJEahk02Ku7NrBOmqcRWxcPm";
     pluto = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPzc6B1S4mp3T3oWZnqQDkDVWFBIzLtkgkdgstfYZ5d/";
     mimas = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICzfTNppOS5b5IvZl1wqjGTUZE0D/o/MY8d7uKPWDvIp";
     titan = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDgz6s5Yho6/bjvrRDuJ2IewAZQaevAMOeMjVjMaw5e+";
+
+    # builders/
+    elated-minsky = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIvrJpd3aynfPVGGG/s7MtRFz/S6M4dtqvqKI3Da7O7+";
+    goofy-hopcroft = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICTJEi+nQNd7hzNYN3cLBK/0JCkmwmyC1I+b5nMI7+dd";
+    hopeful-rivest = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBgjwpQaNAWdEdnk1YG7JWThM4xQdKNJ3h3arhF7+iFm";
+    sleepy-brown = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOh4/3m7o6H3J5QG711aJdlSUVvlC8yW6KoqAES3Fy6I";
   };
 }

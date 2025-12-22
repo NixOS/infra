@@ -7,13 +7,17 @@
         inputs.nixpkgs.lib.nixosSystem {
           inherit system;
 
+          specialArgs = { inherit inputs; };
+
           modules = [
+            inputs.agenix.nixosModules.age
             inputs.disko.nixosModules.disko
 
             ./common/hardening.nix
             ./common/network.nix
             ./common/nix.nix
             ./common/node-exporter.nix
+            ./common/hydra-queue-builder.nix
             ./common/system.nix
             ./common/tools.nix
             ./common/update.nix
@@ -36,5 +40,15 @@
 
       # Ampere Q80-30 (80C), 128 GB DDR4 RAM, 2x960GB PCIe4 NVME
       hopeful-rivest = mkNixOS "aarch64-linux" ./instances/hopeful-rivest.nix;
+    };
+
+  perSystem =
+    { pkgs, inputs', ... }:
+    {
+      devShells.builders = pkgs.mkShell {
+        buildInputs = [
+          inputs'.agenix.packages.agenix
+        ];
+      };
     };
 }
