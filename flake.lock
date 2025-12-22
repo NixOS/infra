@@ -98,13 +98,13 @@
       "locked": {
         "lastModified": 1765066094,
         "narHash": "sha256-0YSU35gfRFJzx/lTGgOt6ubP8K6LeW0vaywzNNqxkl4=",
-        "owner": "LnL7",
+        "owner": "nix-darwin",
         "repo": "nix-darwin",
         "rev": "688427b1aab9afb478ca07989dc754fa543e03d5",
         "type": "github"
       },
       "original": {
-        "owner": "LnL7",
+        "owner": "nix-darwin",
         "ref": "nix-darwin-25.11",
         "repo": "nix-darwin",
         "type": "github"
