@@ -72,6 +72,7 @@ D("nixos.org",
 	A("mimas", "157.90.104.34"),
 	AAAA("mimas", "2a01:4f8:2220:11c8::1"),
 	CNAME("hydra", "mimas"),
+	CNAME("queue-runner.hydra", "mimas"),
 
 	A("pluto", "37.27.99.100"),
 	AAAA("pluto", "2a01:4f9:3070:15e0::1"),
