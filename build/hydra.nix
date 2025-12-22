@@ -104,6 +104,8 @@ in
     evaluator_workers = 16
     evaluator_max_memory_size = 8192
 
+    queue_runner_endpoint = http://${config.services.queue-runner-dev.rest.address}:${toString config.services.queue-runner-dev.rest.port}
+
     max_concurrent_evals = 1
 
     # increase the number of active compress slots (CPU is 48*2 on mimas)
