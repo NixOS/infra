@@ -55,13 +55,6 @@ in
   # Don't rate-limit the journal.
   services.journald.rateLimitBurst = 0;
 
-  age.secrets.hydra-aws-credentials = {
-    file = ./secrets/hydra-aws-credentials.age;
-    path = "/var/lib/hydra/queue-runner/.aws/credentials";
-    owner = "hydra-queue-runner";
-    group = "hydra";
-  };
-
   age.secrets.hydra-github-client-secret = {
     file = ./secrets/hydra-github-client-secret.age;
     owner = "hydra-www";
@@ -104,6 +97,8 @@ in
     evaluator_workers = 16
     evaluator_max_memory_size = 8192
 
+    queue_runner_endpoint = http://${config.services.hydra-queue-runner-dev.rest.address}:${toString config.services.hydra-queue-runner-dev.rest.port}
+
     max_concurrent_evals = 1
 
     # increase the number of active compress slots (CPU is 48*2 on mimas)
@@ -145,7 +140,9 @@ in
   # eats memory as if it was free
   systemd.services.hydra-notify.enable = false;
 
+  # replaced by hydra-queue-runner-dev
   systemd.services.hydra-queue-runner = {
+    enable = false;
     # restarting the scheduler is very expensive
     restartIfChanged = false;
     serviceConfig = {
