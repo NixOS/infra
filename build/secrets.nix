@@ -36,6 +36,36 @@ let
       mimas
       sleepy-brown
     ];
+
+    # macs/
+    eager-heisenberg-queue-runner-token = with machines; [
+      mimas
+      eager-heisenberg
+    ];
+    enormous-catfish-queue-runner-token = with machines; [
+      mimas
+      enormous-catfish
+    ];
+    growing-jennet-queue-runner-token = with machines; [
+      mimas
+      growing-jennet
+    ];
+    intense-heron-queue-runner-token = with machines; [
+      mimas
+      intense-heron
+    ];
+    kind-lumiere-queue-runner-token = with machines; [
+      mimas
+      kind-lumiere
+    ];
+    maximum-snail-queue-runner-token = with machines; [
+      mimas
+      maximum-snail
+    ];
+    sweeping-filly-queue-runner-token = with machines; [
+      mimas
+      sweeping-filly
+    ];
   };
 in
 builtins.listToAttrs (
