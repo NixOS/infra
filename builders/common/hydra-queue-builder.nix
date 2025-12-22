@@ -17,5 +17,6 @@
     enable = true;
     queueRunnerAddr = "https://queue-runner.hydra.nixos.org";
     authorizationFile = config.age.secrets."queue-runner-token".path;
+    maxJobs = config.nix.settings.max-jobs;
   };
 }
