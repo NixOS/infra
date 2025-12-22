@@ -17,6 +17,24 @@ let
     rfc39-record-push = [ machines.pluto ];
     tarball-mirror-aws-credentials = [ machines.pluto ];
     zrepl-ssh-key = [ machines.titan ];
+
+    # builders/
+    elated-minsky-queue-runner-token = with machines; [
+      mimas
+      elated-minsky
+    ];
+    goofy-hopcroft-queue-runner-token = with machines; [
+      mimas
+      goofy-hopcroft
+    ];
+    hopeful-rivest-queue-runner-token = with machines; [
+      mimas
+      hopeful-rivest
+    ];
+    sleepy-brown-queue-runner-token = with machines; [
+      mimas
+      sleepy-brown
+    ];
   };
 in
 builtins.listToAttrs (
