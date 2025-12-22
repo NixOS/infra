@@ -3,6 +3,7 @@
     ../common.nix
     ../hydra.nix
     ../hydra-proxy.nix
+    ../hydra-queue-runner.nix
     ./boot.nix
     ./firewall.nix
     ./network.nix
