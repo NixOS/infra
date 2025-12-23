@@ -154,7 +154,7 @@
 
             html = typeof html !== 'undefined' ? html + prepareTable(info) :
                                                  prepareTable(info);
-            if (info.nextMarker != "null") {
+            if (info.nextMarker !== null) {
               getS3Data(info.nextMarker, html);
             } else {
               document.getElementById('listing').innerHTML =
@@ -250,8 +250,9 @@
         }
         // clang-format on
       });
+      console.log($(xml.find('IsTruncated')[0]).text());
       if ($(xml.find('IsTruncated')[0]).text() == 'true') {
-        var nextMarker = xml.find('NextMarker').textContent;
+        var nextMarker = xml.find('NextMarker').text();
       } else {
         var nextMarker = null;
       }
@@ -260,7 +261,7 @@
         files: files,
         directories: directories,
         prefix: $(xml.find('Prefix')[0]).text(),
-        nextMarker: encodeURIComponent(nextMarker)
+        nextMarker: nextMarker
       }
       // clang-format on
     }
