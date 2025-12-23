@@ -43,6 +43,10 @@ jobs:
           - pluto
           - mimas
     steps:
+      - name: Free disk space
+        if: matrix.machine == 'mimas'
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
         with:
           persist-credentials: false
