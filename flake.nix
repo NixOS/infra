@@ -17,6 +17,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    hydra-queue-runner = {
+      url = "github:mweinelt/hydra-queue-runner/flake-modules-fix";
+      inputs.flake-utils.follows = "flake-utils";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+    };
+
     nixos-channel-scripts = {
       url = "github:NixOS/nixos-channel-scripts";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -36,7 +44,7 @@
     };
 
     darwin = {
-      url = "github:LnL7/nix-darwin/nix-darwin-25.11";
+      url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

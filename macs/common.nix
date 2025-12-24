@@ -20,6 +20,10 @@ let
 in
 
 {
+  imports = [
+    ./hydra-queue-builder.nix
+  ];
+
   environment.darwinConfig = "/nix/home/darwin-config/macs/nix-darwin.nix";
   environment.systemPackages = [
     config.nix.package

@@ -98,13 +98,13 @@
       "locked": {
         "lastModified": 1765066094,
         "narHash": "sha256-0YSU35gfRFJzx/lTGgOt6ubP8K6LeW0vaywzNNqxkl4=",
-        "owner": "LnL7",
+        "owner": "nix-darwin",
         "repo": "nix-darwin",
         "rev": "688427b1aab9afb478ca07989dc754fa543e03d5",
         "type": "github"
       },
       "original": {
-        "owner": "LnL7",
+        "owner": "nix-darwin",
         "ref": "nix-darwin-25.11",
         "repo": "nix-darwin",
         "type": "github"
@@ -315,6 +315,36 @@
         "type": "github"
       }
     },
+    "hydra-queue-runner": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixpkgs-unstable": [
+          "nixpkgs-unstable"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1766449587,
+        "narHash": "sha256-dDjBEDi9VP0ThFcMmoRYQ/JWw+h3myxhWotfu3TpYhk=",
+        "owner": "mweinelt",
+        "repo": "hydra-queue-runner",
+        "rev": "70948823e5d16a792361c6f05e395e1c3143a75e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mweinelt",
+        "ref": "flake-modules-fix",
+        "repo": "hydra-queue-runner",
+        "type": "github"
+      }
+    },
     "nft-prefix-import": {
       "inputs": {
         "nixpkgs": [
@@ -492,6 +522,7 @@
         "flake-utils": "flake-utils",
         "freescout": "freescout",
         "hydra": "hydra",
+        "hydra-queue-runner": "hydra-queue-runner",
         "nft-prefix-import": "nft-prefix-import",
         "nixos-channel-scripts": "nixos-channel-scripts",
         "nixpkgs": "nixpkgs",
