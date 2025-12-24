@@ -116,6 +116,42 @@ in
               type = lib.types.nullOr lib.types.path;
               default = null;
             };
+            usePresignedUploads = lib.mkOption {
+              description = ''
+                If enabled the queue runner will no longer upload to s3 but rather the builder will do the uploads.
+                This also requires a s3 remote store, as well as substitution on the builders.
+                You can use forcedSubstituters setting to specify the required substituter on the builders.
+              '';
+              type = lib.types.bool;
+              default = false;
+            };
+            forcedSubstituters = lib.mkOption {
+              description = "Force a list of substituters per builder. Builder will no longer be accepted if they don't have `useSubstitutes` with the substituters listed here.";
+              type = lib.types.listOf lib.types.singleLineStr;
+              default = [ ];
+            };
+            fodChecker = lib.mkOption {
+              description = "Reloadable settings for queue runner";
+              type = lib.types.submodule {
+                options = {
+                  enable = lib.mkOption {
+                    description = "Enable FOD Checker";
+                    type = lib.types.bool;
+                    default = false;
+                  };
+                  secondsBetweenFodChecks = lib.mkOption {
+                    description = "Time in seconds between FOD Checker";
+                    type = lib.types.int;
+                    default = 60 * 60 * 24 * 7;
+                  };
+                  uploadRealisations = lib.mkOption {
+                    description = "Upload realisations outputs of FOD Checker to remote store.";
+                    type = lib.types.bool;
+                    default = false;
+                  };
+                };
+              };
+            };
           };
         };
         default = { };
