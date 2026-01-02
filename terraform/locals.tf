@@ -4,6 +4,9 @@ locals {
   # TLS v1.2, protocols HTTP/1.1 and HTTP/2
   fastly_tls12_sni_configuration_id = "5PXBTa6c01Xoh54ylNwmVA"
 
+  # TLS1.2 and 1.3+0RTT, HTTP/1.1, HTTP/2 and HTTP/3
+  fastly_tls13_quic_configuration_id = "oZPSgSiY0PM8sNTAAyOZHw"
+
   cache-iam  = data.terraform_remote_state.terraform-iam.outputs.cache
   fastlylogs = data.terraform_remote_state.terraform-iam.outputs.fastlylogs
 

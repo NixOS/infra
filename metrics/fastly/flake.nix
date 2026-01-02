@@ -1,6 +1,6 @@
 {
   outputs =
-    { nixpkgs }:
+    { }:
     {
       nixosModules.nix-metrics =
         { pkgs, ... }:

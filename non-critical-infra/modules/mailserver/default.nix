@@ -9,7 +9,6 @@
   imports = [
     inputs.simple-nixos-mailserver.nixosModule
     ./mailing-lists.nix
-    ./postsrsd.nix
     ./freescout.nix
   ];
 
@@ -19,6 +18,7 @@
   mailserver = {
     enable = true;
     enableImap = false;
+    stateVersion = 3;
     certificateScheme = "acme-nginx";
 
     fqdn = config.networking.fqdn;
@@ -27,6 +27,8 @@
       "nixcon.org"
       "nixos.org"
     ];
+
+    srs.enable = true;
   };
 
   # https://nixos-mailserver.readthedocs.io/en/latest/backup-guide.html
@@ -67,7 +69,7 @@
     path = "${config.mailserver.dkimKeyDirectory}/nixcon.org.mail.key";
   };
 
-  services.postfix.config.bounce_template_file = "${pkgs.writeText "bounce-template.cf" ''
+  services.postfix.settings.main.bounce_template_file = "${pkgs.writeText "bounce-template.cf" ''
     failure_template = <<EOF
     Charset: us-ascii
     From: MAILER-DAEMON (Mail Delivery System)
@@ -114,4 +116,23 @@
                        The mail system
     EOF
   ''}";
+
+  services.postsrsd.secretsFile = config.sops.secrets.postsrsd-secret.path;
+
+  # ```
+  # How to generate:
+  #
+  # ```console
+  # cd non-critical-infra
+  # SECRET_PATH=secrets/postsrsd-secret.umbriel
+  # dd if=/dev/random bs=18 count=1 status=none | base64 > "$SECRET_PATH"
+  # sops encrypt --in-place "$SECRET_PATH"
+  # ```
+  sops.secrets.postsrsd-secret = {
+    format = "binary";
+    owner = config.services.postsrsd.user;
+    group = config.services.postsrsd.group;
+    sopsFile = ../../secrets/postsrsd-secret.umbriel;
+    restartUnits = [ "postsrsd.service" ];
+  };
 }

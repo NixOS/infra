@@ -13,7 +13,7 @@
     };
 
     hydra = {
-      url = "github:NixOS/hydra";
+      url = "github:NixOS/hydra/34ff66a460c21ee69d840c8c896d067405ba4a3e";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -27,8 +27,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05-small";
-
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11-small";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     flake-parts = {
@@ -37,7 +36,7 @@
     };
 
     darwin = {
-      url = "github:LnL7/nix-darwin/nix-darwin-25.05";
+      url = "github:LnL7/nix-darwin/nix-darwin-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -81,11 +80,8 @@
     };
 
     simple-nixos-mailserver = {
-      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-25.05";
-      inputs = {
-        nixpkgs.follows = "nixpkgs-unstable";
-        nixpkgs-25_05.follows = "nixpkgs";
-      };
+      url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-25.11";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     sops-nix = {

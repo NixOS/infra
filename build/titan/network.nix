@@ -1,6 +1,4 @@
 {
-  networking.useDHCP = false;
-
   systemd.network = {
     enable = true;
     netdevs = {
@@ -13,33 +11,37 @@
       };
     };
     networks = {
-      "30-enp5s0" = {
+      "30-enp35s0" = {
         matchConfig = {
-          MACAddress = "9c:6b:00:70:d1:f8";
+          MACAddress = "9c:6b:00:1f:aa:fd";
           Type = "ether";
         };
-        linkConfig.RequiredForOnline = true;
-        networkConfig.Description = "WAN";
         address = [
-          "157.90.104.34/26"
-          "2a01:4f8:2220:11c8::1/64"
+          "159.69.62.224/26"
+          "2a01:4f8:231:e53::1/64"
         ];
         routes = [
-          { Gateway = "157.90.104.1"; }
+          { Gateway = "159.69.62.193"; }
           { Gateway = "fe80::1"; }
         ];
         vlan = [
           "vlan4000"
         ];
+        networkConfig.Description = "WAN";
+        linkConfig.RequiredForOnline = true;
       };
       "30-vlan4000" = {
         matchConfig.Name = "vlan4000";
+        networkConfig = {
+          DHCP = false;
+          IPv6AcceptRA = false;
+        };
         linkConfig = {
           MTUBytes = "1400";
           RequiredForOnline = "routable";
         };
         address = [
-          "10.0.40.2/31"
+          "10.0.40.3/31"
         ];
       };
     };

@@ -25,7 +25,7 @@ rec {
     #   status = "beta";
     # };
     "nixos-unstable" = {
-      job = "nixos/trunk-combined/tested";
+      job = "nixos/unstable/tested";
       variant = "primary";
       status = "rolling";
     };
@@ -35,38 +35,38 @@ rec {
       status = "rolling";
     };
     "nixpkgs-unstable" = {
-      job = "nixpkgs/trunk/unstable";
+      job = "nixpkgs/unstable/unstable";
       status = "rolling";
+    };
+
+    "nixos-25.11" = {
+      job = "nixos/release-25.11/tested";
+      variant = "primary";
+      status = "stable";
+    };
+    "nixos-25.11-small" = {
+      job = "nixos/release-25.11-small/tested";
+      variant = "small";
+      status = "stable";
+    };
+    "nixpkgs-25.11-darwin" = {
+      job = "nixpkgs/nixpkgs-25.11-darwin/darwin-tested";
+      variant = "darwin";
+      status = "stable";
     };
 
     "nixos-25.05" = {
       job = "nixos/release-25.05/tested";
       variant = "primary";
-      status = "stable";
+      status = "unmaintained";
     };
     "nixos-25.05-small" = {
       job = "nixos/release-25.05-small/tested";
       variant = "small";
-      status = "stable";
+      status = "unmaintained";
     };
     "nixpkgs-25.05-darwin" = {
       job = "nixpkgs/nixpkgs-25.05-darwin/darwin-tested";
-      variant = "darwin";
-      status = "stable";
-    };
-
-    "nixos-24.11" = {
-      job = "nixos/release-24.11/tested";
-      variant = "primary";
-      status = "unmaintained";
-    };
-    "nixos-24.11-small" = {
-      job = "nixos/release-24.11-small/tested";
-      variant = "small";
-      status = "unmaintained";
-    };
-    "nixpkgs-24.11-darwin" = {
-      job = "nixpkgs/nixpkgs-24.11-darwin/darwin-tested";
       variant = "darwin";
       status = "unmaintained";
     };

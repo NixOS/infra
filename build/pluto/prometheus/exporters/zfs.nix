@@ -13,6 +13,7 @@
               "haumea.nixos.org:9134"
               "mimas.nixos.org:9134"
               "pluto.nixos.org:9134"
+              "titan.nixos.org:9134"
             ];
           }
         ];
@@ -28,7 +29,7 @@
                 {
                   alert = "ZfsPoolFull";
                   expr = ''
-                    (zfs_pool_free_bytes / zfs_pool_size_bytes) * 100 < 15
+                    round((zfs_pool_free_bytes / zfs_pool_size_bytes) * 100, 1) < 15
                   '';
                   for = "30m";
                   labels.severity = "warning";

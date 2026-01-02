@@ -16,7 +16,7 @@
           python = pkgs.python3.withPackages (
             ps: with ps; [
               requests
-              prometheus_client
+              prometheus-client
             ]
           );
         in

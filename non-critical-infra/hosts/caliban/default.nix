@@ -15,10 +15,10 @@
     ../../modules/draupnir.nix
     ../../modules/backup.nix
     ../../modules/element-web.nix
+    ../../modules/limesurvey.nix
     ../../modules/matrix-synapse.nix
     ../../modules/owncast.nix
     ../../modules/vaultwarden.nix
-    ./limesurvey-tmp.nix
     ./nixpkgs-swh.nix
   ];
 

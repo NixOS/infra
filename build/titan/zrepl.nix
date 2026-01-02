@@ -14,10 +14,10 @@
     knownHosts = {
       rsync-net = {
         hostNames = [
-          "zh2543b.rsync.net"
-          "2001:1620:2019::324"
+          "zh4461b.rsync.net"
+          "2001:1620:2019::336"
         ];
-        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKlIcNwmx7id/XdYKZzVX2KtZQ4PAsEa9KVQ9N43L3PX";
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILtF46LwRn+hC9vuw0vedXBKGNPMSIqrXdxl+EQOI/8J";
       };
     };
   };
@@ -26,7 +26,7 @@
     let
       defaultBackupJob = {
         type = "push";
-        filesystems."rpool/safe<" = true;
+        filesystems."zroot/pg<" = true;
         snapshotting = {
           type = "periodic";
           interval = "30m";
@@ -36,7 +36,7 @@
               # https://zrepl.github.io/master/configuration/snapshotting.html#postgres-checkpoint-hook
               type = "postgres-checkpoint";
               dsn = "host=/run/postgresql dbname=hydra user=root sslmode=disable";
-              filesystems."rpool/safe/postgres" = true;
+              filesystems."zroot/pg" = true;
             }
           ];
         };

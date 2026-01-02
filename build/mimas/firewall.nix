@@ -8,6 +8,7 @@
 let
   blockedAutNums = [
     45102 # ALIBABA-CN-NET
+    45899 # VNPT-AS-VN
     132203 # TENCENT-NET-AP-CN
   ];
 in
@@ -51,7 +52,7 @@ in
       Group = "nft-asblock";
       ExecStart = toString (
         [
-          (lib.getExe inputs.nft-prefix-import.packages.${pkgs.hostPlatform.system}.default)
+          (lib.getExe inputs.nft-prefix-import.packages.${pkgs.stdenv.hostPlatform.system}.default)
           "--table"
           "abuse"
           "--ipv4set"

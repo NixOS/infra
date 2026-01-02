@@ -1,5 +1,5 @@
 {
-  rustPackages,
+  rustPackages_1_91,
   fetchFromGitHub,
   pkg-config,
   openssl,
@@ -11,17 +11,17 @@
   nlohmann_json,
   libsodium,
   boost,
+  withOtel ? false,
 }:
 let
-  version = "unstable-2025-08-07";
+  version = "unstable-2025-11-27";
   src = fetchFromGitHub {
     owner = "helsinki-systems";
     repo = "hydra-queue-runner";
-    rev = "54b3c9351d2ae10be5c4d1b97cc0f86300cd70ca";
-    hash = "sha256-gR2DzWkTykM9GdW3Nf/V8eRv68fl3aO+NW0zNPFSRT0=";
+    rev = "8266ce9818393ee9d0fe3ffd7bcde3eb09c2221f";
+    hash = "sha256-tC4s+opt4BpN0qFx96AXhtUEJj8T7J5C68Hjj2OEetM=";
   };
-  useFetchCargoVendor = true;
-  cargoHash = "sha256-oNUMmFfts4rjBX0k5mzsxpYA2JqgsRu1nMRFf/2rZa8=";
+  cargoHash = "sha256-49p2mC0DmsdgWdj4mWZf7SZj4Gd9eQFqTGRDzvMYSQM=";
   nativeBuildInputs = [
     pkg-config
     protobuf
@@ -32,7 +32,7 @@ let
     zlib
     protobuf
 
-    nixVersions.nix_2_29
+    nixVersions.nix_2_32
     nlohmann_json
     libsodium
     boost
@@ -46,59 +46,57 @@ let
   };
 in
 {
-  runner = rustPackages.rustPlatform.buildRustPackage (finalAttrs: {
+  runner = rustPackages_1_91.rustPlatform.buildRustPackage {
     pname = "hydra-queue-runner";
     inherit version src;
     __structuredAttrs = true;
     strictDeps = true;
 
     inherit
-      useFetchCargoVendor
       cargoHash
       nativeBuildInputs
       buildInputs
       ;
 
-    cargoBuildFlags = [
-      "-p"
-      "queue-runner"
-    ];
-    cargoTestFlags = finalAttrs.cargoBuildFlags;
+    buildAndTestSubdir = "queue-runner";
+    buildFeatures = lib.optional withOtel "otel";
+    doCheck = false;
 
     postInstall = ''
-      wrapProgram $out/bin/queue-runner --prefix PATH : ${lib.makeBinPath [ nixVersions.nix_2_29 ]}
+      wrapProgram $out/bin/queue-runner \
+        --prefix PATH : ${lib.makeBinPath [ nixVersions.nix_2_32 ]} \
+        --set-default JEMALLOC_SYS_WITH_MALLOC_CONF "background_thread:true,narenas:1,tcache:false,dirty_decay_ms:0,muzzy_decay_ms:0,abort_conf:true"
     '';
 
     meta = meta // {
       mainProgram = "queue-runner";
     };
-  });
+  };
 
-  builder = rustPackages.rustPlatform.buildRustPackage (finalAttrs: {
+  builder = rustPackages_1_91.rustPlatform.buildRustPackage {
     pname = "hydra-queue-builder";
     inherit src version;
     __structuredAttrs = true;
     strictDeps = true;
 
     inherit
-      useFetchCargoVendor
       cargoHash
       nativeBuildInputs
       buildInputs
       ;
 
-    cargoBuildFlags = [
-      "-p"
-      "builder"
-    ];
-    cargoTestFlags = finalAttrs.cargoBuildFlags;
+    buildAndTestSubdir = "builder";
+    buildFeatures = lib.optional withOtel "otel";
+    doCheck = false;
 
     postInstall = ''
-      wrapProgram $out/bin/builder --prefix PATH : ${lib.makeBinPath [ nixVersions.nix_2_29 ]}
+      wrapProgram $out/bin/builder \
+        --prefix PATH : ${lib.makeBinPath [ nixVersions.nix_2_32 ]} \
+        --set-default JEMALLOC_SYS_WITH_MALLOC_CONF "background_thread:true,narenas:1,tcache:false,dirty_decay_ms:0,muzzy_decay_ms:0,abort_conf:true"
     '';
 
     meta = meta // {
       mainProgram = "builder";
     };
-  });
+  };
 }

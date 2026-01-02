@@ -101,6 +101,21 @@ in
               type = lib.types.int;
               default = 60;
             };
+            maxConcurrentDownloads = lib.mkOption {
+              description = "Max count of concurrent downloads per build. Increasing this will increase memory usage of the queue runner.";
+              type = lib.types.ints.positive;
+              default = 5;
+            };
+            concurrentUploadLimit = lib.mkOption {
+              description = "Concurrent limit for uploading to s3.";
+              type = lib.types.ints.positive;
+              default = 5;
+            };
+            tokenListPath = lib.mkOption {
+              description = "Path to a list of allowed authentication tokens.";
+              type = lib.types.nullOr lib.types.path;
+              default = null;
+            };
           };
         };
         default = { };
@@ -170,7 +185,7 @@ in
       };
       package = lib.mkOption {
         type = lib.types.package;
-        default = (pkgs.recurseIntoAttrs (pkgs.callPackage ../packages/hydra-queue-runner { })).runner;
+        default = (lib.recurseIntoAttrs (pkgs.callPackage ../packages/hydra-queue-runner { })).runner;
       };
     };
   };
@@ -198,6 +213,7 @@ in
         HOME = "/var/lib/hydra/queue-runner";
       };
 
+      restartIfChanged = false;
       serviceConfig = {
         Type = "notify";
         Restart = "always";
@@ -231,7 +247,7 @@ in
         StateDirectoryMode = "0700";
         ReadWritePaths = [
           "/nix/var/nix/gcroots/"
-          "/run/postgresql/.s.PGSQL.${toString config.services.postgresql.port}"
+          "/run/postgresql/.s.PGSQL.${toString config.services.postgresql.settings.port}"
           "/nix/var/nix/daemon-socket/socket"
           "/var/lib/hydra/build-logs/"
         ];
@@ -244,6 +260,8 @@ in
           "~@privileged"
           "~@resources"
         ];
+        ManagedOOMPreference = "avoid";
+        LimitNOFILE = 65536;
 
         ProtectSystem = "strict";
         ProtectHome = true;
