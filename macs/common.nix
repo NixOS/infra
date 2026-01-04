@@ -65,12 +65,6 @@ in
   ++ (import ../ssh-keys.nix).infra-core;
 
   system.activationScripts.postActivation.text = ''
-    printf "configuring ssh keys for hydra on the root account... "
-    mkdir -p ~root/.ssh
-    cp -f /etc/per-user/root/ssh/authorized_keys ~root/.ssh/authorized_keys
-    chown root:wheel ~root ~root/.ssh ~root/.ssh/authorized_keys
-    echo "ok"
-
     printf "disabling spotlight indexing... "
     mdutil -i off -d / &> /dev/null
     mdutil -E / &> /dev/null
