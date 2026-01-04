@@ -59,9 +59,10 @@ in
     };
   };
 
-  environment.etc."per-user/root/ssh/authorized_keys".text = lib.concatStringsSep "\n" [
+  users.users.root.openssh.authorizedKeys.keys = [
     (authorizedNixStoreKey sshKeys.hydra-queue-runner)
-  ];
+  ]
+  ++ (import ../ssh-keys.nix).infra-core;
 
   system.activationScripts.postActivation.text = ''
     printf "configuring ssh keys for hydra on the root account... "
