@@ -13,7 +13,7 @@
     };
 
     hydra = {
-      url = "github:NixOS/hydra/41daeb3cc94077c42395bf1e9f1698e3e1bf5532";
+      url = "github:NixOS/hydra/9df4b65c672f0b123235d3123e84679048cd5df3";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

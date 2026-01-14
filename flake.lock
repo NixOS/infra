@@ -301,17 +301,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1767626752,
-        "narHash": "sha256-VKBXQV3sWJB4DMm8xCMBsyp9HLe5isb+dduWrzPRj7A=",
+        "lastModified": 1768396302,
+        "narHash": "sha256-P83O7scGSQUQtkvS59oNgh6/VS3ef7AHupApuqTHKiQ=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "41daeb3cc94077c42395bf1e9f1698e3e1bf5532",
+        "rev": "9df4b65c672f0b123235d3123e84679048cd5df3",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "41daeb3cc94077c42395bf1e9f1698e3e1bf5532",
+        "rev": "9df4b65c672f0b123235d3123e84679048cd5df3",
         "type": "github"
       }
     },
@@ -338,11 +338,11 @@
     "nix": {
       "flake": false,
       "locked": {
-        "lastModified": 1767367029,
-        "narHash": "sha256-RsVlkBkxvPPePEo59AVolBFdayxny9FFv8X4aNq9qFc=",
+        "lastModified": 1768160359,
+        "narHash": "sha256-XDCQIrHNJKMYoL8hcUgzEbBHzINofkcsLRDr7tYa7Ac=",
         "owner": "NixOS",
         "repo": "nix",
-        "rev": "394a8da9dd9c046de715e451a96b70e64ce4aa7a",
+        "rev": "b601b44de51f8d46530a99659f889027e1e7d670",
         "type": "github"
       },
       "original": {
