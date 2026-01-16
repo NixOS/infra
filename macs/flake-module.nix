@@ -7,6 +7,10 @@
         inputs.darwin.lib.darwinSystem {
           system = "aarch64-darwin";
 
+          specialArgs = {
+            inherit inputs;
+          };
+
           modules = [
             {
               networking = { inherit localHostName; };
