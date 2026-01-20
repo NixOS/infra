@@ -15,6 +15,7 @@ let
     rfc39-credentials = [ machines.pluto ];
     rfc39-github = [ machines.pluto ];
     rfc39-record-push = [ machines.pluto ];
+    storagebox-exporter-token = [ machines.pluto ];
     tarball-mirror-aws-credentials = [ machines.pluto ];
     zrepl-ssh-key = [ machines.titan ];
   };
