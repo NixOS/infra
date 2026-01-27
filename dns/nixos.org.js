@@ -124,6 +124,7 @@ D("nixos.org",
 	CNAME("nixpkgs-swh", "caliban"),
 	CNAME("survey", "caliban"),
 	CNAME("vault", "caliban"),
+	CNAME("lasuite-meet", "caliban"),
 	DMARC_BUILDER({
 		label: "caliban",
 		policy: "none"
