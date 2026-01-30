@@ -18,6 +18,11 @@
 
   networking.firewall.interfaces."vlan4000".allowedTCPPorts = [ 5432 ];
 
+  systemd.services.postgresql = {
+    wants = [ "network-online.target" ];
+    after = [ "network-online.target" ];
+  };
+
   services.postgresql = {
     enable = true;
     enableJIT = true;
