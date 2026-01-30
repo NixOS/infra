@@ -6,7 +6,6 @@
 
 {
   imports = [
-    ./diffoscope.nix
     ../modules/common.nix
     ../modules/nftables.nix
     ../modules/prometheus
