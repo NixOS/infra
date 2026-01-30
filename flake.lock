@@ -301,17 +301,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1768396302,
-        "narHash": "sha256-P83O7scGSQUQtkvS59oNgh6/VS3ef7AHupApuqTHKiQ=",
+        "lastModified": 1769212608,
+        "narHash": "sha256-Ro+qOHWmWuKJiUwX8bmNuGpb0cLUaPr0vsuZGAi2QCI=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "9df4b65c672f0b123235d3123e84679048cd5df3",
+        "rev": "8bc95a96f787eb36f29ceec773f5bf48bd121097",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "9df4b65c672f0b123235d3123e84679048cd5df3",
+        "rev": "8bc95a96f787eb36f29ceec773f5bf48bd121097",
         "type": "github"
       }
     },
@@ -338,16 +338,16 @@
     "nix": {
       "flake": false,
       "locked": {
-        "lastModified": 1768160359,
-        "narHash": "sha256-XDCQIrHNJKMYoL8hcUgzEbBHzINofkcsLRDr7tYa7Ac=",
+        "lastModified": 1768160797,
+        "narHash": "sha256-TVKn52SoKq8mMyW/x3NPPskGVurFdnGGV0DGvnL0gak=",
         "owner": "NixOS",
         "repo": "nix",
-        "rev": "b601b44de51f8d46530a99659f889027e1e7d670",
+        "rev": "fb562abba93fb15f66a71a9fc1d94bb1ea21a2d4",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "2.32-maintenance",
+        "ref": "2.33-maintenance",
         "repo": "nix",
         "type": "github"
       }
@@ -355,16 +355,16 @@
     "nix-eval-jobs": {
       "flake": false,
       "locked": {
-        "lastModified": 1760478325,
-        "narHash": "sha256-hA+NOH8KDcsuvH7vJqSwk74PyZP3MtvI/l+CggZcnTc=",
+        "lastModified": 1767025318,
+        "narHash": "sha256-i68miKHGdueWggcDAF+Kca9g6S3ipkW629XbMpQYfn0=",
         "owner": "nix-community",
         "repo": "nix-eval-jobs",
-        "rev": "daa42f9e9c84aeff1e325dd50fda321f53dfd02c",
+        "rev": "79dd7adbb5f75b08fb4b9bddd712ebc52baa46bc",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
-        "ref": "v2.32.1",
+        "ref": "v2.33.0",
         "repo": "nix-eval-jobs",
         "type": "github"
       }
