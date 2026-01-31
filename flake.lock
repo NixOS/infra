@@ -301,17 +301,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1769212608,
-        "narHash": "sha256-Ro+qOHWmWuKJiUwX8bmNuGpb0cLUaPr0vsuZGAi2QCI=",
+        "lastModified": 1769800271,
+        "narHash": "sha256-vrwZnNY7DypyWyHRqQ0uIBiQ5hZ6MRMfq5Gjl6VoLiA=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "8bc95a96f787eb36f29ceec773f5bf48bd121097",
+        "rev": "a9581bcdc469fdf34cb92519ee973045b5e8c8e4",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "8bc95a96f787eb36f29ceec773f5bf48bd121097",
+        "rev": "a9581bcdc469fdf34cb92519ee973045b5e8c8e4",
         "type": "github"
       }
     },
