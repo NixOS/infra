@@ -19,7 +19,7 @@ in
   ];
 
   networking.firewall.allowedTCPPorts = [
-    9198 # queue-runnner metrics
+    8080 # queue-runnner metrics
     9199 # hydra-notify metrics
   ];
 
@@ -69,7 +69,16 @@ in
   services = {
     hydra-dev = {
       enable = true;
-      package = pkgs.hydra;
+      package = (
+        pkgs.hydra.overrideAttrs {
+          patches = [
+            (pkgs.fetchpatch2 {
+              url = "https://patch-diff.githubusercontent.com/raw/NixOS/hydra/pull/1542.patch";
+              hash = "sha256-FG4s3VfyDLyBP407W4Y2h8zbWYE2k/ocrIZKu5xPYuo=";
+            })
+          ];
+        }
+      );
       buildMachinesFiles = [
         (pkgs.writeText "local" ''
           localhost ${lib.concatStringsSep "," localSystems} - 3 1 ${lib.concatStringsSep "," config.nix.settings.system-features} - -
@@ -126,12 +135,20 @@ in
 
     queue-runner-dev = {
       enable = true;
+      rest = {
+        address = "[::0]";
+        port = 8080;
+      };
       settings = {
         queueTriggerTimerInS = 300;
         concurrentUploadLimit = 2;
         remoteStoreAddr = [
           "s3://nix-cache-staging?secret-key=${config.sops.secrets.signing-key.path}&ls-compression=br&log-compression=br"
         ];
+        fodChecker = {
+          enable = true;
+          uploadRealisations = true;
+        };
       };
     };
 

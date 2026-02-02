@@ -18,7 +18,7 @@
     };
 
     hydra-queue-runner = {
-      url = "github:helsinki-systems/hydra-queue-runner";
+      url = "github:helsinki-systems/hydra-queue-runner/feat/fod_v2";
       inputs.flake-utils.follows = "flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
