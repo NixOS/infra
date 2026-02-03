@@ -11,6 +11,7 @@
 
   age.secrets."queue-runner-token" = {
     file = ../../build/secrets/${config.networking.hostName}-queue-runner-token.age;
+    owner = "hydra-queue-builder";
   };
 
   services.queue-builder-dev = {
