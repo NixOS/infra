@@ -40,6 +40,10 @@ in
       enableACME = true;
       forceSSL = true;
 
+      extraConfig = ''
+        access_log /var/log/nginx/queue-runner.log;
+      '';
+
       locations."/".extraConfig = ''
         # This is necessary so that grpc connections do not get closed early
         # see https://stackoverflow.com/a/67805465
