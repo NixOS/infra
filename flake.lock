@@ -331,11 +331,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1770157923,
-        "narHash": "sha256-membbrfTGxshueRXRVAUgT0FwApCKoZjtrpDRf933GE=",
+        "lastModified": 1770326663,
+        "narHash": "sha256-NKQ0rgMBRu2gzIC2+PZkdMYaHcYFuSmbKPG95fR/2rU=",
         "owner": "helsinki-systems",
         "repo": "hydra-queue-runner",
-        "rev": "b1de6bf412b6758d00b4923fe40d6d2c844647cf",
+        "rev": "b596166832633eaaca10259dd63636c961bf12b9",
         "type": "github"
       },
       "original": {
