@@ -48,6 +48,7 @@
         # downloads (e.g. distrobuilder for lxc/incus images)
         ~^/build/\d+/download/ hydra-server;
         ~^/build/\d+/download-by-type/ hydra-server;
+        ~^/job/[^/]+/[^/]+/[^/]+/latest/download/ hydra-server;
         ~^/job/[^/]+/[^/]+/[^/]+/latest/download-by-type/file/ hydra-server;
       }
 
