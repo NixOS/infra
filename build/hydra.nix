@@ -69,7 +69,7 @@ in
   };
 
   services.hydra-dev.enable = true;
-  services.hydra-dev.buildMachinesFiles = [ "/etc/nix/machines" ];
+  services.hydra-dev.buildMachinesFiles = lib.mkForce [ ];
   services.hydra-dev.dbi = "dbi:Pg:dbname=hydra;host=10.0.40.3;user=hydra;";
   services.hydra-dev.logo = ./hydra-logo.png;
   services.hydra-dev.hydraURL = "https://hydra.nixos.org";
@@ -103,6 +103,8 @@ in
 
     evaluator_workers = 16
     evaluator_max_memory_size = 8192
+
+    queue_runner_endpoint = http://${config.services.queue-runner-dev.rest.address}:${toString config.services.queue-runner-dev.rest.port}
 
     max_concurrent_evals = 1
 
@@ -146,6 +148,8 @@ in
   systemd.services.hydra-notify.enable = false;
 
   systemd.services.hydra-queue-runner = {
+    enable = false;
+
     # restarting the scheduler is very expensive
     restartIfChanged = false;
     serviceConfig = {
