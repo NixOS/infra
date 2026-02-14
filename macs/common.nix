@@ -49,7 +49,7 @@ in
         "nix-command"
         "flakes"
       ];
-      max-silent-time = 7200; # 2h
+      max-silent-time = 14400; # 4h
       timeout = 43200; # 12h
     };
     gc = {
