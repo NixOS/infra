@@ -5,7 +5,10 @@
 {
   services.backup.includes = [ "/var/lib/grafana" ];
 
-  age.secrets."grafana-secret-key".file = ../secrets/grafana-secret-key.age;
+  age.secrets."grafana-secret-key" = {
+    file = ../secrets/grafana-secret-key.age;
+    owner = "grafana";
+  };
 
   services.grafana = {
     enable = true;
