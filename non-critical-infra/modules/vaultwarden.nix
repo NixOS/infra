@@ -58,7 +58,7 @@
         filter = {
           INCLUDES.before = "common.conf";
           Definition = {
-            failregex = "^.*Username or password is incorrect\. Try again\. IP: <ADDR>\. Username:.*$";
+            failregex = "^.*Username or password is incorrect. Try again. IP: <ADDR>. Username:.*$";
             ignoreregex = "";
           };
         };
@@ -76,7 +76,7 @@
         filter = {
           INCLUDES.before = "common.conf";
           Definition = {
-            failregex = "^.*Invalid admin token\. IP: <ADDR>.*$";
+            failregex = "^.*Invalid admin token. IP: <ADDR>.*$";
             ignoreregex = "";
           };
         };

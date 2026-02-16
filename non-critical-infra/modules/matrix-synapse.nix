@@ -134,7 +134,7 @@
       forceSSL = true;
       enableACME = true;
 
-      locations."~* ^(\/_matrix|\/_synapse)" = {
+      locations."~* ^(/_matrix|/_synapse)" = {
         proxyPass = "http://matrix-synapse";
       };
       locations."= /metrics" = {
