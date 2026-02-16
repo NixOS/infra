@@ -5,6 +5,7 @@ let
     alertmanager-matrix-forwarder = [ machines.pluto ];
     alertmanager-oauth2-proxy-env = [ machines.pluto ];
     fastly-exporter-env = [ machines.pluto ];
+    grafana-secret-key = [ machines.pluto ];
     hydra-aws-credentials = [ machines.mimas ];
     hydra-github-client-secret = [ machines.mimas ];
     hydra-mirror-aws-credentials = [ machines.pluto ];

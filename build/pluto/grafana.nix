@@ -1,5 +1,11 @@
 {
+  config,
+  ...
+}:
+{
   services.backup.includes = [ "/var/lib/grafana" ];
+
+  age.secrets."grafana-secret-key".file = ../secrets/grafana-secret-key.age;
 
   services.grafana = {
     enable = true;
@@ -14,6 +20,7 @@
         root_url = "https://grafana.nixos.org";
         protocol = "socket";
       };
+      security.secret_key = "$__file{${config.age.secrets.grafana-secret-key.path}}";
     };
   };
 
