@@ -7,9 +7,19 @@ resource "aws_s3_bucket" "cache" {
   bucket   = "nix-cache"
 }
 
+resource "aws_s3_bucket_versioning" "cache" {
+  provider = aws.us
+  bucket   = aws_s3_bucket.cache.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
 resource "aws_s3_bucket_lifecycle_configuration" "cache" {
   provider = aws.us
   bucket   = aws_s3_bucket.cache.id
+
+  depends_on = [aws_s3_bucket_versioning.cache]
 
   transition_default_minimum_object_size = "varies_by_storage_class"
 
@@ -24,6 +34,16 @@ resource "aws_s3_bucket_lifecycle_configuration" "cache" {
     transition {
       days          = 365
       storage_class = "STANDARD_IA"
+    }
+  }
+
+  # We delete no-current versions after 30 days
+  rule {
+    id     = "Non-current Versions"
+    status = "Enabled"
+
+    noncurrent_version_expiration {
+      noncurrent_days = 30
     }
   }
 }
