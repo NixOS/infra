@@ -27,6 +27,15 @@
               name = "zfs";
               rules = [
                 {
+                  alert = "ZfsPoolHealth";
+                  expr = ''
+                    zfs_pool_health > 0
+                  '';
+                  for = "5m";
+                  labels.severity = "WARNING";
+                  annotations.summary = "ZFS pool {{ $labels.pool }} on {{ $labels.instance }} is unhealthy.";
+                }
+                {
                   alert = "ZfsPoolFull";
                   expr = ''
                     round((zfs_pool_free_bytes / zfs_pool_size_bytes) * 100, 1) < 15
