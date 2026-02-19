@@ -34,7 +34,7 @@
       };
       nvme1n1 = {
         type = "disk";
-        device = "/dev/disk/by-id/nvme-SAMSUNG_MZVL2512HDJD-00B07_S782NE0W900175";
+        device = "/dev/disk/by-id/nvme-SAMSUNG_MZVL2512HDJD-00B07_S782NF0YA37531";
         content = {
           type = "gpt";
           partitions = {
