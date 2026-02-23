@@ -4,7 +4,7 @@
     networks = {
       "30-enp5s0" = {
         matchConfig = {
-          MACAddress = "08:bf:b8:18:2e:23";
+          MACAddress = "c8:7f:54:67:bd:31";
           Type = "ether";
         };
         linkConfig.RequiredForOnline = true;
