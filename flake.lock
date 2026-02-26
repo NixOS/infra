@@ -351,11 +351,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1757887817,
-        "narHash": "sha256-LAwCjMvMwKTIdOaqsNhHm/2URd1cBds013lDRc8CarM=",
+        "lastModified": 1772134399,
+        "narHash": "sha256-O9YSvxHkNhMUB3U/WdC/R1np6biaxqoglPDUQHx5KIc=",
         "owner": "mweinelt",
         "repo": "nft-prefix-import",
-        "rev": "8dafafa3eb9834e414b60490eb08ed905715b3a0",
+        "rev": "fbe66b91d7f0c818e0966e275d284095969cfe9b",
         "type": "github"
       },
       "original": {
