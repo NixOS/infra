@@ -17,7 +17,7 @@
   };
 
   services.queue-builder-dev = {
-    enable = true;
+    enable = false;
     queueRunnerAddr = "https://queue-runner.hydra.nixos.org";
     authorizationFile = config.age.secrets."queue-runner-token".path;
     maxJobs = if lib.elem "big-parallel" (config.nix.settings.system-features or [ ]) then 2 else 4;
