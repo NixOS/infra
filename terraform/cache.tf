@@ -157,6 +157,12 @@ resource "fastly_service_vcl" "cache" {
   name        = local.cache_domain
   default_ttl = 86400
 
+  # https://registry.terraform.io/providers/fastly/fastly/latest/docs/resources/service_vcl#activation-and-staging
+  # activate should not be set to true when stage is also set to true. While this combination will not cause any harm to the service,
+  # there is no logical reason to both stage and activate every set of applied changes.
+  activate = false # set to true to deploy
+  stage    = true  # set to false to remove staging environment
+
   backend {
     address               = "s3.amazonaws.com"
     auto_loadbalance      = false
@@ -192,6 +198,13 @@ resource "fastly_service_vcl" "cache" {
     priority  = 10
     statement = "req.url ~ \"^/$\""
     type      = "REQUEST"
+  }
+
+  condition {
+    name      = "is-nar"
+    priority  = 10
+    statement = "beresp.status == 200 && req.url ~ \"^/nar/\" "
+    type      = "CACHE"
   }
 
   domain {
@@ -257,6 +270,12 @@ resource "fastly_service_vcl" "cache" {
     content_type    = "text/plain"
     response        = "Not Found"
     status          = 404
+  }
+
+  cache_setting {
+    name            = "cache-nar"
+    cache_condition = "is-nar"
+    ttl             = 31557600 # the maximum. 1 year
   }
 
   # Authenticate Fastly<->S3 requests. See Fastly documentation:
