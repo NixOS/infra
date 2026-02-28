@@ -58,6 +58,11 @@ in
       format = "binary";
       owner = config.systemd.services.hydra-queue-runner.serviceConfig.User;
     };
+    signing-key-2 = {
+      sopsFile = ../../secrets/signing-key-2.staging-hydra;
+      format = "binary";
+      owner = config.systemd.services.hydra-queue-runner.serviceConfig.User;
+    };
     hydra-aws-credentials = {
       sopsFile = ../../secrets/hydra-aws-credentials.staging-hydra;
       format = "binary";
@@ -83,7 +88,7 @@ in
       extraConfig = ''
         max_servers 30
 
-        store_uri = s3://nix-cache-staging?secret-key=${config.sops.secrets.signing-key.path}&ls-compression=br&log-compression=br
+        store_uri = s3://nix-cache-staging?secret-key=${config.sops.secrets.signing-key.path}&secret-key=${config.sops.secrets.signing-key-2.path}&ls-compression=br&log-compression=br
         server_store_uri = https://cache-staging.nixos.org?local-nar-cache=${narCache}
         binary_cache_public_uri = https://cache-staging.nixos.org
 
