@@ -99,7 +99,7 @@
                     expr = ''
                       node_filesystem_files_free{${diskSelector}} / node_filesystem_files{${diskSelector}} * 100 < 10
                     '';
-                    for = "30m";
+                    for = "60m";
                     labels.severity = "warning";
                     annotations.summary = "{{ $labels.device }} mounted to {{ $labels.mountpoint }} ({{ $labels.fstype }}) on {{ $labels.instance }} has only {{ $value }}% free inodes.";
                     annotations.grafana = "https://grafana.nixos.org/d/rYdddlPWk/node-exporter-full?orgId=1&var-job=node&var-node={{ $labels.instance }}";
@@ -109,7 +109,7 @@
                     expr = ''
                       round((node_filesystem_free_bytes{${diskSelector}} * 100) / node_filesystem_size_bytes{${diskSelector}}) < 10 and ON (instance, device, mountpoint) node_filesystem_free_bytes < 100 * 1024^3
                     '';
-                    for = "30m";
+                    for = "60m";
                     labels.severity = "warning";
                     annotations.summary = "{{ $labels.device }} mounted to {{ $labels.mountpoint }} ({{ $labels.fstype }}) on {{ $labels.instance }} has {{ $value }}% free.";
                     annotations.grafana = "https://grafana.nixos.org/d/rYdddlPWk/node-exporter-full?orgId=1&var-job=node&var-node={{ $labels.instance }}";
