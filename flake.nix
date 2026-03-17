@@ -13,16 +13,8 @@
     };
 
     hydra = {
-      url = "github:NixOS/hydra/a40d42862da88cce78a27dd594e1484a034aac4d";
+      url = "github:NixOS/hydra/d92a6b6905474886e672c771b46e0cffaefabe3c";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    hydra-queue-runner = {
-      url = "github:helsinki-systems/hydra-queue-runner";
-      inputs.flake-utils.follows = "flake-utils";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
-      inputs.treefmt-nix.follows = "treefmt-nix";
     };
 
     nixos-channel-scripts = {

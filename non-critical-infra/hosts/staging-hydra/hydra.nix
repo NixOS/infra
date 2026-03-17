@@ -15,7 +15,6 @@ in
 {
   imports = [
     inputs.hydra.nixosModules.hydra
-    inputs.hydra-queue-runner.nixosModules.queue-runner
   ];
 
   networking.firewall.allowedTCPPorts = [
@@ -124,8 +123,9 @@ in
       '';
     };
 
-    queue-runner-dev = {
+    hydra-queue-runner-dev = {
       enable = true;
+      package = pkgs.hydra-queue-runner;
       settings = {
         queueTriggerTimerInS = 300;
         concurrentUploadLimit = 2;

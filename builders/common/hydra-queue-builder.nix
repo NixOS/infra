@@ -7,7 +7,7 @@
 
 {
   imports = [
-    inputs.hydra-queue-runner.nixosModules.queue-builder
+    "${inputs.hydra}/nixos-modules/linux-builder-module.nix"
   ];
 
   config = lib.mkIf false {
@@ -16,7 +16,7 @@
       owner = "hydra-queue-builder";
     };
 
-    services.queue-builder-dev = {
+    services.hydra-queue-builder-dev = {
       enable = true;
       queueRunnerAddr = "https://queue-runner.hydra.nixos.org";
       authorizationFile = config.age.secrets."queue-runner-token".path;
