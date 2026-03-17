@@ -14,8 +14,8 @@ let
 in
 {
   imports = [
-    inputs.hydra.nixosModules.hydra
-    inputs.hydra-queue-runner.nixosModules.queue-runner
+    inputs.hydra-staging.nixosModules.web-app
+    inputs.hydra-staging.nixosModules.queue-runner
   ];
 
   networking.firewall.allowedTCPPorts = [
@@ -124,7 +124,7 @@ in
       '';
     };
 
-    queue-runner-dev = {
+    hydra-queue-runner-dev = {
       enable = true;
       settings = {
         queueTriggerTimerInS = 300;
