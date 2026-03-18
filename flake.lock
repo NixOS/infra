@@ -301,17 +301,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1769800271,
-        "narHash": "sha256-vrwZnNY7DypyWyHRqQ0uIBiQ5hZ6MRMfq5Gjl6VoLiA=",
+        "lastModified": 1773705119,
+        "narHash": "sha256-8pttLK/JQiUL6EXJfjBtBggiLw+769JdQGrpM7klXdg=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "a9581bcdc469fdf34cb92519ee973045b5e8c8e4",
+        "rev": "a40d42862da88cce78a27dd594e1484a034aac4d",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "a9581bcdc469fdf34cb92519ee973045b5e8c8e4",
+        "rev": "a40d42862da88cce78a27dd594e1484a034aac4d",
         "type": "github"
       }
     },
@@ -367,16 +367,16 @@
     "nix": {
       "flake": false,
       "locked": {
-        "lastModified": 1768160797,
-        "narHash": "sha256-TVKn52SoKq8mMyW/x3NPPskGVurFdnGGV0DGvnL0gak=",
+        "lastModified": 1773703540,
+        "narHash": "sha256-4Y+8PXniloxfreG6nSWF6SWjY58FvGOUvlym4NrmvpI=",
         "owner": "NixOS",
         "repo": "nix",
-        "rev": "fb562abba93fb15f66a71a9fc1d94bb1ea21a2d4",
+        "rev": "7ee0a95261253665e064a197272f91ca0e97c7b1",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "2.33-maintenance",
+        "ref": "2.34-maintenance",
         "repo": "nix",
         "type": "github"
       }
@@ -384,16 +384,16 @@
     "nix-eval-jobs": {
       "flake": false,
       "locked": {
-        "lastModified": 1767025318,
-        "narHash": "sha256-i68miKHGdueWggcDAF+Kca9g6S3ipkW629XbMpQYfn0=",
-        "owner": "nix-community",
+        "lastModified": 1773356729,
+        "narHash": "sha256-OFGRoJOYhvZ3Enk5a8vMy0QNcG5ZxyzFhyHMrwKXde8=",
+        "owner": "NixOS",
         "repo": "nix-eval-jobs",
-        "rev": "79dd7adbb5f75b08fb4b9bddd712ebc52baa46bc",
+        "rev": "65ebf5b7cd453a27af09cf02b1fc57b3568cc4b7",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
-        "ref": "v2.33.0",
+        "owner": "NixOS",
+        "ref": "v2.34.1",
         "repo": "nix-eval-jobs",
         "type": "github"
       }
