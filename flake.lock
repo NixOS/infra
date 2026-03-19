@@ -294,7 +294,9 @@
     },
     "hydra": {
       "inputs": {
-        "nix": "nix",
+        "nix": [
+          "nix"
+        ],
         "nix-eval-jobs": "nix-eval-jobs",
         "nixpkgs": [
           "nixpkgs"
@@ -367,17 +369,17 @@
     "nix": {
       "flake": false,
       "locked": {
-        "lastModified": 1773703540,
-        "narHash": "sha256-4Y+8PXniloxfreG6nSWF6SWjY58FvGOUvlym4NrmvpI=",
-        "owner": "NixOS",
-        "repo": "nix",
-        "rev": "7ee0a95261253665e064a197272f91ca0e97c7b1",
+        "lastModified": 1773922402,
+        "narHash": "sha256-9fBGB4ytkZ1PwFAD3rEr1mc1LhMq90c3qpIO2bazi8Q=",
+        "owner": "Mic92",
+        "repo": "nix-1",
+        "rev": "53e404f7bf1acaa7f7365e95b459a22f3a088c4f",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "2.34-maintenance",
-        "repo": "nix",
+        "owner": "Mic92",
+        "ref": "2.34-maintenance-s3-fix",
+        "repo": "nix-1",
         "type": "github"
       }
     },
@@ -523,6 +525,7 @@
         "hydra": "hydra",
         "hydra-queue-runner": "hydra-queue-runner",
         "nft-prefix-import": "nft-prefix-import",
+        "nix": "nix",
         "nixos-channel-scripts": "nixos-channel-scripts",
         "nixpkgs": "nixpkgs",
         "nixpkgs-swh": "nixpkgs-swh",
