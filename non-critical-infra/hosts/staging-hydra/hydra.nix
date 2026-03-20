@@ -56,13 +56,13 @@ in
     signing-key = {
       sopsFile = ../../secrets/signing-key.staging-hydra;
       format = "binary";
-      owner = config.systemd.services.hydra-queue-runner.serviceConfig.User;
+      owner = config.systemd.services.hydra-queue-runner-dev.serviceConfig.User;
     };
     hydra-aws-credentials = {
       sopsFile = ../../secrets/hydra-aws-credentials.staging-hydra;
       format = "binary";
       path = "/var/lib/hydra/queue-runner/.aws/credentials";
-      owner = config.systemd.services.hydra-queue-runner.serviceConfig.User;
+      owner = config.systemd.services.hydra-queue-runner-dev.serviceConfig.User;
     };
   };
 
