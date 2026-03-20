@@ -28,16 +28,15 @@ All the members should be watching this repository for changes.
 
 ## Regular catch up
 
-We meet regularly over Jitsi to hash some issues out. Sometimes it helps to have
-dedicated focus and higher communication bandwidth.
+We meet regularly over [Lasuite Meet](https://github.com/suitenumerique/meet) to catch up and make decisions. Sometimes it helps to have dedicated focus and higher communication bandwidth.
 
 There is an open team meeting **every other Thursday at
 [18:00 (Europe/Zurich)](https://dateful.com/convert/zurich?t=18)**. See the
 [google calendar](https://calendar.google.com/calendar/u/0/embed?src=b9o52fobqjak8oq8lfkhg3t0qg@group.calendar.google.com)
 (search for "NixOS Infra") to see the next date.
 
-Location: <https://meet.cccda.de/nix-osin-fra> Meeting notes:
-<https://pad.lassul.us/nixos-infra>
+- Location: <https://meet.cccda.de/nix-osin-fra>
+- Meeting notes: <https://pad.lassul.us/nixos-infra>
 
 ## Reporting issues
 
