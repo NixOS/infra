@@ -26,12 +26,9 @@
       inputs.nix.follows = "nix";
     };
 
-    hydra-queue-runner = {
-      url = "github:helsinki-systems/hydra-queue-runner";
-      inputs.flake-utils.follows = "flake-utils";
+    hydra-staging = {
+      url = "github:NixOS/hydra";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
-      inputs.treefmt-nix.follows = "treefmt-nix";
     };
 
     nixos-channel-scripts = {

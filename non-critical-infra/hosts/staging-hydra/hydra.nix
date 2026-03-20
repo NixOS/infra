@@ -14,8 +14,8 @@ let
 in
 {
   imports = [
-    inputs.hydra.nixosModules.hydra
-    inputs.hydra-queue-runner.nixosModules.queue-runner
+    inputs.hydra-staging.nixosModules.web-app
+    inputs.hydra-staging.nixosModules.queue-runner
   ];
 
   networking.firewall.allowedTCPPorts = [
@@ -56,13 +56,13 @@ in
     signing-key = {
       sopsFile = ../../secrets/signing-key.staging-hydra;
       format = "binary";
-      owner = config.systemd.services.hydra-queue-runner.serviceConfig.User;
+      owner = config.systemd.services.hydra-queue-runner-dev.serviceConfig.User;
     };
     hydra-aws-credentials = {
       sopsFile = ../../secrets/hydra-aws-credentials.staging-hydra;
       format = "binary";
       path = "/var/lib/hydra/queue-runner/.aws/credentials";
-      owner = config.systemd.services.hydra-queue-runner.serviceConfig.User;
+      owner = config.systemd.services.hydra-queue-runner-dev.serviceConfig.User;
     };
   };
 
@@ -124,7 +124,7 @@ in
       '';
     };
 
-    queue-runner-dev = {
+    hydra-queue-runner-dev = {
       enable = true;
       settings = {
         queueTriggerTimerInS = 300;

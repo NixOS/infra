@@ -10,7 +10,7 @@
   ];
 
   nixpkgs.overlays = [
-    inputs.hydra.overlays.default
+    inputs.hydra-staging.overlays.default
   ];
 
   boot = {
