@@ -28,7 +28,9 @@ All the members should be watching this repository for changes.
 
 ## Regular catch up
 
-We meet regularly over [Lasuite Meet](https://github.com/suitenumerique/meet) to catch up and make decisions. Sometimes it helps to have dedicated focus and higher communication bandwidth.
+We meet regularly over [Lasuite Meet](https://github.com/suitenumerique/meet) to
+catch up and make decisions. Sometimes it helps to have dedicated focus and
+higher communication bandwidth.
 
 There is an open team meeting **every other Thursday at
 [18:00 (Europe/Zurich)](https://dateful.com/convert/zurich?t=18)**. See the
