@@ -29,6 +29,8 @@
     hydra-staging = {
       url = "github:NixOS/hydra";
       inputs.nixpkgs.follows = "nixpkgs";
+      # Can be kept in sync I suppose for now.
+      inputs.nix.follows = "nix";
     };
 
     nixos-channel-scripts = {
