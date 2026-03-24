@@ -8,7 +8,7 @@
 {
   imports = [
     inputs.agenix.darwinModules.age
-    inputs.hydra-queue-runner.darwinModules.queue-builder
+    inputs.hydra-staging.nixosModules.darwin-builder
   ];
 
   config = lib.mkIf false {
@@ -17,7 +17,7 @@
       owner = "hydra-queue-builder";
     };
 
-    services.queue-builder-dev = {
+    services.hydra-queue-builder-dev = {
       enable = true;
       queueRunnerAddr = "https://queue-runner.hydra.nixos.org";
       authorizationFile = config.age.secrets."queue-runner-token".path;

@@ -317,32 +317,25 @@
         "type": "github"
       }
     },
-    "hydra-queue-runner": {
+    "hydra-staging": {
       "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
+        "nix": "nix_2",
+        "nix-eval-jobs": "nix-eval-jobs_2",
         "nixpkgs": [
           "nixpkgs"
-        ],
-        "nixpkgs-unstable": [
-          "nixpkgs-unstable"
-        ],
-        "treefmt-nix": [
-          "treefmt-nix"
         ]
       },
       "locked": {
-        "lastModified": 1773309570,
-        "narHash": "sha256-HWlyDU/4dkxYIiKsnf0I6Zws2QyOG6o8/olPAVikKEo=",
-        "owner": "helsinki-systems",
-        "repo": "hydra-queue-runner",
-        "rev": "12152675138355f430f495c86231f7e8559b63c3",
+        "lastModified": 1773946232,
+        "narHash": "sha256-GMghkvx6E+klBk3Q1S9DvL2+WAvM1J15eBPU+oJnA2Q=",
+        "owner": "NixOS",
+        "repo": "hydra",
+        "rev": "aedf068ef3f4319d690dd57a9a1ccb4391756ea3",
         "type": "github"
       },
       "original": {
-        "owner": "helsinki-systems",
-        "repo": "hydra-queue-runner",
+        "owner": "NixOS",
+        "repo": "hydra",
         "type": "github"
       }
     },
@@ -400,6 +393,23 @@
         "type": "github"
       }
     },
+    "nix-eval-jobs_2": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1773356729,
+        "narHash": "sha256-OFGRoJOYhvZ3Enk5a8vMy0QNcG5ZxyzFhyHMrwKXde8=",
+        "owner": "NixOS",
+        "repo": "nix-eval-jobs",
+        "rev": "65ebf5b7cd453a27af09cf02b1fc57b3568cc4b7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "v2.34.1",
+        "repo": "nix-eval-jobs",
+        "type": "github"
+      }
+    },
     "nix-github-actions": {
       "inputs": {
         "nixpkgs": [
@@ -418,6 +428,23 @@
       "original": {
         "owner": "nix-community",
         "repo": "nix-github-actions",
+        "type": "github"
+      }
+    },
+    "nix_2": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1772966630,
+        "narHash": "sha256-qzVtneydMSjNZXzNbxQG9VvJc490keS9RNlbUCfiQas=",
+        "owner": "NixOS",
+        "repo": "nix",
+        "rev": "26842787496f2293c676fb36db38dacfd63497e0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "2.34-maintenance",
+        "repo": "nix",
         "type": "github"
       }
     },
@@ -523,7 +550,7 @@
         "flake-utils": "flake-utils",
         "freescout": "freescout",
         "hydra": "hydra",
-        "hydra-queue-runner": "hydra-queue-runner",
+        "hydra-staging": "hydra-staging",
         "nft-prefix-import": "nft-prefix-import",
         "nix": "nix",
         "nixos-channel-scripts": "nixos-channel-scripts",
