@@ -61,7 +61,6 @@ in
     hydra-aws-credentials = {
       sopsFile = ../../secrets/hydra-aws-credentials.staging-hydra;
       format = "binary";
-      path = "/var/lib/hydra/queue-runner/.aws/credentials";
       owner = config.systemd.services.hydra-queue-runner-dev.serviceConfig.User;
     };
   };
@@ -126,6 +125,7 @@ in
 
     hydra-queue-runner-dev = {
       enable = true;
+      awsCredentialsFile = config.sops.secrets.hydra-aws-credentials.path;
       settings = {
         queueTriggerTimerInS = 300;
         concurrentUploadLimit = 2;
