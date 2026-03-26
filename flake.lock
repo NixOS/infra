@@ -325,20 +325,20 @@
         "nix-eval-jobs": "nix-eval-jobs_2",
         "nixpkgs": [
           "nixpkgs"
-        ]
+        ],
+        "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1774391370,
-        "narHash": "sha256-CSILL6ExopBW+lfraxckNo0ouCW8ylSrHezrGKHTARI=",
+        "lastModified": 1775509722,
+        "narHash": "sha256-aQl2iSbryscmZr4FlyM8cqUKViyaMSULychJwVP/dc8=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "2e97e1a32e1383ea46386739551a163479a0ed81",
+        "rev": "b256df11dcaef226ba4fb3f723edf6bdd13f9fc0",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "2e97e1a32e1383ea46386739551a163479a0ed81",
         "type": "github"
       }
     },
@@ -547,7 +547,7 @@
         "simple-nixos-mailserver": "simple-nixos-mailserver",
         "sops-nix": "sops-nix",
         "srvos": "srvos",
-        "treefmt-nix": "treefmt-nix"
+        "treefmt-nix": "treefmt-nix_2"
       }
     },
     "simple-nixos-mailserver": {
@@ -645,6 +645,27 @@
       }
     },
     "treefmt-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "hydra-staging",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1773297127,
+        "narHash": "sha256-6E/yhXP7Oy/NbXtf1ktzmU8SdVqJQ09HC/48ebEGBpk=",
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "rev": "71b125cd05fbfd78cab3e070b73544abe24c5016",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "treefmt-nix_2": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs-unstable"

@@ -27,9 +27,7 @@
     };
 
     hydra-staging = {
-      # Pinning commit until https://github.com/NixOS/hydra/pull/1598 is
-      # merged, then should go back to tracking latest master.
-      url = "github:NixOS/hydra/2e97e1a32e1383ea46386739551a163479a0ed81";
+      url = "github:NixOS/hydra";
       inputs.nixpkgs.follows = "nixpkgs";
       # Can be kept in sync I suppose for now.
       inputs.nix.follows = "nix";
