@@ -7,6 +7,7 @@ keys:
   - &staging-hydra age1xj4dl6xdl5ztmetp9axa0epjj922hu6a2gut3rrs5rdc5xv85yjsq5ggpx
   - &mic92 age17n64ahe3wesh8l8lj0zylf4nljdmqn28hvqns2g7hgm9mdkhlsvsjuvkxz
   - &mic92-mac age1nnm255ah9wa4gpsaq0v023a75lnmlcxszt9lc6az3mtwzxgrucfq45rp7h
+  - &Ericson2314 age1fgzf77gyah4efemnrqg4e7j0vk8fpq0uzrucepmdpsd5z7l4lgpsfq54df
 
 creation_rules:
   - path_regex: secrets/[^/]+.caliban
@@ -46,3 +47,4 @@ creation_rules:
           - *hexa
           - *zimbatm
           - *simon
+          - *Ericson2314
