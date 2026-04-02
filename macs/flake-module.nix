@@ -15,12 +15,13 @@
             {
               networking = { inherit localHostName; };
             }
-            ./common.nix
             entrypoint
           ];
         };
     in
     {
+      bootstrap = mkNixDarwin "bootstrap" ./profiles/bootstrap.nix;
+
       # M1 8C, 16G, 256G (Hetzner)
       enormous-catfish = mkNixDarwin "enormous-catfish" ./profiles/m1.nix;
       growing-jennet = mkNixDarwin "growing-jennet" ./profiles/m1.nix;
