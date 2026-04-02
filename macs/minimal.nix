@@ -63,6 +63,8 @@ in
     };
   };
 
+  services.openssh.enable = true;
+
   users.users.root.openssh.authorizedKeys.keys = [
     (authorizedNixStoreKey sshKeys.hydra-queue-runner)
   ]
