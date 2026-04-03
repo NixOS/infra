@@ -92,4 +92,15 @@ in
     serviceConfig.StandardErrorPath = "/var/log/rosetta2-gc.log";
     serviceConfig.StandardOutPath = "/var/log/rosetta2-gc.log";
   };
+
+  # MacOS stores extensive logs in /var/db/uuidtext, which cause high disk usage
+  launchd.daemons.uuidtext-gc = {
+    script = ''
+      date
+      find /var/db/uuidtext -type f -mtime +7 -delete
+    '';
+    serviceConfig.StartInterval = 3600 * 24;
+    serviceConfig.StandardErrorPath = "/var/log/uuidtext-gc.log";
+    serviceConfig.StandardOutPath = "/var/log/uuidtext-gc.log";
+  };
 }
