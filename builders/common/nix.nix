@@ -49,6 +49,7 @@
       ExecStart = lib.concatStringsSep " " [
         (lib.getExe pkgs.findutils)
         "/nix/var/nix/builds"
+        "-mindepth 1"
         "-maxdepth 1"
         "-type d"
         "-mtime +1" # days
