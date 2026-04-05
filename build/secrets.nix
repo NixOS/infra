@@ -63,6 +63,10 @@ let
       mimas
       maximum-snail
     ];
+    norwegian-blue-queue-runner-token = with machines; [
+      mimas
+      norwegian-blue
+    ];
     sweeping-filly-queue-runner-token = with machines; [
       mimas
       sweeping-filly

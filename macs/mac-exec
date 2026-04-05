@@ -8,6 +8,7 @@ HOSTS=(
 	"hetzner@sweeping-filly.mac.nixos.org"
 	"customer@eager-heisenberg.mac.nixos.org"
 	"customer@kind-lumiere.mac.nixos.org"
+	"root@norwegian-blue.mac.nixos.org"
 )
 PIDS=()
 

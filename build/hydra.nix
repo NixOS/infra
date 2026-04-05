@@ -196,6 +196,10 @@ in
     "enormous-catfish.mac.nixos.org".publicKey =
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMlg7NXxeG5L3s0YqSQIsqVG0MTyvyWDHUyYEfFPazLe";
 
+    # M1 Macs at Flying Circus
+    "norwegian-blue.mac.nixos.org".publicKey =
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDQ6Cjvoq5VBYfXl6ZV/ijQ1q4UxbWRYYfkXe0rzmJjf";
+
     # M2 Macs at Oakhost
     "kind-lumiere.mac.nixos.org".publicKey =
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFoqn1AAcOqtG65milpBtWVXP5VcBmTUSMGNfJzPwW8Q";
