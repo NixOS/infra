@@ -28,6 +28,9 @@
       maximum-snail = mkNixDarwin "maximum-snail" ./profiles/m1.nix;
       sweeping-filly = mkNixDarwin "sweeping-filly" ./profiles/m1.nix;
 
+      # M1 8C, 16G, 256G (Hosted by Flying-Circus)
+      norwegian-blue = mkNixDarwin "norwegian-blue" ./profiles/m1.nix;
+
       # M2 8C, 24G, 1TB (Oakhost)
       eager-heisenberg = mkNixDarwin "eager-heisenberg" ./profiles/m2.large.nix;
       kind-lumiere = mkNixDarwin "kind-lumiere" ./profiles/m2.large.nix;

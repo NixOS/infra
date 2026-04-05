@@ -16,5 +16,6 @@ update hetzner@maximum-snail.mac.nixos.org
 update hetzner@sweeping-filly.mac.nixos.org
 update customer@eager-heisenberg.mac.nixos.org
 update customer@kind-lumiere.mac.nixos.org
+update root@norwegian-blue.mac.nixos.org
 
 wait "${PIDS[@]}"

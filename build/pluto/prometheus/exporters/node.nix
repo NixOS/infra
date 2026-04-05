@@ -38,6 +38,8 @@
           {
             labels.role = "mac";
             targets = [
+              # flying circus
+              "norwegian-blue.mac.nixos.org:9100"
               # hetzner
               "intense-heron.mac.nixos.org:9100"
               "sweeping-filly.mac.nixos.org:9100"

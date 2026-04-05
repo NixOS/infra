@@ -49,6 +49,7 @@ rec {
     intense-heron = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICeSgOe/cr1yVAJOl30t3AZOLtvzeQa5rnrHGceKeBue";
     kind-lumiere = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFoqn1AAcOqtG65milpBtWVXP5VcBmTUSMGNfJzPwW8Q";
     maximum-snail = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEs+fK4hH8UKo+Pa7u1VYltkMufBHHH5uC93RQ2S6Xy9";
+    norwegian-blue = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDQ6Cjvoq5VBYfXl6ZV/ijQ1q4UxbWRYYfkXe0rzmJjf";
     sweeping-filly = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE6b/coXQEcFZW1eG4zFyCMCF0mZFahqmadz6Gk9DWMF";
   };
 }
