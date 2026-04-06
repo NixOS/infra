@@ -3,7 +3,7 @@
   flake.darwinConfigurations =
     let
       mkNixDarwin =
-        localHostName: entrypoint:
+        hostname: entrypoint:
         inputs.darwin.lib.darwinSystem {
           system = "aarch64-darwin";
 
@@ -13,7 +13,12 @@
 
           modules = [
             {
-              networking = { inherit localHostName; };
+              networking = {
+                # the name used to resolve the flake output
+                localHostName = hostname;
+                # the name that propagates into the MDM
+                computerName = hostname;
+              };
             }
             entrypoint
           ];
