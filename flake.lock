@@ -319,7 +319,9 @@
     },
     "hydra-staging": {
       "inputs": {
-        "nix": "nix",
+        "nix": [
+          "nix"
+        ],
         "nix-eval-jobs": "nix-eval-jobs_2",
         "nixpkgs": [
           "nixpkgs"
@@ -327,11 +329,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1775339090,
-        "narHash": "sha256-un4yecNLiiD1Q07nWYeMFlRJniYujARAANe5WlCdETI=",
+        "lastModified": 1775509722,
+        "narHash": "sha256-aQl2iSbryscmZr4FlyM8cqUKViyaMSULychJwVP/dc8=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "461fefedcb386f4ecb5b8216690f9d8b8372c83a",
+        "rev": "b256df11dcaef226ba4fb3f723edf6bdd13f9fc0",
         "type": "github"
       },
       "original": {
@@ -363,17 +365,17 @@
     "nix": {
       "flake": false,
       "locked": {
-        "lastModified": 1772966630,
-        "narHash": "sha256-qzVtneydMSjNZXzNbxQG9VvJc490keS9RNlbUCfiQas=",
-        "owner": "NixOS",
-        "repo": "nix",
-        "rev": "26842787496f2293c676fb36db38dacfd63497e0",
+        "lastModified": 1773922402,
+        "narHash": "sha256-9fBGB4ytkZ1PwFAD3rEr1mc1LhMq90c3qpIO2bazi8Q=",
+        "owner": "Mic92",
+        "repo": "nix-1",
+        "rev": "53e404f7bf1acaa7f7365e95b459a22f3a088c4f",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "2.34-maintenance",
-        "repo": "nix",
+        "owner": "Mic92",
+        "ref": "2.34-maintenance-s3-fix",
+        "repo": "nix-1",
         "type": "github"
       }
     },
@@ -429,23 +431,6 @@
       "original": {
         "owner": "nix-community",
         "repo": "nix-github-actions",
-        "type": "github"
-      }
-    },
-    "nix_2": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1773922402,
-        "narHash": "sha256-9fBGB4ytkZ1PwFAD3rEr1mc1LhMq90c3qpIO2bazi8Q=",
-        "owner": "Mic92",
-        "repo": "nix-1",
-        "rev": "53e404f7bf1acaa7f7365e95b459a22f3a088c4f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Mic92",
-        "ref": "2.34-maintenance-s3-fix",
-        "repo": "nix-1",
         "type": "github"
       }
     },
@@ -553,7 +538,7 @@
         "hydra": "hydra",
         "hydra-staging": "hydra-staging",
         "nft-prefix-import": "nft-prefix-import",
-        "nix": "nix_2",
+        "nix": "nix",
         "nixos-channel-scripts": "nixos-channel-scripts",
         "nixpkgs": "nixpkgs",
         "nixpkgs-swh": "nixpkgs-swh",
