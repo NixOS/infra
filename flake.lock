@@ -300,20 +300,21 @@
         "nix-eval-jobs": "nix-eval-jobs",
         "nixpkgs": [
           "nixpkgs"
-        ]
+        ],
+        "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1773705119,
-        "narHash": "sha256-8pttLK/JQiUL6EXJfjBtBggiLw+769JdQGrpM7klXdg=",
+        "lastModified": 1775667573,
+        "narHash": "sha256-9J9jzf82/EEAy0+qG8/yz201tMB/+Ch3PdxXmb5cq4U=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "a40d42862da88cce78a27dd594e1484a034aac4d",
+        "rev": "cd235f7de82e3b67e81b442b73f5f7a98791298c",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "a40d42862da88cce78a27dd594e1484a034aac4d",
+        "rev": "cd235f7de82e3b67e81b442b73f5f7a98791298c",
         "type": "github"
       }
     },
@@ -326,7 +327,7 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "treefmt-nix": "treefmt-nix"
+        "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
         "lastModified": 1775509722,
@@ -547,7 +548,7 @@
         "simple-nixos-mailserver": "simple-nixos-mailserver",
         "sops-nix": "sops-nix",
         "srvos": "srvos",
-        "treefmt-nix": "treefmt-nix_2"
+        "treefmt-nix": "treefmt-nix_3"
       }
     },
     "simple-nixos-mailserver": {
@@ -647,7 +648,7 @@
     "treefmt-nix": {
       "inputs": {
         "nixpkgs": [
-          "hydra-staging",
+          "hydra",
           "nixpkgs"
         ]
       },
@@ -666,6 +667,27 @@
       }
     },
     "treefmt-nix_2": {
+      "inputs": {
+        "nixpkgs": [
+          "hydra-staging",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1773297127,
+        "narHash": "sha256-6E/yhXP7Oy/NbXtf1ktzmU8SdVqJQ09HC/48ebEGBpk=",
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "rev": "71b125cd05fbfd78cab3e070b73544abe24c5016",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "treefmt-nix_3": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs-unstable"
