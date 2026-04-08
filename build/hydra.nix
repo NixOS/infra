@@ -178,12 +178,6 @@ in
     "hopeful-rivest.builder.nixos.org".publicKey =
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBgjwpQaNAWdEdnk1YG7JWThM4xQdKNJ3h3arhF7+iFm";
 
-    # M1 Macs in North America
-    "*.foundation.detsys.dev" = {
-      certAuthority = true;
-      publicKey = "@cert-authority *.foundation.detsys.dev ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDBQ55ccEXJHIY9Cde6hSx26zTOju0RIXzuJL2uxmKrSc6l2SsZV3RsejfY3vp4Zhs/UVhk9VBkaiYY6bMg1SW6f9A0fBrPOSSytRwKgW/XCO605bdpNlGC5sKFGQAuOZfhFEeW9mInhjn1Pkz63gINrI3jWEM1mWJMKwLpstC2P0wXX3kWxQutPjIQrGqKP+TRiYdWcy+dWUFItXcBQkBRk+2xC24PL4s5JLGJffx/pNt+WnZqADIEu42WgrQiiz5OPGoGwlzDNgcWltuHdYaDtKU7bDY4wZxWa/HZGNju1vqLbVPai/Fo4EpONjKr4+EJpInxTpmjm4rcXHmCNmf2fEjZvbpXVcocj/NHp0IuusSLfMo3JfUTo6Vo5gyDjEETWDm1y++pWp5aZ0Dss1mJAbkUN/arMqIIj1RcmLFYf7p9Y1mE7axHZL3BFIlsHxAnZle+ouxPUSIstq9GrD1b3rIC03lTqEH0eTikEpoJAU3OIK5Eoi7vuJyDTtd8rzxPhsv3ScxBGJF6BRbyaaBsqjXWphxzlmzKvwH0psLoE3NuS46EQ5VXq4A4p0KgcuybccuxYMDSf81u96LSIm4f7yWZcE7+iXTollc3tn48uxWFSFNLxzo7RixmJ0R/cRPY6KlOUUJyurWO/bMxSc9rxCJpVrrr/0cMbBbEggICEw==";
-    };
-
     # M1 Macs at Hetzner
     "intense-heron.mac.nixos.org".publicKey =
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICeSgOe/cr1yVAJOl30t3AZOLtvzeQa5rnrHGceKeBue";

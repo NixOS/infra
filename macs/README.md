@@ -4,22 +4,30 @@ See [inventory](../docs/inventory.md).
 
 ## Inventory
 
-### At Graham's place
+### Obisdian Systems (US Hosting)
 
-We have mac-mini's are in [Grahams](https://github.com/grahamc) house, that only
-[@cole-h](https://github.com/cole-h) can deploy:
+They are hosting five Macs Minis for us in the United States.
 
-- becoming-hyena.foundation.detsys.dev
-- cosmic-stud.foundation.detsys.dev
-- quality-ram.foundation.detsys.dev
-- tight-bug.foundation.detsys.dev
+Contact: [@ryantrinkle](https://github.com/ryantrinkle)
 
-- These are getting erased and automatically redeployed from the configuration
-  in this directory.
+- Mac Mini (M1 2020, 16 GB, 256 GB)
+- Mac Mini (M1 2020, 16 GB, 256 GB)
+- Mac Mini (M1 2020, 16 GB, 256 GB)
+- Mac Mini (M1 2020, 16 GB, 256 GB)
+- Mac Mini (i3-8100B, 8GB, 128 GB)
+
+### Flying Circus (DE Hosting)
+
+Currently hosting two Mac Minis for us in Germany.
+
+Contact: [@ctheune](https://github.com/ctheune)
+
+- Mac Mini (M1 2020, 16 GB, 256 GB)
+- Mac Mini (M1 2020, 16 GB, 256 GB)
 
 ### Hetzner
 
-Additional we have five M1 builders at Hetzner online:
+Additional we rent five M1 (16 GB, 256 GB) builders at Hetzner online:
 
 - enormous-catfish.mac.nixos.org
 - growing-jennet.mac.nixos.org
@@ -30,6 +38,12 @@ Additional we have five M1 builders at Hetzner online:
 These are maintained by the build infra team.
 
 ### Oakhost
+
+Two M2 Mac Mini with 24 GB RAM and 1 TB disk are sponsored by
+[Oakhost](https://www.oakhost.com/).
+
+If you are looking for Mac Hosting in the EU, we can recommend Oakhost. They
+offer a great admin experience with ad-hoc KVM access in the browser.
 
 - eager-heisenberg.mac.nixos.org
 - kind-lumiere.mac.nixos.org
