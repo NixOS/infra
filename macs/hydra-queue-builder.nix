@@ -8,7 +8,7 @@
 {
   imports = [
     inputs.agenix.darwinModules.age
-    inputs.hydra-staging.nixosModules.darwin-builder
+    inputs.hydra-staging.darwinModules.builder
   ];
 
   config = lib.mkIf false {
