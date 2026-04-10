@@ -11,6 +11,7 @@
       efi.canTouchEfiVariables = false;
       grub = {
         enable = true;
+        configurationLimit = 10;
         efiSupport = true;
         efiInstallAsRemovable = true;
         mirroredBoots = [
