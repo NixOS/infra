@@ -37,7 +37,7 @@
         "build"
         "root"
       ];
-      max-silent-time = 10800; # 3h
+      max-silent-time = 14400; # 4h
     };
   };
 
