@@ -46,7 +46,7 @@ in
         "-type"
         "f"
         "-mtime"
-        "+${toString (3 * 365)}" # days
+        "+213" # days (~7 months, roughly one release cycle)
         "-delete"
       ];
     };
