@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
-# Use this script to deploy the initial keys when bootstrapping a new machine.
+# Bootstrap staging-hydra on nixos.lysator.liu.se (130.236.254.207).
+#
+# WARNING: nixos-anywhere will WIPE all disks. Only use this for a fresh
+# install. For regular deployments use colmena:
+#   colmena apply --on staging-hydra
 
 set -euo pipefail
 tmpDir=$(mktemp -d)
@@ -24,5 +28,4 @@ for keyname in "${keys[@]}"; do
   fi
   sops --extract '["'"$keyname"'"]' --decrypt "$SCRIPT_DIR/../../secrets/staging-hydra-hostkeys.yaml" >"$sshDir/$keyname"
 done
-# Mounted NixOS minimal image
-nix run nixpkgs#nixos-anywhere -- --extra-files "$tmpDir" -f .#staging-hydra nixos@157.180.25.203
+nix run nixpkgs#nixos-anywhere -- --extra-files "$tmpDir" -f .#staging-hydra nixos@nixos.lysator.liu.se

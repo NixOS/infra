@@ -114,8 +114,8 @@ D("nixos.org",
 	AAAA("norwegian-blue.mac", "2a06:3a80:0:41:423:898a:1e16:3cf7"),
 
 	// hydra staging area
-	A("staging-hydra", "157.180.25.203"),
-	AAAA("staging-hydra", "2a01:4f9:c012:d5d3::1"),
+	A("staging-hydra", "130.236.254.207"),
+	AAAA("staging-hydra", "2001:6b0:17:f0a0::cf"),
 	CNAME("queue-runner.staging-hydra", "staging-hydra"),
 
 	// services infra
