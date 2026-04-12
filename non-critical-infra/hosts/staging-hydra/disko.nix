@@ -1,44 +1,58 @@
-{
-  disk = {
-    main = {
-      device = "/dev/sda";
-      type = "disk";
-      content = {
-        type = "gpt";
-        partitions = {
-          esp = {
-            type = "EF00";
-            size = "1024M";
-            content = {
-              type = "filesystem";
-              format = "vfat";
-              mountpoint = "/efi";
-            };
-          };
-          root = {
-            size = "100%";
-            content = {
-              type = "zfs";
-              pool = "zroot";
-            };
-          };
-        };
-      };
+# Matches the existing disk layout on nixos.lysator.liu.se:
+# 3x 1.8T disks in raidz1 ZFS pool "tank", each with a 1G EFI partition
+let
+  espPartition = mountpoint: {
+    type = "EF00";
+    size = "1G";
+    content = {
+      type = "filesystem";
+      format = "vfat";
+      inherit mountpoint;
+      mountOptions = [
+        "fmask=0022"
+        "dmask=0022"
+      ];
     };
   };
 
-  zpool.zroot = {
+  zfsPart = {
+    size = "100%";
+    content = {
+      type = "zfs";
+      pool = "tank";
+    };
+  };
+
+  makeDisk = device: espMountpoint: {
+    inherit device;
+    type = "disk";
+    content = {
+      type = "gpt";
+      partitions = {
+        esp = espPartition espMountpoint;
+        zfs = zfsPart;
+      };
+    };
+  };
+in
+{
+  disk = {
+    sda = makeDisk "/dev/disk/by-id/wwn-0x5000cca222c595d2" "/boot";
+    sdb = makeDisk "/dev/disk/by-id/wwn-0x5000cca222c1c46e" "/boot-fallback/1";
+    sdc = makeDisk "/dev/disk/by-id/wwn-0x5000cca222c5c6d3" "/boot-fallback/2";
+  };
+
+  zpool.tank = {
     type = "zpool";
+    mode = "raidz1";
     options = {
-      # smartctl --all /dev/sda
-      # Logical block size:   512 bytes
-      ashift = "9";
+      ashift = "12";
     };
     rootFsOptions = {
-      acltype = "posixacl";
-      compression = "zstd";
+      compression = "on";
       mountpoint = "none";
-      xattr = "sa";
+      acltype = "posix";
+      xattr = "on";
     };
     datasets = {
       "root" = {
@@ -49,12 +63,13 @@
         type = "zfs_fs";
         mountpoint = "/nix";
       };
-      "reserved" = {
+      "var" = {
         type = "zfs_fs";
-        options = {
-          canmount = "off";
-          refreservation = "1G";
-        };
+        mountpoint = "/var";
+      };
+      "home" = {
+        type = "zfs_fs";
+        mountpoint = "/home";
       };
     };
   };

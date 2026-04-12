@@ -57,6 +57,13 @@ in
       }
     '';
 
+    # Plain HTTP access via lysator hostname (no ACME since we don't control the domain)
+    virtualHosts."nixos.lysator.liu.se" = {
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:3000";
+      };
+    };
+
     virtualHosts."staging-hydra.nixos.org" = {
       forceSSL = true;
       enableACME = true;
