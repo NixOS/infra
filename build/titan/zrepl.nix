@@ -4,6 +4,9 @@
   ...
 }:
 
+let
+  metricsPort = 9811;
+in
 {
   age.secrets."zrepl-ssh-key" = {
     file = ../secrets/zrepl-ssh-key.age;
@@ -106,6 +109,14 @@
           ];
         };
 
+        # https://zrepl.github.io/configuration/monitoring.html
+        monitoring = [
+          {
+            type = "prometheus";
+            listen = ":${toString metricsPort}";
+          }
+        ];
+
         jobs = [
           # Covers 20240629+
           (
@@ -132,4 +143,9 @@
         ];
       };
     };
+
+  networking.firewall.extraInputRules = ''
+    ip6 saddr $prometheus_inet6 tcp dport ${toString metricsPort} accept
+    ip saddr $prometheus_inet4 tcp dport ${toString metricsPort} accept
+  '';
 }

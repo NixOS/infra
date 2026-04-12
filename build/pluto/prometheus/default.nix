@@ -21,6 +21,7 @@
     ./exporters/sql.nix
     ./exporters/up.nix
     ./exporters/zfs.nix
+    ./exporters/zrepl.nix
   ];
 
   services.backup.includesZfsDatasets = [ "/var/lib/prometheus2" ];
