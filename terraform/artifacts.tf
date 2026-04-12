@@ -4,9 +4,12 @@
 # It transparently follows GitHub's S3 redirects to provide direct file access.
 #
 # Supported URL patterns:
-# - /experimental-installer/tag/* -> /NixOS/experimental-nix-installer/releases/download/*
-# - /experimental-installer -> /NixOS/experimental-nix-installer/releases/latest/download/nix-installer.sh
-# - /experimental-installer/* -> /NixOS/experimental-nix-installer/releases/latest/download/*
+# - /nix-installer/tag/* -> /NixOS/nix-installer/releases/download/*
+# - /nix-installer -> /NixOS/nix-installer/releases/latest/download/nix-installer.sh
+# - /nix-installer/* -> /NixOS/nix-installer/releases/latest/download/*
+# - /experimental-installer/tag/* -> /NixOS/experimental-nix-installer/releases/download/* (legacy)
+# - /experimental-installer -> /NixOS/experimental-nix-installer/releases/latest/download/nix-installer.sh (legacy)
+# - /experimental-installer/* -> /NixOS/experimental-nix-installer/releases/latest/download/* (legacy)
 # - /patchelf/* -> /NixOS/patchelf/releases/download/*
 #
 # Testing commands:
@@ -99,7 +102,18 @@ resource "fastly_service_vcl" "artifacts" {
     content  = <<-EOT
       # Only rewrite if this is the first request (not a restart)
       if (!req.http.X-Rewritten) {
-        if (req.url ~ "^/experimental-installer/tag/") {
+        # New nix-installer routes (NixOS/nix-installer)
+        if (req.url ~ "^/nix-installer/tag/") {
+          set req.url = regsub(req.url.path, "^/nix-installer/tag/", "/NixOS/nix-installer/releases/download/");
+          set req.http.X-Rewritten = "true";
+        } else if (req.url ~ "^(/nix-installer|/nix-installer/)$") {
+          set req.url = regsub(req.url.path, "^(/nix-installer|/nix-installer/)$", "/NixOS/nix-installer/releases/latest/download/nix-installer.sh");
+          set req.http.X-Rewritten = "true";
+        } else if (req.url ~ "^/nix-installer/") {
+          set req.url = regsub(req.url.path, "^/nix-installer", "/NixOS/nix-installer/releases/latest/download/");
+          set req.http.X-Rewritten = "true";
+        # Legacy experimental-installer routes (NixOS/experimental-nix-installer)
+        } else if (req.url ~ "^/experimental-installer/tag/") {
           set req.url = regsub(req.url.path, "^/experimental-installer/tag/", "/NixOS/experimental-nix-installer/releases/download/");
           set req.http.X-Rewritten = "true";
         } else if (req.url ~ "^(/experimental-installer|/experimental-installer/)$") {
