@@ -12,11 +12,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Revert TCP keepalive on curl handles which causes S3 RequestTimeout
-    # errors when curl reuses connections that S3 has already dropped.
-    # Remove nix override once hydra's nix input includes the upstream revert.
     nix = {
-      url = "github:Mic92/nix-1/2.34-maintenance-s3-fix";
+      url = "github:NixOS/nix/2.34-maintenance";
       flake = false;
     };
 
