@@ -75,6 +75,60 @@ jobs:
           name: nixos-infra-dev
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - run: nix run --inputs-from . nixpkgs#nix-fast-build -- --skip-cached --no-nom --flake '.#nixosConfigurations."${{ matrix.machine }}".config.system.build.toplevel'
+  # ofborg machines share most of their closure, so build all of one arch in a
+  # single job to reuse the store between them.
+  nixos-ofborg-x86_64:
+    name: NixOS ofborg (x86_64)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          persist-credentials: false
+      - uses: cachix/install-nix-action@616559265b40713947b9c190a8ff4b507b5df49b # v31
+      - uses: cachix/cachix-action@1eb2ef646ac0255473d23a5907ad7b04ce94065c # v17
+        with:
+          name: nixos-infra-dev
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+      - run: nix run --inputs-from . nixpkgs#nix-fast-build -- --skip-cached --no-nom --flake '.#ciSystems.ofborg-x86_64-linux'
+  nixos-ofborg-aarch64:
+    name: NixOS ofborg (aarch64)
+    runs-on: ubuntu-22.04-arm
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          persist-credentials: false
+      - uses: cachix/install-nix-action@616559265b40713947b9c190a8ff4b507b5df49b # v31
+      - uses: cachix/cachix-action@1eb2ef646ac0255473d23a5907ad7b04ce94065c # v17
+        with:
+          name: nixos-infra-dev
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+      - run: nix run --inputs-from . nixpkgs#nix-fast-build -- --skip-cached --no-nom --flake '.#ciSystems.ofborg-aarch64-linux'
+  nix-darwin-ofborg:
+    name: nix-darwin ofborg (aarch64)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          persist-credentials: false
+      - uses: cachix/install-nix-action@616559265b40713947b9c190a8ff4b507b5df49b # v31
+      - uses: cachix/cachix-action@1eb2ef646ac0255473d23a5907ad7b04ce94065c # v17
+        with:
+          name: nixos-infra-dev
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+      - run: nix run --inputs-from . nixpkgs#nix-fast-build -- --skip-cached --no-nom --flake '.#ciSystems.ofborg-aarch64-darwin'
+  nix-darwin-ofborg-x86_64:
+    name: nix-darwin ofborg (x86_64)
+    runs-on: macos-15-intel
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          persist-credentials: false
+      - uses: cachix/install-nix-action@616559265b40713947b9c190a8ff4b507b5df49b # v31
+      - uses: cachix/cachix-action@1eb2ef646ac0255473d23a5907ad7b04ce94065c # v17
+        with:
+          name: nixos-infra-dev
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+      - run: nix run --inputs-from . nixpkgs#nix-fast-build -- --skip-cached --no-nom --flake '.#ciSystems.ofborg-x86_64-darwin'
   nix-darwin:
     runs-on: macos-latest
     strategy:
