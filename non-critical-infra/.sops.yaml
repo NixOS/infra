@@ -8,6 +8,19 @@ keys:
   - &mic92 age17n64ahe3wesh8l8lj0zylf4nljdmqn28hvqns2g7hgm9mdkhlsvsjuvkxz
   - &mic92-mac age1nnm255ah9wa4gpsaq0v023a75lnmlcxszt9lc6az3mtwzxgrucfq45rp7h
   - &Ericson2314 age1fgzf77gyah4efemnrqg4e7j0vk8fpq0uzrucepmdpsd5z7l4lgpsfq54df
+  # ofborg admins
+  - &dasJ age1lz3mvem0rgfxj7uavth8du4xsw23wp5ts77m5vvclxyj5mjxfujs0jgtcz
+  # ofborg hosts
+  - &core01-ofborg-org age1rrrj8tgcyp9xfxvy6zmk9487x62cgx0z68l7jretz2th6ey9nf4qh7nq7h
+  - &eval01-ofborg-org age16d0phf8c5wy3rfsd4pgc42mqa3aw2llfukdhgu7pzklnzjr2rvxsusz842
+  - &eval02-ofborg-org age1qn3q3y04pxumygmq96x0gk9qtrdcgdw4y5nl6xd780u4avk0qgsqy8tuu0
+  - &eval03-ofborg-org age1yssfznyq8rljcpfthpulnvfls0l5t36fpqxkk5taxcwpkqhv9gcqrvvwh7
+  - &eval04-ofborg-org age1vunut833rrdfulgnsjqtuke4yjtzexn2xqjqavwzxlgrg7n4y45qhurzwc
+  - &build01-ofborg-org age1ulnex45wt7fpj92jy9c5del3ccz6mmnqptrsva24k8m7qsez9pcsdu3eae
+  - &build02-ofborg-org age1wrp04f5c0d4jx3hwjsn8cyxdjzpzx6fl202zftqfvfdt7hx8efgskf6s86
+  - &build03-ofborg-org age1n0yrvl2v397kztuhf00cdvrhf26c9uegwz6day8z9pyqj3zff4sq6ha0lm
+  - &build04-ofborg-org age1l7xmxkh6y6d5svj06txknamlwdpfwac8855p3edgpu6jcqea7pvslw4r9a
+  - &build05-ofborg-org age1mduqldqpqp33u2wwh685cwwkpj2ak36z67dtrq2tcskgqkultvps7w9q7u
 
 creation_rules:
   - path_regex: secrets/[^/]+.caliban
@@ -48,3 +61,108 @@ creation_rules:
           - *zimbatm
           - *simon
           - *Ericson2314
+
+  # ofborg
+  - path_regex: secrets/[^/]+.core01.ofborg.org.yml
+    key_groups:
+      - age:
+          - *core01-ofborg-org
+          - *hexa
+          - *simon
+          - *dasJ
+          - *mic92
+          - *mic92-mac
+  - path_regex: secrets/github-tokens.ofborg.org.yml
+    key_groups:
+      - age:
+          - *core01-ofborg-org
+          - *eval01-ofborg-org
+          - *eval02-ofborg-org
+          - *eval03-ofborg-org
+          - *eval04-ofborg-org
+          - *hexa
+          - *simon
+          - *dasJ
+          - *mic92
+          - *mic92-mac
+  - path_regex: secrets/[^/]+.eval01.ofborg.org.yml
+    key_groups:
+      - age:
+          - *eval01-ofborg-org
+          - *hexa
+          - *simon
+          - *dasJ
+          - *mic92
+          - *mic92-mac
+  - path_regex: secrets/[^/]+.eval02.ofborg.org.yml
+    key_groups:
+      - age:
+          - *eval02-ofborg-org
+          - *hexa
+          - *simon
+          - *dasJ
+          - *mic92
+          - *mic92-mac
+  - path_regex: secrets/[^/]+.eval03.ofborg.org.yml
+    key_groups:
+      - age:
+          - *eval03-ofborg-org
+          - *hexa
+          - *simon
+          - *dasJ
+          - *mic92
+          - *mic92-mac
+  - path_regex: secrets/[^/]+.eval04.ofborg.org.yml
+    key_groups:
+      - age:
+          - *eval04-ofborg-org
+          - *hexa
+          - *simon
+          - *dasJ
+          - *mic92
+          - *mic92-mac
+  - path_regex: secrets/[^/]+.build01.ofborg.org.yml
+    key_groups:
+      - age:
+          - *build01-ofborg-org
+          - *hexa
+          - *simon
+          - *dasJ
+          - *mic92
+          - *mic92-mac
+  - path_regex: secrets/[^/]+.build02.ofborg.org.yml
+    key_groups:
+      - age:
+          - *build02-ofborg-org
+          - *hexa
+          - *simon
+          - *dasJ
+          - *mic92
+          - *mic92-mac
+  - path_regex: secrets/[^/]+.build03.ofborg.org.yml
+    key_groups:
+      - age:
+          - *build03-ofborg-org
+          - *hexa
+          - *simon
+          - *dasJ
+          - *mic92
+          - *mic92-mac
+  - path_regex: secrets/[^/]+.build04.ofborg.org.yml
+    key_groups:
+      - age:
+          - *build04-ofborg-org
+          - *hexa
+          - *simon
+          - *dasJ
+          - *mic92
+          - *mic92-mac
+  - path_regex: secrets/[^/]+.build05.ofborg.org.yml
+    key_groups:
+      - age:
+          - *build05-ofborg-org
+          - *hexa
+          - *simon
+          - *dasJ
+          - *mic92
+          - *mic92-mac
