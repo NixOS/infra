@@ -24,7 +24,7 @@
     };
 
     hydra-staging = {
-      url = "github:NixOS/hydra";
+      url = "github:NixOS/hydra/nixos-infra";
       inputs.nixpkgs.follows = "nixpkgs";
       # Can be kept in sync I suppose for now.
       inputs.nix.follows = "nix";
