@@ -107,15 +107,15 @@ in
               format = "human";
             }
           ];
-        };
 
-        # https://zrepl.github.io/configuration/monitoring.html
-        monitoring = [
-          {
-            type = "prometheus";
-            listen = ":${toString metricsPort}";
-          }
-        ];
+          # https://zrepl.github.io/configuration/monitoring.html
+          monitoring = [
+            {
+              type = "prometheus";
+              listen = ":${toString metricsPort}";
+            }
+          ];
+        };
 
         jobs = [
           # Covers 20240629+
