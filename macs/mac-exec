@@ -9,6 +9,12 @@ HOSTS=(
 	"customer@eager-heisenberg.mac.nixos.org"
 	"customer@kind-lumiere.mac.nixos.org"
 	"root@norwegian-blue.mac.nixos.org"
+	# ofborg (MacStadium)
+	"root@mac01.ofborg.org"
+	"root@mac02.ofborg.org"
+	"root@mac03.ofborg.org"
+	"root@mac04.ofborg.org"
+	"root@mac05.ofborg.org"
 )
 PIDS=()
 

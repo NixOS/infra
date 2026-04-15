@@ -24,7 +24,7 @@
     };
 
     hydra-staging = {
-      url = "github:NixOS/hydra";
+      url = "github:NixOS/hydra/nixos-infra";
       inputs.nixpkgs.follows = "nixpkgs";
       # Can be kept in sync I suppose for now.
       inputs.nix.follows = "nix";
@@ -106,6 +106,17 @@
       url = "github:nix-community/nixpkgs-swh";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    ofborg = {
+      url = "github:NixOS/ofborg";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    ofborg-viewer = {
+      url = "github:NixOS/ofborg-viewer";
+      flake = false;
+    };
+
   };
   outputs =
     inputs@{ flake-parts, ... }:
