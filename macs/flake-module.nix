@@ -3,7 +3,7 @@
   flake.darwinConfigurations =
     let
       mkNixDarwin =
-        localHostName: entrypoint:
+        hostname: entrypoint:
         inputs.darwin.lib.darwinSystem {
           system = "aarch64-darwin";
 
@@ -13,14 +13,20 @@
 
           modules = [
             {
-              networking = { inherit localHostName; };
+              networking = {
+                # the name used to resolve the flake output
+                localHostName = hostname;
+                # the name that propagates into the MDM
+                computerName = hostname;
+              };
             }
-            ./common.nix
             entrypoint
           ];
         };
     in
     {
+      bootstrap = mkNixDarwin "bootstrap" ./profiles/bootstrap.nix;
+
       # M1 8C, 16G, 256G (Hetzner)
       enormous-catfish = mkNixDarwin "enormous-catfish" ./profiles/m1.nix;
       growing-jennet = mkNixDarwin "growing-jennet" ./profiles/m1.nix;
