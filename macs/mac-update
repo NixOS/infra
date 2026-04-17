@@ -17,5 +17,11 @@ update hetzner@sweeping-filly.mac.nixos.org
 update customer@eager-heisenberg.mac.nixos.org
 update customer@kind-lumiere.mac.nixos.org
 update root@norwegian-blue.mac.nixos.org
+# ofborg (MacStadium)
+update root@mac01.ofborg.org
+update root@mac02.ofborg.org
+update root@mac03.ofborg.org
+update root@mac04.ofborg.org
+update root@mac05.ofborg.org
 
 wait "${PIDS[@]}"
