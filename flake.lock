@@ -349,15 +349,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1772134399,
-        "narHash": "sha256-O9YSvxHkNhMUB3U/WdC/R1np6biaxqoglPDUQHx5KIc=",
-        "owner": "mweinelt",
+        "lastModified": 1776722121,
+        "narHash": "sha256-DGXg6ODTQAP914+edQgfNwRhvu9cER9vtACtH235XP8=",
+        "owner": "Mic92",
         "repo": "nft-prefix-import",
-        "rev": "fbe66b91d7f0c818e0966e275d284095969cfe9b",
+        "rev": "c69c6463c5a3fb51a0e65a4b5981252486157a92",
         "type": "github"
       },
       "original": {
-        "owner": "mweinelt",
+        "owner": "Mic92",
+        "ref": "nft-stdin",
         "repo": "nft-prefix-import",
         "type": "github"
       }
