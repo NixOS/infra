@@ -306,15 +306,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1777112476,
-        "narHash": "sha256-5q6yCFLkdIqmbKWDgpTrw+JffthUrOdNgJflLV1lQaA=",
-        "owner": "NixOS",
+        "lastModified": 1777473491,
+        "narHash": "sha256-/dm+4Mh2tnT1/d8dAHPbI0X4gxuO3JdAezfv1QfI3CM=",
+        "owner": "helsinki-systems",
         "repo": "hydra",
-        "rev": "7fe1c317a92e6ee64b6d378befb3063784dd8d5b",
+        "rev": "e7a5d9cd334eaa2b0eefc5609becccce2e94d775",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
+        "owner": "helsinki-systems",
+        "ref": "fix/zstd_encode_decode",
         "repo": "hydra",
         "type": "github"
       }

@@ -18,7 +18,7 @@
     };
 
     hydra = {
-      url = "github:NixOS/hydra";
+      url = "github:helsinki-systems/hydra/?ref=fix/zstd_encode_decode";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nix.follows = "nix";
       inputs.treefmt-nix.follows = "treefmt-nix";
