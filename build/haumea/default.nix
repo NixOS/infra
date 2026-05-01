@@ -49,4 +49,11 @@
   powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
 
   system.stateVersion = "14.12";
+
+  users.users.root.openssh.authorizedKeys.keys =
+    with (import ../../ssh-keys.nix);
+    infra # maybe this isn't needed to add (again)?
+    ++ [
+      bmg
+    ];
 }
