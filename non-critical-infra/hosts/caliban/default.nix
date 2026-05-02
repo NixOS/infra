@@ -16,6 +16,7 @@
     ../../modules/backup.nix
     ../../modules/element-web.nix
     ../../modules/limesurvey.nix
+    ../../modules/lasuite-meet.nix
     ../../modules/matrix-synapse.nix
     ../../modules/owncast.nix
     ../../modules/vaultwarden.nix
