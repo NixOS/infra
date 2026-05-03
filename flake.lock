@@ -507,6 +507,42 @@
         "type": "github"
       }
     },
+    "ofborg": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1775142351,
+        "narHash": "sha256-HdnxJRJnPvlE4jqkivzd+zKVlsew4prfOz4cAkpkwyc=",
+        "owner": "NixOS",
+        "repo": "ofborg",
+        "rev": "f5c1e00707d3ebd232d114b2732783d36a9dc17f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "ofborg",
+        "type": "github"
+      }
+    },
+    "ofborg-viewer": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1736528671,
+        "narHash": "sha256-g4BK1MP8LPBEesMdRavl6eqJcKPIQg6FWs4XSbzObq4=",
+        "owner": "NixOS",
+        "repo": "ofborg-viewer",
+        "rev": "bb4ad97f2bd431e113698fce3a4a988f5d713019",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "ofborg-viewer",
+        "type": "github"
+      }
+    },
     "rfc39": {
       "inputs": {
         "nixpkgs": [
@@ -544,6 +580,8 @@
         "nixpkgs": "nixpkgs",
         "nixpkgs-swh": "nixpkgs-swh",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "ofborg": "ofborg",
+        "ofborg-viewer": "ofborg-viewer",
         "rfc39": "rfc39",
         "simple-nixos-mailserver": "simple-nixos-mailserver",
         "sops-nix": "sops-nix",

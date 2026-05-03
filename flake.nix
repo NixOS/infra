@@ -107,6 +107,17 @@
       url = "github:nix-community/nixpkgs-swh";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    ofborg = {
+      url = "github:NixOS/ofborg";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    ofborg-viewer = {
+      url = "github:NixOS/ofborg-viewer";
+      flake = false;
+    };
+
   };
   outputs =
     inputs@{ flake-parts, ... }:
