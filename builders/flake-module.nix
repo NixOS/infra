@@ -17,6 +17,7 @@
             ./common/network.nix
             ./common/nix.nix
             ./common/node-exporter.nix
+            ./common/nspawn-test-containers.nix
             ./common/hydra-queue-builder.nix
             ./common/system.nix
             ./common/tools.nix
