@@ -11,6 +11,8 @@ let
     hydra-github-client-secret = [ mimas ];
     hydra-mirror-aws-credentials = [ pluto ];
     hydra-mirror-git-credentials = [ pluto ];
+    matrix-alertmanager-secret = [ pluto ];
+    matrix-alertmanager-token = [ pluto ];
     owncast-admin-password = [ pluto ];
     pluto-backup-secret = [ pluto ];
     pluto-backup-ssh-key = [ pluto ];
