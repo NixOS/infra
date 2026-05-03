@@ -2,7 +2,6 @@ let
   keys = import ../ssh-keys.nix;
 
   secrets = with keys; {
-    alertmanager-matrix-forwarder = [ machines.pluto ];
     alertmanager-oauth2-proxy-env = [ machines.pluto ];
     fastly-exporter-env = [ machines.pluto ];
     grafana-secret-key = [ machines.pluto ];
@@ -10,6 +9,8 @@ let
     hydra-github-client-secret = [ machines.mimas ];
     hydra-mirror-aws-credentials = [ machines.pluto ];
     hydra-mirror-git-credentials = [ machines.pluto ];
+    matrix-alertmanager-secret = [ machines.pluto ];
+    matrix-alertmanager-token = [ machines.pluto ];
     owncast-admin-password = [ machines.pluto ];
     pluto-backup-secret = [ machines.pluto ];
     pluto-backup-ssh-key = [ machines.pluto ];
