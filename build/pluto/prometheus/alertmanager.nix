@@ -1,4 +1,8 @@
-{ config, ... }:
+{
+  config,
+  lib,
+  ...
+}:
 
 {
   services.prometheus = {
@@ -30,7 +34,7 @@
 
           routes = [
             {
-              receiver = "go-neb";
+              receiver = "matrix";
               group_wait = "30s";
               match.severity = "warning";
             }
@@ -42,11 +46,15 @@
             name = "ignore";
           }
           {
-            name = "go-neb";
+            name = "matrix";
             webhook_configs = [
               {
-                url = "${config.services.go-neb.baseUrl}:4050/services/hooks/YWxlcnRtYW5hZ2VyX3NlcnZpY2U";
+                url = "http://localhost:${toString config.services.matrix-alertmanager.port}/alerts";
                 send_resolved = true;
+                http_config.basic_auth = {
+                  username = "alertmanager";
+                  password_file = config.age.secrets."matrix-alertmanager-secret".path;
+                };
               }
             ];
           }
@@ -88,83 +96,33 @@
     };
   };
 
-  age.secrets.alertmanager-matrix-forwarder = {
-    file = ../../secrets/alertmanager-matrix-forwarder.age;
-    owner = config.systemd.services.go-neb.serviceConfig.User;
+  # access token
+  age.secrets."matrix-alertmanager-token".file = ../../secrets/matrix-alertmanager-token.age;
+  # webhook secret
+  age.secrets."matrix-alertmanager-secret" = {
+    file = ../../secrets/matrix-alertmanager-secret.age;
+    owner = "alertmanager";
   };
 
-  # Create user so that we can set the ownership of the key to
-  # it. DynamicUser will not take full effect as a result of this.
-  users.users.go-neb = {
-    isSystemUser = true;
-    group = "go-neb";
-  };
-  users.groups.go-neb = { };
-
-  systemd.services.go-neb.serviceConfig.SupplementaryGroups = [ "keys" ];
-
-  nixpkgs.config.permittedInsecurePackages = [ "olm-3.2.16" ];
-
-  services.go-neb = {
+  services.matrix-alertmanager = {
     enable = true;
-    bindAddress = "localhost:4050";
-    baseUrl = "http://localhost";
-    secretFile = config.age.secrets.alertmanager-matrix-forwarder.path;
-    config = {
-      clients = [
-        {
-          UserId = "@bot:nixos.org";
-          AccessToken = "$CHANGEME";
-          HomeServerUrl = "https://matrix.nixos.org";
-          Sync = true;
-          AutoJoinRooms = true;
-          DisplayName = "Bot";
-        }
-      ];
-      services = [
-        {
-          ID = "alertmanager_service";
-          Type = "alertmanager";
-          UserId = "@bot:nixos.org";
-          Config = {
-            webhook_url = "http://localhost:4050/services/hooks/YWxlcnRtYW5hZ2VyX3NlcnZpY2U";
-            rooms = {
-              # infra-alerts:nixos.org
-              "!QLQqibtFaVtDgurUAE:nixos.org" = {
-                text_template = ''
-                  {{range .Alerts -}} [{{ .Status }}] {{index .Labels "alertname" }}: {{index .Annotations "description"}} {{ end -}}
-                '';
+    tokenFile = config.age.secrets.matrix-alertmanager-token.path;
+    secretFile = config.age.secrets.matrix-alertmanager-secret.path;
+    homeserverUrl = "https://matrix.nixos.org";
+    matrixUser = "@bot:nixos.org";
+    matrixRooms = [
+      {
+        receivers = [ "matrix" ];
+        roomId = "!QLQqibtFaVtDgurUAE:nixos.org";
+      }
+    ];
+  };
 
-                # $$severity otherwise envsubst replaces $severity with an empty string
-                html_template = ''
-                  {{range .Alerts -}}
-                    {{ $$severity := index .Labels "severity" }}
-                    {{ if eq .Status "firing" }}
-                      {{ if eq $$severity "critical"}}
-                        <font color='red'><b>[FIRING - CRITICAL]</b></font>
-                      {{ else if eq $$severity "warning"}}
-                        <font color='orange'><b>[FIRING - WARNING]</b></font>
-                      {{ else }}
-                        <b>[FIRING - {{ $$severity }}]</b>
-                      {{ end }}
-                    {{ else }}
-                      <font color='green'><b>[RESOLVED]</b></font>
-                    {{ end }}
-                    {{ index .Labels "alertname"}}: {{ index .Annotations "summary"}}
-                    (
-                      {{ if .Annotations.grafana }}
-                        <a href="{{ index .Annotations "grafana" }}">📈 Grafana</a>,
-                      {{ end }}
-                      <a href="{{ .GeneratorURL }}">🔥 Prometheus</a>,
-                      <a href="{{ .SilenceURL }}">🔕 Silence</a>
-                    )<br/>
-                  {{end -}}'';
-                msg_type = "m.text"; # Must be either `m.text` or `m.notice`
-              };
-            };
-          };
-        }
-      ];
-    };
+  systemd.services.matrix-alertmanager.environment = {
+    ALERT_LINKS = lib.concatStringsSep "|" [
+      "📈 Grafana:{annotations.grafana}"
+      "🔥 Prometheus:{generatorURL}"
+      "🔕 Silence:https://alerts.nixos.org/#/silences/new?filter={labels.alertname}"
+    ];
   };
 }
