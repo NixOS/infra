@@ -54,6 +54,6 @@
     with (import ../../ssh-keys.nix);
     infra # maybe this isn't needed to add (again)?
     ++ [
-      brianmcgillion # experiments with the old Hydra's DB
+      brianmcgee # experiments with the old Hydra's DB
     ];
 }

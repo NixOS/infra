@@ -17,7 +17,7 @@ rec {
 
   jfly = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIImw0Xc1buEQ9WOskyGGeg3QwdbU7DTUQBiu02fObDlm jfly";
 
-  brianmcgillion = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBKHHl5kgMDNQA/zqK+AzT4SO09rfAp+y/EeUC+Ow5XqyNid5lm6sgLGM+AqZDx0jOrMKWhd5lhzGDdtsSf0Y8g4= brian@saturn";
+  brianmcgee = "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBKHHl5kgMDNQA/zqK+AzT4SO09rfAp+y/EeUC+Ow5XqyNid5lm6sgLGM+AqZDx0jOrMKWhd5lhzGDdtsSf0Y8g4= brian@saturn";
 
   infra-core = [
     hexa-gaia
