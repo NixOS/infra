@@ -16,12 +16,12 @@
     package =
       inputs.freescout.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs
         (_oldAttrs: rec {
-          version = "1.8.215";
+          version = "1.8.218";
           src = pkgs.fetchFromGitHub {
             owner = "freescout-helpdesk";
             repo = "freescout";
             tag = version;
-            hash = "sha256-YbHsLbUJ1fGH7ky7SYppss5w9d06IhHjzHXmsxijxD4=";
+            hash = "sha256-oLbsrlvsBkZ8oa2EuByJafItuG1n2MXPrt/noAXTt94=";
           };
         });
     domain = "freescout.nixos.org";
