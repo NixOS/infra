@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 
@@ -106,6 +107,11 @@
 
   services.matrix-alertmanager = {
     enable = true;
+    package = pkgs.matrix-alertmanager.overrideAttrs (oldAttrs: {
+      patches = oldAttrs.patches or [ ] ++ [
+        ./matrix-alertmanager-linkfix.patch
+      ];
+    });
     tokenFile = config.age.secrets.matrix-alertmanager-token.path;
     secretFile = config.age.secrets.matrix-alertmanager-secret.path;
     homeserverUrl = "https://matrix.nixos.org";
