@@ -83,8 +83,7 @@
     };
 
     nft-prefix-import = {
-      # https://github.com/mweinelt/nft-prefix-import/pull/2
-      url = "github:Mic92/nft-prefix-import/nft-stdin";
+      url = "github:mweinelt/nft-prefix-import";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
