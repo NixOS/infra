@@ -21,17 +21,23 @@ in
     ip saddr $prometheus_inet4 tcp dport { 9198, 9199 } accept
   '';
 
-  nix.package = config.services.hydra-dev.package.nix;
+  nix = {
+    package = config.services.hydra-dev.package.nix;
 
-  # garbage collection
-  nix.gc = {
-    automatic = true;
-    options = ''--max-freed "$((400 * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | ${pkgs.gawk}/bin/awk '{ print $4 }')))"'';
-    dates = "03,09,15,21:15";
+    settings = {
+      # gc outputs as well, since they are served from the cache
+      keep-outputs = lib.mkForce false;
+
+      # retry uploads (yes, uploads) harder; defaults to 5 otherwise
+      download-attempts = 32;
+    };
+
+    gc = {
+      automatic = true;
+      options = ''--max-freed "$((400 * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | ${pkgs.gawk}/bin/awk '{ print $4 }')))"'';
+      dates = "03,09,15,21:15";
+    };
   };
-
-  # gc outputs as well, since they are served from the cache
-  nix.settings.keep-outputs = lib.mkForce false;
 
   systemd.services.hydra-prune-build-logs = {
     description = "Clean up old build logs";
