@@ -7,10 +7,6 @@
 }:
 let
   narCache = "/var/cache/hydra/nar-cache";
-  localSystems = [
-    "builtin"
-    config.nixpkgs.hostPlatform.system
-  ];
 in
 {
   imports = [
@@ -69,11 +65,6 @@ in
     hydra-dev = {
       enable = true;
       package = pkgs.hydra;
-      buildMachinesFiles = [
-        (pkgs.writeText "local" ''
-          localhost ${lib.concatStringsSep "," localSystems} - 3 1 ${lib.concatStringsSep "," config.nix.settings.system-features} - -
-        '')
-      ];
       logo = ../../../build/hydra-logo.png;
       hydraURL = "https://hydra.nixos.org";
       notificationSender = "edolstra@gmail.com";
