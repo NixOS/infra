@@ -31,7 +31,7 @@ in
         ];
       };
 
-      root.openssh.authorizedKeys.keys = (import ../../ssh-keys.nix).infra-core;
+      root.openssh.authorizedKeys.keys = (import ../../keys.nix).ssh.groups.infra-core;
     };
   };
 }
