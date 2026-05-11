@@ -111,7 +111,7 @@ D("nixos.org",
 
 	A("sweeping-filly.mac", "142.132.141.35"),
 
-	AAAA("norwegian-blue.mac", "2a06:3a80:0:41:423:898a:1e16:3cf7"),
+	AAAA("norwegian-blue.mac", "2a06:3a80:0:41::9"),
 
 	// hydra staging area
 	A("staging-hydra", "130.236.254.207"),
