@@ -11,7 +11,7 @@
   time.timeZone = "UTC";
 
   systemd.services.openssh.enable = true;
-  users.users.root.openssh.authorizedKeys.keys = (import ../../ssh-keys.nix).infra;
+  users.users.root.openssh.authorizedKeys.keys = (import ../../keys.nix).ssh.groups.infra;
 
   environment.systemPackages = with pkgs; [ neovim ];
 

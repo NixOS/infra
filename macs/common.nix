@@ -70,7 +70,7 @@ in
   users.users.root.openssh.authorizedKeys.keys = [
     (authorizedNixStoreKey sshKeys.hydra-queue-runner)
   ]
-  ++ (import ../ssh-keys.nix).infra-core;
+  ++ (import ../keys.nix).ssh.groups.infra-core;
 
   system.activationScripts.postActivation.text = ''
     printf "disabling spotlight indexing... "
