@@ -317,20 +317,22 @@
         "nix-eval-jobs": "nix-eval-jobs",
         "nixpkgs": [
           "nixpkgs"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
         ]
       },
       "locked": {
-        "lastModified": 1773705119,
-        "narHash": "sha256-8pttLK/JQiUL6EXJfjBtBggiLw+769JdQGrpM7klXdg=",
+        "lastModified": 1777998324,
+        "narHash": "sha256-zVW/Qyd5FD+9DwbTolF4AE/pySKvPd2B9qRdhUP+lXY=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "a40d42862da88cce78a27dd594e1484a034aac4d",
+        "rev": "cf52793f44ba8ad15007c6e4c7f8b6593cb95e9b",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "a40d42862da88cce78a27dd594e1484a034aac4d",
         "type": "github"
       }
     },
