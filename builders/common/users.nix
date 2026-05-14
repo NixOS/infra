@@ -5,10 +5,6 @@
   ...
 }:
 let
-  sshKeys = {
-    hydra-queue-runner-rhea = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOdxl6gDS7h3oeBBja2RSBxeS51Kp44av8OAJPPJwuU/ hydra-queue-runner@rhea";
-  };
-
   authorizedNixStoreKey =
     key:
     let
@@ -17,6 +13,8 @@ let
       ];
     in
     "command=\"${environment} ${config.nix.package}/bin/nix-store --serve --write\" ${key}";
+
+  keys = import ../../keys.nix;
 in
 
 {
@@ -26,12 +24,10 @@ in
       build = {
         isNormalUser = true;
         uid = 2000;
-        openssh.authorizedKeys.keys = [
-          (authorizedNixStoreKey sshKeys.hydra-queue-runner-rhea)
-        ];
+        openssh.authorizedKeys.keys = map authorizedNixStoreKey keys.ssh.users.hydra-queue-runner;
       };
 
-      root.openssh.authorizedKeys.keys = (import ../../keys.nix).ssh.groups.infra-core;
+      root.openssh.authorizedKeys.keys = keys.ssh.groups.infra-core;
     };
   };
 }
