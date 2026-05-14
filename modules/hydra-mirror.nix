@@ -25,8 +25,8 @@ let
         if ! [[ -e $dir ]]; then
           git clone --bare https://github.com/NixOS/nixpkgs.git $dir
         fi
-        GIT_DIR=$dir git config credential.helper 'store --file=${config.age.secrets.hydra-mirror-git-credentials.path}'
         GIT_DIR=$dir git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
+        export GIT_SSH_COMMAND="ssh -i $CREDENTIALS_DIRECTORY/hydra-mirror-git-credentials -o IdentitiesOnly=yes"
 
         # FIXME: use IAM role.
         export AWS_ACCESS_KEY_ID=$(sed 's/aws_access_key_id=\(.*\)/\1/ ; t; d' ${config.age.secrets.hydra-mirror-aws-credentials.path})
@@ -39,6 +39,9 @@ let
         User = "hydra-mirror";
         # Allow the unit to use 80% of the system's RAM and 100% of the system's swap
         MemoryHigh = "80%";
+        LoadCredential = [
+          "hydra-mirror-git-credentials:${config.age.secrets.hydra-mirror-git-credentials.path}"
+        ];
       };
       unitConfig = {
         After = [ "networking.target" ];
@@ -60,7 +63,6 @@ in
 
   age.secrets.hydra-mirror-git-credentials = {
     file = ../build/secrets/hydra-mirror-git-credentials.age;
-    owner = "hydra-mirror";
   };
 
   users.users.hydra-mirror = {
