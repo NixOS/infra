@@ -22,11 +22,12 @@ let
       script = ''
         # Hardcoded in channel scripts.
         dir=/home/hydra-mirror/nixpkgs-channels
+
+        export GIT_SSH_COMMAND="ssh -i $CREDENTIALS_DIRECTORY/hydra-mirror-git-credentials -o IdentitiesOnly=yes"
         if ! [[ -e $dir ]]; then
-          git clone --bare https://github.com/NixOS/nixpkgs.git $dir
+          git clone --bare git@github.com:NixOS/nixpkgs.git $dir
         fi
         GIT_DIR=$dir git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
-        export GIT_SSH_COMMAND="ssh -i $CREDENTIALS_DIRECTORY/hydra-mirror-git-credentials -o IdentitiesOnly=yes"
 
         # FIXME: use IAM role.
         export AWS_ACCESS_KEY_ID=$(sed 's/aws_access_key_id=\(.*\)/\1/ ; t; d' ${config.age.secrets.hydra-mirror-aws-credentials.path})
