@@ -1,5 +1,5 @@
 {
   imports = [
-    ../minimal.nix
+    ../bootstrap.nix
   ];
 }

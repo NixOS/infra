@@ -1,6 +1,6 @@
 {
   imports = [
-    ../common.nix
+    ../production.nix
   ];
 
   # 8 Cores, 16 GB RAM, 256 GB Disk

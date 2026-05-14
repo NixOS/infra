@@ -19,6 +19,8 @@
                 # the name that propagates into the MDM
                 computerName = hostname;
               };
+
+              system.stateVersion = 5;
             }
             entrypoint
           ];
