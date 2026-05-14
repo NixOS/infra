@@ -104,4 +104,12 @@ in
     serviceConfig.StandardErrorPath = "/var/log/uuidtext-gc.log";
     serviceConfig.StandardOutPath = "/var/log/uuidtext-gc.log";
   };
+
+  # Regularly kill fseventsd to reclaim excessively leaked memory/swap
+  launchd.daemons.fseventsd-reclaim = {
+    script = ''
+      killall -9 fseventsd
+    '';
+    serviceConfig.StartInterval = 3600;
+  };
 }
