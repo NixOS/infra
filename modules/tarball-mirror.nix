@@ -57,7 +57,6 @@ in
       cd $dir
       git remote update origin
       git checkout -f origin/${branch}
-      git apply ${./tarball-mirror.patch}
       # FIXME: use IAM role.
       export AWS_ACCESS_KEY_ID=$(sed 's/aws_access_key_id=\(.*\)/\1/ ; t; d' ${config.age.secrets.tarball-mirror-aws-credentials.path})
       export AWS_SECRET_ACCESS_KEY=$(sed 's/aws_secret_access_key=\(.*\)/\1/ ; t; d' ${config.age.secrets.tarball-mirror-aws-credentials.path})
