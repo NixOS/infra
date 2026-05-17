@@ -48,6 +48,23 @@ offer a great admin experience with ad-hoc KVM access in the browser.
 - eager-heisenberg.mac.nixos.org
 - kind-lumiere.mac.nixos.org
 
+### Macstadium
+
+Two M1 Mac Mini with 8 GB RAM and 256 GB disk and three x86_64 Macs with 32 GB
+RAM and 500 gb disk are sponsored by [Macstadium](https://macstadium.com/).
+
+These machines are x86_64-darwin hosts and will be retired once NixOS 26.05
+reache end of life. We have reached out to Macstadium to get them replaced.
+
+- mac01.ofborg.org
+- mac02.ofborg.org
+- mac03.ofborg.org
+
+These machine are aarch64-darwin hosts.
+
+- mac04.ofborg.org
+- mac05.ofborg.org
+
 ## Install
 
 - Login to user hetzner with the given password
