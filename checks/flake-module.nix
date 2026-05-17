@@ -6,8 +6,9 @@
   # forcing evaluation of every configuration just to learn its system.
   flake.ciSystems =
     let
-      nixos = names: lib.genAttrs names (n: self.nixosConfigurations.${n}.config.system.build.toplevel);
-      darwin = names: lib.genAttrs names (n: self.darwinConfigurations.${n}.config.system.build.toplevel);
+      nixos = names: lib.genAttrs names (n: self.nixosConfigurations."${n}".config.system.build.toplevel);
+      darwin =
+        names: lib.genAttrs names (n: self.darwinConfigurations."${n}".config.system.build.toplevel);
     in
     {
       ofborg-x86_64-linux = nixos [
@@ -25,13 +26,13 @@
         "build05.ofborg.org"
       ];
       ofborg-aarch64-darwin = darwin [
-        "nixos-foundation-macstadium-44911207"
-        "nixos-foundation-macstadium-44911104"
+        "mac04.ofborg.org"
+        "mac05.ofborg.org"
       ];
       ofborg-x86_64-darwin = darwin [
-        "nixos-foundation-macstadium-44911305"
-        "nixos-foundation-macstadium-44911362"
-        "nixos-foundation-macstadium-44911507"
+        "mac01.ofborg.org"
+        "mac02.ofborg.org"
+        "mac03.ofborg.org"
       ];
     };
 
