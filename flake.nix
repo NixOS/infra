@@ -106,6 +106,19 @@
       url = "github:nix-community/nixpkgs-swh";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    ofborg = {
+      # FIXME: switch back to NixOS/ofborg once merged:
+      # https://github.com/NixOS/ofborg/pull/738
+      url = "github:Mic92/ofborg/drop-clippy-from-build";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    ofborg-viewer = {
+      url = "github:NixOS/ofborg-viewer";
+      flake = false;
+    };
+
   };
   outputs =
     inputs@{ flake-parts, ... }:
