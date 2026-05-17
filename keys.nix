@@ -42,12 +42,22 @@ rec {
       brianmcgee = [
         "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBKHHl5kgMDNQA/zqK+AzT4SO09rfAp+y/EeUC+Ow5XqyNid5lm6sgLGM+AqZDx0jOrMKWhd5lhzGDdtsSf0Y8g4= brian@saturn"
       ];
+
+      janne = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM35Bq87SBWrEcoDqrZFOXyAmV/PJrSSu3hl3TdVvo4C janne"
+      ];
+
+      conni2461 = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPK/3rYhlIzoPCsPK38PMdK1ivqPaJgUqWwRtmxdKZrO ✏️"
+      ];
     };
 
     groups = with ssh.users; {
       infra-core = arianvp ++ hexa ++ mic92 ++ vcunat;
 
       infra = ssh.groups.infra-core ++ jfly;
+
+      ofborg = ssh.groups.infra-core ++ janne ++ conni2461;
     };
 
     machines = {

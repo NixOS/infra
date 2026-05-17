@@ -6,8 +6,9 @@
   # forcing evaluation of every configuration just to learn its system.
   flake.ciSystems =
     let
-      nixos = names: lib.genAttrs names (n: self.nixosConfigurations.${n}.config.system.build.toplevel);
-      darwin = names: lib.genAttrs names (n: self.darwinConfigurations.${n}.config.system.build.toplevel);
+      nixos = names: lib.genAttrs names (n: self.nixosConfigurations."${n}".config.system.build.toplevel);
+      darwin =
+        names: lib.genAttrs names (n: self.darwinConfigurations."${n}".config.system.build.toplevel);
     in
     {
       ofborg-x86_64-linux = nixos [
