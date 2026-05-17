@@ -88,7 +88,7 @@ in
     enable_google_login = 1
     google_client_id = 816926039128-ia4s4rsqrq998rsevce7i09mo6a4nffg.apps.googleusercontent.com
 
-    github_client_id = b022c64ce4531ffc1031
+    github_client_id = Ov23liat892hkVARixsT
     github_client_secret_file = ${config.age.secrets.hydra-github-client-secret.path}
 
     store_uri = s3://nix-cache?secret-key=/var/lib/hydra/queue-runner/keys/cache.nixos.org-1/secret&write-nar-listing=1&ls-compression=br&log-compression=br&index-debug-info=true
