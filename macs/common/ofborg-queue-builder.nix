@@ -1,6 +1,7 @@
 {
   config,
   inputs,
+  lib,
   ...
 }:
 
@@ -25,4 +26,6 @@
     owner = "hydra-queue-builder";
     sopsFile = ../secrets/${config.networking.hostName}.yml;
   };
+
+  users.users.hydra-queue-builder.home = lib.mkForce "/private/var/lib/hydra-queue-builder";
 }
