@@ -22,7 +22,7 @@ in
     queueRunnerAddr = "https://queue-runner.staging-hydra.nixos.org";
     maxJobs = 2;
     mtls = {
-      serverRootCaCertPath = ../../hosts/staging-hydra/ca.crt;
+      serverRootCaCertPath = "${../../hosts/staging-hydra/ca.crt}";
       clientCertPath = "${../../hosts/${nodePath}/client.crt}";
       clientKeyPath = config.sops.secrets."queue-runner-client.key".path;
       domainName = "queue-runner.staging-hydra.nixos.org";
