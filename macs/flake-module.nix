@@ -2,6 +2,7 @@
 {
   flake.darwinConfigurations =
     let
+      lib = inputs.nixpkgs.legacyPackages.aarch64-darwin.lib;
       mkNixDarwin =
         hostname: entrypoint: args:
         inputs.darwin.lib.darwinSystem {
@@ -68,7 +69,10 @@
       # M1 8C, 16G, 256M (Macstadium)
       nixos-foundation-macstadium-44911207 = mkNixDarwin "mac04.ofborg.org" ./profiles/ofborg-m1.nix {
         extraModules = [
-          { networking.hostName = "nixos-foundation-macstadium-44911207"; }
+          {
+            networking.hostName = "nixos-foundation-macstadium-44911207";
+            ids.gids.nixbld = lib.mkForce 350;
+          }
         ];
       };
       nixos-foundation-macstadium-44911104 = mkNixDarwin "mac05.ofborg.org" ./profiles/ofborg-m1.nix {
