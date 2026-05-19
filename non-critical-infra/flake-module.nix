@@ -10,16 +10,16 @@
     staging-hydra = { };
 
     # ofborg
-    "core01.ofborg.org".targetHost = "138.199.148.47";
-    "eval01.ofborg.org".targetHost = "95.217.15.9";
-    "eval02.ofborg.org".targetHost = "95.216.209.162";
-    "eval03.ofborg.org".targetHost = "37.27.189.4";
-    "eval04.ofborg.org".targetHost = "95.217.18.12";
-    "build01.ofborg.org".targetHost = "185.119.168.10";
-    "build02.ofborg.org".targetHost = "185.119.168.11";
-    "build03.ofborg.org".targetHost = "185.119.168.12";
-    "build04.ofborg.org".targetHost = "185.119.168.13";
-    "build05.ofborg.org".targetHost = "142.132.171.106";
+    "core01.ofborg.org".targetHost = "core01.ofborg.org";
+    "eval01.ofborg.org".targetHost = "eval01.ofborg.org";
+    "eval02.ofborg.org".targetHost = "eval02.ofborg.org";
+    "eval03.ofborg.org".targetHost = "eval03.ofborg.org";
+    "eval04.ofborg.org".targetHost = "eval04.ofborg.org";
+    "build01.ofborg.org".targetHost = "build01.ofborg.org";
+    "build02.ofborg.org".targetHost = "build02.ofborg.org";
+    "build03.ofborg.org".targetHost = "build03.ofborg.org";
+    "build04.ofborg.org".targetHost = "build04.ofborg.org";
+    "build05.ofborg.org".targetHost = "build05.ofborg.org";
   };
   flake =
     let
