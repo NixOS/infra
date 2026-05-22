@@ -3,6 +3,7 @@
   imports = [
     inputs.srvos.nixosModules.server
     ../../../modules/common.nix
+    ../../../modules/nspawn-test-containers.nix
     ../common.nix
     ./ofborg-config.nix
   ];
