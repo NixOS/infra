@@ -17,7 +17,6 @@
             ./common/network.nix
             ./common/nix.nix
             ./common/node-exporter.nix
-            ./common/nspawn-test-containers.nix
             ./common/hydra-queue-builder.nix
             ./common/system.nix
             ./common/tools.nix
@@ -26,6 +25,7 @@
             ./common/ssh.nix
 
             ../modules/rasdaemon.nix
+            ../modules/nspawn-test-containers.nix
 
             config
           ];
