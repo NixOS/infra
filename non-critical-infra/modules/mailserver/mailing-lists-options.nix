@@ -123,9 +123,9 @@ in
 
     sops.templates."postfix-virtual-mailing-lists" = {
       content = lib.concatStringsSep "\n" (
-        lib.mapAttrsToList (
-          name: members: "${name} ${lib.concatStringsSep ", " members}"
-        ) listsWithSecretPlaceholders
+        lib.mapAttrsToList (name: members: "${name} ${lib.concatStringsSep ", " members}") (
+          lib.filterAttrs (_name: members: builtins.length members > 0) listsWithSecretPlaceholders
+        )
       );
 
       # Need to restart postfix-setup to rerun `postmap` and generate updated `.db`
