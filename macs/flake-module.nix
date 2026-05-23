@@ -77,7 +77,10 @@
       };
       nixos-foundation-macstadium-44911104 = mkNixDarwin "mac05.ofborg.org" ./profiles/ofborg-m1.nix {
         extraModules = [
-          { networking.hostName = "nixos-foundation-macstadium-44911104"; }
+          {
+            networking.hostName = "nixos-foundation-macstadium-44911104";
+            ids.gids.nixbld = lib.mkForce 350;
+          }
         ];
       };
     };
