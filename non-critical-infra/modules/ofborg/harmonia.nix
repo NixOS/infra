@@ -38,7 +38,7 @@ let
   allOtherNodes = lib.filterAttrs (n: _: n != config.networking.hostName) nodes;
 in
 {
-  services.harmonia = {
+  services.harmonia.cache = {
     enable = true;
     signKeyPaths = [ "/run/secrets/harmonia/secret" ];
     settings = {
