@@ -14,6 +14,11 @@
     keyPath = "/run/opendkim-keys";
   };
 
+  # Permitted as long as we're only signing and not validating
+  nixpkgs.config.permittedInsecurePackages = [
+    "opendkim-2.11.0-Beta2"
+  ];
+
   systemd.services.opendkim.serviceConfig = {
     ExecStartPre = [
       "+${pkgs.writeShellScript "opendkim-keys" ''
