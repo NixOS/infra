@@ -87,4 +87,6 @@
   };
 
   services.zfs.autoScrub.enable = true;
+
+  boot.zfs.forceImportRoot = false;
 }

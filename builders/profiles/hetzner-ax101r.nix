@@ -11,6 +11,7 @@
 
   disko.devices = import ../disk-layouts/efi-zfs-raid0.nix { };
   boot.supportedFilesystems.zfs = true;
+  boot.zfs.forceImportRoot = false;
   networking.hostId = "91312b0a";
 
   fileSystems."/nix/var/nix/builds" = {
