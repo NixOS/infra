@@ -15,13 +15,23 @@
   # enabled through systemd.network.enable
   services.resolved.enable = false;
 
+  services.nginx = {
+    enable = true;
+    virtualHosts.${config.mailserver.fqdn} = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/".return = "204";
+    };
+  };
+
   mailserver = {
     enable = true;
     enableImap = false;
     stateVersion = 3;
-    certificateScheme = "acme-nginx";
 
     fqdn = config.networking.fqdn;
+
+    x509.useACMEHost = config.mailserver.fqdn;
 
     domains = [
       "nixcon.org"
@@ -32,7 +42,7 @@
   };
 
   # https://nixos-mailserver.readthedocs.io/en/latest/backup-guide.html
-  services.backup.includes = [ config.mailserver.mailDirectory ];
+  services.backup.includes = [ config.mailserver.storage.path ];
 
   sops.secrets."nixos.org.mail.key" = {
     format = "binary";

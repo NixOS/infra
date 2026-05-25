@@ -72,7 +72,7 @@
 
   services.resolved = {
     enable = true;
-    fallbackDns = [
+    settings.Resolve.FallbackDNS = [
       # https://docs.hetzner.com/de/dns-console/dns/general/recursive-name-servers/
       "185.12.64.1"
       "185.12.64.2"
@@ -87,4 +87,6 @@
   };
 
   services.zfs.autoScrub.enable = true;
+
+  boot.zfs.forceImportRoot = false;
 }

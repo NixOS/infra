@@ -7,6 +7,7 @@
   ];
 
   boot.initrd.systemd.enable = true;
+  boot.zfs.forceImportRoot = false;
 
   time.timeZone = "UTC";
 

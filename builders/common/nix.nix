@@ -25,7 +25,6 @@
       builders-use-substitutes = true;
       extra-experimental-features = [
         "nix-command"
-        "no-url-literals"
         "flakes"
       ];
       system-features = [
