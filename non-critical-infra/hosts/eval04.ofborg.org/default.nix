@@ -49,7 +49,6 @@
       sopsFile = ../../secrets/ofborg.eval04.ofborg.org.yml;
     };
     "harmonia/secret" = {
-      owner = "harmonia";
       restartUnits = [ "harmonia.service" ];
       sopsFile = ../../secrets/ofborg.eval04.ofborg.org.yml;
     };
