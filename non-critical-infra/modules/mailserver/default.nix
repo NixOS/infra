@@ -42,7 +42,7 @@
   };
 
   # https://nixos-mailserver.readthedocs.io/en/latest/backup-guide.html
-  services.backup.includes = [ config.mailserver.mailDirectory ];
+  services.backup.includes = [ config.mailserver.storage.path ];
 
   sops.secrets."nixos.org.mail.key" = {
     format = "binary";

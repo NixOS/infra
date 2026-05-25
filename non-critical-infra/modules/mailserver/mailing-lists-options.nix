@@ -87,7 +87,7 @@ in
       message = "Mailing list '${name}' must have either forwardTo addresses or a loginAccount configured";
     }) config.mailing-lists;
 
-    mailserver.loginAccounts = lib.pipe config.mailing-lists [
+    mailserver.accounts = lib.pipe config.mailing-lists [
       (lib.filterAttrs (_name: mailingList: mailingList.loginAccount != null))
       (lib.mapAttrs (
         _name: mailingList: {
