@@ -67,7 +67,7 @@
 
     # Ensure the file gets symlinked to where Simple NixOS Mailserver expects
     # to find it.
-    path = "${config.mailserver.dkimKeyDirectory}/nixos.org.mail.key";
+    path = "${config.mailserver.dkim.keyDirectory}/nixos.org.mail.key";
   };
 
   sops.secrets."nixcon.org.mail.key" = {
@@ -76,7 +76,7 @@
     group = "rspamd";
     mode = "0600";
     sopsFile = ../../secrets/nixcon.org.mail.key.umbriel;
-    path = "${config.mailserver.dkimKeyDirectory}/nixcon.org.mail.key";
+    path = "${config.mailserver.dkim.keyDirectory}/nixcon.org.mail.key";
   };
 
   services.postfix.settings.main.bounce_template_file = "${pkgs.writeText "bounce-template.cf" ''
