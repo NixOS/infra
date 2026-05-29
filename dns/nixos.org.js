@@ -146,6 +146,16 @@ D("nixos.org",
 	AAAA("umbriel", "2a01:4f9:c011:8fb5::1"),
 	// See `nixos.org.mail.key` in `non-critical-infra/modules/mailserver/default.nix`.
 	TXT("mail._domainkey", "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDcgNq4+Y23GxN8Mdza437tL5DuJJZU1y6VzTCwSi6cBNLyBDci2cmqXx/gm1sA3yv7+h+8/OyJpEgcbCIW/Ygs1XLuECqvXVX8MU6Djn4KY+d2sU1tlUdqvNM86puoneQtjEv9rDsjf3HGqaeOcjetFnQW7H+qcNcaEShxyKztzQIDAQAB"),
+	DKIM_BUILDER({
+		selector: "r202605",
+		keytype: "rsa",
+		pubkey: "p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsMhbyIflWa1rx2eaK23vdo1HxQU+CVT8bKfBaRXFIXk51ihrzutyAN0CH8aXUHoiR3MAeDVHE8ftXXh6exrZut9aXZSvBFQBziWJRvVOM9V6oIQqIFSWeac/4rkoWIpvwwaJpc0YBTxosRjnD0C0J9lFWDpuHd6vpXxdZg/YgM7EADP5A4Dlnv3GHxmDvtRK90M20XVBNiCiYVF+9hgncjIhY5B3Nc8n2vZr01aKNPNkYU5CYc7hlmQHyZQqhg1SjmWUex9Uf85WyEGgT4yJV1b0X11tYQHD0h072uNAxpz8dYgII5J46OteQmOmwGh2WqLOa0Vwt5LtAdwIN7BtDQIDAQAB"
+	}),
+	DKIM_BUILDER({
+		selector: "e202605",
+		keytype: "ed25519",
+		pubkey: "p=SEawMqEG+q0WauDF9Noe3xSqVuBZqmEBgmStaxpNFHE="
+	}),
 	CNAME("freescout", "umbriel.nixos.org."),
 
 	// ngi
