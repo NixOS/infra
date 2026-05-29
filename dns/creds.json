@@ -1,6 +1,7 @@
 {
   "gandi": {
     "TYPE": "GANDI_V5",
-    "token": "$GANDI_TOKEN"
+    "token": "$GANDI_TOKEN",
+    "sharing_id": "$GANDI_SHARING_ID"
   }
 }

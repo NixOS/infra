@@ -1,6 +1,7 @@
 {
   inputs,
   config,
+  lib,
   pkgs,
   ...
 }:
@@ -37,6 +38,26 @@
       "nixcon.org"
       "nixos.org"
     ];
+
+    dkim.domains =
+      let
+        selectors = {
+          "mail" = {
+            # legacy managed key
+          };
+          "r202605" = {
+            keyType = "rsa";
+            keyLength = 2048;
+          };
+          "e202605" = {
+            keyType = "ed25519";
+            keyLength = null;
+          };
+        };
+      in
+      lib.genAttrs config.mailserver.domains (_: {
+        inherit selectors;
+      });
 
     srs.enable = true;
   };

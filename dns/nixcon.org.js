@@ -23,6 +23,16 @@ D("nixcon.org",
 	}),
 	// Matching private key in `non-critical-infra/secrets/nixcon.org.mail.key.umbriel`
 	TXT("mail._domainkey", "p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC1wQ2uPZfdlGmjDDxeNVet7IEFxS55TpWuqQWNKmd4fX8HcKKw7kVHXU5+gjT37wMUI27ZZnIobYhumnl+BLiXZqbuzAt7s3dbJU2de2ZWxOqcDRbK6m2A3AwIAiMzzRUjx14EWgnw55KRi2enpLyS0pKGdvSquHnxaySkAF8YIwIDAQAB"),
+	DKIM_BUILDER({
+		selector: "r202605",
+		keytype: "rsa",
+		pubkey: "p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkF4Z/6jTCOi1OcVduYoa9MMqW3XeV7vtZGAHDiHU2teCFiC4qZpJ4Ry7f0/gJw6WHh1zKc83AZTxsA82tBzfIUXrr1tGUh6DX8RmhKPzDtbaXZAmRYb9o0CAtIqzUFrVfz8oyCzHF13aaZGztgZBOOjCGECxcKd4KC+u0XAeRFfLc6zf4j6GQ4qTQ3aJoiIl0WUbbDl8VVGYjgd7SA/necpVXYf9LD/KNtumH4IS1oU1tGjsVrqPv9+Hbl4yi325ExMsbYK9sj4HhjcdtT4p9NlH/ZmaTTW3pEm1wZ8Fw+J3UVcB/Nxi1N1HFrdsnyoGhfMnz1z9Xtpdj/ANZtTTFwIDAQAB"
+	}),
+	DKIM_BUILDER({
+		selector: "e202605",
+		keytype: "ed25519",
+		pubkey: "p=SEawMqEG+q0WauDF9Noe3xSqVuBZqmEBgmStaxpNFHE="
+	}),
 	DMARC_BUILDER({
 		policy: "none",
 	}),
