@@ -22,7 +22,8 @@ jobs:
       - uses: cachix/install-nix-action@8aa03977d8d733052d78f4e008a241fd1dbf36b3 # v31
       - name: dnscontrol preview
         env:
-          GANDI_TOKEN: "${{ secrets.GANDI_TOKEN }}" # Expires 2026-04-07
+          GANDI_TOKEN: "${{ secrets.GANDI_TOKEN }}" # Expires 2027-05-29
+          GANDI_SHARING_ID: "${{ secrets.GANDI_SHARING_ID }}"
         working-directory: ./dns/
         run: |
           nix run --inputs-from . nixpkgs#dnscontrol -- preview
