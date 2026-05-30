@@ -19,6 +19,7 @@
     ../../modules/matrix-synapse.nix
     ../../modules/owncast.nix
     ../../modules/vaultwarden.nix
+    ../../modules/docuseal.nix
     ./nixpkgs-swh.nix
   ];
 

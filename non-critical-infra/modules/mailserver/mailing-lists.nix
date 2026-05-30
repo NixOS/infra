@@ -22,6 +22,13 @@
       ];
     };
 
+    "docuseal-noreply@nixos.org" = {
+      loginAccount = {
+        encryptedHashedPassword = ../../secrets/docuseal-noreply-email-login.umbriel;
+        storeEmail = false;
+      };
+    };
+
     "finance@nixos.org" = {
       loginAccount = {
         encryptedHashedPassword = ../../secrets/finance-email-login.umbriel;
