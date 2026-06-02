@@ -383,16 +383,16 @@
     "nix": {
       "flake": false,
       "locked": {
-        "lastModified": 1779318684,
-        "narHash": "sha256-zj8d2tTd3DGiVKMMjuIUpMODgjJfxWP4hkQ8bdhHQYk=",
-        "owner": "NixOS",
+        "lastModified": 1780338454,
+        "narHash": "sha256-F8ffRCTXLyhd2/dUfj/2JagvX3vPBiM6esHZN42wHI0=",
+        "owner": "tomberek",
         "repo": "nix",
-        "rev": "8294f1c1fda17f87e65723ac9348395d2f07513c",
+        "rev": "40326d5fed987ca048c383d9de9596d7644c5f10",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "2.34-maintenance",
+        "owner": "tomberek",
+        "ref": "backport-15855-to-2.34-maintenance",
         "repo": "nix",
         "type": "github"
       }

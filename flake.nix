@@ -13,7 +13,9 @@
     };
 
     nix = {
-      url = "github:NixOS/nix/2.34-maintenance";
+      #url = "github:NixOS/nix/2.34-maintenance";
+      # TMP S3 upload abortions: https://github.com/NixOS/nix/pull/15949
+      url = "github:tomberek/nix/backport-15855-to-2.34-maintenance";
       flake = false;
     };
 
