@@ -164,7 +164,6 @@
     "security@nixos.org" = {
       forwardTo = [
         ../../secrets/mweinelt-email-address.umbriel # https://github.com/mweinelt
-        ../../secrets/risicle-email-address.umbriel # https://github.com/risicle
         ../../secrets/LeSuisse-email-address.umbriel # https://github.com/LeSuisse
       ];
     };
