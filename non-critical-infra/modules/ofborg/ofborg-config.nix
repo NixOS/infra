@@ -89,6 +89,7 @@ in
     };
   };
 
-  nix.settings.trusted-users = lib.mkForce [ "*" ];
-  nix.settings.allowed-users = lib.mkForce [ "*" ];
+  nix.settings.trusted-users = [
+    "ofborg-builder"
+  ];
 }
