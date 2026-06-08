@@ -9,7 +9,6 @@ in
 {
   config,
   pkgs,
-  lib,
   ...
 }:
 {
