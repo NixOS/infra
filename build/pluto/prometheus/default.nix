@@ -7,6 +7,7 @@
     ./exporters/blackbox.nix
     ./exporters/channel.nix
     ./exporters/domain.nix
+    ./exporters/elasticsearch.nix
     ./exporters/fastly.nix
     ./exporters/github.nix
     ./exporters/hydra.nix

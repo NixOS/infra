@@ -4,6 +4,7 @@ let
   secrets = with keys.ssh.machines; {
     alertmanager-matrix-forwarder = [ pluto ];
     alertmanager-oauth2-proxy-env = [ pluto ];
+    elasticsearch-exporter-env = [ pluto ];
     fastly-exporter-env = [ pluto ];
     grafana-secret-key = [ pluto ];
     hydra-aws-credentials = [ mimas ];
