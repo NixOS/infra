@@ -111,12 +111,13 @@ in
         value = {
           format = "binary";
           sopsFile = file;
-          # Need to restart `dovecot2.service` to trigger `genPasswdScript` in
+          # Need to restart `dovecot.service` to trigger `genPasswdScript` in
           # `nixos-mailserver`:
           # https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/blob/af7d3bf5daeba3fc28089b015c0dd43f06b176f2/mail-server/dovecot.nix#L369
           # This could go away if sops-nix gets support for "input addressed secret
           # paths": https://github.com/Mic92/sops-nix/issues/648
-          restartUnits = [ "dovecot2.service" ];
+          # Note: NixOS 26.05 renamed dovecot2.service to dovecot.
+          restartUnits = [ "dovecot.service" ];
         };
       }) secretPasswordFiles)
     );
