@@ -26,6 +26,8 @@
     # Required for presigned uploads: builders fetch dependencies via
     # substitution and upload results to s3 directly.
     useSubstitutes = true;
+    # Align this with what our GC settings
+    storeAvailThreshold = 5.0;
   };
 
   nix.settings.trusted-users = [ "hydra-queue-builder" ];
