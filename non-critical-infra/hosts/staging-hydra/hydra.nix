@@ -10,8 +10,8 @@ let
 in
 {
   imports = [
-    inputs.hydra-staging.nixosModules.web-app
-    inputs.hydra-staging.nixosModules.queue-runner
+    inputs.hydra.nixosModules.web-app
+    inputs.hydra.nixosModules.queue-runner
   ];
 
   networking.firewall.allowedTCPPorts = [
@@ -73,7 +73,7 @@ in
       extraConfig = ''
         max_servers 30
 
-        store_uri = s3://nix-cache-staging?secret-key=${config.sops.secrets.signing-key.path}&ls-compression=br&log-compression=br
+        store_uri = s3://nix-cache-staging?secret-key=${config.sops.secrets.signing-key.path}&compression=zstd&ls-compression=zstd&log-compression=zstd
         server_store_uri = https://cache-staging.nixos.org?local-nar-cache=${narCache}
         binary_cache_public_uri = https://cache-staging.nixos.org
 
@@ -118,10 +118,12 @@ in
       enable = true;
       awsCredentialsFile = config.sops.secrets.hydra-aws-credentials.path;
       settings = {
+        stepSortFn = "WithCriticalPath";
+        usePresignedUploads = true;
         queueTriggerTimerInS = 300;
         concurrentUploadLimit = 2;
         remoteStoreAddr = [
-          "s3://nix-cache-staging?secret-key=${config.sops.secrets.signing-key.path}&ls-compression=br&log-compression=br"
+          "s3://nix-cache-staging?secret-key=${config.sops.secrets.signing-key.path}&compression=zstd&ls-compression=zstd&log-compression=zstd"
         ];
       };
     };

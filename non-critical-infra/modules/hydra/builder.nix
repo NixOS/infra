@@ -14,13 +14,16 @@ let
 in
 {
   imports = [
-    inputs.hydra-staging.nixosModules.builder
+    inputs.hydra.nixosModules.builder
   ];
 
   services.hydra-queue-builder-dev = {
     enable = true;
     queueRunnerAddr = "https://queue-runner.staging-hydra.nixos.org";
     maxJobs = 2;
+    # Required for presigned uploads: builders fetch dependencies via
+    # substitution and upload results to s3 directly.
+    useSubstitutes = true;
     mtls = {
       serverRootCaCertPath = "${../../hosts/staging-hydra/ca.crt}";
       clientCertPath = "${../../hosts/${nodePath}/client.crt}";

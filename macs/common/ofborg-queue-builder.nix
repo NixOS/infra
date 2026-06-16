@@ -7,7 +7,7 @@
 
 {
   imports = [
-    inputs.hydra-staging.darwinModules.builder
+    inputs.hydra.darwinModules.builder
   ];
 
   services.hydra-queue-builder-dev = {

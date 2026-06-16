@@ -7,7 +7,7 @@
 
 {
   imports = [
-    inputs.hydra-staging.nixosModules.builder
+    inputs.hydra.nixosModules.builder
   ];
 
   config = lib.mkIf false {
