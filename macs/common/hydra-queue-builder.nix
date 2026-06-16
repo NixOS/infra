@@ -25,4 +25,6 @@
     # substitution and upload results to s3 directly.
     useSubstitutes = true;
   };
+
+  nix.settings.trusted-users = [ "hydra-queue-builder" ];
 }
