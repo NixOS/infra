@@ -146,14 +146,27 @@ in
     after = [
       "network-online.target"
     ];
+    serviceConfig = {
+      Restart = "on-failure";
+      RestartSec = "5s";
+    };
   };
 
   # eats memory as if it was free
   systemd.services.hydra-notify.enable = false;
 
+  systemd.services.hydra-server = {
+    bindsTo = [ "hydra-init.service" ];
+  };
+
+  systemd.services.hydra-evaluator = {
+    bindsTo = [ "hydra-init.service" ];
+  };
+
   systemd.services.hydra-queue-runner = {
     # restarting the scheduler is very expensive
     restartIfChanged = false;
+    bindsTo = [ "hydra-init.service" ];
     serviceConfig = {
       ManagedOOMPreference = "avoid";
       LimitNOFILE = 65535;

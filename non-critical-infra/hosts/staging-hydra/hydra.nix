@@ -183,6 +183,21 @@ in
 
     # eats memory as if it was free
     services = {
+      hydra-init = {
+        serviceConfig = {
+          Restart = "on-failure";
+          RestartSec = "5s";
+        };
+      };
+
+      hydra-server = {
+        bindsTo = [ "hydra-init.service" ];
+      };
+
+      hydra-evaluator = {
+        bindsTo = [ "hydra-init.service" ];
+      };
+
       hydra-notify.enable = false;
       hydra-queue-runner = {
         enable = false;
