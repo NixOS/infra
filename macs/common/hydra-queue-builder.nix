@@ -16,6 +16,8 @@
     owner = "hydra-queue-builder";
   };
 
+  users.users.hydra-queue-builder.home = lib.mkForce "/private/var/lib/hydra-queue-builder";
+
   services.hydra-queue-builder-dev = {
     enable = true;
     queueRunnerAddr = "https://queue-runner.hydra.nixos.org";
