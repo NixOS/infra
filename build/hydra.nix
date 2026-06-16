@@ -15,10 +15,10 @@ in
     inputs.hydra.nixosModules.hydra
   ];
 
-  # queue-runner and hydra-notify metrics
+  # hydra-notify metrics
   networking.firewall.extraInputRules = ''
-    ip6 saddr $prometheus_inet6 tcp dport { 9198, 9199 } accept
-    ip saddr $prometheus_inet4 tcp dport { 9198, 9199 } accept
+    ip6 saddr $prometheus_inet6 tcp dport 9199 accept
+    ip saddr $prometheus_inet4 tcp dport 9199 accept
   '';
 
   nix = {
@@ -115,8 +115,6 @@ in
 
     max_output_size = 4294967295 # 4 GiB - 1 B
     max_db_connections = 350
-
-    queue_runner_metrics_address = [::]:9198
 
     <hydra_notify>
       <prometheus>
