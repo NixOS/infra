@@ -44,6 +44,11 @@ in
       enableACME = true;
       forceSSL = true;
 
+      # Expose the queue runner's prometheus metrics from its REST listener,
+      # which is otherwise only reachable on localhost.
+      locations."= /metrics".proxyPass =
+        "http://${config.services.hydra-queue-runner-dev.rest.address}:${toString config.services.hydra-queue-runner-dev.rest.port}/metrics";
+
       locations."/".extraConfig = ''
         # This is necessary so that grpc connections do not get closed early
         # see https://stackoverflow.com/a/67805465
