@@ -9,6 +9,8 @@
     system-features = [ "big-parallel" ];
   };
 
+  services.hydra-queue-builder-dev.mandatoryFeatures = [ "big-parallel" ];
+
   networking = {
     hostName = "hopeful-rivest";
     domain = "builders.nixos.org";
