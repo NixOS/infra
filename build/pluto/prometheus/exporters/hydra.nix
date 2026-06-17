@@ -16,12 +16,6 @@
         static_configs = [ { targets = [ "queue-runner.hydra.nixos.org:443" ]; } ];
       }
       {
-        job_name = "hydra_queue_runner_dev";
-        metrics_path = "/metrics";
-        scheme = "https";
-        static_configs = [ { targets = [ "queue-runner.hydra.nixos.org:443" ]; } ];
-      }
-      {
         job_name = "hydra-webserver";
         metrics_path = "/metrics";
         scheme = "https";
