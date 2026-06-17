@@ -23,7 +23,7 @@ fi
 
 systemConfig="$(readlink -f ./result)"
 
-if [[ ! -d "$systemConfig" ]]; then
+if [[ ! -d $systemConfig ]]; then
   echo "$0: $systemConfig does not exist or is not a directory"
   exit 1
 fi
