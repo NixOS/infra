@@ -61,6 +61,12 @@ in
         grpc_send_timeout 31536000s; # 1 year in seconds
         grpc_socket_keepalive on;
 
+        # Builders reuse one long-lived HTTP/2 channel for many RPCs. The
+        # default keepalive_requests (1000) makes nginx GOAWAY mid-stream,
+        # cancelling in-flight RPCs and aborting builds.
+        keepalive_requests 1000000;
+        keepalive_timeout 600s;
+
         grpc_set_header Host $host;
         grpc_set_header X-Real-IP $remote_addr;
         grpc_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
