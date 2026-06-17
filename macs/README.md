@@ -67,8 +67,8 @@ These machine are aarch64-darwin hosts.
 
 ## MDM Bootstrap
 
-Machines provisioned via MDM (e.g. Mosyle) use the `mdm-bootstrap.sh` script
-for initial activation. This replaces the legacy `activate-user` + `activate`
+Machines provisioned via MDM (e.g. Mosyle) use the `mdm-bootstrap.sh` script for
+initial activation. This replaces the legacy `activate-user` + `activate`
 sequence with the recommended `darwin-rebuild activate` approach.
 
 The MDM bootstrap flow is:
