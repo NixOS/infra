@@ -113,7 +113,6 @@ in
 
     allow_import_from_derivation = false
 
-    max_output_size = 4294967295 # 4 GiB - 1 B
     max_db_connections = 350
 
     <hydra_notify>

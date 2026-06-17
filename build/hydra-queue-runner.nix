@@ -86,6 +86,7 @@ in
       machineFreeFn = "DynamicWithMaxJobLimit";
       stepSortFn = "WithCriticalPath";
       usePresignedUploads = true;
+      maxOutputSize = 4294967295; # 4 GiB - 1 B, matches prod hydra.conf max_output_size
       # TODO: Expose dispatchTriggerTimerInS, defaults to 120s
       queueTriggerTimerInS = 60;
       concurrentUploadLimit = 48;
