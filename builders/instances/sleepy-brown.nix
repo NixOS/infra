@@ -9,6 +9,8 @@
     system-features = [ "big-parallel" ];
   };
 
+  services.hydra-queue-builder-dev.mandatoryFeatures = [ "big-parallel" ];
+
   networking = {
     hostName = "sleepy-brown";
     domain = "builders.nixos.org";

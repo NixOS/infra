@@ -8,5 +8,6 @@
   nix.settings = {
     cores = 2;
     max-jobs = 4;
+    system-features = [ ];
   };
 }

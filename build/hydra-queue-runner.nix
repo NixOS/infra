@@ -1,0 +1,111 @@
+{
+  config,
+  lib,
+  ...
+}:
+
+let
+  machines = [
+    "eager-heisenberg"
+    "elated-minsky"
+    "enormous-catfish"
+    "goofy-hopcroft"
+    "growing-jennet"
+    "hopeful-rivest"
+    "intense-heron"
+    "kind-lumiere"
+    "maximum-snail"
+    "norwegian-blue"
+    "sleepy-brown"
+    "sweeping-filly"
+  ];
+in
+{
+  age.secrets = {
+    hydra-aws-credentials = {
+      file = ./secrets/hydra-aws-credentials.age;
+      path = "/var/lib/hydra/queue-runner/.aws/credentials";
+      owner = "hydra-queue-runner";
+      group = "hydra";
+    };
+  }
+  // lib.listToAttrs (
+    map (
+      machine:
+      lib.nameValuePair "${machine}-queue-runner-token" {
+        file = ./secrets/${machine}-queue-runner-token.age;
+      }
+    ) machines
+  );
+
+  services.nginx = {
+    enable = true;
+    virtualHosts."queue-runner.hydra.nixos.org" = {
+      enableACME = true;
+      forceSSL = true;
+
+      # Expose the queue runner's prometheus metrics from its REST listener,
+      # which is otherwise only reachable on localhost.
+      locations."= /metrics".proxyPass =
+        "http://${config.services.hydra-queue-runner-dev.rest.address}:${toString config.services.hydra-queue-runner-dev.rest.port}/metrics";
+
+      locations."/".extraConfig = ''
+        # This is necessary so that grpc connections do not get closed early
+        # see https://stackoverflow.com/a/67805465
+        client_body_timeout 31536000s;
+        client_max_body_size 0;
+
+        grpc_pass grpc://${config.services.hydra-queue-runner-dev.grpc.address}:${toString config.services.hydra-queue-runner-dev.grpc.port};
+
+        grpc_read_timeout 31536000s; # 1 year in seconds
+        grpc_send_timeout 31536000s; # 1 year in seconds
+        grpc_socket_keepalive on;
+
+        # Builders reuse one long-lived HTTP/2 channel for many RPCs. The
+        # default keepalive_requests (1000) makes nginx GOAWAY mid-stream,
+        # cancelling in-flight RPCs and aborting builds.
+        keepalive_requests 1000000;
+        keepalive_timeout 600s;
+
+        grpc_set_header Host $host;
+        grpc_set_header X-Real-IP $remote_addr;
+        grpc_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        grpc_set_header X-Forwarded-Proto $scheme;
+
+        access_log /var/log/nginx/queue-runner.access.log;
+        error_log /var/log/nginx/queue-runner.error.log;
+      '';
+    };
+  };
+
+  services.hydra-queue-runner-dev = {
+    enable = true;
+    awsCredentialsFile = config.age.secrets."hydra-aws-credentials".path;
+    settings = {
+      dbUrl = "postgres://hydra@10.0.40.3:5432/hydra";
+      machineFreeFn = "DynamicWithMaxJobLimit";
+      stepSortFn = "WithCriticalPath";
+      usePresignedUploads = true;
+      maxOutputSize = 4294967295; # 4 GiB - 1 B, matches prod hydra.conf max_output_size
+      # TODO: Expose dispatchTriggerTimerInS, defaults to 120s
+      queueTriggerTimerInS = 60;
+      concurrentUploadLimit = 48;
+      maxConcurrentDownloads = 48;
+      remoteStoreAddr = [
+        "s3://nix-cache?${
+          lib.concatStringsSep "&" [
+            "secret-key=/var/lib/hydra/queue-runner/keys/cache.nixos.org-1/secret"
+            "write-nar-listing=1"
+            "compression=zstd"
+            "compression-level=19"
+            "ls-compression=zstd"
+            "log-compression=zstd"
+            "index-debug-info=true"
+          ]
+        }"
+      ];
+      rootsDir = "/nix/var/nix/gcroots/hydra";
+      tokenPaths = map (machine: config.age.secrets."${machine}-queue-runner-token".path) machines;
+    };
+  };
+}

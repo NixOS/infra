@@ -49,6 +49,19 @@ resource "aws_s3_bucket_lifecycle_configuration" "cache" {
       noncurrent_days = 30
     }
   }
+
+  # Reap multipart uploads (large NARs) that were never completed, e.g. when a
+  # build aborts mid-upload. Uploads normally finish within an hour.
+  rule {
+    id     = "Abort incomplete multipart uploads"
+    status = "Enabled"
+
+    filter {}
+
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 7
+    }
+  }
 }
 
 import {
