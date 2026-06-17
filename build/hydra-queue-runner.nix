@@ -65,6 +65,9 @@ in
         grpc_set_header X-Real-IP $remote_addr;
         grpc_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         grpc_set_header X-Forwarded-Proto $scheme;
+
+        access_log /var/log/nginx/queue-runner.access.log;
+        error_log /var/log/nginx/queue-runner.error.log;
       '';
     };
   };
