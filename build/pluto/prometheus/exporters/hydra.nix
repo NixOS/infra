@@ -1,31 +1,6 @@
 { pkgs, ... }:
 
 {
-  systemd.services.prometheus-hydra-queue-runner-exporter = {
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network.target" ];
-    wants = [ "network.target" ];
-    serviceConfig = {
-      DynamicUser = true;
-      Restart = "always";
-      RestartSec = "60s";
-      PrivateTmp = true;
-      WorkingDirectory = "/tmp";
-      ExecStart =
-        let
-          python = pkgs.python3.withPackages (
-            ps: with ps; [
-              requests
-              prometheus-client
-            ]
-          );
-        in
-        ''
-          ${python.interpreter} ${./hydra-queue-runner-reexporter.py}
-        '';
-    };
-  };
-
   services.prometheus = {
     scrapeConfigs = [
       {
@@ -41,21 +16,10 @@
         static_configs = [ { targets = [ "queue-runner.hydra.nixos.org:443" ]; } ];
       }
       {
-        job_name = "hydra_queue_runner_dev";
-        metrics_path = "/metrics";
-        scheme = "https";
-        static_configs = [ { targets = [ "queue-runner.hydra.nixos.org:443" ]; } ];
-      }
-      {
         job_name = "hydra-webserver";
         metrics_path = "/metrics";
         scheme = "https";
         static_configs = [ { targets = [ "hydra.nixos.org:443" ]; } ];
-      }
-      {
-        job_name = "hydra-reexport";
-        metrics_path = "/";
-        static_configs = [ { targets = [ "localhost:9200" ]; } ];
       }
     ];
 
