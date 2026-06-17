@@ -12,6 +12,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    ai-robots-txt.url = "https://github.com/ai-robots-txt/ai.robots.txt/raw/refs/heads/main/robots.json";
+    ai-robots-txt.flake = false;
+
+    # This is https://github.com/P3TERX/GeoLite.mmdb
+    # Atlernative https://github.com/sapics/ip-location-db
+    geolite2-asn-mmdb.url = "https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-ASN.mmdb";
+    geolite2-asn-mmdb.flake = false;
+
     nix = {
       #url = "github:NixOS/nix/2.34-maintenance";
       # TMP S3 upload abortions: https://github.com/NixOS/nix/pull/15949
@@ -30,6 +38,9 @@
       url = "github:NixOS/nixos-channel-scripts";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixocaine.url = "git+https://git.madhouse-project.org/iocaine/nixocaine";
+    nixocaine.inputs.nixpkgs.follows = "nixpkgs";
 
     rfc39 = {
       url = "github:NixOS/rfc39";
@@ -76,11 +87,6 @@
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nft-prefix-import = {
-      url = "github:mweinelt/nft-prefix-import";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     srvos = {

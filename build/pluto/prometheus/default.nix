@@ -3,13 +3,13 @@
 {
   imports = [
     ./alertmanager.nix
-    ./exporters/anubis.nix
     ./exporters/blackbox.nix
     ./exporters/channel.nix
     ./exporters/domain.nix
     ./exporters/fastly.nix
     ./exporters/github.nix
     ./exporters/hydra.nix
+    ./exporters/iocaine.nix
     ./exporters/json.nix
     ./exporters/matrix-synapse.nix
     ./exporters/nixos.nix
