@@ -120,6 +120,9 @@ in
       settings = {
         queueTriggerTimerInS = 300;
         concurrentUploadLimit = 2;
+        # bump from the 120s default: builder reconnects briefly drop their
+        # system and we'd abort buildable steps as unsupported (hydra#1805)
+        maxUnsupportedTimeInS = 86400;
         remoteStoreAddr = [
           "s3://nix-cache-staging?secret-key=${config.sops.secrets.signing-key.path}&ls-compression=br&log-compression=br"
         ];

@@ -89,6 +89,9 @@ in
       maxOutputSize = 4294967295; # 4 GiB - 1 B, matches prod hydra.conf max_output_size
       # TODO: Expose dispatchTriggerTimerInS, defaults to 120s
       queueTriggerTimerInS = 60;
+      # bump from the 120s default: builder reconnects briefly drop their
+      # system and we'd abort buildable steps as unsupported (hydra#1805)
+      maxUnsupportedTimeInS = 86400;
       concurrentUploadLimit = 48;
       maxConcurrentDownloads = 48;
       remoteStoreAddr = [
