@@ -1,29 +1,82 @@
 {
   config,
+  lib,
   pkgs,
+  inputs,
   ...
 }:
 
 {
+  imports = [
+    inputs.nixocaine.nixosModules.default
+  ];
+
   networking.firewall.allowedTCPPorts = [
     80
     443
   ];
 
-  services.anubis.instances."hydra-server" = {
-    settings = {
-      TARGET = "http://127.0.0.1:3000";
-      BIND = ":3001";
-      BIND_NETWORK = "tcp";
-      METRICS_BIND = ":9001";
-      METRICS_BIND_NETWORK = "tcp";
+  services.iocaine = {
+    enable = true;
+    config = {
+      handler.default.config = {
+        "ai-robots-txt-path" = inputs.ai-robots-txt;
+        sources = {
+          "training-corpus" = [
+            (pkgs.fetchurl {
+              name = "1984_djvu.txt";
+              url = "https://archive.org/download/GeorgeOrwells1984/1984_djvu.txt";
+              hash = "sha256-9R1PTa8yDtkfH+4rU5BF62ee73irhd3VYX1QB5KU+ZU=";
+            })
+            (pkgs.fetchurl {
+              name = "brave-new-world.txt";
+              url = "https://archive.org/download/ost-english-brave_new_world_aldous_huxley/Brave_New_World_Aldous_Huxley_djvu.txt";
+              hash = "sha256-6WkaO/3zQIezGzJDp4QjglikiTZTxgo0P4MEff2mdcY=";
+            })
+          ];
+          "wordlists" = [
+            (pkgs.fetchurl {
+              name = "words.txt";
+              url = "https://git.savannah.gnu.org/cgit/miscfiles.git/plain/web2";
+              hash = "sha256-KSmJWrP+x4xpY+vly7NJP+T8nhHroJWlInh7ivxTqGM=";
+            })
+          ];
+        };
+        unwanted-asns = {
+          db-path = inputs.geolite2-asn-mmdb;
+          list = map toString [
+            45102 # ALIBABA-CN-NET
+            45899 # VNPT-AS-VN
+            132203 # TENCENT-NET-AP-CN
+          ];
+        };
+      };
+      server.default = {
+        bind = "/run/iocaine/default.sock";
+        unix-socket-access = "group";
+        mode = "http";
+        use = {
+          handler-from = "default";
+          metrics = "metrics";
+        };
+      };
+      server.metrics = {
+        bind = "[::]:42042";
+        mode = "prometheus";
+      };
     };
   };
 
   networking.firewall.extraInputRules = ''
-    ip6 saddr $prometheus_inet6 tcp dport 9001 accept
-    ip saddr $prometheus_inet4 tcp dport 9001 accept
+    ip6 saddr $prometheus_inet6 tcp dport { 9001, 42042 } accept
+    ip saddr $prometheus_inet4 tcp dport { 9001, 42042 } accept
   '';
+
+  # Kill the hard dependency on iocaine
+  systemd.services.nginx = {
+    requires = lib.mkForce [ ];
+    after = lib.mkForce [ "network.target" ];
+  };
 
   services.nginx = {
     enable = true;
@@ -42,16 +95,6 @@
     '';
 
     appendHttpConfig = ''
-      map $request_uri $backend {
-        default anubis;
-
-        # downloads (e.g. distrobuilder for lxc/incus images)
-        ~^/build/\d+/download/ hydra-server;
-        ~^/build/\d+/download-by-type/ hydra-server;
-        ~^/job/[^/]+/[^/]+/[^/]+/latest/download/ hydra-server;
-        ~^/job/[^/]+/[^/]+/[^/]+/latest/download-by-type/file/ hydra-server;
-      }
-
       limit_req_zone $binary_remote_addr zone=hydra-server:8m rate=2r/s;
       limit_req_status 429;
     '';
@@ -61,7 +104,7 @@
     '';
 
     upstreams = {
-      anubis.servers."127.0.0.1:3001" = { };
+      iocaine.servers."unix:${config.services.iocaine.config.server.default.bind}" = { };
       hydra-server.servers."127.0.0.1:3000" = { };
     };
 
@@ -86,12 +129,33 @@
         Allow: /$
       '';
 
+      locations."/" = {
+        proxyPass = "http://iocaine";
+        extraConfig = ''
+          # allow nginx to intercept non-200 responses
+          proxy_intercept_errors on;
+
+          # optionally retry upstream on certain failures
+          proxy_next_upstream error timeout;
+
+          # treat 421 as a special fallback condition
+          # treat 502 when iocaine is down
+          error_page 421 502 = @hydra;
+
+          # discard the noise
+          access_log off;
+
+          # don't spend time compressing garbage
+          gzip off;
+        '';
+      };
+
       locations."~ ^/job/[^/]+/[^/]+/metrics/metric/" = {
         proxyPass = "http://hydra-server";
       };
 
-      locations."/" = {
-        proxyPass = "http://$backend";
+      locations."@hydra" = {
+        proxyPass = "http://hydra-server";
         extraConfig = ''
           limit_req zone=hydra-server burst=7;
         '';
