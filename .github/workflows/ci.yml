@@ -118,7 +118,7 @@ jobs:
       - run: nix run --inputs-from . nixpkgs#nix-fast-build -- --skip-cached --no-nom --flake '.#ciSystems.ofborg-aarch64-darwin'
   nix-darwin-ofborg-x86_64:
     name: nix-darwin ofborg (x86_64)
-    runs-on: macos-15-intel
+    runs-on: macos-26-intel
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
         with:
