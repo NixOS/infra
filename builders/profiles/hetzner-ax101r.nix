@@ -26,7 +26,7 @@
     # 128G tmpfs, 128G RAM (+zram swap) for standard builders
     # 160GB tmpfs, 96 GB RAM (+zram swap) for big-parallel builders
     ++ (
-      if lib.elem "big-parallel" config.nix.settings.system-features then
+      if lib.elem "big-parallel" config.services.hydra-queue-builder-dev.supportedFeatures then
         [ "size=160G" ]
       else
         [ "size=128G" ]

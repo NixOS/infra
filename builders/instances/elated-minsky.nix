@@ -1,4 +1,10 @@
 {
+  config,
+  lib,
+  ...
+}:
+
+{
   imports = [
     ../profiles/hetzner-ax101r.nix
   ];
@@ -7,6 +13,10 @@
     cores = 2;
     max-jobs = 48;
   };
+
+  services.hydra-queue-builder-dev.supportedFeatures = lib.filter (feat: feat != "big-parallel") (
+    with config.nix.settings; system-features ++ extra-system-features
+  );
 
   networking = {
     hostName = "elated-minsky";
