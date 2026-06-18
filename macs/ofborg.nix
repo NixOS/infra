@@ -10,6 +10,7 @@
     ./common/node-exporter.nix
     ./common/ofborg.nix
     ./common/ofborg-queue-builder.nix
+    ./common/reboot.nix
     ./common/shells.nix
     ./common/spotlight.nix
     ./common/ssh.nix
