@@ -1,4 +1,10 @@
 {
+  config,
+  lib,
+  ...
+}:
+
+{
   imports = [
     ../profiles/hetzner-rx220.nix
   ];
@@ -7,6 +13,10 @@
     cores = 2;
     max-jobs = 40;
   };
+
+  services.hydra-queue-builder-dev.supportedFeatures = lib.filter (feat: feat != "big-parallel") (
+    with config.nix.settings; system-features ++ extra-system-features
+  );
 
   networking = {
     hostName = "goofy-hopcroft";
