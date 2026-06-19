@@ -15,6 +15,7 @@ in
 {
   imports = [
     inputs.hydra.nixosModules.builder
+    ./staging-cache.nix
   ];
 
   services.hydra-queue-builder-dev = {

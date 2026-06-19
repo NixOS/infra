@@ -8,6 +8,7 @@
 {
   imports = [
     inputs.hydra.darwinModules.builder
+    ../../non-critical-infra/modules/hydra/staging-cache.nix
   ];
 
   services.hydra-queue-builder-dev = {
