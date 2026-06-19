@@ -23,7 +23,7 @@
     matchConfig.MACAddress = "96:00:03:f4:25:eb";
     address = [
       "95.217.18.12/32"
-      "2a01:4f9:c012:273b::/64"
+      "2a01:4f9:c012:273b::1/64"
     ];
     routes = [
       { Gateway = "fe80::1"; }
