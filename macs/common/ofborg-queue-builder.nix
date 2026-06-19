@@ -15,8 +15,14 @@
     queueRunnerAddr = "https://queue-runner.staging-hydra.nixos.org";
     maxJobs = 2;
     mtls = {
-      serverRootCaCertPath = ../non-critical-infra/hosts/staging-hydra/ca.crt;
-      clientCertPath = "${../ofborg-ca/client-${config.networking.hostName}.crt}";
+      serverRootCaCertPath = builtins.path {
+        path = ../../non-critical-infra/hosts/staging-hydra/ca.crt;
+        name = "staging-hydra-ca.crt";
+      };
+      clientCertPath = builtins.path {
+        path = ../ofborg-ca/client-${config.networking.hostName}.crt;
+        name = "client-${config.networking.hostName}.crt";
+      };
       clientKeyPath = config.sops.secrets."queue-runner-client.key".path;
       domainName = "queue-runner.staging-hydra.nixos.org";
     };
