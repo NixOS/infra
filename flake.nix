@@ -34,8 +34,9 @@
       inputs.treefmt-nix.follows = "treefmt-nix";
     };
 
-    nixos-channel-scripts = {
-      url = "github:NixOS/nixos-channel-scripts";
+    nix-index = {
+      # zstd .ls listing support, pending https://github.com/nix-community/nix-index/pull/320
+      url = "github:Mic92/nix-index/zstd-listings";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

@@ -15,9 +15,12 @@ let
     name = "update-${channelName}";
     value = {
       description = "Update Channel ${channelName}";
-      path = with pkgs; [
-        git
-        inputs.nixos-channel-scripts.packages.${pkgs.stdenv.hostPlatform.system}.default
+      path = [
+        pkgs.git
+        (pkgs.callPackage ../pkgs/nixos-channel-scripts {
+          # nixpkgs nix-index cannot read zstd-compressed .ls listings yet
+          nix-index = inputs.nix-index.packages.${pkgs.stdenv.hostPlatform.system}.default;
+        })
       ];
       script = ''
         # Hardcoded in channel scripts.
