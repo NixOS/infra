@@ -126,6 +126,8 @@ in
         remoteStoreAddr = [
           "s3://nix-cache-staging?secret-key=${config.sops.secrets.signing-key.path}&ls-compression=br&log-compression=br"
         ];
+        usePresignedUploads = true;
+        forcedSubstituters = [ "https://cache-staging.nixos.org" ];
       };
     };
 

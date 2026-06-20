@@ -49,7 +49,7 @@ D("ofborg.org",
 	A("build04", "185.119.168.13"),
 
 	A("build05", "142.132.171.106"),
-	AAAA("build05", "2a01:4f8:1c1b:6d41::"),
+	AAAA("build05", "2a01:4f8:1c1b:6d41::1"),
 
 	A("eval01", "95.217.15.9"),
 	AAAA("eval01", "2a01:4f9:c012:cf00::1"),
@@ -61,7 +61,7 @@ D("ofborg.org",
 	AAAA("eval03", "2a01:4f9:c012:e37b::1"),
 
 	A("eval04", "95.217.18.12"),
-	AAAA("eval04", "2a01:4f9:c012:273b::"),
+	AAAA("eval04", "2a01:4f9:c012:273b::1"),
 
 	// nixos-foundation-macstadium-44911305
 	A("mac01", "208.83.1.173"),

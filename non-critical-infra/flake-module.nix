@@ -7,7 +7,7 @@
   colmena.hosts = {
     caliban = { };
     umbriel = { };
-    staging-hydra = { };
+    staging-hydra.targetHost = "staging-hydra.nixos.org";
 
     # ofborg
     "core01.ofborg.org".targetHost = "core01.ofborg.org";
