@@ -73,7 +73,7 @@ in
       extraConfig = ''
         max_servers 30
 
-        store_uri = s3://nix-cache-staging?secret-key=${config.sops.secrets.signing-key.path}&ls-compression=br&log-compression=br
+        store_uri = s3://nix-cache-staging?secret-key=${config.sops.secrets.signing-key.path}&compression=zstd&ls-compression=zstd&log-compression=zstd&narinfo-compression=zstd
         server_store_uri = https://cache-staging.nixos.org?local-nar-cache=${narCache}
         binary_cache_public_uri = https://cache-staging.nixos.org
 
@@ -124,7 +124,7 @@ in
         # system and we'd abort buildable steps as unsupported (hydra#1805)
         maxUnsupportedTimeInS = 86400;
         remoteStoreAddr = [
-          "s3://nix-cache-staging?secret-key=${config.sops.secrets.signing-key.path}&ls-compression=br&log-compression=br"
+          "s3://nix-cache-staging?secret-key=${config.sops.secrets.signing-key.path}&compression=zstd&ls-compression=zstd&log-compression=zstd&narinfo-compression=zstd"
         ];
         usePresignedUploads = true;
         forcedSubstituters = [ "https://cache-staging.nixos.org" ];
