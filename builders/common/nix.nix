@@ -12,7 +12,7 @@
 
     gc =
       let
-        maxFreed = 500; # GB
+        maxFreed = 800; # GB
       in
       {
         automatic = true;
