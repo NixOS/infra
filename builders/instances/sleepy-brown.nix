@@ -5,7 +5,7 @@
 
   nix.settings = {
     cores = 24;
-    max-jobs = 6;
+    max-jobs = 4;
   };
 
   services.hydra-queue-builder-dev.mandatoryFeatures = [ "big-parallel" ];
