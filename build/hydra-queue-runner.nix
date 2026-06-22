@@ -34,6 +34,8 @@ in
       machine:
       lib.nameValuePair "${machine}-queue-runner-token" {
         file = ./secrets/${machine}-queue-runner-token.age;
+        owner = "hydra-queue-runner";
+        group = "hydra";
       }
     ) machines
   );

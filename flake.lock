@@ -321,7 +321,7 @@
     "geolite2-asn-mmdb": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-rjgkEvcWX7RMiJbT+mZ1HyHtXaNFXu04Dheatr7rRQM=",
+        "narHash": "sha256-e/gxpwXdU/mJuDQRrgvdb3xJd62QDX4VLA7wYVXXVQI=",
         "type": "file",
         "url": "https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-ASN.mmdb"
       },
@@ -436,11 +436,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1782086685,
-        "narHash": "sha256-oUwgWUuzCNBIjJEg/yCCHysFLBYE6R7tWLchPrRDxGs=",
+        "lastModified": 1782114231,
+        "narHash": "sha256-S5zZx7WnthL8ln1Km4kcSpQdqZnwnv3yFSAwzHtDhx4=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "5738f42d684eb7336d766bd81e4ed8aba1ada847",
+        "rev": "58bd9d0d3070a313f45aaaae512629be37345952",
         "type": "github"
       },
       "original": {
