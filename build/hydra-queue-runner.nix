@@ -94,6 +94,8 @@ in
       # bump from the 120s default: builder reconnects briefly drop their
       # system and we'd abort buildable steps as unsupported (hydra#1805)
       maxUnsupportedTimeInS = 86400;
+      maxSilentTime = 3 * 3600;
+      buildTimeout = 86400;
       concurrentUploadLimit = 48;
       maxConcurrentDownloads = 48;
       remoteStoreAddr = [
