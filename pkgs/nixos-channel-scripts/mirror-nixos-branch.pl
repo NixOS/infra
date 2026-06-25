@@ -225,7 +225,7 @@ if ($bucketReleases && $bucketReleases->head_key("$releasePrefix")) {
     }
 
     if ($channelName =~ /nixos/) {
-        downloadFile("nixos.channel", "nixexprs.tar.xz");
+        downloadFile("nixos.channel", "nixexprs.tar.xz", "source-dist", '\.tar\.xz$');
         downloadFile("nixpkgs.tarball", "packages.json.br", "json-br");
         downloadFile("nixos.options", "options.json.br", "json-br");
 
@@ -265,7 +265,7 @@ if ($bucketReleases && $bucketReleases->head_key("$releasePrefix")) {
         }
 
     } else {
-        downloadFile("tarball", "nixexprs.tar.xz", "source-dist");
+        downloadFile("tarball", "nixexprs.tar.xz", "source-dist", '\.tar\.xz$');
         downloadFile("tarball", "packages.json.br", "json-br");
     }
 
