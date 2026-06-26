@@ -45,6 +45,7 @@
         unwanted-asns = {
           db-path = inputs.geolite2-asn-mmdb;
           list = map toString [
+            37963 # ALIBABA-CN-NET
             45102 # ALIBABA-CN-NET
             45899 # VNPT-AS-VN
             132203 # TENCENT-NET-AP-CN
