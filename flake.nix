@@ -111,9 +111,7 @@
     };
 
     ofborg = {
-      # FIXME: switch back to NixOS/ofborg once merged:
-      # https://github.com/NixOS/ofborg/pull/738
-      url = "github:Mic92/ofborg/drop-clippy-from-build";
+      url = "github:NixOS/ofborg";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
