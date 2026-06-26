@@ -7,7 +7,11 @@
 
 {
   nix = {
-    package = pkgs.nix;
+    # Backport of NixOS/nix#15992: a temp root registered while a GC is in its
+    # deletion phase was ignored, so hydra-builder's per-build AddTempRoot pins
+    # raced the hourly GC and inputs/outputs were collected mid-build
+    # (NixOS/hydra#1806).
+    package = pkgs.nix.appendPatches [ ./nix-gc-addtemproot-race.patch ];
     nrBuildUsers = config.nix.settings.max-jobs + 32;
 
     gc =
