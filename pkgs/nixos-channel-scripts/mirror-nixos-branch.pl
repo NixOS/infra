@@ -156,24 +156,34 @@ if ($bucketReleases && $bucketReleases->head_key("$releasePrefix")) {
     }
 
     sub downloadFile {
-        my ($jobName, $dstName, $productType) = @_;
+        my ($jobName, $dstName, $productType, $productPattern) = @_;
 
         my $buildInfo = decode_json(fetch("$evalUrl/job/$jobName", 'application/json'));
 
         my $products = ();
         # Key the products by subtype.
         foreach my $key (keys $buildInfo->{buildproducts}->%*) {
-            my $subType = $buildInfo->{buildproducts}->{$key}->{subtype};
+            my $product = $buildInfo->{buildproducts}->{$key};
+            my $subType = $product->{subtype};
+
+            next if defined $productPattern
+                 && $product->{path} !~ /$productPattern/;
+
             if ($products->{$subType}) {
-                die "Job $jobName has multiple products of the same subtype $subType.\nThis is a bad assumption from this script";
+                if (defined $productPattern) {
+                    die "Job $jobName has multiple products of subtype $subType that match $productPattern.\nRefine the product regex pattern further to disambiguate.";
+                } else {
+                    die "Job $jobName has multiple products of the same subtype $subType.\nPass a product regex pattern to disambiguate.";
+                }
             }
-            $products->{$subType} = $buildInfo->{buildproducts}->{$key};
+
+            $products->{$subType} = $product;
         }
         my $size = keys %{$products};
 
         if ($size > 1 && !$productType) {
             my $types = join(", ", keys %{$products});
-            die "Job $jobName has $size build products. Select the right product by subtype [$types]";
+            die "Job $jobName has $size build products. Select the right product by subtype [$types] and product match";
         }
 
         my $product;
@@ -215,7 +225,7 @@ if ($bucketReleases && $bucketReleases->head_key("$releasePrefix")) {
     }
 
     if ($channelName =~ /nixos/) {
-        downloadFile("nixos.channel", "nixexprs.tar.xz");
+        downloadFile("nixos.channel", "nixexprs.tar.xz", "source-dist", '\.tar\.xz$');
         downloadFile("nixpkgs.tarball", "packages.json.br", "json-br");
         downloadFile("nixos.options", "options.json.br", "json-br");
 
@@ -255,7 +265,7 @@ if ($bucketReleases && $bucketReleases->head_key("$releasePrefix")) {
         }
 
     } else {
-        downloadFile("tarball", "nixexprs.tar.xz", "source-dist");
+        downloadFile("tarball", "nixexprs.tar.xz", "source-dist", '\.tar\.xz$');
         downloadFile("tarball", "packages.json.br", "json-br");
     }
 
