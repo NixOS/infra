@@ -109,6 +109,13 @@
       hydra-server.servers."127.0.0.1:3000" = { };
     };
 
+    virtualHosts."mimas.nixos.org" = {
+      forceSSL = true;
+      enableACME = true;
+      default = true;
+      locations."/".return = "444";
+    };
+
     virtualHosts."hydra.nixos.org" = {
       forceSSL = true;
       enableACME = true;
