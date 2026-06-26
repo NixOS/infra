@@ -36,6 +36,6 @@
 
   sops.secrets."ofborg/builder-rabbitmq-password" = {
     owner = "ofborg";
-    sopsFile = ../secrets/${config.networking.hostName}.yml;
+    sopsFile = ../secrets/${config.networking.localHostName}.yml;
   };
 }
