@@ -9,4 +9,6 @@
     cores = 3;
     max-jobs = 4;
   };
+
+  services.fast-nix-gc.ensureFree = "150G"; # per hour
 }

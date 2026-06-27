@@ -10,4 +10,13 @@
     max-jobs = 4;
     system-features = [ ];
   };
+
+  services.fast-nix-gc = {
+    ensureFree = "100G"; # per half-hour
+    startCalendarInterval = [
+      {
+        Minute = 45; # second interval
+      }
+    ];
+  };
 }

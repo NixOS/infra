@@ -10,4 +10,6 @@
     max-jobs = 2;
     system-features = [ "big-parallel" ];
   };
+
+  services.fast-nix-gc.ensureFree = "200G"; # per hour
 }

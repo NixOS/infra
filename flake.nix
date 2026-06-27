@@ -15,6 +15,11 @@
     ai-robots-txt.url = "https://github.com/ai-robots-txt/ai.robots.txt/raw/refs/heads/main/robots.json";
     ai-robots-txt.flake = false;
 
+    fast-nix-gc.url = "github:Mic92/fast-nix-gc";
+    fast-nix-gc.inputs.nixpkgs.follows = "nixpkgs";
+    fast-nix-gc.inputs.nix-darwin.follows = "darwin";
+    fast-nix-gc.inputs.treefmt-nix.follows = "treefmt-nix";
+
     # This is https://github.com/P3TERX/GeoLite.mmdb
     # Atlernative https://github.com/sapics/ip-location-db
     geolite2-asn-mmdb.url = "https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-ASN.mmdb";
