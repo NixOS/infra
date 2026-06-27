@@ -15,8 +15,9 @@
           modules = [
             {
               networking = {
-                # the name used to resolve the flake output
-                localHostName = hostname;
+                # the name as it appears on the terminal and in the queue-runner
+                # inherited by `localHostName` for the flake-ref
+                hostName = hostname;
                 # the name that propagates into the MDM
                 computerName = hostname;
               };
@@ -50,19 +51,19 @@
       nixos-foundation-macstadium-44911305 = mkNixDarwin "mac01.ofborg.org" ./profiles/ofborg-x86_64.nix {
         system = "x86_64-darwin";
         extraModules = [
-          { networking.hostName = "nixos-foundation-macstadium-44911305"; }
+          { networking.localHostName = "nixos-foundation-macstadium-44911305"; }
         ];
       };
       nixos-foundation-macstadium-44911362 = mkNixDarwin "mac02.ofborg.org" ./profiles/ofborg-x86_64.nix {
         system = "x86_64-darwin";
         extraModules = [
-          { networking.hostName = "nixos-foundation-macstadium-44911362"; }
+          { networking.localHostName = "nixos-foundation-macstadium-44911362"; }
         ];
       };
       nixos-foundation-macstadium-44911507 = mkNixDarwin "mac03.ofborg.org" ./profiles/ofborg-x86_64.nix {
         system = "x86_64-darwin";
         extraModules = [
-          { networking.hostName = "nixos-foundation-macstadium-44911507"; }
+          { networking.localHostName = "nixos-foundation-macstadium-44911507"; }
         ];
       };
 
@@ -70,7 +71,7 @@
       nixos-foundation-macstadium-44911207 = mkNixDarwin "mac04.ofborg.org" ./profiles/ofborg-m1.nix {
         extraModules = [
           {
-            networking.hostName = "nixos-foundation-macstadium-44911207";
+            networking.localHostName = "nixos-foundation-macstadium-44911207";
             ids.gids.nixbld = lib.mkForce 350;
           }
         ];
@@ -78,7 +79,7 @@
       nixos-foundation-macstadium-44911104 = mkNixDarwin "mac05.ofborg.org" ./profiles/ofborg-m1.nix {
         extraModules = [
           {
-            networking.hostName = "nixos-foundation-macstadium-44911104";
+            networking.localHostName = "nixos-foundation-macstadium-44911104";
             ids.gids.nixbld = lib.mkForce 350;
           }
         ];

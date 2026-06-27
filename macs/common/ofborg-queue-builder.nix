@@ -21,8 +21,8 @@
         name = "staging-hydra-ca.crt";
       };
       clientCertPath = builtins.path {
-        path = ../ofborg-ca/client-${config.networking.hostName}.crt;
-        name = "client-${config.networking.hostName}.crt";
+        path = ../ofborg-ca/client-${config.networking.localHostName}.crt;
+        name = "client-${config.networking.localHostName}.crt";
       };
       clientKeyPath = config.sops.secrets."queue-runner-client.key".path;
       domainName = "queue-runner.staging-hydra.nixos.org";
@@ -31,7 +31,7 @@
 
   sops.secrets."queue-runner-client.key" = {
     owner = "hydra-queue-builder";
-    sopsFile = ../secrets/${config.networking.hostName}.yml;
+    sopsFile = ../secrets/${config.networking.localHostName}.yml;
   };
 
   users.users.hydra-queue-builder.home = lib.mkForce "/private/var/lib/hydra-queue-builder";
