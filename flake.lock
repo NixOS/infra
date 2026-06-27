@@ -693,16 +693,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1778995354,
-        "narHash": "sha256-yAujgNpro2Sh7EeCDuL4MAj/kWlVSNfg1mfO6rDjfak=",
-        "owner": "Mic92",
+        "lastModified": 1780036770,
+        "narHash": "sha256-5ozCWlik03HQaLmCpkFKMaEJRWVyYh+wpn1n+QCwCXQ=",
+        "owner": "NixOS",
         "repo": "ofborg",
-        "rev": "c3a9ff64cc8677200baa87184d48bbbd08938185",
+        "rev": "76dd2e363527f124de98307eb36e53945dccd32e",
         "type": "github"
       },
       "original": {
-        "owner": "Mic92",
-        "ref": "drop-clippy-from-build",
+        "owner": "NixOS",
         "repo": "ofborg",
         "type": "github"
       }
