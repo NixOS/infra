@@ -1,5 +1,6 @@
 {
   config,
+  pkgs,
   ...
 }:
 
@@ -9,6 +10,11 @@
   ];
 
   nix = {
+    # Backport of NixOS/nix#15992: a temp root registered while a GC is in its
+    # deletion phase was ignored, so per-build AddTempRoot pins raced the
+    # periodic GC and inputs/outputs were collected mid-build (NixOS/hydra#1806).
+    package = pkgs.nix.appendPatches [ ../../builders/common/nix-gc-addtemproot-race.patch ];
+
     settings = {
       extra-experimental-features = [
         "nix-command"
