@@ -28,7 +28,7 @@
     };
 
     hydra = {
-      url = "github:NixOS/hydra/hydra.nixos.org";
+      url = "github:NixOS/hydra/staging-hydra.nixos.org";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.nix.follows = "nix";
       inputs.treefmt-nix.follows = "treefmt-nix";
