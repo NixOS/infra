@@ -47,7 +47,6 @@
           list = map toString [
             37963 # ALIBABA-CN-NET
             45102 # ALIBABA-CN-NET
-            45899 # VNPT-AS-VN
             132203 # TENCENT-NET-AP-CN
           ];
         };
