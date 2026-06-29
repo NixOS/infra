@@ -1,11 +1,16 @@
 {
   config,
+  inputs,
   lib,
   pkgs,
   ...
 }:
 
 {
+  imports = [
+    inputs.fast-nix-gc.nixosModules.default
+  ];
+
   nix = {
     # Backport of NixOS/nix#15992: a temp root registered while a GC is in its
     # deletion phase was ignored, so hydra-builder's per-build AddTempRoot pins
@@ -13,16 +18,6 @@
     # (NixOS/hydra#1806).
     package = pkgs.nix.appendPatches [ ./nix-gc-addtemproot-race.patch ];
     nrBuildUsers = config.nix.settings.max-jobs + 32;
-
-    gc =
-      let
-        maxFreed = 800; # GB
-      in
-      {
-        automatic = true;
-        dates = "hourly";
-        options = "--max-freed \"$((${toString maxFreed} * 1024**3 - 1024 * $(df --output=avail /nix/store | tail -n 1)))\"";
-      };
 
     settings = {
       accept-flake-config = false;
@@ -37,6 +32,14 @@
       ];
       max-silent-time = 10800; # 3h
     };
+  };
+
+  services.fast-nix-gc = {
+    enable = true;
+    automatic = true;
+    dates = "hourly";
+    ensureFree = "30%"; # some breathing room for zfs
+    keepRecent = "72h";
   };
 
   systemd.services.prune-stale-nix-builds = {
