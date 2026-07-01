@@ -58,17 +58,17 @@ rec {
     "nixos-25.11" = {
       job = "nixos/release-25.11/tested";
       variant = "primary";
-      status = "deprecated";
+      status = "unmaintained";
     };
     "nixos-25.11-small" = {
       job = "nixos/release-25.11-small/tested";
       variant = "small";
-      status = "deprecated";
+      status = "unmaintained";
     };
     "nixpkgs-25.11-darwin" = {
       job = "nixpkgs/nixpkgs-25.11-darwin/darwin-tested";
       variant = "darwin";
-      status = "deprecated";
+      status = "unmaintained";
     };
 
     "nixos-25.05" = {
