@@ -39,7 +39,7 @@
     automatic = true;
     dates = "hourly";
     ensureFree = "30%"; # some breathing room for zfs
-    keepRecent = "72h";
+    keepRecent = "24h";
   };
 
   systemd.services.prune-stale-nix-builds = {
