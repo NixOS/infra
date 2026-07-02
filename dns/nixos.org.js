@@ -217,6 +217,7 @@ D("nixos.org",
 	CNAME("planet", "nixos-planet.netlify.app."),
 	CNAME("search", "nixos-search.netlify.app."),
 	CNAME("status", "nixos-status.netlify.app."),
+	CNAME("surveys", "nixos-surveys.netlify.app."),
 	CNAME("weekly", "nixos-weekly.netlify.com."),
 	CNAME("www", "nixos-homepage.netlify.app."),
 );
