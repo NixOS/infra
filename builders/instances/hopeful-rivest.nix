@@ -3,9 +3,10 @@
     ../profiles/hetzner-rx170.nix
   ];
 
+  # 2/80 cores remain spare
   nix.settings = {
-    cores = 20;
-    max-jobs = 4;
+    cores = 26;
+    max-jobs = 3;
   };
 
   services.hydra-queue-builder-dev.mandatoryFeatures = [ "big-parallel" ];
