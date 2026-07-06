@@ -32,10 +32,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "cache" {
     }
 
     transition {
-      # TODO: Set this to 0 as we rely on intelligent tiering to move between
-      # standard and infrequent access after 30  days.
-      # but I want to test that this is working first.
-      days          = 365
+      days          = 0
       storage_class = "INTELLIGENT_TIERING"
     }
   }
