@@ -24,5 +24,7 @@
     useSubstitutes = true;
     # Align this with what our GC settings
     storeAvailThreshold = 5.0;
+    # Tolerate only minimal contention before we stop scheduling new jobs
+    cpuPsiThreshold = 15.0;
   };
 }
