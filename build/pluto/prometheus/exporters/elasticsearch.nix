@@ -14,8 +14,8 @@
       extraFlags = [
         "--es.all"
         "--es.indices"
-        "--es.cluster_settings"
-        "--es.snapshots"
+        "--collector.clustersettings"
+        "--collector.snapshots"
       ];
     };
 
