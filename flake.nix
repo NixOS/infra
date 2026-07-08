@@ -40,8 +40,7 @@
     };
 
     nix-index = {
-      # zstd .ls listing support, pending https://github.com/nix-community/nix-index/pull/320
-      url = "github:Mic92/nix-index/zstd-listings";
+      url = "github:nix-community/nix-index";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
