@@ -229,6 +229,7 @@ if ($bucketReleases && $bucketReleases->head_key("$releasePrefix")) {
 
     if ($channelName =~ /nixos/) {
         downloadFile("nixos.channel", "nixexprs.tar.xz", "source-dist", '\.tar\.xz$');
+        downloadFile("nixos.channel", "nixexprs.tar.zst", "source-dist", '\.tar\.zst$');
         downloadFile("nixpkgs.tarball", "packages.json.br", "json-br");
         downloadFile("nixos.options", "options.json.br", "json-br");
 
@@ -269,22 +270,79 @@ if ($bucketReleases && $bucketReleases->head_key("$releasePrefix")) {
 
     } else {
         downloadFile("tarball", "nixexprs.tar.xz", "source-dist", '\.tar\.xz$');
+        downloadFile("tarball", "nixexprs.tar.zst", "source-dist", '\.tar\.zst$');
         downloadFile("tarball", "packages.json.br", "json-br");
     }
 
     # Generate the programs.sqlite database and put it in
-    # nixexprs.tar.xz. Also maintain the debug info repository at
+    # nixexprs.tar.{xz,zst}. Also maintain the debug info repository at
     # https://cache.nixos.org/debuginfo.
     if ($channelName =~ /nixos/ && -e "$tmpDir/store-paths") {
+        # Unpack nixpkgs from tarball.
         File::Path::make_path("$tmpDir/unpack");
-        run("tar", "xfJ", "$tmpDir/nixexprs.tar.xz", "-C", "$tmpDir/unpack");
+        run("tar",
+            "--extract",
+            "--file", "$tmpDir/nixexprs.tar.zst",
+            "--zstd",
+            "--directory", "$tmpDir/unpack"
+        );
         my $exprDir = glob("$tmpDir/unpack/*");
-        run("nix-channel-index", "-o", "$exprDir/programs.sqlite", "-d", "$exprDir/debug.sqlite", "-f", "$exprDir/nixpkgs", "-s", "aarch64-linux", "-s", "x86_64-linux");
+
+        # Create artifacts.
+        run("nix-channel-index",
+            "--output", "$exprDir/programs.sqlite",
+            "--debug-output", "$exprDir/debug.sqlite",
+            "--nixpkgs", "$exprDir/nixpkgs",
+            "--platform", "aarch64-linux",
+            "--platform", "x86_64-linux"
+        );
+
         run("index-debuginfo", "$exprDir/debug.sqlite", "s3://nix-cache");
-        run("rm", "-f", "$tmpDir/nixexprs.tar.xz", "$exprDir/debug.sqlite");
-        unlink("$tmpDir/nixexprs.tar.xz.sha256");
-        run("tar", "cfJ", "$tmpDir/nixexprs.tar.xz", "-C", "$tmpDir/unpack", basename($exprDir));
-        run("rm", "-rf", "$tmpDir/unpack");
+
+        # Remove the downloaded tarballs and intermediate artifacts before repacking.
+        run("rm",
+            "--force",
+            "$tmpDir/nixexprs.tar.xz",
+            "$tmpDir/nixexprs.tar.xz.sha256",
+            "$tmpDir/nixexprs.tar.zst",
+            "$tmpDir/nixexprs.tar.zst.sha256",
+            "$exprDir/debug.sqlite"
+        );
+
+        # Repack tarballs with the generated artifacts.
+        run("tar",
+            "--create",
+            "--file=$tmpDir/nixexprs.tar.xz",
+            "--xz",
+            "--format=gnu",
+            "--sort=name",
+            "--owner=0",
+            "--group=0",
+            "--mtime=@315532800", # matches SOURCE_DATE_EPOCH from stdenv
+            "--numeric-owner",
+            "--directory=$tmpDir/unpack",
+            basename($exprDir)
+        );
+        run("tar",
+            "--create",
+            "--file=$tmpDir/nixexprs.tar.zst",
+            "--use-compress-program=zstd -19 -T0",
+            "--format=gnu",
+            "--sort=name",
+            "--owner=0",
+            "--group=0",
+            "--mtime=@315532800", # matches SOURCE_DATE_EPOCH from stdenv
+            "--numeric-owner",
+            "--directory=$tmpDir/unpack",
+            basename($exprDir)
+        );
+
+        # Clean up.
+        run("rm",
+            "--recursive",
+            "--force",
+            "$tmpDir/unpack"
+        );
     }
 
     if (-e "$tmpDir/store-paths") {
@@ -376,6 +434,7 @@ sub redirect {
 # Update channels on channels.nixos.org.
 redirect($channelName, $releasePrefix);
 redirect("$channelName/nixexprs.tar.xz", "$releasePrefix/nixexprs.tar.xz?rev=$rev&lastModified=$revUnix");
+redirect("$channelName/nixexprs.tar.zst", "$releasePrefix/nixexprs.tar.zst?rev=$rev&lastModified=$revUnix");
 redirect("$channelName/git-revision", "$releasePrefix/git-revision");
 redirect("$channelName/packages.json.br", "$releasePrefix/packages.json.br");
 redirect("$channelName/store-paths.xz", "$releasePrefix/store-paths.xz");
