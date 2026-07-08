@@ -166,6 +166,9 @@ if ($bucketReleases && $bucketReleases->head_key("$releasePrefix")) {
             my $product = $buildInfo->{buildproducts}->{$key};
             my $subType = $product->{subtype};
 
+            next if defined $productType
+                 && $subType ne $productType;
+
             next if defined $productPattern
                  && $product->{path} !~ /$productPattern/;
 
