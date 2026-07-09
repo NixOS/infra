@@ -12,6 +12,7 @@
     nix-top
     nvme-cli
     pciutils
+    perf
     smartmontools
     usbutils
   ];
