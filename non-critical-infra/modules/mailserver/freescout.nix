@@ -13,15 +13,7 @@
 
   services.freescout = {
     enable = true;
-    package = inputs.freescout.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs rec {
-      version = "1.8.225";
-      src = pkgs.fetchFromGitHub {
-        owner = "freescout-helpdesk";
-        repo = "freescout";
-        tag = version;
-        hash = "sha256-kXZ6bjF36YO1p6q+KTugnBO+KxqQZci5O0RNM7lqecQ=";
-      };
-    };
+    package = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.freescout;
     domain = "freescout.nixos.org";
 
     settings.APP_KEY._secret = config.sops.secrets.freescout-app-key.path;
