@@ -2,13 +2,20 @@
 {
   imports = [
     inputs.srvos.nixosModules.server
+    inputs.fast-nix-gc.nixosModules.default
     ../../../modules/common.nix
     ../../../modules/nspawn-test-containers.nix
     ../common.nix
     ./ofborg-config.nix
   ];
 
-  nix.gc.automatic = true;
+  services.fast-nix-gc = {
+    enable = true;
+    automatic = true;
+    dates = "hourly";
+    ensureFree = "30%"; # some breathing room for zfs
+    keepRecent = "24h";
+  };
 
   # TODO wire up exporters
   # TODO loki
