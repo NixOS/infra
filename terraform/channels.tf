@@ -254,13 +254,14 @@ resource "fastly_service_vcl" "channels" {
       # layer after the first layer turned a 301 into a 302.
       #
       # Additionally, this also implements the "Lockable HTTP Tarball Protocol"
-      # to use nixexprs.tar.xz with Flakes and have it locked properly.
+      # to use nixexprs.tar.zst (or any other nixexprs.tar.*) with Flakes and
+      # have it locked properly.
       if (beresp.status == 301 || beresp.status == 302) {
         set beresp.status = 302;
         set beresp.ttl = 0s;
         set beresp.grace = 0s;
         set beresp.cacheable = false;
-        if (req.backend.is_origin && std.suffixof(bereq.url, "/nixexprs.tar.xz")) {
+        if (req.backend.is_origin && std.prefixof(bereq.url.basename, "nixexprs.tar.")) {
           # pass redirect location into special flake "immutable tarball" header
           set beresp.http.link = "<" + beresp.http.location + {">; rel="immutable""};
           # clear query string from redirect destination as precaution in case
