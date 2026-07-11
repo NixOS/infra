@@ -13,6 +13,7 @@
   nix,
   gnutar,
   xz,
+  zstd,
   rsync,
   openssh,
   nix-index,
@@ -76,6 +77,7 @@ stdenv.mkDerivation {
           nix
           gnutar
           xz
+          zstd
           rsync
           openssh
           nix-index
