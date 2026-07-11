@@ -318,7 +318,7 @@ if ($bucketReleases && $bucketReleases->head_key("$releasePrefix")) {
             "--sort=name",
             "--owner=0",
             "--group=0",
-            "--mtime=@315532800", # matches SOURCE_DATE_EPOCH from stdenv
+            "--mtime=\@315532800", # matches SOURCE_DATE_EPOCH from stdenv
             "--numeric-owner",
             "--directory=$tmpDir/unpack",
             basename($exprDir)
@@ -331,7 +331,7 @@ if ($bucketReleases && $bucketReleases->head_key("$releasePrefix")) {
             "--sort=name",
             "--owner=0",
             "--group=0",
-            "--mtime=@315532800", # matches SOURCE_DATE_EPOCH from stdenv
+            "--mtime=\@315532800", # matches SOURCE_DATE_EPOCH from stdenv
             "--numeric-owner",
             "--directory=$tmpDir/unpack",
             basename($exprDir)
