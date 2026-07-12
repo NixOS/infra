@@ -94,7 +94,7 @@ in
     log_prefix = https://cache.nixos.org/
 
     evaluator_workers = 16
-    evaluator_max_memory_size = 8192
+    evaluator_max_memory_size = 4096
 
     queue_runner_endpoint = http://${config.services.hydra-queue-runner-dev.rest.address}:${toString config.services.hydra-queue-runner-dev.rest.port}
 
