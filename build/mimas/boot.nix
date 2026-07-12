@@ -6,6 +6,9 @@
       "nvme"
       "usbhid"
     ];
+    kernelParams = [
+      "zfs_arc_max=68719476736.0" # 64 GiB
+    ];
     supportedFilesystems.zfs = true;
     loader = {
       efi.canTouchEfiVariables = false;
