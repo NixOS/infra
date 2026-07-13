@@ -81,9 +81,7 @@
     "infra@nixos.org" = {
       forwardTo = [
         ../../secrets/mweinelt-email-address.umbriel # https://github.com/mweinelt
-        ../../secrets/zimbatm-email-address.umbriel # https://github.com/zimbatm
         ../../secrets/vcunat-email-address.umbriel # https://github.com/vcunat
-        ../../secrets/edef1c-email-address.umbriel # https://github.com/edef1c
         ../../secrets/Mic92-email-address.umbriel # https://github.com/Mic92
       ];
     };
