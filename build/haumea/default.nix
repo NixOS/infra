@@ -53,5 +53,8 @@
   users.users.root.openssh.authorizedKeys.keys =
     with (import ../../keys.nix);
     ssh.groups.infra-core # maybe this isn't needed to add (again)?
-    ++ ssh.users.brianmcgee; # experiments with the old Hydra's DB
+    # experiments with the old Hydra's DB
+    ++ ssh.users.brianmcgee
+    ++ ssh.users.conni2461
+    ++ ssh.users.ericson2314;
 }
