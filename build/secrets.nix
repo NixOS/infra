@@ -19,7 +19,10 @@ let
     rfc39-record-push = [ pluto ];
     storagebox-exporter-token = [ pluto ];
     tarball-mirror-aws-credentials = [ pluto ];
-    zrepl-ssh-key = [ titan ];
+    zrepl-ssh-key = [
+      titan
+      mimas
+    ];
 
     # builders/
     elated-minsky-queue-runner-token = [

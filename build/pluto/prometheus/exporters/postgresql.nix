@@ -8,6 +8,7 @@
           targets = [
             "haumea.nixos.org:9187"
             "titan.nixos.org:9187"
+            "mimas.nixos.org:9187"
             "tracker.security.nixos.org:9187"
           ];
         }
