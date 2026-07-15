@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }:
@@ -7,7 +8,9 @@
 {
   services.prometheus.exporters.postgres = {
     enable = true;
-    dataSourceName = "user=root database=hydra host=/run/postgresql sslmode=disable";
+    # CREATE USER "postgres-exporter";
+    # GRANT pg_monitor TO "postgres-exporter";
+    dataSourceName = "user=postgres-exporter database=hydra host=/run/postgresql sslmode=disable";
     openFirewall = true;
     firewallRules = ''
       ip6 saddr $prometheus_inet6 tcp dport ${toString config.services.prometheus.exporters.postgres.port} accept
@@ -90,13 +93,8 @@
       compute_query_id = "on";
     };
 
-    authentication = ''
-      local all root peer map=prometheus
-    '';
-
-    identMap = ''
-      prometheus root root
-      prometheus postgres-exporter root
+    authentication = lib.mkBefore ''
+      local all postgres-exporter peer
     '';
   };
 }
