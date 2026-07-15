@@ -10,7 +10,6 @@
             labels.role = "database";
             targets = [
               "mimas.nixos.org:9811"
-              "titan.nixos.org:9811"
             ];
           }
         ];

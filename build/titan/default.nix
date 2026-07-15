@@ -3,8 +3,6 @@
     ../common.nix
     ./boot.nix
     ./network.nix
-    ./postgresql.nix
-    ./zrepl.nix
   ];
 
   disko.devices = import ./disko.nix;
