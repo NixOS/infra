@@ -8,19 +8,14 @@
 {
   services.prometheus.exporters.postgres = {
     enable = true;
-    dataSourceName = "user=root database=hydra host=/run/postgresql sslmode=disable";
+    # CREATE USER "postgres-exporter";
+    # GRANT pg_monitor TO "postgres-exporter";
+    dataSourceName = "user=postgres-exporter database=hydra host=/run/postgresql sslmode=disable";
     openFirewall = true;
     firewallRules = ''
       ip6 saddr $prometheus_inet6 tcp dport ${toString config.services.prometheus.exporters.postgres.port} accept
       ip saddr $prometheus_inet4 tcp dport ${toString config.services.prometheus.exporters.postgres.port} accept
     '';
-  };
-
-  networking.firewall.interfaces."vlan4000".allowedTCPPorts = [ 5432 ];
-
-  systemd.services.postgresql = {
-    wants = [ "network-online.target" ];
-    after = [ "network-online.target" ];
   };
 
   services.postgresql = {
@@ -29,8 +24,6 @@
     package = pkgs.postgresql_18;
     # https://pgtune.leopard.in.ua/#/
     settings = {
-      listen_addresses = lib.mkForce "10.0.40.3";
-
       # https://vadosware.io/post/everything-ive-seen-on-optimizing-postgres-on-zfs-on-linux/#zfs-related-tunables-on-the-postgres-side
       full_page_writes = "off";
 
@@ -100,15 +93,8 @@
       compute_query_id = "on";
     };
 
-    # FIXME: don't use 'trust'.
-    authentication = ''
-      host hydra all 10.0.40.2/32 trust
-      local all root peer map=prometheus
-    '';
-
-    identMap = ''
-      prometheus root root
-      prometheus postgres-exporter root
+    authentication = lib.mkBefore ''
+      local all postgres-exporter peer
     '';
   };
 }

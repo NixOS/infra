@@ -84,7 +84,7 @@ in
     enable = true;
     awsCredentialsFile = config.age.secrets."hydra-aws-credentials".path;
     settings = {
-      dbUrl = "postgres://hydra@10.0.40.3:5432/hydra";
+      dbUrl = "postgres://hydra@%2Frun%2Fpostgresql:5432/hydra";
       machineFreeFn = "DynamicWithMaxJobLimit";
       stepSortFn = "WithCriticalPath";
       usePresignedUploads = true;

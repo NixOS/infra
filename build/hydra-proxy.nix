@@ -6,6 +6,12 @@
   ...
 }:
 
+let
+  genAgentRange =
+    agent: from: to: sep: trailer:
+    map (n: "${agent}${sep}${toString n}${trailer}") (lib.range from to);
+in
+
 {
   imports = [
     inputs.nixocaine.nixosModules.default
@@ -45,13 +51,47 @@
         unwanted-asns = {
           db-path = inputs.geolite2-asn-mmdb;
           list = map toString [
+            7552 # VIETEL-AS-AP
             37963 # ALIBABA-CN-NET
             45102 # ALIBABA-CN-NET
             45899 # VNPT-AS-VN
+            51167 # CONTABO
             62610 # ZEN-DPS
             132203 # TENCENT-NET-AP-CN
           ];
         };
+        unwanted-visitors =
+          # broad version ranges
+          (genAgentRange "Android" 2 12 " " ".")
+          ++ (genAgentRange "Chrome" 1 142 "/" ".")
+          ++ (genAgentRange "CriOS" 1 142 "/" ".")
+          ++ (genAgentRange "Firefox" 1 139 "/" ".")
+          ++ (genAgentRange "Firefox" 141 150 "/" ".")
+          ++ (genAgentRange "FxiOS" 1 150 "/" ".")
+          ++ (genAgentRange "iPhone OS" 1 14 " " "_")
+          ++ (genAgentRange "Windows NT" 4 7 " " "")
+          ++ (genAgentRange "Mac OS X" 11 14 " " "")
+          ++ [
+            # manually crafted patterns
+            "Mac OS X 10." # should be 10_
+            "Mac OS X 10_5"
+            "Mac OS X 10_6"
+            "Mac OS X 10_7"
+            "Mac OS X 10_8"
+            "Mac OS X 10_9"
+            "Mac OS X 10_10"
+            "Mac OS X 10_11"
+            "Mac OS X 10_12"
+            "Mac OS X 10_13"
+            "Mac OS X 10_14"
+            "iPod;"
+            "Presto/"
+            "Trident/"
+            "Windows CE"
+            # Missing contact information
+            "efx-scanner/3.0"
+            "Go-http-client/1.1"
+          ];
       };
       server.default = {
         bind = "/run/iocaine/default.sock";

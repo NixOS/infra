@@ -38,7 +38,7 @@ in
             {
               # https://zrepl.github.io/configuration/snapshotting.html#postgres-checkpoint-hook
               type = "postgres-checkpoint";
-              dsn = "host=/run/postgresql dbname=hydra user=root sslmode=disable";
+              dsn = "host=/run/postgresql dbname=hydra user=postgres sslmode=disable";
               filesystems."zroot/pg" = true;
             }
           ];

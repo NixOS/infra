@@ -17,7 +17,7 @@ jobs:
     type: sink
     serve:
       type: stdinserver
-      client_identities: [titan]
+      client_identities: [hydra]
     recv:
       placeholder:
         encryption: off

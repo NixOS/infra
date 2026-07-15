@@ -9,7 +9,7 @@
           {
             labels.role = "database";
             targets = [
-              "titan.nixos.org:9811"
+              "mimas.nixos.org:9811"
             ];
           }
         ];

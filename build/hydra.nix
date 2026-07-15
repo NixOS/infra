@@ -62,7 +62,6 @@ in
   };
 
   services.hydra-dev.enable = true;
-  services.hydra-dev.dbi = "dbi:Pg:dbname=hydra;host=10.0.40.3;user=hydra;";
   services.hydra-dev.logo = ./hydra-logo.png;
   services.hydra-dev.hydraURL = "https://hydra.nixos.org";
   services.hydra-dev.notificationSender = "edolstra@gmail.com";
