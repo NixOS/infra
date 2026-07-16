@@ -95,6 +95,11 @@
 
     authentication = lib.mkBefore ''
       local all postgres-exporter peer
+      local hydra zrepl peer map=zrepl
+    '';
+
+    identMap = ''
+      zrepl root zrepl
     '';
   };
 }
