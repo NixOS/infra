@@ -63,27 +63,18 @@ in
         unwanted-visitors =
           # broad version ranges
           (genAgentRange "Android" 2 12 " " ".")
-          ++ (genAgentRange "Chrome" 1 142 "/" ".")
+          ++ (genAgentRange "Chrome" 1 148 "/" ".")
           ++ (genAgentRange "CriOS" 1 142 "/" ".")
           ++ (genAgentRange "Firefox" 1 139 "/" ".")
           ++ (genAgentRange "Firefox" 141 150 "/" ".")
           ++ (genAgentRange "FxiOS" 1 150 "/" ".")
           ++ (genAgentRange "iPhone OS" 1 14 " " "_")
           ++ (genAgentRange "Windows NT" 4 7 " " "")
+          ++ (genAgentRange "Mac OS X 10." 5 14 "" "")
+          ++ (genAgentRange "Mac OS X 10_" 5 14 "" "")
           ++ (genAgentRange "Mac OS X" 11 14 " " "")
           ++ [
             # manually crafted patterns
-            "Mac OS X 10." # should be 10_
-            "Mac OS X 10_5"
-            "Mac OS X 10_6"
-            "Mac OS X 10_7"
-            "Mac OS X 10_8"
-            "Mac OS X 10_9"
-            "Mac OS X 10_10"
-            "Mac OS X 10_11"
-            "Mac OS X 10_12"
-            "Mac OS X 10_13"
-            "Mac OS X 10_14"
             "iPod;"
             "Presto/"
             "Trident/"
