@@ -25,17 +25,9 @@
     geolite2-asn-mmdb.url = "https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-ASN.mmdb";
     geolite2-asn-mmdb.flake = false;
 
-    nix = {
-      #url = "github:NixOS/nix/2.34-maintenance";
-      # TMP S3 upload abortions: https://github.com/NixOS/nix/pull/15949
-      url = "github:tomberek/nix/backport-15855-to-2.34-maintenance";
-      flake = false;
-    };
-
     hydra = {
-      url = "github:NixOS/hydra/hydra.nixos.org";
+      url = "github:NixOS/hydra";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nix.follows = "nix";
       inputs.treefmt-nix.follows = "treefmt-nix";
     };
 

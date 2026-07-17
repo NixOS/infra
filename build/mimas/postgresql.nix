@@ -20,13 +20,14 @@
 
   services.postgresql = {
     enable = true;
-    enableJIT = true;
     package = pkgs.postgresql_18;
     # https://pgtune.leopard.in.ua/#/
+    # https://vadosware.io/post/everything-ive-seen-on-optimizing-postgres-on-zfs-on-linux/#zfs-related-tunables-on-the-postgres-side
     settings = {
-      # https://vadosware.io/post/everything-ive-seen-on-optimizing-postgres-on-zfs-on-linux/#zfs-related-tunables-on-the-postgres-side
+      # no page tearing on ZFS
       full_page_writes = "off";
 
+      # avoid zero-filling with ZFS
       wal_init_zero = "off";
       wal_recycle = "off";
 
@@ -47,37 +48,43 @@
       log_autovacuum_min_duration = 0;
       log_line_prefix = "user=%u,db=%d,app=%a,client=%h ";
 
-      max_connections = 500;
-      work_mem = "20MB";
-      maintenance_work_mem = "2GB";
+      max_worker_processes = 48;
+      max_parallel_workers_per_gather = 4;
+      max_parallel_workers = 48;
+      max_parallel_maintenance_workers = 4;
+
+      max_connections = 100;
+      work_mem = "150MB";
+      maintenance_work_mem = "8GB";
 
       # 25% of memory
       shared_buffers = "32GB";
 
-      # Checkpoint every 1GB. (default)
-      # increased after seeing many warnings about frequent checkpoints
+      # Reduce WAL file creation churn
       min_wal_size = "1GB";
       max_wal_size = "4GB";
+
+      # Shared memory allocation before writing WAL to disk
       wal_buffers = "16MB";
 
-      max_worker_processes = 32;
-      max_parallel_workers_per_gather = 4;
-      max_parallel_workers = 32;
+      # Async I/O over shared ringbuffer with the kernel
+      io_method = "io_uring";
 
       # NVMe related performance tuning
-      effective_io_concurrency = 200;
+      effective_io_concurrency = 1000;
       random_page_cost = "1.1";
 
-      # We can risk losing some transactions.
+      # query planner estimate for memory available for disk caching
+      effective_cache_size = "96GB";
+
+      # With ZFS we can risk losing some transactions.
       synchronous_commit = "off";
 
-      effective_cache_size = "64GB";
-
-      # try to allocate huge pages, if possible
+      # Try to allocate huge pages, if possible
       huge_pages = "try";
 
-      # Enable JIT compilation if possible.
-      jit = "on";
+      # Only useful for long-running CPU-bound queries
+      jit = "off";
 
       # autovacuum and autoanalyze much more frequently:
       # at these values vacuum should run approximately
@@ -86,8 +93,8 @@
       # benefit from frequent vacuums, so this should
       # help. In particular, I'm thinking the jobsets
       # pages.
-      autovacuum_vacuum_scale_factor = 0.02;
-      autovacuum_analyze_scale_factor = 0.01;
+      autovacuum_vacuum_scale_factor = 0.02; # down from 0.2
+      autovacuum_analyze_scale_factor = 0.01; # down from 0.1
 
       shared_preload_libraries = "pg_stat_statements";
       compute_query_id = "on";

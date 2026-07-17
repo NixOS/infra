@@ -450,9 +450,7 @@
     "hydra": {
       "inputs": {
         "foreman": "foreman",
-        "nix": [
-          "nix"
-        ],
+        "nix": "nix",
         "nix-eval-jobs": "nix-eval-jobs",
         "nixpkgs": [
           "nixpkgs"
@@ -462,16 +460,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1783580739,
-        "narHash": "sha256-JKTgQmWFTkEWA9lzK0ikc6zuKSZ3zojlq6PPPWR0Pkk=",
+        "lastModified": 1784223924,
+        "narHash": "sha256-aLoklefjR3NGGAgVArBwlC/7mcH9Z0zgUQfIoq9G7EA=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "5d83743a96b9f262b8707e2209f8296ea354ac1f",
+        "rev": "c5e3a66c668a1c9858e1d8e9b22db7ffb9b9a6e0",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "hydra.nixos.org",
         "repo": "hydra",
         "type": "github"
       }
@@ -545,16 +542,16 @@
     "nix": {
       "flake": false,
       "locked": {
-        "lastModified": 1781104715,
-        "narHash": "sha256-qaInXBHddYnhnWQMLLmWusSFcaHwwlfysHD8QJaLnds=",
-        "owner": "tomberek",
+        "lastModified": 1783987836,
+        "narHash": "sha256-UkRzz0meYeuSQt5rQodwfiSe1If+5JojDP7Kxk0beXM=",
+        "owner": "NixOS",
         "repo": "nix",
-        "rev": "15ee316650a282432676207e472de8d2f7a77f6c",
+        "rev": "aa2613fa02ca6199fe0ebf61a0f7f6d781d32a47",
         "type": "github"
       },
       "original": {
-        "owner": "tomberek",
-        "ref": "backport-15855-to-2.34-maintenance",
+        "owner": "NixOS",
+        "ref": "2.35-maintenance",
         "repo": "nix",
         "type": "github"
       }
@@ -562,16 +559,16 @@
     "nix-eval-jobs": {
       "flake": false,
       "locked": {
-        "lastModified": 1773356729,
-        "narHash": "sha256-OFGRoJOYhvZ3Enk5a8vMy0QNcG5ZxyzFhyHMrwKXde8=",
+        "lastModified": 1784200986,
+        "narHash": "sha256-/C5wyGYe4uMKKH26vy3knpwP/hvjOHO/58cySL8ADC4=",
         "owner": "NixOS",
         "repo": "nix-eval-jobs",
-        "rev": "65ebf5b7cd453a27af09cf02b1fc57b3568cc4b7",
+        "rev": "a0cd02231c58974a6b5aaa3712069b071047162e",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "v2.34.1",
+        "ref": "v2.35.0",
         "repo": "nix-eval-jobs",
         "type": "github"
       }
@@ -803,7 +800,6 @@
         "freescout": "freescout",
         "geolite2-asn-mmdb": "geolite2-asn-mmdb",
         "hydra": "hydra",
-        "nix": "nix",
         "nix-index": "nix-index",
         "nixocaine": "nixocaine",
         "nixpkgs": "nixpkgs",
