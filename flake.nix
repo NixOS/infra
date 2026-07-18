@@ -26,7 +26,7 @@
     geolite2-asn-mmdb.flake = false;
 
     hydra = {
-      url = "github:NixOS/hydra";
+      url = "github:NixOS/hydra/revert-nix-2.35.0";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.treefmt-nix.follows = "treefmt-nix";
     };
