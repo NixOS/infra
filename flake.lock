@@ -551,6 +551,32 @@
         "type": "github"
       }
     },
+    "nix-fast-build": {
+      "inputs": {
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1785674245,
+        "narHash": "sha256-GgrP1+KBWztL04EaXVBYW5Ar1FsN0Qpnd5Rp0rjJn+E=",
+        "owner": "Mic92",
+        "repo": "nix-fast-build",
+        "rev": "813ce1a65e0375a337337c97eecd55c7f792e2a5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "nix-fast-build",
+        "type": "github"
+      }
+    },
     "nix-github-actions": {
       "inputs": {
         "nixpkgs": [
@@ -777,6 +803,7 @@
         "flake-utils": "flake-utils",
         "geolite2-asn-mmdb": "geolite2-asn-mmdb",
         "hydra": "hydra",
+        "nix-fast-build": "nix-fast-build",
         "nix-index": "nix-index",
         "nixocaine": "nixocaine",
         "nixpkgs": "nixpkgs",

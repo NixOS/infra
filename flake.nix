@@ -31,6 +31,11 @@
       inputs.treefmt-nix.follows = "treefmt-nix";
     };
 
+    nix-fast-build.url = "github:Mic92/nix-fast-build";
+    nix-fast-build.inputs.nixpkgs.follows = "nixpkgs";
+    nix-fast-build.inputs.flake-parts.follows = "flake-parts";
+    nix-fast-build.inputs.treefmt-nix.follows = "treefmt-nix";
+
     nix-index = {
       url = "github:nix-community/nix-index";
       inputs.nixpkgs.follows = "nixpkgs";
