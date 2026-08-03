@@ -31,6 +31,11 @@
       inputs.treefmt-nix.follows = "treefmt-nix";
     };
 
+    nix-fast-build.url = "github:Mic92/nix-fast-build";
+    nix-fast-build.inputs.nixpkgs.follows = "nixpkgs";
+    nix-fast-build.inputs.flake-parts.follows = "flake-parts";
+    nix-fast-build.inputs.treefmt-nix.follows = "treefmt-nix";
+
     nix-index = {
       url = "github:nix-community/nix-index";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -45,27 +50,20 @@
     };
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05-small";
+    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-26.05-darwin";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
-      inputs.nixpkgs-lib.follows = "nixpkgs";
+      inputs.nixpkgs-lib.follows = "nixpkgs-darwin";
     };
 
     darwin = {
       url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
 
     flake-utils.url = "github:numtide/flake-utils";
-
-    freescout = {
-      url = "git+https://cyberchaos.dev/e1mo/freescout-nix-flake.git";
-      inputs = {
-        flake-utils.follows = "flake-utils";
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
 
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";

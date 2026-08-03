@@ -21,7 +21,7 @@ in
   services.hydra-queue-builder-dev = {
     enable = true;
     queueRunnerAddr = "https://queue-runner.staging-hydra.nixos.org";
-    maxJobs = 2;
+    settings.maxJobs = 2;
     mtls = {
       serverRootCaCertPath = "${../../hosts/staging-hydra/ca.crt}";
       clientCertPath = "${../../hosts/${nodePath}/client.crt}";
