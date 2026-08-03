@@ -14,9 +14,9 @@
     max-jobs = 48;
   };
 
-  services.hydra-queue-builder-dev.supportedFeatures = lib.filter (feat: feat != "big-parallel") (
-    with config.nix.settings; system-features ++ extra-system-features
-  );
+  services.hydra-queue-builder-dev.settings.supportedFeatures = lib.filter (
+    feat: feat != "big-parallel"
+  ) (with config.nix.settings; system-features ++ extra-system-features);
 
   networking = {
     hostName = "elated-minsky";

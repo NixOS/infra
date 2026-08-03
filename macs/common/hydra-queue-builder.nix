@@ -22,12 +22,14 @@
     enable = true;
     queueRunnerAddr = "https://queue-runner.hydra.nixos.org";
     authorizationFile = config.age.secrets."queue-runner-token".path;
-    maxJobs = if lib.elem "big-parallel" (config.nix.settings.system-features or [ ]) then 2 else 4;
-    # Required for presigned uploads: builders fetch dependencies via
-    # substitution and upload results to s3 directly.
-    useSubstitutes = true;
-    # Align this with what our GC settings
-    storeAvailThreshold = 5.0;
+    settings = {
+      maxJobs = if lib.elem "big-parallel" (config.nix.settings.system-features or [ ]) then 2 else 4;
+      # Required for presigned uploads: builders fetch dependencies via
+      # substitution and upload results to s3 directly.
+      useSubstitutes = true;
+      # Align this with what our GC settings
+      storeAvailThreshold = 5.0;
+    };
   };
 
   nix.settings.trusted-users = [ "hydra-queue-builder" ];

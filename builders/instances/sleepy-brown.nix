@@ -8,7 +8,7 @@
     max-jobs = 4;
   };
 
-  services.hydra-queue-builder-dev.supportedFeatures = [ "big-parallel" ];
+  services.hydra-queue-builder-dev.settings.supportedFeatures = [ "big-parallel" ];
 
   networking = {
     hostName = "sleepy-brown";

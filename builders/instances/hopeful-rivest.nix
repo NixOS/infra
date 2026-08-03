@@ -9,7 +9,7 @@
     max-jobs = 3;
   };
 
-  services.hydra-queue-builder-dev.mandatoryFeatures = [ "big-parallel" ];
+  services.hydra-queue-builder-dev.settings.mandatoryFeatures = [ "big-parallel" ];
 
   networking = {
     hostName = "hopeful-rivest";
