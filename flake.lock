@@ -321,29 +321,6 @@
         "type": "github"
       }
     },
-    "freescout": {
-      "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1761846753,
-        "narHash": "sha256-ijmJj6bplEz27JSt5eV842QBwNhRzQT8pTKNDz4lR2Y=",
-        "ref": "refs/heads/main",
-        "rev": "1b9ac64565b6dd65aa677a004abb8fabd68981e2",
-        "revCount": 52,
-        "type": "git",
-        "url": "https://cyberchaos.dev/e1mo/freescout-nix-flake.git"
-      },
-      "original": {
-        "type": "git",
-        "url": "https://cyberchaos.dev/e1mo/freescout-nix-flake.git"
-      }
-    },
     "geolite2-asn-mmdb": {
       "flake": false,
       "locked": {
@@ -798,7 +775,6 @@
         "fast-nix-gc": "fast-nix-gc",
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
-        "freescout": "freescout",
         "geolite2-asn-mmdb": "geolite2-asn-mmdb",
         "hydra": "hydra",
         "nix-index": "nix-index",

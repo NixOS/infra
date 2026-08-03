@@ -1,13 +1,13 @@
 {
-  inputs,
   config,
+  inputs,
   pkgs,
   ...
 }:
 
 {
   imports = [
-    inputs.freescout.nixosModules.freescout
+    "${inputs.nixpkgs-unstable}/nixos/modules/services/web-apps/freescout.nix"
     ../nginx.nix
   ];
 
@@ -22,11 +22,11 @@
       enable = true;
       kind = "pgsql";
     };
+  };
 
-    nginx = {
-      forceSSL = true;
-      enableACME = true;
-    };
+  services.nginx.virtualHosts.${config.services.freescout.domain} = {
+    forceSSL = true;
+    enableACME = true;
   };
 
   services.postgresqlBackup = {
