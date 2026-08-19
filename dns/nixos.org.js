@@ -169,7 +169,7 @@ D("nixos.org",
 	CNAME("summer", "makemake.ngi.nixos.org."),
 
 	// ngi git-pages
-	TXT("_git-pages-challenge.dev.ngi", "db86aace97f23cde80a9377a3569e39140637fc5721aea14f270bc3d44b9df00"),
+	TXT("_git-pages-challenge.dev.ngi", "2a8644def04db7c934ba3b62e9d00280136a149f5dc5cd4817da5782ce1e398a"),
 
 	A("tracker-staging.security", "188.245.41.195"),
 	AAAA("tracker-staging.security", "2a01:4f8:1c1b:b87b::1"),
