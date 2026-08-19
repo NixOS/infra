@@ -136,6 +136,10 @@ in
       restartUnits = [ "postfix-setup.service" ];
     };
 
+    systemd.services.postfix-setup = {
+      after = [ "sops-install-secrets.service" ];
+    };
+
     services.postfix.mapFiles.virtual-mailing-lists =
       config.sops.templates."postfix-virtual-mailing-lists".path;
 
