@@ -165,7 +165,11 @@ D("nixos.org",
 	CNAME("buildbot.ngi", "makemake.ngi.nixos.org."),
 	CNAME("cryptpad.ngi", "makemake.ngi.nixos.org."),
 	CNAME("cryptpad-sandbox.ngi", "makemake.ngi.nixos.org."),
+	CNAME("dev.ngi", "makemake.ngi.nixos.org."),
 	CNAME("summer", "makemake.ngi.nixos.org."),
+
+	// ngi git-pages
+	TXT("_git-pages-challenge.dev.ngi", "db86aace97f23cde80a9377a3569e39140637fc5721aea14f270bc3d44b9df00"),
 
 	A("tracker-staging.security", "188.245.41.195"),
 	AAAA("tracker-staging.security", "2a01:4f8:1c1b:b87b::1"),
