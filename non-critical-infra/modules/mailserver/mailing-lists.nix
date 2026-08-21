@@ -232,5 +232,14 @@
         ../../secrets/sigmasquadron-xsa-email-address.umbriel # https://github.com/SigmaSquadron
       ];
     };
+
+    # Primary point of contact for https://github.com/google/oss-fuzz reports
+    # for https://github.com/NixOS/nix. Subset of https://nixos.org/community/teams/nix.
+    "nix.oss-fuzz@nixos.org" = {
+      forwardTo = [
+        ../../secrets/xokdvium-email-address.umbriel # https://github.com/xokdvium
+        # TODO: Include other interested nix team members.
+      ];
+    };
   };
 }
