@@ -227,7 +227,7 @@ in
         after = [ config.systemd.services.hydra-server.name ];
         requires = [ config.systemd.services.hydra-server.name ];
         environment = {
-          inherit (config.systemd.services.hydra-init.environment) HYDRA_DBI;
+          inherit (config.systemd.services.hydra-init.environment) HYDRA_DATABASE_URL;
         };
         path = [
           config.services.hydra.package
