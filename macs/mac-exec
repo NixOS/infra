@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
 HOSTS=(
-	"hetzner@enormous-catfish.mac.nixos.org"
-	"hetzner@growing-jennet.mac.nixos.org"
-	"hetzner@intense-heron.mac.nixos.org"
-	"hetzner@maximum-snail.mac.nixos.org"
-	"hetzner@sweeping-filly.mac.nixos.org"
-	"customer@eager-heisenberg.mac.nixos.org"
-	"customer@kind-lumiere.mac.nixos.org"
+	"root@enormous-catfish.mac.nixos.org"
+	"root@growing-jennet.mac.nixos.org"
+	"root@intense-heron.mac.nixos.org"
+	"root@maximum-snail.mac.nixos.org"
+	"root@sweeping-filly.mac.nixos.org"
+	"root@eager-heisenberg.mac.nixos.org"
+	"root@kind-lumiere.mac.nixos.org"
 	"root@norwegian-blue.mac.nixos.org"
 	# ofborg (MacStadium)
 	"root@mac01.ofborg.org"
