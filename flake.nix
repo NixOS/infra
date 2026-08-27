@@ -31,6 +31,14 @@
       inputs.treefmt-nix.follows = "treefmt-nix";
     };
 
+    # What staging-hydra.nixos.org and the ofborg builders feeding it run, so a
+    # hydra change can be exercised there before `hydra` above moves.
+    hydra-staging = {
+      url = "github:NixOS/hydra/with-2.35-with-magic-query-fix-without-timestamp-migration";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+    };
+
     # TODO: https://github.com/Mic92/nix-fast-build/commit/b171a273ae8387dcedd19193761bbf919f82c509#commitcomment-196494707
     nix-fast-build.url = "github:Mic92/nix-fast-build/5501bb1ad288244021431edf2b0a6bed63f23568";
     nix-fast-build.inputs.nixpkgs.follows = "nixpkgs";

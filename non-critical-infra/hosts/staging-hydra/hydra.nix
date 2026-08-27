@@ -10,8 +10,8 @@ let
 in
 {
   imports = [
-    inputs.hydra.nixosModules.web-app
-    inputs.hydra.nixosModules.queue-runner
+    inputs.hydra-staging.nixosModules.web-app
+    inputs.hydra-staging.nixosModules.queue-runner
   ];
 
   networking.firewall.allowedTCPPorts = [
