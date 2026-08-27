@@ -9,7 +9,7 @@
   ];
 
   nixpkgs.overlays = [
-    inputs.hydra.overlays.default
+    inputs.hydra-staging.overlays.default
   ];
 
   disko.devices = import ./disko.nix;

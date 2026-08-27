@@ -14,7 +14,7 @@ let
 in
 {
   imports = [
-    inputs.hydra.nixosModules.builder
+    inputs.hydra-staging.nixosModules.builder
     ./staging-cache.nix
   ];
 
