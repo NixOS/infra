@@ -65,6 +65,22 @@ These machine are aarch64-darwin hosts.
 - mac04.ofborg.org
 - mac05.ofborg.org
 
+## MDM Bootstrap
+
+Machines provisioned via MDM (e.g. Mosyle) use the `mdm-bootstrap.sh` script for
+initial activation. This replaces the legacy `activate-user` + `activate`
+sequence with the recommended `darwin-rebuild activate` approach.
+
+The MDM bootstrap flow is:
+
+```
+systemConfig="$(readlink -f ./result)"
+nix-env -p /nix/var/nix/profiles/system --set "$systemConfig"
+./mdm-bootstrap.sh
+```
+
+See [mdm-bootstrap.sh](./mdm-bootstrap.sh) for details.
+
 ## Install
 
 - Login to user hetzner with the given password
