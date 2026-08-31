@@ -27,7 +27,7 @@
 
     hydra = {
       # TODO: just a temporary branch on production
-      url = "github:NixOS/hydra/bd930d5133312f88b3aa917e1c5c054f";
+      url = "github:NixOS/hydra/with-2.35-with-magic-query-fix-without-timestamp-migration";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.treefmt-nix.follows = "treefmt-nix";
     };
@@ -35,7 +35,7 @@
     # What staging-hydra.nixos.org and the ofborg builders feeding it run, so a
     # hydra change can be exercised there before `hydra` above moves.
     hydra-staging = {
-      url = "github:NixOS/hydra/bd930d5133312f88b3aa917e1c5c054f";
+      url = "github:NixOS/hydra/with-2.35-with-magic-query-fix-without-timestamp-migration";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.treefmt-nix.follows = "treefmt-nix";
     };
