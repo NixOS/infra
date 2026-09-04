@@ -4,7 +4,7 @@ D("nixos.org",
 
 	TXT("@", "apple-domain-verification=OvacO4lGB9A6dBFg"),
 	TXT("@", "brevo-code:f580a125e215ecb440363a15cdf47a17"),	
-	TXT("@", "google-site-verification=Pm5opvmNjJOwdb7JnuVJ_eFBPaZYWNcAavY-08AJoGc"),
+	TXT("@", "google-site-verification=Qp2ww11Hvufxn0pGsHvbU6KgLU_Lpe_LF9vq_i3J8NI"),
 	// bluesky account/domain binding
 	TXT("_atproto", "did=did:plc:bf43o4nxudgubwt4iljpayb7"),
 
