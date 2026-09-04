@@ -222,7 +222,15 @@ resource "fastly_service_vcl" "channels" {
         set beresp.cacheable = true;
       }
       if (req.url ~ "/flake-registry.json") {
-        set beresp.stale_if_error = 1000000s;
+        # serve stale registry on GitHub errors (e.g. 429 rate limits)
+        if (beresp.status >= 400 && stale.exists) {
+          return(deliver_stale);
+        }
+        # override GitHub's max-age=300
+        set beresp.ttl = 86400s; # 1 day
+        set beresp.http.Cache-Control = "public, max-age=86400"; # 1 day
+        set beresp.stale_if_error = 604800s; # 7 days
+        set beresp.stale_while_revalidate = 120s;
       }
     EOT
     name     = "Change 403 from S3 to 404"
