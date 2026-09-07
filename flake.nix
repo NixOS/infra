@@ -41,7 +41,7 @@
     };
 
     # TODO: https://github.com/Mic92/nix-fast-build/commit/b171a273ae8387dcedd19193761bbf919f82c509#commitcomment-196494707
-    nix-fast-build.url = "github:Mic92/nix-fast-build/5501bb1ad288244021431edf2b0a6bed63f23568";
+    nix-fast-build.url = "github:Mic92/nix-fast-build/8f0c351b6da50d990e41c501fffb34182a21247a";
     nix-fast-build.inputs.nixpkgs.follows = "nixpkgs";
     nix-fast-build.inputs.flake-parts.follows = "flake-parts";
     nix-fast-build.inputs.treefmt-nix.follows = "treefmt-nix";
