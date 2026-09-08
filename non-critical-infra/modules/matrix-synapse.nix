@@ -61,6 +61,49 @@
 
     extraConfigFiles = [ config.sops.secrets.matrix-synapse-secrets.path ];
 
+    configureRedisLocally = true;
+
+    workers = {
+      client1 = {
+        worker_app = "synapse.app.generic_worker";
+        worker_listeners = [
+          {
+            path = "/run/matrix-synapse/client1.sock";
+            type = "http";
+            x_forwarded = true;
+            resources = [
+              {
+                compress = true;
+                names = [
+                  "client"
+                  "metrics"
+                ];
+              }
+            ];
+          }
+        ];
+      };
+      client2 = {
+        worker_app = "synapse.app.generic_worker";
+        worker_listeners = [
+          {
+            path = "/run/matrix-synapse/client2.sock";
+            type = "http";
+            x_forwarded = true;
+            resources = [
+              {
+                compress = true;
+                names = [
+                  "client"
+                  "metrics"
+                ];
+              }
+            ];
+          }
+        ];
+      };
+    };
+
     # https://github.com/element-hq/synapse/blob/master/docs/usage/configuration/config_documentation.md
     settings = {
       enable_metrics = true;
@@ -93,15 +136,24 @@
         path = config.services.redis.servers.matrix-synapse.unixSocket;
       };
 
+      instance_map = {
+        main = {
+          path = "/run/matrix-synapse/replication.sock";
+        };
+      };
+
       listeners = [
         {
           type = "http";
-          path = "/run/matrix-synapse/matrix-synapse.sock";
+          path = "/run/matrix-synapse/main.sock";
           mode = "0660";
           resources = [
             {
               compress = true;
-              names = [ "client" ];
+              names = [
+                "client"
+                "metrics"
+              ];
             }
             {
               compress = false;
@@ -110,14 +162,11 @@
           ];
         }
         {
+          path = "/run/matrix-synapse/replication.sock";
           type = "http";
-          bind_addresses = [
-            "127.0.0.1"
-            "::1"
+          resources = [
+            { names = [ "replication" ]; }
           ];
-          port = 8090;
-          tls = false;
-          resources = [ { names = [ "metrics" ]; } ];
         }
       ];
     };
@@ -127,18 +176,58 @@
 
   services.nginx = {
     clientMaxBodySize = config.services.matrix-synapse.settings.max_upload_size;
-    upstreams."matrix-synapse".servers = {
-      "unix:/run/matrix-synapse/matrix-synapse.sock" = { };
+    upstreams = {
+      synapse_main.servers = {
+        "unix:/run/matrix-synapse/main.sock" = { };
+      };
+      synapse_client = {
+        servers = {
+          "unix:/run/matrix-synapse/client1.sock" = { };
+          "unix:/run/matrix-synapse/client2.sock" = { };
+        };
+      };
+      synapse_client1.servers = {
+        "unix:/run/matrix-synapse/client1.sock" = { };
+      };
+      synapse_client2.servers = {
+        "unix:/run/matrix-synapse/client2.sock" = { };
+      };
     };
+    appendHttpConfig = ''
+      # Updated for 1.159.0
+      # https://github.com/element-hq/synapse/blob/develop/docs/workers.md
+      map $request_uri $matrix_backend {
+        default synapse_main;
+
+        # Event sending requests
+        ~^/_matrix/client/(api/v1|r0|v3|unstable)/rooms/.*/redact synapse_client;
+        ~^/_matrix/client/(api/v1|r0|v3|unstable)/rooms/.*/send synapse_client;
+        ~^/_matrix/client/(api/v1|r0|v3|unstable)/rooms/.*/state/ synapse_client;
+        ~^/_matrix/client/(api/v1|r0|v3|unstable)/rooms/.*/(join|invite|leave|ban|unban|kick)$ synapse_client;
+        ~^/_matrix/client/(api/v1|r0|v3|unstable)/join/ synapse_client;
+        ~^/_matrix/client/(api/v1|r0|v3|unstable)/knock/ synapse_client;
+        ~^/_matrix/client/(api/v1|r0|v3|unstable)/profile/ synapse_client;
+      }
+
+      map $uri $metrics_backend {
+        default "";
+        /metrics/main synapse_main;
+        /metrics/client1 synapse_client1;
+        /metrics/client2 synapse_client2;
+      }
+    '';
     virtualHosts."matrix.nixos.org" = {
       forceSSL = true;
       enableACME = true;
 
-      locations."~* ^(/_matrix|/_synapse)" = {
-        proxyPass = "http://matrix-synapse";
+      locations."~* ^/_matrix" = {
+        proxyPass = "http://$matrix_backend";
       };
-      locations."= /metrics" = {
-        proxyPass = "http://localhost:8090/_synapse/metrics";
+      locations."~* ^/_synapse" = {
+        proxyPass = "http://synapse_main";
+      };
+      locations."~ ^/metrics/[^/]+$" = {
+        proxyPass = "http://$metrics_backend/_synapse/metrics";
       };
       locations."= /" = {
         return = "301 https://matrix.to/#/#community:nixos.org";
