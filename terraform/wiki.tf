@@ -54,6 +54,8 @@ resource "fastly_service_vcl" "wiki" {
       # addresses; anonymous users have no business there at this rate.
       if (req.url.path == "/w/index.php" && (
             req.url.qs ~ "(^|&)title=Special(:|%253A)(UserLogin|CreateAccount)(&|$)" && req.url.qs ~ "(^|&)returnto="
+         || req.url.qs ~ "(^|&)title=Special(:|%253A)Translate(&|$)"
+         || req.url.qs ~ "(^|&)action=(edit|submit)(&|$)"
          || req.url.qs ~ "(^|&)title=Special(:|%253A)RecentChanges(Linked)?(&|$)" && req.url.qs ~ "(^|&)from="
          || req.url.qs ~ "(^|&)mobileaction=toggle_view_(mobile|desktop)(&|$)"
          || req.url.qs ~ "(^|&)action=history(&|$)" && req.url.qs ~ "(^|&)(offset|dir)="
