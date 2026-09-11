@@ -31,11 +31,6 @@ resource "fastly_service_vcl" "wiki" {
     name = local.wiki_domain
   }
 
-  # canary
-  domain {
-    name = "test.${local.wiki_domain}"
-  }
-
   snippet {
     name    = "recv"
     type    = "recv"
@@ -103,22 +98,10 @@ resource "fastly_service_vcl" "wiki" {
   }
 }
 
-moved {
-  from = fastly_service_vcl.wiki-test
-  to   = fastly_service_vcl.wiki
-}
-
 resource "fastly_tls_subscription" "wiki" {
   domains               = [local.wiki_domain]
   configuration_id      = local.fastly_tls13_quic_configuration_id
   certificate_authority = "lets-encrypt"
-}
-
-resource "fastly_tls_subscription" "wiki-test" {
-  domains               = ["test.${local.wiki_domain}"]
-  configuration_id      = local.fastly_tls13_quic_configuration_id
-  certificate_authority = "lets-encrypt"
-  depends_on            = [fastly_service_vcl.wiki]
 }
 
 output "wiki_acme_challenge" {
