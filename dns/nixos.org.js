@@ -178,13 +178,21 @@ D("nixos.org",
 	AAAA("tracker.security", "2a01:4f8:1c1b:6921::1"),
 
 	// wiki
-	A("wiki", "65.21.240.250"),
-	AAAA("wiki", "2a01:4f9:c012:8178::"),
-	// Direct access to wiki server in Helsinki (for deployments)
+	// Fastly, apex records of TLS configuration oZPSgSiY0PM8sNTAAyOZHw.
+	// Cannot be a CNAME because of the TXT/MX records on this label.
+	A("wiki", "151.101.1.91"),
+	A("wiki", "151.101.65.91"),
+	A("wiki", "151.101.129.91"),
+	A("wiki", "151.101.193.91"),
+	AAAA("wiki", "2a04:4e42::347"),
+	AAAA("wiki", "2a04:4e42:200::347"),
+	AAAA("wiki", "2a04:4e42:400::347"),
+	AAAA("wiki", "2a04:4e42:600::347"),
+	CNAME("_acme-challenge.wiki", "t605l3x8jg1g15yrlu.fastly-validations.com."),
+	// Origin, used by Fastly and for deployments
 	A("he1.wiki", "65.21.240.250"),
 	AAAA("he1.wiki", "2a01:4f9:c012:8178::"),
 	MX("wiki", 10, "he1.wiki.nixos.org."),
-	CNAME("_acme-challenge.wiki", "t605l3x8jg1g15yrlu.fastly-validations.com."),
 	DMARC_BUILDER({
 		label: "wiki",
 		policy: "none"
