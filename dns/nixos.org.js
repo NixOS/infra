@@ -183,6 +183,8 @@ D("nixos.org",
 	// Direct access to wiki server in Helsinki (for deployments)
 	A("he1.wiki", "65.21.240.250"),
 	AAAA("he1.wiki", "2a01:4f9:c012:8178::"),
+	MX("wiki", 10, "he1.wiki.nixos.org."),
+	CNAME("_acme-challenge.wiki", "t605l3x8jg1g15yrlu.fastly-validations.com."),
 	DMARC_BUILDER({
 		label: "wiki",
 		policy: "none"
