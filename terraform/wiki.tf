@@ -50,6 +50,21 @@ resource "fastly_service_vcl" "wiki" {
       }
       unset req.http.Cookie;
 
+      # Distributed scrapers walk these uncacheable URLs from thousands of
+      # addresses; anonymous users have no business there at this rate.
+      if (req.url.path == "/w/index.php" && (
+            req.url.qs ~ "(^|&)title=Special(:|%253A)(UserLogin|CreateAccount)(&|$)" && req.url.qs ~ "(^|&)returnto="
+         || req.url.qs ~ "(^|&)title=Special(:|%253A)RecentChanges(Linked)?(&|$)" && req.url.qs ~ "(^|&)from="
+         || req.url.qs ~ "(^|&)mobileaction=toggle_view_(mobile|desktop)(&|$)"
+         || req.url.qs ~ "(^|&)action=history(&|$)" && req.url.qs ~ "(^|&)(offset|dir)="
+          )
+          || req.url.path == "/w/api.php" && (
+            req.url.qs ~ "(^|&)action=feedrecentchanges(&|$)" && req.url.qs ~ "(^|&)from="
+         || req.url.qs ~ "(^|&)action=parse(&|$)" && req.url.qs ~ "(^|&)oldid="
+          )) {
+        error 429 "Too Many Requests";
+      }
+
       # MobileFrontend varies HTML by User-Agent; same regex as the origin nginx.
       if (req.http.User-Agent ~ "(?i)(mobi|240x240|240x320|320x320|alcatel|android|audiovox|bada|benq|blackberry|cdm-|compal-|docomo|ericsson|hiptop|htc[-_]|huawei|ipod|kddi-|kindle|meego|midp|mitsu|mmp/|mot-|motor|ngm_|nintendo|opera.m|palm|panasonic|philips|phone|playstation|portalmmm|sagem-|samsung-|sanyo|sec-|semc-browser|sendo|sharp|silk|softbank|symbian|teleca|up.browser|vodafone|webos)") {
         set req.http.X-Device = "mobile";
@@ -70,6 +85,19 @@ resource "fastly_service_vcl" "wiki" {
       }
       if (beresp.http.Content-Type ~ "^text/html") {
         set beresp.http.Vary = if(beresp.http.Vary, beresp.http.Vary ", X-Device", "X-Device");
+      }
+    EOT
+  }
+
+  snippet {
+    name    = "error"
+    type    = "error"
+    content = <<-EOT
+      if (obj.status == 429) {
+        set obj.http.Content-Type = "text/plain";
+        set obj.http.Retry-After = "600";
+        synthetic "Rate limited. Log in to browse history and recent changes without limits." ;
+        return(deliver);
       }
     EOT
   }
