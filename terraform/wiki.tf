@@ -54,6 +54,8 @@ resource "fastly_service_vcl" "wiki" {
       # addresses; anonymous users have no business there at this rate.
       if (req.url.path == "/w/index.php" && (
             req.url.qs ~ "(^|&)title=Special(:|%253A)(UserLogin|CreateAccount)(&|$)" && req.url.qs ~ "(^|&)returnto="
+         || req.url.qs ~ "(^|&)title=Special(:|%253A)Translate(&|$)"
+         || req.url.qs ~ "(^|&)action=(edit|submit)(&|$)"
          || req.url.qs ~ "(^|&)title=Special(:|%253A)RecentChanges(Linked)?(&|$)" && req.url.qs ~ "(^|&)from="
          || req.url.qs ~ "(^|&)mobileaction=toggle_view_(mobile|desktop)(&|$)"
          || req.url.qs ~ "(^|&)action=history(&|$)" && req.url.qs ~ "(^|&)(offset|dir)="
@@ -86,6 +88,13 @@ resource "fastly_service_vcl" "wiki" {
       if (beresp.http.Content-Type ~ "^text/html") {
         set beresp.http.Vary = if(beresp.http.Vary, beresp.http.Vary ", X-Device", "X-Device");
       }
+
+      # Keep serving readers from cache while the origin is overloaded or down.
+      if (beresp.status >= 500 && beresp.status < 600 && stale.exists) {
+        return(deliver_stale);
+      }
+      set beresp.stale_while_revalidate = 60s;
+      set beresp.stale_if_error = 86400s;
     EOT
   }
 
@@ -93,6 +102,9 @@ resource "fastly_service_vcl" "wiki" {
     name    = "error"
     type    = "error"
     content = <<-EOT
+      if (obj.status >= 500 && obj.status < 600 && stale.exists) {
+        return(deliver_stale);
+      }
       if (obj.status == 429) {
         set obj.http.Content-Type = "text/plain";
         set obj.http.Retry-After = "600";
