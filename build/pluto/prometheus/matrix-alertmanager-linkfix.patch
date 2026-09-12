@@ -1,0 +1,31 @@
+diff --git a/src/utils.js b/src/utils.js
+index f71935f..a1e16f9 100644
+--- a/src/utils.js
++++ b/src/utils.js
+@@ -76,6 +76,8 @@ const utils = {
+         }
+         // Add custom links if configured
+         if (process.env.ALERT_LINKS) {
++            let links = []
++
+             const linkConfigs = process.env.ALERT_LINKS.split('|')
+             for (let linkConfig of linkConfigs) {
+                 const firstColonIndex = linkConfig.indexOf(':')
+@@ -105,11 +107,15 @@ const utils = {
+                         return encodeURIComponent(data.labels[labelName] || '')
+                     })
+                     url = url.replace(/{annotations\.([^}]+)}/g, (match, annotationName) => {
+-                        return encodeURIComponent(data.annotations[annotationName] || '')
++                        return data.annotations[annotationName] || ''
+                     })
+-                    parts.push('<br><a href="', url, '">', name, '</a>')
++                    links.push('<a href="', url.trim(), '">', name.trim(), '</a>&nbsp;')
+                 }
+             }
++
++            if (links.length >= 0) {
++                parts.push(...links)
++            }
+         } else {
+             // Fallback to the original message if no custom links configured
+             parts.push('<br><a href="', data.generatorURL,'">Alert link</a>')
