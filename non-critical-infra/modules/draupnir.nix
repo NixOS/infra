@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   ...
 }:
 {
@@ -12,8 +11,6 @@
 
   services.draupnir = {
     enable = true;
-    # crashes; see https://github.com/NixOS/nixpkgs/pull/548839#issuecomment-5415871323
-    package = pkgs.draupnir.override { nodejs_24 = pkgs.nodejs_26; };
     secrets = {
       accessToken = config.sops.secrets.mjolnir-access-token.path;
     };
