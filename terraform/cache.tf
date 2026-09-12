@@ -21,7 +21,14 @@ resource "aws_s3_bucket_lifecycle_configuration" "cache" {
 
   depends_on = [aws_s3_bucket_versioning.cache]
 
-  transition_default_minimum_object_size = "varies_by_storage_class"
+  # Prevent objects <128KB from transitioning to any storage class.
+  # This avoids small files (like narinfos) being billed as 128KB in Glacier.
+  #
+  # Because our bucket is old, we were on the previous default of
+  # `varies_by_storage_class`. Amazon since September 2024 defaults to
+  # `all_storage_classes_128K`.
+  # https://aws.amazon.com/about-aws/whats-new/2024/09/amazon-s3-default-minimum-object-size-lifecycle-transition-rules/
+  transition_default_minimum_object_size = "all_storage_classes_128K"
 
   rule {
     id     = "Infrequent Access"
