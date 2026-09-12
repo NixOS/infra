@@ -9,13 +9,13 @@ update() {
 	PIDS+=($!)
 }
 
-update hetzner@enormous-catfish.mac.nixos.org
-update hetzner@growing-jennet.mac.nixos.org
-update hetzner@intense-heron.mac.nixos.org
-update hetzner@maximum-snail.mac.nixos.org
-update hetzner@sweeping-filly.mac.nixos.org
-update customer@eager-heisenberg.mac.nixos.org
-update customer@kind-lumiere.mac.nixos.org
+update root@enormous-catfish.mac.nixos.org
+update root@growing-jennet.mac.nixos.org
+update root@intense-heron.mac.nixos.org
+update root@maximum-snail.mac.nixos.org
+update root@sweeping-filly.mac.nixos.org
+update root@eager-heisenberg.mac.nixos.org
+update root@kind-lumiere.mac.nixos.org
 update root@norwegian-blue.mac.nixos.org
 # ofborg (MacStadium)
 update root@mac01.ofborg.org
