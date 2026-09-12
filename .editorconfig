@@ -1,0 +1,21 @@
+# https://editorconfig.org
+# Complements the treefmt formatter (see formatter/flake-module.nix);
+# keep these rules in sync with `nix fmt`.
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+# ruff-format, matching [tool.ruff] in pyproject.toml
+[*.py]
+indent_size = 4
+max_line_length = 88
+
+# Trailing whitespace is significant in Markdown (hard line breaks)
+[*.md]
+trim_trailing_whitespace = false
