@@ -463,16 +463,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1787803693,
-        "narHash": "sha256-Yh/ZbJyTMKUNjQG1MoaQEf+ahPTvKWHVZ40sb8upSpk=",
+        "lastModified": 1788208740,
+        "narHash": "sha256-YbhgH7eMC6RCK4PW7c0dMJ+zk8vS8L72mQe/0F8+IX4=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "d1e8d118eed930fb048edfbbd8b2a2accf85b641",
+        "rev": "6ad973bbd489072eec797657f6cdf77710360d94",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "with-2.35-with-magic-query-fix-without-timestamp-migration",
+        "ref": "with-faster-migration",
         "repo": "hydra",
         "type": "github"
       }
@@ -491,16 +491,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1787803693,
-        "narHash": "sha256-Yh/ZbJyTMKUNjQG1MoaQEf+ahPTvKWHVZ40sb8upSpk=",
+        "lastModified": 1788208740,
+        "narHash": "sha256-YbhgH7eMC6RCK4PW7c0dMJ+zk8vS8L72mQe/0F8+IX4=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "d1e8d118eed930fb048edfbbd8b2a2accf85b641",
+        "rev": "6ad973bbd489072eec797657f6cdf77710360d94",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "with-2.35-with-magic-query-fix-without-timestamp-migration",
+        "ref": "with-faster-migration",
         "repo": "hydra",
         "type": "github"
       }
