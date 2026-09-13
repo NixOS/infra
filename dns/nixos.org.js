@@ -191,7 +191,7 @@ D("nixos.org",
 	CNAME("_acme-challenge.wiki", "t605l3x8jg1g15yrlu.fastly-validations.com."),
 	// Origin, used by Fastly and for deployments
 	A("he1.wiki", "65.21.240.250"),
-	AAAA("he1.wiki", "2a01:4f9:c012:8178::"),
+	AAAA("he1.wiki", "2a01:4f9:c012:8178::1"),
 	MX("wiki", 10, "he1.wiki.nixos.org."),
 	DMARC_BUILDER({
 		label: "wiki",
@@ -202,7 +202,7 @@ D("nixos.org",
 		parts: [
 			"v=spf1",
 			"ip4:65.21.240.250",
-			"ip6:2a01:4f9:c012:8178::",
+			"ip6:2a01:4f9:c012:8178::1",
 			"-all"
 		]
 	}),
