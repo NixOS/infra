@@ -135,8 +135,10 @@ resource "fastly_service_vcl" "releases" {
   }
 
   request_setting {
-    name      = "Redirect HTTP to HTTPS"
-    force_ssl = true
+    name          = "Redirect HTTP to HTTPS"
+    force_ssl     = true
+    max_stale_age = 0
+    xff           = "append"
   }
 
   condition {

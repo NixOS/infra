@@ -89,8 +89,10 @@ resource "fastly_service_vcl" "artifacts" {
 
 
   request_setting {
-    name      = "Redirect HTTP to HTTPS"
-    force_ssl = true
+    name          = "Redirect HTTP to HTTPS"
+    force_ssl     = true
+    max_stale_age = 0
+    xff           = "append"
   }
 
   domain {
