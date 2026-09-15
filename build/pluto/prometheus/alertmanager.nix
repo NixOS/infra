@@ -130,7 +130,7 @@
             webhook_url = "http://localhost:4050/services/hooks/YWxlcnRtYW5hZ2VyX3NlcnZpY2U";
             rooms = {
               # infra-alerts:nixos.org
-              "!QLQqibtFaVtDgurUAE:nixos.org" = {
+              "!aKmBiCqDfFms9yXUdDVNwc_VIBDYOxnjp-x-UTCYqnA" = {
                 text_template = ''
                   {{range .Alerts -}} [{{ .Status }}] {{index .Labels "alertname" }}: {{index .Annotations "description"}} {{ end -}}
                 '';
