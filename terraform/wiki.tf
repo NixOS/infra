@@ -50,11 +50,13 @@ resource "fastly_service_vcl" "wiki" {
       }
       unset req.http.Cookie;
 
-      # Distributed scrapers walk these uncacheable URLs from thousands of
-      # addresses; anonymous users have no business there at this rate.
-      # Special:UserLogin/CreateAccount must not be listed here: every
-      # "Log in" link carries returnto=, and a logged-out user by definition
-      # has no session cookie, so blocking them locks everyone out of login.
+      # Anonymous scrapers on thousands of addresses walk uncacheable URLs.
+      # Login pages are only refused when returnto points at such a URL,
+      # since a normal login link never does.
+      if ((req.url.path ~ "^/wiki/Special(:|%253A)(UserLogin|CreateAccount|PasswordReset)" || req.url.qs ~ "(^|&)title=Special(:|%253A)(UserLogin|CreateAccount|PasswordReset)(&|$)")
+          && req.url.qs ~ "(^|&)(mobileaction=|returnto=Special(:|%253A)|returntoquery=[^&]*(from|diff|oldid|offset|action|variant|mobileaction)(=|%253D))") {
+        error 429 "Too Many Requests";
+      }
       if (req.url.path == "/w/index.php" && (
             req.url.qs ~ "(^|&)title=Special(:|%253A)Translate(&|$)"
          || req.url.qs ~ "(^|&)action=(edit|submit)(&|$)"
@@ -69,7 +71,7 @@ resource "fastly_service_vcl" "wiki" {
         error 429 "Too Many Requests";
       }
 
-      # MobileFrontend varies HTML by User-Agent; same regex as the origin nginx.
+      # MobileFrontend varies HTML by User-Agent, same regex as the origin nginx.
       if (req.http.User-Agent ~ "(?i)(mobi|240x240|240x320|320x320|alcatel|android|audiovox|bada|benq|blackberry|cdm-|compal-|docomo|ericsson|hiptop|htc[-_]|huawei|ipod|kddi-|kindle|meego|midp|mitsu|mmp/|mot-|motor|ngm_|nintendo|opera.m|palm|panasonic|philips|phone|playstation|portalmmm|sagem-|samsung-|sanyo|sec-|semc-browser|sendo|sharp|silk|softbank|symbian|teleca|up.browser|vodafone|webos)") {
         set req.http.X-Device = "mobile";
       } else {
