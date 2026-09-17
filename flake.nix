@@ -35,7 +35,7 @@
     # What staging-hydra.nixos.org and the ofborg builders feeding it run, so a
     # hydra change can be exercised there before `hydra` above moves.
     hydra-staging = {
-      url = "github:NixOS/hydra/with-2.35-with-magic-query-fix-without-timestamp-migration";
+      url = "github:NixOS/hydra/master";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.treefmt-nix.follows = "treefmt-nix";
     };

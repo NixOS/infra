@@ -7,11 +7,17 @@
 }:
 let
   narCache = "/var/cache/hydra/nar-cache";
+
+  # In `notify/` because the module already creates it owned by the user the
+  # senders run as; /var/lib/hydra itself belongs to `hydra`, which they are
+  # not, and could not create a file in.
+  mailSink = "/var/lib/hydra/notify/mail-sink";
 in
 {
   imports = [
     inputs.hydra-staging.nixosModules.web-app
     inputs.hydra-staging.nixosModules.queue-runner
+    inputs.hydra-staging.nixosModules.ws-server
   ];
 
   networking.firewall.allowedTCPPorts = [
@@ -70,12 +76,29 @@ in
       notificationSender = "edolstra@gmail.com";
       smtpHost = "localhost";
       useSubstitutes = true;
+      evaluatorSettings.max_concurrent_evals = 1;
+      extraEnv = {
+        # There is no MTA here, and a failed send is no longer caught: it fails
+        # the task and is retried with backoff. So mail is written to a file
+        # rather than sent, and also printed, which is the whole of what this
+        # host does with it.
+        HYDRA_MAIL_SINK = mailSink;
+        HYDRA_MAIL_TEST = "1";
+      };
       extraConfig = ''
         max_servers 30
 
         store_uri = s3://nix-cache-staging?secret-key=${config.sops.secrets.signing-key.path}&compression=zstd&ls-compression=zstd&log-compression=zstd&narinfo-compression=zstd
         server_store_uri = https://cache-staging.nixos.org?local-nar-cache=${narCache}
         binary_cache_public_uri = https://cache-staging.nixos.org
+
+        # Only the mail that goes to a project's owner. Build results would go
+        # to whoever maintains the job -- real nixpkgs maintainers, from a
+        # staging instance -- so that half stays off.
+        <email_notifications>
+          build = 0
+          eval = 1
+        </email_notifications>
 
         <Plugin::Session>
           cache_size = 32m
@@ -89,12 +112,14 @@ in
 
         log_prefix = https://cache.nixos.org/
 
+        # Live log tailing. The path is proxied to `hydra-ws-dev` by nginx in
+        # hydra-proxy.nix; the server ignores it and upgrades any request.
+        ws_endpoint = wss://staging-hydra.nixos.org/ws
+
         evaluator_workers = 4
         evaluator_max_memory_size = 4096
 
         queue_runner_endpoint = http://localhost:8080
-
-        max_concurrent_evals = 1
 
         max_unsupported_time = 86400
 
@@ -129,6 +154,13 @@ in
         usePresignedUploads = true;
         forcedSubstituters = [ "https://cache-staging.nixos.org" ];
       };
+    };
+
+    hydra-ws-dev = {
+      enable = true;
+      # Matching `max_db_connections` on the web app rather than taking the
+      # module's default of 128.
+      settings.maxDbConnections = 50;
     };
 
     nginx = {
@@ -186,9 +218,9 @@ in
       "d ${narCache}      0775 hydra hydra 1d -"
     ];
 
-    # eats memory as if it was free
     services = {
-      hydra-notify.enable = false;
+      # Maybe doesn't "eat memory as if it was free" anymore with newer PostgreSQL?
+      hydra-notify.enable = true;
       hydra-queue-runner = {
         enable = false;
 
