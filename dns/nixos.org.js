@@ -166,6 +166,7 @@ D("nixos.org",
 	CNAME("cryptpad.ngi", "makemake.ngi.nixos.org."),
 	CNAME("cryptpad-sandbox.ngi", "makemake.ngi.nixos.org."),
 	CNAME("dev.ngi", "makemake.ngi.nixos.org."),
+	CNAME("offen.ngi", "makemake.ngi.nixos.org."),
 	CNAME("summer", "makemake.ngi.nixos.org."),
 
 	// ngi git-pages
