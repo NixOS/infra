@@ -19,7 +19,6 @@
       homeserverUrl = "https://matrix.nixos.org";
       managementRoom = "#draupnir:nixos.org";
       backgroundDelayMS = "10"; # snappy reactions, we don't mind the performance hit
-      protectAllJoinedRooms = true;
       automaticallyRedactForReasons = [
         "spam"
       ];
