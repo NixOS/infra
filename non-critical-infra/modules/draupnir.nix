@@ -21,6 +21,7 @@
       backgroundDelayMS = "10"; # snappy reactions, we don't mind the performance hit
       automaticallyRedactForReasons = [
         "spam"
+        "harassment"
       ];
       web = {
         enabled = true;
