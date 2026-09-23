@@ -26,6 +26,20 @@
             __metrics_path__ = "/metrics/client2";
           };
         }
+        {
+          targets = [ "matrix.nixos.org:443" ];
+          labels = {
+            index = "client3";
+            __metrics_path__ = "/metrics/client3";
+          };
+        }
+        {
+          targets = [ "matrix.nixos.org:443" ];
+          labels = {
+            index = "client4";
+            __metrics_path__ = "/metrics/client4";
+          };
+        }
       ];
     }
   ];
