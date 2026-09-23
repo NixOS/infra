@@ -63,46 +63,57 @@
 
     configureRedisLocally = true;
 
-    workers = {
-      client1 = {
-        worker_app = "synapse.app.generic_worker";
-        worker_listeners = [
-          {
-            path = "/run/matrix-synapse/client1.sock";
-            type = "http";
-            x_forwarded = true;
-            resources = [
-              {
-                compress = true;
-                names = [
-                  "client"
-                  "metrics"
-                ];
-              }
-            ];
-          }
-        ];
+    workers =
+      let
+        mkClientWorker = idx: {
+          worker_app = "synapse.app.generic_worker";
+          worker_listeners = [
+            {
+              path = "/run/matrix-synapse/client${toString idx}.sock";
+              type = "http";
+              x_forwarded = true;
+              resources = [
+                {
+                  compress = true;
+                  names = [
+                    "client"
+                    "metrics"
+                  ];
+                }
+              ];
+            }
+          ];
+        };
+
+        mkFederationSender = idx: {
+          worker_app = "synapse.app.generic_worker";
+          worker_listeners = [
+            {
+              path = "/run/matrix-synapse/federation_sender${toString idx}.sock";
+              type = "http";
+              x_forwarded = true;
+              resources = [
+                {
+                  names = [
+                    "federation"
+                    "metrics"
+                  ];
+                }
+              ];
+            }
+          ];
+        };
+      in
+      {
+        client1 = mkClientWorker 1;
+        client2 = mkClientWorker 2;
+        client3 = mkClientWorker 3;
+        client4 = mkClientWorker 4;
+        federation_sender1 = mkFederationSender 1;
+        federation_sender2 = mkFederationSender 2;
+        federation_sender3 = mkFederationSender 3;
+        federation_sender4 = mkFederationSender 4;
       };
-      client2 = {
-        worker_app = "synapse.app.generic_worker";
-        worker_listeners = [
-          {
-            path = "/run/matrix-synapse/client2.sock";
-            type = "http";
-            x_forwarded = true;
-            resources = [
-              {
-                compress = true;
-                names = [
-                  "client"
-                  "metrics"
-                ];
-              }
-            ];
-          }
-        ];
-      };
-    };
 
     # https://github.com/element-hq/synapse/blob/master/docs/usage/configuration/config_documentation.md
     settings = {
@@ -136,9 +147,29 @@
         path = config.services.redis.servers.matrix-synapse.unixSocket;
       };
 
+      send_federation = false;
+      federation_sender_instances = [
+        "federation_sender1"
+        "federation_sender2"
+        "federation_sender3"
+        "federation_sender4"
+      ];
+
       instance_map = {
         main = {
           path = "/run/matrix-synapse/replication.sock";
+        };
+        federation_sender1 = {
+          path = "/run/matrix-synapse/federation_sender1.sock";
+        };
+        federation_sender2 = {
+          path = "/run/matrix-synapse/federation_sender2.sock";
+        };
+        federation_sender3 = {
+          path = "/run/matrix-synapse/federation_sender3.sock";
+        };
+        federation_sender4 = {
+          path = "/run/matrix-synapse/federation_sender4.sock";
         };
       };
 
@@ -176,6 +207,12 @@
 
   services.nginx = {
     clientMaxBodySize = config.services.matrix-synapse.settings.max_upload_size;
+    appendConfig = ''
+      worker_processes auto;
+    '';
+    eventsConfig = ''
+      worker_connections 4096;
+    '';
     upstreams = {
       synapse_main.servers = {
         "unix:/run/matrix-synapse/main.sock" = { };
@@ -184,6 +221,8 @@
         servers = {
           "unix:/run/matrix-synapse/client1.sock" = { };
           "unix:/run/matrix-synapse/client2.sock" = { };
+          "unix:/run/matrix-synapse/client3.sock" = { };
+          "unix:/run/matrix-synapse/client4.sock" = { };
         };
       };
       synapse_client1.servers = {
@@ -191,6 +230,24 @@
       };
       synapse_client2.servers = {
         "unix:/run/matrix-synapse/client2.sock" = { };
+      };
+      synapse_client3.servers = {
+        "unix:/run/matrix-synapse/client1.sock" = { };
+      };
+      synapse_client4.servers = {
+        "unix:/run/matrix-synapse/client2.sock" = { };
+      };
+      synapse_federation_sender1.servers = {
+        "unix:/run/matrix-synapse/federation_sender1.sock" = { };
+      };
+      synapse_federation_sender2.servers = {
+        "unix:/run/matrix-synapse/federation_sender2.sock" = { };
+      };
+      synapse_federation_sender3.servers = {
+        "unix:/run/matrix-synapse/federation_sender3.sock" = { };
+      };
+      synapse_federation_sender4.servers = {
+        "unix:/run/matrix-synapse/federation_sender4.sock" = { };
       };
     };
     appendHttpConfig = ''
@@ -214,6 +271,12 @@
         /metrics/main synapse_main;
         /metrics/client1 synapse_client1;
         /metrics/client2 synapse_client2;
+        /metrics/client3 synapse_client3;
+        /metrics/client4 synapse_client4;
+        /metrics/federation_sender1 synapse_federation_sender1;
+        /metrics/federation_sender2 synapse_federation_sender2;
+        /metrics/federation_sender3 synapse_federation_sender3;
+        /metrics/federation_sender4 synapse_federation_sender4;
       }
     '';
     virtualHosts."matrix.nixos.org" = {

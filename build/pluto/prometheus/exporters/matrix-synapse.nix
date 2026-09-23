@@ -1,32 +1,57 @@
 {
+  lib,
+  ...
+}:
+
+{
   services.prometheus.scrapeConfigs = [
     {
       job_name = "matrix_synapse";
       scheme = "https";
 
-      static_configs = [
-        {
-          targets = [ "matrix.nixos.org:443" ];
-          labels = {
-            index = "main";
-            __metrics_path__ = "/metrics/main";
-          };
-        }
-        {
-          targets = [ "matrix.nixos.org:443" ];
-          labels = {
-            index = "client1";
-            __metrics_path__ = "/metrics/client1";
-          };
-        }
-        {
-          targets = [ "matrix.nixos.org:443" ];
-          labels = {
-            index = "client2";
-            __metrics_path__ = "/metrics/client2";
-          };
-        }
-      ];
+      static_configs = lib.flatten (
+        map
+          (
+            {
+              job,
+              indices,
+            }:
+            map (index: {
+              targets = [ "matrix.nixos.org:443" ];
+              labels = {
+                job = "synapse${if job != "main" then "-${job}" else ""}";
+                __metrics_path__ = "/metrics/${job}${toString index}";
+              }
+              // lib.optionalAttrs (index != null) {
+                index = toString index;
+              };
+            }) indices
+          )
+          [
+            {
+              job = "main";
+              indices = [ null ];
+            }
+            {
+              job = "client";
+              indices = [
+                1
+                2
+                3
+                4
+              ];
+            }
+            {
+              job = "federation_sender";
+              indices = [
+                1
+                2
+                3
+                4
+              ];
+            }
+          ]
+      );
     }
   ];
 }
