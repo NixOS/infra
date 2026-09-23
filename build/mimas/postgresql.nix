@@ -53,7 +53,7 @@
       max_parallel_workers = 48;
       max_parallel_maintenance_workers = 4;
 
-      max_connections = 100;
+      max_connections = 150;
       work_mem = "150MB";
       maintenance_work_mem = "8GB";
 
