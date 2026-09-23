@@ -4,43 +4,26 @@
       job_name = "matrix_synapse";
       scheme = "https";
 
-      static_configs = [
-        {
-          targets = [ "matrix.nixos.org:443" ];
-          labels = {
-            index = "main";
-            __metrics_path__ = "/metrics/main";
-          };
-        }
-        {
-          targets = [ "matrix.nixos.org:443" ];
-          labels = {
-            index = "client1";
-            __metrics_path__ = "/metrics/client1";
-          };
-        }
-        {
-          targets = [ "matrix.nixos.org:443" ];
-          labels = {
-            index = "client2";
-            __metrics_path__ = "/metrics/client2";
-          };
-        }
-        {
-          targets = [ "matrix.nixos.org:443" ];
-          labels = {
-            index = "client3";
-            __metrics_path__ = "/metrics/client3";
-          };
-        }
-        {
-          targets = [ "matrix.nixos.org:443" ];
-          labels = {
-            index = "client4";
-            __metrics_path__ = "/metrics/client4";
-          };
-        }
-      ];
+      static_configs =
+        map
+          (index: {
+            targets = [ "matrix.nixos.org:443" ];
+            labels = {
+              inherit index;
+              __metrics_path__ = "/metrics/${index}";
+            };
+          })
+          [
+            "main"
+            "client1"
+            "client2"
+            "client3"
+            "client4"
+            "federation_sender1"
+            "federation_sender2"
+            "federation_sender3"
+            "federation_sender4"
+          ];
     }
   ];
 }
