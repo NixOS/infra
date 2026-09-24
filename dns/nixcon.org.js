@@ -75,5 +75,8 @@ D("nixcon.org",
 	CNAME("bee", "cache.ners.ch."),
 
 	// NixCon CTF 2026
-	CNAME("ctf", "ctf.immutable-byte.de.")
+	CNAME("ctf", "ctf.immutable-byte.de."),
+
+	// NixCon 2026 Quiz
+	CNAME("quiz", "quiz.lassul.us.")
 );
