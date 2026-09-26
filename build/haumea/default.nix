@@ -56,5 +56,6 @@
     # experiments with the old Hydra's DB
     ++ ssh.users.brianmcgee
     ++ ssh.users.conni2461
-    ++ ssh.users.ericson2314;
+    ++ ssh.users.ericson2314
+    ++ ssh.users.janne;
 }
