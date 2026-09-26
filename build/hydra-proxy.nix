@@ -101,8 +101,8 @@ in
   };
 
   networking.firewall.extraInputRules = ''
-    ip6 saddr $prometheus_inet6 tcp dport { 9001, 42042 } accept
-    ip saddr $prometheus_inet4 tcp dport { 9001, 42042 } accept
+    ip6 saddr $prometheus_inet6 tcp dport { 42042 } accept
+    ip saddr $prometheus_inet4 tcp dport { 42042 } accept
   '';
 
   # Kill the hard dependency on iocaine
