@@ -1,10 +1,37 @@
-# The NixOS infrastructure configurations
+# NixOS infrastructure
 
-This repository contains all the hardware configuration for the nixos project
-infrastructure.
+This repo is used by the NixOS infrastucture team to hold, manage and document
+the server infrastructure needed to run the project.
 
-All the hosts are currently managed using NixOps. Some of the infrastructure is
-managed using Terraform. There are still a lot of things configured manually.
+This includes things like hydra.nixos.org, the binary cache, CDN, email, etc...
+
+## Team role
+
+The infra team is in service to the rest of the project to keep things up and
+running (to the best of our abilities).
+
+If you are a member of the project and need infrastructure, feel free to reach
+out by creating a new issue on this repository. Please remember that our
+capacity is limited so if you really want to see something happening, the best
+way is to ask how you can help, and we'll try to find a way to make you part of
+the team.
+
+## How the team functions
+
+Each member is voluntary and taking on part of the infrastructure they want to
+work on.
+
+In general we try to reach overall consensus on decisions, and the team lead is
+here to listen and make judgement calls when no clear direction is available.
+
+The current team lead is @mweinelt (hexa on Matrix).
+
+Because the team size and budget is limited, we try to only take on new projects
+we feel we can manage.
+
+The best way to join the team, is to start helping out. Ask where you can help
+and start tackling some tickets. If you're unsure what to work on, you can join
+or bi-weekly call (see below).
 
 ## Docs
 
