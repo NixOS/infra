@@ -15,6 +15,8 @@
     ai-robots-txt.url = "https://github.com/ai-robots-txt/ai.robots.txt/raw/refs/heads/main/robots.json";
     ai-robots-txt.flake = false;
 
+    empty.url = "github:nix-systems/empty";
+
     fast-nix-gc.url = "github:Mic92/fast-nix-gc";
     fast-nix-gc.inputs.nixpkgs.follows = "nixpkgs";
     fast-nix-gc.inputs.nix-darwin.follows = "darwin";
@@ -107,6 +109,17 @@
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixpkgs-update = {
+      url = "github:nix-community/nixpkgs-update/infra";
+      inputs.mmdoc.follows = "empty";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+    };
+
+    nixpkgs-update-github-releases = {
+      url = "github:nix-community/nixpkgs-update-github-releases";
+      flake = false;
     };
 
     nixpkgs-swh = {

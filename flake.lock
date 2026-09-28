@@ -206,6 +206,21 @@
         "type": "github"
       }
     },
+    "empty": {
+      "locked": {
+        "lastModified": 1708697125,
+        "narHash": "sha256-JeMK8G1oabQTSpqXhYaYtPRak4m6z1xxyRKf8CvHy14=",
+        "owner": "nix-systems",
+        "repo": "empty",
+        "rev": "23d743284b73ae69caf0cb7874edf05c0c631a1f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "empty",
+        "type": "github"
+      }
+    },
     "fast-nix-gc": {
       "inputs": {
         "nix-darwin": [
@@ -808,6 +823,61 @@
         "url": "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.zst"
       }
     },
+    "nixpkgs-update": {
+      "inputs": {
+        "mmdoc": [
+          "empty"
+        ],
+        "nixpkgs": "nixpkgs_2",
+        "treefmt-nix": [
+          "treefmt-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1789076953,
+        "narHash": "sha256-TAbcD814oF6gGMHwsSzcVtgi5SCHU+ArEy08CQ+rW1g=",
+        "owner": "nix-community",
+        "repo": "nixpkgs-update",
+        "rev": "322ba714ce9bd5918cbc98eb9709f331f42e6abf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "ref": "infra",
+        "repo": "nixpkgs-update",
+        "type": "github"
+      }
+    },
+    "nixpkgs-update-github-releases": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1770450995,
+        "narHash": "sha256-3wQeouRJnqYfZCvjgjLjLuGtEpMmwM3+NvcsxgwrJkg=",
+        "owner": "nix-community",
+        "repo": "nixpkgs-update-github-releases",
+        "rev": "fee014c81b84ca9740f9e2fcb3e61d3f4a90bc0b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nixpkgs-update-github-releases",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1672428209,
+        "narHash": "sha256-eejhqkDz2cb2vc5VeaWphJz8UXNuoNoM8/Op8eWv2tQ=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "293a28df6d7ff3dec1e61e37cc4ee6e6c0fb0847",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
     "ofborg": {
       "inputs": {
         "nixpkgs": [
@@ -893,6 +963,7 @@
         "colmena": "colmena",
         "darwin": "darwin_2",
         "disko": "disko",
+        "empty": "empty",
         "fast-nix-gc": "fast-nix-gc",
         "flake-parts": "flake-parts",
         "flake-utils": "flake-utils",
@@ -906,6 +977,8 @@
         "nixpkgs-darwin": "nixpkgs-darwin",
         "nixpkgs-swh": "nixpkgs-swh",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "nixpkgs-update": "nixpkgs-update",
+        "nixpkgs-update-github-releases": "nixpkgs-update-github-releases",
         "ofborg": "ofborg",
         "ofborg-viewer": "ofborg-viewer",
         "rfc39": "rfc39",

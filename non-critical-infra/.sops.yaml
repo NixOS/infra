@@ -3,6 +3,7 @@ keys:
   - &hexa-yk5nfc age1yubikey1qwuegva8azwhjxvahxm59dfsyf7xhz3ulzexav2dkulq6vm958rlz2xxp9l
   - &hexa-yk5cnfc age1yubikey1qtm7740epvw4ju2a53vy7jgs6nvfpz5mjq6vvzwf2ty04h6h7l7tqytgu5k
   - &simon age17ez23w2kpxl0gcdx4ehcglkcfcfnv4qz0gq2n8ylxwx4yrtjpvjqxfasua
+  - &nixpkgs-update age1kh6yvgxz9ys74as7aufdy8je7gmqjtguhnjuxvj79qdjswk2r3xqxf2n6d
   - &caliban age1sv307kkrxwgjah8pjpap5kzl4j2r6fqr3vg234n7m32chlchs9lsey7nlq
   - &umbriel age15vcp7875xwtf64j4yshyld0a3hpgzv6n2kxky493s3q0swr9hdaqxugpv6
   - &staging-hydra age1zxcssfw5j6dwvcw25tmxs79lq40xk70h2s234hen8pkpte2qe30q9e7cy8
@@ -28,6 +29,14 @@ creation_rules:
     key_groups:
       - age:
           - *caliban
+          - *hexa
+          - *mic92
+          - *mic92-mac
+
+  - path_regex: secrets/nixpkgs-update.yaml
+    key_groups:
+      - age:
+          - *nixpkgs-update
           - *hexa
           - *mic92
           - *mic92-mac
