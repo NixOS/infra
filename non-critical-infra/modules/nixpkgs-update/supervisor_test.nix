@@ -8,10 +8,13 @@ pkgs.runCommand "nixpkgs-update-supervisor-test"
       fileset = pkgs.lib.fileset.unions [
         ./supervisor.py
         ./supervisor_test.py
+        ./metrics.py
+        ./metrics_test.py
       ];
     };
   }
   ''
     python3 $files/supervisor_test.py
+    python3 $files/metrics_test.py
     touch $out
   ''

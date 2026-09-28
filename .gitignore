@@ -11,3 +11,6 @@ result
 
 # Colmena --keep-result roots directory
 .gcroots
+
+# Python
+__pycache__/
