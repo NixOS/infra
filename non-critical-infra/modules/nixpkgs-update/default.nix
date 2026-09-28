@@ -237,6 +237,18 @@ in
     '';
   };
 
+  systemd.services.nixpkgs-update-metrics = {
+    startAt = "*:0/5";
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${lib.getExe pkgs.python3} ${./metrics.py} /var/log/nixpkgs-update/~supervisor/state.db /var/lib/prometheus-node-exporter-text-files/nixpkgs-update.prom";
+      ReadWritePaths = [ "/var/lib/prometheus-node-exporter-text-files" ];
+      ProtectSystem = "strict";
+      PrivateTmp = true;
+      NoNewPrivileges = true;
+    };
+  };
+
   systemd.services.nixpkgs-update-delete-old-logs = {
     startAt = "daily";
     # delete logs older than 9 months

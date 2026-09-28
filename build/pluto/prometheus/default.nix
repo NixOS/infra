@@ -14,6 +14,7 @@
     ./exporters/json.nix
     ./exporters/matrix-synapse.nix
     ./exporters/nixos.nix
+    ./exporters/nixpkgs-update.nix
     ./exporters/node.nix
     ./exporters/owncast.nix
     ./exporters/postgresql.nix
