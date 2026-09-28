@@ -111,6 +111,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # The infra branch has commits that are not meant for upstream, e.g.
+    # "use tools from $PATH".
     nixpkgs-update = {
       url = "github:nix-community/nixpkgs-update/infra";
       inputs.mmdoc.follows = "empty";

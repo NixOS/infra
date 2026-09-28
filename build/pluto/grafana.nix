@@ -27,5 +27,12 @@
     };
   };
 
+  services.grafana.provision.dashboards.settings.providers = [
+    {
+      name = "git";
+      options.path = ./dashboards;
+    }
+  ];
+
   systemd.services.nginx.serviceConfig.SupplementaryGroups = [ "grafana" ];
 }
