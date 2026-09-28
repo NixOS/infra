@@ -1,5 +1,7 @@
 - Config:
-  [https://github.com/NixOS/infra/tree/main/non-critical-infra/modules/nixpkgs-update](https://github.com/nix-community/infra/tree/master/hosts/build02)
+  [https://github.com/NixOS/infra/tree/main/non-critical-infra/modules/nixpkgs-update](https://github.com/NixOS/infra/tree/main/non-critical-infra/modules/nixpkgs-update)
+- Dashboard:
+  [https://grafana.nixos.org/d/nixpkgs-update/nixpkgs-update](https://grafana.nixos.org/d/nixpkgs-update/nixpkgs-update)
 - Docs:
   [https://nix-community.github.io/nixpkgs-update](https://nix-community.github.io/nixpkgs-update)
 - Logs:
