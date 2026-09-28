@@ -3,7 +3,7 @@
 - Dashboard:
   [https://grafana.nixos.org/d/nixpkgs-update/nixpkgs-update](https://grafana.nixos.org/d/nixpkgs-update/nixpkgs-update)
 - Docs:
-  [https://nix-community.github.io/nixpkgs-update](https://nix-community.github.io/nixpkgs-update)
+  [https://nixos.github.io/nixpkgs-update](https://nixos.github.io/nixpkgs-update)
 - Logs:
   [https://nixpkgs-update-logs.nixos.org](https://nixpkgs-update-logs.nixos.org)
 - Nixpkgs Pull Requests:
@@ -13,4 +13,4 @@
 - Queue:
   [https://nixpkgs-update-logs.nixos.org/~supervisor/queue.html](https://nixpkgs-update-logs.nixos.org/~supervisor/queue.html)
 - Source:
-  [https://github.com/nix-community/nixpkgs-update](https://github.com/nix-community/nixpkgs-update)
+  [https://github.com/NixOS/nixpkgs-update](https://github.com/NixOS/nixpkgs-update)
