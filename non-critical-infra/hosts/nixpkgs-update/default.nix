@@ -21,6 +21,16 @@
 
   nixpkgs.hostPlatform = "x86_64-linux";
 
+  # Keep the host key of the previous installation: the sops age key is derived
+  # from it.
+  services.openssh.hostKeys = [
+    {
+      path = "/var/lib/ssh_secrets/ssh_host_ed25519_key";
+      type = "ed25519";
+    }
+  ];
+  sops.age.sshKeyPaths = [ "/var/lib/ssh_secrets/ssh_host_ed25519_key" ];
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 

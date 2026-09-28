@@ -13,6 +13,8 @@
   services.harmonia.daemon.enable = true;
 
   services.nginx.virtualHosts."nixpkgs-update-cache.nixos.org" = {
+    enableACME = true;
+    forceSSL = true;
     locations."/" = {
       extraConfig = ''
         proxy_pass http://127.0.0.1:5000;
