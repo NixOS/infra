@@ -65,6 +65,12 @@ D("nixos.org",
 	CNAME("releases", "dualstack.n.sni.global.fastly.net."),
 	CNAME("tarballs", "dualstack.n.sni.global.fastly.net."),
 
+	// nixpkgs-update (r-ryantm bot)
+	A("nixpkgs-update", "65.21.133.211"),
+	AAAA("nixpkgs-update", "2a01:4f9:3b:41d9::1"),
+	CNAME("nixpkgs-update-cache", "nixpkgs-update"),
+	CNAME("nixpkgs-update-logs", "nixpkgs-update"),
+
 	// hydra.nixos.org
 	A("haumea", "46.4.89.205"),
 	AAAA("haumea", "2a01:4f8:212:41c9::1"),

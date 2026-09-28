@@ -7,6 +7,7 @@
   colmena.hosts = {
     caliban = { };
     umbriel = { };
+    nixpkgs-update.targetHost = "nixpkgs-update.nixos.org";
     staging-hydra.targetHost = "staging-hydra.nixos.org";
 
     # ofborg

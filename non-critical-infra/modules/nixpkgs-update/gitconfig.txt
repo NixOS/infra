@@ -1,0 +1,6 @@
+[user]
+        email = ryantm-bot@ryantm.com
+        name = R. Ryantm
+
+[url "git@github.com:"]
+        pushInsteadOf = https://github.com/

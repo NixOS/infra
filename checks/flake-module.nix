@@ -37,7 +37,13 @@
     };
 
   perSystem =
-    { self', lib, ... }:
+    {
+      self',
+      lib,
+      pkgs,
+      system,
+      ...
+    }:
     {
       checks =
         let
@@ -50,6 +56,13 @@
           packages = lib.mapAttrs' (n: lib.nameValuePair "package-${n}") self'.packages;
           devShells = lib.mapAttrs' (n: lib.nameValuePair "devShell-${n}") self'.devShells;
         in
-        nixosMachines // packages // devShells;
+        nixosMachines
+        // packages
+        // devShells
+        // lib.optionalAttrs (system == "x86_64-linux") {
+          nixpkgs-update-supervisor-test =
+            pkgs.callPackage ../non-critical-infra/modules/nixpkgs-update/supervisor_test.nix
+              { };
+        };
     };
 }
