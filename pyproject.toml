@@ -62,7 +62,6 @@ lint.ignore = [
 
 # TODO fixes
 [tool.ruff.lint.per-file-ignores]
-# imported unchanged from nix-community/infra
 "non-critical-infra/modules/nixpkgs-update/*.py" = [
   "ANN",
   "ASYNC240",
