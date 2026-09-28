@@ -21,6 +21,8 @@
 
   nixpkgs.hostPlatform = "x86_64-linux";
 
+  services.userborn.enable = true;
+
   # Keep the host key of the previous installation: the sops age key is derived
   # from it.
   services.openssh.hostKeys = [

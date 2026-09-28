@@ -72,6 +72,13 @@ in
             http.headers.User-Agent = "blackbox-exporter";
           };
 
+          modules.https_nixpkgs_update_supervisor = {
+            prober = "http";
+            tcp.tls = true;
+            http.headers.User-Agent = "blackbox-exporter";
+            http.fail_if_body_not_matches_regexp = [ "state\\.db" ];
+          };
+
           # From https://github.com/prometheus/blackbox_exporter/blob/53e78c2b3535ecedfd072327885eeba2e9e51ea2/example.yml#L120-L133
           modules.smtp_starttls = {
             prober = "tcp";
@@ -117,6 +124,10 @@ in
           "https://tracker.security.nixos.org"
         ];
       })
+      (mkStaticProbe {
+        module = "https_nixpkgs_update_supervisor";
+        targets = [ "https://nixpkgs-update-logs.nixos.org/~supervisor/" ];
+      })
       (mkDnsSdProbe "smtp_starttls" {
         names = [
           "nixos.org"
@@ -145,7 +156,7 @@ in
                 {
                   alert = "HttpUnreachable";
                   expr = ''
-                    probe_success{job="blackbox-https_success"} == 0
+                    probe_success{job=~"blackbox-https_.*"} == 0
                   '';
                   for = "15m";
                   labels.severity = "warning";

@@ -16,6 +16,12 @@
           ];
         }
         {
+          labels.role = "services";
+          targets = [
+            "nixpkgs-update.nixos.org:9300"
+          ];
+        }
+        {
           labels.role = "database";
           targets = [
             "haumea.nixos.org:9300"

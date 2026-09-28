@@ -14,6 +14,7 @@
               "mimas.nixos.org:9134"
               "pluto.nixos.org:9134"
               "titan.nixos.org:9134"
+              "nixpkgs-update.nixos.org:9134"
             ];
           }
         ];
