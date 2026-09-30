@@ -63,7 +63,8 @@ in
         unwanted-visitors =
           # broad version ranges
           (genAgentRange "Android" 2 12 " " ".")
-          ++ (genAgentRange "Chrome" 1 148 "/" ".")
+          ++ (genAgentRange "Chrome" 1 139 "/" ".")
+          ++ (genAgentRange "Chrome" 141 148 "/" ".")
           ++ (genAgentRange "CriOS" 1 142 "/" ".")
           ++ (genAgentRange "Firefox" 1 139 "/" ".")
           ++ (genAgentRange "Firefox" 141 150 "/" ".")
