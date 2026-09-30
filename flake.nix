@@ -79,7 +79,7 @@
 
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
     };
 
     colmena = {
@@ -88,6 +88,7 @@
         flake-utils.follows = "flake-utils";
         nixpkgs.follows = "nixpkgs";
         stable.follows = "nixpkgs";
+        nix-github-actions.follows = "nixpkgs";
       };
     };
 
