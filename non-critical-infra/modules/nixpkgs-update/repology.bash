@@ -11,12 +11,12 @@ fetch() {
   curl --silent --compressed --user-agent "https://github.com/nix-community/infra" --location "$url"
 }
 
-fetch "https://repology.amdmi3.ru/api/v1/projects/?inrepo=nix_unstable&outdated=1" >"$file"
+fetch "https://repology.org/api/v1/projects/?inrepo=nix_unstable&outdated=1" >"$file"
 
 append() {
   sleep 2
   local last="$1"
-  local url="https://repology.amdmi3.ru/api/v1/projects/$last/?inrepo=nix_unstable&outdated=1"
+  local url="https://repology.org/api/v1/projects/$last/?inrepo=nix_unstable&outdated=1"
   fetch "$url" >>"$file"
 }
 
