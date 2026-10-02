@@ -56,6 +56,12 @@
       };
     };
 
+    "infinisil@nixos.org" = {
+      forwardTo = [
+        "nixos@infinisil.com"
+      ];
+    };
+
     "fundraising@nixos.org" = {
       forwardTo = [
         "foundation@nixos.org"
