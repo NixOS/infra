@@ -62,6 +62,12 @@
       ];
     };
 
+    "lassulus@nixos.org" = {
+      forwardTo = [
+        "nixos@lassul.us"
+      ];
+    };
+
     "fundraising@nixos.org" = {
       forwardTo = [
         "foundation@nixos.org"
