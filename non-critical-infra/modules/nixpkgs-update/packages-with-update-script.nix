@@ -42,7 +42,7 @@ let
           result = builtins.tryEval pathContent;
 
           somewhatUniqueRepresentant =
-            { package }:
+            { package, ... }:
             {
               inherit (package) updateScript;
               # Some updaters use the same `updateScript` value for all packages.
