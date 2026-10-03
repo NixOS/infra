@@ -1,0 +1,29 @@
+diff --git a/iocaine-powder/embeds/defaults/roto/main/pkg.roto b/iocaine-powder/embeds/defaults/roto/main/pkg.roto
+index 457fbeb..70e1b89 100644
+--- a/iocaine-powder/embeds/defaults/roto/main/pkg.roto
++++ b/iocaine-powder/embeds/defaults/roto/main/pkg.roto
+@@ -99,8 +99,7 @@ fn output(request: Request, maybe_decision: String?) -> Response? {
+ 	if decision == "default" {
+ 		response.status_code(CONFIG_GARBAGE_FALLTHROUGH_STATUS_CODE.as_u16()?);
+ 	} else {
+-		make_garbage_response(request, response)?;
+-		METRIC_GARBAGE_GENERATED.inc_by_for1(response.content_length(), request.header("host"));
++		make_denied_response(response)?;
+ 	}
+ 
+ 	Some(response.build())
+@@ -119,6 +118,14 @@ fn make_garbage_response(request: Request, response: ResponseBuilder) -> ()? {
+ 	Some(())
+ }
+ 
++fn make_denied_response(response: ResponseBuilder) -> ()? {
++	response.status_code(200);
++	response.header("content-type", "text/html; charset=utf-8");
++	let html = File.read_as_string(f"{script_path}/denied.html")?;
++	response.body_from_string(html);
++	Some(())
++}
++
+ fn generate_garbage(request: Request) -> HashMap? {
+ 	let rng = rng.from_request(request, "default");
+ 	let ctx = HashMap.new();
