@@ -115,6 +115,7 @@ EOF
 resource "fastly_service_vcl" "channels" {
   name        = local.channels_domain
   default_ttl = 3600
+  http3       = true
 
   backend {
     address           = local.channels_backend
