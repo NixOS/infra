@@ -33,6 +33,7 @@
   services.fast-nix-gc = {
     enable = true;
     automatic = true;
+    deleteOlderThan = "30d";
     startCalendarInterval = [
       {
         Minute = 15;
