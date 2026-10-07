@@ -115,11 +115,11 @@
     },
     "crane": {
       "locked": {
-        "lastModified": 1787326676,
-        "narHash": "sha256-lWhBbBvC05/xwivKBBiM2YNizpmgqCgyOIzomvRuwxs=",
+        "lastModified": 1790899423,
+        "narHash": "sha256-THGtz65UGJU+sonZidRboyCMk+9DclpMF7pwL4uDV4M=",
         "owner": "ipetkov",
         "repo": "crane",
-        "rev": "692f7e9ef2ece8125b466f66f2af532b3edaed0d",
+        "rev": "47b6b27ed9a3a9181415e4367d0c30ab2a0e0250",
         "type": "github"
       },
       "original": {
@@ -366,23 +366,6 @@
         "type": "github"
       }
     },
-    "foreman_2": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1778004604,
-        "narHash": "sha256-YdFYx5/91pK0LdBpD6Xb2xPaTNCS3GvwErPaDiKt3OY=",
-        "owner": "Ericson2314",
-        "repo": "foreman",
-        "rev": "dabe4b3b95034d30df68c196cd3824bf8860ee52",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Ericson2314",
-        "ref": "socketfile",
-        "repo": "foreman",
-        "type": "github"
-      }
-    },
     "geolite2-asn-mmdb": {
       "flake": false,
       "locked": {
@@ -467,7 +450,6 @@
     "hydra": {
       "inputs": {
         "crane": "crane",
-        "foreman": "foreman",
         "nix": "nix",
         "nix-eval-jobs": "nix-eval-jobs",
         "nixpkgs": [
@@ -478,16 +460,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1787803693,
-        "narHash": "sha256-Yh/ZbJyTMKUNjQG1MoaQEf+ahPTvKWHVZ40sb8upSpk=",
+        "lastModified": 1791307047,
+        "narHash": "sha256-dWhWBZF2Jr3ANOj9GPRG4EKT/oBs58M6r3wC/eUhiME=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "d1e8d118eed930fb048edfbbd8b2a2accf85b641",
+        "rev": "7e04b6f1e3fee3c57ff88ca54dd95032c67ced30",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "with-2.35-with-magic-query-fix-without-timestamp-migration",
         "repo": "hydra",
         "type": "github"
       }
@@ -495,7 +476,7 @@
     "hydra-staging": {
       "inputs": {
         "crane": "crane_2",
-        "foreman": "foreman_2",
+        "foreman": "foreman",
         "nix": "nix_2",
         "nix-eval-jobs": "nix-eval-jobs_2",
         "nixpkgs": [
@@ -589,11 +570,11 @@
     "nix": {
       "flake": false,
       "locked": {
-        "lastModified": 1787430475,
-        "narHash": "sha256-iGfnPtu1VEXkBr3K1MieXYMjgQNaK5+RkuUpCMftipY=",
+        "lastModified": 1791037421,
+        "narHash": "sha256-xsLF4du2XzHgO7yZv+uTzLllVjHvpcsP4QVqOfJxnMY=",
         "owner": "NixOS",
         "repo": "nix",
-        "rev": "cf5200adbde34465679f4324e782e2cc8dcf9794",
+        "rev": "56f147d2e201c2f105e4570ca8303ed4a8a474c3",
         "type": "github"
       },
       "original": {
@@ -606,16 +587,16 @@
     "nix-eval-jobs": {
       "flake": false,
       "locked": {
-        "lastModified": 1786358870,
-        "narHash": "sha256-EFJnN35L7UieL8zV8qPrpqfdfzztWksY8JYuXF+mr9o=",
+        "lastModified": 1789638029,
+        "narHash": "sha256-t1FbcjvTWQ1WO3hJNKN+viNXuz4BX9Pte5K4F+IJLDk=",
         "owner": "NixOS",
         "repo": "nix-eval-jobs",
-        "rev": "5f1fe8040163c58a4a975dbe42e6624f6c948aa4",
+        "rev": "9f1553afabd95f9f59951f5c946e86005af7196a",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "v2.35.1",
+        "ref": "v2.35.4",
         "repo": "nix-eval-jobs",
         "type": "github"
       }
