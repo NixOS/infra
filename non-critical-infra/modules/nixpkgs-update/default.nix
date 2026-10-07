@@ -128,6 +128,10 @@ let
   };
 in
 {
+  imports = [
+    ../../../modules/nspawn-test-containers.nix
+  ];
+
   users.groups.r-ryantm = { };
   users.users.r-ryantm = {
     useDefaultShell = true;
