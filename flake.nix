@@ -27,12 +27,9 @@
     geolite2-asn-mmdb.url = "https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-ASN.mmdb";
     geolite2-asn-mmdb.flake = false;
 
-    hydra = {
-      # TODO: just a temporary branch on production
-      url = "github:NixOS/hydra/with-2.35-with-magic-query-fix-without-timestamp-migration";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.treefmt-nix.follows = "treefmt-nix";
-    };
+    hydra.url = "github:NixOS/hydra";
+    hydra.inputs.nixpkgs.follows = "nixpkgs";
+    hydra.inputs.treefmt-nix.follows = "treefmt-nix";
 
     # What staging-hydra.nixos.org and the ofborg builders feeding it run, so a
     # hydra change can be exercised there before `hydra` above moves.
@@ -83,7 +80,7 @@
     };
 
     colmena = {
-      url = "github:zhaofengli/colmena";
+      url = "github:nix-community/colmena/v0.5.0";
       inputs = {
         flake-utils.follows = "flake-utils";
         nixpkgs.follows = "nixpkgs";
