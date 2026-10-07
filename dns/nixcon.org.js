@@ -34,7 +34,10 @@ D("nixcon.org",
 		pubkey: "SEawMqEG+q0WauDF9Noe3xSqVuBZqmEBgmStaxpNFHE="
 	}),
 	DMARC_BUILDER({
-		policy: "none",
+		policy: "reject",
+		rua: [
+			"mailto:dmarc@nixos.org"
+		]
 	}),
 
 	// Websites

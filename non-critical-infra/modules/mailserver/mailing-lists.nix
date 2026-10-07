@@ -29,6 +29,13 @@
       };
     };
 
+    "dmarc@nixos.org" = {
+      loginAccount = {
+        encryptedHashedPassword = ../../secrets/dmarc-email-login.umbriel;
+        storeEmail = true;
+      };
+    };
+
     "finance@nixos.org" = {
       loginAccount = {
         encryptedHashedPassword = ../../secrets/finance-email-login.umbriel;
