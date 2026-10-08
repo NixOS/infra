@@ -56,6 +56,12 @@
       };
     };
 
+    "christina@nixos.org" = {
+      forwardTo = [
+        ../../secrets/cafkafk-email-address.umbriel # https://github.com/cafkafk
+      ];
+    };
+
     "infinisil@nixos.org" = {
       forwardTo = [
         "nixos@infinisil.com"
