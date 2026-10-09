@@ -92,6 +92,10 @@ in
 
     log_prefix = https://cache.nixos.org/
 
+    # Live log tailing. The path is proxied to `hydra-ws-dev` by nginx in
+    # hydra-proxy.nix; the server ignores it and upgrades any request.
+    ws_endpoint = wss://hydra.nixos.org/ws
+
     evaluator_workers = 16
     evaluator_max_memory_size = 4096
 
@@ -115,6 +119,11 @@ in
       </prometheus>
     </hydra_notify>
   '';
+
+  services.hydra-ws-dev = {
+    enable = true;
+    settings.maxDbConnections = 128;
+  };
 
   systemd.tmpfiles.rules = [
     "d /var/cache/hydra 0755 hydra hydra -  -"
