@@ -110,6 +110,7 @@ in
           "https://common-styles.nixos.org"
           "https://discourse.nixos.org"
           "https://hydra.nixos.org"
+          "https://lasuite-meet.nixos.org"
           "https://mobile.nixos.org"
           "https://monitoring.nixos.org"
           "https://nixos.org"
