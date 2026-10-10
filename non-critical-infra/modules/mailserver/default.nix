@@ -9,6 +9,7 @@
 {
   imports = [
     inputs.simple-nixos-mailserver.nixosModule
+    ./dmarc-exporter.nix
     ./mailing-lists.nix
     ./freescout.nix
   ];

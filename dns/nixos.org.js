@@ -29,8 +29,12 @@ D("nixos.org",
 		]
 	}),
 	DMARC_BUILDER({
-		policy: "none",
+		policy: "reject",
+		rua: [
+			"mailto:dmarc@nixos.org"
+		]
 	}),
+	TXT("nixcon.org._report._dmarc", "v=DMARC1"),
 
 	// discourse
 	A("discourse", "195.62.126.31"),

@@ -5,6 +5,7 @@
     ./alertmanager.nix
     ./exporters/blackbox.nix
     ./exporters/channel.nix
+    ./exporters/dmarc.nix
     ./exporters/domain.nix
     ./exporters/elasticsearch.nix
     ./exporters/fastly.nix
