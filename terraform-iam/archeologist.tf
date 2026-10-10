@@ -109,34 +109,3 @@ resource "aws_iam_instance_profile" "archeologist" {
   # Make sure the role is attached before continuing
   depends_on = [aws_iam_role_policy.archeologist-worker]
 }
-
-resource "aws_key_pair" "edef" {
-  provider = aws.us
-
-  key_name   = "edef-key"
-  public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGu/CiEnmhIthp0XaGhU1cB18t6Ta/51k1/7EeIzKFwm"
-}
-
-resource "aws_instance" "archeologist" {
-  provider = aws.us
-
-  ami                         = "ami-07df5833f04703a2a" # "23.05".us-east-1.x86_64-linux.hvm-ebs
-  associate_public_ip_address = true
-  iam_instance_profile        = aws_iam_instance_profile.archeologist.id
-  instance_type               = "r5a.2xlarge"
-  key_name                    = aws_key_pair.edef.key_name
-  subnet_id                   = "subnet-1eb22868" # default subnet us-east-1c
-
-  root_block_device {
-    volume_size = "1024" # GB
-  }
-
-  vpc_security_group_ids = [
-    "sg-51d35d29", # default
-    "sg-b2ee60ca", # public-ssh
-  ]
-
-  tags = {
-    Name = "archeologist-workspace"
-  }
-}
