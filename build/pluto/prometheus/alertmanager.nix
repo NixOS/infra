@@ -101,7 +101,14 @@
   };
   users.groups.go-neb = { };
 
-  systemd.services.go-neb.serviceConfig.SupplementaryGroups = [ "keys" ];
+  systemd.services.go-neb = {
+    after = [
+      "network.target"
+      "agenix-install-secrets.service"
+    ];
+    wants = [ "agenix-install-secrets.service" ];
+    serviceConfig.SupplementaryGroups = [ "keys" ];
+  };
 
   nixpkgs.config.permittedInsecurePackages = [ "olm-3.2.16" ];
 
