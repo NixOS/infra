@@ -52,9 +52,11 @@ data "aws_iam_policy_document" "nix_release" {
     actions = [
       "s3:PutObject"
     ]
-    # The release also publishes the install script when it's the latest
-    # release.
-    resources = ["arn:aws:s3:::nix-channels/nix-latest/install"]
+    # Redirects for the latest installer scripts.
+    resources = [
+      "arn:aws:s3:::nix-channels/nix-latest/install",
+      "arn:aws:s3:::nix-channels/nix-latest/nix-installer",
+    ]
   }
 
   statement {
