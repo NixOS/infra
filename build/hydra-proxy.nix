@@ -7,6 +7,18 @@
 }:
 
 let
+  qmk-handler = pkgs.stdenv.mkDerivation {
+    pname = "iocaine-qmk-handler";
+    version = "unstable";
+    src = inputs.nixocaine.inputs.iocaine-unstable;
+    patches = [ ./iocaine-qmk-block-page.patch ];
+    dontBuild = true;
+    installPhase = ''
+      mkdir -p "$out"
+      cp -r iocaine-powder/embeds/defaults/roto/. "$out"
+      cp "${./iocaine-denied.html}" "$out/denied.html"
+    '';
+  };
   genAgentRange =
     agent: from: to: sep: trailer:
     map (n: "${agent}${sep}${toString n}${trailer}") (lib.range from to);
@@ -25,65 +37,68 @@ in
   services.iocaine = {
     enable = true;
     config = {
-      handler.default.config = {
-        "ai-robots-txt-path" = inputs.ai-robots-txt;
-        sources = {
-          "training-corpus" = [
-            (pkgs.fetchurl {
-              name = "1984_djvu.txt";
-              url = "https://archive.org/download/GeorgeOrwells1984/1984_djvu.txt";
-              hash = "sha256-9R1PTa8yDtkfH+4rU5BF62ee73irhd3VYX1QB5KU+ZU=";
-            })
-            (pkgs.fetchurl {
-              name = "brave-new-world.txt";
-              url = "https://archive.org/download/ost-english-brave_new_world_aldous_huxley/Brave_New_World_Aldous_Huxley_djvu.txt";
-              hash = "sha256-6WkaO/3zQIezGzJDp4QjglikiTZTxgo0P4MEff2mdcY=";
-            })
-          ];
-          "wordlists" = [
-            (pkgs.fetchurl {
-              name = "words.txt";
-              url = "https://git.savannah.gnu.org/cgit/miscfiles.git/plain/web2";
-              hash = "sha256-KSmJWrP+x4xpY+vly7NJP+T8nhHroJWlInh7ivxTqGM=";
-            })
-          ];
+      handler.default = {
+        path = qmk-handler;
+        config = {
+          "ai-robots-txt-path" = inputs.ai-robots-txt;
+          sources = {
+            "training-corpus" = [
+              (pkgs.fetchurl {
+                name = "1984_djvu.txt";
+                url = "https://archive.org/download/GeorgeOrwells1984/1984_djvu.txt";
+                hash = "sha256-9R1PTa8yDtkfH+4rU5BF62ee73irhd3VYX1QB5KU+ZU=";
+              })
+              (pkgs.fetchurl {
+                name = "brave-new-world.txt";
+                url = "https://archive.org/download/ost-english-brave_new_world_aldous_huxley/Brave_New_World_Aldous_Huxley_djvu.txt";
+                hash = "sha256-6WkaO/3zQIezGzJDp4QjglikiTZTxgo0P4MEff2mdcY=";
+              })
+            ];
+            "wordlists" = [
+              (pkgs.fetchurl {
+                name = "words.txt";
+                url = "https://git.savannah.gnu.org/cgit/miscfiles.git/plain/web2";
+                hash = "sha256-KSmJWrP+x4xpY+vly7NJP+T8nhHroJWlInh7ivxTqGM=";
+              })
+            ];
+          };
+          unwanted-asns = {
+            db-path = inputs.geolite2-asn-mmdb;
+            list = map toString [
+              7552 # VIETEL-AS-AP
+              37963 # ALIBABA-CN-NET
+              45102 # ALIBABA-CN-NET
+              45899 # VNPT-AS-VN
+              51167 # CONTABO
+              62610 # ZEN-DPS
+              132203 # TENCENT-NET-AP-CN
+            ];
+          };
+          unwanted-visitors =
+            # broad version ranges
+            (genAgentRange "Android" 2 12 " " ".")
+            ++ (genAgentRange "Chrome" 1 139 "/" ".")
+            ++ (genAgentRange "Chrome" 141 148 "/" ".")
+            ++ (genAgentRange "CriOS" 1 142 "/" ".")
+            ++ (genAgentRange "Firefox" 1 139 "/" ".")
+            ++ (genAgentRange "Firefox" 141 150 "/" ".")
+            ++ (genAgentRange "FxiOS" 1 150 "/" ".")
+            ++ (genAgentRange "iPhone OS" 1 14 " " "_")
+            ++ (genAgentRange "Windows NT" 4 7 " " "")
+            ++ (genAgentRange "Mac OS X 10." 5 14 "" "")
+            ++ (genAgentRange "Mac OS X 10_" 5 14 "" "")
+            ++ (genAgentRange "Mac OS X" 11 14 " " "")
+            ++ [
+              # manually crafted patterns
+              "iPod;"
+              "Presto/"
+              "Trident/"
+              "Windows CE"
+              # Missing contact information
+              "efx-scanner/3.0"
+              "Go-http-client/1.1"
+            ];
         };
-        unwanted-asns = {
-          db-path = inputs.geolite2-asn-mmdb;
-          list = map toString [
-            7552 # VIETEL-AS-AP
-            37963 # ALIBABA-CN-NET
-            45102 # ALIBABA-CN-NET
-            45899 # VNPT-AS-VN
-            51167 # CONTABO
-            62610 # ZEN-DPS
-            132203 # TENCENT-NET-AP-CN
-          ];
-        };
-        unwanted-visitors =
-          # broad version ranges
-          (genAgentRange "Android" 2 12 " " ".")
-          ++ (genAgentRange "Chrome" 1 139 "/" ".")
-          ++ (genAgentRange "Chrome" 141 148 "/" ".")
-          ++ (genAgentRange "CriOS" 1 142 "/" ".")
-          ++ (genAgentRange "Firefox" 1 139 "/" ".")
-          ++ (genAgentRange "Firefox" 141 150 "/" ".")
-          ++ (genAgentRange "FxiOS" 1 150 "/" ".")
-          ++ (genAgentRange "iPhone OS" 1 14 " " "_")
-          ++ (genAgentRange "Windows NT" 4 7 " " "")
-          ++ (genAgentRange "Mac OS X 10." 5 14 "" "")
-          ++ (genAgentRange "Mac OS X 10_" 5 14 "" "")
-          ++ (genAgentRange "Mac OS X" 11 14 " " "")
-          ++ [
-            # manually crafted patterns
-            "iPod;"
-            "Presto/"
-            "Trident/"
-            "Windows CE"
-            # Missing contact information
-            "efx-scanner/3.0"
-            "Go-http-client/1.1"
-          ];
       };
       server.default = {
         bind = "/run/iocaine/default.sock";
