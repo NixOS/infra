@@ -1,5 +1,13 @@
 locals {
   cache_domain = "cache.nixos.org"
+
+  # Origin for per-file reads under `/nix/store/`. It runs nar-serve, which reads
+  # this same cache over its public interface; it holds no credentials and has
+  # no write path.
+  nar_serve_origin = "nar-serve.nixos.org"
+
+  # S3 has no keys under `nix/`, so these paths do not collide with the cache.
+  nar_serve_paths = "req.url.path ~ \"^/nix/store/\""
 }
 
 resource "aws_s3_bucket" "cache" {
@@ -188,6 +196,39 @@ resource "fastly_service_vcl" "cache" {
     weight                = 100
   }
 
+  # Per-file reads. This backend only gets `/nix/store/`; all other paths
+  # continue to go to S3 with byte-identical behavior.
+  #
+  # `first_byte_timeout` is large because the origin must decompress the archive
+  # up to the wanted file before it can send a byte. Measured over 25 store
+  # paths, the median is 0.53s, but a file near the end of a 700 MB xz NAR takes
+  # 19s. The 15s that S3 gets is too short for that.
+  backend {
+    address               = local.nar_serve_origin
+    auto_loadbalance      = false
+    between_bytes_timeout = 10000
+    connect_timeout       = 5000
+    error_threshold       = 0
+    first_byte_timeout    = 60000
+    max_conn              = 200
+    name                  = "nar-serve"
+    override_host         = local.nar_serve_origin
+    port                  = 443
+    request_condition     = "Per-file reads"
+    shield                = "iad-va-us"
+    ssl_cert_hostname     = local.nar_serve_origin
+    ssl_check_cert        = true
+    use_ssl               = true
+    weight                = 100
+  }
+
+  condition {
+    name      = "Per-file reads"
+    priority  = 10
+    statement = local.nar_serve_paths
+    type      = "REQUEST"
+  }
+
   request_setting {
     name          = "Redirect HTTP to HTTPS"
     force_ssl     = true
@@ -285,6 +326,8 @@ resource "fastly_service_vcl" "cache" {
       backend_domain = aws_s3_bucket.cache.bucket_domain_name
       access_key     = local.cache-iam.key
       secret_key     = local.cache-iam.secret
+      # Per-file reads go to nar-serve, which is public and needs no signature.
+      unsigned_paths = local.nar_serve_paths
     })
   }
 
