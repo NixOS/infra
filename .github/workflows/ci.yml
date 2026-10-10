@@ -57,7 +57,7 @@ jobs:
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
       - run: nix run --inputs-from . nix-fast-build#nix-fast-build -- --skip-cached --flake '.#nixosConfigurations."${{ matrix.machine }}".config.system.build.toplevel'
   nixos-aarch64:
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-26.04-arm
     strategy:
       fail-fast: false
       matrix:
@@ -92,7 +92,7 @@ jobs:
       - run: nix run --inputs-from . nix-fast-build#nix-fast-build -- --skip-cached --flake '.#ciSystems.ofborg-x86_64-linux'
   nixos-ofborg-aarch64:
     name: NixOS ofborg (aarch64)
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-26.04-arm
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
