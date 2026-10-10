@@ -1,4 +1,5 @@
 {
+  lib,
   config,
   pkgs,
   ...
@@ -6,6 +7,10 @@
 
 let
   prometheus-nixos-exporter = pkgs.callPackage ./nixos-exporter { };
+  system-version-exporter = pkgs.writeShellApplication {
+    name = "system-version-exporter";
+    text = builtins.readFile ./system-version-exporter.sh;
+  };
 in
 {
   services.prometheus.exporters.node = {
@@ -23,7 +28,7 @@ in
     mkdir -pm 0775 /var/lib/prometheus-node-exporter-text-files
 
     cd /var/lib/prometheus-node-exporter-text-files
-    ${./system-version-exporter.sh} | ${pkgs.moreutils}/bin/sponge system-version.prom
+    ${lib.getExe system-version-exporter} | ${pkgs.moreutils}/bin/sponge system-version.prom
   '';
 
   systemd.services.prometheus-nixos-exporter = {
