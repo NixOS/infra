@@ -74,6 +74,12 @@
       ];
     };
 
+    "philip@nixos.org" = {
+      forwardTo = [
+        "philip.taron+nixos@gmail.com"
+      ];
+    };
+
     "tomberek@nixos.org" = {
       forwardTo = [
         "tomberek+nixos@gmail.com"
