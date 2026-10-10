@@ -169,6 +169,7 @@ resource "aws_s3_bucket_request_payment_configuration" "cache" {
 resource "fastly_service_vcl" "cache" {
   name        = local.cache_domain
   default_ttl = 86400
+  http3       = true
 
   backend {
     address               = "s3.amazonaws.com"
