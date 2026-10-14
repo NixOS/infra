@@ -75,6 +75,12 @@
       ];
     };
 
+    "john_ericson@nixos.org" = {
+      forwardTo = [
+        ../../secrets/Ericson2314-email-address.umbriel # https://github.com/Ericson2314
+      ];
+    };
+
     "lassulus@nixos.org" = {
       forwardTo = [
         "nixos@lassul.us"
