@@ -13,8 +13,6 @@
           "*.age"
           "non-critical-infra/secrets/*"
         ];
-
-        programs.actionlint.enable = true;
         programs.deno = {
           enable = true;
           excludes = [
