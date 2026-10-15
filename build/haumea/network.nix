@@ -15,9 +15,6 @@
           { Gateway = "46.4.89.193"; }
           { Gateway = "fe80::1"; }
         ];
-        vlan = [
-          "vlan4000"
-        ];
         networkConfig.Description = "WAN";
         linkConfig.RequiredForOnline = true;
       };
