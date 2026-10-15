@@ -115,6 +115,7 @@ EOF
 resource "fastly_service_vcl" "releases" {
   name        = local.releases_domain
   default_ttl = 86400
+  http3       = true
 
   backend {
     address               = local.releases_backend

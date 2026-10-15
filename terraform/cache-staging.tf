@@ -73,6 +73,7 @@ resource "aws_s3_object" "new-cache-test-file" {
 resource "fastly_service_vcl" "cache-staging" {
   name        = local.cache_staging_domain
   default_ttl = 86400
+  http3       = true
 
   backend {
     address               = module.cache-staging-202010.bucket_regional_domain_name
