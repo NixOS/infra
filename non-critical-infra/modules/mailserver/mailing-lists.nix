@@ -196,6 +196,12 @@
       ];
     };
 
+    "robert@nixos.org" = {
+      forwardTo = [
+        ../../secrets/roberth-email-address.umbriel # https://github.com/roberth
+      ];
+    };
+
     "ron@nixos.org" = {
       forwardTo = [
         ../../secrets/refroni-email-address.umbriel # https://github.com/refroni
