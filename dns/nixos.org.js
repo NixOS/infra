@@ -88,7 +88,6 @@ D("nixos.org",
 	AAAA("pluto", "2a01:4f9:3070:15e0::1"),
 	CNAME("alerts", "pluto", TTL(300)),
 	CNAME("grafana", "pluto", TTL(300)),
-	CNAME("monitoring", "pluto"),
 	CNAME("prometheus", "pluto", TTL(300)),
 
 	A("titan", "159.69.62.224"),
