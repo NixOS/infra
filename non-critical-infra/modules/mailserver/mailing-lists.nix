@@ -139,12 +139,6 @@
     };
 
     "moderation@nixos.org" = {
-      forwardTo = [
-        ../../secrets/lassulus-email-address.umbriel # https://github.com/lassulus
-        ../../secrets/uep-email-address.umbriel # https://discourse.nixos.org/u/uep
-        ../../secrets/0x4A6F-moderation-email-address.umbriel # https://github.com/0x4A6F
-        ../../secrets/aleksana-email-address.umbriel # https://github.com/aleksanaa
-      ];
       loginAccount = {
         encryptedHashedPassword = ../../secrets/moderation-email-login.umbriel;
         storeEmail = true;
