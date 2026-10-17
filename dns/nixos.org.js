@@ -166,7 +166,7 @@ D("nixos.org",
 	DKIM_BUILDER({
 		selector: "e202605",
 		keytype: "ed25519",
-		pubkey: "SEawMqEG+q0WauDF9Noe3xSqVuBZqmEBgmStaxpNFHE="
+		pubkey: "nh8rc3i+m6cwI+TSEaWwqnrOHvGr0GCMZMcNM1LK9aE="
 	}),
 	CNAME("freescout", "umbriel.nixos.org."),
 
