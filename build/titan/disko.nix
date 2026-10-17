@@ -65,15 +65,6 @@ in
         type = "zfs_fs";
         mountpoint = "/nix";
       };
-      "pg" = {
-        type = "zfs_fs";
-        mountpoint = "/var/lib/postgresql";
-        options = {
-          logbias = "latency";
-          recordsize = "16K";
-          redundant_metadata = "most";
-        };
-      };
       "reserved" = {
         type = "zfs_fs";
         options = {
