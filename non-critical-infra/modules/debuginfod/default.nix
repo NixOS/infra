@@ -21,6 +21,9 @@
     locations."/" = {
       proxyPass = "http://127.0.0.1:1949";
       index = "index.html";
+      extraConfig = ''
+        proxy_read_timeout 300s;
+      '';
     };
   };
 }
