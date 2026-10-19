@@ -4,10 +4,17 @@
 # `cache.nixos.org`: it decompresses forward to the wanted file and emits only
 # that file's bytes. Directories, absent paths and `HEAD` requests come from the
 # `.ls` listing, without the NAR. It holds no credentials, needs no bucket access
-# and has no write path, so it is exactly as trusted as the `.ls` listings.
+# and has no write path.
+#
+# Access is only for the clients in `clients`, each with its own token. Fastly
+# and this host both make sure that a request has the
+# `Authorization: Bearer <token>` header of a client. Fastly compares the
+# SHA-256 of the token, which is in `terraform/cache.tf`. This host compares the
+# token itself and writes the name of the client to the access log.
 {
   config,
   inputs,
+  lib,
   pkgs,
   ...
 }:
@@ -15,6 +22,10 @@
 let
   cfg = config.services.nar-serve;
   upstreamPort = 8384;
+
+  # The token of each client is in `secrets/nar-serve-token-<client>.caliban`.
+  clients = [ "nixos-search" ];
+  secretName = client: "nar-serve-token-${client}";
 in
 {
   # `nixos-26.05` has nar-serve 0.7.0: it reads the full NAR for each request
@@ -43,12 +54,66 @@ in
     ip saddr $prometheus_inet4 tcp dport 9464 accept
   '';
 
+  # To add a client, or to replace the token of a client:
+  #
+  #   $ cd non-critical-infra
+  #   $ SECRET_PATH=secrets/nar-serve-token-<client>.caliban
+  #   $ openssl rand -hex 32 | tr -d '\n' > "$SECRET_PATH"
+  #   $ sha256sum "$SECRET_PATH"  # put this in `nar_serve_token_sha256`
+  #   $ sops encrypt --in-place "$SECRET_PATH"
+  sops.secrets = lib.genAttrs (map secretName clients) (name: {
+    sopsFile = ../secrets + "/${name}.caliban";
+    format = "binary";
+  });
+
+  sops.templates."nar-serve-tokens.map" = {
+    content = lib.concatMapStrings (client: ''
+      "${config.sops.placeholder.${secretName client}}" ${client};
+    '') clients;
+    owner = config.services.nginx.user;
+    reloadUnits = [ config.systemd.services.nginx.name ];
+  };
+
+  # The 64 characters of the token do not fit in a bucket of the default size.
+  services.nginx.mapHashBucketSize = 128;
+
+  # The scheme name is not case-sensitive (RFC 9110).
+  services.nginx.appendHttpConfig = ''
+    map $http_authorization $nar_serve_token {
+      default "";
+      "~*^bearer (.+)$" $1;
+    }
+
+    map $nar_serve_token $nar_serve_client {
+      default "";
+      include ${config.sops.templates."nar-serve-tokens.map".path};
+    }
+
+    # `combined`, with the client in place of the user of Basic authentication.
+    log_format nar_serve '$remote_addr - $nar_serve_client [$time_local] '
+                         '"$request" $status $body_bytes_sent '
+                         '"$http_referer" "$http_user_agent"';
+  '';
+
   services.nginx.virtualHosts."nar-serve.nixos.org" = {
     forceSSL = true;
     enableACME = true;
 
+    extraConfig = ''
+      access_log /var/log/nginx/access.log nar_serve;
+    '';
+
+    # Fastly does not keep a 401, thus a token that is not correct here does not
+    # put errors in its cache. A 401 must tell the client which authentication
+    # scheme to use (RFC 9110).
     locations."/" = {
       proxyPass = "http://127.0.0.1:${toString cfg.port}";
+      extraConfig = ''
+        if ($nar_serve_client = "") {
+          add_header WWW-Authenticate Bearer always;
+          return 401;
+        }
+      '';
     };
   };
 
