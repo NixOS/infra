@@ -9,7 +9,7 @@
   ];
 
   disko.devices = import ../disk-layouts/efi-zfs-raid0.nix { };
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_7_2;
   boot.supportedFilesystems.zfs = true;
   boot.zfs.forceImportRoot = false;
   networking.hostId = "91312b0a";
