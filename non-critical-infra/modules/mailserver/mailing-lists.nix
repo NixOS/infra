@@ -9,6 +9,12 @@
   # follow the instructions.
   mailing-lists = {
     # nixcon.org
+    "hostmaster@nixcon.org" = {
+      forwardTo = [
+        "infra@nixos.org"
+      ];
+    };
+
     "orgateam@nixcon.org" = {
       forwardTo = [
         "nixcon@nixos.org"
