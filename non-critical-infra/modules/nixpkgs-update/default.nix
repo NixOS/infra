@@ -312,18 +312,4 @@ in
       '';
     };
   };
-
-  # TODO: permanent redirect r.ryantm.com/log/ -> nixpkgs-update-logs.nixos.org
-  services.nginx.virtualHosts."r.ryantm.com" = {
-    enableACME = true;
-    forceSSL = true;
-    locations."/log/" = {
-      alias = "/var/log/nixpkgs-update/";
-      extraConfig = ''
-        charset utf-8;
-        autoindex on;
-      '';
-    };
-  };
-
 }
