@@ -162,6 +162,7 @@ resource "aws_s3_bucket_object" "nixpkgs-tarballs-index" {
 resource "fastly_service_vcl" "nixpkgs-tarballs" {
   name        = local.tarballs_domain
   default_ttl = 86400
+  http3       = true
 
   backend {
     address               = local.tarballs_backend
