@@ -34,6 +34,10 @@
     };
   };
 
+  # TODO: this is temporary workaround for chromium fetches
+  # https://github.com/NixOS/nixpkgs/pull/576960#issuecomment-6355360111
+  systemd.services.nix-daemon.serviceConfig.Environment = "NIX_CURL_FLAGS=--header=Cookie:gi=0";
+
   services.fast-nix-gc = {
     enable = true;
     automatic = true;
