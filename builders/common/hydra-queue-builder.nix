@@ -29,4 +29,9 @@
       cpuPsiThreshold = 15.0;
     };
   };
+  # TODO: integrate this into hydra defaults?
+  systemd.services.hydra-queue-builder-dev.serviceConfig = {
+    ManagedOOMPreference = "avoid";
+    LimitNOFILE = 1024 * 1024;
+  };
 }
