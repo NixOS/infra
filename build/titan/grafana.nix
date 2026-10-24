@@ -10,6 +10,15 @@
     owner = "grafana";
   };
 
+  services.nginx.virtualHosts."grafana.nixos.org" = {
+    enableACME = true;
+    forceSSL = true;
+    locations."/" = {
+      proxyPass = "http://unix:${config.services.grafana.settings.server.socket}";
+      proxyWebsockets = true;
+    };
+  };
+
   services.grafana = {
     enable = true;
     settings = {
