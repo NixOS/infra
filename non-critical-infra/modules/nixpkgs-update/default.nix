@@ -129,8 +129,17 @@ let
 in
 {
   imports = [
+    inputs.fast-nix-gc.nixosModules.default
     ../../../modules/nspawn-test-containers.nix
   ];
+
+  services.fast-nix-gc = {
+    enable = true;
+    automatic = true;
+    dates = "daily";
+    ensureFree = "30%"; # some breathing room for zfs
+    keepRecent = "72h";
+  };
 
   users.groups.r-ryantm = { };
   users.users.r-ryantm = {
