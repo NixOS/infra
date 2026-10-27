@@ -76,8 +76,6 @@ These machine are aarch64-darwin hosts.
   - We are currently seeing performance regression in macOS Sequoia.
   - So to not have the machines auto-upgrade, we use:
     `sudo softwareupdate --schedule off`
-- Install rosetta2
-  - softwareupdate --install-rosetta2 --agree-to-license
 - Set up passwordless sudo
   ```
   # visudo /etc/sudoers.d/passwordless
