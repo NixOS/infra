@@ -212,6 +212,7 @@
       forwardTo = [
         ../../secrets/mweinelt-email-address.umbriel # https://github.com/mweinelt
         ../../secrets/LeSuisse-email-address.umbriel # https://github.com/LeSuisse
+        ../../secrets/leona-ya-email-address.umbriel # https://github.com/leona-ya
       ];
     };
 
