@@ -38,7 +38,7 @@ There is an open team meeting **every other Thursday at
 (search for "NixOS Infra") to see the next date.
 
 - Location: <https://meet.cccda.de/nix-osin-fra>
-- Meeting notes: <https://pad.lassul.us/nixos-infra>
+- Meeting notes: <https://pad.lassul.us/nixos-infra-2026>
 
 ## Reporting issues
 
