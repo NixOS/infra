@@ -70,9 +70,6 @@ in
   services.hydra-dev.extraConfig = ''
     max_servers 30
 
-    enable_google_login = 1
-    google_client_id = 816926039128-ia4s4rsqrq998rsevce7i09mo6a4nffg.apps.googleusercontent.com
-
     github_client_id = Ov23liat892hkVARixsT
     github_client_secret_file = ${config.age.secrets.hydra-github-client-secret.path}
 
