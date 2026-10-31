@@ -1,6 +1,7 @@
 {
   config,
   inputs,
+  lib,
   pkgs,
   ...
 }:
@@ -13,6 +14,15 @@
   environment.systemPackages = [
     config.nix.package
   ];
+
+  system.activationScripts.preActivation.text = lib.mkIf pkgs.stdenv.hostPlatform.isAarch64 (
+    lib.mkBefore ''
+      if [ ! -e /Library/Apple/usr/libexec/oah/libRosettaRuntime ]; then
+        echo "Installing Rosetta and accepting its license."
+        /usr/sbin/softwareupdate --install-rosetta --agree-to-license
+      fi
+    ''
+  );
 
   nix = {
     # Backport of NixOS/nix#15992: a temp root registered while a GC is in its
