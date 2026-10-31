@@ -7,6 +7,7 @@ locals {
 resource "fastly_service_vcl" "wiki" {
   name        = local.wiki_domain
   default_ttl = 0
+  http3       = true
 
   backend {
     address               = local.wiki_origin
