@@ -23,13 +23,17 @@
     "ai-robots-txt": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-v9Uy2W5dyFXhzjGUBZeJlnIV+PHo20vIe0Ng/r4mZr8=",
-        "type": "file",
-        "url": "https://github.com/ai-robots-txt/ai.robots.txt/raw/refs/heads/main/robots.json"
+        "lastModified": 1793331631,
+        "narHash": "sha256-PBqy/baZhVB2e8fzdm6gi7+yOD7U8vwADaXOyhlikX0=",
+        "owner": "ai-robots-txt",
+        "repo": "ai.robots.txt",
+        "rev": "d8e8b77ca6f04ee132fd5dec0ce842b5d45e85da",
+        "type": "github"
       },
       "original": {
-        "type": "file",
-        "url": "https://github.com/ai-robots-txt/ai.robots.txt/raw/refs/heads/main/robots.json"
+        "owner": "ai-robots-txt",
+        "repo": "ai.robots.txt",
+        "type": "github"
       }
     },
     "avalanche": {

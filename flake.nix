@@ -12,7 +12,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    ai-robots-txt.url = "https://github.com/ai-robots-txt/ai.robots.txt/raw/refs/heads/main/robots.json";
+    ai-robots-txt.url = "github:ai-robots-txt/ai.robots.txt";
     ai-robots-txt.flake = false;
 
     empty.url = "github:nix-systems/empty";

@@ -26,7 +26,7 @@ in
     enable = true;
     config = {
       handler.default.config = {
-        "ai-robots-txt-path" = inputs.ai-robots-txt;
+        "ai-robots-txt-path" = "${inputs.ai-robots-txt}/robots.json";
         sources = {
           "training-corpus" = [
             (pkgs.fetchurl {
