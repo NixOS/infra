@@ -652,13 +652,13 @@
       "locked": {
         "lastModified": 1791933611,
         "narHash": "sha256-JA03qBiTwNRHc/NBS6Vgj2gRmEXW7m+vP+bel6T3ll0=",
-        "owner": "nix-community",
+        "owner": "NixOS",
         "repo": "nix-index",
         "rev": "fb369a3ed3a3ea76963757aff508347014c0da35",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
+        "owner": "NixOS",
         "repo": "nix-index",
         "type": "github"
       }

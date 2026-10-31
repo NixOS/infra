@@ -46,7 +46,7 @@
     nix-fast-build.inputs.treefmt-nix.follows = "treefmt-nix";
 
     nix-index = {
-      url = "github:nix-community/nix-index";
+      url = "github:NixOS/nix-index";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
