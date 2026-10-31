@@ -23,7 +23,7 @@
     "ai-robots-txt": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-1y+VnXAhefUfPm1Dl+2+6ENUgLV/+iGbOQm+8PgdBdk=",
+        "narHash": "sha256-v9Uy2W5dyFXhzjGUBZeJlnIV+PHo20vIe0Ng/r4mZr8=",
         "type": "file",
         "url": "https://github.com/ai-robots-txt/ai.robots.txt/raw/refs/heads/main/robots.json"
       },
@@ -361,7 +361,7 @@
     "geolite2-asn-mmdb": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-Y5GkUkL27DbNvuDTMIETz6muO8qm35CvLIPvil/EZbI=",
+        "narHash": "sha256-37OuqYFlDq4FOLC58j/PIaRaPjbR6so5w0Rd4Qoy6RM=",
         "type": "file",
         "url": "https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-ASN.mmdb"
       },
