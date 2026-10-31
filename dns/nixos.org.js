@@ -25,6 +25,7 @@ D("nixos.org",
 		parts: [
 			"v=spf1",
 			"a:umbriel.nixos.org",
+			"include:_spf.google.com",
 			"-all"
 		]
 	}),
@@ -167,6 +168,11 @@ D("nixos.org",
 		selector: "e202605",
 		keytype: "ed25519",
 		pubkey: "nh8rc3i+m6cwI+TSEaWwqnrOHvGr0GCMZMcNM1LK9aE="
+	}),
+    DKIM_BUILDER({
+		selector: "google",
+		keytype: "rsa",
+		pubkey: "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0jodBAzcPpO1cgUlQINvarJ6M/4ZWW7GN0z2l8f/VELn9OZE7YZHVGw1N10m1jkoNjLZESvLE8Fx+35fIid4BW/TAFehyE2T9p0+v76RqcZXlxmarV6OKFJ43zkt8UJ33/tXzt8bpjDdCUDYkpFp50wjjh5+L5dty23W7h5I2fq5R5Euz9CqAYIaLdjBckWhqlseofX+YegfaAbQ7ISzlv1TFB/ey9VEO+HjGR6cdS5AoMtnEwtFt2dvCFZ2Cv5eD0kjS8DNhWBh5C94a9lfk9HUN2C3QM96kSC0JiZnhhhliLDeqyG7Z/AYNfQ34T4TfY+HjDPeEPbyLaL+vgpL0wIDAQAB"
 	}),
 	CNAME("freescout", "umbriel.nixos.org."),
 
