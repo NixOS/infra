@@ -286,7 +286,11 @@ in
 
     "d /var/lib/nixpkgs-update/bin/ 700 r-ryantm r-ryantm - -"
     "L+ ${nixpkgs-update-bin} - - - - ${
-      inputs.nixpkgs-update.packages.${pkgs.stdenv.hostPlatform.system}.default
+      inputs.nixpkgs-update.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
+        # Keeps the closure size down, but requires all dependencies (Nix, Git,
+        # nixpkgs-review, etc.) to be in PATH.
+        withStaticToolPaths = false;
+      }
     }/bin/nixpkgs-update"
   ];
 

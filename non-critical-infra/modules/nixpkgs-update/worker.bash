@@ -8,7 +8,11 @@ socket=/run/nixpkgs-update-supervisor/work.sock
 function run-nixpkgs-update {
   exit_code=0
   set -x
-  timeout 6h "${NIXPKGS_UPDATE_BIN}" update-batch --pr --outpaths --nixpkgs-review "$attr_path $payload" || exit_code=$?
+  timeout 6h "${NIXPKGS_UPDATE_BIN}" update-batch --pr --outpaths --nixpkgs-review \
+    --nixpkgs-review-opt 'extra-nixpkgs-config={ allowBroken = false; }' \
+    --nixpkgs-review-opt num-eval-workers=3 \
+    --nixpkgs-review-opt max-memory-size=4096 \
+    "$attr_path $payload" || exit_code=$?
   set +x
   if [ $exit_code -eq 124 ]; then
     echo "Update was interrupted because it was taking too long."
