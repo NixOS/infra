@@ -39,6 +39,7 @@
       neovim
 
       # utilities
+      mbuffer
       ripgrep
       fd
 

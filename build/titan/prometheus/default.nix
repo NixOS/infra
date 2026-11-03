@@ -1,4 +1,8 @@
-{ pkgs, ... }:
+{
+  config,
+  pkgs,
+  ...
+}:
 
 {
   imports = [
@@ -28,6 +32,14 @@
   ];
 
   services.backup.includesZfsDatasets = [ "/var/lib/prometheus2" ];
+
+  services.nginx.virtualHosts."prometheus.nixos.org" = {
+    enableACME = true;
+    forceSSL = true;
+    locations."/" = {
+      proxyPass = "http://${config.services.prometheus.listenAddress}:${toString config.services.prometheus.port}";
+    };
+  };
 
   services.prometheus = {
     enable = true;
