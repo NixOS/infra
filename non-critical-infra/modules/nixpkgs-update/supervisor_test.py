@@ -201,6 +201,33 @@ class StorageTestCase(unittest.TestCase):
         self.assertEqual(self.storage.dequeue(111), ("charlie", "0.1 0.2"))
         self.assertEqual(self.storage.dequeue(112), None)
 
+    def test_verified_release_consumes_updatescript_fallback(self):
+        self.storage.upsert_fetcher_run("updatescript", 100, True)
+        self.storage.enqueue("updatescript", 100, [("alpha", "0 1"), ("bravo", "0 1")])
+        self.storage.upsert_fetcher_run("github", 101, True)
+        self.storage.enqueue("github", 101, [("alpha", "1.0 1.1")])
+
+        # Make bravo lower priority, so alpha is dispatched first.
+        self.execute(
+            "INSERT INTO log (attr_path, started, finished, exit_code) "
+            "VALUES ('bravo', 10, 11, 0)"
+        )
+        self.assertEqual(self.storage.dequeue(200), ("alpha", "1.0 1.1"))
+        self.assertDBContents(
+            "SELECT payload, is_dequeued FROM queue WHERE attr_path = 'alpha'",
+            {("0 1", 1), ("1.0 1.1", 1)},
+        )
+
+        self.storage.finish("alpha", 201, 0)
+        self.assertEqual(self.storage.dequeue(202), ("bravo", "0 1"))
+        self.storage.finish("bravo", 203, 0)
+        self.assertEqual(self.storage.dequeue(204), None)
+
+        # A subsequent fetcher run still schedules periodic fallback checks.
+        self.storage.upsert_fetcher_run("updatescript", 205, True)
+        self.storage.enqueue("updatescript", 205, [("alpha", "0 1")])
+        self.assertEqual(self.storage.dequeue(206), ("alpha", "0 1"))
+
     def test_exclusion_period(self):
         self.storage.upsert_fetcher_run("f1", 10000, False)
         self.storage.upsert_fetcher_run("f2", 10000, False)
