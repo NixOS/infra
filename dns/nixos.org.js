@@ -248,4 +248,8 @@ D("nixos.org",
 	CNAME("status", "nixos-status.netlify.app."),
 	CNAME("weekly", "nixos-weekly.netlify.com."),
 	CNAME("www", "nixos-homepage.netlify.app."),
+
+	// MITRE CVE domain verification https://mitre.github.io/mitre-cve-roles/domain-verification/
+	// tgerbet / @LeSuisse validation
+	TXT("_cveform-cd-challenge", "cveform-cd-verification=0EDs2W-i3wsZF4Q_NMx7lNrAkLozHhlM"),
 );
