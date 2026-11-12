@@ -28,7 +28,9 @@ def mkdtemp():
 
 
 def tick():
-    time.sleep(0.01)
+    # Give the supervisor thread and inotify events enough time to run on
+    # slow or heavily loaded builders.
+    time.sleep(0.1)
 
 
 class UsesFetchers:
@@ -227,6 +229,46 @@ class StorageTestCase(unittest.TestCase):
         self.storage.upsert_fetcher_run("updatescript", 205, True)
         self.storage.enqueue("updatescript", 205, [("alpha", "0 1")])
         self.assertEqual(self.storage.dequeue(206), ("alpha", "0 1"))
+
+    def test_failed_verified_release_recovered_by_next_fetcher_run(self):
+        self.storage.upsert_fetcher_run("updatescript", 100, True)
+        self.storage.enqueue("updatescript", 100, [("alpha", "0 1")])
+        self.storage.upsert_fetcher_run("github", 101, True)
+        self.storage.enqueue("github", 101, [("alpha", "1.0 1.1")])
+
+        # The versioned candidate already ran updateScript, so a failure does
+        # not immediately re-run the speculative fallback.
+        self.assertEqual(self.storage.dequeue(200), ("alpha", "1.0 1.1"))
+        self.storage.finish("alpha", 201, 1)
+        self.assertEqual(self.storage.dequeue(202), None)
+
+        # The next periodic updateScript run still schedules the package.
+        self.storage.upsert_fetcher_run("updatescript", 300, True)
+        self.storage.enqueue("updatescript", 300, [("alpha", "0 1")])
+        self.assertEqual(self.storage.dequeue(301), ("alpha", "0 1"))
+
+    def test_multiple_verified_fetchers_do_not_resurrect_fallback(self):
+        self.storage.upsert_fetcher_run("updatescript", 100, True)
+        self.storage.enqueue("updatescript", 100, [("alpha", "0 1")])
+        self.storage.upsert_fetcher_run("github", 101, True)
+        self.storage.enqueue("github", 101, [("alpha", "1.0 1.1")])
+        self.storage.upsert_fetcher_run("repology", 102, True)
+        self.storage.enqueue("repology", 102, [("alpha", "1.0 1.2")])
+
+        # Both release fetchers still dispatch; only the synthetic entry is
+        # consumed rather than running a third time.
+        first = self.storage.dequeue(200)
+        self.assertIn(first, {("alpha", "1.0 1.1"), ("alpha", "1.0 1.2")})
+        self.storage.finish("alpha", 201, 0)
+        second = self.storage.dequeue(202)
+        self.assertIn(second, {("alpha", "1.0 1.1"), ("alpha", "1.0 1.2")})
+        self.assertNotEqual(first, second)
+        self.storage.finish("alpha", 203, 0)
+        self.assertEqual(self.storage.dequeue(204), None)
+        self.assertDBContents(
+            "SELECT payload, is_dequeued FROM queue WHERE attr_path = 'alpha'",
+            {("0 1", 1), ("1.0 1.1", 1), ("1.0 1.2", 1)},
+        )
 
     def test_exclusion_period(self):
         self.storage.upsert_fetcher_run("f1", 10000, False)
