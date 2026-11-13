@@ -11,7 +11,7 @@ declare local var.dateStamp STRING;
 declare local var.signature STRING;
 declare local var.scope STRING;
 
-if (req.method == "GET" && !req.backend.is_shield) {
+if (req.method == "GET" && !req.backend.is_shield && !(${unsigned_paths})) {
   set bereq.http.x-amz-content-sha256 = digest.hash_sha256("");
   set bereq.http.x-amz-date = strftime({"%Y%m%dT%H%M%SZ"}, now);
   set bereq.http.x-amz-request-payer = "requester";

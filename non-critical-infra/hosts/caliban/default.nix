@@ -21,6 +21,7 @@
     ../../modules/owncast.nix
     ../../modules/vaultwarden.nix
     ../../modules/docuseal.nix
+    ../../modules/nar-serve.nix
     ./nixpkgs-swh.nix
   ];
 

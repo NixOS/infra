@@ -14,6 +14,7 @@
     ./exporters/iocaine.nix
     ./exporters/json.nix
     ./exporters/matrix-synapse.nix
+    ./exporters/nar-serve.nix
     ./exporters/nixos.nix
     ./exporters/nixpkgs-update.nix
     ./exporters/node.nix
