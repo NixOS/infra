@@ -35,7 +35,7 @@ rec {
       status = "rolling";
     };
     "nixpkgs-unstable" = {
-      job = "nixpkgs/unstable/unstable";
+      job = "nixpkgs/unstable/tested";
       status = "rolling";
     };
 
