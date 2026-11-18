@@ -158,6 +158,12 @@
       };
     };
 
+    "niklaskorz@nixos.org" = {
+      forwardTo = [
+        "nixos@niklaskorz.de"
+      ];
+    };
+
     "ngi@nixos.org" = {
       loginAccount = {
         encryptedHashedPassword = ../../secrets/ngi-nixos-org-email-login.umbriel;
