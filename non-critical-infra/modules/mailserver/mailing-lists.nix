@@ -99,6 +99,12 @@
       ];
     };
 
+    "raf@nixos.org" = {
+      forwardTo = [
+        ../../secrets/6o1H5fNKheyV1WzhUc1P5AJZDxm4cSRO-email-address.umbriel # https://github.com/notashelf
+      ];
+    };
+
     "tomberek@nixos.org" = {
       forwardTo = [
         "tomberek+nixos@gmail.com"
