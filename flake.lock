@@ -365,7 +365,7 @@
     "geolite2-asn-mmdb": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-e1gun5VPyZRA1OZ1wcoqRgsR1Y/1phNMOAi+U/w/Hb0=",
+        "narHash": "sha256-3rLFJiaVokGskKAK4gYtYTAYDKjhVUvVJ2oJBvTCKbU=",
         "type": "file",
         "url": "https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-ASN.mmdb"
       },
@@ -436,11 +436,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794327489,
-        "narHash": "sha256-/Jng409ZM9yfn4NR9QcTbNQ65/TOM/IDEBvKYNuPk6c=",
+        "lastModified": 1795012085,
+        "narHash": "sha256-pTjmc0rILsZGXipa1kWiZ1GgLHc2E//logM0HMnUh9Q=",
         "owner": "NixOS",
         "repo": "hydra",
-        "rev": "16c866f809ae9d7e100e5ed75a33ee0885274cf6",
+        "rev": "02f5417147614fb3a20fcb6d8549e771b9dcd3e6",
         "type": "github"
       },
       "original": {
@@ -546,11 +546,11 @@
     "nix": {
       "flake": false,
       "locked": {
-        "lastModified": 1794058301,
-        "narHash": "sha256-ZNQEHcXMMXZfIHTRN5DIF/ucKhkYCTOSOcxLx30J0SA=",
+        "lastModified": 1794575410,
+        "narHash": "sha256-rQQMf2v9ufii1sjOHuvmFcdFGZXKryyur1GwmH2H7oM=",
         "owner": "NixOS",
         "repo": "nix",
-        "rev": "ed8739e523a4170370122fab4b2351084442668e",
+        "rev": "02211c0f1612d083539f155f4a2c80c0e3bba440",
         "type": "github"
       },
       "original": {
@@ -707,15 +707,15 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1794165970,
-        "narHash": "sha256-YqwBRaXgqn0+I8BCsZVLkzd746X/84fr1/FvZiocsYE=",
-        "rev": "ac588ef1c914865dad517b337ea0eb9694a4021c",
+        "lastModified": 1795017444,
+        "narHash": "sha256-UgrVhruoxqecFKUEnGvBnVkKy6u0xN1UQFpYqFymnmM=",
+        "rev": "1e6cf0d7cf5f5354d1bfd7105813dddb527851d4",
         "type": "tarball",
-        "url": "https://releases.nixos.org/nixos/26.05/nixos-26.05.13936.ac588ef1c914/nixexprs.tar.zst"
+        "url": "https://releases.nixos.org/nixos/26.05-small/nixos-26.05.14730.1e6cf0d7cf5f/nixexprs.tar.zst?lastModified=1795017444&rev=1e6cf0d7cf5f5354d1bfd7105813dddb527851d4"
       },
       "original": {
         "type": "tarball",
-        "url": "https://channels.nixos.org/nixos-26.05/nixexprs.tar.zst"
+        "url": "https://channels.nixos.org/nixos-26.05-small/nixexprs.tar.zst"
       }
     },
     "nixpkgs-2505": {
