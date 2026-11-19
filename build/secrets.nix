@@ -2,27 +2,24 @@ let
   keys = import ../keys.nix;
 
   secrets = with keys.ssh.machines; {
-    alertmanager-matrix-forwarder = [ pluto ];
-    alertmanager-oauth2-proxy-env = [ pluto ];
-    elasticsearch-exporter-env = [ pluto ];
-    fastly-exporter-env = [ pluto ];
-    grafana-secret-key = [ pluto ];
+    alertmanager-matrix-forwarder = [ titan ];
+    alertmanager-oauth2-proxy-env = [ titan ];
+    elasticsearch-exporter-env = [ titan ];
+    fastly-exporter-env = [ titan ];
+    grafana-secret-key = [ titan ];
     hydra-aws-credentials = [ mimas ];
     hydra-github-client-secret = [ mimas ];
-    hydra-mirror-aws-credentials = [ pluto ];
-    hydra-mirror-git-credentials = [ pluto ];
-    owncast-admin-password = [ pluto ];
-    pluto-backup-secret = [ pluto ];
-    pluto-backup-ssh-key = [ pluto ];
-    rfc39-credentials = [ pluto ];
-    rfc39-github = [ pluto ];
-    rfc39-record-push = [ pluto ];
-    storagebox-exporter-token = [ pluto ];
-    tarball-mirror-aws-credentials = [ pluto ];
-    zrepl-ssh-key = [
-      titan
-      mimas
-    ];
+    hydra-mirror-aws-credentials = [ titan ];
+    hydra-mirror-git-credentials = [ titan ];
+    owncast-admin-password = [ titan ];
+    rfc39-credentials = [ titan ];
+    rfc39-github = [ titan ];
+    rfc39-record-push = [ titan ];
+    storagebox-exporter-token = [ titan ];
+    tarball-mirror-aws-credentials = [ titan ];
+    titan-backup-secret = [ titan ];
+    titan-backup-ssh-key = [ titan ];
+    zrepl-ssh-key = [ mimas ];
 
     # builders/
     elated-minsky-queue-runner-token = [

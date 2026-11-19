@@ -53,18 +53,17 @@ in
         type = "zfs_fs";
         mountpoint = "/";
       };
+      "root/prometheus" = {
+        type = "zfs_fs";
+        mountpoint = "/var/lib/prometheus2";
+      };
+      "root/victoriametrics" = {
+        type = "zfs_fs";
+        mountpoint = "/var/lib/victoriametrics";
+      };
       "nix" = {
         type = "zfs_fs";
         mountpoint = "/nix";
-      };
-      "pg" = {
-        type = "zfs_fs";
-        mountpoint = "/var/lib/postgresql";
-        options = {
-          logbias = "latency";
-          recordsize = "16K";
-          redundant_metadata = "most";
-        };
       };
       "reserved" = {
         type = "zfs_fs";
