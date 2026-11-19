@@ -36,6 +36,7 @@ locals {
 resource "fastly_service_vcl" "artifacts" {
   name        = local.artifacts_domain
   default_ttl = 3600
+  http3       = true
 
   backend {
     address               = "github.com"
