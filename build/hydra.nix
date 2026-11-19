@@ -98,8 +98,6 @@ in
 
     queue_runner_endpoint = http://${config.services.hydra-queue-runner-dev.rest.address}:${toString config.services.hydra-queue-runner-dev.rest.port}
 
-    max_concurrent_evals = 1
-
     # increase the number of active compress slots (CPU is 48*2 on mimas)
     max_local_worker_threads = 144
 
@@ -116,6 +114,10 @@ in
       </prometheus>
     </hydra_notify>
   '';
+
+  services.hydra-evaluator-dev.settings = {
+    max_concurrent_evals = 1;
+  };
 
   services.hydra-ws-dev = {
     enable = true;
