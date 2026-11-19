@@ -93,9 +93,6 @@ in
     # hydra-proxy.nix; the server ignores it and upgrades any request.
     ws_endpoint = wss://hydra.nixos.org/ws
 
-    evaluator_workers = 16
-    evaluator_max_memory_size = 4096
-
     queue_runner_endpoint = http://${config.services.hydra-queue-runner-dev.rest.address}:${toString config.services.hydra-queue-runner-dev.rest.port}
 
     # increase the number of active compress slots (CPU is 48*2 on mimas)
@@ -117,6 +114,8 @@ in
 
   services.hydra-evaluator-dev.settings = {
     max_concurrent_evals = 1;
+    evaluator_workers = 16;
+    evaluator_max_memory_size = 4096;
   };
 
   services.hydra-ws-dev = {
