@@ -27,7 +27,7 @@
     geolite2-asn-mmdb.url = "https://github.com/P3TERX/GeoLite.mmdb/raw/download/GeoLite2-ASN.mmdb";
     geolite2-asn-mmdb.flake = false;
 
-    hydra.url = "github:NixOS/hydra?rev=c7eee7d7635df188c4e6640b38036ce127457109";
+    hydra.url = "github:NixOS/hydra?rev=02f5417147614fb3a20fcb6d8549e771b9dcd3e6";
     hydra.inputs.nixpkgs.follows = "nixpkgs";
     hydra.inputs.treefmt-nix.follows = "treefmt-nix";
 
