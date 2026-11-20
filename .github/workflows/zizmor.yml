@@ -27,7 +27,7 @@ jobs:
           persist-credentials: false
 
       - name: Install nix
-        uses: cachix/install-nix-action@3dc140bfc76c49fbd4dd958429132e3746bcb086 # v31
+        uses: cachix/install-nix-action@bb0495a1086c46893eee56f32fd192dfe4a15bb9 # v32
 
       - name: Run zizmor 🌈
         env:
