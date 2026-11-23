@@ -164,6 +164,12 @@
       };
     };
 
+    "k900@nixos.org" = {
+      forwardTo = [
+        "nixos@0upti.me"
+      ];
+    };
+
     "niklaskorz@nixos.org" = {
       forwardTo = [
         "nixos@niklaskorz.de"
