@@ -50,7 +50,7 @@ rec {
       status = "beta";
     };
     "nixpkgs-26.11" = {
-      job = "nixpkgs/nixpkgs-26.11/tested";
+      job = "nixpkgs/release-26.11/tested";
       status = "beta";
     };
 
