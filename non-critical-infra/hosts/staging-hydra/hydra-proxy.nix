@@ -97,6 +97,19 @@ in
       locations."/static/" = {
         alias = "${config.services.hydra-dev.package}/libexec/hydra/root/static/";
       };
+
+      # Live build-log tailing, matching `ws_endpoint` in hydra.nix.
+      locations."/ws" = {
+        # `bind.address` already carries its own brackets for IPv6.
+        proxyPass = "http://${config.services.hydra-ws-dev.bind.address}:${toString config.services.hydra-ws-dev.bind.port}";
+        proxyWebsockets = true;
+        # A tail lives as long as the build does, so the 900s `proxyTimeout`
+        # would cut streams off mid-build.
+        extraConfig = ''
+          proxy_read_timeout 1d;
+          proxy_send_timeout 1d;
+        '';
+      };
     };
   };
 
