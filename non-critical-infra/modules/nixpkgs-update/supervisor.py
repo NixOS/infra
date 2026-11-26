@@ -439,6 +439,11 @@ class Storage:
         record for this entry will be marked as started as of
         `start_time`.
 
+        If a non-updatescript fetcher has a verified release candidate
+        pending for a package, prefer it to the speculative updatescript
+        entry and consume that fallback when the package is dispatched.
+        Workers already invoke updateScript for packages that define it.
+
         Most of the time, if a job for an attribute path was started but
         has not yet finished, any queue entries for that same path will
         be skipped. However, in case a worker dies or fails to report
@@ -455,7 +460,16 @@ class Storage:
                 `attr_path`,
                 `payload`
             FROM `queue`
+            JOIN `fetchers` USING (`fetcher_id`)
             LEFT JOIN `log` USING (`attr_path`)
+            WHERE `fetchers`.`name` != 'updatescript'
+            OR NOT EXISTS (
+                SELECT 1 FROM `queue` AS verified
+                JOIN `fetchers` AS source USING (`fetcher_id`)
+                WHERE verified.`attr_path` = `queue`.`attr_path`
+                  AND verified.`is_dequeued` = 0
+                  AND source.`name` != 'updatescript'
+            )
             GROUP BY `last_started`, `order_jitter`, `attr_path`, `fetcher_id`
             HAVING `is_dequeued` = 0
             AND (`started` IS NULL OR `finished` IS NOT NULL OR `started` + 43200 < ?)
@@ -481,6 +495,18 @@ class Storage:
                 WHERE `fetcher_id` = ? AND `attr_path` = ?
                 """,
                 (fetcher_id, attr_path),
+            )
+            # A verified release candidate runs updateScript too, when present.
+            # Do not spend another worker slot on its speculative fallback.
+            cur.execute(
+                """
+                UPDATE `queue` SET `is_dequeued` = 1
+                WHERE `attr_path` = ?
+                  AND `fetcher_id` = (
+                      SELECT `fetcher_id` FROM `fetchers` WHERE `name` = 'updatescript'
+                  )
+                """,
+                (attr_path,),
             )
             cur.execute(
                 """
