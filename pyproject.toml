@@ -84,7 +84,7 @@ lint.ignore = [
   "PTH118",
   "PTH120"
 ]
-"build/pluto/prometheus/exporters/**.py" = [
+"build/titan/prometheus/exporters/**.py" = [
   "ANN"
 ]
 "build/datadog/hydra.py" = [
@@ -93,16 +93,9 @@ lint.ignore = [
   "INP001",
   "S113",
 ]
-"build/pluto/prometheus/exporters/channel-exporter.py" = [
+"build/titan/prometheus/exporters/channel-exporter.py" = [
   "BLE001",
   "PTH123"
-]
-"build/pluto/prometheus/exporters/hydra-queue-runner-reexporter.py" = [
-  "TRY300",
-  "N806",
-  "A002",
-  "PTH123",
-  "S113"
 ]
 
 [[tool.mypy.overrides]]
