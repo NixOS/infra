@@ -5,6 +5,7 @@
     extra-substituters = [ "https://cache-staging.nixos.org" ];
     extra-trusted-public-keys = [
       "staging-hydra.nixos.org:XTeS2S4YgmVOVVTBazog3M6pSHoUKw0k5mCcqdmPeCU="
+      "cache-staging.nixos.org-2:CTXl/Yq687j+W4OvTFnMNNdsAFN7jqCAleLIjUMqaaU="
     ];
   };
 }

@@ -54,6 +54,11 @@ in
       format = "binary";
       owner = config.systemd.services.hydra-queue-runner-dev.serviceConfig.User;
     };
+    signing-key-2 = {
+      sopsFile = ../../secrets/signing-key-2.staging-hydra;
+      format = "binary";
+      owner = config.systemd.services.hydra-queue-runner-dev.serviceConfig.User;
+    };
     hydra-aws-credentials = {
       sopsFile = ../../secrets/hydra-aws-credentials.staging-hydra;
       format = "binary";
@@ -124,7 +129,7 @@ in
         # system and we'd abort buildable steps as unsupported (hydra#1805)
         maxUnsupportedTimeInS = 86400;
         remoteStoreAddr = [
-          "s3://nix-cache-staging?secret-key=${config.sops.secrets.signing-key.path}&write-nar-listing=1&compression=zstd&ls-compression=zstd&log-compression=zstd&narinfo-compression=zstd"
+          "s3://nix-cache-staging?secret-keys=${config.sops.secrets.signing-key.path},${config.sops.secrets.signing-key-2.path}&write-nar-listing=1&compression=zstd&ls-compression=zstd&log-compression=zstd&narinfo-compression=zstd"
         ];
         usePresignedUploads = true;
         forcedSubstituters = [ "https://cache-staging.nixos.org" ];
